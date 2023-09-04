@@ -1,6 +1,6 @@
 const Benefits = () => {
   return (
-    <div className="flex flex-col items-center justify-center space-y-8">
+    <div className="flex flex-col items-center justify-center space-y-8 mt-12">
       <p className="font-semibold text-4xl text-secondary text-center">
         Short headline about the benefit of using your product or service
       </p>
