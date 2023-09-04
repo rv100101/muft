@@ -6,7 +6,7 @@ import Benefits from "./components/benefits";
 function App() {
   return (
     <>
-      <div className="mx-[260px]">
+      <div className="mx-[200px] space-y-4">
         <NavBar />
         <Hero />
         <Benefits />
