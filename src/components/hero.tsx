@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import heroPhone from "@/assets/hero-phone.svg";
 import heroAvatar1 from "@/assets/hero-avatar1.svg";
 import heroAvatar2 from "@/assets/hero-avatar2.svg";
+import { motion } from "framer-motion";
 
 const Hero = () => {
   return (
@@ -27,14 +28,24 @@ const Hero = () => {
         </div>
         <div className="flex justify-end items-center relative h-full w-full">
           <img src={heroPhone} alt="hero phone image" />
-          <div className="absolute flex space-x-4 items-start -translate-y-32 -translate-x-24">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+            className="absolute flex space-x-4 items-start -translate-y-32 -translate-x-24"
+          >
             <img width={36} src={heroAvatar1} alt="user avatar 1" />
             <p className="text-xs w-64 text-justify bg-white p-2 rounded-lg font-normal">
               Hey, Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
               do eiusmod tempor incididunt ut labore et dolore magna aliqua.
             </p>
-          </div>
-          <div className="absolute flex space-x-4 items-start translate-y-36 translate-x-6">
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ delay: 1.5 }}
+            className="absolute flex space-x-4 items-start translate-y-36 translate-x-6"
+          >
             <p className="text-xs w-64 text-justify bg-blue-600 p-2 text-white rounded-lg font-extralight">
               Hey, Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
               do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
@@ -42,7 +53,7 @@ const Hero = () => {
               nisi ut aliquip ex ea commodo consequat.
             </p>
             <img width={36} src={heroAvatar2} alt="user avatar 2" />
-          </div>
+          </motion.div>
         </div>
       </div>
     </div>

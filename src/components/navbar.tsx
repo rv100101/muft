@@ -17,7 +17,12 @@ function NavBar() {
         <Button variant={"ghost"} className="font-light">
           Link Three
         </Button>
-        <Button className={cn("rounded-[100px]", "font-semibold px-6")}>
+        <Button
+          className={cn(
+            "rounded-[100px] hover:bg-[#d86392]",
+            "font-semibold px-6"
+          )}
+        >
           Sign in
         </Button>
       </div>

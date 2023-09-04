@@ -4,9 +4,15 @@ import FeatureIcone2 from "@/assets/feature-icon-2.svg";
 import FeatureIcone3 from "@/assets/feature-icon-3.svg";
 import FeatureIcone4 from "@/assets/feature-icon-4.svg";
 import FeaturesPhone from "@/assets/features-phone.svg";
+import { motion } from "framer-motion";
 const Features = () => {
   return (
-    <section className="mt-12">
+    <motion.section
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ delay: 0.5 }}
+      className="mt-12"
+    >
       <div className="grid grid-cols-3 gap-4 h-max w-full">
         <div className="space-y-8 flex flex-col justify-start">
           <FeatureCard
@@ -36,7 +42,7 @@ const Features = () => {
           />
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 
