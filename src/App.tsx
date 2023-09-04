@@ -4,6 +4,7 @@ import NavBar from "@/components/navbar";
 import Benefits from "./components/benefits";
 import Features from "./components/features";
 import Testimonials from "./components/testimonials";
+import Cta from "./components/cta";
 
 function App() {
   return (
@@ -14,6 +15,9 @@ function App() {
         <Benefits />
         <Features />
         <Testimonials />
+      </div>
+      <div className="bg-[#FF7AAF]">
+        <Cta />
       </div>
     </>
   );
