@@ -3,7 +3,7 @@ import { Button } from "./ui/button";
 import logo from "@/assets/logo.svg";
 function NavBar() {
   return (
-    <nav className="flex items-center justify-between mx-64 my-4">
+    <nav className="flex items-center justify-between my-4">
       <a href="/">
         <img src={logo} alt="muffin-logo" />
       </a>
