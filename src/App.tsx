@@ -5,6 +5,7 @@ import Benefits from "./components/benefits";
 import Features from "./components/features";
 import Testimonials from "./components/testimonials";
 import Cta from "./components/cta";
+import Footer from "./components/footer";
 
 function App() {
   return (
@@ -18,6 +19,9 @@ function App() {
       </div>
       <div className="bg-[#FF7AAF]">
         <Cta />
+      </div>
+      <div className="bg-[#0C1223]">
+        <Footer />
       </div>
     </>
   );

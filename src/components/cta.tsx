@@ -17,8 +17,12 @@ const Cta = () => {
             vitae erat.
           </p>
           <div className="flex space-x-4">
-            <img width={170} src={GooglePlay} alt="google play" />
-            <img width={160} src={AppStore} alt="app store" />
+            <a href="/">
+              <img width={170} src={GooglePlay} alt="google play" />
+            </a>
+            <a href="/">
+              <img width={160} src={AppStore} alt="app store" />
+            </a>
           </div>
         </div>
       </div>
