@@ -6,9 +6,9 @@ import heroAvatar2 from "@/assets/hero-avatar2.svg";
 
 const Hero = () => {
   return (
-    <div className="bg-secondaryBackground pt-12 pl-[60px] rounded-3xl ">
+    <div className="bg-secondaryBackground py-12 px-[60px] rounded-3xl ">
       <div className="grid grid-cols-2">
-        <div className="space-y-6">
+        <div className="space-y-6 flex flex-col items-start justify-center">
           <h1 className="text-4xl font-semibold text-secondary">
             Medium length section heading goes here
           </h1>
@@ -28,7 +28,7 @@ const Hero = () => {
         <div className="flex justify-end items-center relative h-full w-full">
           <img src={heroPhone} alt="hero phone image" />
           <div className="absolute flex space-x-4 items-start -translate-y-32 -translate-x-24">
-            <img src={heroAvatar1} alt="user avatar 1" />
+            <img width={36} src={heroAvatar1} alt="user avatar 1" />
             <p className="text-xs w-64 text-justify bg-white p-2 rounded-lg font-normal">
               Hey, Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
               do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -41,7 +41,7 @@ const Hero = () => {
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
               nisi ut aliquip ex ea commodo consequat.
             </p>
-            <img src={heroAvatar2} alt="user avatar 2" />
+            <img width={36} src={heroAvatar2} alt="user avatar 2" />
           </div>
         </div>
       </div>
