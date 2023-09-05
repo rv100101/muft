@@ -22,8 +22,9 @@ const ChatCard = ({
     <motion.div
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
-      transition={{ delay: 3 }}
+      transition={{ delay: avatarFirst ? 3 : 0.5 }}
       className={cn(className, "space-x-2 md:space-x-4")}
+      viewport={{ once: true }}
     >
       {avatarFirst && <img width={36} src={img} alt="chat avatar" />}
       <div

@@ -109,6 +109,7 @@ const Hero = () => {
             transition={{
               delay: 2.5,
             }}
+            viewport={{ once: true }}
           >
             <Button
               className={cn(
@@ -131,6 +132,7 @@ const Hero = () => {
             transition={{
               delay: 2.5,
             }}
+            viewport={{ once: true }}
             src={heroPhone}
             alt="hero phone image"
           />

@@ -9,6 +9,22 @@ import BottomNav from "@/assets/features_section/bottom-nav.png";
 import AddToStory from "@/assets/features_section/add-to-story.png";
 
 import { motion } from "framer-motion";
+const container = {
+  hidden: { opacity: 0 },
+  whileInView: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 1,
+    },
+  },
+};
+
+const itemA = {
+  hidden: { opacity: 0 },
+  whileInView: { opacity: 1 },
+};
+
 const Features = () => {
   return (
     <motion.section
@@ -31,20 +47,32 @@ const Features = () => {
             img={FeatureIcone2}
           />
         </div>
-        <div className="md:justify-center md:items-center relative md:flex hidden">
-          <img src={PinkBg} alt="pink-vector" />
-          <img className="absolute z-20" src={Phone} alt="phone" />
-          <img
+        <motion.div
+          variants={container}
+          initial="hidden"
+          animate="whileInView"
+          className="md:justify-center md:items-center relative md:flex hidden"
+        >
+          <motion.img variants={itemA} src={PinkBg} alt="pink-vector" />
+          <motion.img
+            variants={itemA}
+            className="absolute z-20"
+            src={Phone}
+            alt="phone"
+          />
+          <motion.img
+            variants={itemA}
             className="w-24 lg:w-48 absolute z-30 -translate-x-12 lg:-translate-x-24 md:-translate-y-12 lg:-translate-y-20"
             src={BottomNav}
             alt="Bottom nav phone image"
           />
-          <img
+          <motion.img
+            variants={itemA}
             className="w-24 lg:w-48 absolute z-30 translate-x-24 translate-y-12"
             src={AddToStory}
             alt="Add to story image"
           />
-        </div>
+        </motion.div>
         <div className="space-y-8 flex flex-col justify-end">
           <FeatureCard
             title="Describe feature three"
