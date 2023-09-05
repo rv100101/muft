@@ -7,23 +7,46 @@ import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 
 const Hero = () => {
-  const textToType = "This is a typing animation.";
-  const [typedText, setTypedText] = useState(
-    "Hey, Lorem ipsum dolor sit amet, consectetur adipiscing elit, seddo eiusmod tempor incididunt ut labore et dolore magna aliqua."
-  );
-  const [currentIndex, setCurrentIndex] = useState(0);
-  useEffect(() => {
-    const typingInterval = setInterval(() => {
-      if (currentIndex < textToType.length) {
-        setTypedText((prevText) => prevText + textToType[currentIndex]);
-        setCurrentIndex((prevIndex) => prevIndex + 1);
-      } else {
-        clearInterval(typingInterval);
-      }
-    }, 70); // Adjust the delay as needed for typing speed
+  const firstTextToType =
+    "Hey, Lorem ipsum dolor sit amet, consectetur adipiscing elit, seddo eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+  const secondTextToType =
+    " Hey, Lorem ipsum dolor sit amet truy, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.";
+  const [firstTypedText, setFirstTypedText] = useState("");
+  const [secondTypedText, setSecondTypedText] = useState("");
+  const [firstCurrentIndex, setFirstCurrentIndex] = useState(0);
+  const [secondCurrentIndex, setSecondCurrentIndex] = useState(0);
 
-    return () => clearInterval(typingInterval);
-  }, [currentIndex]);
+  useEffect(() => {
+    const firstTypingInterval = setInterval(() => {
+      if (firstCurrentIndex < firstTextToType.length) {
+        setFirstTypedText(
+          (prevText) => prevText + firstTextToType[firstCurrentIndex]
+        );
+        setFirstCurrentIndex((prevIndex) => prevIndex + 1);
+      } else {
+        clearInterval(firstTypingInterval);
+      }
+    }, 45);
+
+    const secondTypingInterval = setInterval(() => {
+      if (
+        firstCurrentIndex >= firstTextToType.length &&
+        secondCurrentIndex < secondTextToType.length
+      ) {
+        setSecondTypedText(
+          (prevText) => prevText + secondTextToType[secondCurrentIndex]
+        );
+        setSecondCurrentIndex((prevIndex) => prevIndex + 1);
+      } else {
+        clearInterval(secondTypingInterval);
+      }
+    }, 45);
+
+    return () => {
+      clearInterval(firstTypingInterval);
+      clearInterval(secondTypingInterval);
+    };
+  }, [firstCurrentIndex, secondCurrentIndex]);
 
   return (
     <div className="bg-secondaryBackground py-6 md:py-12 px-[30px] md:px-[60px] rounded-3xl">
@@ -57,23 +80,22 @@ const Hero = () => {
           >
             <img width={36} src={heroAvatar1} alt="user avatar 1" />
             <p className="text-xs w-64 bg-white p-2 rounded-lg font-normal">
-              {typedText}
+              {firstTypedText}
             </p>
           </motion.div>
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ delay: 1.5 }}
-            className="h-12 md:h-max absolute flex space-x-4 items-start translate-y-12 md:translate-y-36 md:translate-x-6"
-          >
-            <p className="text-xs md:h-max w-64 bg-blue-600 p-2 text-white rounded-lg font-extralight truncate md:whitespace-normal">
-              Hey, Lorem ipsum dolor sit amet truy, consectetur adipiscing elit,
-              sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
-            </p>
-            <img width={36} src={heroAvatar2} alt="user avatar 2" />
-          </motion.div>
+          {firstCurrentIndex >= firstTextToType.length && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+              className="h-12 md:h-max absolute flex space-x-4 items-start translate-y-12 md:translate-y-36 md:translate-x-6"
+            >
+              <p className="text-xs md:h-max w-64 bg-blue-600 p-2 text-white rounded-lg font-extralight truncate md:whitespace-normal">
+                {secondTypedText}
+              </p>
+              <img width={36} src={heroAvatar2} alt="user avatar 2" />
+            </motion.div>
+          )}
         </div>
       </div>
     </div>
