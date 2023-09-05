@@ -12,10 +12,10 @@ function App() {
     <>
       <div className="mx-8 md:mx-12 lg:mx-48">
         <NavBar />
-        {/* <Hero />
-        <Benefits />
-        <Features />
-        <Testimonials /> */}
+        <Hero />
+        {/* <Benefits /> */}
+        {/* <Features /> */}
+        {/* <Testimonials /> */}
       </div>
       {/* <div className="bg-[#FF7AAF]">
         <Cta />

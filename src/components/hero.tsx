@@ -7,8 +7,8 @@ import { motion } from "framer-motion";
 
 const Hero = () => {
   return (
-    <div className="bg-secondaryBackground py-12 px-[60px] rounded-3xl ">
-      <div className="grid grid-cols-2">
+    <div className="bg-secondaryBackground py-6 md:py-12 px-[30px] md:px-[60px] rounded-3xl ">
+      <div className="grid grid-cols-1 grid-rows-2 md:grid-cols-2">
         <div className="space-y-6 flex flex-col items-start justify-center">
           <h1 className="text-4xl font-semibold text-secondary">
             Medium length section heading goes here
@@ -32,10 +32,10 @@ const Hero = () => {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
-            className="absolute flex space-x-4 items-start -translate-y-32 -translate-x-24"
+            className="absolute flex space-x-4 items-start -translate-y-32 md:-translate-y-32 md:-translate-x-24"
           >
             <img width={36} src={heroAvatar1} alt="user avatar 1" />
-            <p className="text-xs w-64 text-justify bg-white p-2 rounded-lg font-normal">
+            <p className="text-xs w-64 bg-white p-2 rounded-lg font-normal">
               Hey, Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
               do eiusmod tempor incididunt ut labore et dolore magna aliqua.
             </p>
@@ -44,12 +44,12 @@ const Hero = () => {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ delay: 1.5 }}
-            className="absolute flex space-x-4 items-start translate-y-36 translate-x-6"
+            className="h-12 md:h-max absolute flex space-x-4 items-start translate-y-12 md:translate-y-36 md:translate-x-6"
           >
-            <p className="text-xs w-64 text-justify bg-blue-600 p-2 text-white rounded-lg font-extralight">
-              Hey, Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-              do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
+            <p className="text-xs md:h-max w-64 bg-blue-600 p-2 text-white rounded-lg font-extralight truncate md:whitespace-normal">
+              Hey, Lorem ipsum dolor sit amet truy, consectetur adipiscing elit,
+              sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
               nisi ut aliquip ex ea commodo consequat.
             </p>
             <img width={36} src={heroAvatar2} alt="user avatar 2" />
