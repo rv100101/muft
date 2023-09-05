@@ -75,7 +75,7 @@ const Hero = () => {
         <div className="flex justify-center md:justify-end items-center relative">
           <img src={heroPhone} alt="hero phone image" />
           <ChatCard
-            className="absolute flex items-start w-48 -translate-x-12 md:-translate-x-1 md:w-full md:-translate-y-16"
+            className="absolute flex items-start md:w-full w-48 -translate-x-12 -translate-y-12 md:-translate-x-1  md:-translate-y-16"
             text={firstTypedText}
             img={heroAvatar1}
             avatarFirst={true}
@@ -85,7 +85,7 @@ const Hero = () => {
           />
           {firstCurrentIndex >= firstTextToType.length && (
             <ChatCard
-              className="h-12 rounded-br-lg w-48 md:w-full md:h-max absolute flex items-start translate-y-12 md:translate-y-36 -translate-x-10 md:translate-x-12 lg:translate-x-20"
+              className="h-12 rounded-br-lg w-48 md:w-full md:h-max absolute flex items-start translate-y-14 md:translate-y-36 md:translate-x-12 lg:translate-x-20"
               text={secondTypedText}
               img={heroAvatar2}
               avatarFirst={false}

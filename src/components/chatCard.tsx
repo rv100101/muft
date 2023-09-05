@@ -28,12 +28,12 @@ const ChatCard = ({
       {avatarFirst && <img width={36} src={img} alt="chat avatar" />}
       <div
         className={cn(
-          "space-y-2 text-left w-78 bg-white p-4 font-normal md:h-max md:whitespace-normal",
+          "space-y-2 text-left w-48 md:w-96 bg-white p-4 font-normal md:h-max md:whitespace-normal",
           borderRadius
         )}
       >
         <div className="flex justify-between">
-          <p className="text-[#CF6AA4] font-semibold text-xs md:text-base">
+          <p className="text-[#CF6AA4] font-bold text-xs md:text-base">
             {name}
           </p>
           <p className="text-xs text-[#C9C3F6]">{time}</p>
