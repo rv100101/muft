@@ -32,16 +32,15 @@ const Features = () => {
           />
         </div>
         <div className="md:justify-center md:items-center relative md:flex hidden">
-          {/* <img src={FeaturesPhone} alt="features phone image" /> */}
           <img src={PinkBg} alt="pink-vector" />
           <img className="absolute z-20" src={Phone} alt="phone" />
           <img
-            className="absolute z-30 -translate-x-24 w-48 -translate-y-20"
+            className="w-24 lg:w-48 absolute z-30 -translate-x-12 lg:-translate-x-24 md:-translate-y-12 lg:-translate-y-20"
             src={BottomNav}
             alt="Bottom nav phone image"
           />
           <img
-            className="absolute z-30 translate-x-24 w-48 translate-y-12"
+            className="w-24 lg:w-48 absolute z-30 translate-x-24 translate-y-12"
             src={AddToStory}
             alt="Add to story image"
           />
