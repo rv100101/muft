@@ -8,7 +8,7 @@ const Benefits = () => {
         whileInView={{ opacity: 1 }}
         transition={{ delay: 1 }}
         viewport={{ once: true }}
-        className="font-semibold text-4xl text-secondary text-center"
+        className="font-semibold text-2xl md:text-4xl text-secondary text-center"
       >
         Short headline about the benefit of using your product or service
       </motion.p>
@@ -17,7 +17,7 @@ const Benefits = () => {
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ delay: 1 }}
-        className="text-center text-secondary text-sm px-32"
+        className="text-center text-secondary text-sm md:px-32"
       >
         Highlight the Unique Selling Proposition (USP) with a short summary of
         the main feature and how it benefits customers. The idea here is to keep

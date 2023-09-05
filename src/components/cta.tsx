@@ -3,8 +3,8 @@ import AppStore from "@/assets/app-store.svg";
 
 const Cta = () => {
   return (
-    <div className="mx-[200px] mt-12">
-      <div className="grid grid-cols-3 relative gap-4 py-28">
+    <div className="mx-8 md:mx-[200px] mt-8 md:mt-12">
+      <div className="grid md:grid-cols-3 relative gap-4 py-14 md:py-28">
         <div className="w-full h-full" />
         <div className="space-y-4 col-span-2 text-secondary">
           <p className="text-4xl font-semibold text-white">

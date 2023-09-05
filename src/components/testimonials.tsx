@@ -4,18 +4,20 @@ import { cn } from "@/lib/utils";
 
 const Testimonials = () => {
   return (
-    <section className="mt-12">
-      <div className="grid grid-cols-3 relative gap-4">
-        <div className="relative flex flex-col">
+    <section className="mt-8 md:mt-12">
+      <div className="grid md:grid-cols-3 relative gap-4">
+        <div className="hidden relative md:flex md:flex-col">
           <img className="absolute flex" src={OkPhone} alt="ok illustration" />
         </div>
 
         <div className="space-y-4 col-span-2 text-secondary">
-          <p className="font-bold text-4xl mt-12 text-secondary">
+          <p className="font-bold text-4xl mt-12 text-secondary text-center md:text-left">
             Customer testimonials
           </p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          <div className="flex space-x-4 ">
+          <p className="text-center md:text-left">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          </p>
+          <div className="flex flex-col md:flex-row space-y-4 md:space-x-4 items-center justify-center">
             <div className="text-center space-y-2 bg-secondaryBackground p-4 rounded-lg">
               <p>
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -31,7 +33,7 @@ const Testimonials = () => {
               <p className="font-semibold">Name Surname</p>
             </div>
           </div>
-          <div className="flex space-x-2">
+          <div className="flex space-x-2 justify-center md:justify-start items-center">
             <Button className={cn("rounded-full h-2 p-0 w-2 bg-black")} />
             <Button className={cn("rounded-full h-2 p-0 w-2 bg-[#8D8D8D]")} />
             <Button className={cn("rounded-full h-2 p-0 w-2 bg-[#8D8D8D]")} />

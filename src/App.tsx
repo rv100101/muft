@@ -13,16 +13,16 @@ function App() {
       <div className="mx-8 md:mx-12 lg:mx-48">
         <NavBar />
         <Hero />
-        {/* <Benefits /> */}
-        {/* <Features /> */}
-        {/* <Testimonials /> */}
+        <Benefits />
+        <Features />
+        <Testimonials />
       </div>
-      {/* <div className="bg-[#FF7AAF]">
+      <div className="bg-[#FF7AAF]">
         <Cta />
       </div>
       <div className="bg-[#0C1223]">
         <Footer />
-      </div> */}
+      </div>
     </>
   );
 }

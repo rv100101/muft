@@ -14,7 +14,7 @@ const Features = () => {
       viewport={{ once: true }}
       className="mt-12"
     >
-      <div className="grid grid-cols-3 gap-4 h-max w-full">
+      <div className="grid md:grid-cols-3 gap-4 h-max w-full">
         <div className="space-y-8 flex flex-col justify-start">
           <FeatureCard
             title="Describe feature one"
@@ -27,7 +27,7 @@ const Features = () => {
             img={FeatureIcone2}
           />
         </div>
-        <div className="flex">
+        <div className="md:flex hidden">
           <img src={FeaturesPhone} alt="features phone image" />
         </div>
         <div className="space-y-8 flex flex-col justify-end">
