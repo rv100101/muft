@@ -57,7 +57,7 @@ const Hero = () => {
           <h1 className="z-20 text-3xl md:text-4xl font-semibold text-secondary">
             Medium length section heading goes here
           </h1>
-          <p>
+          <p className="z-20">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
             varius enim in eros elementum tristique. Duis cursus, mi quis
             viverra ornare, eros dolor interdum nulla, ut commodo diam libero
