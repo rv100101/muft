@@ -3,7 +3,7 @@ import AppStore from "@/assets/app-store.svg";
 import CtaPhone from "@/assets/cta-phone.png";
 const Cta = () => {
   return (
-    <div className="mx-8 lg:mx-[200px] mt-8 md:mt-12 lg:mt-64">
+    <div className="mx-8 lg:mx-36 mt-8 md:mt-12 lg:mt-64">
       <div className="grid lg:grid-cols-3 relative gap-4 py-14 md:py-28">
         <div className="lg:block hidden w-full h-full">
           <img
