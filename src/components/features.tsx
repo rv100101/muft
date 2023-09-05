@@ -11,6 +11,7 @@ const Features = () => {
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ delay: 0.5 }}
+      viewport={{ once: true }}
       className="mt-12"
     >
       <div className="grid grid-cols-3 gap-4 h-max w-full">
