@@ -7,10 +7,10 @@ import { motion } from "framer-motion";
 
 const Hero = () => {
   return (
-    <div className="bg-secondaryBackground py-6 md:py-12 px-[30px] md:px-[60px] rounded-3xl ">
-      <div className="grid grid-cols-1 grid-rows-2 md:grid-cols-2">
+    <div className="bg-secondaryBackground py-6 md:py-12 px-[30px] md:px-[60px] rounded-3xl">
+      <div className="grid grid-cols-1 grid-rows-2 md:grid-rows-1 md:grid-cols-2">
         <div className="space-y-6 flex flex-col items-start justify-center">
-          <h1 className="text-4xl font-semibold text-secondary">
+          <h1 className="text-2xl md:text-4xl font-semibold text-secondary">
             Medium length section heading goes here
           </h1>
           <p>
@@ -20,7 +20,9 @@ const Hero = () => {
             vitae erat.
           </p>
           <Button
-            className={cn("border-primary rounded-xl text-primary")}
+            className={cn(
+              "border-primary rounded-xl text-primary hover:text-[#FF267C] hover:ring-1 ring-primary"
+            )}
             variant={"outline"}
           >
             Read more

@@ -35,10 +35,26 @@ const Testimonials = () => {
           </div>
           <div className="flex space-x-2 justify-center md:justify-start items-center">
             <Button className={cn("rounded-full h-2 p-0 w-2 bg-black")} />
-            <Button className={cn("rounded-full h-2 p-0 w-2 bg-[#8D8D8D]")} />
-            <Button className={cn("rounded-full h-2 p-0 w-2 bg-[#8D8D8D]")} />
-            <Button className={cn("rounded-full h-2 p-0 w-2 bg-[#8D8D8D]")} />
-            <Button className={cn("rounded-full h-2 p-0 w-2 bg-[#8D8D8D]")} />
+            <Button
+              className={cn(
+                "rounded-full h-2 p-0 w-2 hover:bg-black bg-[#8D8D8D]"
+              )}
+            />
+            <Button
+              className={cn(
+                "rounded-full h-2 p-0 w-2 hover:bg-black bg-[#8D8D8D]"
+              )}
+            />
+            <Button
+              className={cn(
+                "rounded-full h-2 p-0 w-2 hover:bg-black bg-[#8D8D8D]"
+              )}
+            />
+            <Button
+              className={cn(
+                "rounded-full h-2 p-0 w-2 hover:bg-black bg-[#8D8D8D]"
+              )}
+            />
           </div>
         </div>
       </div>
