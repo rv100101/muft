@@ -5,7 +5,7 @@ const Cta = () => {
   return (
     <div className="mx-8 lg:mx-36 mt-8 md:mt-12 lg:mt-64">
       <div className="grid lg:grid-cols-3 relative gap-4 py-14 md:py-28">
-        <div className="lg:block hidden w-full h-full">
+        <div className="lg:flex justify-end hidden w-full h-full">
           <img
             className="absolute -translate-y-72 "
             src={CtaPhone}

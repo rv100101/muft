@@ -50,30 +50,90 @@ const Hero = () => {
   }, [firstCurrentIndex, secondCurrentIndex]);
 
   return (
-    <motion.div className="bg-secondaryBackground py-6 md:py-12 px-[30px] md:px-[60px] rounded-3xl">
+    <motion.div
+      initial={{
+        scale: 0,
+      }}
+      whileInView={{
+        scale: 1,
+      }}
+      transition={{
+        delay: 1.5,
+      }}
+      viewport={{ once: true }}
+      className="bg-secondaryBackground py-6 md:py-12 px-[30px] md:px-[60px] rounded-3xl"
+    >
       <div className="grid grid-cols-1 md:grid-rows-1 rows-auto md:grid-cols-2 md:gap-2">
         <div className="relative space-y-6 flex flex-col items-start lg:justify-center">
           <div className="h-56 absolute rounded-full w-56 bg-[#FFDEEB] lg:-translate-y-36 lg:-translate-x-8 blur-2xl"></div>
-          <h1 className="z-20 text-3xl md:text-4xl font-semibold text-secondary">
+          <motion.h1
+            initial={{
+              scale: 0,
+            }}
+            whileInView={{
+              scale: 1,
+            }}
+            transition={{
+              delay: 2,
+            }}
+            viewport={{ once: true }}
+            className="z-20 text-3xl md:text-4xl font-semibold text-secondary"
+          >
             Medium length section heading goes here
-          </h1>
-          <p className="z-20">
+          </motion.h1>
+          <motion.p
+            initial={{
+              scale: 0,
+            }}
+            whileInView={{
+              scale: 1,
+            }}
+            transition={{
+              delay: 2.5,
+            }}
+            viewport={{ once: true }}
+            className="z-20"
+          >
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
             varius enim in eros elementum tristique. Duis cursus, mi quis
             viverra ornare, eros dolor interdum nulla, ut commodo diam libero
             vitae erat.
-          </p>
-          <Button
-            className={cn(
-              "border-primary rounded-xl text-primary hover:text-[#FF267C] hover:ring-1 ring-primary"
-            )}
-            variant={"outline"}
+          </motion.p>
+          <motion.div
+            initial={{
+              scale: 0,
+            }}
+            whileInView={{
+              scale: 1,
+            }}
+            transition={{
+              delay: 2.5,
+            }}
           >
-            Read more
-          </Button>
+            <Button
+              className={cn(
+                "border-primary rounded-xl text-primary hover:text-[#FF267C] hover:ring-1 ring-primary"
+              )}
+              variant={"outline"}
+            >
+              Read more
+            </Button>
+          </motion.div>
         </div>
         <div className="flex justify-center md:justify-end items-center relative">
-          <img src={heroPhone} alt="hero phone image" />
+          <motion.img
+            initial={{
+              scale: 0,
+            }}
+            whileInView={{
+              scale: 1,
+            }}
+            transition={{
+              delay: 2.5,
+            }}
+            src={heroPhone}
+            alt="hero phone image"
+          />
           <ChatCard
             className="absolute flex items-start md:w-full w-48 -translate-x-12 -translate-y-12 md:-translate-x-1  md:-translate-y-16"
             text={firstTypedText}
@@ -81,7 +141,7 @@ const Hero = () => {
             avatarFirst={true}
             name="Daryl"
             time="05:16 AM"
-            borderRadius="rounded-tr-xl rounded-br-xl shadow-xl"
+            borderRadius="rounded-tr-xl rounded-br-xl rounded-bl-xl shadow-xl"
           />
           {firstCurrentIndex >= firstTextToType.length && (
             <ChatCard
