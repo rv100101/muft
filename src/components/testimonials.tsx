@@ -11,7 +11,7 @@ const Testimonials = () => {
         </div>
 
         <div className="space-y-4 col-span-2 text-secondary">
-          <p className="font-bold text-4xl mt-12 text-secondary text-center md:text-left">
+          <p className="font-bold text-3xl md:text-4xl mt-12 text-secondary text-center md:text-left">
             Customer testimonials
           </p>
           <p className="text-center md:text-left">
