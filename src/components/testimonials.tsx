@@ -7,7 +7,11 @@ const Testimonials = () => {
     <section className="mt-8 md:mt-12">
       <div className="grid md:grid-cols-3 relative gap-4">
         <div className="hidden relative md:flex md:flex-col">
-          <img className="absolute flex" src={OkPhone} alt="ok illustration" />
+          <img
+            className="absolute flex md:w-48 lg:w-full"
+            src={OkPhone}
+            alt="ok illustration"
+          />
         </div>
 
         <div className="space-y-4 col-span-2 text-secondary">

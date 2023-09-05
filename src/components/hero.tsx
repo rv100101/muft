@@ -26,7 +26,7 @@ const Hero = () => {
       } else {
         clearInterval(firstTypingInterval);
       }
-    }, 45);
+    }, 50);
 
     const secondTypingInterval = setInterval(() => {
       if (
@@ -40,7 +40,7 @@ const Hero = () => {
       } else {
         clearInterval(secondTypingInterval);
       }
-    }, 45);
+    }, 50);
 
     return () => {
       clearInterval(firstTypingInterval);
@@ -49,9 +49,9 @@ const Hero = () => {
   }, [firstCurrentIndex, secondCurrentIndex]);
 
   return (
-    <div className="bg-secondaryBackground py-6 md:py-12 px-[30px] md:px-[60px] rounded-3xl">
-      <div className="grid grid-cols-1 grid-rows-2 md:grid-rows-1 md:grid-cols-2">
-        <div className="space-y-6 flex flex-col items-start justify-center">
+    <motion.div className="bg-secondaryBackground py-6 md:py-12 px-[30px] md:px-[60px] rounded-3xl">
+      <div className="grid grid-cols-1 md:grid-rows-1 rows-auto md:grid-cols-2 md:gap-2">
+        <div className="space-y-6 flex flex-col items-start lg:justify-center">
           <h1 className="text-3xl md:text-4xl font-semibold text-secondary">
             Medium length section heading goes here
           </h1>
@@ -70,16 +70,16 @@ const Hero = () => {
             Read more
           </Button>
         </div>
-        <div className="flex justify-end items-center relative h-full w-full">
+        <div className="flex justify-center md:justify-end items-center relative">
           <img src={heroPhone} alt="hero phone image" />
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
-            className="absolute flex space-x-4 items-start -translate-y-24 md:-translate-y-32 md:-translate-x-24"
+            className="absolute flex space-x-4 items-start w-48 -translate-x-12 md:-translate-x-1 md:w-full md:-translate-y-32"
           >
             <img width={36} src={heroAvatar1} alt="user avatar 1" />
-            <p className="text-xs w-64 bg-white p-2 rounded-lg font-normal">
+            <p className="text-xs w-64 bg-white p-2 rounded-lg font-normal truncate md:h-max md:whitespace-normal">
               {firstTypedText}
             </p>
           </motion.div>
@@ -88,9 +88,9 @@ const Hero = () => {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
-              className="h-12 md:h-max absolute flex space-x-4 items-start translate-y-12 md:translate-y-36 md:translate-x-6"
+              className="h-12 w-48 md:w-full md:h-max absolute flex space-x-4 items-start translate-y-12 md:translate-y-36 translate-x-12 md:translate-x-6"
             >
-              <p className="text-xs md:h-max w-64 bg-blue-600 p-2 text-white rounded-lg font-extralight truncate md:whitespace-normal">
+              <p className="text-xs w-64 bg-blue-600 p-2 text-white rounded-lg font-extralight truncate md:h-max  md:whitespace-normal">
                 {secondTypedText}
               </p>
               <img width={36} src={heroAvatar2} alt="user avatar 2" />
@@ -98,7 +98,7 @@ const Hero = () => {
           )}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

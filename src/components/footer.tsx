@@ -3,7 +3,7 @@ import { Button } from "./ui/button";
 import { Facebook, Instagram, Twitter, Linkedin } from "lucide-react";
 const Footer = () => {
   return (
-    <div className="mx-8 md:mx-[200px] py-8 md:py-32 space-y-4 ">
+    <div className="mx-8 lg:mx-[200px] py-8 md:py-32 space-y-4 ">
       <div className="flex justify-center md:justify-start">
         <img src={LogoWhite} alt="white muffin logo" />
       </div>
