@@ -1,11 +1,17 @@
 import GooglePlay from "@/assets/google-play.svg";
 import AppStore from "@/assets/app-store.svg";
-
+import CtaPhone from "@/assets/cta-phone.png";
 const Cta = () => {
   return (
-    <div className="mx-8 lg:mx-[200px] mt-8 md:mt-12">
+    <div className="mx-8 lg:mx-[200px] mt-8 md:mt-12 lg:mt-64">
       <div className="grid lg:grid-cols-3 relative gap-4 py-14 md:py-28">
-        <div className="w-full h-full" />
+        <div className="lg:block hidden w-full h-full">
+          <img
+            className="absolute -translate-y-72 "
+            src={CtaPhone}
+            alt="phone"
+          />
+        </div>
         <div className="space-y-4 col-span-2 text-secondary">
           <p className="text-4xl font-semibold text-white">
             Short CTA goes here
