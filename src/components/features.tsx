@@ -9,13 +9,35 @@ import BottomNav from "@/assets/features_section/bottom-nav.png";
 import AddToStory from "@/assets/features_section/add-to-story.png";
 
 import { motion } from "framer-motion";
-const container = {
+const imageContainer = {
   hidden: { opacity: 0 },
   whileInView: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1,
+      staggerChildren: 0.3,
       delayChildren: 1,
+    },
+  },
+};
+
+const leftFeatureDescriptionsContainer = {
+  hidden: { opacity: 0 },
+  whileInView: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.5,
+      delayChildren: 1,
+    },
+  },
+};
+
+const rightFeatureDescriptionsContainer = {
+  hidden: { opacity: 0 },
+  whileInView: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.5,
+      delayChildren: 2,
     },
   },
 };
@@ -35,20 +57,29 @@ const Features = () => {
       className="mt-12"
     >
       <div className="grid md:grid-cols-3 gap-4 md:gap-12 h-max w-full">
-        <div className="space-y-8 flex flex-col justify-start">
-          <FeatureCard
-            title="Describe feature one"
-            description="Highlight Unique Selling Propositions with a short summary of the key feature and how it benefits customers."
-            img={FeatureIcone1}
-          />
-          <FeatureCard
-            title="Describe feature two"
-            description="Highlight Unique Selling Propositions with a short summary of the key feature and how it benefits customers."
-            img={FeatureIcone2}
-          />
-        </div>
         <motion.div
-          variants={container}
+          variants={leftFeatureDescriptionsContainer}
+          initial="hidden"
+          animate="whileInView"
+          className="space-y-8 flex flex-col justify-start"
+        >
+          <motion.div variants={itemA}>
+            <FeatureCard
+              title="Describe feature one"
+              description="Highlight Unique Selling Propositions with a short summary of the key feature and how it benefits customers."
+              img={FeatureIcone1}
+            />
+          </motion.div>
+          <motion.div variants={itemA}>
+            <FeatureCard
+              title="Describe feature two"
+              description="Highlight Unique Selling Propositions with a short summary of the key feature and how it benefits customers."
+              img={FeatureIcone2}
+            />
+          </motion.div>
+        </motion.div>
+        <motion.div
+          variants={imageContainer}
           initial="hidden"
           animate="whileInView"
           className="md:justify-center md:items-center relative md:flex hidden"
@@ -73,18 +104,27 @@ const Features = () => {
             alt="Add to story image"
           />
         </motion.div>
-        <div className="space-y-8 flex flex-col justify-end">
-          <FeatureCard
-            title="Describe feature three"
-            description="Highlight Unique Selling Propositions with a short summary of the key feature and how it benefits customers."
-            img={FeatureIcone3}
-          />
-          <FeatureCard
-            title="Describe feature four"
-            description="Highlight Unique Selling Propositions with a short summary of the key feature and how it benefits customers."
-            img={FeatureIcone4}
-          />
-        </div>
+        <motion.div
+          variants={rightFeatureDescriptionsContainer}
+          initial="hidden"
+          animate="whileInView"
+          className="space-y-8 flex flex-col justify-end"
+        >
+          <motion.div variants={itemA}>
+            <FeatureCard
+              title="Describe feature three"
+              description="Highlight Unique Selling Propositions with a short summary of the key feature and how it benefits customers."
+              img={FeatureIcone3}
+            />
+          </motion.div>
+          <motion.div variants={itemA}>
+            <FeatureCard
+              title="Describe feature four"
+              description="Highlight Unique Selling Propositions with a short summary of the key feature and how it benefits customers."
+              img={FeatureIcone4}
+            />
+          </motion.div>
+        </motion.div>
       </div>
     </motion.section>
   );

@@ -65,7 +65,19 @@ const Hero = () => {
     >
       <div className="grid grid-cols-1 md:grid-rows-1 rows-auto md:grid-cols-2 md:gap-2">
         <div className="relative space-y-6 flex flex-col items-start lg:justify-center">
-          <div className="h-56 absolute rounded-full w-56 bg-[#FFDEEB] lg:-translate-y-36 lg:-translate-x-8 blur-2xl"></div>
+          <motion.div
+            initial={{
+              opacity: 0,
+            }}
+            whileInView={{
+              opacity: 1,
+            }}
+            transition={{
+              delay: 3,
+            }}
+            viewport={{ once: true }}
+            className="h-56 absolute rounded-full w-56 bg-[#FFDEEB] lg:-translate-y-36 lg:-translate-x-8 blur-2xl"
+          />
           <motion.h1
             initial={{
               scale: 0,
