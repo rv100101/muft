@@ -54,7 +54,7 @@ const Features = () => {
         <motion.div
           variants={leftFeatureDescriptionsContainer}
           initial="hidden"
-          animate="whileInView"
+          whileInView="whileInView"
           className="space-y-8 flex flex-col justify-start"
         >
           <motion.div variants={itemA}>
@@ -75,7 +75,7 @@ const Features = () => {
         <motion.div
           variants={imageContainer}
           initial="hidden"
-          animate="whileInView"
+          whileInView="whileInView"
           className="md:justify-center md:items-center relative md:flex hidden"
         >
           <motion.img variants={itemA} src={PinkBg} alt="pink-vector" />
@@ -101,7 +101,7 @@ const Features = () => {
         <motion.div
           variants={rightFeatureDescriptionsContainer}
           initial="hidden"
-          animate="whileInView"
+          whileInView="whileInView"
           className="space-y-8 flex flex-col justify-end"
         >
           <motion.div variants={itemA}>

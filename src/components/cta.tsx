@@ -1,18 +1,48 @@
 import GooglePlay from "@/assets/google-play.svg";
 import AppStore from "@/assets/app-store.svg";
 import CtaPhone from "@/assets/cta-phone.png";
+import { motion } from "framer-motion";
+
+const staggerMotion = {
+  hidden: { opacity: 0 },
+  whileInView: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.3,
+      delayChildren: 1,
+    },
+  },
+};
+
+const child = {
+  hidden: { opacity: 0 },
+  whileInView: { opacity: 1 },
+};
+
 const Cta = () => {
   return (
-    <div className="mx-8 lg:mx-36 mt-8 md:mt-12 lg:mt-64">
-      <div className="grid lg:grid-cols-3 relative gap-4 py-14 md:py-28">
-        <div className="lg:flex justify-end hidden w-full h-full">
+    <motion.div className="mx-8 lg:mx-36 mt-8 md:mt-12 lg:mt-64">
+      <motion.div
+        variants={staggerMotion}
+        viewport={{ once: true }}
+        initial="hidden"
+        whileInView="whileInView"
+        className="grid lg:grid-cols-3 relative gap-4 py-14 md:py-28"
+      >
+        <motion.div
+          variants={child}
+          className="lg:flex justify-end hidden w-full h-full"
+        >
           <img
             className="absolute -translate-y-72 "
             src={CtaPhone}
             alt="phone"
           />
-        </div>
-        <div className="space-y-4 col-span-2 text-secondary">
+        </motion.div>
+        <motion.div
+          variants={child}
+          className="space-y-4 col-span-2 text-secondary"
+        >
           <p className="text-4xl font-semibold text-white">
             Short CTA goes here
           </p>
@@ -22,17 +52,17 @@ const Cta = () => {
             viverra ornare, eros dolor interdum nulla, ut commodo diam libero
             vitae erat.
           </p>
-          <div className="flex space-x-4">
+          <motion.div variants={child} className="flex space-x-4">
             <a href="https://play.google.com/store/apps" target="_blank">
               <img width={170} src={GooglePlay} alt="google play" />
             </a>
             <a href="https://www.apple.com/app-store/" target="_blank">
               <img width={160} src={AppStore} alt="app store" />
             </a>
-          </div>
-        </div>
-      </div>
-    </div>
+          </motion.div>
+        </motion.div>
+      </motion.div>
+    </motion.div>
   );
 };
 
