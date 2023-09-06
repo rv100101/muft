@@ -50,11 +50,15 @@ const itemA = {
 const Features = () => {
   return (
     <section className="mt-12">
-      <div className="grid md:grid-cols-3 gap-4 md:gap-12 h-max w-full">
+      <motion.div
+        viewport={{ once: true }}
+        className="grid md:grid-cols-3 gap-4 md:gap-12 h-max w-full"
+      >
         <motion.div
           variants={leftFeatureDescriptionsContainer}
           initial="hidden"
           whileInView="whileInView"
+          viewport={{ once: true }}
           className="space-y-8 flex flex-col justify-start"
         >
           <motion.div variants={itemA}>
@@ -76,6 +80,7 @@ const Features = () => {
           variants={imageContainer}
           initial="hidden"
           whileInView="whileInView"
+          viewport={{ once: true }}
           className="md:justify-center md:items-center relative md:flex hidden"
         >
           <motion.img variants={itemA} src={PinkBg} alt="pink-vector" />
@@ -102,6 +107,7 @@ const Features = () => {
           variants={rightFeatureDescriptionsContainer}
           initial="hidden"
           whileInView="whileInView"
+          viewport={{ once: true }}
           className="space-y-8 flex flex-col justify-end"
         >
           <motion.div variants={itemA}>
@@ -119,7 +125,7 @@ const Features = () => {
             />
           </motion.div>
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 };
