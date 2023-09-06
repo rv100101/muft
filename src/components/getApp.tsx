@@ -21,14 +21,16 @@ const GetApp = () => {
         <div className="flex group-hover:flex-col space-x-2 group-hover:space-x-0 group-hover:space-y-1 hover:space-y-1 text-xs text-black font-semibold">
           <a
             className="hover:transition delay-100 w-full hover:bg-black hover:text-white group-hover:p-2 group-hover:py-1 border-black flex items-center justify-between group-hover:border-2 rounded-md"
-            href="/"
+            href="https://play.google.com/"
+            target="_blank"
           >
             <img className="w-4 h-4" src={GooglePlay} alt="google play logo" />
             {isHovered && <p>Google Play</p>}
           </a>
           <a
             className="hover:transition delay-100 w-full hover:bg-slate-200 hover:text-black group-hover:p-2 group-hover:py-1 border-black flex items-center justify-between group-hover:border-2 rounded-md"
-            href="/"
+            href="https://www.apple.com/"
+            target="_blank"
           >
             <img className="w-4 " src={Apple} alt="apple logo" />
             {isHovered && <p>App Store</p>}

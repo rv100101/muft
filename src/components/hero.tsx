@@ -124,7 +124,8 @@ const Hero = () => {
           >
             <a
               className="w-max text-xs space-x-2 bg-black text-white px-2 py-1 border-black flex items-center justify-between border rounded-md"
-              href="/"
+              href="https://play.google.com"
+              target="_blank"
             >
               <img
                 className="w-4 h-4"
@@ -135,7 +136,8 @@ const Hero = () => {
             </a>
             <a
               className="w-max space-x-2 text-xs bg-slate-200 text-black p-2 py-1 border-black flex items-center justify-between border rounded-md"
-              href="/"
+              href="https://www.apple.com"
+              target="_blank"
             >
               <img className="w-4 " src={Apple} alt="apple logo" />
               <p>App Store</p>
