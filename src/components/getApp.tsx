@@ -16,7 +16,7 @@ const GetApp = () => {
         className="overflow-hidden hover:transition-all delay-50 duration-200 h-12 hover:h-28 hover:space-y-4 group hover:flex-col w-32 fixed bottom-8 bg-white py-2 px-2 hover:space-x-0 flex justify-around items-center border-black border border-r-0 rounded-l-lg"
       >
         <p className="font-bold text-xs text-[#1B2950] mr-2">GET APP</p>
-        <div className="flex group-hover:flex-col space-x-2 group-hover:space-x-0 hover:space-y-1 text-xs text-black font-semibold">
+        <div className="flex group-hover:flex-col space-x-2 group-hover:space-x-0 group-hover:space-y-1 hover:space-y-1 text-xs text-black font-semibold">
           <a
             className="hover:transition delay-100 w-full hover:bg-black hover:text-white group-hover:p-2 group-hover:py-1 border-black flex items-center justify-between group-hover:border-2 rounded-md"
             href="/"
