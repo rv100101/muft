@@ -120,7 +120,7 @@ const Hero = () => {
               delay: 2.5,
             }}
             viewport={{ once: true }}
-            className="flex space-x-4"
+            className="z-20 flex space-x-4"
           >
             <a
               className="w-max text-xs space-x-2 bg-black text-white px-2 py-1 border-black flex items-center justify-between border rounded-md"
