@@ -1,14 +1,12 @@
 import FeatureCard from "./featureCard";
-import FeatureIcone1 from "@/assets/feature-icon-1.svg";
-import FeatureIcone2 from "@/assets/feature-icon-2.svg";
-import FeatureIcone3 from "@/assets/feature-icon-3.svg";
-import FeatureIcone4 from "@/assets/feature-icon-4.svg";
+
 import PinkBg from "@/assets/features_section/pink-bg.svg";
 import Phone from "@/assets/features_section/phone.png";
 import BottomNav from "@/assets/features_section/bottom-nav.png";
 import AddToStory from "@/assets/features_section/add-to-story.png";
-
 import { motion } from "framer-motion";
+import { features } from "@/utils/homepage";
+
 const imageContainer = {
   hidden: { opacity: 0 },
   whileInView: {
@@ -48,6 +46,18 @@ const itemA = {
 };
 
 const Features = () => {
+  const featureComponents = features.data.map((feature) => {
+    return (
+      <motion.div variants={itemA}>
+        <FeatureCard
+          title={feature.title}
+          description={feature.description}
+          img={feature.icon}
+        />
+      </motion.div>
+    );
+  });
+
   return (
     <section className="mt-12">
       <motion.div
@@ -61,20 +71,8 @@ const Features = () => {
           viewport={{ once: true }}
           className="space-y-8 flex flex-col justify-start"
         >
-          <motion.div variants={itemA}>
-            <FeatureCard
-              title="Describe feature one"
-              description="Highlight Unique Selling Propositions with a short summary of the key feature and how it benefits customers."
-              img={FeatureIcone1}
-            />
-          </motion.div>
-          <motion.div variants={itemA}>
-            <FeatureCard
-              title="Describe feature two"
-              description="Highlight Unique Selling Propositions with a short summary of the key feature and how it benefits customers."
-              img={FeatureIcone2}
-            />
-          </motion.div>
+          {featureComponents[0]}
+          {featureComponents[1]}
         </motion.div>
         <motion.div
           variants={imageContainer}
@@ -110,20 +108,8 @@ const Features = () => {
           viewport={{ once: true }}
           className="space-y-8 flex flex-col justify-end"
         >
-          <motion.div variants={itemA}>
-            <FeatureCard
-              title="Describe feature three"
-              description="Highlight Unique Selling Propositions with a short summary of the key feature and how it benefits customers."
-              img={FeatureIcone3}
-            />
-          </motion.div>
-          <motion.div variants={itemA}>
-            <FeatureCard
-              title="Describe feature four"
-              description="Highlight Unique Selling Propositions with a short summary of the key feature and how it benefits customers."
-              img={FeatureIcone4}
-            />
-          </motion.div>
+          {featureComponents[2]}
+          {featureComponents[3]}
         </motion.div>
       </motion.div>
     </section>

@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { features } from "@/utils/homepage";
 
 const Benefits = () => {
   return (
@@ -10,7 +11,7 @@ const Benefits = () => {
         viewport={{ once: true }}
         className="font-semibold text-2xl md:text-4xl text-secondary text-center"
       >
-        Short headline about the benefit of using your product or service
+        {features.header}
       </motion.p>
       <motion.p
         initial={{ opacity: 0 }}
@@ -19,10 +20,7 @@ const Benefits = () => {
         transition={{ delay: 1 }}
         className="text-center text-secondary text-sm md:px-32"
       >
-        Highlight the Unique Selling Proposition (USP) with a short summary of
-        the main feature and how it benefits customers. The idea here is to keep
-        it short and direct. If the visitor wishes to learn more they will hit
-        the button.
+        {features.description}
       </motion.p>
     </div>
   );
