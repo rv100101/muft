@@ -1,11 +1,12 @@
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
 import heroPhone from "@/assets/hero-phone.png";
 import heroAvatar1 from "@/assets/hero-avatar1.svg";
 import heroAvatar2 from "@/assets/hero-avatar2.svg";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import ChatCard from "./chatCard";
+import { banner } from "@/utils/homepage";
+import GooglePlay from "@/assets/google-play-logo.png";
+import Apple from "@/assets/apple-logo.png";
 
 const Hero = () => {
   const firstTextToType =
@@ -91,7 +92,7 @@ const Hero = () => {
             viewport={{ once: true }}
             className="z-20 text-3xl md:text-4xl font-semibold text-secondary"
           >
-            Medium length section heading goes here
+            {banner.header}
           </motion.h1>
           <motion.p
             initial={{
@@ -106,10 +107,7 @@ const Hero = () => {
             viewport={{ once: true }}
             className="z-20"
           >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            varius enim in eros elementum tristique. Duis cursus, mi quis
-            viverra ornare, eros dolor interdum nulla, ut commodo diam libero
-            vitae erat.
+            {banner.body}
           </motion.p>
           <motion.div
             initial={{
@@ -122,15 +120,26 @@ const Hero = () => {
               delay: 2.5,
             }}
             viewport={{ once: true }}
+            className="flex space-x-4"
           >
-            <Button
-              className={cn(
-                "border-primary rounded-xl text-primary hover:text-[#FF267C] hover:ring-1 ring-primary"
-              )}
-              variant={"outline"}
+            <a
+              className="w-max text-xs space-x-2 bg-black text-white px-2 py-1 border-black flex items-center justify-between border rounded-md"
+              href="/"
             >
-              Read more
-            </Button>
+              <img
+                className="w-4 h-4"
+                src={GooglePlay}
+                alt="google play logo"
+              />
+              <p>Google Play</p>
+            </a>
+            <a
+              className="w-max space-x-2 text-xs bg-slate-200 text-black p-2 py-1 border-black flex items-center justify-between border rounded-md"
+              href="/"
+            >
+              <img className="w-4 " src={Apple} alt="apple logo" />
+              <p>App Store</p>
+            </a>
           </motion.div>
         </div>
         <div className="flex justify-center md:justify-end items-center relative">
