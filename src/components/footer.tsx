@@ -1,15 +1,23 @@
 import LogoWhite from "@/assets/logo-white.svg";
-import { Button } from "./ui/button";
-import { Facebook, Instagram, Twitter, Linkedin } from "lucide-react";
+// import { Button } from "./ui/button";
+// import { Facebook, Instagram, Twitter, Linkedin } from "lucide-react";
+import { Mail } from "lucide-react";
 const Footer = () => {
   return (
     <div className="mx-8 lg:mx-36 py-8 md:py-32 space-y-4 ">
-      <div className="flex justify-center md:justify-start">
-        <img src={LogoWhite} alt="white muffin logo" />
-      </div>
       <nav className="flex flex-col space-y-4 md:space-y-0 md:flex-row justify-between">
-        <div className="flex flex-wrap space-x-2 md:space-x-4 hover">
-          <Button
+        <div className="flex justify-center md:justify-start">
+          <img src={LogoWhite} alt="white muffin logo" />
+        </div>
+        <div className="flex justify-between items-center flex-wrap space-x-2 md:space-x-4 hover">
+          <a
+            className="flex space-x-2 hover:bg-transparent hover:text-slate-400 p-0 font-light text-white"
+            href="https://support.softnames.com/"
+          >
+            <p>Contact Us</p>
+            <Mail />
+          </a>
+          {/* <Button
             className="hover:bg-transparent hover:text-slate-400 p-0 font-light text-white"
             variant={"ghost"}
           >
@@ -38,9 +46,9 @@ const Footer = () => {
             variant={"ghost"}
           >
             Link Five
-          </Button>
+          </Button> */}
         </div>
-        <div className="flex space-x-4 justify-evenly items-center">
+        {/* <div className="flex space-x-4 justify-evenly items-center">
           <a href="/" color="white" className="text-white hover:text-slate-400">
             <Facebook />
           </a>
@@ -53,25 +61,34 @@ const Footer = () => {
           <a href="/" color="white" className="text-white hover:text-slate-400">
             <Linkedin />
           </a>
-        </div>
+        </div> */}
       </nav>
       <hr />
       <div className="flex justify-between text-white">
         <p className="hidden md:block">© 2023 Relume. All rights reserved.</p>
         <ul className="flex list-none space-x-4 underline text-xs md:text-md">
           <li>
-            <a href="/" className="hover:text-slate-400">
+            <a
+              href="https://www.getmuffin.app/Privacy"
+              className="hover:text-slate-400"
+            >
               Privacy Policy
             </a>
           </li>
           <li>
-            <a href="/" className="hover:text-slate-400">
+            <a
+              href="https://www.getmuffin.app/Terms"
+              className="hover:text-slate-400"
+            >
               Terms of Service
             </a>
           </li>
           <li>
-            <a href="/" className="hover:text-slate-400">
-              Cookies Settings
+            <a
+              href="https://www.getmuffin.app/ReleaseNotes"
+              className="hover:text-slate-400"
+            >
+              Release Notes
             </a>
           </li>
         </ul>

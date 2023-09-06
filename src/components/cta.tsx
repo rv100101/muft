@@ -2,7 +2,7 @@ import GooglePlay from "@/assets/google-play.svg";
 import AppStore from "@/assets/app-store.svg";
 import CtaPhone from "@/assets/cta-phone.png";
 import { motion } from "framer-motion";
-
+import { callToAction } from "@/utils/homepage";
 const staggerMotion = {
   hidden: { opacity: 0 },
   whileInView: {
@@ -44,14 +44,9 @@ const Cta = () => {
           className="space-y-4 col-span-2 text-secondary"
         >
           <p className="text-4xl font-semibold text-white">
-            Short CTA goes here
+            {callToAction.header}
           </p>
-          <p className="text-white font-light">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            varius enim in eros elementum tristique. Duis cursus, mi quis
-            viverra ornare, eros dolor interdum nulla, ut commodo diam libero
-            vitae erat.
-          </p>
+          <p className="text-white font-light">{callToAction.description}</p>
           <motion.div variants={child} className="flex space-x-4">
             <a href="https://play.google.com/store/apps" target="_blank">
               <img width={170} src={GooglePlay} alt="google play" />

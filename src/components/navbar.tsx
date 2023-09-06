@@ -24,12 +24,12 @@ const container = {
   },
 };
 
-const itemA = {
-  hidden: { scale: 0, top: 100 },
-  show: { scale: 1, top: 30 },
-};
+// const itemA = {
+//   hidden: { scale: 0, top: 100 },
+//   show: { scale: 1, top: 30 },
+// };
 
-const itemB = {
+const motionTop80 = {
   hidden: { scale: 0, top: 200 },
   show: { scale: 1, top: 80 },
 };
@@ -52,12 +52,12 @@ function NavBar() {
         animate="show"
         className="space-x-4 hidden md:flex"
       >
-        <motion.li variants={itemA}>
+        {/* <motion.li variants={itemA}>
           <Button variant={"ghost"} className="font-light">
             Link One
           </Button>
         </motion.li>
-        <motion.li variants={itemB}>
+        <motion.li variants={motionTop80}>
           <Button variant={"ghost"} className="font-light">
             Link Two
           </Button>
@@ -66,8 +66,13 @@ function NavBar() {
           <Button variant={"ghost"} className="font-light">
             Link Three
           </Button>
+        </motion.li> */}
+        <motion.li variants={motionTop80}>
+          <Button variant={"ghost"} className="font-light">
+            <a href="https://support.softnames.com/">Contact Us</a>
+          </Button>
         </motion.li>
-        <motion.li variants={itemB}>
+        <motion.li variants={motionTop80}>
           <Button
             className={cn(
               "rounded-[100px] hover:bg-[#d86392]",
