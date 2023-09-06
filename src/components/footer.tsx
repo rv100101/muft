@@ -5,11 +5,11 @@ import { Mail } from "lucide-react";
 const Footer = () => {
   return (
     <div className="mx-8 lg:mx-36 py-8 md:py-32 space-y-4 ">
-      <nav className="flex flex-col space-y-4 md:space-y-0 md:flex-row justify-between">
+      <nav className="flex flex-row space-y-4 md:space-y-0 md:flex-row justify-between">
         <div className="flex justify-center md:justify-start">
           <img src={LogoWhite} alt="white muffin logo" />
         </div>
-        <div className="flex justify-between items-center flex-wrap space-x-2 md:space-x-4 hover">
+        <div className="flex justify-center items-center space-x-2 md:space-x-4 hover">
           <a
             className="flex space-x-2 hover:bg-transparent hover:text-slate-400 p-0 font-light text-white"
             href="https://support.softnames.com/"
@@ -65,7 +65,9 @@ const Footer = () => {
       </nav>
       <hr />
       <div className="flex justify-between text-white">
-        <p className="hidden md:block">© 2023 Relume. All rights reserved.</p>
+        <p className="hidden md:block text-xs">
+          &copy; 2023 Softnames. All Right Reserved.
+        </p>
         <ul className="flex list-none space-x-4 underline text-xs md:text-md">
           <li>
             <a

@@ -90,12 +90,12 @@ function NavBar() {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-48">
-          <DropdownMenuLabel>Links</DropdownMenuLabel>
+          <DropdownMenuLabel>Muffin</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
-            <DropdownMenuItem>Link 1</DropdownMenuItem>
-            <DropdownMenuItem>Link 2</DropdownMenuItem>
-            <DropdownMenuItem>Link 3</DropdownMenuItem>
+            <DropdownMenuItem>
+              <a href="https://support.softnames.com/">Contact Us</a>
+            </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
           <DropdownMenuItem
