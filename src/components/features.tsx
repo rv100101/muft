@@ -49,13 +49,7 @@ const itemA = {
 
 const Features = () => {
   return (
-    <motion.section
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      transition={{ delay: 0.5 }}
-      viewport={{ once: true }}
-      className="mt-12"
-    >
+    <section className="mt-12">
       <div className="grid md:grid-cols-3 gap-4 md:gap-12 h-max w-full">
         <motion.div
           variants={leftFeatureDescriptionsContainer}
@@ -126,7 +120,7 @@ const Features = () => {
           </motion.div>
         </motion.div>
       </div>
-    </motion.section>
+    </section>
   );
 };
 
