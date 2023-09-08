@@ -2,6 +2,12 @@ import LogoWhite from "@/assets/logo-white.svg";
 import { Mail } from "lucide-react";
 import { Link } from "wouter";
 const Footer = () => {
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
   return (
     <div className="mx-8 lg:mx-36 py-8 md:py-32 space-y-4 ">
       <nav className="flex flex-row md:space-y-0 md:flex-row justify-between">
@@ -29,17 +35,17 @@ const Footer = () => {
         </p>
         <ul className="flex list-none space-x-4 underline text-xs md:text-md">
           <li>
-            <Link href="/privacy-policy">
+            <Link onClick={scrollToTop} href="/privacy-policy">
               <a className="hover:text-slate-400">Privacy Policy</a>
             </Link>
           </li>
           <li>
-            <Link href="/terms">
+            <Link onClick={scrollToTop} href="/terms">
               <a className="hover:text-slate-400">Terms of Service</a>
             </Link>
           </li>
           <li>
-            <Link href="/release-notes">
+            <Link onClick={scrollToTop} href="/release-notes">
               <a className="hover:text-slate-400">Release Notes</a>
             </Link>
           </li>
