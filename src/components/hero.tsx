@@ -10,9 +10,9 @@ import AppStore from "@/assets/app-store.svg";
 
 const Hero = () => {
   const firstTextToType =
-    "Hey, Lorem ipsum dolor sit amet, consectetur adipiscing elit, seddo eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+    "What was it about my profile that caught your attention and made flirt?";
   const secondTextToType =
-    " Hey, Lorem ipsum dolor sit amet truy, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.";
+    "Your captivating smile drew me in, and your intriguing interests made me want to flirt.";
   const [firstTypedText, setFirstTypedText] = useState("");
   const [secondTypedText, setSecondTypedText] = useState("");
   const [firstCurrentIndex, setFirstCurrentIndex] = useState(0);
