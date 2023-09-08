@@ -5,8 +5,8 @@ import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import ChatCard from "./chatCard";
 import { banner } from "@/utils/homepage";
-import GooglePlay from "@/assets/google-play-logo.png";
-import Apple from "@/assets/apple-logo.png";
+import GooglePlay from "@/assets/google-play.svg";
+import AppStore from "@/assets/app-store.svg";
 
 const Hero = () => {
   const firstTextToType =
@@ -122,25 +122,11 @@ const Hero = () => {
             viewport={{ once: true }}
             className="flex space-x-4"
           >
-            <a
-              className="w-max text-xs space-x-2 bg-black text-white px-2 py-1 border-black flex items-center justify-between border rounded-md"
-              href="https://play.google.com"
-              target="_blank"
-            >
-              <img
-                className="w-4 h-4"
-                src={GooglePlay}
-                alt="google play logo"
-              />
-              <p>Google Play</p>
+            <a href="https://www.apple.com" target="_blank">
+              <img width={160} src={AppStore} alt="app store" />
             </a>
-            <a
-              className="w-max space-x-2 text-xs bg-slate-200 text-black p-2 py-1 border-black flex items-center justify-between border rounded-md"
-              href="https://www.apple.com"
-              target="_blank"
-            >
-              <img className="w-4 " src={Apple} alt="apple logo" />
-              <p>App Store</p>
+            <a href="https://play.google.com" target="_blank">
+              <img width={170} src={GooglePlay} alt="google play" />
             </a>
           </motion.div>
         </div>
