@@ -12,8 +12,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Menu } from "lucide-react";
 import { motion } from "framer-motion";
-
+import { useLocation } from "wouter";
 const container = {
+  none: { opacity: 1 },
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
@@ -24,21 +25,20 @@ const container = {
   },
 };
 
-// const itemA = {
-//   hidden: { scale: 0, top: 100 },
-//   show: { scale: 1, top: 30 },
-// };
-
 const motionTop80 = {
   hidden: { scale: 0, top: 200 },
   show: { scale: 1, top: 80 },
 };
 
 function NavBar() {
+  const [location] = useLocation();
+
   return (
     <motion.nav className="flex items-center justify-between my-4">
       <motion.a
-        initial={{ opacity: 0, scale: 0 }}
+        initial={
+          location == "/" ? { opacity: 0, scale: 0 } : { opacity: 1, scale: 1 }
+        }
         whileInView={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.5 }}
         viewport={{ once: true }}
@@ -48,25 +48,10 @@ function NavBar() {
       </motion.a>
       <motion.ul
         variants={container}
-        initial="hidden"
+        initial={location == "/" ? "hidden" : "none"}
         animate="show"
         className="space-x-4 hidden md:flex"
       >
-        {/* <motion.li variants={itemA}>
-          <Button variant={"ghost"} className="font-light">
-            Link One
-          </Button>
-        </motion.li>
-        <motion.li variants={motionTop80}>
-          <Button variant={"ghost"} className="font-light">
-            Link Two
-          </Button>
-        </motion.li>
-        <motion.li variants={itemA}>
-          <Button variant={"ghost"} className="font-light">
-            Link Three
-          </Button>
-        </motion.li> */}
         <motion.li variants={motionTop80}>
           <Button variant={"ghost"} className="font-light">
             <a href="https://support.softnames.com/">Contact Us</a>

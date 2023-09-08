@@ -1,7 +1,6 @@
 import LogoWhite from "@/assets/logo-white.svg";
-// import { Button } from "./ui/button";
-// import { Facebook, Instagram, Twitter, Linkedin } from "lucide-react";
 import { Mail } from "lucide-react";
+import { Link } from "wouter";
 const Footer = () => {
   return (
     <div className="mx-8 lg:mx-36 py-8 md:py-32 space-y-4 ">
@@ -30,28 +29,19 @@ const Footer = () => {
         </p>
         <ul className="flex list-none space-x-4 underline text-xs md:text-md">
           <li>
-            <a
-              href="https://www.getmuffin.app/Privacy"
-              className="hover:text-slate-400"
-            >
-              Privacy Policy
-            </a>
+            <Link href="/privacy-policy">
+              <a className="hover:text-slate-400">Privacy Policy</a>
+            </Link>
           </li>
           <li>
-            <a
-              href="https://www.getmuffin.app/Terms"
-              className="hover:text-slate-400"
-            >
-              Terms of Service
-            </a>
+            <Link href="/terms">
+              <a className="hover:text-slate-400">Terms of Service</a>
+            </Link>
           </li>
           <li>
-            <a
-              href="https://www.getmuffin.app/ReleaseNotes"
-              className="hover:text-slate-400"
-            >
-              Release Notes
-            </a>
+            <Link href="/release-notes">
+              <a className="hover:text-slate-400">Release Notes</a>
+            </Link>
           </li>
         </ul>
       </div>
