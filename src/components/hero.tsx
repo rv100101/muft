@@ -7,12 +7,23 @@ import ChatCard from "./chatCard";
 import { banner } from "@/utils/homepage";
 import GooglePlay from "@/assets/google-play.svg";
 import AppStore from "@/assets/app-store.svg";
-
+import { useMediaQuery, useTimeout } from "usehooks-ts";
 const Hero = () => {
-  const firstTextToType =
-    "What was it about my profile that caught your attention and made flirt?";
-  const secondTextToType =
-    "Your captivating smile drew me in, and your intriguing interests made me want to flirt.";
+  const [visible, setVisible] = useState(false);
+
+  const hide = () => setVisible(true);
+
+  useTimeout(hide, 3000);
+
+  const matches = useMediaQuery("(min-width: 768px)");
+
+  const firstTextToType = matches
+    ? "What was it about my profile that caught your attention and made flirt?"
+    : "What caught your eye?";
+  const secondTextToType = matches
+    ? "Your captivating smile drew me in, and your intriguing interests made me want to flirt."
+    : "Smile and interests.";
+
   const [firstTypedText, setFirstTypedText] = useState("");
   const [secondTypedText, setSecondTypedText] = useState("");
   const [firstCurrentIndex, setFirstCurrentIndex] = useState(0);
@@ -20,7 +31,7 @@ const Hero = () => {
 
   useEffect(() => {
     const firstTypingInterval = setInterval(() => {
-      if (firstCurrentIndex < firstTextToType.length) {
+      if (visible && firstCurrentIndex < firstTextToType.length) {
         setFirstTypedText(
           (prevText) => prevText + firstTextToType[firstCurrentIndex]
         );
@@ -32,6 +43,7 @@ const Hero = () => {
 
     const secondTypingInterval = setInterval(() => {
       if (
+        visible &&
         firstCurrentIndex >= firstTextToType.length &&
         secondCurrentIndex < secondTextToType.length
       ) {
@@ -48,7 +60,13 @@ const Hero = () => {
       clearInterval(firstTypingInterval);
       clearInterval(secondTypingInterval);
     };
-  }, [firstCurrentIndex, secondCurrentIndex]);
+  }, [
+    firstCurrentIndex,
+    firstTextToType,
+    secondCurrentIndex,
+    secondTextToType,
+    visible,
+  ]);
 
   return (
     <motion.div
