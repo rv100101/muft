@@ -5,9 +5,13 @@ import { Mail } from "lucide-react";
 const Footer = () => {
   return (
     <div className="mx-8 lg:mx-36 py-8 md:py-32 space-y-4 ">
-      <nav className="flex flex-row space-y-4 md:space-y-0 md:flex-row justify-between">
+      <nav className="flex flex-row md:space-y-0 md:flex-row justify-between">
         <div className="flex justify-center md:justify-start">
-          <img src={LogoWhite} alt="white muffin logo" />
+          <img
+            className="w-28 md:w-max"
+            src={LogoWhite}
+            alt="white muffin logo"
+          />
         </div>
         <div className="flex justify-center items-center space-x-2 md:space-x-4 hover">
           <a
@@ -17,51 +21,7 @@ const Footer = () => {
             <p>Contact Us</p>
             <Mail />
           </a>
-          {/* <Button
-            className="hover:bg-transparent hover:text-slate-400 p-0 font-light text-white"
-            variant={"ghost"}
-          >
-            Link One
-          </Button>
-          <Button
-            className="hover:bg-transparent hover:text-slate-400 p-0 font-light text-white"
-            variant={"ghost"}
-          >
-            Link Two
-          </Button>
-          <Button
-            className="hover:bg-transparent hover:text-slate-400 p-0 font-light text-white"
-            variant={"ghost"}
-          >
-            Link Three
-          </Button>
-          <Button
-            className="hover:bg-transparent hover:text-slate-400 p-0 font-light text-white"
-            variant={"ghost"}
-          >
-            Link Four
-          </Button>
-          <Button
-            className="hover:bg-transparent hover:text-slate-400 p-0 font-light text-white"
-            variant={"ghost"}
-          >
-            Link Five
-          </Button> */}
         </div>
-        {/* <div className="flex space-x-4 justify-evenly items-center">
-          <a href="/" color="white" className="text-white hover:text-slate-400">
-            <Facebook />
-          </a>
-          <a href="/" color="white" className="text-white hover:text-slate-400">
-            <Instagram />
-          </a>
-          <a href="/" color="white" className="text-white hover:text-slate-400">
-            <Twitter />
-          </a>
-          <a href="/" color="white" className="text-white hover:text-slate-400">
-            <Linkedin />
-          </a>
-        </div> */}
       </nav>
       <hr />
       <div className="flex justify-between text-white">
