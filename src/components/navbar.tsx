@@ -34,7 +34,7 @@ function NavBar() {
   const [location] = useLocation();
 
   return (
-    <motion.nav className="flex items-center justify-between my-4">
+    <motion.nav className="flex items-center justify-between my-4 mx-8 md:mx-12 lg:mx-36">
       <motion.a
         initial={
           location == "/" ? { opacity: 0, scale: 0 } : { opacity: 1, scale: 1 }

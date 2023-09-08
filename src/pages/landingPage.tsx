@@ -1,6 +1,5 @@
 import Footer from "@/components/footer";
 import Hero from "@/components/hero";
-import NavBar from "@/components/navbar";
 import Benefits from "@/components/benefits";
 import Features from "@/components/features";
 import Cta from "@/components/cta";
@@ -10,10 +9,8 @@ import { motion } from "framer-motion";
 const LandingPage = () => {
   return (
     <>
-      {" "}
       <GetApp />
       <div className="mx-8 md:mx-12 lg:mx-36">
-        <NavBar />
         <Hero />
         <Benefits />
         <Features />
