@@ -2,7 +2,7 @@ import GooglePlay from "@/assets/google-play.svg";
 import AppStore from "@/assets/app-store.svg";
 import CtaPhone from "@/assets/cta-phone.png";
 import { motion } from "framer-motion";
-import { callToAction } from "@/utils/homepage";
+import { callToAction } from "@/lib/homepage";
 const staggerMotion = {
   hidden: { opacity: 0 },
   whileInView: {

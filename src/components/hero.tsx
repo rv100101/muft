@@ -4,7 +4,7 @@ import heroAvatar2 from "@/assets/hero-avatar2.svg";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import ChatCard from "./chatCard";
-import { banner } from "@/utils/homepage";
+import { banner } from "@/lib/homepage";
 import GooglePlay from "@/assets/google-play.svg";
 import AppStore from "@/assets/app-store.svg";
 import { useMediaQuery, useTimeout } from "usehooks-ts";

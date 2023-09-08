@@ -5,7 +5,7 @@ import Phone from "@/assets/features_section/phone.png";
 import BottomNav from "@/assets/features_section/bottom-nav.png";
 import AddToStory from "@/assets/features_section/add-to-story.png";
 import { motion } from "framer-motion";
-import { features } from "@/utils/homepage";
+import { features } from "@/lib/homepage";
 
 const imageContainer = {
   hidden: { opacity: 0 },

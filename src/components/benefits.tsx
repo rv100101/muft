@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { features } from "@/utils/homepage";
+import { features } from "@/lib/homepage";
 
 const Benefits = () => {
   return (
