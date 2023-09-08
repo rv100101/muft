@@ -12,7 +12,7 @@ function App() {
     <>
       <NavBar />
       <Route path="/" component={LandingPage} />
-      <div className="mx-8 md:mx-12 lg:mx-36">
+      <div className="md:mx-12 lg:mx-36">
         <Route path="/privacy-policy" component={PrivacyPolicyPage} />
         <Route path="/terms" component={TermsPage} />
         <Route path="/release-notes" component={ReleaseNotesPage} />

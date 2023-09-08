@@ -15,8 +15,10 @@ const ReleaseNotesPage = () => {
     </div>
   ));
   return (
-    <div className="space-y-8 my-8 py-8 px-6 rounded-2xl bg-secondaryBackground">
-      <h1 className="text-4xl font-bold text-[#1B2950]">Release Notes</h1>
+    <div className="md:space-y-8 space-y-2 md:my-8 py-4 md:py-8 px-4 md:px-6 md:rounded-2xl bg-secondaryBackground">
+      <h1 className="text-2xl md:text-4xl font-bold text-[#1B2950]">
+        Release Notes
+      </h1>
       <div className="space-y-4">{notes}</div>
     </div>
   );
