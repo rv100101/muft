@@ -120,7 +120,7 @@ const Hero = () => {
               delay: 2.5,
             }}
             viewport={{ once: true }}
-            className="flex space-x-4"
+            className="z-20 flex space-x-4"
           >
             <a href="https://www.apple.com" target="_blank">
               <img width={160} src={AppStore} alt="app store" />
