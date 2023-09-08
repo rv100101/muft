@@ -168,7 +168,7 @@ const Hero = () => {
             text={firstTypedText}
             img={heroAvatar1}
             avatarFirst={true}
-            name="Daryl"
+            name="Emily"
             time="05:16 AM"
             borderRadius="rounded-tr-xl rounded-br-xl rounded-bl-xl shadow-xl"
           />
@@ -178,7 +178,7 @@ const Hero = () => {
               text={secondTypedText}
               img={heroAvatar2}
               avatarFirst={false}
-              name="James"
+              name="Mike"
               time="10:23 AM"
               borderRadius="rounded-tl-xl rounded-bl-xl rounded-br-xl shadow-xl"
             />
