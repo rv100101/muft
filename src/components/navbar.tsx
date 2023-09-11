@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+// import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
 import logo from "@/assets/logo.svg";
 import {
@@ -57,7 +57,7 @@ function NavBar() {
             <a href="https://support.softnames.com/">Contact Us</a>
           </Button>
         </motion.li>
-        <motion.li variants={motionTop80}>
+        {/* <motion.li variants={motionTop80}>
           <Button
             className={cn(
               "rounded-[100px] hover:bg-[#d86392]",
@@ -66,7 +66,7 @@ function NavBar() {
           >
             Sign in
           </Button>
-        </motion.li>
+        </motion.li> */}
       </motion.ul>
       <DropdownMenu>
         <DropdownMenuTrigger className="block md:hidden" asChild>
@@ -83,14 +83,14 @@ function NavBar() {
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
-          <DropdownMenuItem
+          {/* <DropdownMenuItem
             className={cn(
               "m-0 text text-white bg-primary hover:bg-[#d86392]",
               "font-semibold px-6"
             )}
           >
             Sign In
-          </DropdownMenuItem>
+          </DropdownMenuItem> */}
         </DropdownMenuContent>
       </DropdownMenu>
     </motion.nav>
