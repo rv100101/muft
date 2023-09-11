@@ -1,7 +1,7 @@
 import GooglePlay from "@/assets/google-play-logo.png";
 import Apple from "@/assets/apple-logo.png";
-import GooglePlayLong from "@/assets/google-play.svg";
-import AppStoreLong from "@/assets/app-store.svg";
+import GooglePlayLong from "@/assets/google-play.png";
+import AppStoreLong from "@/assets/app-store.png";
 import { useState } from "react";
 const GetApp = () => {
   const [isHovered, setIsHovered] = useState(false);

@@ -5,8 +5,8 @@ import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import ChatCard from "./chatCard";
 import { banner } from "@/lib/homepage";
-import GooglePlay from "@/assets/google-play.svg";
-import AppStore from "@/assets/app-store.svg";
+import GooglePlay from "@/assets/google-play.png";
+import AppStore from "@/assets/app-store.png";
 import { useMediaQuery, useTimeout } from "usehooks-ts";
 const Hero = () => {
   const [visible, setVisible] = useState(false);
@@ -138,19 +138,19 @@ const Hero = () => {
               delay: 2.5,
             }}
             viewport={{ once: true }}
-            className="z-20 flex space-x-4"
+            className="z-20 flex space-x-2 w-64 md:w-80"
           >
             <a
               href="https://apps.apple.com/us/app/muffin/id1658172035"
               target="_blank"
             >
-              <img width={160} src={AppStore} alt="app store" />
+              <img className="w-full" src={AppStore} alt="app store" />
             </a>
             <a
               href="https://play.google.com/store/apps/details?id=com.muffin.app"
               target="_blank"
             >
-              <img width={170} src={GooglePlay} alt="google play" />
+              <img className="w-full" src={GooglePlay} alt="google play" />
             </a>
           </motion.div>
         </div>
