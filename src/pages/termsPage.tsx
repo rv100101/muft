@@ -1,4 +1,4 @@
-import { termsAndConditionsData } from "@/utils/terms";
+import { termsAndConditionsData } from "@/lib/terms";
 
 const TermsPage = () => {
   const terms = termsAndConditionsData.map((data, index) => (

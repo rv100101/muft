@@ -1,4 +1,4 @@
-import { releaseNotesData } from "@/utils/releaseNotes";
+import { releaseNotesData } from "@/lib/releaseNotes";
 
 const ReleaseNotesPage = () => {
   const notes = releaseNotesData.map((data) => (

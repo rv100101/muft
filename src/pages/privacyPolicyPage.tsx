@@ -1,4 +1,4 @@
-import { privacyPolicyData } from "@/utils/privacyPolicy";
+import { privacyPolicyData } from "@/lib/privacyPolicy";
 
 const PrivacyPolicyPage = () => {
   const policies = privacyPolicyData.map((data, index) => (

@@ -52,7 +52,7 @@ const Footer = () => {
         </ul>
       </div>
       <p className="text-white text-xs text-center md:hidden block">
-        © 2023 Relume. All rights reserved.
+        &copy; 2023 Softnames. All Right Reserved.
       </p>
     </div>
   );
