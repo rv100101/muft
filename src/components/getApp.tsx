@@ -22,26 +22,32 @@ const GetApp = () => {
         </p>
         <div className="flex group-hover:flex-col space-x-2 group-hover:space-x-0 group-hover:space-y-1 hover:space-y-1 text-xs text-black font-semibold">
           {isHovered ? (
-            <a href="https://www.apple.com" target="_blank">
+            <a
+              href="https://apps.apple.com/us/app/muffin/id1658172035"
+              target="_blank"
+            >
               <img width={160} src={AppStoreLong} alt="app store" />
             </a>
           ) : (
             <a
               className="hover:transition delay-100 w-full hover:bg-slate-200 hover:text-black group-hover:p-2 group-hover:py-1 border-black flex items-center justify-between group-hover:border-2 rounded-md"
-              href="https://www.apple.com/"
+              href="https://apps.apple.com/us/app/muffin/id1658172035"
               target="_blank"
             >
               <img className="w-4 " src={Apple} alt="apple logo" />
             </a>
           )}
           {isHovered ? (
-            <a href="https://play.google.com" target="_blank">
+            <a
+              href="https://play.google.com/store/apps/details?id=com.muffin.app"
+              target="_blank"
+            >
               <img width={170} src={GooglePlayLong} alt="google play" />
             </a>
           ) : (
             <a
               className="hover:transition delay-100 w-full hover:bg-black hover:text-white group-hover:p-2 group-hover:py-1 border-black flex items-center justify-between group-hover:border-2 rounded-md"
-              href="https://play.google.com/"
+              href="https://play.google.com/store/apps/details?id=com.muffin.app"
               target="_blank"
             >
               <img
