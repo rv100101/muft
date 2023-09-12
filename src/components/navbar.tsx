@@ -54,7 +54,9 @@ function NavBar() {
       >
         <motion.li variants={motionTop80}>
           <Button variant={"ghost"} className="font-light">
-            <a href="https://support.softnames.com/">Contact Us</a>
+            <a href="https://support.softnames.com/" target="_blank">
+              Contact Us
+            </a>
           </Button>
         </motion.li>
         {/* <motion.li variants={motionTop80}>
