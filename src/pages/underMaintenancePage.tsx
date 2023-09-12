@@ -13,13 +13,13 @@ const UnderMaintenancePage = () => {
         alt="pink background"
       />
       <div className="h-screen flex flex-col items-center justify-end md:justify-center lg:justify-between py-12 lg:py-0 w-full lg:grid lg:grid-flow-col z-20 relative">
-        <section className="p-8 text-right md:text-left lg:pt-48 lg:pb-32 lg:pl-36 flex flex-col lg:h-full w-max items-start justify-between ">
+        <section className="px-8 md:p-8 text-right md:text-left lg:pt-48 lg:pb-32 lg:pl-36 flex flex-col lg:h-full w-full md:items-start justify-between ">
           <div className="space-y-2">
             <div className="flex justify-end md:justify-start">
               <img className="w-36 hidden md:flex" src={Logo} alt="Logo" />
               <img className="w-24 flex md:hidden" src={LogoWhite} alt="Logo" />
             </div>
-            <h1 className="text-4xl md:text-6xl lg:text-5xl lg:w-96 font-bold lg:font-semibold text-[#1B2950]">
+            <h1 className="text-3xl md:text-5xl flex-wrap lg:text-5xl lg:w-96 font-bold lg:font-semibold text-[#1B2950]">
               Website under Maintenance
             </h1>
           </div>
