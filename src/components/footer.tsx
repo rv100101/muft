@@ -22,6 +22,7 @@ const Footer = () => {
           <a
             className="flex space-x-2 hover:bg-transparent hover:text-slate-400 p-0 font-light text-white"
             href="https://support.softnames.com/"
+            target="_blank"
           >
             <p>Contact Us</p>
             <Mail />
