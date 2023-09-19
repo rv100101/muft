@@ -2,7 +2,7 @@ import { privacyPolicyData } from "@/lib/privacyPolicy";
 
 const PrivacyPolicyPage = () => {
   const policies = privacyPolicyData.map((data, index) => (
-    <p>
+    <p key={index}>
       <span className="font-bold">
         {index + 1}. {data.title}:
       </span>{" "}

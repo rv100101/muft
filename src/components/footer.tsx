@@ -1,5 +1,6 @@
 import LogoWhite from "@/assets/logo-white.svg";
 import { Mail } from "lucide-react";
+
 import { Link } from "wouter";
 const Footer = () => {
   const scrollToTop = () => {

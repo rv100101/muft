@@ -2,7 +2,7 @@ import { termsAndConditionsData } from "@/lib/terms";
 
 const TermsPage = () => {
   const terms = termsAndConditionsData.map((data, index) => (
-    <p>
+    <p key={index}>
       <span className="font-bold">
         {index + 1}. {data.title}:
       </span>{" "}

@@ -1,8 +1,11 @@
 import { releaseNotesData } from "@/lib/releaseNotes";
 
 const ReleaseNotesPage = () => {
-  const notes = releaseNotesData.map((data) => (
-    <div className="text-[#212529] border-2 rounded-2xl p-4 space-y-2">
+  const notes = releaseNotesData.map((data, index) => (
+    <div
+      key={index}
+      className="text-[#212529] border-2 rounded-2xl p-4 space-y-2"
+    >
       <p className="text-2xl font-semibold">{data.version}</p>
       <p>
         <span className="font-bold">Released On:</span> {data.releasedOn}
