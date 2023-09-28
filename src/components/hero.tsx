@@ -5,10 +5,27 @@ import GooglePlay from "@/assets/google-play.png";
 import AppStore from "@/assets/app-store.png";
 import { useMediaQuery, useTimeout } from "usehooks-ts";
 import Conversation from "./conversation";
+import axios from "axios";
 const Hero = () => {
   const [visible, setVisible] = useState(false);
 
   const hide = () => setVisible(true);
+
+  useEffect(() => {
+    const test = async () =>
+      await axios({
+        method: "get",
+        url: "https://muffinfunction.azurewebsites.net/api/GetConversation",
+        params: {
+          code: "Q9-xWtz5B2wNnEDUyaIZOtf-BpjX3aupmt6hZZ051AWIAzFuyAhjJw==",
+          member: 184,
+          chat_member: 69,
+        },
+      }).then(function (response) {
+        console.log(response);
+      });
+    test();
+  }, []);
 
   useTimeout(hide, 3000);
 
