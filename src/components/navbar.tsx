@@ -44,7 +44,7 @@ function NavBar() {
         viewport={{ once: true }}
         href="/"
       >
-        <img className="w-24 md:w-full" src={logo} alt="muffin-logo" />
+        <img className="w-24 md:w-36" src={logo} alt="muffin-logo" />
       </motion.a>
       <motion.ul
         variants={container}

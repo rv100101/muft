@@ -1,7 +1,7 @@
 import ChatCard from "./chatCard";
 import heroPhone from "@/assets/hero-phone.png";
-import heroAvatar1 from "@/assets/hero-avatar1.svg";
-import heroAvatar2 from "@/assets/hero-avatar2.svg";
+import heroAvatar1 from "@/assets/hero-avatar1.png";
+import heroAvatar2 from "@/assets/hero-avatar2.png";
 import { motion } from "framer-motion";
 
 type FirstChat = {
