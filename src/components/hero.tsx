@@ -14,7 +14,7 @@ const Hero = () => {
   useEffect(() => {
     const test = async () =>
       await axios({
-        method: "get",
+        method: "post",
         url: "https://muffinfunction.azurewebsites.net/api/GetConversation",
         params: {
           code: "Q9-xWtz5B2wNnEDUyaIZOtf-BpjX3aupmt6hZZ051AWIAzFuyAhjJw==",
