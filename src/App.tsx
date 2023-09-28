@@ -11,7 +11,6 @@ import Footer from "./components/footer";
 function App() {
   return (
     <>
-      {/* <UnderMaintenancePage /> */}
       <NavBar />
       <Route path="/" component={LandingPage} />
       <div className="md:mx-12 lg:mx-36">

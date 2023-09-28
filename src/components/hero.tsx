@@ -1,13 +1,10 @@
-import heroPhone from "@/assets/hero-phone.png";
-import heroAvatar1 from "@/assets/hero-avatar1.svg";
-import heroAvatar2 from "@/assets/hero-avatar2.svg";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
-import ChatCard from "./chatCard";
 import { banner } from "@/lib/homepage";
 import GooglePlay from "@/assets/google-play.png";
 import AppStore from "@/assets/app-store.png";
 import { useMediaQuery, useTimeout } from "usehooks-ts";
+import Conversation from "./conversation";
 const Hero = () => {
   const [visible, setVisible] = useState(false);
 
@@ -24,18 +21,18 @@ const Hero = () => {
     ? "Your captivating smile drew me in, and your intriguing interests made me want to flirt."
     : "Smile and interests.";
 
-  const [firstTypedText, setFirstTypedText] = useState("");
-  const [secondTypedText, setSecondTypedText] = useState("");
-  const [firstCurrentIndex, setFirstCurrentIndex] = useState(0);
-  const [secondCurrentIndex, setSecondCurrentIndex] = useState(0);
+  const [firstTypedChat, setFirstTypedChat] = useState("");
+  const [secondTypedChat, setSecondTypedChat] = useState("");
+  const [firstChatIndex, setFirstChatIndex] = useState(0);
+  const [secondChatIndex, setSecondChatIndex] = useState(0);
 
   useEffect(() => {
     const firstTypingInterval = setInterval(() => {
-      if (visible && firstCurrentIndex < firstTextToType.length) {
-        setFirstTypedText(
-          (prevText) => prevText + firstTextToType[firstCurrentIndex]
+      if (visible && firstChatIndex < firstTextToType.length) {
+        setFirstTypedChat(
+          (prevText) => prevText + firstTextToType[firstChatIndex]
         );
-        setFirstCurrentIndex((prevIndex) => prevIndex + 1);
+        setFirstChatIndex((prevIndex) => prevIndex + 1);
       } else {
         clearInterval(firstTypingInterval);
       }
@@ -44,13 +41,13 @@ const Hero = () => {
     const secondTypingInterval = setInterval(() => {
       if (
         visible &&
-        firstCurrentIndex >= firstTextToType.length &&
-        secondCurrentIndex < secondTextToType.length
+        firstChatIndex >= firstTextToType.length &&
+        secondChatIndex < secondTextToType.length
       ) {
-        setSecondTypedText(
-          (prevText) => prevText + secondTextToType[secondCurrentIndex]
+        setSecondTypedChat(
+          (prevText) => prevText + secondTextToType[secondChatIndex]
         );
-        setSecondCurrentIndex((prevIndex) => prevIndex + 1);
+        setSecondChatIndex((prevIndex) => prevIndex + 1);
       } else {
         clearInterval(secondTypingInterval);
       }
@@ -61,9 +58,9 @@ const Hero = () => {
       clearInterval(secondTypingInterval);
     };
   }, [
-    firstCurrentIndex,
+    firstChatIndex,
     firstTextToType,
-    secondCurrentIndex,
+    secondChatIndex,
     secondTextToType,
     visible,
   ]);
@@ -154,42 +151,14 @@ const Hero = () => {
             </a>
           </motion.div>
         </div>
-        <div className="flex justify-center md:justify-end items-center relative">
-          <motion.img
-            initial={{
-              scale: 0,
-            }}
-            whileInView={{
-              scale: 1,
-            }}
-            transition={{
-              delay: 2.5,
-            }}
-            viewport={{ once: true }}
-            src={heroPhone}
-            alt="hero phone image"
-          />
-          <ChatCard
-            className="absolute flex items-start md:w-full w-48 -translate-x-12 -translate-y-12 md:-translate-x-1  md:-translate-y-16"
-            text={firstTypedText}
-            img={heroAvatar1}
-            avatarFirst={true}
-            name="Emily"
-            time="05:16 AM"
-            borderRadius="rounded-tr-xl rounded-br-xl rounded-bl-xl shadow-xl"
-          />
-          {firstCurrentIndex >= firstTextToType.length && (
-            <ChatCard
-              className="h-12 rounded-br-lg w-48 md:w-full md:h-max absolute flex items-start translate-y-14 md:translate-y-36 md:translate-x-12 lg:translate-x-20"
-              text={secondTypedText}
-              img={heroAvatar2}
-              avatarFirst={false}
-              name="Mike"
-              time="10:23 AM"
-              borderRadius="rounded-tl-xl rounded-bl-xl rounded-br-xl shadow-xl"
-            />
-          )}
-        </div>
+        <Conversation
+          firstChat={{
+            firstTypedChat: firstTypedChat,
+            firstChatIndex: firstChatIndex,
+            firstChatToType: firstTextToType,
+          }}
+          secondChat={{ secondTypedChat: secondTypedChat }}
+        />
       </div>
     </motion.div>
   );
