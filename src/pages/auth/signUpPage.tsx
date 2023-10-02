@@ -1,4 +1,4 @@
-// import { useState } from "react";
+import { useState } from "react";
 import logo from "@/assets/logo.svg";
 import fbLogo from "@/assets/auth/facebook-logo.png";
 import googleLogo from "@/assets/auth/google-logo.png";
@@ -9,39 +9,68 @@ import { LockIcon } from "lucide-react";
 import { InfoIcon } from "lucide-react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import axios from "axios";
+
+type FormDataType = {
+  code: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  password: string;
+};
 
 const SignUpPage = () => {
+  const headers = {
+    Authorization: `Bearer 0DB31DEE22DC4C03AD7DAAA9C29518FF3C08D931992A4A5CB0A4FF4CF4707DC6`, // Include the token in the 'Authorization' header
+    "Content-Type": "application/json", // You can include other headers as needed
+  };
+
+  const [isLoading, setIsLoading] = useState(false);
   const formik = useFormik({
     initialValues: {
-      firstname: "",
-      lastname: "",
+      code: "",
+      first_name: "",
+      last_name: "",
       email: "",
       password: "",
     },
     validationSchema: Yup.object({
-      firstname: Yup.string().required("Firstname is required"),
-      lastname: Yup.string().required("Lastname is required"),
+      first_name: Yup.string().required("Firstname is required"),
+      last_name: Yup.string().required("Lastname is required"),
       email: Yup.string()
         .email("Invalid email address")
         .required("Email is required"),
       password: Yup.string().required("Password is required"),
     }),
-    onSubmit: (values) => {
-      // Form submission logic here
-      console.log("Form submitted successfully:", values);
-    },
+    onSubmit: (values: FormDataType) => handleSignUp(values),
   });
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    console.log("this form is triggered");
-    e.preventDefault();
-    formik.setTouched(
-      { firstname: true, lastname: true, email: true, password: true },
-      true
-    );
-    if (formik.isValid) {
-      formik.handleSubmit(e);
+
+  const handleSignUp = async (values: FormDataType) => {
+    try {
+      setIsLoading(true);
+      values["code"] =
+        "pEDhx3zADTfpNlQkndonKnl0ucPGi0QVLqbWe0Y-6NMSAzFuE-Mhvg=="; //code for auth
+      console.log("values: ", values);
+      const response = await axios.post(
+        "https://muffinfunction.azurewebsites.net/api/Signup",
+        values,
+        {
+          headers: headers,
+        }
+      );
+      console.log("response: ", response);
+      const data = await response.data;
+      if (data) {
+        setIsLoading(false);
+        console.log("response: ", data);
+        return data;
+      }
+    } catch (err: unknown) {
+      // throw new Error(err);
+      console.log("err", err);
     }
   };
+
   return (
     <>
       <div className="flex justify-center items-center h-full mt-10 my-[150px]">
@@ -60,19 +89,20 @@ const SignUpPage = () => {
           {/* form */}
           <form
             action="post"
-            onSubmit={handleSubmit}
+            onSubmit={formik.handleSubmit}
             className="space-y-5 w-full p-2"
           >
+            {/* first_name */}
             <div className="flex flex-col  space-y-1">
               <label
-                htmlFor="firstname"
+                htmlFor="first_name"
                 className="text-sm text-semibold ml-5 mb-2"
               >
                 First name
               </label>
               <div
                 className={`flex flex-row border rounded-full py-1 px-5 m-3 ${
-                  formik.touched.firstname && formik.errors.firstname
+                  formik.touched.first_name && formik.errors.first_name
                     ? "border-rose-500"
                     : ""
                 }`}
@@ -80,29 +110,34 @@ const SignUpPage = () => {
                 <UserIcon color="#98A2B3" size={20} className="mt-1" />
                 <input
                   type="text"
-                  className="border-0 rounded-full py-1 px-5 text-normal focus:outline-0 w-full "
+                  className="border-0 rounded-full py-1 px-5 text-normal focus:outline-0 w-full"
                   placeholder="First Name"
-                  {...formik.getFieldProps("firstname")}
+                  {...formik.getFieldProps("first_name")}
+                  name="first_name"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                 />
                 <InfoIcon
                   color="#D92D20"
                   size={20}
                   className={`mt-1 ${
-                    formik.touched.firstname && formik.errors.firstname
+                    formik.touched.first_name && formik.errors.first_name
                       ? "visible"
                       : "hidden"
                   }`}
                 />
               </div>
-              {formik.touched.firstname && formik.errors.firstname ? (
+              {formik.touched.first_name && formik.errors.first_name ? (
                 <div className="error text-red-500 ml-5 pt-2">
-                  {formik.errors.firstname}
+                  {formik.errors.first_name}
                 </div>
               ) : null}
             </div>
+
+            {/* last_name */}
             <div className="flex flex-col space-y-1">
               <label
-                htmlFor="firstname"
+                htmlFor="first_name"
                 className="text-sm text-semibold  ml-5 mb-2"
               >
                 Last name
@@ -110,7 +145,7 @@ const SignUpPage = () => {
 
               <div
                 className={`flex flex-row border rounded-full py-1 px-5 m-3 ${
-                  formik.touched.lastname && formik.errors.lastname
+                  formik.touched.last_name && formik.errors.last_name
                     ? "border-rose-500"
                     : ""
                 }`}
@@ -120,25 +155,29 @@ const SignUpPage = () => {
                   type="text"
                   className="border-0 rounded-full py-1 px-5 text-normal focus:outline-0 w-full"
                   placeholder="Last Name"
-                  {...formik.getFieldProps("lastname")}
+                  {...formik.getFieldProps("last_name")}
+                  name="last_name"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                 />
                 <InfoIcon
                   color="#D92D20"
                   size={20}
                   className={`mt-1 ${
-                    formik.touched.lastname && formik.errors.lastname
+                    formik.touched.last_name && formik.errors.last_name
                       ? "visible"
                       : "hidden"
                   }`}
                 />
               </div>
-              {formik.touched.lastname && formik.errors.lastname ? (
+              {formik.touched.last_name && formik.errors.last_name ? (
                 <div className="error text-red-500 ml-5 pt-2">
-                  {formik.errors.lastname}
+                  {formik.errors.last_name}
                 </div>
               ) : null}
             </div>
 
+            {/* email */}
             <div className="flex flex-col space-y-1">
               <label
                 htmlFor="email"
@@ -159,6 +198,9 @@ const SignUpPage = () => {
                   className="border-0 rounded-full py-1 px-5 text-normal focus:outline-0 w-full"
                   placeholder="example@email.com"
                   {...formik.getFieldProps("email")}
+                  onChange={formik.handleChange}
+                  name="email"
+                  onBlur={formik.handleBlur}
                 />
                 <InfoIcon
                   color="#D92D20"
@@ -176,6 +218,8 @@ const SignUpPage = () => {
                 </div>
               ) : null}
             </div>
+
+            {/* password */}
             <div className="flex flex-col space-y-1">
               <label
                 htmlFor="password"
@@ -196,6 +240,9 @@ const SignUpPage = () => {
                   className="border-0 rounded-full py-1 px-5 text-normal focus:outline-0 w-full"
                   placeholder="Password"
                   {...formik.getFieldProps("password")}
+                  name="password"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                 />
                 <InfoIcon
                   color="#D92D20"
@@ -216,9 +263,11 @@ const SignUpPage = () => {
             {/* button */}
             <button
               type="submit"
-              className="bg-[#FF599B] text-white w-full rounded-full py-2"
+              className={` text-white w-full rounded-full py-2 ${
+                isLoading ? "bg-[#FF8AB3]" : "bg-[#FF599B]"
+              }`}
             >
-              Sign Up
+              {isLoading ? "Creating user..." : "Sign Up"}
             </button>
           </form>
 
