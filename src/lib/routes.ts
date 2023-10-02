@@ -29,7 +29,7 @@ const pageRoutes = {
     component: ReleaseNotesPage,
   },
   messagingPage: {
-    path: "/messaging",
+    path: "/messages",
     component: MessagingPage,
   },
 };

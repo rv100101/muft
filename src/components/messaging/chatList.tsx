@@ -28,7 +28,7 @@ const ChatList = () => {
       </Button>
     );
   });
-  return <ul className="space-y-1">{conversations}</ul>;
+  return <ul className="space-y-1 overflow-y-auto">{conversations}</ul>;
 };
 
 export default ChatList;
