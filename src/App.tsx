@@ -1,6 +1,6 @@
 import "./App";
 import { Route, useLocation } from "wouter";
-import TopNav from "./components/navbar";
+import TopNav from "./components/topNav";
 import Footer from "./components/footer";
 import pageRoutes, { routesWithFooterAndTopNav } from "./lib/routes";
 import { useEffect, useState } from "react";
@@ -10,12 +10,11 @@ function App() {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
+    /* Navbar and footer is hidden on certain routes. See routesWithFooterAndTopNav */
     if (routesWithFooterAndTopNav.includes(location) && !show) {
       setShow(true);
     }
   }, [location, show]);
-
-  /* Navbar and footer is hidden on certain routes. See routesWithFooterAndTopNav */
 
   return (
     <>

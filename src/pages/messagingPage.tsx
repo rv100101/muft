@@ -1,5 +1,5 @@
-const messagingPage = () => {
+const MessagingPage = () => {
   return <div>messagingPage</div>;
 };
 
-export default messagingPage;
+export default MessagingPage;
