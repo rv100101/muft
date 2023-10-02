@@ -34,8 +34,9 @@ const ChatMessages = () => {
       </div>
     );
   });
+
   return (
-    <div className="h-full w-full space-y-4 overflow-y-scroll p-2">
+    <div className="h-full w-full space-y-4 overflow-y-scroll p-4 bg-[#F7F8FA]">
       {messages}
     </div>
   );
