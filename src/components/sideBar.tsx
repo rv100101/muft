@@ -23,7 +23,7 @@ const SideBar = () => {
     <div className="h-full border-r flex flex-col justify-between">
       <div>
         <a href="/">
-          <img className="h-max w-36 my-8 mx-4" src={logo} alt="logo" />
+          <img className="h-max w-max my-8 mx-4" src={logo} alt="logo" />
         </a>
         <ul>{navLinks}</ul>
       </div>
