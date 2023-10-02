@@ -1,24 +1,25 @@
 import "./App";
 import { Route, useLocation } from "wouter";
-import NavBar from "./components/navbar";
+import TopNav from "./components/navbar";
 import Footer from "./components/footer";
-import pageRoutes, { routesWithFooter } from "./lib/routes";
+import pageRoutes, { routesWithFooterAndTopNav } from "./lib/routes";
 import { useEffect, useState } from "react";
-
-// import UnderMaintenancePage from "./pages/underMaintenancePage";
 
 function App() {
   const [location] = useLocation();
-  const [showFooter, setShowFooter] = useState(false);
+  const [show, setShow] = useState(false);
+
   useEffect(() => {
-    if (routesWithFooter.includes(location) && !showFooter) {
-      setShowFooter(true);
+    if (routesWithFooterAndTopNav.includes(location) && !show) {
+      setShow(true);
     }
-  }, [location, showFooter]);
+  }, [location, show]);
+
+  /* Navbar and footer is hidden on certain routes. See routesWithFooterAndTopNav */
 
   return (
     <>
-      <NavBar />
+      {show && <TopNav />}
       <Route
         path={pageRoutes.landingPage.path}
         component={pageRoutes.landingPage.component}
@@ -41,7 +42,7 @@ function App() {
         path={pageRoutes.messagingPage.path}
         component={pageRoutes.messagingPage.component}
       />
-      {showFooter && (
+      {show && (
         <div className="bg-[#0C1223]">
           <Footer />
         </div>

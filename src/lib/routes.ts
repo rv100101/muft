@@ -4,7 +4,7 @@ import ReleaseNotesPage from "@/pages/releaseNotesPage";
 import TermsPage from "@/pages/termsPage";
 import MessagingPage from "@/pages/messagingPage";
 
-export const routesWithFooter = [
+export const routesWithFooterAndTopNav = [
   "/",
   "/privacy-policy",
   "/terms",
