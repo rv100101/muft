@@ -1,28 +1,54 @@
 import "./App";
-import { Route } from "wouter";
-import LandingPage from "./pages/landingPage";
-import NavBar from "@/components/navbar";
-import PrivacyPolicyPage from "./pages/privacyPolicyPage";
-import ReleaseNotesPage from "./pages/releaseNotesPage";
-import TermsPage from "./pages/termsPage";
+import { Route, useLocation } from "wouter";
+import TopNav from "./components/topNav";
 import Footer from "./components/footer";
+import pageRoutes, { routesWithFooterAndTopNav } from "./lib/routes";
+import { useEffect, useState } from "react";
 import signUpPage from "./pages/auth/signUpPage";
-// import UnderMaintenancePage from "./pages/underMaintenancePage";
 
 function App() {
+  const [location] = useLocation();
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    /* Navbar and footer is hidden on certain routes. See routesWithFooterAndTopNav */
+    if (routesWithFooterAndTopNav.includes(location) && !show) {
+      setShow(true);
+    }
+  }, [location, show]);
+
   return (
     <>
-      <NavBar />
+      {show && <TopNav />}
+      <Route
+        path={pageRoutes.landingPage.path}
+        component={pageRoutes.landingPage.component}
+      />
       <Route path="/" component={LandingPage} />
       <Route path="/auth/signup" component={signUpPage} />
       <div className="md:mx-12 lg:mx-36">
-        <Route path="/privacy-policy" component={PrivacyPolicyPage} />
-        <Route path="/terms" component={TermsPage} />
-        <Route path="/release-notes" component={ReleaseNotesPage} />
+        <Route
+          path={pageRoutes.privacyPolicyPage.path}
+          component={pageRoutes.privacyPolicyPage.component}
+        />
+        <Route
+          path={pageRoutes.termsPage.path}
+          component={pageRoutes.termsPage.component}
+        />
+        <Route
+          path={pageRoutes.releaseNotesPage.path}
+          component={pageRoutes.releaseNotesPage.component}
+        />
       </div>
-      <div className="bg-[#0C1223]">
-        <Footer />
-      </div>
+      <Route
+        path={pageRoutes.messagingPage.path}
+        component={pageRoutes.messagingPage.component}
+      />
+      {show && (
+        <div className="bg-[#0C1223]">
+          <Footer />
+        </div>
+      )}
     </>
   );
 }
