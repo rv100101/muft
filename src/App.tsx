@@ -6,7 +6,8 @@ import PrivacyPolicyPage from "./pages/privacyPolicyPage";
 import ReleaseNotesPage from "./pages/releaseNotesPage";
 import TermsPage from "./pages/termsPage";
 import Footer from "./components/footer";
-import signUpPage from "./pages/auth/signUpPage";
+import SignUpPage from "./pages/auth/signUpPage";
+import SignInPage from "./pages/auth/signInPage";
 // import UnderMaintenancePage from "./pages/underMaintenancePage";
 
 function App() {
@@ -14,7 +15,8 @@ function App() {
     <>
       <NavBar />
       <Route path="/" component={LandingPage} />
-      <Route path="/auth/signup" component={signUpPage} />
+      <Route path="/auth/signup" component={SignUpPage} />
+      <Route path="/auth/signin" component={SignInPage} />
       <div className="md:mx-12 lg:mx-36">
         <Route path="/privacy-policy" component={PrivacyPolicyPage} />
         <Route path="/terms" component={TermsPage} />
