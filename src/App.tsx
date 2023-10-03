@@ -3,10 +3,8 @@ import { Route, useLocation } from "wouter";
 import TopNav from "./components/topNav";
 import Footer from "./components/footer";
 
-import SignUpPage from "./pages/auth/signUpPage";
-import SignInPage from "./pages/auth/signInPage";
 import pageRoutes, { routesWithFooterAndTopNav } from "./lib/routes";
-
+import { useEffect, useState } from "react";
 
 function App() {
   const [location] = useLocation();
@@ -21,14 +19,19 @@ function App() {
 
   return (
     <>
-
       {show && <TopNav />}
       <Route
         path={pageRoutes.landingPage.path}
         component={pageRoutes.landingPage.component}
       />
-      <Route path="/auth/signup" component={signUpPage} />
-      <Route path="/auth/signup" component={SignInPage} />
+      <Route
+        path={pageRoutes.signUp.path}
+        component={pageRoutes.signUp.component}
+      />
+      <Route
+        path={pageRoutes.signIn.path}
+        component={pageRoutes.signIn.component}
+      />
       <div className="md:mx-12 lg:mx-36">
         <Route
           path={pageRoutes.privacyPolicyPage.path}
