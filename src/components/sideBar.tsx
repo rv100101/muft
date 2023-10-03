@@ -7,6 +7,7 @@ const SideBar = () => {
   const navLinks = links.map((link, index) => {
     return (
       <li key={index} className="w-full">
+        {" "}
         <Button variant={"ghost"} className="w-full justify-start py-7">
           <a
             className="flex justify-start items-center space-x-2"
@@ -20,7 +21,7 @@ const SideBar = () => {
   });
 
   return (
-    <div className="h-full border-r flex flex-col justify-between">
+    <div className="h-full border-r flex flex-col justify-between ">
       <div>
         <a href="/">
           <img className="h-max w-max my-8 mx-4" src={logo} alt="logo" />

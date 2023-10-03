@@ -4,7 +4,7 @@ import { Button } from "../ui/button";
 const MessageHeader = () => {
   const links = buttons.map((button, index) => (
     <Button key={index} variant={"ghost"}>
-      {button.icon}
+      {<button.icon />}
     </Button>
   ));
   return (

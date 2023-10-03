@@ -3,6 +3,7 @@ import PrivacyPolicyPage from "@/pages/privacyPolicyPage";
 import ReleaseNotesPage from "@/pages/releaseNotesPage";
 import TermsPage from "@/pages/termsPage";
 import MessagingPage from "@/pages/messagingPage";
+import NotificationsPage from "@/pages/notificationsPage";
 
 export const routesWithFooterAndTopNav = [
   "/",
@@ -31,6 +32,10 @@ const pageRoutes = {
   messagingPage: {
     path: "/messages",
     component: MessagingPage,
+  },
+  notificationsPage: {
+    path: "/notifications",
+    component: NotificationsPage,
   },
 };
 

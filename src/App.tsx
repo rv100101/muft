@@ -43,6 +43,10 @@ function App() {
         path={pageRoutes.messagingPage.path}
         component={pageRoutes.messagingPage.component}
       />
+      <Route
+        path={pageRoutes.notificationsPage.path}
+        component={pageRoutes.notificationsPage.component}
+      />
       {show && (
         <div className="bg-[#0C1223]">
           <Footer />

@@ -3,18 +3,18 @@ import { MoreHorizontal, PhoneIcon, UserIcon, VideoIcon } from "lucide-react";
 export const buttons = [
   {
     path: "/",
-    icon: <PhoneIcon />,
+    icon: PhoneIcon,
   },
   {
     path: "/",
-    icon: <VideoIcon />,
+    icon: VideoIcon,
   },
   {
     path: "/",
-    icon: <UserIcon />,
+    icon: UserIcon,
   },
   {
     path: "/",
-    icon: <MoreHorizontal />,
+    icon: MoreHorizontal,
   },
 ];
