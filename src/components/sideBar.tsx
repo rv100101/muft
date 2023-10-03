@@ -2,6 +2,7 @@ import logo from "@/assets/logo.svg";
 import links from "@/lib/sideBar";
 import { Button } from "./ui/button";
 import { Settings2Icon } from "lucide-react";
+import { Link } from "wouter";
 
 const SideBar = () => {
   const navLinks = links.map((link, index) => {
@@ -23,9 +24,9 @@ const SideBar = () => {
   return (
     <div className="h-full border-r flex flex-col justify-between ">
       <div>
-        <a href="/">
+        <Link href="/">
           <img className="h-max w-max my-8 mx-4" src={logo} alt="logo" />
-        </a>
+        </Link>
         <ul>{navLinks}</ul>
       </div>
       <Button variant={"ghost"} className="w-full justify-start py-7">

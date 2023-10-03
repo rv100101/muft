@@ -7,10 +7,10 @@ const NotificationsList = () => {
     return (
       <div
         key={index}
-        className="flex items-center justify-start space-x-2 p-8 m-2 bg-white w-full"
+        className="flex items-center justify-start space-x-2 p-8 m-2 bg-white"
       >
         <img
-          className="rounded-full"
+          className="rounded-2xl"
           src={notification.avatar}
           alt="user avatar"
         />
@@ -22,10 +22,10 @@ const NotificationsList = () => {
     );
   });
   return (
-    <div className="w-full h-full ">
+    <div className="w-full h-full flex flex-col">
       <NotificationsListHeader />
       <NotificationsListFiters />
-      <div className="w-full h-full space-y-4 bg-[#F7F8FA]">
+      <div className="space-y-4 overflow-y-scroll bg-[#F7F8FA]">
         {notifications}
       </div>
     </div>
