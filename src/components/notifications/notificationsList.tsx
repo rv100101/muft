@@ -7,7 +7,7 @@ const NotificationsList = () => {
     return (
       <div
         key={index}
-        className="flex items-center justify-start space-x-2 p-8 m-4 bg-white"
+        className="flex items-center justify-start space-x-2 p-8 m-4 bg-white rounded-xl"
       >
         <img
           className="rounded-2xl"

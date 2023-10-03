@@ -1,13 +1,19 @@
 import chatHistoryData from "@/lib/dummies/chatHistoryData";
 import { Button } from "../ui/button";
+import useMobileMessagingViewStore from "@/zustand/messaging/mobileStateView";
 
 const ChatList = () => {
+  const updateMessagingPageView = useMobileMessagingViewStore(
+    (state) => state.toggle
+  );
+
   const conversations = chatHistoryData.map((history, index) => {
     return (
       <Button
         variant={"ghost"}
         className="flex space-x-2 w-full h-max items-start justify-start text-left"
         key={index}
+        onClick={updateMessagingPageView}
       >
         <div className="relative flex items-center">
           <img
