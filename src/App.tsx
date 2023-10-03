@@ -5,6 +5,7 @@ import Footer from "./components/footer";
 import pageRoutes, { routesWithFooterAndTopNav } from "./lib/routes";
 import { useEffect, useState } from "react";
 import signUpPage from "./pages/auth/signUpPage";
+import LandingPage from "./pages/landingPage";
 
 function App() {
   const [location] = useLocation();
