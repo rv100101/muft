@@ -6,7 +6,6 @@ import AppStore from "@/assets/app-store.png";
 import { useMediaQuery, useTimeout } from "usehooks-ts";
 import Conversation from "./conversation";
 
-// import axios from "axios";
 const Hero = () => {
   const [visible, setVisible] = useState(false);
 
