@@ -30,7 +30,7 @@ const motionTop80 = {
   show: { scale: 1, top: 80 },
 };
 
-function NavBar() {
+function TopNav() {
   const [location] = useLocation();
 
   return (
@@ -99,4 +99,4 @@ function NavBar() {
   );
 }
 
-export default NavBar;
+export default TopNav;
