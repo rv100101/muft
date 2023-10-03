@@ -1,6 +1,6 @@
-import ChatConversation from "@/components/messaging/chatConversation";
 import NotificationsList from "@/components/notifications/notificationsList";
 import AuthenticatedLayout from "./layout";
+import Suggestions from "@/components/suggestions";
 
 const NotificationsPage = () => {
   return (
@@ -10,7 +10,7 @@ const NotificationsPage = () => {
           <NotificationsList />
         </div>
         <div className="col-span-3 w-full h-full">
-          <ChatConversation />
+          <Suggestions />
         </div>
       </div>
     </AuthenticatedLayout>
