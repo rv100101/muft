@@ -40,11 +40,11 @@ const pageRoutes = {
     component: NotificationsPage,
   },
   signUp: {
-    path: "/signup",
+    path: "/auth/signup",
     component: SignUpPage,
   },
   signIn: {
-    path: "/signiun",
+    path: "/auth/signin",
     component: SignInPage,
   },
 };
