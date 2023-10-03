@@ -1,5 +1,5 @@
 import ChatList from "./chatList";
-import SearchInput from "./searchInput";
+import SearchInput from "../searchInput";
 import TopBar from "../topBar";
 import heroAvatar1 from "@/assets/hero-avatar1.png";
 
