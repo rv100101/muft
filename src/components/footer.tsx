@@ -1,14 +1,9 @@
 import LogoWhite from "@/assets/logo-white.svg";
 import { Mail } from "lucide-react";
 
-import { Link } from "wouter";
+import FooterLinks from "./footerLinks";
+
 const Footer = () => {
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
   return (
     <div className="mx-8 lg:mx-36 py-8 md:py-32 space-y-4 ">
       <nav className="flex flex-row md:space-y-0 md:flex-row justify-between">
@@ -35,23 +30,7 @@ const Footer = () => {
         <p className="hidden md:block text-xs">
           &copy; 2023 Softnames. All Right Reserved.
         </p>
-        <ul className="flex list-none space-x-4 underline text-xs md:text-md">
-          <li>
-            <Link onClick={scrollToTop} href="/privacy-policy">
-              <a className="hover:text-slate-400">Privacy Policy</a>
-            </Link>
-          </li>
-          <li>
-            <Link onClick={scrollToTop} href="/terms">
-              <a className="hover:text-slate-400">Terms of Service</a>
-            </Link>
-          </li>
-          <li>
-            <Link onClick={scrollToTop} href="/release-notes">
-              <a className="hover:text-slate-400">Release Notes</a>
-            </Link>
-          </li>
-        </ul>
+        <FooterLinks />
       </div>
       <p className="text-white text-xs text-center md:hidden block">
         &copy; 2023 Softnames. All Right Reserved.

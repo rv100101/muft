@@ -2,8 +2,8 @@ import LandingPage from "@/pages/landingPage";
 import PrivacyPolicyPage from "@/pages/privacyPolicyPage";
 import ReleaseNotesPage from "@/pages/releaseNotesPage";
 import TermsPage from "@/pages/termsPage";
-import MessagingPage from "@/pages/messagingPage";
-import NotificationsPage from "@/pages/notificationsPage";
+import MessagingPage from "@/pages/authenticatedPages/messagingPage";
+import NotificationsPage from "@/pages/authenticatedPages/notificationsPage";
 import SignUpPage from "@/pages/auth/signUpPage";
 import SignInPage from "@/pages/auth/signInPage";
 

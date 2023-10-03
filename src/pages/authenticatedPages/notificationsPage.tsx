@@ -1,20 +1,19 @@
-import ChatConversation from "@/components/messaging/chatConversation";
 import NotificationsList from "@/components/notifications/notificationsList";
-import SideBar from "@/components/sideBar";
+import AuthenticatedLayout from "./layout";
+import Suggestions from "@/components/suggestions";
 
 const NotificationsPage = () => {
   return (
-    <div className="h-screen overflow-hidden w-full flex">
-      <SideBar />
+    <AuthenticatedLayout>
       <div className="w-full h-full grid grid-cols-10 grid-rows-1">
-        <div className="col-span-7">
+        <div className="col-span-7 h-full w-full">
           <NotificationsList />
         </div>
-        <div className="col-span-3">
-          <ChatConversation />
+        <div className="col-span-3 w-full h-full">
+          <Suggestions />
         </div>
       </div>
-    </div>
+    </AuthenticatedLayout>
   );
 };
 
