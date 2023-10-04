@@ -9,6 +9,8 @@ import * as Yup from "yup";
 import axios from "axios";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import ForgotPassword from "@/components/auth/forgotPassword";
+import { Link } from "wouter";
+import { scrollToTop } from "@/lib/utils";
 
 type FormDataType = {
   code: string;
@@ -81,7 +83,7 @@ const SignInPage = () => {
             <div className="flex flex-col text-center items-center space-y-3">
               <img className="w-24 md:w-36 " src={logo} alt="muffin-logo" />
               <p className="text-[#1B2950] font-bold text-center">
-                Enter your E-Mail and Password!
+                Enter your E-Mail and Password
               </p>
             </div>
             {/* form */}
@@ -213,12 +215,13 @@ const SignInPage = () => {
             </div>
             <div className="py-10 flex flex-row space-x-3">
               <p>Don't have an Account?</p>
-              <a
+              <Link
                 href="/auth/signup"
+                onClick={scrollToTop}
                 className="text-sm hover:underline hover:text-blue-500"
               >
                 Sign up here
-              </a>
+              </Link>
             </div>
           </div>
           <div></div>

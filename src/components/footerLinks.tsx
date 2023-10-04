@@ -1,12 +1,7 @@
+import { scrollToTop } from "@/lib/utils";
 import { Link } from "wouter";
 
 const FooterLinks = () => {
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
   return (
     <ul className="flex list-none space-x-4 underline text-xs md:text-md">
       <li>
