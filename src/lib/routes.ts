@@ -6,12 +6,15 @@ import MessagingPage from "@/pages/messagingPage";
 import NotificationsPage from "@/pages/notificationsPage";
 import SignUpPage from "@/pages/auth/signUpPage";
 import SignInPage from "@/pages/auth/signInPage";
+import HomePage from "@/pages/homePage";
 
 export const routesWithFooterAndTopNav = [
   "/",
   "/privacy-policy",
   "/terms",
   "/release-notes",
+  "/auth/signup",
+  "/auth/signin",
 ];
 
 const pageRoutes = {
@@ -46,6 +49,10 @@ const pageRoutes = {
   signIn: {
     path: "/auth/signin",
     component: SignInPage,
+  },
+  homePage: {
+    path: "/home",
+    component: HomePage,
   },
 };
 
