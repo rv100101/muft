@@ -12,7 +12,6 @@ import * as Yup from "yup";
 import axios from "axios";
 
 type FormDataType = {
-  code: string;
   first_name: string;
   last_name: string;
   email: string;
@@ -21,6 +20,7 @@ type FormDataType = {
 
 const SignUpPage = () => {
   const headers = {
+    "x-functions-key": import.meta.env.VITE_AZURE_FUNCTIONS_KEY,
     Authorization: `Bearer 0DB31DEE22DC4C03AD7DAAA9C29518FF3C08D931992A4A5CB0A4FF4CF4707DC6`, // Include the token in the 'Authorization' header
     "Content-Type": "application/json", // You can include other headers as needed
   };
@@ -28,7 +28,6 @@ const SignUpPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const formik = useFormik({
     initialValues: {
-      code: "",
       first_name: "",
       last_name: "",
       email: "",
@@ -48,8 +47,6 @@ const SignUpPage = () => {
   const handleSignUp = async (values: FormDataType) => {
     try {
       setIsLoading(true);
-      values["code"] =
-        "pEDhx3zADTfpNlQkndonKnl0ucPGi0QVLqbWe0Y-6NMSAzFuE-Mhvg=="; //code for auth
       console.log("values: ", values);
       const response = await axios.post(
         "https://muffinfunction.azurewebsites.net/api/Signup",
