@@ -59,10 +59,14 @@ const TopBar = ({ children }: { children: ReactNode }) => {
           </SheetHeader>
         </SheetContent>
       </Sheet>
-
-      <Button variant={"ghost"} className="hidden sm:block hover:bg-white p-0">
-        <ArrowLeft />
-      </Button>
+      <Link href="/home">
+        <Button
+          variant={"ghost"}
+          className="hidden sm:block hover:bg-white p-0"
+        >
+          <ArrowLeft />
+        </Button>
+      </Link>
       {children}
     </div>
   );
