@@ -32,6 +32,10 @@ function App() {
         path={pageRoutes.signIn.path}
         component={pageRoutes.signIn.component}
       />
+      <Route
+        path={pageRoutes.homePage.path}
+        component={pageRoutes.homePage.component}
+      />
       <div className="md:mx-12 lg:mx-36">
         <Route
           path={pageRoutes.privacyPolicyPage.path}
