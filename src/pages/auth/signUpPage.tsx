@@ -1,7 +1,5 @@
 import { useState } from "react";
 import logo from "@/assets/logo.svg";
-import fbLogo from "@/assets/auth/facebook-logo.png";
-import googleLogo from "@/assets/auth/google-logo.png";
 import helpIcon from "@/assets/auth/help-icon.png";
 import { UserIcon } from "lucide-react";
 import { MailIcon } from "lucide-react";
@@ -10,6 +8,8 @@ import { InfoIcon } from "lucide-react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+import { Link } from "wouter";
+import { scrollToTop } from "@/lib/utils";
 
 type FormDataType = {
   first_name: string;
@@ -269,14 +269,14 @@ const SignUpPage = () => {
           </form>
 
           {/* or */}
-          <div className="flex w-full item-center">
+          {/* <div className="flex w-full item-center">
             <div className="border-b border-black mt-3 h-[1px] w-full"></div>
             <div className="mx-2 text-black font-bold">or</div>
             <div className="border-b border-black mt-3 h-[1px] w-full"></div>
-          </div>
+          </div> */}
 
           {/* social icons */}
-          <div className="flex flex-row space-x-5">
+          {/* <div className="flex flex-row space-x-5">
             <img
               src={fbLogo}
               alt="facebook-logo"
@@ -287,10 +287,14 @@ const SignUpPage = () => {
               alt="google-logo"
               className="hover:cursor-pointer"
             />
-          </div>
-          <a href="/auth/signin" className="text-sm hover:underline">
-            Already have an account
-          </a>
+          </div> */}
+          <Link
+            onClick={scrollToTop}
+            href="/auth/signin"
+            className="text-sm hover:underline"
+          >
+            Already have an account?
+          </Link>
         </div>
         <div></div>
       </div>
