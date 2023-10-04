@@ -7,7 +7,7 @@ import FooterLinks from "./footerLinks";
 const Suggestions = () => {
   const suggestions = suggestionsData.map((suggestion, index) => {
     return (
-      <li key={index} className="h-36 lg:h-48 w-full relative">
+      <li key={index} className="h-36 lg:h-340 w-full relative">
         <img
           className="h-full w-full rounded-xl z-10"
           src={suggestion.backgroundImage}
@@ -31,10 +31,10 @@ const Suggestions = () => {
   });
 
   return (
-    <div className="w-full h-full pt-4 px-2 lg:p-4 sm:flex flex-col hidden">
+    <div className="w-full h-5/6 pt-4 px-2 lg:p-4 sm:flex flex-col hidden">
       <SearchInput />
       <div className="h-max w-full flex justify-between mt-4 items-center">
-        <p className="font-semibold lg:text-xl">SUGGESTIONS</p>
+        <p className=" lg:text-lg">SUGGESTIONS</p>
         <div className="flex">
           <Button variant={"ghost"} className="p-0">
             <ChevronLeftIcon />
@@ -44,7 +44,7 @@ const Suggestions = () => {
           </Button>
         </div>
       </div>
-      <ul className="border-top h-full p-2 space-y-2 lg:space-y-4 overflow-y-scroll">
+      <ul className="border-top h-full p-2 space-y-2 lg:space-y-4 overflow-y-scroll rounded-lg mb-5">
         {suggestions}
       </ul>
       <div className="w-full border-t pt-2 hidden lg:block">

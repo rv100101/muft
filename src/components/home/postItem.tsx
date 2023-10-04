@@ -9,14 +9,9 @@ const PostItem = () => {
     <>
       <div className="relative flex flex-col items-center justify-end h-full w-full p-5">
         <div className="flex flex-col h-full justify-center items-center py-5 px-10">
-          <img
-            src={postImage}
-            alt="post-img"
-            width={600}
-            className="filter brightness-50"
-          />
-          <div className="absolute bottom-[300px]">
-            <div className="flex flex-row w-full justify-center space-x-20">
+          <img src={postImage} alt="post-img" width={600} className="filter " />
+          <div className="absolute bottom-[350px]">
+            <div className="flex flex-row w-full justify-center space-x-5">
               <div className="flex flex-col">
                 <p className="text-white text-3xl mb-3">John, 28</p>
                 <p className="text-white text-md">
@@ -38,7 +33,7 @@ const PostItem = () => {
             </div>
           </div>
           {/* bio */}
-          <div className="flex flex-col justify-center items-center md:w-1/2 p-5">
+          <div className="flex flex-col justify-center items-center p-5">
             <p className="text-[#727272] p-5 ">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum,
               nesciunt quos. Eius deserunt velit, assumenda debitis blanditiis
