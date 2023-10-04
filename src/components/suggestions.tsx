@@ -20,7 +20,7 @@ const Suggestions = () => {
             alt="user avatar"
           />
           <div>
-            <p className="font-semibold text-xs lg:text-md">
+            <p className="font-semibold text-xs lg:text-lg">
               {suggestion.name}
             </p>
             <p className="text-xs lg:text-md">{suggestion.country}</p>
@@ -47,7 +47,7 @@ const Suggestions = () => {
       <ul className="border-top h-full p-2 space-y-2 lg:space-y-4 overflow-y-scroll">
         {suggestions}
       </ul>
-      <div className="w-full border-t pt-2">
+      <div className="w-full border-t pt-2 hidden lg:block">
         <FooterLinks />
       </div>
     </div>
