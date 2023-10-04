@@ -4,7 +4,7 @@ import PostHeader from "@/components/home/postHeader";
 import LazyPostItem from "@/components/home/lazyPostItem";
 
 const HomePage = () => {
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   const handleScroll = () => {
     const container = containerRef.current;
