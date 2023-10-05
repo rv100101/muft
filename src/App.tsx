@@ -4,22 +4,12 @@ import TopNav from "./components/topNav";
 import Footer from "./components/footer";
 
 import pageRoutes, { routesWithFooterAndTopNav } from "./lib/routes";
-import { useEffect, useState } from "react";
 
 function App() {
   const [location] = useLocation();
-  const [show, setShow] = useState(false);
-
-  useEffect(() => {
-    /* Navbar and footer is hidden on certain routes. See routesWithFooterAndTopNav */
-    if (routesWithFooterAndTopNav.includes(location) && !show) {
-      setShow(true);
-    }
-  }, [location, show]);
-
   return (
     <>
-      {show && <TopNav />}
+      {routesWithFooterAndTopNav.includes(location) && <TopNav />}
       <Route
         path={pageRoutes.landingPage.path}
         component={pageRoutes.landingPage.component}
@@ -58,7 +48,7 @@ function App() {
         path={pageRoutes.notificationsPage.path}
         component={pageRoutes.notificationsPage.component}
       />
-      {show && (
+      {routesWithFooterAndTopNav.includes(location) && (
         <div className="bg-[#0C1223]">
           <Footer />
         </div>

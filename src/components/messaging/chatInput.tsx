@@ -14,11 +14,10 @@ const ChatInput = () => {
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files && event.target.files[0];
     if (selectedFile) {
+      console.log(selectedImage);
       setSelectedImage(selectedFile);
     }
   };
-
-  console.log(selectedImage);
 
   return (
     <div className="flex w-full items-end rounded-lg h-max bg-[#F7F8FA]">
