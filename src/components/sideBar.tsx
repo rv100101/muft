@@ -1,10 +1,13 @@
 import logo from "@/assets/logo.svg";
 import links from "@/lib/sideBar";
 import { Button } from "./ui/button";
-import { Settings2Icon } from "lucide-react";
+import { LogOutIcon, Settings2Icon } from "lucide-react";
 import { Link } from "wouter";
+import { useUserStore } from "@/zustand/auth/user";
 
 const SideBar = () => {
+  const signOut = useUserStore((state) => state.reset);
+
   const navLinks = links.map((link, index) => {
     return (
       <li key={index} className="w-full">
@@ -28,7 +31,18 @@ const SideBar = () => {
             alt="logo"
           />
         </Link>
-        <ul>{navLinks}</ul>
+        <ul>
+          {navLinks}
+          <li className="w-full">
+            <Link
+              onClick={signOut}
+              className="h-10 px-4 py-2 hover:bg-accent hover:text-accent-foreground flex justify-start items-center space-x-2"
+              href={"/"}
+            >
+              {<LogOutIcon />} <p>Sign out</p>
+            </Link>
+          </li>
+        </ul>
       </div>
       <Button variant={"ghost"} className="w-full justify-start py-7">
         <a
