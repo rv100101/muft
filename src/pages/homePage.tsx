@@ -30,26 +30,25 @@ const HomePage = () => {
 
   return (
     <AuthenticatedLayout>
-      <div className="flex flex-row ">
-        <div className="w-1/2"></div>
-        <div className="flex flex-col pl-20">
+      <div className="grid grid-cols-6 gap4">
+        <div className="col-span-1"></div>
+        <div className="col-span-2 overflow-auto no-scrollbar">
           <PostHeader />
           {/* post container */}
           <div
-            className="no-scrollbar rounded-xl border border-[#E0E0E0] h-full m-5 overflow-y-auto"
+            className="no-scrollbar rounded-xl border border-[#E0E0E0] h-full overflow-y-auto"
             ref={containerRef}
           >
-            {/* Lazy-loaded PostItems go here */}
-
             <LazyPostItem />
             <LazyPostItem />
             <LazyPostItem />
             <LazyPostItem />
-            {/* Add more LazyPostItem instances as needed */}
           </div>
         </div>
-        <Suggestions />
-        <div className="w-1/4"></div>
+        <div className="col-span-2 overflow-auto">
+          <Suggestions />
+        </div>
+        <div className="col-span-1"></div>
       </div>
     </AuthenticatedLayout>
   );
