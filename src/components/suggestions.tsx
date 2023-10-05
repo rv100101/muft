@@ -5,7 +5,7 @@ import { Button } from "./ui/button";
 import FooterLinks from "./footerLinks";
 
 const Suggestions = () => {
-  const suggestions = suggestionsData.map((suggestion, index) => {
+  const suggestions = suggestionsData.slice(0, 3).map((suggestion, index) => {
     return (
       <li key={index} className="h-36 lg:h-340 w-full relative">
         <img
@@ -15,7 +15,7 @@ const Suggestions = () => {
         />
         <div className="absolute flex bottom-4 left-4 z-20 space-x-2 items-end">
           <img
-            className="rounded-full h-12 lg:h-20 ring-2 ring-primary"
+            className="rounded-full h-10 lg:h-16 ring-2 ring-primary"
             src={suggestion.avatar}
             alt="user avatar"
           />
@@ -31,7 +31,7 @@ const Suggestions = () => {
   });
 
   return (
-    <div className="w-full h-5/6 pt-4 px-2 lg:p-4 sm:flex flex-col hidden">
+    <div className="w-[380px] h-5/6 pt-4 px-5 lg:p-4 sm:flex flex-col hidden">
       <SearchInput />
       <div className="h-max w-full flex justify-between mt-4 items-center">
         <p className=" lg:text-lg">SUGGESTIONS</p>
@@ -44,7 +44,7 @@ const Suggestions = () => {
           </Button>
         </div>
       </div>
-      <ul className="border-top h-full p-2 space-y-2 lg:space-y-4 overflow-y-scroll rounded-lg mb-5">
+      <ul className="no-scrollbar border-top h-full p-2 space-y-2 lg:space-y-4 overflow-y-auto rounded-lg mb-5">
         {suggestions}
       </ul>
       <div className="w-full border-t pt-2 hidden lg:block">

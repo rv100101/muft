@@ -23,10 +23,10 @@ const SideBar = () => {
 
   return (
     <div className="h-full border-r sm:flex sm:flex-col justify-between hidden">
-      <div>
+      <div className="flex flex-col w-[220px]">
         <Link href="/">
           <img
-            className="hover:cursor-pointer h-max w-max my-8 mx-4"
+            className="hover:cursor-pointer w-1/2 my-8 mx-4"
             src={logo}
             alt="logo"
           />
