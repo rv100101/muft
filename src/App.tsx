@@ -4,15 +4,22 @@ import TopNav from "./components/topNav";
 import Footer from "./components/footer";
 
 import pageRoutes, { routesWithFooterAndTopNav } from "./lib/routes";
+import { useUserStore } from "./zustand/auth/user";
 
 function App() {
   const [location] = useLocation();
+  const user = useUserStore((state) => state.user);
+
   return (
     <>
-      {routesWithFooterAndTopNav.includes(location) && <TopNav />}
+      {routesWithFooterAndTopNav.includes(location) && !user && <TopNav />}
       <Route
-        path={pageRoutes.landingPage.path}
-        component={pageRoutes.landingPage.component}
+        path={"/"}
+        component={
+          user
+            ? pageRoutes.homePage.component
+            : pageRoutes.landingPage.component
+        }
       />
       <Route
         path={pageRoutes.signUp.path}
@@ -22,10 +29,7 @@ function App() {
         path={pageRoutes.signIn.path}
         component={pageRoutes.signIn.component}
       />
-      <Route
-        path={pageRoutes.homePage.path}
-        component={pageRoutes.homePage.component}
-      />
+
       <div className="md:mx-12 lg:mx-36">
         <Route
           path={pageRoutes.privacyPolicyPage.path}
@@ -48,7 +52,7 @@ function App() {
         path={pageRoutes.notificationsPage.path}
         component={pageRoutes.notificationsPage.component}
       />
-      {routesWithFooterAndTopNav.includes(location) && (
+      {routesWithFooterAndTopNav.includes(location) && !user && (
         <div className="bg-[#0C1223]">
           <Footer />
         </div>

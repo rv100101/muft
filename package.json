@@ -15,6 +15,7 @@
     "@radix-ui/react-menubar": "^1.0.4",
     "@radix-ui/react-popover": "1.0.6",
     "@radix-ui/react-slot": "^1.0.2",
+    "@radix-ui/react-toast": "^1.1.5",
     "@syncfusion/ej2-react-buttons": "^23.1.36",
     "@syncfusion/ej2-react-dropdowns": "^23.1.38",
     "@syncfusion/ej2-react-inputs": "^23.1.38",

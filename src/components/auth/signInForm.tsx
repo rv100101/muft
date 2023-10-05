@@ -3,32 +3,29 @@ import { useState } from "react";
 import * as Yup from "yup";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import ForgotPassword from "@/components/auth/forgotPassword";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { scrollToTop } from "@/lib/utils";
 import logo from "@/assets/logo.svg";
 import helpIcon from "@/assets/auth/help-icon.png";
 import { MailIcon } from "lucide-react";
 import { LockIcon } from "lucide-react";
 import { InfoIcon } from "lucide-react";
-
-import axiosQuery from "@/queries/axios";
+import authQuery from "@/queries/auth";
+import { User, useUserStore } from "@/zustand/auth/user";
+import { useToast } from "@/components/ui/use-toast";
 
 type FormDataType = {
-  code: string;
   email: string;
   password: string;
 };
 
 const SignInForm = () => {
-  const headers = {
-    Authorization: `Bearer 0DB31DEE22DC4C03AD7DAAA9C29518FF3C08D931992A4A5CB0A4FF4CF4707DC6`, // Include the token in the 'Authorization' header
-    "Content-Type": "application/json", // You can include other headers as needed
-  };
-
+  const { toast } = useToast();
+  const [, navigate] = useLocation();
   const [isLoading, setIsLoading] = useState(false);
+  const updateUser = useUserStore((state) => state.updateUser);
   const formik = useFormik({
     initialValues: {
-      code: "",
       email: "",
       password: "",
     },
@@ -38,24 +35,25 @@ const SignInForm = () => {
         .required("Email is required"),
       password: Yup.string().required("Password is required"),
     }),
-    onSubmit: (values: FormDataType) => handleSignUp(values),
+    onSubmit: (values: FormDataType) => handleSignIn(values),
   });
 
-  const handleSignUp = async (values: FormDataType) => {
+  const handleSignIn = async (values: FormDataType) => {
     try {
       setIsLoading(true);
-      values["code"] =
-        "pEDhx3zADTfpNlQkndonKnl0ucPGi0QVLqbWe0Y-6NMSAzFuE-Mhvg=="; //code for auth
-      console.log("values: ", values);
-      const response = await axiosQuery.post("/Signup", values, {
-        headers: headers,
-      });
-      console.log("response: ", response);
-      const data = await response.data;
-      if (data) {
-        setIsLoading(false);
-        console.log("response: ", data);
-        return data;
+      const res = await authQuery.signIn(values.email, values.password);
+      setIsLoading(false);
+      const data: User | string = res.data;
+      if (typeof data != "string" && data!.authorized) {
+        updateUser(data);
+        navigate("/", { replace: true });
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Invalid credentials",
+          description: "Make sure your email and password is correct.",
+          color: "#FF7AAF",
+        });
       }
     } catch (err: unknown) {
       // throw new Error(err);
@@ -64,7 +62,7 @@ const SignInForm = () => {
   };
 
   return (
-    <div className="card flex flex-col justify-center items-center shadow-xl rounded-lg p-4 border w-full space-y-5">
+    <div className="flex flex-col w-max items-center shadow-xl rounded-lg p-4 border space-y-5">
       <div className="flex w-full justify-end">
         <img
           src={helpIcon}
@@ -166,6 +164,7 @@ const SignInForm = () => {
         </div>
         {/* button */}
         <button
+          disabled={isLoading}
           type="submit"
           className={` text-white w-full rounded-full py-2 ${
             isLoading ? "bg-[#FF8AB3]" : "bg-primary"
@@ -179,18 +178,18 @@ const SignInForm = () => {
           {/* Dialog here */}
           <ForgotPassword />
           <DialogTrigger className="float-right">
-            <a className="text-sm hover:underline hover:text-blue-500">
+            <a className="text-xs hover:underline hover:text-blue-500">
               Forgot Password?
             </a>
           </DialogTrigger>
         </Dialog>
       </div>
-      <div className="py-2 flex flex-row space-x-2">
-        <p className="text-sm">Don't have an Account?</p>
+      <div className="flex flex-row space-x-2">
+        <p className="text-xs">Don't have an Account?</p>
         <Link
           href="/auth/signup"
           onClick={scrollToTop}
-          className="text-sm hover:underline hover:text-blue-500"
+          className="text-xs hover:underline hover:text-blue-500"
         >
           Sign up here
         </Link>
