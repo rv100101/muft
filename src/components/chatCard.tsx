@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
+import { useLocation } from "wouter";
 
 const ChatCard = ({
   img,
@@ -18,11 +19,13 @@ const ChatCard = ({
   time: string;
   borderRadius: string;
 }) => {
+  const [location] = useLocation();
+  const isAuthPage = location.includes("/auth/");
   return (
     <motion.div
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
-      transition={{ delay: avatarFirst ? 3 : 0.5 }}
+      transition={{ delay: avatarFirst ? (isAuthPage ? 1 : 3) : 0.5 }}
       className={cn(className, "space-x-2 md:space-x-4")}
       viewport={{ once: true }}
     >

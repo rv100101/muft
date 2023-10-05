@@ -2,8 +2,20 @@ import LogoWhite from "@/assets/logo-white.svg";
 import { Mail } from "lucide-react";
 
 import FooterLinks from "./footerLinks";
+import { useLocation } from "wouter";
+import SmallFooter from "./smallFooter";
 
 const Footer = () => {
+  const [location] = useLocation();
+
+  if (location.includes("/auth/")) {
+    return (
+      <div className="w-full h-full">
+        <SmallFooter />
+      </div>
+    );
+  }
+
   return (
     <div className="mx-8 lg:mx-36 py-8 md:py-32 space-y-4 ">
       <nav className="flex flex-row md:space-y-0 md:flex-row justify-between">
