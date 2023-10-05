@@ -3,8 +3,10 @@ import Conversation from "@/components/conversation";
 
 const SignInPage = () => {
   return (
-    <div className="grid grid-cols-2 gap-8 justify-center items-center h-full px-32 py-4 border-t">
-      <SignInForm />
+    <div className="grid grid-cols-2 gap-8 h-full w-full px-32 border-t">
+      <div className="flex items-center justify-center ">
+        <SignInForm />
+      </div>
       <Conversation />
     </div>
   );
