@@ -15,6 +15,9 @@ const ChatList = () => {
   const setConversation = useLatestConversationStore(
     (state) => state.setConversation
   );
+  const selectedConversation = useLatestConversationStore(
+    (state) => state.conversation
+  );
   const { isLoading, isSuccess, data } = useQuery({
     queryKey: ["conversations"],
     queryFn: () => messagingQuery.getConversations(69),
@@ -28,7 +31,7 @@ const ChatList = () => {
   );
 
   useEffect(() => {
-    if (data && data.length !== 0) {
+    if (!selectedConversation && data && data.length !== 0) {
       setConversation(
         data[0].initiator_id,
         data[0].conversation_id,
@@ -38,7 +41,7 @@ const ChatList = () => {
         data[0].recipient_nickname
       );
     }
-  }, [data, setConversation]);
+  }, [data, selectedConversation, setConversation]);
 
   const conversations = data
     ?.sort((a, b) => {
