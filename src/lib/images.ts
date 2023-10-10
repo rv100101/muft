@@ -1,6 +1,6 @@
 export const getImagePath = (
   gallery_uuid: string | null | undefined,
-  gender: string | undefined,
+  gender: string | null | undefined,
   member_uuid: string | undefined
 ) => {
   if (gallery_uuid != null) {

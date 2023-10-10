@@ -18,7 +18,7 @@ const MessageHeader = () => {
   //     {<button.icon />}
   //   </Button>
   // ));
-  console.log(currentConversationData);
+  // console.log(currentConversationData);
 
   return (
     <div className="flex justify-between h-max items-center border-b p-2">

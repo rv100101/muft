@@ -7,12 +7,11 @@ import moment from "moment-with-locales-es6";
 import ChatListLoadingSkeleton from "./chatListLoadingSkeleton";
 import useLatestConversationStore from "@/zustand/messaging/showConversation";
 import { useEffect } from "react";
-import { useUserStore } from "@/zustand/auth/user";
 import { useMediaQuery } from "usehooks-ts";
+import { useSearchFilterStore } from "@/zustand/messaging/searchFilter";
 
 const ChatList = () => {
   const matches = useMediaQuery("(min-width: 640px)");
-  const user = useUserStore((state) => state.user);
   const setConversation = useLatestConversationStore(
     (state) => state.setConversation
   );
@@ -21,7 +20,7 @@ const ChatList = () => {
     queryFn: () => messagingQuery.getConversations(69),
   });
 
-  console.log(user);
+  const searchFilterValue = useSearchFilterStore((state) => state.value);
 
   // This is used for page view switching in mobile view
   const updateMessagingPageView = useMobileMessagingViewStore(
@@ -47,13 +46,19 @@ const ChatList = () => {
       const dateB: Date = new Date(b.created_date);
       return dateA.getTime() - dateB.getTime();
     })
+    .filter((conversation) =>
+      searchFilterValue.length === 0
+        ? true
+        : conversation.recipient_nickname
+            .toLowerCase()
+            .includes(searchFilterValue.toLowerCase())
+    )
     .map((conversation, index) => {
       return (
         <li key={index}>
           <Button
             variant={"ghost"}
             className="flex space-x-2 w-full h-max items-start justify-start text-left"
-            key={index}
             onClick={() => {
               if (!matches) {
                 updateMessagingPageView();

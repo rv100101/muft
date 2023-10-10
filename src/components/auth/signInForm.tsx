@@ -13,6 +13,7 @@ import { InfoIcon } from "lucide-react";
 import authQuery from "@/queries/auth";
 import { User, useUserStore } from "@/zustand/auth/user";
 import { useToast } from "@/components/ui/use-toast";
+import { useUserAvatar } from "@/zustand/auth/avatar";
 
 type FormDataType = {
   email: string;
@@ -24,6 +25,8 @@ const SignInForm = () => {
   const [, navigate] = useLocation();
   const [isLoading, setIsLoading] = useState(false);
   const updateUser = useUserStore((state) => state.updateUser);
+  const updateUserAvatar = useUserAvatar((state) => state.setAvatar);
+  // const avatar = useUserAvatar((state) => state.gallery_uuid);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -41,9 +44,13 @@ const SignInForm = () => {
   const handleSignIn = async (values: FormDataType) => {
     try {
       setIsLoading(true);
-      const res = await authQuery.signIn(values.email, values.password);
+      const signInData = await authQuery.signIn(values.email, values.password);
+      const profilePhotoData = await authQuery.getProfilePhoto(
+        signInData.data.member_id
+      );
+      updateUserAvatar(profilePhotoData.data.gallery_uuid);
       setIsLoading(false);
-      const data: User | string = res.data;
+      const data: User | string = signInData.data;
       if (typeof data != "string" && data!.authorized) {
         updateUser(data);
         navigate("/", { replace: true });
