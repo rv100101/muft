@@ -38,10 +38,12 @@ const ChatList = () => {
         data[0].gallery_uuid,
         data[0].gender,
         data[0].recipient_uuid,
-        data[0].recipient_nickname
+        data[0].recipient_nickname,
+        data[0].conversation_uuid
       );
     }
   }, [data, selectedConversation, setConversation]);
+  console.log(data);
 
   const conversations = data
     ?.sort((a, b) => {
@@ -72,7 +74,8 @@ const ChatList = () => {
                 conversation.gallery_uuid,
                 conversation.gender,
                 conversation.recipient_uuid,
-                conversation.recipient_nickname
+                conversation.recipient_nickname,
+                conversation.conversation_uuid
               );
             }}
           >

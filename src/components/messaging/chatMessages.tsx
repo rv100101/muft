@@ -14,7 +14,7 @@ const ChatMessages = () => {
   );
 
   const { isLoading, isSuccess, data } = useQuery({
-    queryKey: ["notificationsList", latestConversation],
+    queryKey: ["current-selected-conversation", latestConversation],
     enabled: latestConversation != null,
     queryFn: () =>
       messagingQuery.getConversationHistory(
@@ -39,7 +39,7 @@ const ChatMessages = () => {
       <div
         className={cn(
           "flex flex-col w-full space-y-1",
-          gray ? "items-start" : "items-end"
+          gray ? "items-end" : "items-start"
         )}
         key={index}
       >

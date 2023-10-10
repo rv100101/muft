@@ -8,6 +8,7 @@ interface ConversationHistory {
     gender: string;
     recipient_uuid: string;
     username: string;
+    conversation_uuid: string;
   } | null;
   setConversation: (
     memberId: number,
@@ -15,7 +16,8 @@ interface ConversationHistory {
     gallery_uuid: string | null,
     gender: string,
     recepient_uuid: string,
-    username: string
+    username: string,
+    conversation_uuid: string
   ) => void;
 }
 
@@ -27,7 +29,8 @@ const useConversationHistoryStore = create<ConversationHistory>((set) => ({
     gallery_uuid,
     gender,
     recipient_uuid,
-    username
+    username,
+    conversation_uuid
   ) =>
     set(() => ({
       conversation: {
@@ -37,6 +40,7 @@ const useConversationHistoryStore = create<ConversationHistory>((set) => ({
         gender,
         recipient_uuid,
         username,
+        conversation_uuid,
       },
     })),
 }));

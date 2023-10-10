@@ -27,9 +27,28 @@ const getConversationHistory = async (
   }
 };
 
+const sendMessage = async (
+  conversation_uuid: string,
+  text: string,
+  member: number
+) => {
+  try {
+    const res = await axiosQuery.post("/NewConversation", {
+      conversation: conversation_uuid,
+      text,
+      member,
+    });
+    const data: ConversationMessage[] = res.data;
+    return data;
+  } catch (error) {
+    return null;
+  }
+};
+
 const messagingQuery = {
   getConversations,
   getConversationHistory,
+  sendMessage,
 };
 
 export default messagingQuery;
