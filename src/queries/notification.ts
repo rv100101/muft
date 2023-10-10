@@ -19,10 +19,8 @@ const getNotifications = async (memberId: number) => {
     const res = await axiosQuery.post("/Notifications", {
       member: memberId,
     });
-    if (res.data) {
-      return res.data;
-    }
-    return null;
+    const data = res.data;
+    return data;
   } catch (error) {
     return null;
   }

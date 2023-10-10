@@ -1,4 +1,4 @@
-import { ImageIcon, SendHorizonalIcon, SmileIcon } from "lucide-react";
+import { SendHorizonalIcon, SmileIcon } from "lucide-react";
 import { Button } from "../ui/button";
 import {
   Popover,
@@ -6,24 +6,12 @@ import {
   PopoverTrigger,
 } from "@radix-ui/react-popover";
 import EmojiPicker from "emoji-picker-react";
-import { ChangeEvent, useState } from "react";
 const ChatInput = () => {
-  const [selectedImage, setSelectedImage] = useState<File | null>(null);
-
-  // Function to handle image selection
-  const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = event.target.files && event.target.files[0];
-    if (selectedFile) {
-      console.log(selectedImage);
-      setSelectedImage(selectedFile);
-    }
-  };
-
   return (
     <div className="flex w-full items-end rounded-lg h-max bg-[#F7F8FA]">
       <div className="h-max w-full flex items-end justify-start mb-4 mt-1">
         <div className="flex flex-col items-center justify-center mx-2 ">
-          <input
+          {/* <input
             type="file"
             accept="image/*"
             onChange={handleImageChange}
@@ -38,17 +26,15 @@ const ChatInput = () => {
             >
               <ImageIcon className="text-primary" />
             </Button>
-          </label>
-          <Button variant={"ghost"} className="hover:bg-transparent p-0">
-            <Popover>
-              <PopoverTrigger>
-                <SmileIcon className="text-primary" />
-              </PopoverTrigger>
-              <PopoverContent>
-                <EmojiPicker height={300} width={"100%"} />
-              </PopoverContent>
-            </Popover>
-          </Button>
+          </label> */}
+          <Popover>
+            <PopoverTrigger>
+              <SmileIcon className="text-primary" />
+            </PopoverTrigger>
+            <PopoverContent>
+              <EmojiPicker height={300} width={"100%"} />
+            </PopoverContent>
+          </Popover>
         </div>
         <textarea
           name="text"
