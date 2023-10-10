@@ -1,17 +1,24 @@
-import heroAvatar1 from "@/assets/hero-avatar1.png";
-import { buttons } from "@/lib/chatButtons";
+// import { buttons } from "@/lib/chatButtons";
 import { Button } from "../ui/button";
 import { ArrowLeftIcon } from "lucide-react";
 import useMobileMessagingViewStore from "@/zustand/messaging/mobileStateView";
+import useConversationHistoryStore from "@/zustand/messaging/showConversation";
+import { getImagePath } from "@/lib/images";
 const MessageHeader = () => {
   const updateMessagingPageView = useMobileMessagingViewStore(
     (state) => state.toggle
   );
-  const links = buttons.map((button, index) => (
-    <Button size={"sm"} key={index} variant={"ghost"}>
-      {<button.icon />}
-    </Button>
-  ));
+
+  const currentConversationData = useConversationHistoryStore(
+    (state) => state.conversation
+  );
+
+  // const links = buttons.map((button, index) => (
+  //   <Button size={"sm"} key={index} variant={"ghost"}>
+  //     {<button.icon />}
+  //   </Button>
+  // ));
+  console.log(currentConversationData);
 
   return (
     <div className="flex justify-between h-max items-center border-b p-2">
@@ -23,10 +30,18 @@ const MessageHeader = () => {
         >
           <ArrowLeftIcon />
         </Button>
-        <img className=" max-h-8" src={heroAvatar1} alt="avatar" />
-        <p className="font-semibold">John Doe</p>
+        <img
+          className="rounded-full max-h-8 object-cover"
+          src={getImagePath(
+            currentConversationData?.gallery_uuid,
+            currentConversationData?.gender,
+            currentConversationData?.recipient_uuid
+          )}
+          alt="avatar"
+        />
+        <p className="font-semibold">{currentConversationData?.username}</p>
       </div>
-      <div className="flex sm:space-x-2 items-center">{links}</div>
+      {/* <div className="flex sm:space-x-2 items-center">{links}</div> */}
     </div>
   );
 };

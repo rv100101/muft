@@ -3,8 +3,10 @@ import AuthenticatedLayout from "./layout";
 import ChatConversation from "@/components/messaging/chatConversation";
 import { cn } from "@/lib/utils";
 import useMobileMessagingViewStore from "@/zustand/messaging/mobileStateView";
+
 const MessagingPage = () => {
   const pageView = useMobileMessagingViewStore((state) => state.view);
+
   return (
     <AuthenticatedLayout>
       {/* Desktop view */}
