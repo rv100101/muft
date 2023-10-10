@@ -1,5 +1,5 @@
 import "./App";
-import { Route, useLocation } from "wouter";
+import { Route, useLocation, Redirect } from "wouter";
 import TopNav from "./components/topNav";
 import Footer from "./components/footer";
 
@@ -44,14 +44,22 @@ function App() {
           component={pageRoutes.releaseNotesPage.component}
         />
       </div>
-      <Route
-        path={pageRoutes.messagingPage.path}
-        component={pageRoutes.messagingPage.component}
-      />
-      <Route
-        path={pageRoutes.notificationsPage.path}
-        component={pageRoutes.notificationsPage.component}
-      />
+
+      {/* Authenticated routes */}
+      {user ? (
+        <>
+          <Route
+            path={pageRoutes.messagingPage.path}
+            component={pageRoutes.messagingPage.component}
+          />
+          <Route
+            path={pageRoutes.notificationsPage.path}
+            component={pageRoutes.notificationsPage.component}
+          />
+        </>
+      ) : (
+        <Redirect to="/auth/signin" />
+      )}
       {routesWithFooterAndTopNav.includes(location) && !user && (
         <div className="bg-[#0C1223]">
           <Footer />
