@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import messagingQuery from "@/queries/messaging";
-import useLatestConversationStore from "@/zustand/messaging/latestConversation";
+import useLatestConversationStore from "@/zustand/messaging/showConversation";
 import { useQuery } from "@tanstack/react-query";
 import moment from "moment-with-locales-es6";
 import { useEffect, useRef } from "react";

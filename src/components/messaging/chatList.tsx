@@ -5,13 +5,16 @@ import messagingQuery from "@/queries/messaging";
 import { getImagePath } from "@/lib/images";
 import moment from "moment-with-locales-es6";
 import ChatListLoadingSkeleton from "./chatListLoadingSkeleton";
-import useLatestConversationStore from "@/zustand/messaging/latestConversation";
+import useLatestConversationStore from "@/zustand/messaging/showConversation";
 import { useEffect } from "react";
 import { useUserStore } from "@/zustand/auth/user";
+import { useMediaQuery } from "usehooks-ts";
+
 const ChatList = () => {
+  const matches = useMediaQuery("(min-width: 640px)");
   const user = useUserStore((state) => state.user);
-  const setLatestConversation = useLatestConversationStore(
-    (state) => state.setLatestConversation
+  const setConversation = useLatestConversationStore(
+    (state) => state.setConversation
   );
   const { isLoading, isSuccess, data } = useQuery({
     queryKey: ["conversations"],
@@ -27,9 +30,16 @@ const ChatList = () => {
 
   useEffect(() => {
     if (data && data.length !== 0) {
-      setLatestConversation(data[0].initiator_id, data[0].conversation_id);
+      setConversation(
+        data[0].initiator_id,
+        data[0].conversation_id,
+        data[0].gallery_uuid,
+        data[0].gender,
+        data[0].recipient_uuid,
+        data[0].recipient_nickname
+      );
     }
-  }, [data, setLatestConversation]);
+  }, [data, setConversation]);
 
   const conversations = data
     ?.sort((a, b) => {
@@ -44,7 +54,19 @@ const ChatList = () => {
             variant={"ghost"}
             className="flex space-x-2 w-full h-max items-start justify-start text-left"
             key={index}
-            onClick={updateMessagingPageView}
+            onClick={() => {
+              if (!matches) {
+                updateMessagingPageView();
+              }
+              setConversation(
+                conversation.initiator_id,
+                conversation.conversation_id,
+                conversation.gallery_uuid,
+                conversation.gender,
+                conversation.recipient_uuid,
+                conversation.recipient_nickname
+              );
+            }}
           >
             <div className="relative flex items-center">
               <img

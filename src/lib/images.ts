@@ -1,7 +1,7 @@
 export const getImagePath = (
-  gallery_uuid: string | null,
-  gender: string,
-  member_uuid: string
+  gallery_uuid: string | null | undefined,
+  gender: string | undefined,
+  member_uuid: string | undefined
 ) => {
   if (gallery_uuid != null) {
     return `https://muffin0.blob.core.windows.net/profile/${member_uuid}/${gallery_uuid}.jpg`;
