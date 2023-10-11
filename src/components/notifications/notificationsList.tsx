@@ -1,5 +1,5 @@
 import NotificationsListHeader from "./notificationListHeader";
-import NotificationsListFiters from "./notificationListFilters";
+// import NotificationsListFiters from "./notificationListFilters";
 import { useQuery } from "@tanstack/react-query";
 import notificationQuery, { NotificationData } from "@/queries/notification";
 import { UserCircle2Icon } from "lucide-react";
@@ -17,14 +17,14 @@ const NotificationsList = () => {
         return (
           <div
             key={index}
-            className="flex items-center justify-start space-x-2 p-8 m-4 bg-white rounded-xl"
+            className="flex items-center justify-start space-x-4 p-8 m-4 bg-white rounded-xl"
           >
             {/* <img
                     className="rounded-2xl"
                     src={notification.avatar}
                     alt="user avatar"
                   /> */}
-            <UserCircle2Icon height={36} width={36} />
+            <UserCircle2Icon height={48} width={48} />
             <div>
               <p className="font-bold text-md">
                 {notification.category_description}
@@ -50,7 +50,7 @@ const NotificationsList = () => {
   return (
     <div className="w-full h-full flex flex-col">
       <NotificationsListHeader />
-      <NotificationsListFiters />
+      {/* <NotificationsListFiters /> */}
       <div className="space-y-4 overflow-y-scroll bg-[#F7F8FA]">
         {isLoading && renderSkeletonLoading()}
         {!isSuccess && data == null ? <p>No notifications</p> : renderList()}
