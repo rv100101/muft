@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import moment from "moment-with-locales-es6";
 import { useEffect, useRef } from "react";
 import ChatMessagesLoadingSkeleton from "./chatMessagesLoadingSkeleton";
+import { useSelectedConversationData } from "@/zustand/messaging/selectedConversationData";
 
 const ChatMessages = () => {
   const scrollableDivRef = useRef<HTMLDivElement | null>(null);
@@ -12,10 +13,21 @@ const ChatMessages = () => {
   const latestConversation = useLatestConversationStore(
     (state) => state.conversation
   );
+  const conversationMessages = useSelectedConversationData(
+    (state) => state.messages
+  );
+  const setConversationMessages = useSelectedConversationData(
+    (state) => state.setMessages
+  );
+  if (conversationMessages) {
+    console.log(conversationMessages![conversationMessages!.length - 1]);
+  }
 
   const { isLoading, isSuccess, data } = useQuery({
-    queryKey: ["notificationsList", latestConversation],
+    queryKey: ["current-selected-conversation", latestConversation],
     enabled: latestConversation != null,
+    // refetchInterval: 500,
+    // refetchIntervalInBackground: true,
     queryFn: () =>
       messagingQuery.getConversationHistory(
         latestConversation!.conversationId,
@@ -24,22 +36,35 @@ const ChatMessages = () => {
   });
 
   useEffect(() => {
+    if (data) {
+      setConversationMessages(data);
+    }
+  }, [data, setConversationMessages]);
+
+  useEffect(() => {
     // Scroll to the bottom of the scrollable div when the component mounts or updates
     if (scrollableDivRef.current) {
       const scrollableDiv = scrollableDivRef.current;
       scrollableDiv.scrollTop = scrollableDiv.scrollHeight;
     }
-  }, [data]);
+  }, [data, conversationMessages]);
 
-  const messages = data?.map((message, index) => {
+  const messages = conversationMessages?.map((message, index) => {
     const gray = message.created_user == latestConversation?.memberId;
-    const date = moment(message.created_date).fromNow();
+    let date = message.created_date;
+    if (date !== "isLoading" && date !== "failed") {
+      date = moment(message.created_date).fromNow();
+    }
+
+    if (date == "failed") {
+      console.log(date);
+    }
 
     return (
       <div
         className={cn(
           "flex flex-col w-full space-y-1",
-          gray ? "items-start" : "items-end"
+          gray ? "items-end" : "items-start"
         )}
         key={index}
       >
@@ -53,7 +78,15 @@ const ChatMessages = () => {
         >
           <p className="text-sm">{message.conversation_text}</p>
         </div>
-        <p className="text-xs text-gray-500">{date}</p>
+        {date === "isLoading" && (
+          <p className={cn("text-xs text-gray-500")}>Sending...</p>
+        )}
+        {date === "failed" && (
+          <p className={cn("text-xs text-red-500")}>Failed to send message</p>
+        )}
+        {date !== "isLoading" && date !== "failed" && (
+          <p className={cn("text-xs text-gray-500")}>{date}</p>
+        )}
       </div>
     );
   });

@@ -7,21 +7,27 @@ import moment from "moment-with-locales-es6";
 import ChatListLoadingSkeleton from "./chatListLoadingSkeleton";
 import useLatestConversationStore from "@/zustand/messaging/showConversation";
 import { useEffect } from "react";
-import { useUserStore } from "@/zustand/auth/user";
 import { useMediaQuery } from "usehooks-ts";
+import { useSearchFilterStore } from "@/zustand/messaging/searchFilter";
+import { useSenderInfo } from "@/zustand/messaging/senderData";
+import { useUserStore } from "@/zustand/auth/user";
 
 const ChatList = () => {
   const matches = useMediaQuery("(min-width: 640px)");
-  const user = useUserStore((state) => state.user);
   const setConversation = useLatestConversationStore(
     (state) => state.setConversation
   );
+  const user = useUserStore((state) => state.user);
+  const selectedConversation = useLatestConversationStore(
+    (state) => state.conversation
+  );
+  const setSenderUserInfo = useSenderInfo((state) => state.setInfo);
   const { isLoading, isSuccess, data } = useQuery({
     queryKey: ["conversations"],
     queryFn: () => messagingQuery.getConversations(69),
   });
 
-  console.log(user);
+  const searchFilterValue = useSearchFilterStore((state) => state.value);
 
   // This is used for page view switching in mobile view
   const updateMessagingPageView = useMobileMessagingViewStore(
@@ -29,17 +35,27 @@ const ChatList = () => {
   );
 
   useEffect(() => {
-    if (data && data.length !== 0) {
+    if (!selectedConversation && data && data.length !== 0) {
       setConversation(
         data[0].initiator_id,
         data[0].conversation_id,
         data[0].gallery_uuid,
         data[0].gender,
         data[0].recipient_uuid,
-        data[0].recipient_nickname
+        data[0].recipient_nickname,
+        data[0].conversation_uuid
       );
+      setSenderUserInfo({
+        conversation_history_id: data[0].conversation_id,
+        conversation_text: "",
+        created_date: data[0].created_date,
+        created_user: data[0].initiator_id,
+        nickname: data[0].initiator_nickname,
+        gender: user!.gender!,
+      });
     }
-  }, [data, setConversation]);
+  }, [data, selectedConversation, setConversation, setSenderUserInfo, user]);
+  console.log(data);
 
   const conversations = data
     ?.sort((a, b) => {
@@ -47,13 +63,19 @@ const ChatList = () => {
       const dateB: Date = new Date(b.created_date);
       return dateA.getTime() - dateB.getTime();
     })
+    .filter((conversation) =>
+      searchFilterValue.length === 0
+        ? true
+        : conversation.recipient_nickname
+            .toLowerCase()
+            .includes(searchFilterValue.toLowerCase())
+    )
     .map((conversation, index) => {
       return (
         <li key={index}>
           <Button
             variant={"ghost"}
             className="flex space-x-2 w-full h-max items-start justify-start text-left"
-            key={index}
             onClick={() => {
               if (!matches) {
                 updateMessagingPageView();
@@ -64,7 +86,8 @@ const ChatList = () => {
                 conversation.gallery_uuid,
                 conversation.gender,
                 conversation.recipient_uuid,
-                conversation.recipient_nickname
+                conversation.recipient_nickname,
+                conversation.conversation_uuid
               );
             }}
           >
