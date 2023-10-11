@@ -1,29 +1,48 @@
-import { suggestionsData } from "@/lib/dummies/suggestionData";
+// import { suggestionsData } from "@/lib/dummies/suggestionData";
 import SearchInput from "./searchInput";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import FooterLinks from "./footerLinks";
+import { getImagePath } from "@/lib/images";
 
-const Suggestions = () => {
-  const suggestions = suggestionsData.slice(0, 3).map((suggestion, index) => {
+type Member = {
+  nickname: string;
+  age: number;
+  countryName: string;
+  member_uuid: string;
+  gallery_uuid: string;
+  gender: string;
+};
+
+type SuggestionsProps = {
+  memberPost: Member[];
+};
+
+const Suggestions = ({ memberPost }: SuggestionsProps) => {
+  const suggestions = memberPost.slice(0, 3).map((suggestion, index) => {
+    const imagePath = getImagePath(
+      suggestion.gallery_uuid,
+      suggestion.gender,
+      suggestion.member_uuid
+    );
     return (
       <li key={index} className="h-36 lg:h-340 w-full relative">
         <img
           className="h-full w-full rounded-xl z-10"
-          src={suggestion.backgroundImage}
+          src=""
           alt="cover photo"
         />
         <div className="absolute flex bottom-4 left-4 z-20 space-x-2 items-end">
           <img
             className="rounded-full h-10 lg:h-16 ring-2 ring-primary"
-            src={suggestion.avatar}
+            src={imagePath}
             alt="user avatar"
           />
           <div>
             <p className="font-semibold text-xs lg:text-lg">
-              {suggestion.name}
+              {suggestion.nickname}
             </p>
-            <p className="text-xs lg:text-md">{suggestion.country}</p>
+            <p className="text-xs lg:text-md">{suggestion.countryName}</p>
           </div>
         </div>
       </li>
