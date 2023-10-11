@@ -10,20 +10,30 @@ import { useMessageInputStore } from "@/zustand/messaging/messageInput";
 import useConversationHistoryStore from "@/zustand/messaging/showConversation";
 import messagingQuery from "@/queries/messaging";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useSelectedConversationData } from "@/zustand/messaging/selectedConversationData";
+import { useSenderInfo } from "@/zustand/messaging/senderData";
+import { useState } from "react";
 const ChatInput = () => {
   const queryClient = useQueryClient();
   const setInputMessage = useMessageInputStore((state) => state.setInputValue);
   const inputMessageValue = useMessageInputStore((state) => state.value);
+  const [finalInputMessage, setfinalInputMessage] = useState(inputMessageValue);
   const currentConversation = useConversationHistoryStore(
     (state) => state.conversation
   );
+  const updateLastSentMessageStatus = useSelectedConversationData(
+    (status) => status.updateMessageStatus
+  );
+  const senderInfo = useSenderInfo((state) => state.senderInfo);
 
-  console.log(currentConversation);
+  const appendNewMessage = useSelectedConversationData(
+    (state) => state.appendNewMessage
+  );
 
   const sendMessage = async () => {
     await messagingQuery.sendMessage(
       currentConversation!.conversation_uuid,
-      inputMessageValue,
+      finalInputMessage,
       currentConversation!.memberId
     );
   };
@@ -31,12 +41,29 @@ const ChatInput = () => {
   const mutateConversation = useMutation({
     mutationFn: sendMessage,
     onSuccess: () => {
-      // Invalidate and refetch
+      console.log("invalidated");
       queryClient.invalidateQueries({
         queryKey: ["current-selected-conversation"],
       });
     },
+    onError: () => {
+      console.log("failed to send message");
+      updateLastSentMessageStatus("failed");
+    },
   });
+
+  const handleMessageSend = () => {
+    if (senderInfo && inputMessageValue.length !== 0) {
+      appendNewMessage({
+        ...senderInfo,
+        conversation_text: inputMessageValue,
+        created_date: "isLoading",
+      });
+    }
+    setfinalInputMessage(inputMessageValue);
+    setInputMessage("");
+    mutateConversation.mutate();
+  };
 
   return (
     <div className="flex w-full items-end rounded-lg h-max bg-[#F7F8FA]">
@@ -49,7 +76,6 @@ const ChatInput = () => {
             <PopoverContent>
               <EmojiPicker
                 onEmojiClick={(emoji: EmojiClickData) => {
-                  console.log(emoji);
                   setInputMessage(inputMessageValue + emoji.emoji);
                 }}
                 height={300}
@@ -59,23 +85,24 @@ const ChatInput = () => {
           </Popover>
         </div>
         <textarea
+          className="focus:outline-none p-2 w-full border-2 rounded-lg max-h-full overflow-y-auto caret-primary resize-none"
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleMessageSend();
+            }
+          }}
           data-emojiable={true}
-          disabled={mutateConversation.isLoading}
           value={inputMessageValue}
           name="text"
           rows={3}
           onChange={(e) => {
             setInputMessage(e.target.value);
           }}
-          className="focus:outline-none p-2 w-full rounded-lg max-h-full overflow-y-auto caret-primary resize-none"
           placeholder="Type a message"
         />
       </div>
       <Button
-        disabled={mutateConversation.isLoading}
-        onClick={() => {
-          mutateConversation.mutate();
-        }}
+        onClick={handleMessageSend}
         className="rounded-full h-max w-max hover:bg-transparen ml-4 px-2 mr-4 mb-4"
       >
         <SendHorizonalIcon height={16} />

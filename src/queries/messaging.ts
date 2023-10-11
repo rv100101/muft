@@ -32,17 +32,11 @@ const sendMessage = async (
   text: string,
   member: number
 ) => {
-  try {
-    const res = await axiosQuery.post("/NewConversation", {
-      conversation: conversation_uuid,
-      text,
-      member,
-    });
-    const data: ConversationMessage[] = res.data;
-    return data;
-  } catch (error) {
-    return null;
-  }
+  return await axiosQuery.post("/NewConversation", {
+    conversation: conversation_uuid,
+    text,
+    member,
+  });
 };
 
 const messagingQuery = {

@@ -1,6 +1,4 @@
 export type Conversation = {
-  authorized: boolean;
-  ip_address: string;
   conversation_id: number;
   conversation_uuid: string;
   initiator_id: number;
@@ -19,8 +17,6 @@ export type Conversation = {
 };
 
 export type ConversationMessage = {
-  authorized: boolean;
-  ip_address: string;
   conversation_history_id: number;
   conversation_text: string;
   created_date: string;

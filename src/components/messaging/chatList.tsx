@@ -9,15 +9,19 @@ import useLatestConversationStore from "@/zustand/messaging/showConversation";
 import { useEffect } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import { useSearchFilterStore } from "@/zustand/messaging/searchFilter";
+import { useSenderInfo } from "@/zustand/messaging/senderData";
+import { useUserStore } from "@/zustand/auth/user";
 
 const ChatList = () => {
   const matches = useMediaQuery("(min-width: 640px)");
   const setConversation = useLatestConversationStore(
     (state) => state.setConversation
   );
+  const user = useUserStore((state) => state.user);
   const selectedConversation = useLatestConversationStore(
     (state) => state.conversation
   );
+  const setSenderUserInfo = useSenderInfo((state) => state.setInfo);
   const { isLoading, isSuccess, data } = useQuery({
     queryKey: ["conversations"],
     queryFn: () => messagingQuery.getConversations(69),
@@ -41,8 +45,16 @@ const ChatList = () => {
         data[0].recipient_nickname,
         data[0].conversation_uuid
       );
+      setSenderUserInfo({
+        conversation_history_id: data[0].conversation_id,
+        conversation_text: "",
+        created_date: data[0].created_date,
+        created_user: data[0].initiator_id,
+        nickname: data[0].initiator_nickname,
+        gender: user!.gender!,
+      });
     }
-  }, [data, selectedConversation, setConversation]);
+  }, [data, selectedConversation, setConversation, setSenderUserInfo, user]);
   console.log(data);
 
   const conversations = data
