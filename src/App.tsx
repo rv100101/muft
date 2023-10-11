@@ -58,7 +58,10 @@ function App() {
           />
         </>
       ) : (
-        <Redirect to="/auth/signin" />
+        (location == pageRoutes.messagingPage.path ||
+          location == pageRoutes.notificationsPage.path) && (
+          <Redirect to="/auth/signin" />
+        )
       )}
       {routesWithFooterAndTopNav.includes(location) && !user && (
         <div className="bg-[#0C1223]">
