@@ -1,38 +1,43 @@
-import postImage from "@/assets/home/sample-post-image.png";
-
 import { Codepen, Heart } from "lucide-react";
 import { useState } from "react";
 
-const PostItem = () => {
+type PostItemProps = {
+  nickname: string;
+  countryName: string;
+  age: number;
+  image: string;
+};
+
+const PostItem = ({ nickname, age, image }: PostItemProps) => {
   const [isLike, setLike] = useState(false);
   return (
-    <>
-      <div className="relative flex flex-col items-center justify-end h-full w-full p-3">
-        <div className="flex flex-col h-full justify-center items-center py-5 px-10">
+    <div className="transition ease-in duration-300 transform">
+      <div className="relative flex flex-col items-center justify-end h-full w-full p-10 border-b">
+        <div className="flex flex-col h-full justify-center items-center py-5 px-15">
           <img
-            src={postImage}
+            src={image}
             alt="post-img"
             width={520}
             className="rounded-md w-full"
             // height={1000}
             // className="h-2/4 "
           />
-          <div className="absolute bottom-[180px]">
-            <div className="flex flex-row w-full justify-center space-x-20">
+          <div className="absolute bottom-[220px] ">
+            <div className="flex flex-row w-full justify-center space-x-10">
               <div className="flex flex-col">
-                <p className="text-white text-2xl mb-3">John, 28</p>
-                <p className="text-white text-sm">
-                  Creative Director at Pheonix Inc.
+                <p className="text-white text-2xl mb-3">
+                  {`${nickname}, ${age}`}
                 </p>
+                {/* <p className="text-white text-sm">{countryName}</p> */}
                 <p className="text-white text-sm">
                   University of California, Berkeley
                 </p>
               </div>
-              <div className="flex items-center justify-center">
+              <div className="flex items-center justify-center mb-5">
                 <Heart
                   color="#FF599B"
                   fill={isLike ? "#FF599B" : "white"}
-                  size={40}
+                  size={50}
                   onClick={() => setLike((prev) => !prev)}
                   className="mt-1 hover:cursor-pointer transition duration-300 ease-in-out"
                 />
@@ -46,7 +51,7 @@ const PostItem = () => {
               eiusmod tempor incididunt.
             </p>
           </div>
-          <div className="flex flex-row justify-start space-x-3 mt-5">
+          <div className="flex flex-row justify-start space-x-3 mt-5 pb-5">
             <div className="rounded-full bg-[#FFF2F7] flex flex-row justify-center align-center space-x-2 py-2 px-4 ">
               <Codepen
                 color="#FF599B"
@@ -78,7 +83,7 @@ const PostItem = () => {
         </div>
         {/* <div className="h-[500px]"></div> */}
       </div>
-    </>
+    </div>
   );
 };
 
