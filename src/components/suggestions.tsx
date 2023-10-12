@@ -28,7 +28,7 @@ const Suggestions = () => {
     },
   );
 
-  const suggestions = members.data.slice(0, 3).map((suggestion: Member, index: number) => {
+  const suggestions = members.data?.slice(0, 3).map((suggestion: Member, index: number) => {
     const imagePath = getImagePath(
       suggestion.gallery_uuid,
       suggestion.gender,
