@@ -1,5 +1,5 @@
 import { SideBarLinks } from "@/types/sideBar";
-import { BellIcon, HomeIcon, MessageSquareIcon, UserIcon } from "lucide-react";
+import { BellIcon, HeartIcon, HomeIcon, MessageSquareIcon, UserIcon } from "lucide-react";
 
 const links: SideBarLinks = [
   {
@@ -21,6 +21,11 @@ const links: SideBarLinks = [
     path: "/profile",
     icon: UserIcon,
     name: "Profile",
+  },
+  {
+    path: "/likes-and-favourites",
+    icon: HeartIcon,
+    name: "Likes & Favourites",
   },
 ];
 
