@@ -1,9 +1,12 @@
 // import { suggestionsData } from "@/lib/dummies/suggestionData";
 import SearchInput from "./searchInput";
+import {useState} from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import FooterLinks from "./footerLinks";
 import { getImagePath } from "@/lib/images";
+import membersQuery from "@/queries/home";
+import { useQuery } from "@tanstack/react-query";
 
 type Member = {
   nickname: string;
@@ -14,12 +17,18 @@ type Member = {
   gender: string;
 };
 
-type SuggestionsProps = {
-  memberPost: Member[];
-};
+const Suggestions = () => {
+  
+  const getMembers = membersQuery.getMembers(69);
 
-const Suggestions = ({ memberPost }: SuggestionsProps) => {
-  const suggestions = memberPost.slice(0, 3).map((suggestion, index) => {
+  const members = useQuery(
+    {
+      queryKey: ["home-members"],
+      queryFn: () => getMembers,
+    },
+  );
+
+  const suggestions = members.data.slice(0, 3).map((suggestion: Member, index: number) => {
     const imagePath = getImagePath(
       suggestion.gallery_uuid,
       suggestion.gender,
