@@ -3,9 +3,21 @@ import AuthenticatedLayout from "./layout";
 import { MoreHorizontal, MoreVertical } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import SearchInput from "@/components/searchInput";
-import user from "@/assets/hero-avatar1.png";
+import likesQuery from "@/queries/likes";
+import { useQuery } from "@tanstack/react-query";
+import { Like } from "@/types/like";
+import { getImagePath } from "@/lib/images";
 const LikesAndFavouritesPage = () => {
-  const dummyCards = [...Array(12)].map((_, index: number) => {
+
+  const getMemberLikes = likesQuery.getLikes(69);
+
+  const likesQueryResults = useQuery({
+    queryKey: ['member-likes'],
+    queryFn: ()=>getMemberLikes
+  });
+
+  const likes = likesQueryResults.data?.map((like: Like, index: number) => {
+    console.log(like);
     return (
       <div
         key={index}
@@ -13,14 +25,14 @@ const LikesAndFavouritesPage = () => {
       >
         <div className="flex space-x-2 items-center">
           <div className="border-4 border-primary w-24 h-24 border-pink p-1 rounded-full">
-            <img className="w-full h-full" src={user} alt="user" />
+            <img className="w-full h-full rounded-full" src={getImagePath(like.gallery_uuid, like.gender, like.member_uuid)} alt="user"/>
           </div>
           <div>
             <p>
-              Shehnaz, 32
+             {like.nickname}, {like.age} 
             </p>
             <p>
-              UNITED KINGDOM
+            {like.country_name}
             </p>
           </div>
         </div>
@@ -30,6 +42,7 @@ const LikesAndFavouritesPage = () => {
       </div>
     );
   });
+
   return (
     <AuthenticatedLayout>
       <div className="flex flex-col w-full h-full space-y-4">
@@ -61,7 +74,7 @@ const LikesAndFavouritesPage = () => {
           <SearchInput />
         </div>
           <div className="grid gap-4 py-2 px-8 grid overflow-y-auto grid-cols-2 rows-auto">
-            {dummyCards}
+            {likes}
           </div>
       </div>
     </AuthenticatedLayout>
