@@ -1,38 +1,75 @@
 import TopBar from "@/components/topBar";
 import AuthenticatedLayout from "./layout";
-import { MoreHorizontal, MoreVertical } from "lucide-react";
+import { MoreHorizontal, MoreVertical, SearchIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import SearchInput from "@/components/searchInput";
 import likesQuery from "@/queries/likes";
 import { useQuery } from "@tanstack/react-query";
 import { Like } from "@/types/like";
 import { getImagePath } from "@/lib/images";
+import { useState } from "react";
+import favouritesQuery from "@/queries/favourites";
+import { cn } from "@/lib/utils";
+import { useUserCountry } from "@/zustand/auth/country";
+import SkeletonLoading from "@/components/likesAndFavourites/skeletonLoading";
 const LikesAndFavouritesPage = () => {
-
+  const [tab, setTab] = useState<"LIKES" | "FAVOURITES">("LIKES");
+  const [filter, setFilter] = useState<"ALL" | "CURRENT-COUNTRY">("ALL");
+  const [search, setSearch] = useState<string>("");
   const getMemberLikes = likesQuery.getLikes(69);
+  const getMemberFavourites = favouritesQuery.getFavourites(69);
+  const userCountry = useUserCountry((state) => state.country);
 
   const likesQueryResults = useQuery({
-    queryKey: ['member-likes'],
-    queryFn: ()=>getMemberLikes
+    queryKey: ["member-likes"],
+    queryFn: () => getMemberLikes,
   });
 
-  const likes = likesQueryResults.data?.map((like: Like, index: number) => {
-    console.log(like);
+  const favouritesQueryResults = useQuery({
+    queryKey: ["member-favourites"],
+    queryFn: () => getMemberFavourites,
+  });
+
+  const handleFilter = (like: Like) => {
+    let match = false;
+    if (search.length === 0 && filter === "ALL") {
+      return true;
+    }
+    if (search.length !== 0) {
+      match = like.nickname.toLowerCase().includes(search.toLowerCase());
+    }
+
+    if (filter === "CURRENT-COUNTRY") {
+      match = like.country_name.toLowerCase() === userCountry?.toLowerCase();
+    }
+    console.log(match);
+
+    return match;
+  };
+
+  const handleMap = (like: Like, index: number) => {
     return (
       <div
         key={index}
-        className="w-full p-8 flex justify-between h-48 border rounded-xl"
+        className="w-full p-8 flex justify-between h-48 border rounded-lg"
       >
         <div className="flex space-x-2 items-center">
           <div className="border-4 border-primary w-24 h-24 border-pink p-1 rounded-full">
-            <img className="w-full h-full rounded-full" src={getImagePath(like.gallery_uuid, like.gender, like.member_uuid)} alt="user"/>
+            <img
+              className="w-full h-full rounded-full"
+              src={getImagePath(
+                like.gallery_uuid,
+                like.gender,
+                like.member_uuid,
+              )}
+              alt="user"
+            />
           </div>
           <div>
-            <p>
-             {like.nickname}, {like.age} 
+            <p className="font-semibold text-xl">
+              {like.nickname}, <span className="text-2xl">{like.age}</span>
             </p>
-            <p>
-            {like.country_name}
+            <p className="text-sm">
+              {like.country_name}
             </p>
           </div>
         </div>
@@ -41,7 +78,16 @@ const LikesAndFavouritesPage = () => {
         </button>
       </div>
     );
-  });
+  };
+
+  const likes = likesQueryResults.data?.filter(handleFilter).map(handleMap);
+
+  const favourites = favouritesQueryResults.data?.filter(handleFilter).map(
+    handleMap,
+  );
+
+  console.log(likesQueryResults.isLoading);
+  
 
   return (
     <AuthenticatedLayout>
@@ -49,33 +95,79 @@ const LikesAndFavouritesPage = () => {
         <div className="pt-4">
           <TopBar>
             <div className="w-full h-full flex items-center justify-between">
-              <h1 className="font-semibold">LIKES AND FAVOURITES</h1>
+              <h1 className="font-semibold">LIKES AND FAVOURITES</h1>{" "}
               <Button variant={"ghost"}>
                 <MoreVertical />
               </Button>
             </div>
           </TopBar>
-        </div>
+        </div>{" "}
         <div className="w-full flex h-max">
-          <Button className="w-full rounded-0 bg-transparent text-black border-r border-t rounded-none border-b border-b-4">
+          <Button
+            onClick={() => {
+              setTab("LIKES");
+            }}
+            className={cn(
+              "w-full rounded-0 bg-transparent text-black border-r border-t rounded-none border-b p-8 text-[#727272] text-lg",
+              tab == "LIKES" && "border-b-4 border-b-[#404040]",
+            )}
+          >
             LIKES
-          </Button>
-          <Button className="w-full bg-transparent text-black border-t rounded-none border-b">
+          </Button>{" "}
+          <Button
+            onClick={() => {
+              setTab("FAVOURITES");
+            }}
+            className={cn(
+              "w-full rounded-0 bg-transparent text-black border-r border-t rounded-none border-b text-[#727272] text-lg p-8",
+              tab == "FAVOURITES" && "border-b-4 border-b-[#404040]",
+            )}
+          >
             FAVOURITES
           </Button>
         </div>
         <div className="flex justify-between h-max items-center px-8">
           <div>
-            <Button variant={"ghost"} className="rounded-none border-b">
+            <Button
+              onClick={() => {
+                setFilter("ALL");
+              }}
+              variant={"ghost"}
+              className={cn("rounded-none", filter === "ALL" && "border-b")}
+            >
               All
             </Button>
-            <Button variant={"ghost"}>Current Country</Button>
+            <Button
+              onClick={() => {
+                setFilter("CURRENT-COUNTRY");
+              }}
+              variant={"ghost"}
+              className={cn(
+                "rounded-none",
+                filter === "CURRENT-COUNTRY" && "border-b",
+              )}
+            >
+              Current Country
+            </Button>
           </div>
-          <SearchInput />
+          <div className="w-max border py-4 px-6  space-x-2 rounded-xl flex items-center">
+            <input
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+              }}
+              className="h-4 border-0 focus:outline-0 w-full"
+              placeholder="Search"
+            />
+            <SearchIcon color="gray"/>
+          </div>
         </div>
-          <div className="grid gap-4 py-2 px-8 grid overflow-y-auto grid-cols-2 rows-auto">
-            {likes}
-          </div>
+        <div className="grid gap-4 py-2 px-8 grid overflow-y-auto grid-cols-2 rows-auto">
+          {likesQueryResults.isLoading && <SkeletonLoading />}
+          {favouritesQueryResults.isLoading && <SkeletonLoading />}
+          {tab == "LIKES" && likes}
+          {tab == "FAVOURITES" && favourites}
+        </div>
       </div>
     </AuthenticatedLayout>
   );
