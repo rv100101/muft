@@ -56,6 +56,10 @@ function App() {
             path={pageRoutes.notificationsPage.path}
             component={pageRoutes.notificationsPage.component}
           />
+          <Route
+            path={pageRoutes.profilePage.path}
+            component={pageRoutes.profilePage.component}
+          />
         </>
       ) : (
         (location == pageRoutes.messagingPage.path ||
