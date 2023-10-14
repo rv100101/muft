@@ -3,19 +3,8 @@ import OverviewForm from "./overview/overviewForm";
 import { useOverviewStore } from "@/zustand/profile/about/useOverviewStore";
 
 const AboutAccordionContent = () => {
-  const {
-    editMode,
-    handleInputChange,
-    handleInputBlur,
-    locationText,
-    EducationText,
-    careerText,
-    relationshipText,
-    contactText,
-    birthInfoText,
-    languageText,
-    handleDoubleClick,
-  } = useOverviewStore();
+  const { handleInputChange, inputs, editModes, setEditMode } =
+    useOverviewStore();
   const [activeTabs, setActiveTabs] = useState([
     false,
     false,
@@ -29,7 +18,7 @@ const AboutAccordionContent = () => {
   };
 
   return (
-    <div className="flex flex-row">
+    <div className="flex flex-row mb-5">
       {/* sidebar */}
       <div className="flex flex-col w-1/3">
         <div
@@ -92,17 +81,10 @@ const AboutAccordionContent = () => {
       {/* content - Form*/}
       {activeTabs[0] && (
         <OverviewForm
-          handleDoubleClick={handleDoubleClick}
-          isEditing={editMode}
-          handleInputBlur={handleInputBlur}
+          inputs={inputs}
+          editModes={editModes}
+          setEditMode={setEditMode}
           handleInputChange={handleInputChange}
-          locationText={locationText}
-          EducationText={EducationText}
-          careerText={careerText}
-          relationshipText={relationshipText}
-          contactText={contactText}
-          birthInfoText={birthInfoText}
-          languageText={languageText}
         />
       )}
     </div>
