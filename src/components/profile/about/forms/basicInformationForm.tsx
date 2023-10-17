@@ -1,26 +1,49 @@
 import {
-  BookOpen,
-  Briefcase,
   Cake,
+  CalendarClock,
+  Cross,
+  Flag,
+  Ghost,
   Heart,
   Languages,
-  MapPin,
   MoreHorizontal,
-  Phone,
   PlusCircle,
+  Users,
 } from "lucide-react";
-import { OverviewStore } from "@/zustand/profile/about/useOverviewStore";
 
-const OverviewForm = ({
-  inputs,
-  editModes,
-  setEditMode,
-  handleInputChange,
-}: OverviewStore) => {
+type BasicInfoFormProps = {
+  basicInfoInputs: {
+    genderText: string;
+    nationalityText: string;
+    birthInfoText: string;
+    ageText: string;
+    religionText: string;
+    ethnicityText: string;
+    maritalStatusText: string;
+    languageText: string;
+  };
+  basicInfoEditModes: {
+    genderText: boolean;
+    nationalityText: boolean;
+    birthInfoText: boolean;
+    ageText: boolean;
+    religionText: boolean;
+    ethnicityText: boolean;
+    maritalStatusText: boolean;
+    languageText: boolean;
+  };
+  basicInfoHandleInputChange: (fieldName: string, value: string) => void;
+};
+
+const BasicInformationForm = ({
+  basicInfoInputs,
+  basicInfoEditModes,
+  basicInfoHandleInputChange,
+}: BasicInfoFormProps) => {
   return (
     <div className="flex flex-col w-full space-y-5">
       <div className="flex flex-row justify-between w-full px-5">
-        {editModes.locationText ? (
+        {basicInfoEditModes.genderText == true ? (
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
             <PlusCircle
               color="#FF599B"
@@ -29,24 +52,20 @@ const OverviewForm = ({
             />
             <input
               type="text"
-              value={inputs.locationText}
+              value={basicInfoInputs.genderText}
               onChange={(e) =>
-                handleInputChange("locationText", e.target.value)
+                basicInfoHandleInputChange("genderText", e.target.value)
               }
-              onBlur={() => setEditMode("locationText", false)}
               autoFocus
               className="outline-0 text-[#FF599B]"
-              name="locationText"
+              name="genderText"
             />
           </div>
         ) : (
-          <div
-            className="flex flex-row space-x-2 hover:cursor-pointer"
-            onDoubleClick={() => setEditMode("locationText", true)}
-          >
-            <MapPin
+          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+            <Ghost
               color={
-                inputs.locationText === "Add Relationship Status"
+                basicInfoInputs.genderText === "Add Relationship Status"
                   ? "#FF599B"
                   : "#727272"
               }
@@ -55,17 +74,17 @@ const OverviewForm = ({
             />
             <p
               className={
-                inputs.locationText === "Add Relationship Status"
+                basicInfoInputs.genderText === "Add Relationship Status"
                   ? "text-[#FF599B]"
                   : "text-[#727272]"
               }
             >
-              {inputs.locationText}
+              {basicInfoInputs.genderText}
             </p>
           </div>
         )}
-        {inputs.locationText !== "Add Relationship Status" &&
-          !editModes.locationText && (
+        {basicInfoInputs.genderText !== "Add Relationship Status" &&
+          !basicInfoEditModes.genderText && (
             <MoreHorizontal
               color="#727272"
               size={20}
@@ -74,7 +93,7 @@ const OverviewForm = ({
           )}
       </div>
       <div className="flex flex-row justify-between w-full px-5">
-        {editModes.educationText ? (
+        {basicInfoEditModes.nationalityText ? (
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
             <PlusCircle
               color="#FF599B"
@@ -83,24 +102,20 @@ const OverviewForm = ({
             />
             <input
               type="text"
-              value={inputs.educationText}
+              value={basicInfoInputs.nationalityText}
               onChange={(e) =>
-                handleInputChange("educationText", e.target.value)
+                basicInfoHandleInputChange("nationalityText", e.target.value)
               }
-              onBlur={() => setEditMode("educationText", false)}
               autoFocus
               className="outline-0 text-[#FF599B]"
-              name="educationText"
+              name="nationalityText"
             />
           </div>
         ) : (
-          <div
-            className="flex flex-row space-x-2 hover:cursor-pointer"
-            onDoubleClick={() => setEditMode("educationText", true)}
-          >
-            <BookOpen
+          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+            <Flag
               color={
-                inputs.educationText === "Add Relationship Status"
+                basicInfoInputs.nationalityText === "Add Relationship Status"
                   ? "#FF599B"
                   : "#727272"
               }
@@ -109,17 +124,17 @@ const OverviewForm = ({
             />
             <p
               className={
-                inputs.educationText === "Add Relationship Status"
+                basicInfoInputs.nationalityText === "Add Relationship Status"
                   ? "text-[#FF599B]"
                   : "text-[#727272]"
               }
             >
-              {inputs.educationText}
+              {basicInfoInputs.nationalityText}
             </p>
           </div>
         )}
-        {inputs.educationText !== "Add Relationship Status" &&
-          !editModes.educationText && (
+        {basicInfoInputs.nationalityText !== "Add Relationship Status" &&
+          !basicInfoEditModes.nationalityText && (
             <MoreHorizontal
               color="#727272"
               size={20}
@@ -128,7 +143,7 @@ const OverviewForm = ({
           )}
       </div>
       <div className="flex flex-row justify-between w-full px-5">
-        {editModes.careerText ? (
+        {basicInfoEditModes.birthInfoText ? (
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
             <PlusCircle
               color="#FF599B"
@@ -137,22 +152,20 @@ const OverviewForm = ({
             />
             <input
               type="text"
-              value={inputs.careerText}
-              onChange={(e) => handleInputChange("careerText", e.target.value)}
-              onBlur={() => setEditMode("careerText", false)}
+              value={basicInfoInputs.birthInfoText}
+              onChange={(e) =>
+                basicInfoHandleInputChange("birthInfoText", e.target.value)
+              }
               autoFocus
               className="outline-0 text-[#FF599B]"
-              name="careerText"
+              name="birthInfoText"
             />
           </div>
         ) : (
-          <div
-            className="flex flex-row space-x-2 hover:cursor-pointer"
-            onDoubleClick={() => setEditMode("careerText", true)}
-          >
-            <Briefcase
+          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+            <Cake
               color={
-                inputs.careerText === "Add Relationship Status"
+                basicInfoInputs.birthInfoText === "Add Relationship Status"
                   ? "#FF599B"
                   : "#727272"
               }
@@ -161,17 +174,17 @@ const OverviewForm = ({
             />
             <p
               className={
-                inputs.careerText === "Add Relationship Status"
+                basicInfoInputs.birthInfoText === "Add Relationship Status"
                   ? "text-[#FF599B]"
                   : "text-[#727272]"
               }
             >
-              {inputs.careerText}
+              {basicInfoInputs.birthInfoText}
             </p>
           </div>
         )}
-        {inputs.careerText !== "Add Relationship Status" &&
-          !editModes.careerText && (
+        {basicInfoInputs.birthInfoText !== "Add Relationship Status" &&
+          !basicInfoEditModes.birthInfoText && (
             <MoreHorizontal
               color="#727272"
               size={20}
@@ -182,7 +195,7 @@ const OverviewForm = ({
 
       {/* add new */}
       <div className="flex flex-row justify-between w-full px-5">
-        {editModes.relationshipText ? (
+        {basicInfoEditModes.ageText ? (
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
             <PlusCircle
               color="#FF599B"
@@ -191,24 +204,173 @@ const OverviewForm = ({
             />
             <input
               type="text"
-              value={inputs.relationshipText}
+              value={basicInfoInputs.ageText}
               onChange={(e) =>
-                handleInputChange("relationshipText", e.target.value)
+                basicInfoHandleInputChange("ageText", e.target.value)
               }
-              onBlur={() => setEditMode("relationshipText", false)}
               autoFocus
               className="outline-0 text-[#FF599B]"
-              name="relationshipText"
+              name="ageText"
             />
           </div>
         ) : (
-          <div
-            className="flex flex-row space-x-2 hover:cursor-pointer"
-            onDoubleClick={() => setEditMode("relationshipText", true)}
-          >
+          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+            <CalendarClock
+              color={
+                basicInfoInputs.ageText === "Add Relationship Status"
+                  ? "#FF599B"
+                  : "#727272"
+              }
+              size={20}
+              className="hover:cursor-pointer"
+            />
+            <p
+              className={
+                basicInfoInputs.ageText === "Add Relationship Status"
+                  ? "text-[#FF599B]"
+                  : "text-[#727272]"
+              }
+            >
+              {basicInfoInputs.ageText}
+            </p>
+          </div>
+        )}
+        {basicInfoInputs.ageText !== "Add Relationship Status" &&
+          !basicInfoEditModes.ageText && (
+            <MoreHorizontal
+              color="#727272"
+              size={20}
+              className="hover:cursor-pointer "
+            />
+          )}
+      </div>
+
+      <div className="flex flex-row justify-between w-full px-5">
+        {basicInfoEditModes.religionText ? (
+          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+            <PlusCircle
+              color="#FF599B"
+              size={20}
+              className="hover:cursor-pointer"
+            />
+            <input
+              type="text"
+              value={basicInfoInputs.religionText}
+              onChange={(e) =>
+                basicInfoHandleInputChange("religionText", e.target.value)
+              }
+              autoFocus
+              className="outline-0 text-[#FF599B]"
+              name="religionText"
+            />
+          </div>
+        ) : (
+          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+            <Cross
+              color={
+                basicInfoInputs.religionText === "Add Relationship Status"
+                  ? "#FF599B"
+                  : "#727272"
+              }
+              size={20}
+              className="hover:cursor-pointer"
+            />
+            <p
+              className={
+                basicInfoInputs.religionText === "Add Relationship Status"
+                  ? "text-[#FF599B]"
+                  : "text-[#727272]"
+              }
+            >
+              {basicInfoInputs.religionText}
+            </p>
+          </div>
+        )}
+        {basicInfoInputs.religionText !== "Add Relationship Status" &&
+          !basicInfoEditModes.religionText && (
+            <MoreHorizontal
+              color="#727272"
+              size={20}
+              className="hover:cursor-pointer "
+            />
+          )}
+      </div>
+
+      <div className="flex flex-row justify-between w-full px-5">
+        {basicInfoEditModes.ethnicityText ? (
+          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+            <PlusCircle
+              color="#FF599B"
+              size={20}
+              className="hover:cursor-pointer"
+            />
+            <input
+              type="text"
+              value={basicInfoInputs.ethnicityText}
+              onChange={(e) =>
+                basicInfoHandleInputChange("ethnicityText", e.target.value)
+              }
+              autoFocus
+              className="outline-0 text-[#FF599B]"
+              name="ethnicityText"
+            />
+          </div>
+        ) : (
+          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+            <Users
+              color={
+                basicInfoInputs.ethnicityText === "Add Relationship Status"
+                  ? "#FF599B"
+                  : "#727272"
+              }
+              size={20}
+              className="hover:cursor-pointer"
+            />
+            <p
+              className={
+                basicInfoInputs.ethnicityText === "Add Relationship Status"
+                  ? "text-[#FF599B]"
+                  : "text-[#727272]"
+              }
+            >
+              {basicInfoInputs.ethnicityText}
+            </p>
+          </div>
+        )}
+        {basicInfoInputs.ethnicityText !== "Add Relationship Status" &&
+          !basicInfoEditModes.ethnicityText && (
+            <MoreHorizontal
+              color="#727272"
+              size={20}
+              className="hover:cursor-pointer "
+            />
+          )}
+      </div>
+
+      <div className="flex flex-row justify-between w-full px-5">
+        {basicInfoEditModes.maritalStatusText ? (
+          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+            <PlusCircle
+              color="#FF599B"
+              size={20}
+              className="hover:cursor-pointer"
+            />
+            <input
+              type="text"
+              value={basicInfoInputs.maritalStatusText}
+              onChange={(e) =>
+                basicInfoHandleInputChange("maritalStatusText", e.target.value)
+              }
+              autoFocus
+              className="outline-0 text-[#FF599B]"
+              name="maritalStatusText"
+            />
+          </div>
+        ) : (
+          <div className="flex flex-row space-x-2 hover:cursor-pointer">
             <Heart
               color={
-                inputs.relationshipText === "Add Relationship Status"
+                basicInfoInputs.maritalStatusText === "Add Relationship Status"
                   ? "#FF599B"
                   : "#727272"
               }
@@ -217,17 +379,17 @@ const OverviewForm = ({
             />
             <p
               className={
-                inputs.relationshipText === "Add Relationship Status"
+                basicInfoInputs.maritalStatusText === "Add Relationship Status"
                   ? "text-[#FF599B]"
                   : "text-[#727272]"
               }
             >
-              {inputs.relationshipText}
+              {basicInfoInputs.maritalStatusText}
             </p>
           </div>
         )}
-        {inputs.relationshipText !== "Add Relationship Status" &&
-          !editModes.relationshipText && (
+        {basicInfoInputs.maritalStatusText !== "Add Relationship Status" &&
+          !basicInfoEditModes.maritalStatusText && (
             <MoreHorizontal
               color="#727272"
               size={20}
@@ -237,7 +399,7 @@ const OverviewForm = ({
       </div>
 
       <div className="flex flex-row justify-between w-full px-5">
-        {editModes.contactText ? (
+        {basicInfoEditModes.languageText ? (
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
             <PlusCircle
               color="#FF599B"
@@ -246,132 +408,20 @@ const OverviewForm = ({
             />
             <input
               type="text"
-              value={inputs.contactText}
-              onChange={(e) => handleInputChange("contactText", e.target.value)}
-              onBlur={() => setEditMode("contactText", false)}
-              autoFocus
-              className="outline-0 text-[#FF599B]"
-              name="contactText"
-            />
-          </div>
-        ) : (
-          <div
-            className="flex flex-row space-x-2 hover:cursor-pointer"
-            onDoubleClick={() => setEditMode("contactText", true)}
-          >
-            <Phone
-              color={
-                inputs.contactText === "Add Relationship Status"
-                  ? "#FF599B"
-                  : "#727272"
-              }
-              size={20}
-              className="hover:cursor-pointer"
-            />
-            <p
-              className={
-                inputs.contactText === "Add Relationship Status"
-                  ? "text-[#FF599B]"
-                  : "text-[#727272]"
-              }
-            >
-              {inputs.contactText}
-            </p>
-          </div>
-        )}
-        {inputs.contactText !== "Add Relationship Status" &&
-          !editModes.contactText && (
-            <MoreHorizontal
-              color="#727272"
-              size={20}
-              className="hover:cursor-pointer "
-            />
-          )}
-      </div>
-
-      <div className="flex flex-row justify-between w-full px-5">
-        {editModes.birthInfoText ? (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
-            <PlusCircle
-              color="#FF599B"
-              size={20}
-              className="hover:cursor-pointer"
-            />
-            <input
-              type="text"
-              value={inputs.birthInfoText}
+              value={basicInfoInputs.languageText}
               onChange={(e) =>
-                handleInputChange("birthInfoText", e.target.value)
+                basicInfoHandleInputChange("languageText", e.target.value)
               }
-              onBlur={() => setEditMode("birthInfoText", false)}
-              autoFocus
-              className="outline-0 text-[#FF599B]"
-              name="birthInfoText"
-            />
-          </div>
-        ) : (
-          <div
-            className="flex flex-row space-x-2 hover:cursor-pointer"
-            onDoubleClick={() => setEditMode("birthInfoText", true)}
-          >
-            <Cake
-              color={
-                inputs.birthInfoText === "Add Relationship Status"
-                  ? "#FF599B"
-                  : "#727272"
-              }
-              size={20}
-              className="hover:cursor-pointer"
-            />
-            <p
-              className={
-                inputs.birthInfoText === "Add Relationship Status"
-                  ? "text-[#FF599B]"
-                  : "text-[#727272]"
-              }
-            >
-              {inputs.birthInfoText}
-            </p>
-          </div>
-        )}
-        {inputs.birthInfoText !== "Add Relationship Status" &&
-          !editModes.birthInfoText && (
-            <MoreHorizontal
-              color="#727272"
-              size={20}
-              className="hover:cursor-pointer "
-            />
-          )}
-      </div>
-
-      <div className="flex flex-row justify-between w-full px-5">
-        {editModes.languageText ? (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
-            <PlusCircle
-              color="#FF599B"
-              size={20}
-              className="hover:cursor-pointer"
-            />
-            <input
-              type="text"
-              value={inputs.languageText}
-              onChange={(e) =>
-                handleInputChange("languageText", e.target.value)
-              }
-              onBlur={() => setEditMode("languageText", false)}
               autoFocus
               className="outline-0 text-[#FF599B]"
               name="languageText"
             />
           </div>
         ) : (
-          <div
-            className="flex flex-row space-x-2 hover:cursor-pointer"
-            onDoubleClick={() => setEditMode("languageText", true)}
-          >
+          <div className="flex flex-row space-x-2 hover:cursor-pointer">
             <Languages
               color={
-                inputs.languageText === "Add Relationship Status"
+                basicInfoInputs.languageText === "Add Relationship Status"
                   ? "#FF599B"
                   : "#727272"
               }
@@ -380,17 +430,17 @@ const OverviewForm = ({
             />
             <p
               className={
-                inputs.languageText === "Add Relationship Status"
+                basicInfoInputs.languageText === "Add Relationship Status"
                   ? "text-[#FF599B]"
                   : "text-[#727272]"
               }
             >
-              {inputs.languageText}
+              {basicInfoInputs.languageText}
             </p>
           </div>
         )}
-        {inputs.languageText !== "Add Relationship Status" &&
-          !editModes.languageText && (
+        {basicInfoInputs.languageText !== "Add Relationship Status" &&
+          !basicInfoEditModes.languageText && (
             <MoreHorizontal
               color="#727272"
               size={20}
@@ -404,4 +454,4 @@ const OverviewForm = ({
   );
 };
 
-export default OverviewForm;
+export default BasicInformationForm;

@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 export interface OverviewStore {
-  inputs: {
+  overviewInputs: {
     locationText: string;
     educationText: string;
     careerText: string;
@@ -10,7 +10,7 @@ export interface OverviewStore {
     birthInfoText: string;
     languageText: string;
   };
-  editModes: {
+  overviewEditModes: {
     locationText: boolean;
     educationText: boolean;
     careerText: boolean;
@@ -19,12 +19,14 @@ export interface OverviewStore {
     birthInfoText: boolean;
     languageText: boolean;
   };
-  setEditMode: (fieldName: string, editMode: boolean) => void;
-  handleInputChange: (fieldName: string, value: string) => void;
+  globalEditMode: boolean;
+  // overviewSetEditMode: (fieldName: string, editMode: boolean) => void;
+  overviewHandleInputChange: (fieldName: string, value: string) => void;
+  handleEditProfileToggle: () => void;
 }
 
 export const useOverviewStore = create<OverviewStore>((set) => ({
-  inputs: {
+  overviewInputs: {
     locationText: "Add Address Info here",
     educationText: "Add Education Info here",
     careerText: "Add Career Info here",
@@ -33,7 +35,7 @@ export const useOverviewStore = create<OverviewStore>((set) => ({
     birthInfoText: "Add Birth Info here",
     languageText: "Add Language Info here",
   },
-  editModes: {
+  overviewEditModes: {
     locationText: false,
     educationText: false,
     careerText: false,
@@ -42,22 +44,42 @@ export const useOverviewStore = create<OverviewStore>((set) => ({
     birthInfoText: false,
     languageText: false,
   },
+  globalEditMode: false,
 
   // reducers
-  setEditMode: (fieldName, editMode) => {
+  // overviewSetEditMode: (fieldName, editMode) => {
+  //   const { globalEditMode } = get();
+  //   if (globalEditMode) {
+  //     set((state) => ({
+  //       overviewEditModes: {
+  //         ...state.overviewEditModes,
+  //         [fieldName]: editMode,
+  //       },
+  //     }));
+  //   }
+  // },
+  overviewHandleInputChange: (fieldName, value) => {
     set((state) => ({
-      editModes: {
-        ...state.editModes,
-        [fieldName]: editMode,
+      overviewInputs: {
+        ...state.overviewInputs,
+        [fieldName]: value,
       },
     }));
   },
-  handleInputChange: (fieldName, value) => {
+  // edit profile btn
+  handleEditProfileToggle: () => {
     set((state) => ({
-      inputs: {
-        ...state.inputs,
-        [fieldName]: value,
+      overviewEditModes: {
+        ...state.overviewEditModes,
+        locationText: !state.overviewEditModes.locationText,
+        educationText: !state.overviewEditModes.educationText,
+        careerText: !state.overviewEditModes.careerText,
+        relationshipText: !state.overviewEditModes.relationshipText,
+        contactText: !state.overviewEditModes.contactText,
+        birthInfoText: !state.overviewEditModes.birthInfoText,
+        languageText: !state.overviewEditModes.languageText,
       },
+      globalEditMode: !state.globalEditMode,
     }));
   },
 }));

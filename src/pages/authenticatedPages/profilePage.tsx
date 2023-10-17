@@ -3,7 +3,6 @@ import AuthenticatedLayout from "./layout";
 import ProfileHeader from "@/components/profile/profileHeader";
 import AboutAccordion from "@/components/profile/about/aboutAccordion";
 import { PlusCircle } from "lucide-react";
-import sampleGallery from "../../assets/profile/sample-gallery.png";
 const ProfilePage = () => {
   return (
     <AuthenticatedLayout>

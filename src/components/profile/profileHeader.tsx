@@ -1,6 +1,30 @@
-import { Copy, Pen } from "lucide-react";
+import { Pen, Save, XCircle } from "lucide-react";
 import profileImg from "../../assets/profile/sample-profile.png";
+import { useState } from "react";
+import { useOverviewStore } from "@/zustand/profile/about/useOverviewStore";
+import { useBasicInfoStore } from "@/zustand/profile/about/useBasicInfoStore";
+import { useWorkEducationStore } from "@/zustand/profile/about/useWorkEducationStore";
+import { useDetailsStore } from "@/zustand/profile/about/useDetailsStore";
+import { useLocationStore } from "@/zustand/profile/about/useLocationStore";
+
 const ProfileHeader = () => {
+  const { handleEditProfileToggle: toggleOverviewFields } = useOverviewStore();
+  const { handleEditProfileToggle: toggleBasicInfoFields } =
+    useBasicInfoStore();
+  const { handleEditProfileToggle: toggleWorkEducationFields } =
+    useWorkEducationStore();
+
+  const { handleEditProfileToggle: toggleDetailsFields } = useDetailsStore();
+  const { handleEditProfileToggle: toggleLocationFields } = useLocationStore();
+  const [showSave, setShowSave] = useState(false);
+  const handleEditToggle = () => {
+    setShowSave((prev) => !prev);
+    toggleOverviewFields();
+    toggleBasicInfoFields();
+    toggleWorkEducationFields();
+    toggleDetailsFields();
+    toggleLocationFields();
+  };
   return (
     <div className="flex flex-row w-full justify-between items-start p-5 border-b">
       <div className="flex flex-row space-x-5 ">
@@ -41,11 +65,38 @@ const ProfileHeader = () => {
       </div>
       {/* options here */}
       <div className="flex flex-row justify-center w-1/3 space-x-4">
-        <div className="flex flex-row rounded-full justify-center hover:cursor-pointer px-5 text-sm space-x-2 bg-[#E8ECEF] py-2">
-          <Pen color="#727272" size={20} className="hover:cursor-pointer" />
-          <p className="text-[#727272]">Edit Profile</p>
-        </div>
-        <Copy color="#727272" size={20} className="mt-2 hover:cursor-pointer" />
+        {showSave ? (
+          <div
+            className="flex flex-row rounded-full justify-center hover:cursor-pointer px-5 text-sm space-x-2 bg-[#E8ECEF] py-2"
+            onClick={() => handleEditToggle()}
+          >
+            <XCircle
+              color="#727272"
+              size={20}
+              className="hover:cursor-pointer"
+            />
+          </div>
+        ) : (
+          <div
+            className="flex flex-row rounded-full justify-center hover:cursor-pointer px-5 text-sm space-x-2 bg-[#E8ECEF] py-2"
+            onClick={() => handleEditToggle()}
+          >
+            <Pen color="#727272" size={20} className="hover:cursor-pointer" />
+            <p className="text-[#727272]">Edit</p>
+          </div>
+        )}
+
+        {showSave && (
+          <div
+            className="flex flex-row rounded-full justify-center hover:cursor-pointer px-5 text-sm space-x-2 bg-green-400 py-2"
+            onClick={() => setShowSave(true)}
+          >
+            <Save color="white" size={20} className="hover:cursor-pointer" />
+            <p className="text-white">Save</p>
+          </div>
+        )}
+
+        {/* <Copy color="#727272" size={20} className="mt-2 hover:cursor-pointer" /> */}
       </div>
     </div>
   );
