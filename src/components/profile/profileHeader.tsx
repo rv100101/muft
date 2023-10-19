@@ -6,16 +6,16 @@ import { useBasicInfoStore } from "@/zustand/profile/about/useBasicInfoStore";
 import { useWorkEducationStore } from "@/zustand/profile/about/useWorkEducationStore";
 import { useDetailsStore } from "@/zustand/profile/about/useDetailsStore";
 import { useLocationStore } from "@/zustand/profile/about/useLocationStore";
+import { useUserStore } from "@/zustand/auth/user";
 
 const ProfileHeader = () => {
+  const { user } = useUserStore();
   const { handleEditProfileToggle: toggleOverviewFields } = useOverviewStore();
-  const { handleEditProfileToggle: toggleBasicInfoFields } =
-    useBasicInfoStore();
-  const { handleEditProfileToggle: toggleWorkEducationFields } =
-    useWorkEducationStore();
+  const { setEditMode: toggleBasicInfoFields } = useBasicInfoStore();
+  const { setEditMode: toggleWorkEducationFields } = useWorkEducationStore();
 
-  const { handleEditProfileToggle: toggleDetailsFields } = useDetailsStore();
-  const { handleEditProfileToggle: toggleLocationFields } = useLocationStore();
+  const { setEditMode: toggleDetailsFields } = useDetailsStore();
+  const { setEditMode: toggleLocationFields } = useLocationStore();
   const [showSave, setShowSave] = useState(false);
   const handleEditToggle = () => {
     setShowSave((prev) => !prev);
@@ -24,6 +24,11 @@ const ProfileHeader = () => {
     toggleWorkEducationFields();
     toggleDetailsFields();
     toggleLocationFields();
+  };
+
+  const onSave = () => {
+    setShowSave(true);
+    if (user) submitForm(user ? user.member_id : 0);
   };
   return (
     <div className="flex flex-row w-full justify-between items-start p-5 border-b">
@@ -89,7 +94,7 @@ const ProfileHeader = () => {
         {showSave && (
           <div
             className="flex flex-row rounded-full justify-center hover:cursor-pointer px-5 text-sm space-x-2 bg-green-400 py-2"
-            onClick={() => setShowSave(true)}
+            onClick={() => onSave()}
           >
             <Save color="white" size={20} className="hover:cursor-pointer" />
             <p className="text-white">Save</p>

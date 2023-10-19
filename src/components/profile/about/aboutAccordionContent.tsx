@@ -1,10 +1,8 @@
 import { useState } from "react";
 import OverviewForm from "./forms/overviewForm";
 import { useOverviewStore } from "@/zustand/profile/about/useOverviewStore";
-import { useBasicInfoStore } from "@/zustand/profile/about/useBasicInfoStore";
 import BasicInformationForm from "./forms/basicInformationForm";
 import WorkEducationForm from "./forms/workEducationForm";
-import { useWorkEducationStore } from "@/zustand/profile/about/useWorkEducationStore";
 import DetailsForm from "./forms/detailsForm";
 import { useDetailsStore } from "@/zustand/profile/about/useDetailsStore";
 import LocationForm from "./forms/locationForm";
@@ -13,17 +11,6 @@ import { useLocationStore } from "@/zustand/profile/about/useLocationStore";
 const AboutAccordionContent = () => {
   const { overviewHandleInputChange, overviewInputs, overviewEditModes } =
     useOverviewStore();
-
-  const { basicInfoEditModes, basicInfoInputs, basicInfoHandleInputChange } =
-    useBasicInfoStore();
-  const {
-    workEducationEditModes,
-    workEducationHandleInputChange,
-    workEducationInputs,
-  } = useWorkEducationStore();
-
-  const { detailsInputs, detailsEditModes, detailsHandleInputChange } =
-    useDetailsStore();
 
   const { locationInputs, locationEditModes, locationHandleInputChange } =
     useLocationStore();
@@ -112,31 +99,13 @@ const AboutAccordionContent = () => {
       )}
 
       {/* basic info */}
-      {activeTabs[1] && (
-        <BasicInformationForm
-          basicInfoInputs={basicInfoInputs}
-          basicInfoEditModes={basicInfoEditModes}
-          basicInfoHandleInputChange={basicInfoHandleInputChange}
-        />
-      )}
+      {activeTabs[1] && <BasicInformationForm />}
 
       {/* Work and Education */}
-      {activeTabs[2] && (
-        <WorkEducationForm
-          workEducationInputs={workEducationInputs}
-          workEducationEditModes={workEducationEditModes}
-          workEducationHandleInputChange={workEducationHandleInputChange}
-        />
-      )}
+      {activeTabs[2] && <WorkEducationForm />}
 
       {/* Details */}
-      {activeTabs[3] && (
-        <DetailsForm
-          detailsInputs={detailsInputs}
-          detailsEditModes={detailsEditModes}
-          detailsHandleInputChange={detailsHandleInputChange}
-        />
-      )}
+      {activeTabs[3] && <DetailsForm />}
 
       {/* Location */}
       {activeTabs[4] && (

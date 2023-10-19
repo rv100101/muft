@@ -1,3 +1,6 @@
+import axiosQuery from "@/queries/axios";
+import { useDetailsStore } from "@/zustand/profile/about/useDetailsStore";
+import { useQuery } from "@tanstack/react-query";
 import {
   Briefcase,
   Heart,
@@ -7,33 +10,60 @@ import {
   PlusCircle,
 } from "lucide-react";
 
-type DetailsFormProps = {
-  detailsInputs: {
-    appearance: string;
-    health: string;
-    lifestyle: string;
-    interest: string;
-    favoriteFood: string;
-  };
-  detailsEditModes: {
-    appearance: boolean;
-    health: boolean;
-    lifestyle: boolean;
-    interest: boolean;
-    favoriteFood: boolean;
-  };
-  detailsHandleInputChange: (fieldName: string, value: string) => void;
+type FavoriteFood = {
+  authorized: boolean;
+  ip_address: string;
+  favorite_food_id: number;
+  favorite_food_name: string;
 };
 
-const DetailsForm = ({
-  detailsInputs,
-  detailsEditModes,
-  detailsHandleInputChange,
-}: DetailsFormProps) => {
+type Interest = {
+  authorized: boolean;
+  ip_address: string;
+  interest_id: number;
+  interest_name: string;
+};
+
+const DetailsForm = () => {
+  const { formData, setFormData, globalEditMode: editMode } = useDetailsStore();
+
+  const handleInputChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  // fetch select options
+  const fetchFavoriteFood = async () => {
+    const response = await axiosQuery.post(
+      "https://muffinfunction.azurewebsites.net/api/FavoriteFoods",
+      { member: 32 }
+    );
+
+    return response.data;
+  };
+
+  const fetchInterest = async () => {
+    const response = await axiosQuery.post(
+      "https://muffinfunction.azurewebsites.net/api/Interests",
+      { member: 32 }
+    );
+
+    return response.data;
+  };
+
+  // useQuery instances
+  const { data: favoriteFoods } = useQuery(
+    ["favoriteFoods"],
+    fetchFavoriteFood
+  );
+  const { data: Interests } = useQuery(["Interests"], fetchInterest);
+
   return (
     <div className="flex flex-col w-full space-y-5">
       <div className="flex flex-row justify-between w-full px-5">
-        {detailsEditModes.appearance == true ? (
+        {editMode ? (
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
             <PlusCircle
               color="#FF599B"
@@ -42,10 +72,8 @@ const DetailsForm = ({
             />
             <input
               type="text"
-              value={detailsInputs.appearance}
-              onChange={(e) =>
-                detailsHandleInputChange("appearance", e.target.value)
-              }
+              value={formData.appearance}
+              onChange={(e) => handleInputChange(e)}
               autoFocus
               className="outline-0 text-[#FF599B]"
               name="appearance"
@@ -54,37 +82,24 @@ const DetailsForm = ({
         ) : (
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
             <MapPin
-              color={
-                detailsInputs.appearance === "Add Relationship Status"
-                  ? "#FF599B"
-                  : "#727272"
-              }
+              color="#727272"
               size={20}
               className="hover:cursor-pointer"
             />
-            <p
-              className={
-                detailsInputs.appearance === "Add Relationship Status"
-                  ? "text-[#FF599B]"
-                  : "text-[#727272]"
-              }
-            >
-              {detailsInputs.appearance}
-            </p>
+            <p className="text-[#727272]">{formData.appearance}</p>
           </div>
         )}
-        {detailsInputs.appearance !== "Add Relationship Status" &&
-          !detailsEditModes.appearance && (
-            <MoreHorizontal
-              color="#727272"
-              size={20}
-              className="hover:cursor-pointer "
-            />
-          )}
+        {!editMode && (
+          <MoreHorizontal
+            color="#727272"
+            size={20}
+            className="hover:cursor-pointer "
+          />
+        )}
       </div>
 
       <div className="flex flex-row justify-between w-full px-5">
-        {detailsEditModes.health ? (
+        {editMode ? (
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
             <PlusCircle
               color="#FF599B"
@@ -93,10 +108,8 @@ const DetailsForm = ({
             />
             <input
               type="text"
-              value={detailsInputs.health}
-              onChange={(e) =>
-                detailsHandleInputChange("health", e.target.value)
-              }
+              value={formData.health}
+              onChange={(e) => handleInputChange(e)}
               autoFocus
               className="outline-0 text-[#FF599B]"
               name="health"
@@ -105,38 +118,25 @@ const DetailsForm = ({
         ) : (
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
             <Briefcase
-              color={
-                detailsInputs.health === "Add Relationship Status"
-                  ? "#FF599B"
-                  : "#727272"
-              }
+              color="#727272"
               size={20}
               className="hover:cursor-pointer"
             />
-            <p
-              className={
-                detailsInputs.health === "Add Relationship Status"
-                  ? "text-[#FF599B]"
-                  : "text-[#727272]"
-              }
-            >
-              {detailsInputs.health}
-            </p>
+            <p className="text-[#727272]">{formData.health}</p>
           </div>
         )}
-        {detailsInputs.health !== "Add Relationship Status" &&
-          !detailsEditModes.health && (
-            <MoreHorizontal
-              color="#727272"
-              size={20}
-              className="hover:cursor-pointer "
-            />
-          )}
+        {!editMode && (
+          <MoreHorizontal
+            color="#727272"
+            size={20}
+            className="hover:cursor-pointer "
+          />
+        )}
       </div>
 
       {/* add new */}
       <div className="flex flex-row justify-between w-full px-5">
-        {detailsEditModes.lifestyle ? (
+        {editMode ? (
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
             <PlusCircle
               color="#FF599B"
@@ -145,10 +145,8 @@ const DetailsForm = ({
             />
             <input
               type="text"
-              value={detailsInputs.lifestyle}
-              onChange={(e) =>
-                detailsHandleInputChange("lifestyle", e.target.value)
-              }
+              value={formData.lifestyle}
+              onChange={(e) => handleInputChange(e)}
               autoFocus
               className="outline-0 text-[#FF599B]"
               name="lifestyle"
@@ -156,136 +154,122 @@ const DetailsForm = ({
           </div>
         ) : (
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
-            <Heart
-              color={
-                detailsInputs.lifestyle === "Add Relationship Status"
-                  ? "#FF599B"
-                  : "#727272"
-              }
-              size={20}
-              className="hover:cursor-pointer"
-            />
-            <p
-              className={
-                detailsInputs.lifestyle === "Add Relationship Status"
-                  ? "text-[#FF599B]"
-                  : "text-[#727272]"
-              }
-            >
-              {detailsInputs.lifestyle}
-            </p>
+            <Heart color="#727272" size={20} className="hover:cursor-pointer" />
+            <p className="text-[#727272]">{formData.lifestyle}</p>
           </div>
         )}
-        {detailsInputs.lifestyle !== "Add Relationship Status" &&
-          !detailsEditModes.lifestyle && (
-            <MoreHorizontal
-              color="#727272"
-              size={20}
-              className="hover:cursor-pointer "
-            />
-          )}
+        {!editMode && (
+          <MoreHorizontal
+            color="#727272"
+            size={20}
+            className="hover:cursor-pointer "
+          />
+        )}
       </div>
 
       <div className="flex flex-row justify-between w-full px-5">
-        {detailsEditModes.interest ? (
+        {editMode ? (
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
             <PlusCircle
               color="#FF599B"
               size={20}
               className="hover:cursor-pointer"
             />
-            <input
+            <select
+              // type="text"
+              value={formData.interest}
+              onChange={(e) => handleInputChange(e)}
+              autoFocus
+              className="outline-0 text-[#FF599B]"
+              name="Interests"
+            >
+              <option value="" disabled>
+                Select Interest
+              </option>
+              {Interests.map((data: Interest) => {
+                const { interest_name: interest, interest_id } = data;
+                return (
+                  <option value={interest} key={interest_id}>
+                    {interest}
+                  </option>
+                );
+              })}
+            </select>
+            {/* <input
               type="text"
-              value={detailsInputs.interest}
-              onChange={(e) =>
-                detailsHandleInputChange("interest", e.target.value)
-              }
+              value={formData.interest}
+              onChange={(e) => handleInputChange(e)}
               autoFocus
               className="outline-0 text-[#FF599B]"
               name="interest"
-            />
+            /> */}
           </div>
         ) : (
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
-            <Phone
-              color={
-                detailsInputs.interest === "Add Relationship Status"
-                  ? "#FF599B"
-                  : "#727272"
-              }
-              size={20}
-              className="hover:cursor-pointer"
-            />
-            <p
-              className={
-                detailsInputs.interest === "Add Relationship Status"
-                  ? "text-[#FF599B]"
-                  : "text-[#727272]"
-              }
-            >
-              {detailsInputs.interest}
-            </p>
+            <Phone color="#727272" size={20} className="hover:cursor-pointer" />
+            <p className="text-[#727272]">{formData.interest}</p>
           </div>
         )}
-        {detailsInputs.interest !== "Add Relationship Status" &&
-          !detailsEditModes.interest && (
-            <MoreHorizontal
-              color="#727272"
-              size={20}
-              className="hover:cursor-pointer "
-            />
-          )}
+        {!editMode && (
+          <MoreHorizontal
+            color="#727272"
+            size={20}
+            className="hover:cursor-pointer "
+          />
+        )}
       </div>
 
       <div className="flex flex-row justify-between w-full px-5">
-        {detailsEditModes.favoriteFood ? (
+        {editMode ? (
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
             <PlusCircle
               color="#FF599B"
               size={20}
               className="hover:cursor-pointer"
             />
-            <input
-              type="text"
-              value={detailsInputs.favoriteFood}
-              onChange={(e) =>
-                detailsHandleInputChange("favoriteFood", e.target.value)
-              }
+            <select
+              // type="text"
+              value={formData.favoriteFood}
+              onChange={(e) => handleInputChange(e)}
               autoFocus
               className="outline-0 text-[#FF599B]"
               name="favoriteFood"
-            />
+            >
+              <option value="" disabled>
+                Select Favorite Food
+              </option>
+              {favoriteFoods.map((data: FavoriteFood) => {
+                const { favorite_food_name: favoriteFood, favorite_food_id } =
+                  data;
+                return (
+                  <option value={favoriteFood} key={favorite_food_id}>
+                    {favoriteFood}
+                  </option>
+                );
+              })}
+            </select>
+            {/* <input
+              type="text"
+              value={formData.favoriteFood}
+              onChange={(e) => handleInputChange(e)}
+              autoFocus
+              className="outline-0 text-[#FF599B]"
+              name="favoriteFood"
+            /> */}
           </div>
         ) : (
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
-            <Phone
-              color={
-                detailsInputs.favoriteFood === "Add Relationship Status"
-                  ? "#FF599B"
-                  : "#727272"
-              }
-              size={20}
-              className="hover:cursor-pointer"
-            />
-            <p
-              className={
-                detailsInputs.favoriteFood === "Add Relationship Status"
-                  ? "text-[#FF599B]"
-                  : "text-[#727272]"
-              }
-            >
-              {detailsInputs.favoriteFood}
-            </p>
+            <Phone color="#727272" size={20} className="hover:cursor-pointer" />
+            <p className="text-[#727272]">{formData.favoriteFood}</p>
           </div>
         )}
-        {detailsInputs.favoriteFood !== "Add Relationship Status" &&
-          !detailsEditModes.favoriteFood && (
-            <MoreHorizontal
-              color="#727272"
-              size={20}
-              className="hover:cursor-pointer "
-            />
-          )}
+        {!editMode && (
+          <MoreHorizontal
+            color="#727272"
+            size={20}
+            className="hover:cursor-pointer "
+          />
+        )}
       </div>
 
       {/*  */}

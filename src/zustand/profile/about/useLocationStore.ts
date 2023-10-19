@@ -1,47 +1,34 @@
 import { create } from "zustand";
 
+interface formData {
+  country: string;
+  state: string;
+}
 export interface LocationStore {
-  locationInputs: {
+  formData: {
     country: string;
     state: string;
   };
+  setFormData: (data: formData) => void;
+  setEditMode: () => void;
+  // submitForm: (memberId: number) => void;
 
-  locationEditModes: {
-    country: boolean;
-    state: boolean;
-  };
   globalEditMode: boolean;
-  locationHandleInputChange: (fieldName: string, value: string) => void;
-  handleEditProfileToggle: () => void;
 }
-
 export const useLocationStore = create<LocationStore>((set) => ({
-  locationInputs: {
-    country: "Add Country Info here",
-    state: "Add State Info here",
+  formData: {
+    country: "",
+    state: "",
   },
-  locationEditModes: {
-    country: false,
-    state: false,
-  },
-  globalEditMode: false,
 
-  locationHandleInputChange: (fieldName, value) => {
-    set((state) => ({
-      locationInputs: {
-        ...state.locationInputs,
-        [fieldName]: value,
-      },
-    }));
+  globalEditMode: false,
+  setFormData: (data: formData) => {
+    set({ formData: data });
   },
+
   // edit profile btn
-  handleEditProfileToggle: () => {
+  setEditMode: () => {
     set((state) => ({
-      locationEditModes: {
-        ...state.locationEditModes,
-        country: !state.locationEditModes.country,
-        state: !state.locationEditModes.state,
-      },
       globalEditMode: !state.globalEditMode,
     }));
   },
