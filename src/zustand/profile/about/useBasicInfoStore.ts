@@ -55,13 +55,4 @@ export const useBasicInfoStore = create<BasicInfoStore>((set) => ({
       globalEditMode: !state.globalEditMode,
     }));
   },
-  // submitForm: async (memberId: number) => {
-  //   const { basicInfoInputs } = get();
-  //   console.log("basicInfoInputs: ", basicInfoInputs);
-  //   // const response = await axiosQuery.post(
-  //   //   "https://muffinfunction.azurewebsites.net/api/SaveGender",
-  //   //   { gender: basicInfoInputs.gender, member: memberId }
-  //   // );
-  //   // console.log("👨‍✈️ ~  submitForm: ~ response:", response);
-  // },
 }));

@@ -395,7 +395,7 @@ const BasicInformationForm = () => {
               {ethnicities.map((data: Ethnicity) => {
                 const { ethnicity_name, ethnicity_id } = data;
                 return (
-                  <option value={ethnicity_name} key={ethnicity_id}>
+                  <option value={ethnicity_id} key={ethnicity_id}>
                     {ethnicity_name}
                   </option>
                 );
@@ -439,7 +439,7 @@ const BasicInformationForm = () => {
               {maritalStatus.map((data: MaritalStatus) => {
                 const { marital_status_name, marital_status_id } = data;
                 return (
-                  <option value={marital_status_name} key={marital_status_id}>
+                  <option value={marital_status_id} key={marital_status_id}>
                     {marital_status_name}
                   </option>
                 );
