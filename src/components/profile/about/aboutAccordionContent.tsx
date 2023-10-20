@@ -1,23 +1,16 @@
 import { useState } from "react";
-import OverviewForm from "./forms/overviewForm";
-import { useOverviewStore } from "@/zustand/profile/about/useOverviewStore";
 import BasicInformationForm from "./forms/basicInformationForm";
 import WorkEducationForm from "./forms/workEducationForm";
 import DetailsForm from "./forms/detailsForm";
-import { useDetailsStore } from "@/zustand/profile/about/useDetailsStore";
 import LocationForm from "./forms/locationForm";
 import { useLocationStore } from "@/zustand/profile/about/useLocationStore";
 
 const AboutAccordionContent = () => {
-  const { overviewHandleInputChange, overviewInputs, overviewEditModes } =
-    useOverviewStore();
-
-  const { locationInputs, locationEditModes, locationHandleInputChange } =
-    useLocationStore();
+  useLocationStore();
 
   const [activeTabs, setActiveTabs] = useState([
-    true,
     false,
+    true,
     false,
     false,
     false,
@@ -31,7 +24,7 @@ const AboutAccordionContent = () => {
     <div className="flex flex-row mb-5">
       {/* sidebar */}
       <div className="flex flex-col w-1/3">
-        <div
+        {/* <div
           className={
             activeTabs[0]
               ? "rounded-full bg-[#FFDEEB] py-2 px-2 my-2 text-[#FF599B] transition ease-in-out delay-150"
@@ -40,7 +33,7 @@ const AboutAccordionContent = () => {
           onClick={() => toggleTab(0)}
         >
           <p className="text-md hover:cursor-pointer select-none">Overview</p>
-        </div>
+        </div> */}
         <div
           className={
             activeTabs[1]
@@ -90,13 +83,7 @@ const AboutAccordionContent = () => {
       </div>
       {/* content - Form*/}
       {/* overview */}
-      {activeTabs[0] && (
-        <OverviewForm
-          overviewInputs={overviewInputs}
-          overviewEditModes={overviewEditModes}
-          overviewHandleInputChange={overviewHandleInputChange}
-        />
-      )}
+      {/* {activeTabs[0] && <OverviewForm />} */}
 
       {/* basic info */}
       {activeTabs[1] && <BasicInformationForm />}
@@ -108,13 +95,7 @@ const AboutAccordionContent = () => {
       {activeTabs[3] && <DetailsForm />}
 
       {/* Location */}
-      {activeTabs[4] && (
-        <LocationForm
-          locationInputs={locationInputs}
-          locationEditModes={locationEditModes}
-          locationHandleInputChange={locationHandleInputChange}
-        />
-      )}
+      {activeTabs[4] && <LocationForm />}
     </div>
   );
 };

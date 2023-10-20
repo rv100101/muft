@@ -9,7 +9,12 @@ import AboutAccordionContent from "./aboutAccordionContent";
 const AboutAccordion = () => {
   return (
     <div className="flex flex-row justify-between">
-      <Accordion type="single" collapsible className="w-full underline-0">
+      <Accordion
+        type="single"
+        collapsible
+        className="w-full underline-0"
+        defaultValue="item-1"
+      >
         <AccordionItem value="item-1" className="px-5 py-1">
           <AccordionTrigger className="">
             <p className="uppercase font-[500] text-[#727272] no-underline">

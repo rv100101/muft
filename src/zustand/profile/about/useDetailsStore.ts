@@ -1,22 +1,35 @@
 import { create } from "zustand";
 
 interface formData {
-  appearance: string;
-  health: string;
-  lifestyle: string;
+  height: string;
+  weight: string;
+  bodyType: string;
   interest: string;
   favoriteFood: string;
 }
 
+//height
+//weight
+//body type
+// living status
+// interest
+//favorite food
+
 export interface DetailsStore {
+  // formData: {
+  //   appearance: string;
+  //   health: string;
+  //   lifestyle: string;
+  //   interest: string;
+  //   favoriteFood: string;
+  // };
   formData: {
-    appearance: string;
-    health: string;
-    lifestyle: string;
+    height: string;
+    weight: string;
+    bodyType: string;
     interest: string;
     favoriteFood: string;
   };
-
   setFormData: (data: formData) => void;
   setEditMode: () => void;
   // submitForm: (memberId: number) => void;
@@ -26,9 +39,9 @@ export interface DetailsStore {
 
 export const useDetailsStore = create<DetailsStore>((set) => ({
   formData: {
-    appearance: "",
-    health: "",
-    lifestyle: "",
+    height: "",
+    weight: "",
+    bodyType: "",
     interest: "",
     favoriteFood: "",
   },

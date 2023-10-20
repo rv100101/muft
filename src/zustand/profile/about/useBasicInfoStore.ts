@@ -9,6 +9,10 @@ interface formData {
   religion: string;
   ethnicity: string;
   maritalStatus: string;
+  // maritalStatus: {
+  //   id: string;
+  //   name: string;
+  // };
   language: string;
 }
 export interface BasicInfoStore {
@@ -21,6 +25,11 @@ export interface BasicInfoStore {
     religion: string;
     ethnicity: string;
     maritalStatus: string;
+
+    // maritalStatus: {
+    //   id: string;
+    //   name: string;
+    // };
     language: string;
   };
 
@@ -41,6 +50,11 @@ export const useBasicInfoStore = create<BasicInfoStore>((set) => ({
     religion: "",
     ethnicity: "",
     maritalStatus: "",
+
+    // maritalStatus: {
+    //   id: "",
+    //   name: "",
+    // },
     language: "",
   },
   globalEditMode: false,

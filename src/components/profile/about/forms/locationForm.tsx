@@ -19,7 +19,7 @@ const LocationForm = () => {
     <div className="flex flex-col w-full space-y-5">
       <div className="flex flex-row justify-between w-full px-5">
         {editMode ? (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+          <div className="flex flex-row space-x-2 hover:cursor-pointer w-full items-center">
             <PlusCircle
               color="#FF599B"
               size={20}
@@ -30,30 +30,18 @@ const LocationForm = () => {
               value={formData.country}
               onChange={(e) => handleInputChange(e)}
               autoFocus
-              className="outline-0 text-[#FF599B]"
+              className="outline-0 text-[#FF599B] border border rounded-lg w-3/4 py-3 px-5"
               name="country"
             />
           </div>
         ) : (
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
             <MapPin
-              color={
-                formData.country === "Add Relationship Status"
-                  ? "#FF599B"
-                  : "#727272"
-              }
+              color="#727272"
               size={20}
               className="hover:cursor-pointer"
             />
-            <p
-              className={
-                formData.country === "Add Relationship Status"
-                  ? "text-[#FF599B]"
-                  : "text-[#727272]"
-              }
-            >
-              {formData.country}
-            </p>
+            <p className="text-[#727272]">{formData.country}</p>
           </div>
         )}
         {!editMode && (
@@ -67,7 +55,7 @@ const LocationForm = () => {
 
       <div className="flex flex-row justify-between w-full px-5">
         {editMode ? (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+          <div className="flex flex-row space-x-2 hover:cursor-pointer w-full items-center">
             <PlusCircle
               color="#FF599B"
               size={20}
@@ -78,7 +66,7 @@ const LocationForm = () => {
               value={formData.state}
               onChange={(e) => handleInputChange(e)}
               autoFocus
-              className="outline-0 text-[#FF599B]"
+              className="outline-0 text-[#FF599B] border border rounded-lg w-3/4 py-3 px-5"
               name="state"
             />
           </div>

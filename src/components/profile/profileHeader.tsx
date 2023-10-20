@@ -15,11 +15,16 @@ const ProfileHeader = () => {
   const { handleEditProfileToggle: toggleOverviewFields } = useOverviewStore();
   const { setEditMode: toggleBasicInfoFields, formData: basicInfoFormData } =
     useBasicInfoStore();
-  const { setEditMode: toggleWorkEducationFields } = useWorkEducationStore();
+  const {
+    setEditMode: toggleWorkEducationFields,
+    formData: WorkEduInfoFormData,
+  } = useWorkEducationStore();
 
-  const { setEditMode: toggleDetailsFields } = useDetailsStore();
+  const { setEditMode: toggleDetailsFields, formData: DetailsFormData } =
+    useDetailsStore();
   const { setEditMode: toggleLocationFields } = useLocationStore();
   const [showSave, setShowSave] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   const handleEditToggle = () => {
     setShowSave((prev) => !prev);
     toggleOverviewFields();
@@ -29,43 +34,111 @@ const ProfileHeader = () => {
     toggleLocationFields();
   };
 
+  const BasicInfoSubmit = async () => {
+    // const { toast } = useToast();
+    try {
+      await Promise.all([
+        axiosQuery.post(
+          "https://muffinfunction.azurewebsites.net/api/SaveGender",
+          { gender: basicInfoFormData.gender, member: member_id }
+        ),
+
+        axiosQuery.post(
+          "https://muffinfunction.azurewebsites.net/api/SaveNationality",
+          { nationality: basicInfoFormData.nationality, member: member_id }
+        ),
+
+        axiosQuery.post(
+          "https://muffinfunction.azurewebsites.net/api/SaveBirthday",
+          { birthday: basicInfoFormData.birthInfo, member: member_id }
+        ),
+
+        // axiosQuery.post(
+        //   "https://muffinfunction.azurewebsites.net/api/SaveReligion",
+        //   { religion: basicInfoFormData.religion, member: member_id }
+        // ),
+
+        // axiosQuery.post(
+        //   "https://muffinfunction.azurewebsites.net/api/SaveEthnicity",
+        //   { ethnicity: basicInfoFormData.ethnicity, member: member_id }
+        // ),
+
+        // axiosQuery.post(
+        //   "https://muffinfunction.azurewebsites.net/api/SaveMaritalStatus",
+        //   { marital_status: basicInfoFormData.maritalStatus, member: member_id }
+        // ),
+
+        axiosQuery.post(
+          "https://muffinfunction.azurewebsites.net/api/SaveLanguage",
+          { language: basicInfoFormData.language, member: member_id }
+        ),
+      ]);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const WorkEducationSubmit = async () => {
+    try {
+      await Promise.all([
+        axiosQuery.post(
+          "https://muffinfunction.azurewebsites.net/api/SaveEducation",
+          { education: WorkEduInfoFormData.education, member: member_id }
+        ),
+        axiosQuery.post(
+          "https://muffinfunction.azurewebsites.net/api/SaveOccupation",
+          { occupation: WorkEduInfoFormData.occupationTitle, member: member_id }
+        ),
+        axiosQuery.post(
+          "https://muffinfunction.azurewebsites.net/api/SaveIncome",
+          { income: WorkEduInfoFormData.income, member: member_id }
+        ),
+      ]);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const DetailsSubmit = async () => {
+    try {
+      await Promise.all([
+        axiosQuery.post(
+          "https://muffinfunction.azurewebsites.net/api/SaveHeight",
+          { height: DetailsFormData.height, member: member_id }
+        ),
+
+        axiosQuery.post(
+          "https://muffinfunction.azurewebsites.net/api/SaveWeight",
+          { weight: DetailsFormData.weight, member: member_id }
+        ),
+
+        axiosQuery.post(
+          "https://muffinfunction.azurewebsites.net/api/SaveBodyType",
+          { body_type: DetailsFormData.bodyType, member: member_id }
+        ),
+
+        axiosQuery.post(
+          "https://muffinfunction.azurewebsites.net/api/SaveFavoriteFood",
+          { favorite_food: DetailsFormData.favoriteFood, member: member_id }
+        ),
+      ]);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const onSave = async () => {
     try {
-      setShowSave(true);
-      const response1 = await axiosQuery.post(
-        "https://muffinfunction.azurewebsites.net/api/SaveGender",
-        { gender: basicInfoFormData.gender, member: member_id }
-      );
+      setIsSaving(true);
+      // basic info
+      await BasicInfoSubmit();
+      // work and education
+      await WorkEducationSubmit();
+      // Details
+      await DetailsSubmit();
 
-      const response2 = await axiosQuery.post(
-        "https://muffinfunction.azurewebsites.net/api/SaveNationality",
-        { nationality: basicInfoFormData.nationality, member: member_id }
-      );
-
-      const response3 = await axiosQuery.post(
-        "https://muffinfunction.azurewebsites.net/api/SaveBirthday",
-        { birthday: basicInfoFormData.birthInfo, member: member_id }
-      );
-
-      // const response4 = await axiosQuery.post(
-      //   "https://muffinfunction.azurewebsites.net/api/SaveReligion",
-      //   { religion: basicInfoFormData.religion, member: member_id }
-      // );
-
-      const response5 = await axiosQuery.post(
-        "https://muffinfunction.azurewebsites.net/api/SaveEthnicity",
-        { ethnicity: basicInfoFormData.ethnicity, member: member_id }
-      );
-
-      const response6 = await axiosQuery.post(
-        "https://muffinfunction.azurewebsites.net/api/SaveMaritalStatus",
-        { maritalStatus: basicInfoFormData.maritalStatus, member: member_id }
-      );
-
-      const response7 = await axiosQuery.post(
-        "https://muffinfunction.azurewebsites.net/api/SaveLanguage",
-        { language: basicInfoFormData.language, member: member_id }
-      );
+      setIsSaving(false);
+      toggleBasicInfoFields();
       setShowSave(false);
     } catch (err) {
       console.log(err);
@@ -136,11 +209,13 @@ const ProfileHeader = () => {
 
         {showSave && (
           <div
-            className="flex flex-row rounded-full justify-center hover:cursor-pointer px-5 text-sm space-x-2 bg-green-400 py-2"
+            className={`flex flex-row rounded-full justify-center hover:cursor-pointer px-5 text-sm space-x-2 ${
+              isSaving ? "bg-green-600" : "bg-green-400"
+            } py-2`}
             onClick={() => onSave()}
           >
             <Save color="white" size={20} className="hover:cursor-pointer" />
-            <p className="text-white">Save</p>
+            <p className="text-white">{isSaving ? "Saving..." : "Save"}</p>
           </div>
         )}
 

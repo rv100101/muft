@@ -1,42 +1,4 @@
-import {
-  BookOpen,
-  Briefcase,
-  Cake,
-  Heart,
-  Languages,
-  MapPin,
-  MoreHorizontal,
-  Phone,
-  PlusCircle,
-} from "lucide-react";
-
-type OverviewFormType = {
-  overviewInputs: {
-    locationText: string;
-    educationText: string;
-    careerText: string;
-    relationshipText: string;
-    contactText: string;
-    birthInfoText: string;
-    languageText: string;
-  };
-  overviewEditModes: {
-    locationText: boolean;
-    educationText: boolean;
-    careerText: boolean;
-    relationshipText: boolean;
-    contactText: boolean;
-    birthInfoText: boolean;
-    languageText: boolean;
-  };
-  overviewHandleInputChange: (fieldName: string, value: string) => void;
-};
-
-const OverviewForm = ({
-  overviewEditModes,
-  overviewInputs,
-  overviewHandleInputChange,
-}: OverviewFormType) => {
+const OverviewForm = () => {
   return (
     <div className="flex justify-center items-center w-full">
       no records yet.

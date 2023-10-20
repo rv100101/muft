@@ -1,13 +1,15 @@
+import { Skeleton } from "@/components/ui/skeleton";
 import axiosQuery from "@/queries/axios";
+import { useUserStore } from "@/zustand/auth/user";
 import { useWorkEducationStore } from "@/zustand/profile/about/useWorkEducationStore";
 import { useQuery } from "@tanstack/react-query";
 import {
   Briefcase,
   DollarSign,
   GraduationCap,
-  Heart,
   MoreHorizontal,
   PlusCircle,
+  User,
 } from "lucide-react";
 
 type Education = {
@@ -39,6 +41,8 @@ type Income = {
 // };
 
 const WorkEducationForm = () => {
+  const { user } = useUserStore();
+
   const {
     formData,
     setFormData,
@@ -85,9 +89,58 @@ const WorkEducationForm = () => {
     return response.data;
   };
 
+  const fetchInitialData = async () => {
+    try {
+      const response1 = await axiosQuery.post(
+        "https://muffinfunction.azurewebsites.net/api/GetBackground",
+        { member: user?.member_id }
+      );
+
+      const response2 = await axiosQuery.post(
+        "https://muffinfunction.azurewebsites.net/api/GetEmployment",
+        { member: user?.member_id }
+      );
+
+      const { education_name } = response1.data;
+      const { employment_status_name, occupation_title, income_range } =
+        response2.data;
+
+      setFormData({
+        ...formData,
+        education: education_name,
+        employmentStatus: employment_status_name,
+        occupationTitle: occupation_title,
+        income: income_range,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const { data: educations } = useQuery(["educations"], fetchEducations);
   const { data: occupations } = useQuery(["occupations"], fetchOccupations);
   const { data: incomes } = useQuery(["incomes"], fetchIncomes);
+  const { isLoading: initialDataLoading } = useQuery(
+    ["initialData"],
+    fetchInitialData
+  );
+
+  if (initialDataLoading) {
+    // return <>Loading...</>;
+    return (
+      <div className="flex justify-start items-start space-x-4 w-full ml-5">
+        <div className="space-y-2">
+          <Skeleton className="h-6 w-[400px]" />
+          <Skeleton className="h-6 w-[375px]" />
+          <Skeleton className="h-6 w-[375px]" />
+          <Skeleton className="h-6 w-[350px]" />
+          <Skeleton className="h-6 w-[350px]" />
+          <Skeleton className="h-6 w-[300px]" />
+          <Skeleton className="h-6 w-[300px]" />
+        </div>
+      </div>
+    );
+  }
   // const { data: employmentStatus } = useQuery(
   //   ["employmentStatus"],
   //   fetchEmploymentStatus
@@ -97,7 +150,7 @@ const WorkEducationForm = () => {
     <div className="flex flex-col w-full space-y-5">
       <div className="flex flex-row justify-between w-full px-5">
         {editMode == true ? (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+          <div className="flex flex-row space-x-2 hover:cursor-pointer w-full items-center ">
             <PlusCircle
               color="#FF599B"
               size={20}
@@ -108,7 +161,7 @@ const WorkEducationForm = () => {
               value={formData.education}
               onChange={(e) => handleInputChange(e)}
               autoFocus
-              className="outline-0 text-[#FF599B]"
+              className="outline-0 text-[#FF599B] border border rounded-lg w-3/4 py-3 px-5"
               name="education"
             >
               <option value="" disabled>
@@ -117,7 +170,7 @@ const WorkEducationForm = () => {
               {educations.map((data: Education) => {
                 const { education_name: education, education_id } = data;
                 return (
-                  <option value={education} key={education_id}>
+                  <option value={education_id} key={education_id}>
                     {education}
                   </option>
                 );
@@ -131,7 +184,9 @@ const WorkEducationForm = () => {
               size={20}
               className="hover:cursor-pointer"
             />
-            <p className="text-[#727272]">{formData.education}</p>
+            <p className="text-[#727272]">
+              {formData.education ? formData.education : "Add education info"}
+            </p>
           </div>
         )}
         {!editMode && (
@@ -145,7 +200,7 @@ const WorkEducationForm = () => {
 
       <div className="flex flex-row justify-between w-full px-5">
         {editMode ? (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+          <div className="flex flex-row space-x-2 hover:cursor-pointer w-full items-center ">
             <PlusCircle
               color="#FF599B"
               size={20}
@@ -155,7 +210,7 @@ const WorkEducationForm = () => {
               value={formData.employmentStatus}
               onChange={(e) => handleInputChange(e)}
               autoFocus
-              className="outline-0 text-[#FF599B]"
+              className="outline-0 text-[#FF599B] border border rounded-lg w-3/4 py-3 px-5"
               name="employmentStatus"
             >
               <option value="" disabled>
@@ -178,7 +233,7 @@ const WorkEducationForm = () => {
               value={formData.employmentStatus}
               onChange={(e) => handleInputChange(e)}
               autoFocus
-              className="outline-0 text-[#FF599B]"
+              className="outline-0 text-[#FF599B] border border rounded-lg w-3/4 py-3 px-5"
               name="employmentStatus"
             />
           </div>
@@ -189,7 +244,11 @@ const WorkEducationForm = () => {
               size={20}
               className="hover:cursor-pointer"
             />
-            <p className="text-[#727272]">{formData.employmentStatus}</p>
+            <p className="text-[#727272]">
+              {formData.employmentStatus
+                ? formData.employmentStatus
+                : "Add Employment Status"}
+            </p>
           </div>
         )}
         {!editMode && (
@@ -204,7 +263,7 @@ const WorkEducationForm = () => {
       {/* add new */}
       <div className="flex flex-row justify-between w-full px-5">
         {editMode ? (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+          <div className="flex flex-row space-x-2 hover:cursor-pointer w-full items-center">
             <PlusCircle
               color="#FF599B"
               size={20}
@@ -214,7 +273,7 @@ const WorkEducationForm = () => {
               value={formData.occupationTitle}
               onChange={(e) => handleInputChange(e)}
               autoFocus
-              className="outline-0 text-[#FF599B]"
+              className="outline-0 text-[#FF599B] border border rounded-lg w-3/4 py-3 px-5"
               name="occupationTitle"
             >
               <option value="" disabled>
@@ -223,7 +282,7 @@ const WorkEducationForm = () => {
               {occupations.map((data: Occupation) => {
                 const { occupation_title: occupation, occupation_id } = data;
                 return (
-                  <option value={occupation} key={occupation_id}>
+                  <option value={occupation_id} key={occupation_id}>
                     {occupation}
                   </option>
                 );
@@ -232,8 +291,12 @@ const WorkEducationForm = () => {
           </div>
         ) : (
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
-            <Heart color="#727272" size={20} className="hover:cursor-pointer" />
-            <p className="text-[#727272]">{formData.occupationTitle}</p>
+            <User color="#727272" size={20} className="hover:cursor-pointer" />
+            <p className="text-[#727272]">
+              {formData.occupationTitle
+                ? formData.occupationTitle
+                : "Add Job Title"}
+            </p>
           </div>
         )}
         {!editMode && (
@@ -247,7 +310,7 @@ const WorkEducationForm = () => {
 
       <div className="flex flex-row justify-between w-full px-5">
         {editMode ? (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+          <div className="flex flex-row space-x-2 hover:cursor-pointer w-full items-center">
             <PlusCircle
               color="#FF599B"
               size={20}
@@ -257,7 +320,7 @@ const WorkEducationForm = () => {
               value={formData.income}
               onChange={(e) => handleInputChange(e)}
               autoFocus
-              className="outline-0 text-[#FF599B]"
+              className="outline-0 text-[#FF599B] border border rounded-lg w-3/4 py-3 px-5"
               name="income"
             >
               <option value="" disabled>
@@ -266,7 +329,7 @@ const WorkEducationForm = () => {
               {incomes.map((data: Income) => {
                 const { income_range: income, income_id } = data;
                 return (
-                  <option value={income} key={income_id}>
+                  <option value={income_id} key={income_id}>
                     {income}
                   </option>
                 );
@@ -277,7 +340,7 @@ const WorkEducationForm = () => {
               value={formData.income}
               onChange={(e) => handleInputChange(e)}
               autoFocus
-              className="outline-0 text-[#FF599B]"
+              className="outline-0 text-[#FF599B] border border rounded-lg w-3/4 py-3 px-5"
               name="income"
             /> */}
           </div>
@@ -288,7 +351,9 @@ const WorkEducationForm = () => {
               size={20}
               className="hover:cursor-pointer"
             />
-            <p className="text-[#727272]">{formData.income}</p>
+            <p className="text-[#727272]">
+              {formData.income ? formData.income : "Add income range"}
+            </p>
           </div>
         )}
         {!editMode && (

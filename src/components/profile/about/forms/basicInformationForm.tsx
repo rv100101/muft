@@ -1,3 +1,4 @@
+import { Skeleton } from "@/components/ui/skeleton";
 import axiosQuery from "@/queries/axios";
 import { useUserStore } from "@/zustand/auth/user";
 import { useBasicInfoStore } from "@/zustand/profile/about/useBasicInfoStore";
@@ -5,7 +6,6 @@ import { useQuery } from "@tanstack/react-query";
 import {
   Cake,
   CalendarClock,
-  Cross,
   Flag,
   Ghost,
   Heart,
@@ -114,9 +114,11 @@ const BasicInformationForm = () => {
         age: age,
         religion: religion_name,
         ethnicity: ethnicity_name,
+        // maritalStatus: { id: marital_status_id, name: marital_status_name },
         maritalStatus: marital_status_name,
         language: language_name,
       });
+      return formData;
     } catch (err) {
       console.log(err);
     }
@@ -147,14 +149,27 @@ const BasicInformationForm = () => {
   );
 
   if (initialDataLoading) {
-    return <>Loading...</>;
+    // return <>Loading...</>;
+    return (
+      <div className="flex justify-start items-start space-x-4 w-full ml-5">
+        <div className="space-y-2">
+          <Skeleton className="h-6 w-[400px]" />
+          <Skeleton className="h-6 w-[375px]" />
+          <Skeleton className="h-6 w-[375px]" />
+          <Skeleton className="h-6 w-[350px]" />
+          <Skeleton className="h-6 w-[350px]" />
+          <Skeleton className="h-6 w-[300px]" />
+          <Skeleton className="h-6 w-[300px]" />
+        </div>
+      </div>
+    );
   }
 
   return (
     <div className="flex flex-col w-full space-y-5">
       <div className="flex flex-row justify-between w-full px-5">
         {editMode == true ? (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+          <div className="flex flex-row space-x-2 hover:cursor-pointer w-full items-center">
             <PlusCircle
               color="#FF599B"
               size={20}
@@ -165,7 +180,7 @@ const BasicInformationForm = () => {
               value={formData.gender}
               onChange={(e) => handleInputChange(e)}
               autoFocus
-              className="outline-0 text-[#FF599B]"
+              className="outline-0 text-[#FF599B] border border rounded-lg w-3/4 py-3 px-5"
               name="gender"
             >
               <option value="" disabled>
@@ -194,7 +209,7 @@ const BasicInformationForm = () => {
       </div>
       <div className="flex flex-row justify-between w-full px-5">
         {editMode ? (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+          <div className="flex flex-row space-x-2 hover:cursor-pointer w-full items-center">
             <PlusCircle
               color="#FF599B"
               size={20}
@@ -205,7 +220,7 @@ const BasicInformationForm = () => {
               value={formData.nationality}
               onChange={(e) => handleInputChange(e)}
               autoFocus
-              className="outline-0 text-[#FF599B] w-1/2"
+              className="outline-0 text-[#FF599B] border border rounded-lg w-3/4 py-3 px-5"
               name="nationality"
             >
               <option value="" disabled>
@@ -223,23 +238,9 @@ const BasicInformationForm = () => {
           </div>
         ) : (
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
-            <Flag
-              color={
-                formData.nationality === "Add Relationship Status"
-                  ? "#FF599B"
-                  : "#727272"
-              }
-              size={20}
-              className="hover:cursor-pointer"
-            />
-            <p
-              className={
-                formData.nationality === "Add Relationship Status"
-                  ? "text-[#FF599B]"
-                  : "text-[#727272]"
-              }
-            >
-              {formData.nationality}
+            <Flag color="#727272" size={20} className="hover:cursor-pointer" />
+            <p className="text-[#727272]">
+              {formData.nationality ? formData.nationality : "Add Nationality"}
             </p>
           </div>
         )}
@@ -253,7 +254,7 @@ const BasicInformationForm = () => {
       </div>
       <div className="flex flex-row justify-between w-full px-5">
         {editMode ? (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+          <div className="flex flex-row space-x-2 hover:cursor-pointer w-full items-center">
             <PlusCircle
               color="#FF599B"
               size={20}
@@ -264,33 +265,19 @@ const BasicInformationForm = () => {
               value={formData.birthInfo}
               onChange={(e) => handleInputChange(e)}
               autoFocus
-              className="outline-0 text-[#FF599B]"
+              className="outline-0 text-[#FF599B] border border rounded-lg w-3/4 py-3 px-5"
               name="birthInfo"
             />
           </div>
         ) : (
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
-            <Cake
-              color={
-                formData.birthInfo === "Add Relationship Status"
-                  ? "#FF599B"
-                  : "#727272"
-              }
-              size={20}
-              className="hover:cursor-pointer"
-            />
-            <p
-              className={
-                formData.birthInfo === "Add Relationship Status"
-                  ? "text-[#FF599B]"
-                  : "text-[#727272]"
-              }
-            >
-              {formData.birthInfo}
+            <Cake color="#727272" size={20} className="hover:cursor-pointer" />
+            <p className="text-[#727272]">
+              {formData.birthInfo ? formData.birthInfo : "Add Birthday"}
             </p>
           </div>
         )}
-        {formData.birthInfo !== "Add Relationship Status" && !editMode && (
+        {!editMode && (
           <MoreHorizontal
             color="#727272"
             size={20}
@@ -302,7 +289,7 @@ const BasicInformationForm = () => {
       {/* add new */}
       <div className="flex flex-row justify-between w-full px-5">
         {editMode ? (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+          <div className="flex flex-row space-x-2 hover:cursor-pointer w-full items-center">
             <PlusCircle
               color="#FF599B"
               size={20}
@@ -313,8 +300,9 @@ const BasicInformationForm = () => {
               value={formData.age}
               onChange={(e) => handleInputChange(e)}
               autoFocus
-              className="outline-0 text-[#FF599B]"
+              className="outline-0 text-[#FF599B] border border rounded-lg w-3/4 py-3 px-5"
               name="age"
+              readOnly
             />
           </div>
         ) : (
@@ -340,7 +328,7 @@ const BasicInformationForm = () => {
         )}
       </div>
 
-      <div className="flex flex-row justify-between w-full px-5">
+      {/* <div className="flex flex-row justify-between w-full px-5">
         {editMode ? (
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
             <PlusCircle
@@ -370,11 +358,11 @@ const BasicInformationForm = () => {
             className="hover:cursor-pointer "
           />
         )}
-      </div>
+      </div> */}
 
       <div className="flex flex-row justify-between w-full px-5">
         {editMode ? (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+          <div className="flex flex-row space-x-2 hover:cursor-pointer w-full items-center">
             <PlusCircle
               color="#FF599B"
               size={20}
@@ -386,7 +374,7 @@ const BasicInformationForm = () => {
               value={formData.ethnicity}
               onChange={(e) => handleInputChange(e)}
               autoFocus
-              className="outline-0 text-[#FF599B]"
+              className="outline-0 text-[#FF599B] border border rounded-lg w-3/4 py-3 px-5"
               name="ethnicity"
             >
               <option value="" disabled>
@@ -405,7 +393,9 @@ const BasicInformationForm = () => {
         ) : (
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
             <Users color="#727272" size={20} className="hover:cursor-pointer" />
-            <p className="text-[#727272]">{formData.ethnicity}</p>
+            <p className="text-[#727272]">
+              {formData.ethnicity ? formData.ethnicity : "Add Ethnicity"}
+            </p>
           </div>
         )}
         {!editMode && (
@@ -419,7 +409,7 @@ const BasicInformationForm = () => {
 
       <div className="flex flex-row justify-between w-full px-5">
         {editMode ? (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+          <div className="flex flex-row space-x-2 hover:cursor-pointer w-full items-center">
             <PlusCircle
               color="#FF599B"
               size={20}
@@ -430,7 +420,7 @@ const BasicInformationForm = () => {
               value={formData.maritalStatus}
               onChange={(e) => handleInputChange(e)}
               autoFocus
-              className="outline-0 text-[#FF599B]"
+              className="outline-0 text-[#FF599B] border border rounded-lg w-3/4 py-3 px-5"
               name="maritalStatus"
             >
               <option value="" disabled>
@@ -449,7 +439,11 @@ const BasicInformationForm = () => {
         ) : (
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
             <Heart color="#727272" size={20} className="hover:cursor-pointer" />
-            <p className="text-[#727272]">{formData.maritalStatus}</p>
+            <p className="text-[#727272]">
+              {formData.maritalStatus
+                ? formData.maritalStatus
+                : "Add Marital Status"}
+            </p>
           </div>
         )}
         {!editMode && (
@@ -463,7 +457,7 @@ const BasicInformationForm = () => {
 
       <div className="flex flex-row justify-between w-full px-5">
         {editMode ? (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer w-1/2">
+          <div className="flex flex-row space-x-2 hover:cursor-pointer w-full items-center">
             <PlusCircle
               color="#FF599B"
               size={20}
@@ -474,7 +468,7 @@ const BasicInformationForm = () => {
               value={formData.language}
               onChange={(e) => handleInputChange(e)}
               autoFocus
-              className="outline-0 text-[#FF599B] w-1/2"
+              className="outline-0 text-[#FF599B] border border rounded-lg w-3/4 py-3 px-5"
               name="language"
             >
               <option value="" disabled>
@@ -497,7 +491,9 @@ const BasicInformationForm = () => {
               size={20}
               className="hover:cursor-pointer"
             />
-            <p className="text-[#727272]">{formData.language}</p>
+            <p className="text-[#727272]">
+              {formData.language ? formData.language : "Add Language"}
+            </p>
           </div>
         )}
         {!editMode && (
