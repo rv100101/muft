@@ -7,6 +7,7 @@ import NotificationsPage from "@/pages/authenticatedPages/notificationsPage";
 import SignUpPage from "@/pages/auth/signUpPage";
 import SignInPage from "@/pages/auth/signInPage";
 import HomePage from "@/pages/homePage";
+import ProfilePage from "@/pages/authenticatedPages/profilePage";
 import LikesAndFavouritesPage from "@/pages/authenticatedPages/likesAndFavouritesPage";
 
 export const routesWithFooterAndTopNav = [
@@ -42,6 +43,10 @@ const pageRoutes = {
   notificationsPage: {
     path: "/notifications",
     component: NotificationsPage,
+  },
+  profilePage: {
+    path: "/profile",
+    component: ProfilePage,
   },
   signUp: {
     path: "/auth/signup",

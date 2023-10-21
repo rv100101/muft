@@ -1,0 +1,72 @@
+// import axiosQuery from "@/queries/axios";
+import { create } from "zustand";
+interface formData {
+  nickname: string;
+  gender: string;
+  nationality: string;
+  birthInfo: string;
+  age: string;
+  religion: string;
+  ethnicity: string;
+  maritalStatus: string;
+  // maritalStatus: {
+  //   id: string;
+  //   name: string;
+  // };
+  language: string;
+}
+export interface BasicInfoStore {
+  formData: {
+    nickname: string;
+    gender: string;
+    nationality: string;
+    birthInfo: string;
+    age: string;
+    religion: string;
+    ethnicity: string;
+    maritalStatus: string;
+
+    // maritalStatus: {
+    //   id: string;
+    //   name: string;
+    // };
+    language: string;
+  };
+
+  setFormData: (data: formData) => void;
+  setEditMode: () => void;
+  // submitForm: (memberId: number) => void;
+
+  globalEditMode: boolean;
+}
+
+export const useBasicInfoStore = create<BasicInfoStore>((set) => ({
+  formData: {
+    nickname: "",
+    gender: "",
+    nationality: "",
+    birthInfo: "",
+    age: "",
+    religion: "",
+    ethnicity: "",
+    maritalStatus: "",
+
+    // maritalStatus: {
+    //   id: "",
+    //   name: "",
+    // },
+    language: "",
+  },
+  globalEditMode: false,
+
+  setFormData: (data) => {
+    set({ formData: data });
+  },
+
+  // edit profile btn
+  setEditMode: () => {
+    set((state) => ({
+      globalEditMode: !state.globalEditMode,
+    }));
+  },
+}));

@@ -44,22 +44,30 @@ function App() {
       </div>
 
       {/* Authenticated routes */}
-      {user
-        ? (
-          <>
-            <Route
-              path={pageRoutes.messagingPage.path}
-              component={pageRoutes.messagingPage.component}
-            />
-            <Route
-              path={pageRoutes.notificationsPage.path}
-              component={pageRoutes.notificationsPage.component}
-            />
-            <Route
-              path={pageRoutes.likesAndFavorites.path}
-              component={pageRoutes.likesAndFavorites.component}
-            />
-          </>
+      
+      {user ? (
+        <>
+          <Route
+            path={pageRoutes.messagingPage.path}
+            component={pageRoutes.messagingPage.component}
+          />
+          <Route
+            path={pageRoutes.notificationsPage.path}
+            component={pageRoutes.notificationsPage.component}
+          />
+          <Route
+            path={pageRoutes.profilePage.path}
+            component={pageRoutes.profilePage.component}
+          />
+          <Route
+            path={pageRoutes.likesAndFavorites.path}
+            component={pageRoutes.likesAndFavorites.component}
+          />
+        </>
+      ) : (
+        (location == pageRoutes.messagingPage.path ||
+          location == pageRoutes.notificationsPage.path) && (
+          <Redirect to="/auth/signin" />
         )
         : (
           (location == pageRoutes.messagingPage.path ||
