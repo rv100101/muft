@@ -1,5 +1,5 @@
 import "./App";
-import { Route, useLocation, Redirect } from "wouter";
+import { Redirect, Route, useLocation } from "wouter";
 import TopNav from "./components/topNav";
 import Footer from "./components/footer";
 
@@ -15,11 +15,9 @@ function App() {
       {routesWithFooterAndTopNav.includes(location) && !user && <TopNav />}
       <Route
         path={"/"}
-        component={
-          user
-            ? pageRoutes.homePage.component
-            : pageRoutes.landingPage.component
-        }
+        component={user
+          ? pageRoutes.homePage.component
+          : pageRoutes.landingPage.component}
       />
       <Route
         path={pageRoutes.signUp.path}
@@ -46,6 +44,7 @@ function App() {
       </div>
 
       {/* Authenticated routes */}
+      
       {user ? (
         <>
           <Route
@@ -60,13 +59,22 @@ function App() {
             path={pageRoutes.profilePage.path}
             component={pageRoutes.profilePage.component}
           />
+          <Route
+            path={pageRoutes.likesAndFavorites.path}
+            component={pageRoutes.likesAndFavorites.component}
+          />
         </>
       ) : (
         (location == pageRoutes.messagingPage.path ||
           location == pageRoutes.notificationsPage.path) && (
           <Redirect to="/auth/signin" />
         )
-      )}
+        : (
+          (location == pageRoutes.messagingPage.path ||
+            location == pageRoutes.notificationsPage.path) && (
+            <Redirect to="/auth/signin" />
+          )
+        )}
       {routesWithFooterAndTopNav.includes(location) && !user && (
         <div className="bg-[#0C1223]">
           <Footer />

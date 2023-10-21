@@ -3,7 +3,7 @@ import { SearchIcon } from "lucide-react";
 
 const SearchInput = () => {
   const updateSearchValue = useSearchFilterStore(
-    (state) => state.setSearchValue
+    (state) => state.setSearchValue,
   );
   const searchValue = useSearchFilterStore((state) => state.value);
   return (

@@ -14,6 +14,7 @@ import authQuery from "@/queries/auth";
 import { User, useUserStore } from "@/zustand/auth/user";
 import { useToast } from "@/components/ui/use-toast";
 import { useUserAvatar } from "@/zustand/auth/avatar";
+import { useUserCountry } from "@/zustand/auth/country";
 
 type FormDataType = {
   email: string;
@@ -26,7 +27,7 @@ const SignInForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const updateUser = useUserStore((state) => state.updateUser);
   const updateUserAvatar = useUserAvatar((state) => state.setAvatar);
-  // const avatar = useUserAvatar((state) => state.gallery_uuid);
+  const updateUserCountry = useUserCountry((state) => state.setCountry);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -46,8 +47,17 @@ const SignInForm = () => {
       setIsLoading(true);
       const signInData = await authQuery.signIn(values.email, values.password);
       const profilePhotoData = await authQuery.getProfilePhoto(
-        signInData.data.member_id
+        signInData.data.member_id,
       );
+      const countryData: {
+        data: {
+          country_name: string;
+        }[];
+      } = await authQuery.getCountry(69);
+      
+      if (countryData.data.length !== 0) {
+        updateUserCountry(countryData.data[0].country_name);
+      }
       updateUserAvatar(profilePhotoData.data.gallery_uuid);
       setIsLoading(false);
       const data: User | string = signInData.data;
@@ -121,11 +131,13 @@ const SignInForm = () => {
               }`}
             />
           </div>
-          {formik.touched.email && formik.errors.email ? (
-            <div className="error text-red-500 ml-5 pt-2">
-              {formik.errors.email}
-            </div>
-          ) : null}
+          {formik.touched.email && formik.errors.email
+            ? (
+              <div className="error text-red-500 ml-5 pt-2">
+                {formik.errors.email}
+              </div>
+            )
+            : null}
         </div>
 
         {/* password */}
@@ -163,11 +175,13 @@ const SignInForm = () => {
               }`}
             />
           </div>
-          {formik.touched.password && formik.errors.password ? (
-            <div className="error text-red-500 ml-5 pt-2">
-              {formik.errors.password}
-            </div>
-          ) : null}
+          {formik.touched.password && formik.errors.password
+            ? (
+              <div className="error text-red-500 ml-5 pt-2">
+                {formik.errors.password}
+              </div>
+            )
+            : null}
         </div>
         {/* button */}
         <button
