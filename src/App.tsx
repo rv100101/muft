@@ -64,19 +64,14 @@ function App() {
             component={pageRoutes.likesAndFavorites.component}
           />
         </>
-      ) : (
+      ) : 
         (location == pageRoutes.messagingPage.path ||
           location == pageRoutes.notificationsPage.path) && (
           <Redirect to="/auth/signin" />
         )
-        : (
-          (location == pageRoutes.messagingPage.path ||
-            location == pageRoutes.notificationsPage.path) && (
-            <Redirect to="/auth/signin" />
-          )
-        )}
+        }
       {routesWithFooterAndTopNav.includes(location) && !user && (
-        <div className="bg-[#0C1223]">
+        <div className="h-full bg-[#0C1223]">
           <Footer />
         </div>
       )}

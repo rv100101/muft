@@ -70,8 +70,8 @@ const SignUpPage = () => {
 
   return (
     <>
-      <div className="flex justify-center items-center h-full mt-10 my-[150px]">
-        <div className="card flex flex-col justify-center items-center shadow-lg rounded-lg p-5 w-[450px] space-y-5">
+      <div className="flex justify-center items-center h-[calc(100vh-120px)]">
+        <div className="card flex flex-col justify-center h-min items-center shadow-lg rounded-lg p-5 w-max space-y-5">
           <div className="flex w-full justify-end">
             <img
               src={helpIcon}
