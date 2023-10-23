@@ -9,10 +9,6 @@ interface formData {
   religion: string;
   ethnicity: string;
   maritalStatus: string;
-  // maritalStatus: {
-  //   id: string;
-  //   name: string;
-  // };
   language: string;
 }
 export interface BasicInfoStore {
@@ -25,17 +21,19 @@ export interface BasicInfoStore {
     religion: string;
     ethnicity: string;
     maritalStatus: string;
-
-    // maritalStatus: {
-    //   id: string;
-    //   name: string;
-    // };
     language: string;
   };
 
+  selectedMaritalStatus: string;
+  selectedEthnicity: string;
+  selectedLanguage: string;
+
+  setSelectedMaritalStatus: (data: string) => void;
+  setSelectedEthnicity: (data: string) => void;
+  setSelectedLanguage: (data: string) => void;
+
   setFormData: (data: formData) => void;
   setEditMode: () => void;
-  // submitForm: (memberId: number) => void;
 
   globalEditMode: boolean;
 }
@@ -50,14 +48,25 @@ export const useBasicInfoStore = create<BasicInfoStore>((set) => ({
     religion: "",
     ethnicity: "",
     maritalStatus: "",
-
-    // maritalStatus: {
-    //   id: "",
-    //   name: "",
-    // },
     language: "",
   },
+
+  selectedMaritalStatus: "",
+  selectedEthnicity: "",
+  selectedLanguage: "",
   globalEditMode: false,
+
+  setSelectedMaritalStatus: (data: string) => {
+    set({ selectedMaritalStatus: data });
+  },
+
+  setSelectedEthnicity: (data: string) => {
+    set({ selectedEthnicity: data });
+  },
+
+  setSelectedLanguage: (data: string) => {
+    set({ selectedLanguage: data });
+  },
 
   setFormData: (data) => {
     set({ formData: data });

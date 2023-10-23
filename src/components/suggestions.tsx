@@ -4,6 +4,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import FooterLinks from "./footerLinks";
 import { getImagePath } from "@/lib/images";
+// import { CoverPhoto } from "../assets/home/cover-photo.png";
 
 type Member = {
   nickname: string;
@@ -29,8 +30,11 @@ const Suggestions = ({ memberPost }: SuggestionsProps) => {
       <li key={index} className="h-36 lg:h-340 w-full relative">
         <img
           className="h-full w-full rounded-xl z-10"
-          src=""
+          src="test.jpg"
           alt="cover photo"
+          onError={(e) => {
+            e.target.src = "https://dummyimage.com/600x400/f6f6f6/f6f6f6.png";
+          }}
         />
         <div className="absolute flex bottom-4 left-4 z-20 space-x-2 items-end">
           <img
