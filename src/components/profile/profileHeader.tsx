@@ -8,13 +8,16 @@ import { useDetailsStore } from "@/zustand/profile/about/useDetailsStore";
 import { useLocationStore } from "@/zustand/profile/about/useLocationStore";
 import { useUserStore } from "@/zustand/auth/user";
 import axiosQuery from "@/queries/axios";
+import { useQuery } from "@tanstack/react-query";
 
 const ProfileHeader = () => {
   const { user } = useUserStore();
   const { member_id } = user;
-  const { handleEditProfileToggle: toggleOverviewFields } = useOverviewStore();
-  const { setEditMode: toggleBasicInfoFields, formData: basicInfoFormData } =
-    useBasicInfoStore();
+  const {
+    setEditMode: toggleBasicInfoFields,
+    formData: basicInfoFormData,
+    globalEditMode: basicInfoEditMode,
+  } = useBasicInfoStore();
   const {
     setEditMode: toggleWorkEducationFields,
     formData: WorkEduInfoFormData,
@@ -27,7 +30,6 @@ const ProfileHeader = () => {
   const [isSaving, setIsSaving] = useState(false);
   const handleEditToggle = () => {
     setShowSave((prev) => !prev);
-    toggleOverviewFields();
     toggleBasicInfoFields();
     toggleWorkEducationFields();
     toggleDetailsFields();
@@ -58,15 +60,15 @@ const ProfileHeader = () => {
         //   { religion: basicInfoFormData.religion, member: member_id }
         // ),
 
-        // axiosQuery.post(
-        //   "https://muffinfunction.azurewebsites.net/api/SaveEthnicity",
-        //   { ethnicity: basicInfoFormData.ethnicity, member: member_id }
-        // ),
+        axiosQuery.post(
+          "https://muffinfunction.azurewebsites.net/api/SaveEthnicity",
+          { ethnicity: basicInfoFormData.ethnicity, member: member_id }
+        ),
 
-        // axiosQuery.post(
-        //   "https://muffinfunction.azurewebsites.net/api/SaveMaritalStatus",
-        //   { marital_status: basicInfoFormData.maritalStatus, member: member_id }
-        // ),
+        axiosQuery.post(
+          "https://muffinfunction.azurewebsites.net/api/SaveMaritalStatus",
+          { marital_status: basicInfoFormData.maritalStatus, member: member_id }
+        ),
 
         axiosQuery.post(
           "https://muffinfunction.azurewebsites.net/api/SaveLanguage",
@@ -101,6 +103,7 @@ const ProfileHeader = () => {
 
   const DetailsSubmit = async () => {
     try {
+      console.log("🎊: ", DetailsFormData);
       await Promise.all([
         axiosQuery.post(
           "https://muffinfunction.azurewebsites.net/api/SaveHeight",
@@ -131,7 +134,9 @@ const ProfileHeader = () => {
     try {
       setIsSaving(true);
       // basic info
-      await BasicInfoSubmit();
+      if (basicInfoEditMode) {
+        await BasicInfoSubmit();
+      }
       // work and education
       await WorkEducationSubmit();
       // Details
@@ -146,6 +151,29 @@ const ProfileHeader = () => {
 
     // if (user) submitForm(user ? user.member_id : 0);
   };
+
+  const fetchIntitialData = async () => {
+    try {
+      const response = await axiosQuery.post(
+        "https://muffinfunction.azurewebsites.net/api/GetNickname",
+        { member: member_id }
+      );
+      const { nickname } = response.data[0];
+
+      return nickname;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const { data: nickname, isLoading } = useQuery(
+    ["nickname"],
+    fetchIntitialData
+  );
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
   return (
     <div className="flex flex-row w-full justify-between items-start p-5 border-b">
       <div className="flex flex-row space-x-5 ">
@@ -160,7 +188,7 @@ const ProfileHeader = () => {
         </div>
         {/* another div here */}
         <div className="flex flex-col">
-          <p className="font-semibold text-[#171717] text-lg">Shanaz, 32</p>
+          <p className="font-semibold text-[#171717] text-lg">{nickname}</p>
           <p className="text-[#727272] text-sm">@us23452</p>
           {/* badges */}
           <div className="flex flex-row w-full">

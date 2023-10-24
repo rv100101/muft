@@ -1,6 +1,7 @@
+// import { Skeleton } from "@/components/ui/skeleton";
 import { Skeleton } from "@/components/ui/skeleton";
 import axiosQuery from "@/queries/axios";
-import { useUserStore } from "@/zustand/auth/user";
+// import { useUserStore } from "@/zustand/auth/user";
 import { useBasicInfoStore } from "@/zustand/profile/about/useBasicInfoStore";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -14,37 +15,6 @@ import {
   PlusCircle,
   Users,
 } from "lucide-react";
-
-// fetch select options
-const fetchNationalities = async () => {
-  const response = await axiosQuery.post(
-    "https://muffinfunction.azurewebsites.net/api/Nationalities"
-  );
-
-  return response.data;
-};
-
-const fetchMaritalStatus = async () => {
-  const response = await axiosQuery.post(
-    "https://muffinfunction.azurewebsites.net/api/MaritalStatus"
-  );
-  return response.data;
-};
-
-const fetchLanguages = async () => {
-  const response = await axiosQuery.post(
-    "https://muffinfunction.azurewebsites.net/api/Languages",
-    { member: 999 }
-  );
-  return response.data;
-};
-
-const fetchEthnicity = async () => {
-  const response = await axiosQuery.post(
-    "https://muffinfunction.azurewebsites.net/api/Ethnicity"
-  );
-  return response.data;
-};
 
 type Nationality = {
   authorized: boolean;
@@ -79,50 +49,87 @@ const BasicInformationForm = () => {
     formData,
     setFormData,
     globalEditMode: editMode,
+    // setSelectedMaritalStatus,
   } = useBasicInfoStore();
-  const { user } = useUserStore();
+
+  // fetch select options
+  const fetchNationalities = async () => {
+    const response = await axiosQuery.post(
+      "https://muffinfunction.azurewebsites.net/api/Nationalities"
+    );
+
+    return response.data;
+  };
+
+  const fetchMaritalStatus = async () => {
+    const response = await axiosQuery.post(
+      "https://muffinfunction.azurewebsites.net/api/MaritalStatus"
+    );
+    // const { marital_status_id } = response.data.filter(
+    //   (item) => item.marital_status_name == formData.maritalStatus
+    // )[0];
+
+    // setSelectedMaritalStatus()
+    return response.data;
+  };
+
+  const fetchLanguages = async () => {
+    const response = await axiosQuery.post(
+      "https://muffinfunction.azurewebsites.net/api/Languages",
+      { member: 999 }
+    );
+    return response.data;
+  };
+
+  const fetchEthnicity = async () => {
+    const response = await axiosQuery.post(
+      "https://muffinfunction.azurewebsites.net/api/Ethnicity"
+    );
+    return response.data;
+  };
+  // const { user } = useUserStore();
 
   // retrieve user data
-  const fetchInitialData = async () => {
-    try {
-      const response1 = await axiosQuery.post(
-        "https://muffinfunction.azurewebsites.net/api/GetBasicInfo",
-        { member: user?.member_id }
-      );
-      const response2 = await axiosQuery.post(
-        "https://muffinfunction.azurewebsites.net/api/GetBackground",
-        { member: user?.member_id }
-      );
-      const response3 = await axiosQuery.post(
-        "https://muffinfunction.azurewebsites.net/api/GetMaritalStatus",
-        { member: user?.member_id }
-      );
-      const response = await axiosQuery.post(
-        "https://muffinfunction.azurewebsites.net/api/GetLanguages",
-        { member: user?.member_id }
-      );
-      const { gender, nationality, date_of_birth, age } = response1.data;
-      const { religion_name, ethnicity_name } = response2.data;
-      const { marital_status_name } = response3.data;
-      const { language_name } = response.data[0];
+  // const fetchInitialData = async () => {
+  //   try {
+  //     const response1 = await axiosQuery.post(
+  //       "https://muffinfunction.azurewebsites.net/api/GetBasicInfo",
+  //       { member: user?.member_id }
+  //     );
+  //     const response2 = await axiosQuery.post(
+  //       "https://muffinfunction.azurewebsites.net/api/GetBackground",
+  //       { member: user?.member_id }
+  //     );
+  //     const response3 = await axiosQuery.post(
+  //       "https://muffinfunction.azurewebsites.net/api/GetMaritalStatus",
+  //       { member: user?.member_id }
+  //     );
+  //     const response = await axiosQuery.post(
+  //       "https://muffinfunction.azurewebsites.net/api/GetLanguages",
+  //       { member: user?.member_id }
+  //     );
+  //     const { gender, nationality, date_of_birth, age } = response1.data;
+  //     const { religion_name, ethnicity_name } = response2.data;
+  //     const { marital_status_name } = response3.data;
+  //     const { language_name } = response.data[0];
 
-      setFormData({
-        ...formData,
-        gender: gender,
-        nationality: nationality,
-        birthInfo: date_of_birth,
-        age: age,
-        religion: religion_name,
-        ethnicity: ethnicity_name,
-        // maritalStatus: { id: marital_status_id, name: marital_status_name },
-        maritalStatus: marital_status_name,
-        language: language_name,
-      });
-      return formData;
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  //     setFormData({
+  //       ...formData,
+  //       gender: gender,
+  //       nationality: nationality,
+  //       birthInfo: date_of_birth,
+  //       age: age,
+  //       religion: religion_name,
+  //       ethnicity: ethnicity_name,
+  //       // maritalStatus: { id: marital_status_id, name: marital_status_name },
+  //       maritalStatus: marital_status_name,
+  //       language: language_name,
+  //     });
+  //     return formData;
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -131,24 +138,35 @@ const BasicInformationForm = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const { data: nationalities } = useQuery(
+  const { data: nationalities, isLoading: nationalitiesIsLoading } = useQuery(
     ["nationalities"],
     fetchNationalities
   );
 
-  const { data: maritalStatus } = useQuery(
+  const { data: maritalStatus, isLoading: maritalStatusIsLoading } = useQuery(
     ["maritalStatus"],
     fetchMaritalStatus
   );
 
-  const { data: languages } = useQuery(["languages"], fetchLanguages);
-  const { data: ethnicities } = useQuery(["ethnicity"], fetchEthnicity);
-  const { isLoading: initialDataLoading } = useQuery(
-    ["initialData"],
-    fetchInitialData
+  const { data: languages, isLoading: languagesIsLoading } = useQuery(
+    ["languages"],
+    fetchLanguages
   );
+  const { data: ethnicities, isLoading: ethnicitiesIsLoading } = useQuery(
+    ["ethnicity"],
+    fetchEthnicity
+  );
+  // const { isLoading: initialDataLoading } = useQuery(
+  //   ["initialData"],
+  //   fetchInitialData
+  // );
 
-  if (initialDataLoading) {
+  if (
+    nationalitiesIsLoading ||
+    maritalStatusIsLoading ||
+    languagesIsLoading ||
+    ethnicitiesIsLoading
+  ) {
     // return <>Loading...</>;
     return (
       <div className="flex justify-start items-start space-x-4 w-full ml-5">
@@ -287,9 +305,9 @@ const BasicInformationForm = () => {
       </div>
 
       {/* add new */}
-      <div className="flex flex-row justify-between w-full px-5">
+      <div className="flex flex-row justify-between w-full px-5 ">
         {editMode ? (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer w-full items-center">
+          <div className="flex flex-row space-x-2 hover:cursor-pointer w-full items-center hidden">
             <PlusCircle
               color="#FF599B"
               size={20}

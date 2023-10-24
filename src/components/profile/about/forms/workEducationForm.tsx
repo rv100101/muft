@@ -1,6 +1,7 @@
+// import { Skeleton } from "@/components/ui/skeleton";
 import { Skeleton } from "@/components/ui/skeleton";
 import axiosQuery from "@/queries/axios";
-import { useUserStore } from "@/zustand/auth/user";
+// import { useUserStore } from "@/zustand/auth/user";
 import { useWorkEducationStore } from "@/zustand/profile/about/useWorkEducationStore";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -41,7 +42,7 @@ type Income = {
 // };
 
 const WorkEducationForm = () => {
-  const { user } = useUserStore();
+  // const { user } = useUserStore();
 
   const {
     formData,
@@ -89,43 +90,49 @@ const WorkEducationForm = () => {
     return response.data;
   };
 
-  const fetchInitialData = async () => {
-    try {
-      const response1 = await axiosQuery.post(
-        "https://muffinfunction.azurewebsites.net/api/GetBackground",
-        { member: user?.member_id }
-      );
+  // const fetchInitialData = async () => {
+  //   try {
+  //     const response1 = await axiosQuery.post(
+  //       "https://muffinfunction.azurewebsites.net/api/GetBackground",
+  //       { member: user?.member_id }
+  //     );
 
-      const response2 = await axiosQuery.post(
-        "https://muffinfunction.azurewebsites.net/api/GetEmployment",
-        { member: user?.member_id }
-      );
+  //     const response2 = await axiosQuery.post(
+  //       "https://muffinfunction.azurewebsites.net/api/GetEmployment",
+  //       { member: user?.member_id }
+  //     );
 
-      const { education_name } = response1.data;
-      const { employment_status_name, occupation_title, income_range } =
-        response2.data;
+  //     const { education_name } = response1.data;
+  //     const { employment_status_name, occupation_title, income_range } =
+  //       response2.data;
 
-      setFormData({
-        ...formData,
-        education: education_name,
-        employmentStatus: employment_status_name,
-        occupationTitle: occupation_title,
-        income: income_range,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  //     setFormData({
+  //       ...formData,
+  //       education: education_name,
+  //       employmentStatus: employment_status_name,
+  //       occupationTitle: occupation_title,
+  //       income: income_range,
+  //     });
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   const { data: educations } = useQuery(["educations"], fetchEducations);
-  const { data: occupations } = useQuery(["occupations"], fetchOccupations);
-  const { data: incomes } = useQuery(["incomes"], fetchIncomes);
-  const { isLoading: initialDataLoading } = useQuery(
-    ["initialData"],
-    fetchInitialData
+  const { data: occupations, isLoading: occupationsLoading } = useQuery(
+    ["occupations"],
+    fetchOccupations
   );
+  const { data: incomes, isLoading: incomeLoading } = useQuery(
+    ["incomes"],
+    fetchIncomes
+  );
+  // const { isLoading: initialDataLoading } = useQuery(
+  //   ["initialData"],
+  //   fetchInitialData
+  // );
 
-  if (initialDataLoading) {
+  if (incomeLoading || occupationsLoading) {
     // return <>Loading...</>;
     return (
       <div className="flex justify-start items-start space-x-4 w-full ml-5">
@@ -145,7 +152,6 @@ const WorkEducationForm = () => {
   //   ["employmentStatus"],
   //   fetchEmploymentStatus
   // );
-
   return (
     <div className="flex flex-col w-full space-y-5">
       <div className="flex flex-row justify-between w-full px-5">
@@ -167,14 +173,15 @@ const WorkEducationForm = () => {
               <option value="" disabled>
                 Select Education Attainment
               </option>
-              {educations.map((data: Education) => {
-                const { education_name: education, education_id } = data;
-                return (
-                  <option value={education_id} key={education_id}>
-                    {education}
-                  </option>
-                );
-              })}
+              {educations &&
+                educations.map((data: Education) => {
+                  const { education_name: education, education_id } = data;
+                  return (
+                    <option value={education_id} key={education_id}>
+                      {education}
+                    </option>
+                  );
+                })}
             </select>
           </div>
         ) : (
@@ -279,14 +286,15 @@ const WorkEducationForm = () => {
               <option value="" disabled>
                 Select Occupation
               </option>
-              {occupations.map((data: Occupation) => {
-                const { occupation_title: occupation, occupation_id } = data;
-                return (
-                  <option value={occupation_id} key={occupation_id}>
-                    {occupation}
-                  </option>
-                );
-              })}
+              {occupations &&
+                occupations.map((data: Occupation) => {
+                  const { occupation_title: occupation, occupation_id } = data;
+                  return (
+                    <option value={occupation_id} key={occupation_id}>
+                      {occupation}
+                    </option>
+                  );
+                })}
             </select>
           </div>
         ) : (
@@ -326,14 +334,15 @@ const WorkEducationForm = () => {
               <option value="" disabled>
                 Select Income Range
               </option>
-              {incomes.map((data: Income) => {
-                const { income_range: income, income_id } = data;
-                return (
-                  <option value={income_id} key={income_id}>
-                    {income}
-                  </option>
-                );
-              })}
+              {incomes &&
+                incomes.map((data: Income) => {
+                  const { income_range: income, income_id } = data;
+                  return (
+                    <option value={income_id} key={income_id}>
+                      {income}
+                    </option>
+                  );
+                })}
             </select>
             {/* <input
               type="text"

@@ -1,6 +1,7 @@
+// import { Skeleton } from "@/components/ui/skeleton";
 import { Skeleton } from "@/components/ui/skeleton";
 import axiosQuery from "@/queries/axios";
-import { useUserStore } from "@/zustand/auth/user";
+// import { useUserStore } from "@/zustand/auth/user";
 import { useDetailsStore } from "@/zustand/profile/about/useDetailsStore";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -34,7 +35,7 @@ type BodyType = {
 };
 
 const DetailsForm = () => {
-  const { user } = useUserStore();
+  // const { user } = useUserStore();
 
   const { formData, setFormData, globalEditMode: editMode } = useDetailsStore();
 
@@ -45,45 +46,45 @@ const DetailsForm = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const fetchInitialData = async () => {
-    try {
-      const response1 = await axiosQuery.post(
-        "https://muffinfunction.azurewebsites.net/api/GetHeight",
-        { member: user?.member_id }
-      );
+  // const fetchInitialData = async () => {
+  //   try {
+  //     const response1 = await axiosQuery.post(
+  //       "https://muffinfunction.azurewebsites.net/api/GetHeight",
+  //       { member: user?.member_id }
+  //     );
 
-      const response2 = await axiosQuery.post(
-        "https://muffinfunction.azurewebsites.net/api/GetWeight",
-        { member: user?.member_id }
-      );
+  //     const response2 = await axiosQuery.post(
+  //       "https://muffinfunction.azurewebsites.net/api/GetWeight",
+  //       { member: user?.member_id }
+  //     );
 
-      const response3 = await axiosQuery.post(
-        "https://muffinfunction.azurewebsites.net/api/GetAppearance",
-        { member: user?.member_id }
-      );
+  //     const response3 = await axiosQuery.post(
+  //       "https://muffinfunction.azurewebsites.net/api/GetAppearance",
+  //       { member: user?.member_id }
+  //     );
 
-      const response4 = await axiosQuery.post(
-        "https://muffinfunction.azurewebsites.net/api/GetFavoriteFood",
-        { member: user?.member_id }
-      );
+  //     const response4 = await axiosQuery.post(
+  //       "https://muffinfunction.azurewebsites.net/api/GetFavoriteFood",
+  //       { member: user?.member_id }
+  //     );
 
-      const { height } = response1.data[0];
+  //     const { height } = response1.data[0];
 
-      const { weight } = response2.data[0];
-      const { body_type_id } = response3.data;
-      const { favorite_food_id } = response4.data[0];
+  //     const { weight } = response2.data[0];
+  //     const { body_type_id } = response3.data;
+  //     const { favorite_food_id } = response4.data[0];
 
-      setFormData({
-        ...formData,
-        height: height,
-        weight: weight,
-        bodyType: body_type_id,
-        favoriteFood: favorite_food_id,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  //     setFormData({
+  //       ...formData,
+  //       height: height,
+  //       weight: weight,
+  //       bodyType: body_type_id,
+  //       favoriteFood: favorite_food_id,
+  //     });
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   // fetch select options
   const fetchFavoriteFood = async () => {
@@ -119,14 +120,17 @@ const DetailsForm = () => {
     fetchFavoriteFood
   );
   // const { data: Interests } = useQuery(["Interests"], fetchInterest);
-  const { data: BodyTypes } = useQuery(["BodyTypes"], fetchBodyTypes);
-
-  const { isLoading: initialDataLoading } = useQuery(
-    ["initialData"],
-    fetchInitialData
+  const { data: BodyTypes, isLoading } = useQuery(
+    ["BodyTypes"],
+    fetchBodyTypes
   );
 
-  if (initialDataLoading) {
+  // const { isLoading: initialDataLoading } = useQuery(
+  //   ["initialData"],
+  //   fetchInitialData
+  // );
+
+  if (isLoading) {
     // return <>Loading...</>;
     return (
       <div className="flex justify-start items-start space-x-4 w-full ml-5">
@@ -237,14 +241,15 @@ const DetailsForm = () => {
               <option value="" disabled>
                 Select Body Type
               </option>
-              {BodyTypes.map((data: BodyType) => {
-                const { body: bodyType, body_type_id } = data;
-                return (
-                  <option value={body_type_id} key={body_type_id}>
-                    {bodyType}
-                  </option>
-                );
-              })}
+              {BodyTypes &&
+                BodyTypes.map((data: BodyType) => {
+                  const { body: bodyType, body_type_id } = data;
+                  return (
+                    <option value={body_type_id} key={body_type_id}>
+                      {bodyType}
+                    </option>
+                  );
+                })}
             </select>
             {/* <input
               type="text"
@@ -342,15 +347,16 @@ const DetailsForm = () => {
               <option value="" disabled>
                 Select Favorite Food
               </option>
-              {favoriteFoods.map((data: FavoriteFood) => {
-                const { favorite_food_name: favoriteFood, favorite_food_id } =
-                  data;
-                return (
-                  <option value={favorite_food_id} key={favorite_food_id}>
-                    {favoriteFood}
-                  </option>
-                );
-              })}
+              {favoriteFoods &&
+                favoriteFoods.map((data: FavoriteFood) => {
+                  const { favorite_food_name: favoriteFood, favorite_food_id } =
+                    data;
+                  return (
+                    <option value={favorite_food_id} key={favorite_food_id}>
+                      {favoriteFood}
+                    </option>
+                  );
+                })}
             </select>
             {/* <input
               type="text"
