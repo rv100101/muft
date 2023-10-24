@@ -13,9 +13,16 @@ const getProfilePhoto = async (memberId: number) => {
   });
 };
 
+const getCountry = async (memberId: number) => {
+  return await axiosQuery.post("/GetCountry", {
+    member: memberId,
+  });
+};
+
 const authQuery = {
   signIn,
   getProfilePhoto,
+  getCountry
 };
 
 export default authQuery;

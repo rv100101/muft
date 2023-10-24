@@ -8,6 +8,7 @@ import SignUpPage from "@/pages/auth/signUpPage";
 import SignInPage from "@/pages/auth/signInPage";
 import HomePage from "@/pages/homePage";
 import ProfilePage from "@/pages/authenticatedPages/profilePage";
+import LikesAndFavouritesPage from "@/pages/authenticatedPages/likesAndFavouritesPage";
 
 export const routesWithFooterAndTopNav = [
   "/",
@@ -59,6 +60,10 @@ const pageRoutes = {
     path: "/home",
     component: HomePage,
   },
+  likesAndFavorites: {
+    path: '/likes-and-favourites',
+    component: LikesAndFavouritesPage
+  }
 };
 
 export default pageRoutes;

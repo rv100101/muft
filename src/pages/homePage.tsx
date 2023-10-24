@@ -1,12 +1,12 @@
 // HomePage.js
-import { useRef, useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 import PostHeader from "@/components/home/postHeader";
-// import LazyPostItem from "@/components/home/lazyPostItem";
 import AuthenticatedLayout from "./authenticatedPages/layout";
 import Suggestions from "@/components/suggestions";
-import axiosQuery from "@/queries/axios";
 import PostItem from "@/components/home/postItem";
 import { getImagePath } from "@/lib/images";
+import { useQuery } from "@tanstack/react-query";
+import membersQuery from "@/queries/home";
 
 type Member = {
   nickname: string;
@@ -19,25 +19,13 @@ type Member = {
 
 const HomePage = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [memberPost, setMemberPost] = useState([]);
-  const retrieveMembers = async () => {
-    try {
-      setIsLoading(true);
-      const response = await axiosQuery.post(
-        "https://muffinfunction.azurewebsites.net/api/HomePage",
-        { member: 69 }
-      );
-      const { data } = response;
 
-      if (data) {
-        setIsLoading(false);
-        setMemberPost(data);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const getMembers = membersQuery.getMembers(69);
+
+  const members = useQuery({
+    queryKey: ["home-members"],
+    queryFn: () => getMembers,
+  });
 
   const handleScroll = () => {
     const container = containerRef.current;
@@ -57,11 +45,6 @@ const HomePage = () => {
         container.removeEventListener("scroll", handleScroll);
       };
     }
-    retrieveMembers();
-  }, []);
-
-  useEffect(() => {
-    retrieveMembers();
   }, []);
 
   return (
@@ -71,14 +54,14 @@ const HomePage = () => {
         <div className="col-span-2 overflow-auto no-scrollbar">
           <PostHeader />
           {/* post container */}
-          {isLoading ? (
+          {members.isLoading ? (
             <>Loading...</>
           ) : (
             <div
               className="no-scrollbar rounded-xl border border-[#E0E0E0] h-full overflow-y-auto scroll-smooth"
               ref={containerRef}
             >
-              {memberPost.map((post: Member) => {
+              {members.data.map((post: Member, index: number) => {
                 const imagePath = getImagePath(
                   post.gallery_uuid,
                   post.gender,
@@ -87,6 +70,7 @@ const HomePage = () => {
                 return (
                   // <h1 className="bg-red-500">{post.nickname}</h1>
                   <PostItem
+                    key={index}
                     nickname={post.nickname}
                     countryName={post.countryName}
                     age={post.age}
@@ -94,12 +78,11 @@ const HomePage = () => {
                   />
                 );
               })}
-              {/* {isLoading ? <>Loading...</> : } */}
             </div>
           )}
-        </div>
+        </div>{" "}
         <div className="col-span-2 overflow-auto">
-          {memberPost ? <Suggestions memberPost={memberPost} /> : <></>}
+          <Suggestions memberPost={members.data} />
         </div>
         <div className="col-span-1"></div>
       </div>
