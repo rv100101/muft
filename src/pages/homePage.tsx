@@ -22,7 +22,7 @@ const HomePage = () => {
 
   const getMembers = membersQuery.getMembers(69);
 
-  const members = useQuery({
+  const { data: members, isLoading } = useQuery({
     queryKey: ["home-members"],
     queryFn: () => getMembers,
   });
@@ -47,6 +47,10 @@ const HomePage = () => {
     }
   }, []);
 
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <AuthenticatedLayout>
       <div className="grid grid-cols-6 gap4">
@@ -54,14 +58,14 @@ const HomePage = () => {
         <div className="col-span-2 overflow-auto no-scrollbar">
           <PostHeader />
           {/* post container */}
-          {members.isLoading ? (
+          {isLoading ? (
             <>Loading...</>
           ) : (
             <div
               className="no-scrollbar rounded-xl border border-[#E0E0E0] h-full overflow-y-auto scroll-smooth"
               ref={containerRef}
             >
-              {members.data.map((post: Member, index: number) => {
+              {members.map((post: Member, index: number) => {
                 const imagePath = getImagePath(
                   post.gallery_uuid,
                   post.gender,
@@ -82,7 +86,7 @@ const HomePage = () => {
           )}
         </div>{" "}
         <div className="col-span-2 overflow-auto">
-          <Suggestions memberPost={members.data} />
+          <Suggestions memberPost={members} />
         </div>
         <div className="col-span-1"></div>
       </div>
