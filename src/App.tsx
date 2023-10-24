@@ -14,10 +14,12 @@ function App() {
     <>
       {routesWithFooterAndTopNav.includes(location) && !user && <TopNav />}
       <Route
-        path={"/"}
-        component={user
-          ? pageRoutes.homePage.component
-          : pageRoutes.landingPage.component}
+        path="/"
+        component={
+          user
+            ? pageRoutes.homePage.component
+            : pageRoutes.landingPage.component
+        }
       />
       <Route
         path={pageRoutes.signUp.path}
@@ -44,8 +46,7 @@ function App() {
       </div>
 
       {/* Authenticated routes */}
-      
-      {user ? (
+      {user && (
         <>
           <Route
             path={pageRoutes.messagingPage.path}
@@ -64,12 +65,14 @@ function App() {
             component={pageRoutes.likesAndFavorites.component}
           />
         </>
-      ) : 
-        (location == pageRoutes.messagingPage.path ||
-          location == pageRoutes.notificationsPage.path) && (
+      )}
+
+      {!user &&
+        (location === pageRoutes.messagingPage.path ||
+          location === pageRoutes.notificationsPage.path) && (
           <Redirect to="/auth/signin" />
-        )
-        }
+        )}
+
       {routesWithFooterAndTopNav.includes(location) && !user && (
         <div className="h-full bg-[#0C1223]">
           <Footer />

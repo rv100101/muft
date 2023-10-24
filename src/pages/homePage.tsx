@@ -22,12 +22,10 @@ const HomePage = () => {
 
   const getMembers = membersQuery.getMembers(69);
 
-  const members = useQuery(
-    {
-      queryKey: ["home-members"],
-      queryFn: () => getMembers,
-    },
-  );
+  const members = useQuery({
+    queryKey: ["home-members"],
+    queryFn: () => getMembers,
+  });
 
   const handleScroll = () => {
     const container = containerRef.current;
@@ -56,7 +54,9 @@ const HomePage = () => {
         <div className="col-span-2 overflow-auto no-scrollbar">
           <PostHeader />
           {/* post container */}
-          {members.isLoading ? <>Loading...</> : (
+          {members.isLoading ? (
+            <>Loading...</>
+          ) : (
             <div
               className="no-scrollbar rounded-xl border border-[#E0E0E0] h-full overflow-y-auto scroll-smooth"
               ref={containerRef}
@@ -65,7 +65,7 @@ const HomePage = () => {
                 const imagePath = getImagePath(
                   post.gallery_uuid,
                   post.gender,
-                  post.member_uuid,
+                  post.member_uuid
                 );
                 return (
                   // <h1 className="bg-red-500">{post.nickname}</h1>
@@ -82,7 +82,7 @@ const HomePage = () => {
           )}
         </div>{" "}
         <div className="col-span-2 overflow-auto">
-          <Suggestions />
+          <Suggestions memberPost={members.data} />
         </div>
         <div className="col-span-1"></div>
       </div>
