@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import ForgotPassword from "@/components/auth/forgotPassword";
 import { Link, useLocation } from "wouter";
-import { scrollToTop } from "@/lib/utils";
+import { cn, scrollToTop } from "@/lib/utils";
 import logo from "@/assets/logo.svg";
 import helpIcon from "@/assets/auth/help-icon.png";
 import { MailIcon } from "lucide-react";
@@ -16,6 +16,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { useUserAvatar } from "@/zustand/auth/avatar";
 import { useUserCountry } from "@/zustand/auth/country";
 import { Input } from "@/components/ui/input";
+import { Button } from "../ui/button";
 
 type FormDataType = {
   email: string;
@@ -48,7 +49,7 @@ const SignInForm = () => {
       setIsLoading(true);
       const signInData = await authQuery.signIn(values.email, values.password);
       const profilePhotoData = await authQuery.getProfilePhoto(
-        signInData.data.member_id
+        signInData.data.member_id,
       );
       const countryData: {
         data: {
@@ -80,7 +81,7 @@ const SignInForm = () => {
   };
 
   return (
-    <div className="flex h-3/4 w-3/4 flex-col items-center shadow-xl rounded-lg p-4 border space-y-5">
+    <div className="flex h-max sm:w-3/4 flex-col items-center lg:shadow-xl rounded-lg p-4 lg:border space-y-5">
       <div className="flex w-full h-min justify-end">
         <img
           src={helpIcon}
@@ -89,8 +90,8 @@ const SignInForm = () => {
         />
       </div>
       <div className="flex flex-col text-center items-center space-y-3">
-        <img className="w-24 md:w-32 " src={logo} alt="muffin-logo" />
-        <p className="text-[#1B2950] text-xs font-bold text-center">
+        <img className="w-36 md:w-48 " src={logo} alt="muffin-logo" />
+        <p className="text-[#1B2950] text-md font-bold text-center">
           Enter your E-Mail and Password
         </p>
       </div>
@@ -102,11 +103,11 @@ const SignInForm = () => {
       >
         {/* email */}
         <div className="flex flex-col space-y-1">
-          <label htmlFor="email" className="text-sm text-semibold  ml-5 mb-2">
+          <label htmlFor="email" className="text-sm text-semibold mb-2">
             Email
           </label>
           <div
-            className={`flex items-center flex-row border rounded-full py-1 px-5 m-3 ${
+            className={`flex items-center flex-row border rounded-full py-1 px-5 ${
               formik.touched.email && formik.errors.email
                 ? "border-rose-500"
                 : ""
@@ -132,23 +133,25 @@ const SignInForm = () => {
               }`}
             />
           </div>
-          {formik.touched.email && formik.errors.email ? (
-            <div className="error text-red-500 ml-5 pt-2">
-              {formik.errors.email}
-            </div>
-          ) : null}
+          {formik.touched.email && formik.errors.email
+            ? (
+              <div className="error text-sm text-red-500 ml-5 pt-2">
+                {formik.errors.email}
+              </div>
+            )
+            : null}
         </div>
 
         {/* password */}
         <div className="flex flex-col space-y-1">
           <label
             htmlFor="password"
-            className="text-sm text-semibold  ml-5 mb-2"
+            className="text-sm text-semibold mb-2"
           >
             Password
           </label>
           <div
-            className={`flex flex-row border items-center rounded-full py-1 px-5 m-3 ${
+            className={`flex flex-row border items-center rounded-full py-1 px-5 ${
               formik.touched.password && formik.errors.password
                 ? "border-rose-500"
                 : ""
@@ -174,22 +177,25 @@ const SignInForm = () => {
               }`}
             />
           </div>
-          {formik.touched.password && formik.errors.password ? (
-            <div className="error text-red-500 ml-5 pt-2">
-              {formik.errors.password}
-            </div>
-          ) : null}
+          {formik.touched.password && formik.errors.password
+            ? (
+              <div className="error text-red-500 text-sm ml-5 pt-2">
+                {formik.errors.password}
+              </div>
+            )
+            : null}
         </div>
         {/* button */}
-        <button
+        <Button
           disabled={isLoading}
           type="submit"
-          className={` text-white w-full rounded-full py-2 ${
-            isLoading ? "bg-[#FF8AB3]" : "bg-primary"
-          }`}
+          className={cn(
+            "text-white w-full rounded-full py-2 hover:bg-[#FF599B]/90",
+            isLoading ? "bg-[#FF8AB3]" : "bg-primary",
+          )}
         >
           {isLoading ? "Signing In..." : "Sign In"}
-        </button>
+        </Button>
       </form>
       <div className="w-full px-5">
         <Dialog>
