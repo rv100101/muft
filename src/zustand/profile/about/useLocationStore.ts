@@ -2,12 +2,12 @@ import { create } from "zustand";
 
 interface formData {
   country: string;
-  state: string;
+  region: string;
 }
 export interface LocationStore {
   formData: {
     country: string;
-    state: string;
+    region: string;
   };
   setFormData: (data: formData) => void;
   setEditMode: () => void;
@@ -18,7 +18,7 @@ export interface LocationStore {
 export const useLocationStore = create<LocationStore>((set) => ({
   formData: {
     country: "",
-    state: "",
+    region: "",
   },
 
   globalEditMode: false,
