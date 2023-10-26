@@ -1,17 +1,11 @@
 import { create } from "zustand";
 
 interface formData {
-  education: string;
-  employmentStatus: string;
-  occupationTitle: string;
-  income: string;
+  nickname: string;
 }
-export interface WorkEducationStore {
+export interface ProfileHeaderStore {
   formData: {
-    education: string;
-    employmentStatus: string;
-    occupationTitle: string;
-    income: string;
+    nickname: string;
   };
 
   setFormData: (data: formData) => void;
@@ -21,12 +15,9 @@ export interface WorkEducationStore {
   globalEditMode: boolean;
 }
 
-export const useWorkEducationStore = create<WorkEducationStore>((set) => ({
+export const useProfileHeaderStore = create<ProfileHeaderStore>((set) => ({
   formData: {
-    education: "",
-    employmentStatus: "",
-    occupationTitle: "",
-    income: "",
+    nickname: "",
   },
 
   globalEditMode: false,

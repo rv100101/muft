@@ -1,7 +1,5 @@
-// import { Skeleton } from "@/components/ui/skeleton";
 import { Skeleton } from "@/components/ui/skeleton";
 import axiosQuery from "@/queries/axios";
-// import { useUserStore } from "@/zustand/auth/user";
 import { useBasicInfoStore } from "@/zustand/profile/about/useBasicInfoStore";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -49,7 +47,6 @@ const BasicInformationForm = () => {
     formData,
     setFormData,
     globalEditMode: editMode,
-    // setSelectedMaritalStatus,
   } = useBasicInfoStore();
 
   // fetch select options
@@ -65,11 +62,7 @@ const BasicInformationForm = () => {
     const response = await axiosQuery.post(
       "https://muffinfunction.azurewebsites.net/api/MaritalStatus"
     );
-    // const { marital_status_id } = response.data.filter(
-    //   (item) => item.marital_status_name == formData.maritalStatus
-    // )[0];
 
-    // setSelectedMaritalStatus()
     return response.data;
   };
 
@@ -87,49 +80,6 @@ const BasicInformationForm = () => {
     );
     return response.data;
   };
-  // const { user } = useUserStore();
-
-  // retrieve user data
-  // const fetchInitialData = async () => {
-  //   try {
-  //     const response1 = await axiosQuery.post(
-  //       "https://muffinfunction.azurewebsites.net/api/GetBasicInfo",
-  //       { member: user?.member_id }
-  //     );
-  //     const response2 = await axiosQuery.post(
-  //       "https://muffinfunction.azurewebsites.net/api/GetBackground",
-  //       { member: user?.member_id }
-  //     );
-  //     const response3 = await axiosQuery.post(
-  //       "https://muffinfunction.azurewebsites.net/api/GetMaritalStatus",
-  //       { member: user?.member_id }
-  //     );
-  //     const response = await axiosQuery.post(
-  //       "https://muffinfunction.azurewebsites.net/api/GetLanguages",
-  //       { member: user?.member_id }
-  //     );
-  //     const { gender, nationality, date_of_birth, age } = response1.data;
-  //     const { religion_name, ethnicity_name } = response2.data;
-  //     const { marital_status_name } = response3.data;
-  //     const { language_name } = response.data[0];
-
-  //     setFormData({
-  //       ...formData,
-  //       gender: gender,
-  //       nationality: nationality,
-  //       birthInfo: date_of_birth,
-  //       age: age,
-  //       religion: religion_name,
-  //       ethnicity: ethnicity_name,
-  //       // maritalStatus: { id: marital_status_id, name: marital_status_name },
-  //       maritalStatus: marital_status_name,
-  //       language: language_name,
-  //     });
-  //     return formData;
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
 
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -156,10 +106,6 @@ const BasicInformationForm = () => {
     ["ethnicity"],
     fetchEthnicity
   );
-  // const { isLoading: initialDataLoading } = useQuery(
-  //   ["initialData"],
-  //   fetchInitialData
-  // );
 
   if (
     nationalitiesIsLoading ||
@@ -184,7 +130,7 @@ const BasicInformationForm = () => {
   }
 
   return (
-    <div className="flex flex-col w-full space-y-5">
+    <div className="flex flex-col w-full space-y-5 py-5">
       <div className="flex flex-row justify-between w-full px-5">
         {editMode == true ? (
           <div className="flex flex-row space-x-2 hover:cursor-pointer w-full items-center">
@@ -198,7 +144,7 @@ const BasicInformationForm = () => {
               value={formData.gender}
               onChange={(e) => handleInputChange(e)}
               autoFocus
-              className="outline-0 text-[#FF599B] border border rounded-lg w-3/4 py-3 px-5"
+              className="outline-0 text-[#FF599B] border border rounded-lg lg:w-3/4 w-full py-3 px-5"
               name="gender"
             >
               <option value="" disabled>
@@ -238,7 +184,7 @@ const BasicInformationForm = () => {
               value={formData.nationality}
               onChange={(e) => handleInputChange(e)}
               autoFocus
-              className="outline-0 text-[#FF599B] border border rounded-lg w-3/4 py-3 px-5"
+              className="outline-0 text-[#FF599B] border border rounded-lg lg:w-3/4 w-full py-3 px-5"
               name="nationality"
             >
               <option value="" disabled>
@@ -283,7 +229,7 @@ const BasicInformationForm = () => {
               value={formData.birthInfo}
               onChange={(e) => handleInputChange(e)}
               autoFocus
-              className="outline-0 text-[#FF599B] border border rounded-lg w-3/4 py-3 px-5"
+              className="outline-0 text-[#FF599B] border border rounded-lg lg:w-3/4 w-full py-3 px-5"
               name="birthInfo"
             />
           </div>
@@ -305,9 +251,9 @@ const BasicInformationForm = () => {
       </div>
 
       {/* add new */}
-      <div className="flex flex-row justify-between w-full px-5 ">
+      <div className="flex flex-row justify-between w-full px-5 hidden">
         {editMode ? (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer w-full items-center hidden">
+          <div className="flex flex-row space-x-2 hover:cursor-pointer w-full items-center ">
             <PlusCircle
               color="#FF599B"
               size={20}
@@ -318,7 +264,7 @@ const BasicInformationForm = () => {
               value={formData.age}
               onChange={(e) => handleInputChange(e)}
               autoFocus
-              className="outline-0 text-[#FF599B] border border rounded-lg w-3/4 py-3 px-5"
+              className="outline-0 text-[#FF599B] border border rounded-lg lg:w-3/4 w-full py-3 px-5"
               name="age"
               readOnly
             />
@@ -392,7 +338,7 @@ const BasicInformationForm = () => {
               value={formData.ethnicity}
               onChange={(e) => handleInputChange(e)}
               autoFocus
-              className="outline-0 text-[#FF599B] border border rounded-lg w-3/4 py-3 px-5"
+              className="outline-0 text-[#FF599B] border border rounded-lg lg:w-3/4 w-full py-3 px-5"
               name="ethnicity"
             >
               <option value="" disabled>
@@ -438,7 +384,7 @@ const BasicInformationForm = () => {
               value={formData.maritalStatus}
               onChange={(e) => handleInputChange(e)}
               autoFocus
-              className="outline-0 text-[#FF599B] border border rounded-lg w-3/4 py-3 px-5"
+              className="outline-0 text-[#FF599B] border border rounded-lg lg:w-3/4 w-full py-3 px-5"
               name="maritalStatus"
             >
               <option value="" disabled>
@@ -486,7 +432,7 @@ const BasicInformationForm = () => {
               value={formData.language}
               onChange={(e) => handleInputChange(e)}
               autoFocus
-              className="outline-0 text-[#FF599B] border border rounded-lg w-3/4 py-3 px-5"
+              className="outline-0 text-[#FF599B] border border rounded-lg lg:w-3/4 w-full py-3 px-5"
               name="language"
             >
               <option value="" disabled>

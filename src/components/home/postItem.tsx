@@ -13,12 +13,12 @@ const PostItem = ({ nickname, age, image }: PostItemProps) => {
   return (
     <div className="transition ease-in duration-300 transform">
       <div className="relative flex flex-col items-center justify-end h-full w-full p-10 border-b">
-        <div className="flex flex-col h-full justify-center items-center py-5 px-15">
+        <div className="flex flex-col h-full justify-center items-center">
           <img
             src={image}
             alt="post-img"
             width={520}
-            className="rounded-md w-full"
+            className="rounded-md w-[420px]  h-[554px] object-cover"
             // height={1000}
             // className="h-2/4 "
           />
@@ -46,7 +46,7 @@ const PostItem = ({ nickname, age, image }: PostItemProps) => {
           </div>
           {/* bio */}
           <div className="flex flex-col justify-center items-center">
-            <p className="text-[#727272] pt-5 px-0 text-sm">
+            <p className="text-[#727272] pt-5 px-5 text-sm">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt.
             </p>

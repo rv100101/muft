@@ -15,7 +15,7 @@ const SideBar = () => {
           className="h-10 px-4 py-2 hover:bg-accent hover:text-accent-foreground flex justify-start items-center space-x-2"
           href={link.path}
         >
-          {<link.icon />} <p>{link.name}</p>
+          {<link.icon size={20} />} <p className="text-sm">{link.name}</p>
         </Link>
       </li>
     );
@@ -39,7 +39,7 @@ const SideBar = () => {
               className="h-10 px-4 py-2 hover:bg-accent hover:text-accent-foreground flex justify-start items-center space-x-2"
               href={"/"}
             >
-              {<LogOutIcon />} <p>Sign out</p>
+              {<LogOutIcon size={20} />} <p className="text-sm">Sign out</p>
             </Link>
           </li>
         </ul>

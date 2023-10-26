@@ -4,7 +4,8 @@ import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import FooterLinks from "./footerLinks";
 import { getImagePath } from "@/lib/images";
-// import { CoverPhoto } from "../assets/home/cover-photo.png";
+import membersQuery from "@/queries/home";
+import { useQuery } from "@tanstack/react-query";
 
 type Member = {
   nickname: string;
@@ -15,55 +16,60 @@ type Member = {
   gender: string;
 };
 
-type SuggestionsProps = {
-  memberPost: Member[];
-};
+const Suggestions = () => {
+  const getMembers = membersQuery.getMembers(69);
 
-const Suggestions = ({ memberPost }: SuggestionsProps) => {
-  const suggestions = memberPost.slice(0, 3).map((suggestion, index) => {
-    const imagePath = getImagePath(
-      suggestion.gallery_uuid,
-      suggestion.gender,
-      suggestion.member_uuid
-    );
-    return (
-      <li key={index} className="h-36 lg:h-340 w-full relative">
-        <img
-          className="h-full w-full rounded-xl z-10"
-          src="test.jpg"
-          alt="cover photo"
-          onError={(e) => {
-            e.target.src = "https://dummyimage.com/600x400/f6f6f6/f6f6f6.png";
-          }}
-        />
-        <div className="absolute flex bottom-4 left-4 z-20 space-x-2 items-end">
-          <img
-            className="rounded-full h-10 lg:h-16 ring-2 ring-primary"
-            src={imagePath}
-            alt="user avatar"
-          />
-          <div>
-            <p className="font-semibold text-xs lg:text-lg">
-              {suggestion.nickname}
-            </p>
-            <p className="text-xs lg:text-md">{suggestion.countryName}</p>
-          </div>
-        </div>
-      </li>
-    );
+  const members = useQuery({
+    queryKey: ["home-members"],
+    queryFn: () => getMembers,
   });
 
+  const suggestions = members.data
+    ?.slice(0, 3)
+    .map((suggestion: Member, index: number) => {
+      const imagePath = getImagePath(
+        suggestion.gallery_uuid,
+        suggestion.gender,
+        suggestion.member_uuid
+      );
+      return (
+        <li key={index} className="h-36 lg:h-340 w-full relative">
+          <img
+            className="h-full w-full rounded-xl z-10"
+            src=""
+            alt="cover photo"
+            onError={(e) => {
+              e.target.src = "https://dummyimage.com/600x400/f6f6f6/f6f6f6.png";
+            }}
+          />
+          <div className="absolute flex bottom-4 left-4 z-20 space-x-2 items-end">
+            <img
+              className="rounded-full h-10 lg:h-16 ring-2 ring-primary"
+              src={imagePath}
+              alt="user avatar"
+            />
+            <div>
+              <p className="font-semibold text-xs lg:text-lg">
+                {suggestion.nickname}
+              </p>
+              <p className="text-xs lg:text-md">{suggestion.countryName}</p>
+            </div>
+          </div>
+        </li>
+      );
+    });
+
   return (
-    <div className="w-[380px] h-5/6 pt-4 px-5 lg:p-4 sm:flex flex-col hidden">
+    <div className="w-[380px] h-5/6 pt-4 px-5 lg:p-4 sm:flex flex-col hidden ">
       <SearchInput />
       <div className="h-max w-full flex justify-between mt-4 items-center">
-        <p className=" lg:text-lg">SUGGESTIONS</p>
-        <div className="flex">
+        <p className=" lg:text-md px-5 py-2">SUGGESTIONS</p>
+        <div className="flex px-5">
           <Button variant={"ghost"} className="p-0">
-            <ChevronLeftIcon />
+            <ChevronLeftIcon size={20} />
           </Button>
           <Button variant={"ghost"} className="p-0">
-            <ChevronRightIcon />
+            <ChevronRightIcon size={20} />
           </Button>
         </div>
       </div>

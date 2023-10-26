@@ -2,7 +2,7 @@ import ProfileTopNav from "@/components/profile/profileTopNav";
 import AuthenticatedLayout from "./layout";
 import ProfileHeader from "@/components/profile/profileHeader";
 import AboutAccordion from "@/components/profile/about/aboutAccordion";
-import { PlusCircle, X, XCircle } from "lucide-react";
+import { PlusCircle, X } from "lucide-react";
 import { useRef, useState } from "react";
 import { useUserStore } from "@/zustand/auth/user";
 import axiosQuery from "@/queries/axios";
@@ -94,7 +94,7 @@ const ProfilePage = () => {
   }
   return (
     <AuthenticatedLayout>
-      <div className="flex flex-col justify-start h-full w-1/2 border mx-auto overflow-y-auto no-scrollbar ">
+      <div className="flex flex-col justify-start h-full lg:w-1/2 border mx-auto overflow-y-auto no-scrollbar ">
         {/* header */}
         <ProfileTopNav />
         {/*  */}
@@ -154,7 +154,7 @@ const ProfilePage = () => {
             </div>
           </div>
           {/* photos section */}
-          <div className="flex flex-row justify-start space-x-5 p-5 h-full">
+          <div className="flex lg:flex-row justify-start space-x-5 p-5 h-full lg:overflow-hidden overflow-scroll ">
             {gallery.map((pic) => {
               const path = getImagePath(
                 pic.gallery_uuid,

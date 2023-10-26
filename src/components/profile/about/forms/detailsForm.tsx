@@ -148,7 +148,7 @@ const DetailsForm = () => {
   }
 
   return (
-    <div className="flex flex-col w-full space-y-5">
+    <div className="flex flex-col w-full space-y-5 py-5">
       <div className="flex flex-row justify-between w-full px-5">
         {editMode ? (
           <div className="flex flex-row space-x-2 hover:cursor-pointer  w-full items-center">
@@ -162,7 +162,7 @@ const DetailsForm = () => {
               value={formData.height}
               onChange={(e) => handleInputChange(e)}
               autoFocus
-              className="outline-0 text-[#FF599B] border border rounded-lg w-3/4 py-3 px-5"
+              className="outline-0 text-[#FF599B] border border rounded-lg lg:w-3/4 w-full py-3 px-5"
               name="height"
             />
           </div>
@@ -196,7 +196,7 @@ const DetailsForm = () => {
               value={formData.weight}
               onChange={(e) => handleInputChange(e)}
               autoFocus
-              className="outline-0 text-[#FF599B] border rounded-lg w-3/4 py-3 px-5"
+              className="outline-0 text-[#FF599B] border rounded-lg lg:w-3/4 w-full py-3 px-5"
               name="weight"
             />
           </div>
@@ -235,7 +235,7 @@ const DetailsForm = () => {
               value={formData.bodyType}
               onChange={(e) => handleInputChange(e)}
               autoFocus
-              className="outline-0 text-[#FF599B] border rounded-lg w-3/4 py-3 px-5"
+              className="outline-0 text-[#FF599B] border rounded-lg lg:w-3/4 w-full py-3 px-5"
               name="bodyType"
             >
               <option value="" disabled>
@@ -341,7 +341,7 @@ const DetailsForm = () => {
               value={formData.favoriteFood}
               onChange={(e) => handleInputChange(e)}
               autoFocus
-              className="outline-0 text-[#FF599B] border rounded-lg w-3/4 py-3 px-5"
+              className="outline-0 text-[#FF599B] border rounded-lg lg:w-3/4 w-full py-3 px-5"
               name="favoriteFood"
             >
               <option value="" disabled>
