@@ -1,5 +1,5 @@
 import { ArrowLeft, MoreVertical } from "lucide-react";
-import TopBar2 from "../topBar2";
+// import TopBar2 from "../topBar2";
 
 const profileTopNav = () => {
   return (
