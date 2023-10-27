@@ -153,7 +153,7 @@ const WorkEducationForm = () => {
   //   fetchEmploymentStatus
   // );
   return (
-    <div className="flex flex-col w-full space-y-5">
+    <div className="flex flex-col w-full space-y-5 py-5">
       <div className="flex flex-row justify-between w-full px-5">
         {editMode == true ? (
           <div className="flex flex-row space-x-2 hover:cursor-pointer w-full items-center ">
@@ -167,7 +167,7 @@ const WorkEducationForm = () => {
               value={formData.education}
               onChange={(e) => handleInputChange(e)}
               autoFocus
-              className="outline-0 text-[#FF599B] border border rounded-lg w-3/4 py-3 px-5"
+              className="outline-0 text-[#FF599B] border border rounded-lg lg:w-3/4 w-full py-3 px-5"
               name="education"
             >
               <option value="" disabled>
@@ -217,7 +217,7 @@ const WorkEducationForm = () => {
               value={formData.employmentStatus}
               onChange={(e) => handleInputChange(e)}
               autoFocus
-              className="outline-0 text-[#FF599B] border border rounded-lg w-3/4 py-3 px-5"
+              className="outline-0 text-[#FF599B] border border rounded-lg lg:w-3/4 w-full py-3 px-5"
               name="employmentStatus"
             >
               <option value="" disabled>
@@ -240,7 +240,7 @@ const WorkEducationForm = () => {
               value={formData.employmentStatus}
               onChange={(e) => handleInputChange(e)}
               autoFocus
-              className="outline-0 text-[#FF599B] border border rounded-lg w-3/4 py-3 px-5"
+              className="outline-0 text-[#FF599B] border border rounded-lg lg:w-3/4 w-full py-3 px-5"
               name="employmentStatus"
             />
           </div>
@@ -280,7 +280,7 @@ const WorkEducationForm = () => {
               value={formData.occupationTitle}
               onChange={(e) => handleInputChange(e)}
               autoFocus
-              className="outline-0 text-[#FF599B] border border rounded-lg w-3/4 py-3 px-5"
+              className="outline-0 text-[#FF599B] border border rounded-lg lg:w-3/4 w-full py-3 px-5"
               name="occupationTitle"
             >
               <option value="" disabled>
@@ -328,7 +328,7 @@ const WorkEducationForm = () => {
               value={formData.income}
               onChange={(e) => handleInputChange(e)}
               autoFocus
-              className="outline-0 text-[#FF599B] border border rounded-lg w-3/4 py-3 px-5"
+              className="outline-0 text-[#FF599B] border border rounded-lg lg:w-3/4 w-full py-3 px-5"
               name="income"
             >
               <option value="" disabled>
@@ -349,7 +349,7 @@ const WorkEducationForm = () => {
               value={formData.income}
               onChange={(e) => handleInputChange(e)}
               autoFocus
-              className="outline-0 text-[#FF599B] border border rounded-lg w-3/4 py-3 px-5"
+              className="outline-0 text-[#FF599B] border border rounded-lg lg:w-3/4 w-full py-3 px-5"
               name="income"
             /> */}
           </div>
