@@ -1,26 +1,83 @@
 import "./App";
-import { Route } from "wouter";
-import LandingPage from "./pages/landingPage";
-import NavBar from "@/components/navbar";
-import PrivacyPolicyPage from "./pages/privacyPolicyPage";
-import ReleaseNotesPage from "./pages/releaseNotesPage";
-import TermsPage from "./pages/termsPage";
+import { Redirect, Route, useLocation } from "wouter";
+import TopNav from "./components/topNav";
 import Footer from "./components/footer";
-// import UnderMaintenancePage from "./pages/underMaintenancePage";
+
+import pageRoutes, { routesWithFooterAndTopNav } from "./lib/routes";
+import { useUserStore } from "./zustand/auth/user";
 
 function App() {
+  const [location] = useLocation();
+  const user = useUserStore((state) => state.user);
+
   return (
     <>
-      <NavBar />
-      <Route path="/" component={LandingPage} />
+      {routesWithFooterAndTopNav.includes(location) && !user && <TopNav />}
+      <Route
+        path="/"
+        component={
+          user
+            ? pageRoutes.homePage.component
+            : pageRoutes.landingPage.component
+        }
+      />
+      <Route
+        path={pageRoutes.signUp.path}
+        component={pageRoutes.signUp.component}
+      />
+      <Route
+        path={pageRoutes.signIn.path}
+        component={pageRoutes.signIn.component}
+      />
+
       <div className="md:mx-12 lg:mx-36">
-        <Route path="/privacy-policy" component={PrivacyPolicyPage} />
-        <Route path="/terms" component={TermsPage} />
-        <Route path="/release-notes" component={ReleaseNotesPage} />
+        <Route
+          path={pageRoutes.privacyPolicyPage.path}
+          component={pageRoutes.privacyPolicyPage.component}
+        />
+        <Route
+          path={pageRoutes.termsPage.path}
+          component={pageRoutes.termsPage.component}
+        />
+        <Route
+          path={pageRoutes.releaseNotesPage.path}
+          component={pageRoutes.releaseNotesPage.component}
+        />
       </div>
-      <div className="bg-[#0C1223]">
-        <Footer />
-      </div>
+
+      {/* Authenticated routes */}
+      {user && (
+        <>
+          <Route
+            path={pageRoutes.messagingPage.path}
+            component={pageRoutes.messagingPage.component}
+          />
+          <Route
+            path={pageRoutes.notificationsPage.path}
+            component={pageRoutes.notificationsPage.component}
+          />
+          <Route
+            path={pageRoutes.profilePage.path}
+            component={pageRoutes.profilePage.component}
+          />
+          <Route
+            path={pageRoutes.likesAndFavorites.path}
+            component={pageRoutes.likesAndFavorites.component}
+          />
+        </>
+      )}
+
+      {!user &&
+        (location === pageRoutes.messagingPage.path ||
+          location === pageRoutes.notificationsPage.path) && (
+          <Redirect to="/auth/signin" />
+        )}
+
+      {routesWithFooterAndTopNav.includes(location) && !user && (
+        <div className="h-full bg-[#0C1223]">
+          <Footer />
+        </div>
+      )}
     </>
   );
 }

@@ -12,7 +12,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Menu } from "lucide-react";
 import { motion } from "framer-motion";
-import { useLocation } from "wouter";
+import { Link, useLocation } from "wouter";
+import { cn } from "@/lib/utils";
 const container = {
   none: { opacity: 1 },
   hidden: { opacity: 0 },
@@ -30,11 +31,15 @@ const motionTop80 = {
   show: { scale: 1, top: 80 },
 };
 
-function NavBar() {
+function TopNav() {
   const [location] = useLocation();
 
   return (
-    <motion.nav className="flex items-center justify-between my-4 mx-8 md:mx-12 lg:mx-36">
+    <motion.nav
+      className={cn(
+        "flex items-center justify-between my-4 mx-8 md:mx-12 lg:mx-36"
+      )}
+    >
       <motion.a
         initial={
           location == "/" ? { opacity: 0, scale: 0 } : { opacity: 1, scale: 1 }
@@ -54,21 +59,23 @@ function NavBar() {
       >
         <motion.li variants={motionTop80}>
           <Button variant={"ghost"} className="font-light">
-            <a href="https://support.softnames.com/" target="_blank">
+            <Link href="https://support.softnames.com/" target="_blank">
               Contact Us
-            </a>
+            </Link>
           </Button>
         </motion.li>
-        {/* <motion.li variants={motionTop80}>
-          <Button
-            className={cn(
-              "rounded-[100px] hover:bg-[#d86392]",
-              "font-semibold px-6"
-            )}
-          >
-            Sign in
-          </Button>
-        </motion.li> */}
+        <motion.li variants={motionTop80}>
+          <Link href="/auth/signin">
+            <Button
+              className={cn(
+                "rounded-[100px] hover:bg-[#d86392]",
+                "font-semibold px-6"
+              )}
+            >
+              Sign in
+            </Button>
+          </Link>
+        </motion.li>
       </motion.ul>
       <DropdownMenu>
         <DropdownMenuTrigger className="block md:hidden" asChild>
@@ -81,22 +88,24 @@ function NavBar() {
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
             <DropdownMenuItem>
-              <a href="https://support.softnames.com/">Contact Us</a>
+              <Link href="https://support.softnames.com/">Contact Us</Link>
             </DropdownMenuItem>
           </DropdownMenuGroup>
-          <DropdownMenuSeparator />
-          {/* <DropdownMenuItem
-            className={cn(
-              "m-0 text text-white bg-primary hover:bg-[#d86392]",
-              "font-semibold px-6"
-            )}
-          >
-            Sign In
-          </DropdownMenuItem> */}
+          <DropdownMenuSeparator />{" "}
+          <Link href="/auth/signin">
+            <DropdownMenuItem
+              className={cn(
+                "m-0 text text-white bg-primary hover:bg-[#d86392]",
+                "font-semibold px-6"
+              )}
+            >
+              Sign In
+            </DropdownMenuItem>
+          </Link>
         </DropdownMenuContent>
       </DropdownMenu>
     </motion.nav>
   );
 }
 
-export default NavBar;
+export default TopNav;

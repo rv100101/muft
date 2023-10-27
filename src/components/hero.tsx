@@ -1,87 +1,10 @@
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
 import { banner } from "@/lib/homepage";
 import GooglePlay from "@/assets/google-play.png";
 import AppStore from "@/assets/app-store.png";
-import { useMediaQuery, useTimeout } from "usehooks-ts";
 import Conversation from "./conversation";
-import axios from "axios";
+
 const Hero = () => {
-  const [visible, setVisible] = useState(false);
-
-  const hide = () => setVisible(true);
-
-  useEffect(() => {
-    const test = async () =>
-      await axios({
-        method: "post",
-        url: "https://muffinfunction.azurewebsites.net/api/GetConversation",
-        params: {
-          code: "Q9-xWtz5B2wNnEDUyaIZOtf-BpjX3aupmt6hZZ051AWIAzFuyAhjJw==",
-          member: 184,
-          chat_member: 69,
-        },
-      }).then(function (response) {
-        console.log(response);
-      });
-    test();
-  }, []);
-
-  useTimeout(hide, 3000);
-
-  const matches = useMediaQuery("(min-width: 768px)");
-
-  const firstTextToType = matches
-    ? "What was it about my profile that caught your attention and made flirt?"
-    : "What caught your eye?";
-  const secondTextToType = matches
-    ? "Your captivating smile drew me in, and your intriguing interests made me want to flirt."
-    : "Smile and interests.";
-
-  const [firstTypedChat, setFirstTypedChat] = useState("");
-  const [secondTypedChat, setSecondTypedChat] = useState("");
-  const [firstChatIndex, setFirstChatIndex] = useState(0);
-  const [secondChatIndex, setSecondChatIndex] = useState(0);
-
-  useEffect(() => {
-    const firstTypingInterval = setInterval(() => {
-      if (visible && firstChatIndex < firstTextToType.length) {
-        setFirstTypedChat(
-          (prevText) => prevText + firstTextToType[firstChatIndex]
-        );
-        setFirstChatIndex((prevIndex) => prevIndex + 1);
-      } else {
-        clearInterval(firstTypingInterval);
-      }
-    }, 50);
-
-    const secondTypingInterval = setInterval(() => {
-      if (
-        visible &&
-        firstChatIndex >= firstTextToType.length &&
-        secondChatIndex < secondTextToType.length
-      ) {
-        setSecondTypedChat(
-          (prevText) => prevText + secondTextToType[secondChatIndex]
-        );
-        setSecondChatIndex((prevIndex) => prevIndex + 1);
-      } else {
-        clearInterval(secondTypingInterval);
-      }
-    }, 50);
-
-    return () => {
-      clearInterval(firstTypingInterval);
-      clearInterval(secondTypingInterval);
-    };
-  }, [
-    firstChatIndex,
-    firstTextToType,
-    secondChatIndex,
-    secondTextToType,
-    visible,
-  ]);
-
   return (
     <motion.div
       initial={{
@@ -168,14 +91,7 @@ const Hero = () => {
             </a>
           </motion.div>
         </div>
-        <Conversation
-          firstChat={{
-            firstTypedChat: firstTypedChat,
-            firstChatIndex: firstChatIndex,
-            firstChatToType: firstTextToType,
-          }}
-          secondChat={{ secondTypedChat: secondTypedChat }}
-        />
+        <Conversation />
       </div>
     </motion.div>
   );
