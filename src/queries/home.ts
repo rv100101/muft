@@ -8,17 +8,23 @@ const getMembers = async (memberId: number) => {
       { member: memberId }
     );
     // Loop through the response array and add imagePath property to each member object
-    const membersWithImagePath = res.data.map((member) => {
-      const imagePath = getImagePath(
-        member.gallery_uuid,
-        member.gender,
-        member.member_uuid
-      );
-      return {
-        ...member,
-        imagePath: imagePath, // Add imagePath property to the member object
-      };
-    });
+    const membersWithImagePath = res.data.map(
+      (member: {
+        gallery_uuid: string;
+        gender: string;
+        member_uuid: string;
+      }) => {
+        const imagePath = getImagePath(
+          member.gallery_uuid,
+          member.gender,
+          member.member_uuid
+        );
+        return {
+          ...member,
+          imagePath: imagePath, // Add imagePath property to the member object
+        };
+      }
+    );
 
     return membersWithImagePath;
   } catch (error) {
