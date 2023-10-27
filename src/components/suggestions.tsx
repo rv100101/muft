@@ -38,8 +38,10 @@ const Suggestions = () => {
             className="h-full w-full rounded-xl z-10"
             src=""
             alt="cover photo"
-            onError={(e) => {
-              e.target.src = "https://dummyimage.com/600x400/f6f6f6/f6f6f6.png";
+            onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+              const imgElement = e.target as HTMLImageElement;
+              imgElement.src =
+                "https://dummyimage.com/600x400/f6f6f6/f6f6f6.png";
             }}
           />
           <div className="absolute flex bottom-4 left-4 z-20 space-x-2 items-end">

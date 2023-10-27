@@ -7,14 +7,12 @@ import { LockIcon } from "lucide-react";
 import { InfoIcon } from "lucide-react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import axios from "axios";
 import { Link, useLocation } from "wouter";
 import { cn, scrollToTop } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useMutation } from "@tanstack/react-query";
 import axiosQuery from "@/queries/axios";
 import { toast } from "@/components/ui/use-toast";
-import authQuery from "@/queries/auth";
 import { useUserStore } from "@/zustand/auth/user";
 
 type FormDataType = {
@@ -49,10 +47,7 @@ const SignUpPage = () => {
   const handleSignUp = async (values: FormDataType) => {
     try {
       setIsLoading(true);
-      const response = await axiosQuery.post(
-        "/Signup",
-        values,
-      );
+      const response = await axiosQuery.post("/Signup", values);
       console.log("response: ", response);
       const data = await response.data;
       if (data) {
@@ -80,7 +75,7 @@ const SignUpPage = () => {
         toast({
           title: "Account successfuly created!",
         });
-        
+
         updateUser(data);
         navigate("/", { replace: true });
       }
@@ -104,7 +99,9 @@ const SignUpPage = () => {
           </div>
           <div className="flex flex-col text-center items-center">
             <img className="w-36 md:w-48" src={logo} alt="muffin-logo" />
-            <p className="text-[#1B2950] text-xl mt-4 mb-4 font-bold">Welcome!</p>
+            <p className="text-[#1B2950] text-xl mt-4 mb-4 font-bold">
+              Welcome!
+            </p>
           </div>
           {/* form */}
           <form
@@ -148,13 +145,11 @@ const SignUpPage = () => {
                     }`}
                   />
                 </div>
-                {formik.touched.first_name && formik.errors.first_name
-                  ? (
-                    <div className="error text-red-500 text-sm ml-5 pt-2">
-                      {formik.errors.first_name}
-                    </div>
-                  )
-                  : null}
+                {formik.touched.first_name && formik.errors.first_name ? (
+                  <div className="error text-red-500 text-sm ml-5 pt-2">
+                    {formik.errors.first_name}
+                  </div>
+                ) : null}
               </div>
 
               {/* last_name */}
@@ -193,13 +188,11 @@ const SignUpPage = () => {
                     }`}
                   />
                 </div>
-                {formik.touched.last_name && formik.errors.last_name
-                  ? (
-                    <div className="error text-red-500 text-sm ml-5 pt-2">
-                      {formik.errors.last_name}
-                    </div>
-                  )
-                  : null}
+                {formik.touched.last_name && formik.errors.last_name ? (
+                  <div className="error text-red-500 text-sm ml-5 pt-2">
+                    {formik.errors.last_name}
+                  </div>
+                ) : null}
               </div>
             </div>
 
@@ -238,13 +231,11 @@ const SignUpPage = () => {
                   }`}
                 />
               </div>
-              {formik.touched.email && formik.errors.email
-                ? (
-                  <div className="error text-red-500 ml-5 text-sm pt-2">
-                    {formik.errors.email}
-                  </div>
-                )
-                : null}
+              {formik.touched.email && formik.errors.email ? (
+                <div className="error text-red-500 ml-5 text-sm pt-2">
+                  {formik.errors.email}
+                </div>
+              ) : null}
             </div>
 
             {/* password */}
@@ -282,13 +273,11 @@ const SignUpPage = () => {
                   }`}
                 />
               </div>
-              {formik.touched.password && formik.errors.password
-                ? (
-                  <div className="error text-red-500 ml-5 text-sm pt-2">
-                    {formik.errors.password}
-                  </div>
-                )
-                : null}
+              {formik.touched.password && formik.errors.password ? (
+                <div className="error text-red-500 ml-5 text-sm pt-2">
+                  {formik.errors.password}
+                </div>
+              ) : null}
             </div>
             {/* button */}
             <div className="px-3">
@@ -296,7 +285,7 @@ const SignUpPage = () => {
                 type="submit"
                 className={cn(
                   "text-white w-full rounded-full hover:bg-[#FF599B]/90",
-                  isLoading ? "bg-[#FF8AB3]" : "bg-primary",
+                  isLoading ? "bg-[#FF8AB3]" : "bg-primary"
                 )}
               >
                 {isLoading ? "Creating user..." : "Sign Up"}
@@ -305,17 +294,14 @@ const SignUpPage = () => {
           </form>
 
           {/* or */}
-          {
-            /* <div className="flex w-full item-center">
+          {/* <div className="flex w-full item-center">
             <div className="border-b border-black mt-3 h-[1px] w-full"></div>
             <div className="mx-2 text-black font-bold">or</div>
             <div className="border-b border-black mt-3 h-[1px] w-full"></div>
-          </div> */
-          }
+          </div> */}
 
           {/* social icons */}
-          {
-            /* <div className="flex flex-row space-x-5">
+          {/* <div className="flex flex-row space-x-5">
             <img
               src={fbLogo}
               alt="facebook-logo"
@@ -326,8 +312,7 @@ const SignUpPage = () => {
               alt="google-logo"
               className="hover:cursor-pointer"
             />
-          </div> */
-          }
+          </div> */}
           <Link
             onClick={scrollToTop}
             href="/auth/signin"
