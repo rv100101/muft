@@ -175,7 +175,7 @@ const AboutAccordionContent = () => {
 
       const { country_name } = response.data;
       const { region_name, country_code } = response2.data.find(
-        ({ country_name }) => country_name == country_name
+        (countryName: string) => countryName == country_name
       );
 
       setLocationFormData({
