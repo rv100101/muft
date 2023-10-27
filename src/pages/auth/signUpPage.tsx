@@ -80,6 +80,7 @@ const SignUpPage = () => {
         toast({
           title: "Account successfuly created!",
         });
+        
         updateUser(data);
         navigate("/", { replace: true });
       }
@@ -103,7 +104,7 @@ const SignUpPage = () => {
           </div>
           <div className="flex flex-col text-center items-center">
             <img className="w-36 md:w-48" src={logo} alt="muffin-logo" />
-            <p className="text-[#1B2950] text-xl mt-4 font-bold">Welcome!</p>
+            <p className="text-[#1B2950] text-xl mt-4 mb-4 font-bold">Welcome!</p>
           </div>
           {/* form */}
           <form
@@ -121,7 +122,7 @@ const SignUpPage = () => {
                   First name
                 </label>
                 <div
-                  className={`flex flex-row border rounded-full py-1 px-5 m-3 ${
+                  className={`flex items-center flex-row border rounded-full py-1 px-5 m-3 ${
                     formik.touched.first_name && formik.errors.first_name
                       ? "border-rose-500"
                       : ""
@@ -130,7 +131,7 @@ const SignUpPage = () => {
                   <UserIcon color="#98A2B3" size={20} className="mt-1" />
                   <input
                     type="text"
-                    className="border-0 rounded-full py-1 px-4 text-normal focus:outline-0 w-full"
+                    className="ml-2 border-0 rounded-full py-1 px-4 text-normal focus:outline-0 w-full"
                     placeholder="First Name"
                     {...formik.getFieldProps("first_name")}
                     name="first_name"
@@ -166,7 +167,7 @@ const SignUpPage = () => {
                 </label>
 
                 <div
-                  className={`flex flex-row border rounded-full py-1 px-5 m-3 ${
+                  className={`flex items-center border rounded-full py-1 px-5 m-3 ${
                     formik.touched.last_name && formik.errors.last_name
                       ? "border-rose-500"
                       : ""
@@ -175,7 +176,7 @@ const SignUpPage = () => {
                   <UserIcon color="#98A2B3" size={20} className="mt-1" />
                   <input
                     type="text"
-                    className="border-0 rounded-full py-1 px-5 text-normal focus:outline-0 w-full"
+                    className="ml-2 border-0 w-full rounded-full py-1 px-5 text-normal focus:outline-0 w-full"
                     placeholder="Last Name"
                     {...formik.getFieldProps("last_name")}
                     name="last_name"
@@ -211,7 +212,7 @@ const SignUpPage = () => {
                 Email
               </label>
               <div
-                className={`flex flex-row border rounded-full py-1 px-5 m-3 ${
+                className={`flex justify-center items-center flex-row border rounded-full py-1 px-5 m-3 ${
                   formik.touched.email && formik.errors.email
                     ? "border-rose-500"
                     : ""
@@ -220,7 +221,7 @@ const SignUpPage = () => {
                 <MailIcon color="#98A2B3" size={20} className="mt-1" />
                 <input
                   type="text"
-                  className="border-0 rounded-full py-1 px-5 text-normal focus:outline-0 w-full"
+                  className="ml-2 border-0 rounded-full py-1 px-5 text-normal focus:outline-0 w-full"
                   placeholder="example@email.com"
                   {...formik.getFieldProps("email")}
                   onChange={formik.handleChange}
@@ -255,7 +256,7 @@ const SignUpPage = () => {
                 Password
               </label>
               <div
-                className={`flex flex-row border rounded-full py-1 px-5 m-3 ${
+                className={`flex items-center flex-row border rounded-full py-1 px-5 m-3 ${
                   formik.touched.password && formik.errors.password
                     ? "border-rose-500"
                     : ""
@@ -290,7 +291,7 @@ const SignUpPage = () => {
                 : null}
             </div>
             {/* button */}
-            <div className="px-2">
+            <div className="px-3">
               <Button
                 type="submit"
                 className={cn(

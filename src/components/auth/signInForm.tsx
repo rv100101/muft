@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import { useState } from "react";
 import * as Yup from "yup";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import ForgotPassword from "@/components/auth/forgotPassword";
 import { Link, useLocation } from "wouter";
 import { cn, scrollToTop } from "@/lib/utils";
@@ -17,19 +17,21 @@ import { useUserAvatar } from "@/zustand/auth/avatar";
 import { useUserCountry } from "@/zustand/auth/country";
 import { Input } from "@/components/ui/input";
 import { Button } from "../ui/button";
+import { usePasswordResetState } from "@/zustand/auth/passwordReset";
 
 type FormDataType = {
   email: string;
   password: string;
-};
-
-const SignInForm = () => {
+}; const SignInForm = () => {
   const { toast } = useToast();
   const [, navigate] = useLocation();
   const [isLoading, setIsLoading] = useState(false);
   const updateUser = useUserStore((state) => state.updateUser);
   const updateUserAvatar = useUserAvatar((state) => state.setAvatar);
   const updateUserCountry = useUserCountry((state) => state.setCountry);
+  const changePasswordResetState = usePasswordResetState((state) => 
+    state.changeState
+  );
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -48,6 +50,13 @@ const SignInForm = () => {
     try {
       setIsLoading(true);
       const signInData = await authQuery.signIn(values.email, values.password);
+      console.log(signInData);
+      if (typeof signInData.data == 'string') {
+        setIsLoading(false);
+        formik.setFieldError('email', 'Invalid credentials')
+        formik.setFieldError('password', 'Invalid credentials')
+        return; 
+      }
       const profilePhotoData = await authQuery.getProfilePhoto(
         signInData.data.member_id,
       );
@@ -116,7 +125,7 @@ const SignInForm = () => {
             <MailIcon color="#98A2B3" size={20} className="mt-1" />
             <Input
               type="text"
-              className="autofill:bg-yellow-200 focus-visible:ring-offset-0 focus-visible:ring-0 border-0 rounded-full py-1 px-5 text-normal w-full"
+              className="autofill:bg-yellow-200 mx-2 focus-visible:ring-offset-0 focus-visible:ring-0 border-0 rounded-full py-1 px-5 text-normal w-full"
               placeholder="example@email.com"
               {...formik.getFieldProps("email")}
               onChange={formik.handleChange}
@@ -143,7 +152,7 @@ const SignInForm = () => {
         </div>
 
         {/* password */}
-        <div className="flex flex-col space-y-1">
+        <div className="flex flex-col justify-center space-y-1">
           <label
             htmlFor="password"
             className="text-sm text-semibold mb-2"
@@ -160,7 +169,7 @@ const SignInForm = () => {
             <LockIcon color="#98A2B3" size={20} className="mt-1" />
             <Input
               type="password"
-              className=" focus-visible:ring-offset-0 focus-visible:ring-0  border-0 rounded-full py-1 px-5 text-normal focus-visble:outline-0 focus:ring-0 focus-visble:ring-none active:bg-transparent w-full"
+              className="mx-2 focus-visible:ring-offset-0 focus-visible:ring-0  border-0 rounded-full py-1 px-5 text-normal focus-visble:outline-0 focus:ring-0 focus-visble:ring-none active:bg-transparent w-full"
               placeholder="Password"
               {...formik.getFieldProps("password")}
               name="password"
@@ -198,14 +207,18 @@ const SignInForm = () => {
         </Button>
       </form>
       <div className="w-full px-5">
-        <Dialog>
+        <Dialog onOpenChange={(val)=>{
+          if (!val) {
+            changePasswordResetState('SEND');
+          }
+        }}>
           {/* Dialog here */}
-          <ForgotPassword />
-          <DialogTrigger className="float-right">
-            <a className="text-xs hover:underline hover:text-blue-500">
+          <DialogTrigger className="float-right text-xs hover:underline hover:text-blue-500">
               Forgot Password?
-            </a>
           </DialogTrigger>
+          <DialogContent className="w-72 md:w-full">
+            <ForgotPassword />
+          </DialogContent>
         </Dialog>
       </div>
       <div className="flex flex-row space-x-2">
