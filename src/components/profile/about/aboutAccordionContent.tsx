@@ -10,6 +10,8 @@ import { useUserStore } from "@/zustand/auth/user";
 import axiosQuery from "@/queries/axios";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Briefcase, Contact, Globe, User2 } from "lucide-react";
+import { useLocationStore } from "@/zustand/profile/about/useLocationStore";
 
 const AboutAccordionContent = () => {
   const { user } = useUserStore();
@@ -20,6 +22,9 @@ const AboutAccordionContent = () => {
     useWorkEducationStore();
   const { formData: detailsFormData, setFormData: setDetailsFormData } =
     useDetailsStore();
+
+  const { formData: locationFormData, setFormData: setLocationFormData } =
+    useLocationStore();
 
   const [activeTabs, setActiveTabs] = useState([
     false,
@@ -52,16 +57,24 @@ const AboutAccordionContent = () => {
         "https://muffinfunction.azurewebsites.net/api/GetLanguages",
         { member: user?.member_id }
       );
+
       const { gender, nationality, date_of_birth, age } = response1.data;
       const { religion_name, ethnicity_name } = response2.data;
       const { marital_status_name } = response3.data;
       const { language_name } = response.data[0];
-
+      const formattedDate = new Date(date_of_birth).toLocaleDateString(
+        "en-US",
+        {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        }
+      );
       setBasicInfoFormData({
         ...basicInfoFormData,
         gender: gender,
         nationality: nationality,
-        birthInfo: date_of_birth,
+        birthInfo: formattedDate,
         age: age,
         religion: religion_name,
         ethnicity: ethnicity_name,
@@ -69,6 +82,8 @@ const AboutAccordionContent = () => {
         maritalStatus: marital_status_name,
         language: language_name,
       });
+
+      return response1.data;
     } catch (err) {
       console.log(err);
     }
@@ -97,6 +112,8 @@ const AboutAccordionContent = () => {
         occupationTitle: occupation_title,
         income: income_range,
       });
+
+      return response1.data;
     } catch (err) {
       console.log(err);
     }
@@ -137,6 +154,37 @@ const AboutAccordionContent = () => {
         bodyType: body_type_name,
         favoriteFood: favorite_food_name,
       });
+
+      return response1.data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const fetchLocationInitialData = async () => {
+    try {
+      const response = await axiosQuery.post(
+        "https://muffinfunction.azurewebsites.net/api/GetCountry",
+        { member: user!.member_id }
+      );
+
+      const response2 = await axiosQuery.post(
+        "https://muffinfunction.azurewebsites.net/api/Countries",
+        { member: user!.member_id }
+      );
+
+      const { country_name } = response.data;
+      const { region_name, country_code } = response2.data.find(
+        ({ country_name }) => country_name == country_name
+      );
+
+      setLocationFormData({
+        ...locationFormData,
+        country: country_code,
+        region: region_name,
+      });
+
+      return response2.data;
     } catch (err) {
       console.log(err);
     }
@@ -157,27 +205,40 @@ const AboutAccordionContent = () => {
     fetchDetailsInitialData
   );
 
-  if (detailsDataLoading || workEducationDataLoading || basicInfoDataLoading) {
+  const { isLoading: locationDataLoading } = useQuery(
+    ["locationInitialData"],
+    fetchLocationInitialData
+  );
+
+  if (
+    detailsDataLoading ||
+    workEducationDataLoading ||
+    basicInfoDataLoading ||
+    locationDataLoading
+  ) {
     // return <>Loading...</>;
     return (
-      <div className="flex justify-start items-start space-x-4 w-full ml-5">
-        <div className="space-y-2">
-          <Skeleton className="h-6 w-[400px]" />
-          <Skeleton className="h-6 w-[375px]" />
-          <Skeleton className="h-6 w-[375px]" />
-          <Skeleton className="h-6 w-[350px]" />
-          <Skeleton className="h-6 w-[350px]" />
-          <Skeleton className="h-6 w-[300px]" />
-          <Skeleton className="h-6 w-[300px]" />
+      <div className="flex flex-row justify-start items-start space-x-4 w-full ml-2">
+        <div className="flex-col space-y-2">
+          <Skeleton className="h-6 w-[100px]" />
+          <Skeleton className="h-6 w-[100px]" />
+          <Skeleton className="h-6 w-[100px]" />
+          <Skeleton className="h-6 w-[100px]" />
+        </div>
+        <div className="flex-col space-y-2">
+          <Skeleton className="h-6 w-[480px]" />
+          <Skeleton className="h-6 w-[460px]" />
+          <Skeleton className="h-6 w-[440px]" />
+          <Skeleton className="h-6 w-[430px]" />
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-row mb-5">
+    <div className="flex lg:flex-row flex-col mb-5">
       {/* sidebar */}
-      <div className="flex flex-col w-1/3">
+      <div className="flex flex-row justify-around lg:justify-start lg:w-1/3 w-full lg:block">
         {/* <div
           className={
             activeTabs[0]
@@ -196,9 +257,14 @@ const AboutAccordionContent = () => {
           }
           onClick={() => toggleTab(1)}
         >
-          <p className="text-md hover:cursor-pointer  select-none">
+          <p className="text-md hover:cursor-pointer  select-none lg:block hidden">
             Basic Information
           </p>
+          <User2
+            // color="#FF599B"
+            size={20}
+            className="hover:cursor-pointer lg:hidden"
+          />
         </div>
         <div
           className={
@@ -208,9 +274,14 @@ const AboutAccordionContent = () => {
           }
           onClick={() => toggleTab(2)}
         >
-          <p className="text-md hover:cursor-pointer select-none">
+          <p className="text-md hover:cursor-pointer select-none lg:block hidden">
             Work and Education
           </p>
+          <Briefcase
+            // color="#FF599B"
+            size={20}
+            className="hover:cursor-pointer lg:hidden"
+          />
         </div>
         <div
           className={
@@ -220,9 +291,14 @@ const AboutAccordionContent = () => {
           }
           onClick={() => toggleTab(3)}
         >
-          <p className="text-md hover:cursor-pointer select-none">
+          <p className="text-md hover:cursor-pointer select-none lg:block hidden">
             Details about you
           </p>
+          <Contact
+            // color="#FF599B"
+            size={20}
+            className="hover:cursor-pointer lg:hidden"
+          />
         </div>
         <div
           className={
@@ -232,24 +308,32 @@ const AboutAccordionContent = () => {
           }
           onClick={() => toggleTab(4)}
         >
-          <p className="text-md hover:cursor-pointer select-none">Location</p>
+          <p className="text-md hover:cursor-pointer select-none lg:block hidden">
+            Location
+          </p>
+          <Globe
+            // color="#FF599B"
+            size={20}
+            className="hover:cursor-pointer lg:hidden"
+          />
         </div>
+      </div>
+      <div className="flex flex-col lg:w-full">
+        {/* basic info */}
+        {activeTabs[1] && <BasicInformationForm />}
+
+        {/* Work and Education */}
+        {activeTabs[2] && <WorkEducationForm />}
+
+        {/* Details */}
+        {activeTabs[3] && <DetailsForm />}
+
+        {/* Location */}
+        {activeTabs[4] && <LocationForm />}
       </div>
       {/* content - Form*/}
       {/* overview */}
       {/* {activeTabs[0] && <OverviewForm />} */}
-
-      {/* basic info */}
-      {activeTabs[1] && <BasicInformationForm />}
-
-      {/* Work and Education */}
-      {activeTabs[2] && <WorkEducationForm />}
-
-      {/* Details */}
-      {activeTabs[3] && <DetailsForm />}
-
-      {/* Location */}
-      {activeTabs[4] && <LocationForm />}
     </div>
   );
 };

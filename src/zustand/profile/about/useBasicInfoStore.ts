@@ -33,7 +33,7 @@ export interface BasicInfoStore {
   setSelectedLanguage: (data: string) => void;
 
   setFormData: (data: formData) => void;
-  setEditMode: () => void;
+  setEditMode: (val?: boolean) => void;
 
   globalEditMode: boolean;
 }
@@ -73,9 +73,9 @@ export const useBasicInfoStore = create<BasicInfoStore>((set) => ({
   },
 
   // edit profile btn
-  setEditMode: () => {
+  setEditMode: (val?: boolean) => {
     set((state) => ({
-      globalEditMode: !state.globalEditMode,
+      globalEditMode: val !== undefined ? val : !state.globalEditMode,
     }));
   },
 }));

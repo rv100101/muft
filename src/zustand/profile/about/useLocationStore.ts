@@ -10,7 +10,7 @@ export interface LocationStore {
     region: string;
   };
   setFormData: (data: formData) => void;
-  setEditMode: () => void;
+  setEditMode: (val?: boolean) => void;
   // submitForm: (memberId: number) => void;
 
   globalEditMode: boolean;
@@ -27,9 +27,9 @@ export const useLocationStore = create<LocationStore>((set) => ({
   },
 
   // edit profile btn
-  setEditMode: () => {
+  setEditMode: (val?: boolean) => {
     set((state) => ({
-      globalEditMode: !state.globalEditMode,
+      globalEditMode: val !== undefined ? val : !state.globalEditMode,
     }));
   },
 }));
