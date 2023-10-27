@@ -1,6 +1,6 @@
 import { Camera, Pen, Save, XCircle } from "lucide-react";
-import profileImg from "../../assets/profile/sample-profile.png";
-import { useEffect, useState } from "react";
+import profileImg from "../../assets/profile/sample-user-profile.jpg";
+import { useEffect, useRef, useState } from "react";
 import { useBasicInfoStore } from "@/zustand/profile/about/useBasicInfoStore";
 import { useWorkEducationStore } from "@/zustand/profile/about/useWorkEducationStore";
 import { useDetailsStore } from "@/zustand/profile/about/useDetailsStore";
@@ -12,6 +12,8 @@ import { Skeleton } from "../ui/skeleton";
 import { useProfileHeaderStore } from "@/zustand/profile/about/useProfileHeader";
 
 const ProfileHeader = () => {
+  const [selectedFile, setSelectedFile] = useState(null);
+  const fileInputRef = useRef(null);
   const user = useUserStore((state) => state.user);
   const {
     globalEditMode: editMode,
@@ -34,6 +36,32 @@ const ProfileHeader = () => {
 
   const { setEditMode: toggleLocationFields, formData: locationFormData } =
     useLocationStore();
+
+  const handleProfileUpload = () => {
+    // Trigger a click event on the hidden file input
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      const base64String = reader.result.split(",")[1]; // Extracting base64 string without data:image/jpeg;base64,
+
+      setSelectedFile(base64String);
+      // setFormData({ ...profileFormData, profilePhoto: reader.result });
+      // setFormData({ ...profileFormData, selectedProfilePhoto: base64String });
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
+    } else {
+      setFormData({ ...profileFormData, selectedProfilePhoto: "" });
+    }
+  };
+
   const [showSave, setShowSave] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [isHover, setIsHover] = useState(false);
@@ -225,22 +253,34 @@ const ProfileHeader = () => {
 
   const fetchIntitialData = async () => {
     try {
-      const response = await axiosQuery.post(
+      const response1 = await axiosQuery.post(
         "https://muffinfunction.azurewebsites.net/api/GetNickname",
         { member: user!.member_id }
       );
-      const { nickname } = response.data[0];
 
+      // const response2 = await axiosQuery.post(
+      //   "https://muffinfunction.azurewebsites.net/api/GetProfilePhoto",
+      //   { member: user!.member_id }
+      // );
+      const { nickname } = response1.data[0];
+
+      // const { gallery_uuid, member_uuid } = response2.data[0];
+      // if(gallery_uuid && member_uuid){
+      //   const path = getImagePath(gallery_uuid, null, member_uuid);
+
+      // }
+      setFormData({
+        ...profileFormData,
+        nickname: nickname,
+        // profilePhotoURL: path,
+      });
       return nickname;
     } catch (err) {
       console.log(err);
     }
   };
 
-  const { data: nickname, isLoading } = useQuery(
-    ["nickname"],
-    fetchIntitialData
-  );
+  const { isLoading } = useQuery(["nickname"], fetchIntitialData);
 
   useEffect(() => {
     toggleBasicInfoFields(false);
@@ -273,21 +313,31 @@ const ProfileHeader = () => {
     );
   }
 
-  console.log("profileFormData: ", profileFormData);
   return (
     <div className="flex flex-row w-full justify-between items-start p-5 border-b select-none">
       <div className="flex flex-row space-x-5 ">
         <div
           onMouseEnter={() => setIsHover(true)}
           onMouseLeave={() => setIsHover(false)}
+          onClick={editMode ? handleProfileUpload : () => {}}
           className="rounded-full h-28 w-28 border-4 border-[#ff5c9d] relative overflow-hidden"
         >
           <img
-            className={`rounded-full object-cover h-full w-full transition-all duration-300 filter ${
+            className={`user-drag-none rounded-full object-cover h-full w-full transition-all duration-300 filter ${
               isHover && editMode ? "brightness-50 cursor-pointer" : ""
             }`}
-            src={profileImg}
-            alt="profile photo"
+            src={
+              selectedFile
+                ? `data:image/png;base64, ${selectedFile}`
+                : profileImg
+            }
+            alt="no image selected"
+          />
+          <input
+            type="file"
+            onChange={handleFileChange}
+            className="invisible w-0 h-0"
+            ref={fileInputRef}
           />
           <Camera
             color="#e8ecef"
@@ -311,7 +361,9 @@ const ProfileHeader = () => {
               placeholder="enter nickname"
             />
           ) : (
-            <p className="font-semibold text-[#171717] text-lg">{nickname}</p>
+            <p className="font-semibold text-[#171717] text-lg">
+              {profileFormData.nickname}
+            </p>
           )}
 
           {!editMode && <p className="text-[#727272] text-sm">@us23452</p>}
@@ -358,11 +410,8 @@ const ProfileHeader = () => {
                   size={20}
                   className="hover:cursor-pointer"
                 />
-                {/* <p className="text-white">{isSaving ? "Saving..." : "Save"}</p> */}
               </div>
             )}
-
-            {/* <Copy color="#727272" size={20} className="mt-2 hover:cursor-pointer" /> */}
           </div>
 
           {/* badges */}
@@ -412,13 +461,24 @@ const ProfileHeader = () => {
 
         {showSave && (
           <div
-            className={`flex flex-row rounded-full justify-center hover:cursor-pointer px-5 text-sm space-x-2 ${
+            className={`mr-3 flex flex-row rounded-full justify-center hover:cursor-pointer px-5 text-sm space-x-2 ${
               isSaving ? "bg-green-600" : "bg-green-400"
             } py-2`}
             onClick={() => onSave()}
           >
-            <Save color="white" size={20} className="hover:cursor-pointer" />
-            <p className="text-white">{isSaving ? "Saving..." : "Save"}</p>
+            {!isSaving && (
+              <Save color="white" size={20} className="hover:cursor-pointer" />
+            )}
+            <div className="text-white">
+              {isSaving ? (
+                <div className="flex flex-row text-xs items-center space-x-5 text-green">
+                  Saving
+                  <div className="ml-5 w-5 h-5 border-t-4 border-green-500 border-solid rounded-full animate-spin"></div>
+                </div>
+              ) : (
+                "Save"
+              )}
+            </div>
           </div>
         )}
 

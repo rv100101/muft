@@ -8,6 +8,7 @@ import sampleGalleryImage from "../../../assets/profile/sample-gallery.png";
 
 const GallerySection = () => {
   const [selectedFile, setSelectedFile] = useState(null);
+  const [isUploading, setIsUploading] = useState(false);
 
   const { user } = useUserStore();
   const fileInputRef = useRef(null);
@@ -26,38 +27,6 @@ const GallerySection = () => {
     }
   };
 
-  const handleUploadButtonClick = async (e) => {
-    if (selectedFile && user) {
-      const reader = new FileReader();
-      reader.onloadend = async () => {
-        // const base64String = reader.result.split(",")[1]; // Extracting base64 string without data:image/jpeg;base64,
-        const formData = new FormData();
-        formData.append("member", String(user.member_id));
-        formData.append("photo", reader.result); // Sending the base64 string instead of a File object
-
-        try {
-          const response = await axiosQuery.post(
-            "/UploadGalleryPhoto",
-            formData,
-            {
-              headers: { "Content-Type": "application/json" }, // Adjust the content type if needed
-            }
-          );
-          if (response.status === 200) {
-            setSelectedFile(null);
-          }
-          console.log(response);
-        } catch (error) {
-          console.error("Error uploading file:", error);
-        }
-      };
-
-      reader.readAsDataURL(selectedFile); // Read the selected file as a data URL
-    } else {
-      console.error("No file selected or user not available.");
-    }
-  };
-
   // gallery
   const fetchGallery = async () => {
     try {
@@ -70,8 +39,46 @@ const GallerySection = () => {
       console.error(error);
     }
   };
-  const { data: gallery, isLoading } = useQuery(["gallery"], fetchGallery);
+  const {
+    data: gallery,
+    isLoading,
+    refetch,
+  } = useQuery(["gallery"], fetchGallery);
+  const handleUploadButtonClick = async (e) => {
+    setIsUploading(true);
+    if (selectedFile && user) {
+      const reader = new FileReader();
+      reader.onloadend = async () => {
+        const base64String = reader.result.split(",")[1]; // Extracting base64 string without data:image/jpeg;base64,
+        const formData = new FormData();
+        formData.append("member", String(user.member_id));
+        // formData.append("photo", reader.result); // Sending the base64 string instead of a File object
+        formData.append("photo", base64String); // Sending the base64 string instead of a File object
 
+        try {
+          const response = await axiosQuery.post(
+            "/UploadGalleryPhoto",
+            formData,
+            {
+              headers: { "Content-Type": "application/json" }, // Adjust the content type if needed
+            }
+          );
+          if (response.status === 200) {
+            setSelectedFile(null);
+            setIsUploading(false);
+            refetch();
+          }
+          console.log(response);
+        } catch (error) {
+          console.error("Error uploading file:", error);
+        }
+      };
+
+      reader.readAsDataURL(selectedFile); // Read the selected file as a data URL
+    } else {
+      console.error("No file selected or user not available.");
+    }
+  };
   if (isLoading) {
     return <></>;
   }
@@ -125,19 +132,29 @@ const GallerySection = () => {
               onClick={handleUploadButtonClick}
               className="flex items-center rounded-full bg-[#fe599b] px-3 py-2 space-x-2 hover:cursor-pointer"
             >
-              <p className="text-white">Upload</p>
+              <div className="text-white">
+                {isUploading ? (
+                  <div className="flex flex-row text-xs items-center space-x-5 text-green">
+                    Uploading
+                    <div className="ml-5 w-5 h-5 border-t-4 border-pink-500 border-solid rounded-full animate-spin"></div>
+                  </div>
+                ) : (
+                  "Upload"
+                )}
+              </div>
+              {/* <p className="text-white">Upload</p> */}
             </div>
           )}
         </div>
       </div>
       {/* photos section */}
       <div className="grid grid-cols-3 gap-5 p-5 h-full lg:overflow-hidden overflow-scroll">
-        {gallery.map((pic) => {
+        {gallery.map((pic, index) => {
           const path = getImagePath(pic.gallery_uuid, null, pic.member_uuid);
 
           return (
             <img
-              key={pic.id} // Don't forget to add a unique key to each image
+              key={index} // Don't forget to add a unique key to each image
               src={path}
               alt="test"
               className="object-cover"

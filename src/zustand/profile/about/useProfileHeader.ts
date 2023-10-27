@@ -2,10 +2,14 @@ import { create } from "zustand";
 
 interface formData {
   nickname: string;
+  selectedProfilePhoto: string;
+  profilePhotoURL: string;
 }
 export interface ProfileHeaderStore {
   formData: {
     nickname: string;
+    selectedProfilePhoto: string;
+    profilePhotoURL: string;
   };
 
   setFormData: (data: formData) => void;
@@ -18,6 +22,8 @@ export interface ProfileHeaderStore {
 export const useProfileHeaderStore = create<ProfileHeaderStore>((set) => ({
   formData: {
     nickname: "",
+    selectedProfilePhoto: "",
+    profilePhotoURL: "",
   },
 
   globalEditMode: false,

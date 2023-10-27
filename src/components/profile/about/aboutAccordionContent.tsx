@@ -57,16 +57,24 @@ const AboutAccordionContent = () => {
         "https://muffinfunction.azurewebsites.net/api/GetLanguages",
         { member: user?.member_id }
       );
+
       const { gender, nationality, date_of_birth, age } = response1.data;
       const { religion_name, ethnicity_name } = response2.data;
       const { marital_status_name } = response3.data;
       const { language_name } = response.data[0];
-
+      const formattedDate = new Date(date_of_birth).toLocaleDateString(
+        "en-US",
+        {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        }
+      );
       setBasicInfoFormData({
         ...basicInfoFormData,
         gender: gender,
         nationality: nationality,
-        birthInfo: date_of_birth,
+        birthInfo: formattedDate,
         age: age,
         religion: religion_name,
         ethnicity: ethnicity_name,
@@ -74,6 +82,8 @@ const AboutAccordionContent = () => {
         maritalStatus: marital_status_name,
         language: language_name,
       });
+
+      return response1.data;
     } catch (err) {
       console.log(err);
     }
@@ -102,6 +112,8 @@ const AboutAccordionContent = () => {
         occupationTitle: occupation_title,
         income: income_range,
       });
+
+      return response1.data;
     } catch (err) {
       console.log(err);
     }
@@ -142,6 +154,8 @@ const AboutAccordionContent = () => {
         bodyType: body_type_name,
         favoriteFood: favorite_food_name,
       });
+
+      return response1.data;
     } catch (err) {
       console.log(err);
     }
@@ -169,6 +183,8 @@ const AboutAccordionContent = () => {
         country: country_code,
         region: region_name,
       });
+
+      return response2.data;
     } catch (err) {
       console.log(err);
     }

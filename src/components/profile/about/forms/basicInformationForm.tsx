@@ -191,9 +191,9 @@ const BasicInformationForm = () => {
                 Select Nationality
               </option>
               {nationalities.map((data: Nationality, index: number) => {
-                const { nationality } = data;
+                const { nationality, country_code } = data;
                 return (
-                  <option value={nationality} key={index}>
+                  <option value={country_code} key={index}>
                     {nationality}
                   </option>
                 );
