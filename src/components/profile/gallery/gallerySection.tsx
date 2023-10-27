@@ -3,15 +3,23 @@ import axiosQuery from "@/queries/axios";
 import { useUserStore } from "@/zustand/auth/user";
 import { useQuery } from "@tanstack/react-query";
 import { PlusCircle, X } from "lucide-react";
-import { useRef, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 import sampleGalleryImage from "../../../assets/profile/sample-gallery.png";
 
+type Gallery = {
+  authorized: boolean;
+  ip_address: string;
+  gallery_id: string;
+  member_uuid: string;
+  gallery_uuid: string;
+};
+
 const GallerySection = () => {
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFile, setSelectedFile] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
 
   const { user } = useUserStore();
-  const fileInputRef = useRef(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleGalleryUpload = () => {
     // Trigger a click event on the hidden file input
@@ -19,14 +27,17 @@ const GallerySection = () => {
       fileInputRef.current.click();
     }
   };
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
     if (file) {
-      // Update the state with the selected file
-      setSelectedFile(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result as string; // Result is a data URL
+        setSelectedFile(base64String);
+      };
+      reader.readAsDataURL(file); // Read file as data URL
     }
   };
-
   // gallery
   const fetchGallery = async () => {
     try {
@@ -44,41 +55,47 @@ const GallerySection = () => {
     isLoading,
     refetch,
   } = useQuery(["gallery"], fetchGallery);
-  const handleUploadButtonClick = async (e) => {
+  const handleUploadButtonClick = async () => {
     setIsUploading(true);
     if (selectedFile && user) {
-      const reader = new FileReader();
-      reader.onloadend = async () => {
-        const base64String = reader.result.split(",")[1]; // Extracting base64 string without data:image/jpeg;base64,
-        const formData = new FormData();
-        formData.append("member", String(user.member_id));
-        // formData.append("photo", reader.result); // Sending the base64 string instead of a File object
-        formData.append("photo", base64String); // Sending the base64 string instead of a File object
+      const base64String = selectedFile.split(",")[1]; // Extracting base64 string without data:image/jpeg;base64,
+      const binaryString = atob(base64String);
+      const arrayBuffer = new ArrayBuffer(binaryString.length);
+      const uint8Array = new Uint8Array(arrayBuffer);
 
-        try {
-          const response = await axiosQuery.post(
-            "/UploadGalleryPhoto",
-            formData,
-            {
-              headers: { "Content-Type": "application/json" }, // Adjust the content type if needed
-            }
-          );
-          if (response.status === 200) {
-            setSelectedFile(null);
-            setIsUploading(false);
-            refetch();
+      for (let i = 0; i < binaryString.length; i++) {
+        uint8Array[i] = binaryString.charCodeAt(i);
+      }
+
+      const blob = new Blob([uint8Array], { type: "image/jpeg" }); // Create Blob from Uint8Array
+
+      const formData = new FormData();
+      formData.append("member", String(user.member_id));
+      formData.append("photo", blob, "filename.jpg"); // Append the Blob object with a filename
+
+      try {
+        const response = await axiosQuery.post(
+          "/UploadGalleryPhoto",
+          formData,
+          {
+            headers: { "Content-Type": "multipart/form-data" },
           }
-          console.log(response);
-        } catch (error) {
-          console.error("Error uploading file:", error);
-        }
-      };
+        );
 
-      reader.readAsDataURL(selectedFile); // Read the selected file as a data URL
+        if (response.status === 200) {
+          setSelectedFile(null);
+          setIsUploading(false);
+          refetch();
+        }
+        console.log(response);
+      } catch (error) {
+        console.error("Error uploading file:", error);
+      }
     } else {
       console.error("No file selected or user not available.");
     }
   };
+
   if (isLoading) {
     return <></>;
   }
@@ -95,7 +112,7 @@ const GallerySection = () => {
             <div className="flex flex-row space-x-3 items-center w-1/2">
               <div className="truncate overflow-hidden">
                 <p className="text-slate-400 mt-1 ">
-                  Selected File: {selectedFile.name}
+                  {/* Selected File: {typeof selectedFile === 'string' ? 'Base64 String' : selectedFile.name} */}
                 </p>
               </div>
               <X
@@ -149,7 +166,7 @@ const GallerySection = () => {
       </div>
       {/* photos section */}
       <div className="grid grid-cols-3 gap-5 p-5 h-full lg:overflow-hidden overflow-scroll">
-        {gallery.map((pic, index) => {
+        {gallery.map((pic: Gallery, index: number) => {
           const path = getImagePath(pic.gallery_uuid, null, pic.member_uuid);
 
           return (
@@ -158,8 +175,9 @@ const GallerySection = () => {
               src={path}
               alt="test"
               className="object-cover"
-              onError={(e) => {
-                e.target.src = sampleGalleryImage;
+              onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+                const imgElement = e.target as HTMLImageElement;
+                imgElement.src = sampleGalleryImage;
               }}
             />
           );
