@@ -1,6 +1,6 @@
 import { Camera, Pen, Save, XCircle } from "lucide-react";
 import profileImg from "../../assets/profile/sample-user-profile.jpg";
-import { useEffect, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useBasicInfoStore } from "@/zustand/profile/about/useBasicInfoStore";
 import { useWorkEducationStore } from "@/zustand/profile/about/useWorkEducationStore";
 import { useDetailsStore } from "@/zustand/profile/about/useDetailsStore";
@@ -12,8 +12,8 @@ import { Skeleton } from "../ui/skeleton";
 import { useProfileHeaderStore } from "@/zustand/profile/about/useProfileHeader";
 
 const ProfileHeader = () => {
-  const [selectedFile, setSelectedFile] = useState(null);
-  const fileInputRef = useRef(null);
+  const [selectedFile, setSelectedFile] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const user = useUserStore((state) => state.user);
   const {
     globalEditMode: editMode,
@@ -43,12 +43,12 @@ const ProfileHeader = () => {
       fileInputRef.current.click();
     }
   };
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
     const reader = new FileReader();
 
     reader.onloadend = () => {
-      const base64String = reader.result.split(",")[1]; // Extracting base64 string without data:image/jpeg;base64,
+      const base64String = (reader.result as string).split(",")[1]; // Extracting base64 string without data:image/jpeg;base64,
 
       setSelectedFile(base64String);
       // setFormData({ ...profileFormData, profilePhoto: reader.result });

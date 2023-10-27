@@ -24,10 +24,14 @@ const LocationForm = () => {
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { value } = event.target;
-    const { region_name } = countryInfo.find(
-      ({ country_code }) => country_code == value
+    const foundCountryInfo = countryInfo.find(
+      ({ country_code }) => country_code === value
     );
-    setFormData({ ...formData, country: value, region: region_name });
+
+    if (foundCountryInfo) {
+      const { region_name } = foundCountryInfo;
+      setFormData({ ...formData, country: value, region: region_name });
+    }
   };
 
   const fetchCountries = async () => {
@@ -40,10 +44,7 @@ const LocationForm = () => {
     return response.data;
   };
 
-  const { data: Countries, isLoading } = useQuery(
-    ["Countries"],
-    fetchCountries
-  );
+  const { data: Countries } = useQuery(["Countries"], fetchCountries);
 
   return (
     <div className="flex flex-col w-full space-y-5 py-5">

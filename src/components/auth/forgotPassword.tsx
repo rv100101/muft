@@ -1,11 +1,10 @@
-import { useState } from "react";
 import SendResetPin from "./sendResetPin";
 import EnterResetCode from "./enterResetCode";
 import ChangePassword from "./changePassword";
 import { usePasswordResetState } from "@/zustand/auth/passwordReset";
 
 const ForgotPassword = () => {
-  const passwordResetState = usePasswordResetState((state)=> state.phase);
+  const passwordResetState = usePasswordResetState((state) => state.phase);
 
   if (passwordResetState === "SEND") {
     return <SendResetPin />;
@@ -16,7 +15,7 @@ const ForgotPassword = () => {
   }
 
   if (passwordResetState === "CHANGE") {
-    return <ChangePassword />
+    return <ChangePassword />;
   }
 };
 
