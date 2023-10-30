@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Menu } from "lucide-react";
 import { motion } from "framer-motion";
-import { Link, useLocation } from "wouter";
+import { useLocation } from "wouter";
 import { cn } from "@/lib/utils";
 const container = {
   none: { opacity: 1 },
@@ -59,9 +59,9 @@ function TopNav() {
       >
         <motion.li variants={motionTop80}>
           <Button variant={"ghost"} className="font-light">
-            <Link href="https://support.softnames.com/" target="_blank">
+            <a href="https://support.softnames.com/" target="_blank">
               Contact Us
-            </Link>
+            </a>
           </Button>
         </motion.li>
         {/* <motion.li variants={motionTop80}>
@@ -88,7 +88,9 @@ function TopNav() {
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
             <DropdownMenuItem>
-              <Link href="https://support.softnames.com/">Contact Us</Link>
+              <a target="_blank" href="https://support.softnames.com/">
+                Contact Us
+              </a>
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />{" "}
