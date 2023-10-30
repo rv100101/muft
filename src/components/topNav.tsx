@@ -64,7 +64,7 @@ function TopNav() {
             </Link>
           </Button>
         </motion.li>
-        <motion.li variants={motionTop80}>
+        {/* <motion.li variants={motionTop80}>
           <Link href="/auth/signin">
             <Button
               className={cn(
@@ -75,7 +75,7 @@ function TopNav() {
               Sign in
             </Button>
           </Link>
-        </motion.li>
+        </motion.li> */}
       </motion.ul>
       <DropdownMenu>
         <DropdownMenuTrigger className="block md:hidden" asChild>
@@ -92,7 +92,7 @@ function TopNav() {
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />{" "}
-          <Link href="/auth/signin">
+          {/* <Link href="/auth/signin">
             <DropdownMenuItem
               className={cn(
                 "m-0 text text-white bg-primary hover:bg-[#d86392]",
@@ -101,7 +101,7 @@ function TopNav() {
             >
               Sign In
             </DropdownMenuItem>
-          </Link>
+          </Link> */}
         </DropdownMenuContent>
       </DropdownMenu>
     </motion.nav>
