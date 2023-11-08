@@ -6,8 +6,7 @@ const axiosQuery = axios.create({
     "x-functions-key":
       "nw7phMvGe08_TmVh6DClQF8kytMiHLOQ8ta-hxXQOq9mAzFujxiSbA==",
     Authorization:
-      import.meta.env.APPSETTING_VITE_TEMP_AUTHORIZATION_TOKEN ||
-      import.meta.env.VITE_TEMP_AUTHORIZATION_TOKEN,
+      "0DB31DEE22DC4C03AD7DAAA9C29518FF3C08D931992A4A5CB0A4FF4CF4707DC6",
   },
 });
 
