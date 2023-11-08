@@ -2,20 +2,36 @@ import logo from "@/assets/logo.svg";
 import links from "@/lib/sideBar";
 import { Button } from "./ui/button";
 import { LogOutIcon, Settings2Icon } from "lucide-react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { useUserStore } from "@/zustand/auth/user";
+import { cn } from "@/lib/utils";
 
 const SideBar = () => {
   const signOut = useUserStore((state) => state.reset);
-
+  const [location] = useLocation();
   const navLinks = links.map((link, index) => {
     return (
       <li key={index} className="w-full">
         <Link
-          className="h-10 px-4 py-2 hover:bg-accent hover:text-accent-foreground flex justify-start items-center space-x-2"
+          className={cn(
+            "h-10 px-4 py-2 hover:bg-accent hover:text-accent-foreground flex justify-start items-center space-x-2",
+            location.endsWith(link.path)
+              ? "font-semibold bg-accent"
+              : "font-normal",
+          )}
           href={link.path}
         >
-          {<link.icon size={20} />} <p className="text-sm">{link.name}</p>
+          {
+            <link.icon
+              fill={location.endsWith(link.path) ? "black" : "white"}
+              stroke={link.name == "Home" && location.endsWith(link.path)
+                ? "white"
+                : "black"}
+              strokeWidth={location.endsWith(link.path) ? 0.8 : 2}
+              size={20}
+            />
+          }
+          <p className="text-sm">{link.name}</p>
         </Link>
       </li>
     );
