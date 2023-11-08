@@ -197,35 +197,34 @@ const SignInForm = () => {
         </div>
         {/* button */}
         <div>
-        <Button
-          disabled={isLoading}
-          type="submit"
-          className={cn(
-            "text-white mt-4 h-10 w-full rounded-full py-2 hover:bg-[#FF599B]/90",
-            isLoading ? "bg-[#FF8AB3]" : "bg-primary",
-          )}
-        >
-          {isLoading ? "Signing In..." : "Sign In"}
-        </Button>
-
+          <Button
+            disabled={isLoading}
+            type="submit"
+            className={cn(
+              "text-white mt-4 h-10 w-full rounded-full py-2 hover:bg-[#FF599B]/90",
+              isLoading ? "bg-[#FF8AB3]" : "bg-primary",
+            )}
+          >
+            {isLoading ? "Signing In..." : "Sign In"}
+          </Button>
         </div>
-      <div className="w-full">
-        <Dialog
-          onOpenChange={(val) => {
-            if (!val) {
-              changePasswordResetState("SEND");
-            }
-          }}
-        >
-          {/* Dialog here */}
-          <DialogTrigger className="float-right underline text-[#4635E2] text-xs">
+        <div className="w-full">
+          <Dialog
+            onOpenChange={(val) => {
+              if (!val) {
+                changePasswordResetState("SEND");
+              }
+            }}
+          >
+            {/* Dialog here */}
+            <DialogTrigger className="float-right underline text-[#4635E2] text-xs">
               Forgot Password?
-          </DialogTrigger>
-          <DialogContent className="w-72 md:w-full">
-            <ForgotPassword />
-          </DialogContent>
-        </Dialog>
-      </div>
+            </DialogTrigger>
+            <DialogContent className="w-72 md:w-full">
+              <ForgotPassword />
+            </DialogContent>
+          </Dialog>
+        </div>
       </form>
       <div className="flex flex-row space-x-2">
         <p className="text-xs mt-4">Don't have an Account?</p>

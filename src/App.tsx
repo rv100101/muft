@@ -15,7 +15,7 @@ function App() {
   return (
     <div
       className={cn(
-        location.startsWith("/auth") ? "h-screen flex flex-col overflow-clip" : "h-full",
+        location == "/auth/signin" ? "h-screen flex flex-col" : "h-full",
       )}
     >
       <div className="h-max">

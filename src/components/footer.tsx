@@ -17,7 +17,7 @@ const Footer = () => {
   }
 
   return (
-    <div className="z-100 mx-8 h-max lg:mx-36 py-8 md:py-32 space-y-4 ">
+    <div className="mx-8 h-max lg:mx-36 py-8 md:py-32 space-y-4 ">
       <nav className="flex flex-row md:space-y-0 md:flex-row justify-between">
         <div className="flex justify-center md:justify-start">
           <img
