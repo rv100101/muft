@@ -34,8 +34,8 @@ const SignUpPage = () => {
       password: "",
     },
     validationSchema: Yup.object({
-      first_name: Yup.string().required("Firstname is required"),
-      last_name: Yup.string().required("Lastname is required"),
+      first_name: Yup.string().required("First name is required"),
+      last_name: Yup.string().required("Last name is required"),
       email: Yup.string()
         .email("Invalid email address")
         .required("Email is required"),
@@ -88,8 +88,8 @@ const SignUpPage = () => {
 
   return (
     <>
-      <div className="flex justify-center lg:items-center min-h-[calc(100vh-70px)] md:min-h-[calc(100vh-120px)] lg:p-8">
-        <div className="flex h-max w-[500px] flex-col items-center md:shadow-xl rounded-lg p-4 md:border space-y-5">
+      <div className="flex justify-center lg:items-center min-h-[calc(100vh-70px)] md:h-max border-t lg:p-8">
+        <div className="flex h-max w-[460px] flex-col items-center md:shadow-xl rounded-lg p-4 md:border">
           <div className="flex w-full justify-end">
             <img
               src={helpIcon}
@@ -98,8 +98,8 @@ const SignUpPage = () => {
             />
           </div>
           <div className="flex flex-col text-center items-center">
-            <img className="w-36 md:w-48" src={logo} alt="muffin-logo" />
-            <p className="text-[#1B2950] text-xl mt-4 mb-4 font-bold">
+            <img className="w-36" src={logo} alt="muffin-logo" />
+            <p className="text-[#1B2950] text-md mt-4 mb-4 font-bold">
               Welcome!
             </p>
           </div>
@@ -109,7 +109,6 @@ const SignUpPage = () => {
             onSubmit={formik.handleSubmit}
             className="space-y-5 w-full"
           >
-            <div className="flex">
               {/* first_name */}
               <div className="flex flex-col space-y-1">
                 <label
@@ -119,7 +118,7 @@ const SignUpPage = () => {
                   First name
                 </label>
                 <div
-                  className={`flex items-center flex-row border rounded-full py-1 px-5 m-3 ${
+                  className={`flex items-center h-max flex-row border rounded-full py-1 px-5 m-3 ${
                     formik.touched.first_name && formik.errors.first_name
                       ? "border-rose-500"
                       : ""
@@ -194,8 +193,6 @@ const SignUpPage = () => {
                   </div>
                 ) : null}
               </div>
-            </div>
-
             {/* email */}
             <div className="flex flex-col space-y-1">
               <label
@@ -316,7 +313,7 @@ const SignUpPage = () => {
           <Link
             onClick={scrollToTop}
             href="/auth/signin"
-            className="text-sm hover:underline"
+            className="mt-8 underline text-[#4635E2] text-sm" 
           >
             Already have an account?
           </Link>
