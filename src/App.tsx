@@ -5,30 +5,38 @@ import Footer from "./components/footer";
 
 import pageRoutes, { routesWithFooterAndTopNav } from "./lib/routes";
 import { useUserStore } from "./zustand/auth/user";
+import { cn } from "./lib/utils";
 
 function App() {
   const [location] = useLocation();
   const user = useUserStore((state) => state.user);
+  console.log(location.startsWith("/auth"));
 
   return (
-    <>
-      {routesWithFooterAndTopNav.includes(location) && !user && <TopNav />}
+    <div
+      className={cn(
+        location.startsWith("/auth") ? "h-screen flex flex-col overflow-clip" : "h-full",
+      )}
+    >
+      <div className="h-max">
+        {routesWithFooterAndTopNav.includes(location) && !user && <TopNav />}
+      </div>
       <Route
         path="/"
-        component={
-          user
-            ? pageRoutes.homePage.component
-            : pageRoutes.landingPage.component
-        }
+        component={user
+          ? pageRoutes.homePage.component
+          : pageRoutes.landingPage.component}
       />
-      <Route
-        path={pageRoutes.signUp.path}
-        component={pageRoutes.signUp.component}
-      />
-      <Route
-        path={pageRoutes.signIn.path}
-        component={pageRoutes.signIn.component}
-      />
+      <div className="flex-auto h-full">
+        <Route
+          path={pageRoutes.signUp.path}
+          component={pageRoutes.signUp.component}
+        />
+        <Route
+          path={pageRoutes.signIn.path}
+          component={pageRoutes.signIn.component}
+        />
+      </div>
 
       <div className="md:mx-12 lg:mx-36">
         <Route
@@ -69,16 +77,15 @@ function App() {
 
       {!user &&
         (location === pageRoutes.messagingPage.path ||
-          location === pageRoutes.notificationsPage.path) && (
-          <Redirect to="/auth/signin" />
-        )}
+          location === pageRoutes.notificationsPage.path) &&
+        <Redirect to="/auth/signin" />}
 
       {routesWithFooterAndTopNav.includes(location) && !user && (
-        <div className="h-full bg-[#0C1223]">
+        <div className="bg-[#0C1223] h-max">
           <Footer />
         </div>
       )}
-    </>
+    </div>
   );
 }
 

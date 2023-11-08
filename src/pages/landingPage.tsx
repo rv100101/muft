@@ -6,6 +6,7 @@ import GetApp from "@/components/getApp";
 import { motion } from "framer-motion";
 
 const LandingPage = () => {
+
   return (
     <>
       <GetApp />

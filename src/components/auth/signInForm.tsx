@@ -22,14 +22,15 @@ import { usePasswordResetState } from "@/zustand/auth/passwordReset";
 type FormDataType = {
   email: string;
   password: string;
-}; const SignInForm = () => {
+};
+const SignInForm = () => {
   const { toast } = useToast();
   const [, navigate] = useLocation();
   const [isLoading, setIsLoading] = useState(false);
   const updateUser = useUserStore((state) => state.updateUser);
   const updateUserAvatar = useUserAvatar((state) => state.setAvatar);
   const updateUserCountry = useUserCountry((state) => state.setCountry);
-  const changePasswordResetState = usePasswordResetState((state) => 
+  const changePasswordResetState = usePasswordResetState((state) =>
     state.changeState
   );
   const formik = useFormik({
@@ -51,11 +52,11 @@ type FormDataType = {
       setIsLoading(true);
       const signInData = await authQuery.signIn(values.email, values.password);
       console.log(signInData);
-      if (typeof signInData.data == 'string') {
+      if (typeof signInData.data == "string") {
         setIsLoading(false);
-        formik.setFieldError('email', 'Invalid credentials')
-        formik.setFieldError('password', 'Invalid credentials')
-        return; 
+        formik.setFieldError("email", "Invalid credentials");
+        formik.setFieldError("password", "Invalid credentials");
+        return;
       }
       const profilePhotoData = await authQuery.getProfilePhoto(
         signInData.data.member_id,
@@ -90,17 +91,17 @@ type FormDataType = {
   };
 
   return (
-    <div className="flex h-max sm:w-3/4 flex-col items-center lg:shadow-xl rounded-lg p-4 lg:border space-y-5">
-      <div className="flex w-full h-min justify-end">
+    <div className="flex h-max sm:w-max flex-col items-center lg:shadow-xl rounded-lg p-8 lg:border space-y-2">
+      <div className="flex w-full justify-end">
         <img
           src={helpIcon}
           alt="help icon"
           className="w-4 md:w-6 hover:cursor-pointer"
         />
       </div>
-      <div className="flex flex-col text-center items-center space-y-3">
-        <img className="w-36 md:w-48 " src={logo} alt="muffin-logo" />
-        <p className="text-[#1B2950] text-md font-bold text-center">
+      <div className="flex flex-col text-center items-center space-y-2">
+        <img className="w-36 md:w-32 " src={logo} alt="muffin-logo" />
+        <p className="text-[#1B2950] text-xs font-bold text-center">
           Enter your E-Mail and Password
         </p>
       </div>
@@ -108,15 +109,15 @@ type FormDataType = {
       <form
         action="post"
         onSubmit={formik.handleSubmit}
-        className="space-y-5 w-full p-2"
+        className="space-y-2 w-full p-2"
       >
         {/* email */}
         <div className="flex flex-col space-y-1">
-          <label htmlFor="email" className="text-sm text-semibold mb-2">
+          <label htmlFor="email" className="text-xs text-sm text-semibold mb-2">
             Email
           </label>
           <div
-            className={`flex items-center flex-row border rounded-full py-1 px-5 ${
+            className={`flex items-center flex-row border rounded-full h-max py-1 px-5 ${
               formik.touched.email && formik.errors.email
                 ? "border-rose-500"
                 : ""
@@ -125,7 +126,7 @@ type FormDataType = {
             <MailIcon color="#98A2B3" size={20} className="mt-1" />
             <Input
               type="text"
-              className="autofill:bg-yellow-200 mx-2 focus-visible:ring-offset-0 focus-visible:ring-0 border-0 rounded-full py-1 px-5 text-normal w-full"
+              className="autofill:bg-yellow-200 mx-2 text-xs h-8 focus-visible:ring-offset-0 focus-visible:ring-0 border-0 rounded-full py-1 px-5 text-normal w-full"
               placeholder="example@email.com"
               {...formik.getFieldProps("email")}
               onChange={formik.handleChange}
@@ -155,12 +156,12 @@ type FormDataType = {
         <div className="flex flex-col justify-center space-y-1">
           <label
             htmlFor="password"
-            className="text-sm text-semibold mb-2"
+            className="text-xs text-semibold mb-2"
           >
             Password
           </label>
           <div
-            className={`flex flex-row border items-center rounded-full py-1 px-5 ${
+            className={`flex h-max flex-row border items-center rounded-full py-1 px-5 ${
               formik.touched.password && formik.errors.password
                 ? "border-rose-500"
                 : ""
@@ -169,7 +170,7 @@ type FormDataType = {
             <LockIcon color="#98A2B3" size={20} className="mt-1" />
             <Input
               type="password"
-              className="mx-2 focus-visible:ring-offset-0 focus-visible:ring-0  border-0 rounded-full py-1 px-5 text-normal focus-visble:outline-0 focus:ring-0 focus-visble:ring-none active:bg-transparent w-full"
+              className="mx-2 h-8 focus-visible:ring-offset-0 focus-visible:ring-0  border-0 rounded-full py-1 px-5 text-normal focus-visble:outline-0 focus:ring-0 focus-visble:ring-none active:bg-transparent w-full"
               placeholder="Password"
               {...formik.getFieldProps("password")}
               name="password"
@@ -195,25 +196,29 @@ type FormDataType = {
             : null}
         </div>
         {/* button */}
+        <div>
         <Button
           disabled={isLoading}
           type="submit"
           className={cn(
-            "text-white w-full rounded-full py-2 hover:bg-[#FF599B]/90",
+            "text-white mt-4 h-10 w-full rounded-full py-2 hover:bg-[#FF599B]/90",
             isLoading ? "bg-[#FF8AB3]" : "bg-primary",
           )}
         >
           {isLoading ? "Signing In..." : "Sign In"}
         </Button>
-      </form>
-      <div className="w-full px-5">
-        <Dialog onOpenChange={(val)=>{
-          if (!val) {
-            changePasswordResetState('SEND');
-          }
-        }}>
+
+        </div>
+      <div className="w-full">
+        <Dialog
+          onOpenChange={(val) => {
+            if (!val) {
+              changePasswordResetState("SEND");
+            }
+          }}
+        >
           {/* Dialog here */}
-          <DialogTrigger className="float-right text-xs hover:underline hover:text-blue-500">
+          <DialogTrigger className="float-right underline text-[#4635E2] text-xs">
               Forgot Password?
           </DialogTrigger>
           <DialogContent className="w-72 md:w-full">
@@ -221,12 +226,13 @@ type FormDataType = {
           </DialogContent>
         </Dialog>
       </div>
+      </form>
       <div className="flex flex-row space-x-2">
-        <p className="text-xs">Don't have an Account?</p>
+        <p className="text-xs mt-4">Don't have an Account?</p>
         <Link
           href="/auth/signup"
           onClick={scrollToTop}
-          className="text-xs hover:underline hover:text-blue-500"
+          className="text-xs underline text-[#4635E2] mt-4"
         >
           Sign up here
         </Link>
