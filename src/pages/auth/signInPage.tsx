@@ -7,7 +7,7 @@ const SignInPage = () => {
       <div className="flex h-max md:h-[calc(100vh-90px)] lg:items-center justify-center">
        <SignInForm />
       </div> 
-      <div className="hidden md:h-[calc(100vh-90px)] items-center justify-center lg:flex">
+      <div className="overflow-clip hidden md:h-[calc(100vh-90px)] items-center justify-center lg:flex">
         <Conversation />
       </div>
     </div>
