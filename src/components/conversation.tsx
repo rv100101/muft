@@ -69,7 +69,7 @@ const Conversation = () => {
   ]);
 
   return (
-    <div className="flex justify-center md:justify-end items-center relative">
+    <div className="flex h-full justify-center md:justify-end items-center relative">
       <motion.img
         initial={{
           scale: 0,

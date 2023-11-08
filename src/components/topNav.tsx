@@ -37,7 +37,7 @@ function TopNav() {
   return (
     <motion.nav
       className={cn(
-        "flex items-center justify-between my-4 mx-8 md:mx-12 lg:mx-36"
+        "flex items-center justify-between mx-8 md:mx-12 lg:mx-36", location.startsWith('/auth') ? "my-2" : "my-4"
       )}
     >
       <motion.a
@@ -49,7 +49,7 @@ function TopNav() {
         viewport={{ once: true }}
         href="/"
       >
-        <img className="w-24 md:w-36" src={logo} alt="muffin-logo" />
+        <img className={cn("w-24", location.startsWith('/auth') ? "md:w-24" : "md:w-36")} src={logo} alt="muffin-logo" />
       </motion.a>
       <motion.ul
         variants={container}
@@ -59,7 +59,7 @@ function TopNav() {
       >
         <motion.li variants={motionTop80}>
           <Button variant={"ghost"} className="font-light">
-            <a href="https://support.softnames.com/" target="_blank">
+            <a className={cn(location.startsWith('/auth') ? "text-xs" : "text-md")} href="https://support.softnames.com/" target="_blank">
               Contact Us
             </a>
           </Button>
