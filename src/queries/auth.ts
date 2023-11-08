@@ -2,6 +2,7 @@ import axiosQuery from "./axios";
 
 const signIn = async (email: string, password: string) => {
   return await axiosQuery.post("/Signin", {
+    code: "C-dxgj9_fh5F5T6k2DPlgHACVuCd1ZrLxn_3N_GCPr7bAzFuv28hDA==",
     email,
     password,
   });
@@ -22,7 +23,7 @@ const getCountry = async (memberId: number) => {
 const authQuery = {
   signIn,
   getProfilePhoto,
-  getCountry
+  getCountry,
 };
 
 export default authQuery;
