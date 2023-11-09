@@ -7,7 +7,7 @@ const SearchInput = () => {
   );
   const searchValue = useSearchFilterStore((state) => state.value);
   return (
-    <div className="border border-2 p-2 space-x-2 rounded-xl flex items-center px-5 mx-2">
+    <div className="hover:cursor-pointer border border-2 p-2 space-x-2 rounded-xl flex items-center px-5 mx-2">
       <input
         value={searchValue}
         onChange={(e) => {
@@ -16,7 +16,7 @@ const SearchInput = () => {
         className="h-4 border-0 focus:outline-0 w-full placeholder-[#E0E0E0] text-sm"
         placeholder="Search"
       />
-      <SearchIcon color="gray" />
+      <SearchIcon />
     </div>
   );
 };

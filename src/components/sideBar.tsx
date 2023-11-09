@@ -5,9 +5,13 @@ import { LogOutIcon, Settings2Icon } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import { useUserStore } from "@/zustand/auth/user";
 import { cn } from "@/lib/utils";
+import useHomepageViewStore from "@/zustand/home/homepageView";
 
 const SideBar = () => {
   const signOut = useUserStore((state) => state.reset);
+  const setSelectedProfileId = useHomepageViewStore((state) =>
+    state.setSelectedProfileId
+  );
   const [location] = useLocation();
   const navLinks = links.map((link, index) => {
     return (
@@ -20,6 +24,11 @@ const SideBar = () => {
               : "font-normal",
           )}
           href={link.path}
+          onClick={() => {
+            if (link.name == "Profile") {
+              setSelectedProfileId(null);
+            }
+          }}
         >
           {
             <link.icon
@@ -49,26 +58,16 @@ const SideBar = () => {
         </Link>
         <ul>
           {navLinks}
-          <li className="w-full">
-            <Link
-              onClick={signOut}
-              className="h-10 px-4 py-2 hover:bg-accent hover:text-accent-foreground flex justify-start items-center space-x-2"
-              href={"/"}
-            >
-              {<LogOutIcon size={20} />} <p className="text-sm">Sign out</p>
-            </Link>
-          </li>
         </ul>
       </div>
-      <Button variant={"ghost"} className="w-full justify-start py-7">
-        <a
-          className="flex justify-start items-center space-x-2"
-          href={"/settings"}
-        >
-          <Settings2Icon />
-          <p>Settings</p>
-        </a>
-      </Button>
+      <Link
+        onClick={signOut}
+        className="h-10 px-4 py-2 hover:bg-accent hover:text-accent-foreground flex justify-start items-center space-x-2"
+        href={"/"}
+      >
+        {<LogOutIcon size={20} />} <p className="text-sm">Sign out</p>
+      {<LogOutIcon size={20} />} <p className="text-sm">Sign out</p>
+      </Link>
     </div>
   );
 };
