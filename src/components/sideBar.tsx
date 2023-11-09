@@ -64,7 +64,6 @@ const SideBar = () => {
         className="h-10 px-4 py-2 hover:bg-accent hover:text-accent-foreground flex justify-start items-center space-x-2"
         href={"/"}
       >
-        {<LogOutIcon size={20} />} <p className="text-sm">Sign out</p>
       {<LogOutIcon size={20} />} <p className="text-sm">Sign out</p>
       </Link>
     </div>
