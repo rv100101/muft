@@ -1,7 +1,6 @@
 import logo from "@/assets/logo.svg";
 import links from "@/lib/sideBar";
-import { Button } from "./ui/button";
-import { LogOutIcon, Settings2Icon } from "lucide-react";
+import { LogOutIcon } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import { useUserStore } from "@/zustand/auth/user";
 import { cn } from "@/lib/utils";
