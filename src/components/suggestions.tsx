@@ -1,12 +1,10 @@
 // import { suggestionsData } from "@/lib/dummies/suggestionData";
-import SearchInput from "./searchInput";
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
   MoreVerticalIcon,
 } from "lucide-react";
 import { Button } from "./ui/button";
-import FooterLinks from "./footerLinks";
 import { getImagePath } from "@/lib/images";
 import membersQuery from "@/queries/home";
 import { useQuery } from "@tanstack/react-query";
