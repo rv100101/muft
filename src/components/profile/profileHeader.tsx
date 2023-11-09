@@ -10,11 +10,17 @@ import axiosQuery from "@/queries/axios";
 import { useQuery } from "@tanstack/react-query";
 import { Skeleton } from "../ui/skeleton";
 import { useProfileHeaderStore } from "@/zustand/profile/about/useProfileHeader";
+import useHomepageViewStore from "@/zustand/home/homepageView";
 
 const ProfileHeader = () => {
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const user = useUserStore((state) => state.user);
+  const userId = useHomepageViewStore((state) =>
+    state.selectedProfileId
+  );
+  console.log(userId);
+  
   const {
     globalEditMode: editMode,
     setEditMode: toggleProfileFields,
@@ -40,8 +46,7 @@ const ProfileHeader = () => {
   const handleProfileUpload = () => {
     // Trigger a click event on the hidden file input
     if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
+      fileInputRef.current.click(); }
   };
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -82,20 +87,26 @@ const ProfileHeader = () => {
       await Promise.all([
         axiosQuery.post(
           "https://muffinfunction.azurewebsites.net/api/SaveGender",
-          { gender: basicInfoFormData.gender, member: user!.member_id }
+          {
+            gender: basicInfoFormData.gender,
+            member: userId ? userId : user!.member_id,
+          },
         ),
 
         axiosQuery.post(
           "https://muffinfunction.azurewebsites.net/api/SaveNationality",
           {
             nationality: basicInfoFormData.nationality,
-            member: user!.member_id,
-          }
+            member: userId ? userId : user!.member_id,
+          },
         ),
 
         axiosQuery.post(
           "https://muffinfunction.azurewebsites.net/api/SaveBirthday",
-          { birthday: basicInfoFormData.birthInfo, member: user!.member_id }
+          {
+            birthday: basicInfoFormData.birthInfo,
+            member: userId ? userId : user!.member_id,
+          },
         ),
 
         // axiosQuery.post(
@@ -105,20 +116,20 @@ const ProfileHeader = () => {
 
         axiosQuery.post(
           "https://muffinfunction.azurewebsites.net/api/SaveEthnicity",
-          { ethnicity: basicInfoFormData.ethnicity, member: user!.member_id }
+          { ethnicity: basicInfoFormData.ethnicity, member: userId ? userId : user!.member_id },
         ),
 
         axiosQuery.post(
           "https://muffinfunction.azurewebsites.net/api/SaveMaritalStatus",
           {
             marital_status: basicInfoFormData.maritalStatus,
-            member: user!.member_id,
-          }
+            member: userId ? userId : user!.member_id,
+          },
         ),
 
         axiosQuery.post(
           "https://muffinfunction.azurewebsites.net/api/SaveLanguage",
-          { language: basicInfoFormData.language, member: user!.member_id }
+          { language: basicInfoFormData.language, member: userId ? userId : user!.member_id },
         ),
       ]);
     } catch (err) {
@@ -131,18 +142,18 @@ const ProfileHeader = () => {
       await Promise.all([
         axiosQuery.post(
           "https://muffinfunction.azurewebsites.net/api/SaveEducation",
-          { education: WorkEduInfoFormData.education, member: user!.member_id }
+          { education: WorkEduInfoFormData.education, member: userId ? userId : user!.member_id },
         ),
         axiosQuery.post(
           "https://muffinfunction.azurewebsites.net/api/SaveOccupation",
           {
             occupation: WorkEduInfoFormData.occupationTitle,
-            member: user!.member_id,
-          }
+            member: userId ? userId : user!.member_id,
+          },
         ),
         axiosQuery.post(
           "https://muffinfunction.azurewebsites.net/api/SaveIncome",
-          { income: WorkEduInfoFormData.income, member: user!.member_id }
+          { income: WorkEduInfoFormData.income, member: userId ? userId : user!.member_id },
         ),
       ]);
     } catch (err) {
@@ -155,25 +166,25 @@ const ProfileHeader = () => {
       await Promise.all([
         axiosQuery.post(
           "https://muffinfunction.azurewebsites.net/api/SaveHeight",
-          { height: DetailsFormData.height, member: user!.member_id }
+          { height: DetailsFormData.height, member: userId ? userId : user!.member_id },
         ),
 
         axiosQuery.post(
           "https://muffinfunction.azurewebsites.net/api/SaveWeight",
-          { weight: DetailsFormData.weight, member: user!.member_id }
+          { weight: DetailsFormData.weight, member: userId ? userId : user!.member_id },
         ),
 
         axiosQuery.post(
           "https://muffinfunction.azurewebsites.net/api/SaveBodyType",
-          { body_type: DetailsFormData.bodyType, member: user!.member_id }
+          { body_type: DetailsFormData.bodyType, member: userId ? userId : user!.member_id },
         ),
 
         axiosQuery.post(
           "https://muffinfunction.azurewebsites.net/api/SaveFavoriteFood",
           {
             favorite_food: DetailsFormData.favoriteFood,
-            member: user!.member_id,
-          }
+            member: userId ? userId : user!.member_id,
+          },
         ),
       ]);
     } catch (err) {
@@ -186,9 +197,8 @@ const ProfileHeader = () => {
       await Promise.all([
         axiosQuery.post(
           "https://muffinfunction.azurewebsites.net/api/SaveCountry",
-          { country: locationFormData.country, member: user!.member_id }
+          { country: locationFormData.country, member: userId ? userId : user!.member_id },
         ),
-
         // add profile image here
       ]);
     } catch (err) {
@@ -201,9 +211,8 @@ const ProfileHeader = () => {
       await Promise.all([
         axiosQuery.post(
           "https://muffinfunction.azurewebsites.net/api/SaveNickname",
-          { nickname: profileFormData.nickname, member: user!.member_id }
+          { nickname: profileFormData.nickname, member: userId ? userId : user!.member_id },
         ),
-
         // add profile image here
       ]);
     } catch (err) {
@@ -214,7 +223,7 @@ const ProfileHeader = () => {
   //
 
   const handleInputChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = event.target;
     setFormData({ ...profileFormData, [name]: value });
@@ -255,7 +264,7 @@ const ProfileHeader = () => {
     try {
       const response1 = await axiosQuery.post(
         "https://muffinfunction.azurewebsites.net/api/GetNickname",
-        { member: user!.member_id }
+        { member: userId ? userId : user!.member_id },
       );
 
       // const response2 = await axiosQuery.post(
@@ -326,11 +335,9 @@ const ProfileHeader = () => {
             className={`user-drag-none rounded-full object-cover h-full w-full transition-all duration-300 filter ${
               isHover && editMode ? "brightness-50 cursor-pointer" : ""
             }`}
-            src={
-              selectedFile
-                ? `data:image/png;base64, ${selectedFile}`
-                : profileImg
-            }
+            src={selectedFile
+              ? `data:image/png;base64, ${selectedFile}`
+              : profileImg}
             alt="no image selected"
           />
           <input
@@ -350,21 +357,23 @@ const ProfileHeader = () => {
 
         {/* another div here */}
         <div className="flex flex-col">
-          {editMode ? (
-            <input
-              type="string"
-              value={profileFormData.nickname}
-              onChange={(e) => handleInputChange(e)}
-              autoFocus
-              className="placeholder:text-[#FF599B] placeholder:text-sm outline-0 text-[#FF599B] border border rounded-lg w-3/4 py-2 px-3 lg:my-5 mt-5"
-              name="nickname"
-              placeholder="enter nickname"
-            />
-          ) : (
-            <p className="font-semibold text-[#171717] text-lg">
-              {profileFormData.nickname}
-            </p>
-          )}
+          {editMode
+            ? (
+              <input
+                type="string"
+                value={profileFormData.nickname}
+                onChange={(e) => handleInputChange(e)}
+                autoFocus
+                className="placeholder:text-[#FF599B] placeholder:text-sm outline-0 text-[#FF599B] border border rounded-lg w-3/4 py-2 px-3 lg:my-5 mt-5"
+                name="nickname"
+                placeholder="enter nickname"
+              />
+            )
+            : (
+              <p className="font-semibold text-[#171717] text-lg">
+                {profileFormData.nickname}
+              </p>
+            )}
 
           {!editMode && <p className="text-[#727272] text-sm">@us23452</p>}
           {/* mobile save and edit */}
@@ -373,30 +382,32 @@ const ProfileHeader = () => {
               showSave ? "ml-12" : ""
             }`}
           >
-            {showSave ? (
-              <div
-                className="flex flex-row rounded-full justify-center hover:cursor-pointer px-5 text-sm space-x-2 bg-[#E8ECEF] py-2"
-                onClick={() => handleEditToggle()}
-              >
-                <XCircle
-                  color="#727272"
-                  size={20}
-                  className="hover:cursor-pointer"
-                />
-              </div>
-            ) : (
-              <div
-                className="flex flex-row rounded-full justify-center hover:cursor-pointer px-5 text-sm space-x-2 bg-[#E8ECEF] py-2"
-                onClick={() => handleEditToggle()}
-              >
-                <Pen
-                  color="#727272"
-                  size={20}
-                  className="hover:cursor-pointer"
-                />
-                {/* <p className="text-[#727272]">Edit</p> */}
-              </div>
-            )}
+            {showSave
+              ? (
+                <div
+                  className="flex flex-row rounded-full justify-center hover:cursor-pointer px-5 text-sm space-x-2 bg-[#E8ECEF] py-2"
+                  onClick={() => handleEditToggle()}
+                >
+                  <XCircle
+                    color="#727272"
+                    size={20}
+                    className="hover:cursor-pointer"
+                  />
+                </div>
+              )
+              : (
+                <div
+                  className="flex flex-row rounded-full justify-center hover:cursor-pointer px-5 text-sm space-x-2 bg-[#E8ECEF] py-2"
+                  onClick={() => handleEditToggle()}
+                >
+                  <Pen
+                    color="#727272"
+                    size={20}
+                    className="hover:cursor-pointer"
+                  />
+                  {/* <p className="text-[#727272]">Edit</p> */}
+                </div>
+              )}
 
             {showSave && (
               <div
@@ -438,26 +449,28 @@ const ProfileHeader = () => {
       </div>
       {/* edit save desktop */}
       <div className="flex flex-row justify-center w-1/3 space-x-4 hidden lg:flex">
-        {showSave ? (
-          <div
-            className="flex flex-row rounded-full justify-center hover:cursor-pointer px-5 text-sm space-x-2 bg-[#E8ECEF] py-2"
-            onClick={() => handleEditToggle()}
-          >
-            <XCircle
-              color="#727272"
-              size={20}
-              className="hover:cursor-pointer"
-            />
-          </div>
-        ) : (
-          <div
-            className="flex flex-row rounded-full justify-center hover:cursor-pointer px-5 text-sm space-x-2 bg-[#E8ECEF] py-2"
-            onClick={() => handleEditToggle()}
-          >
-            <Pen color="#727272" size={20} className="hover:cursor-pointer" />
-            <p className="text-[#727272]">Edit</p>
-          </div>
-        )}
+        {showSave
+          ? (
+            <div
+              className="flex flex-row rounded-full justify-center hover:cursor-pointer px-5 text-sm space-x-2 bg-[#E8ECEF] py-2"
+              onClick={() => handleEditToggle()}
+            >
+              <XCircle
+                color="#727272"
+                size={20}
+                className="hover:cursor-pointer"
+              />
+            </div>
+          )
+          : (
+            <div
+              className="flex flex-row rounded-full justify-center hover:cursor-pointer px-5 text-sm space-x-2 bg-[#E8ECEF] py-2"
+              onClick={() => handleEditToggle()}
+            >
+              <Pen color="#727272" size={20} className="hover:cursor-pointer" />
+              <p className="text-[#727272]">Edit</p>
+            </div>
+          )}
 
         {showSave && (
           <div
@@ -470,14 +483,17 @@ const ProfileHeader = () => {
               <Save color="white" size={20} className="hover:cursor-pointer" />
             )}
             <div className="text-white">
-              {isSaving ? (
-                <div className="flex flex-row text-xs items-center space-x-5 text-green">
-                  Saving
-                  <div className="ml-5 w-5 h-5 border-t-4 border-green-500 border-solid rounded-full animate-spin"></div>
-                </div>
-              ) : (
-                "Save"
-              )}
+              {isSaving
+                ? (
+                  <div className="flex flex-row text-xs items-center space-x-5 text-green">
+                    Saving
+                    <div className="ml-5 w-5 h-5 border-t-4 border-green-500 border-solid rounded-full animate-spin">
+                    </div>
+                  </div>
+                )
+                : (
+                  "Save"
+                )}
             </div>
           </div>
         )}
