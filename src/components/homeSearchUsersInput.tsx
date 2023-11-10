@@ -73,7 +73,6 @@ const HomepageSearchInput = () => {
                 <Button
                   onClick={() => {
                     setSelectedProfileId(result!.member_id!);
-                    setHomepageView("PROFILE");
                   }}
                   className="bg-white border-b h-max w-full"
                 >
