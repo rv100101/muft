@@ -1,7 +1,7 @@
 export const notificationFilters = [
   "All",
-  "Tags",
-  "Messages",
-  "Comments",
-  "Interactions",
+  "Like",
+  "Favorite",
 ];
+
+export type NotificationFilterOptions = "All" | "Like" | "Favorite";

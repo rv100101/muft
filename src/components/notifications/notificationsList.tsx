@@ -1,11 +1,13 @@
 import NotificationsListHeader from "./notificationListHeader";
-// import NotificationsListFiters from "./notificationListFilters";
 import { useQuery } from "@tanstack/react-query";
 import notificationQuery, { NotificationData } from "@/queries/notification";
 import { UserCircle2Icon } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import NotificationsListFiters from "./notificationListFilters";
+import useNotificationFilterValueStore from "@/zustand/notification/filterValueStore";
 
 const NotificationsList = () => {
+  const selectedFilter = useNotificationFilterValueStore(state => state.value);
   const { isLoading, isSuccess, data } = useQuery({
     queryKey: ["notificationsList"],
     queryFn: () => notificationQuery.getNotifications(74),
@@ -13,11 +15,28 @@ const NotificationsList = () => {
 
   const renderList = () => {
     if (isSuccess) {
-      return data.map((notification: NotificationData, index: number) => {
+      console.log(data);
+      
+
+      let notifications = data;
+      console.log(selectedFilter);
+      
+      if (selectedFilter !== 'All') {  
+      notifications = data.filter((item: {
+          category_description: string
+        })=>
+        item.category_description == selectedFilter
+        );   
+      }
+
+      console.log(notifications);
+      
+  
+      return notifications.map((notification: NotificationData, index: number) => {
         return (
           <div
             key={index}
-            className="flex items-center justify-start space-x-4 p-8 m-4 bg-white rounded-xl"
+            className="border flex items-center justify-start space-x-4 p-8 m-4 bg-white rounded-xl"
           >
             {/* <img
                     className="rounded-2xl"
@@ -50,8 +69,8 @@ const NotificationsList = () => {
   return (
     <div className="w-full h-full flex flex-col">
       <NotificationsListHeader />
-      {/* <NotificationsListFiters /> */}
-      <div className="space-y-4 overflow-y-scroll bg-[#F7F8FA]">
+      <NotificationsListFiters />
+      <div className="space-y-4 w-full overflow-y-scroll bg-[#F7F8FA]">
         {isLoading && renderSkeletonLoading()}
         {!isSuccess && data == null ? <p>No notifications</p> : renderList()}
       </div>
