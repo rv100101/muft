@@ -21,7 +21,6 @@ type SearchResultItem = {
 
 const HomepageSearchInput = () => {
   const [searchResults, setSearchResults] = useState([]);
-  const setHomepageView = useHomepageViewStore((state) => state.setView);
   const setSelectedProfileId = useHomepageViewStore((state) =>
     state.setSelectedProfileId
   );
