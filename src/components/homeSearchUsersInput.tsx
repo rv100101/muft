@@ -22,7 +22,9 @@ type SearchResultItem = {
 const HomepageSearchInput = () => {
   const [searchResults, setSearchResults] = useState([]);
   const setHomepageView = useHomepageViewStore((state) => state.setView);
-  const setSelectedProfileId = useHomepageViewStore((state) => state.setSelectedProfileId)
+  const setSelectedProfileId = useHomepageViewStore((state) =>
+    state.setSelectedProfileId
+  );
   const user = useUserStore((state) => state.user);
   const setSearchValue = useHomepageSearchStore(
     (state) => state.setSearchValue,
@@ -33,7 +35,7 @@ const HomepageSearchInput = () => {
   const searchUsers = async () =>
     await searchQuery.search(debouncedSearchValue, user!.member_id);
 
-  const search = useQuery({
+  useQuery({
     queryFn: searchUsers,
     queryKey: ["searchUsers", debouncedSearchValue],
     enabled: debouncedSearchValue.length !== 0,
@@ -45,8 +47,6 @@ const HomepageSearchInput = () => {
     },
   });
 
-  console.log(search);
-
   return (
     <div className="w-[330px] flex flex-col justify-center items-center">
       <div className="hover:cursor-pointer w-full border border-2 p-2 space-x-2 rounded-xl flex items-center px-5 mx-2">
@@ -55,10 +55,10 @@ const HomepageSearchInput = () => {
           onChange={(e) => {
             setSearchValue(e.target.value);
           }}
-          onBlur={()=>{
-            setTimeout(()=>{
-            setSearchResults([]);
-            setSearchValue('');
+          onBlur={() => {
+            setTimeout(() => {
+              setSearchResults([]);
+              setSearchValue("");
             }, 200);
           }}
           className="h-4 border-0 focus:outline-0 w-full placeholder-[#E0E0E0] text-sm"
@@ -71,10 +71,13 @@ const HomepageSearchInput = () => {
           <div className="mt-1 sticky z-40 h-min max-h-[200px] border rounded-b-md w-[330px] bg-white overflow-y-auto">
             {searchResults.map((result: SearchResultItem) => {
               return (
-                <Button onClick={()=>{
-            setSelectedProfileId(result!.member_id!);
-            setHomepageView("PROFILE");
-                }} className="bg-white border-b h-max w-full">
+                <Button
+                  onClick={() => {
+                    setSelectedProfileId(result!.member_id!);
+                    setHomepageView("PROFILE");
+                  }}
+                  className="bg-white border-b h-max w-full"
+                >
                   <div className="flex text-black space-x-2 w-full items-center justify-start">
                     <img
                       src={getImagePath(

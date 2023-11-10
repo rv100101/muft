@@ -1,4 +1,3 @@
-// import { suggestionsData } from "@/lib/dummies/suggestionData";
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -14,9 +13,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { scrollToTop } from "@/lib/utils";
-import useHomepageViewStore from "@/zustand/home/homepageView";
 import HomepageSearchInput from "./homeSearchUsersInput";
 
 type Member = {
@@ -31,18 +29,14 @@ type Member = {
 
 const Suggestions = () => {
   const getMembers = membersQuery.getMembers(69);
-  const setHomepageView = useHomepageViewStore((state) => state.setView);
-  const setSelectedProfileId = useHomepageViewStore((state) =>
-    state.setSelectedProfileId
-  );
+  const [, setLocation] = useLocation();
   const members = useQuery({
     queryKey: ["home-members"],
     queryFn: () => getMembers,
   });
 
   const handleSuggestionSelect = (suggestion: Member) => {
-    setSelectedProfileId(suggestion.member_id);
-    setHomepageView("PROFILE");
+    setLocation(`/users/${suggestion.member_id}`);
   };
 
   const suggestions = members.data
@@ -53,7 +47,6 @@ const Suggestions = () => {
         suggestion.gender,
         suggestion.member_uuid,
       );
-      console.log(suggestion);
 
       return (
         <li
