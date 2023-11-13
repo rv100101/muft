@@ -12,29 +12,33 @@ import messagingQuery from "@/queries/messaging";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSelectedConversationData } from "@/zustand/messaging/selectedConversationData";
 import { useSenderInfo } from "@/zustand/messaging/senderData";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import useLatestConversationStore from "@/zustand/messaging/showConversation";
 const ChatInput = () => {
+  const currentSelectedConversation = useLatestConversationStore(
+    (state) => state.conversation
+  );
   const queryClient = useQueryClient();
   const setInputMessage = useMessageInputStore((state) => state.setInputValue);
   const inputMessageValue = useMessageInputStore((state) => state.value);
   const [finalInputMessage, setfinalInputMessage] = useState(inputMessageValue);
   const currentConversation = useConversationHistoryStore(
-    (state) => state.conversation
+    (state) => state.conversation,
   );
   const updateLastSentMessageStatus = useSelectedConversationData(
-    (status) => status.updateMessageStatus
+    (status) => status.updateMessageStatus,
   );
   const senderInfo = useSenderInfo((state) => state.senderInfo);
 
   const appendNewMessage = useSelectedConversationData(
-    (state) => state.appendNewMessage
+    (state) => state.appendNewMessage,
   );
 
   const sendMessage = async () => {
     await messagingQuery.sendMessage(
       currentConversation!.conversation_uuid,
       finalInputMessage,
-      currentConversation!.memberId
+      currentConversation!.memberId,
     );
   };
 
@@ -52,6 +56,10 @@ const ChatInput = () => {
     },
   });
 
+  useEffect(()=>{
+    setInputMessage('');
+  }, [currentSelectedConversation]);
+
   const handleMessageSend = () => {
     if (senderInfo && inputMessageValue.length !== 0) {
       appendNewMessage({
@@ -59,10 +67,10 @@ const ChatInput = () => {
         conversation_text: inputMessageValue,
         created_date: "isLoading",
       });
+      setfinalInputMessage(inputMessageValue);
+      setInputMessage("");
+      mutateConversation.mutate();
     }
-    setfinalInputMessage(inputMessageValue);
-    setInputMessage("");
-    mutateConversation.mutate();
   };
 
   return (
