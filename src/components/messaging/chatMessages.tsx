@@ -50,7 +50,7 @@ const ChatMessages = () => {
 
   const messages = conversationMessages?.map((message, index) => {
     const gray = message.created_user == latestConversation?.memberId;
-    let date = `${message.created_date}Z`;
+    let date = moment(message.created_date, moment.ISO_8601, true).isValid() ? `${message.created_date}Z` : "isLoading";
     
     if (date !== "isLoading" && date !== "failed") {
       date = moment(date).fromNow();
