@@ -2,8 +2,7 @@ import useHomepageViewStore from "@/zustand/home/homepageView";
 import { ArrowLeft, MoreVertical } from "lucide-react";
 import { Link } from "wouter";
 
-const profileTopNav = () => {
-  const setHomepageView = useHomepageViewStore((state) => state.setView);
+const ProfileTopNav = () => {
   const setSelectedProfileId = useHomepageViewStore((state) => state.setSelectedProfileId);
   return (
     <div className="flex flex-row w-full justify-between p-5 lg:border-b">
@@ -11,7 +10,6 @@ const profileTopNav = () => {
         <Link
           href="/"
           onClick={() => {
-            setHomepageView("HOME");
             setSelectedProfileId(null);
           }}
         >
@@ -30,4 +28,4 @@ const profileTopNav = () => {
   );
 };
 
-export default profileTopNav;
+export default ProfileTopNav;
