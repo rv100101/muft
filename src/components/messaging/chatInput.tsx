@@ -12,8 +12,12 @@ import messagingQuery from "@/queries/messaging";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSelectedConversationData } from "@/zustand/messaging/selectedConversationData";
 import { useSenderInfo } from "@/zustand/messaging/senderData";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import useLatestConversationStore from "@/zustand/messaging/showConversation";
 const ChatInput = () => {
+  const currentSelectedConversation = useLatestConversationStore(
+    (state) => state.conversation
+  );
   const queryClient = useQueryClient();
   const setInputMessage = useMessageInputStore((state) => state.setInputValue);
   const inputMessageValue = useMessageInputStore((state) => state.value);
@@ -51,6 +55,10 @@ const ChatInput = () => {
       updateLastSentMessageStatus("failed");
     },
   });
+
+  useEffect(()=>{
+    setInputMessage('');
+  }, [currentSelectedConversation]);
 
   const handleMessageSend = () => {
     if (senderInfo && inputMessageValue.length !== 0) {
