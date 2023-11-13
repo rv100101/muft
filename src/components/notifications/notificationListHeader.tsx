@@ -1,4 +1,3 @@
-import { MoreVertical } from "lucide-react";
 import TopBar from "../topBar";
 
 const NotificationsListHeader = () => {
@@ -7,7 +6,6 @@ const NotificationsListHeader = () => {
       <TopBar>
         <div className="flex items-center justify-between w-full space-x-2">
           <p className="font-semibold">NOTIFICATION</p>
-          <MoreVertical />
         </div>
       </TopBar>
     </div>
