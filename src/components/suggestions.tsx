@@ -32,8 +32,8 @@ type Member = {
 const Suggestions = () => {
   const getMembers = membersQuery.getMembers(69);
   const setHomepageView = useHomepageViewStore((state) => state.setView);
-  const setSelectedProfileId = useHomepageViewStore((state) =>
-    state.setSelectedProfileId
+  const setSelectedProfileId = useHomepageViewStore(
+    (state) => state.setSelectedProfileId
   );
   const members = useQuery({
     queryKey: ["home-members"],
@@ -51,7 +51,7 @@ const Suggestions = () => {
       const imagePath = getImagePath(
         suggestion.gallery_uuid,
         suggestion.gender,
-        suggestion.member_uuid,
+        suggestion.member_uuid
       );
       console.log(suggestion);
 
@@ -73,30 +73,19 @@ const Suggestions = () => {
           <div className="absolute top-0 right-0 mt-2 mr-1">
             <DropdownMenu>
               <DropdownMenuTrigger>
-                <MoreVerticalIcon height={20} />
-                {" "}
+                <MoreVerticalIcon height={20} />{" "}
               </DropdownMenuTrigger>
               <DropdownMenuContent className="flex flex-col">
-                <Button variant={"ghost"}>
-                  Like
-                </Button>
-                <Button variant={"ghost"}>
-                  Favourite
-                </Button>
-                <Button variant={"ghost"}>
-                  Send Message
-                </Button>
+                <Button variant={"ghost"}>Like</Button>
+                <Button variant={"ghost"}>Favourite</Button>
+                <Button variant={"ghost"}>Send Message</Button>
                 <DropdownMenuSeparator />
-                <Button variant={"ghost"}>
-                  Block
-                </Button>
-                <Button variant={"destructive"}>
-                  Report
-                </Button>
+                <Button variant={"ghost"}>Block</Button>
+                <Button variant={"destructive"}>Report</Button>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-          <div className="absolute flex bottom-4 left-4 z-20 space-x-2 items-end">
+          <div className="absolute flex bottom-4 left-4 z-20 space-x-2 items-end hover:underline">
             <img
               onClick={() => handleSuggestionSelect(suggestion)}
               className="rounded-full h-10 lg:h-16 ring-2 ring-primary hover:cursor-pointer"
@@ -106,14 +95,14 @@ const Suggestions = () => {
             <div>
               <p
                 onClick={() => handleSuggestionSelect(suggestion)}
-                className="font-semibold text-xs hover:underline hover:cursor-pointer lg:text-lg"
+                className="font-semibold text-xs  hover:cursor-pointer lg:text-lg"
               >
                 {suggestion.nickname},{" "}
                 <span className="font-bold">{suggestion.age}</span>
               </p>
               <p
                 onClick={() => handleSuggestionSelect(suggestion)}
-                className="text-xs lg:text-md hover:underline hover:cursor-pointer"
+                className="text-xs lg:text-md  hover:cursor-pointer"
               >
                 {suggestion.country_name}
               </p>

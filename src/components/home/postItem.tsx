@@ -6,16 +6,27 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip";
+import useHomepageViewStore from "@/zustand/home/homepageView";
 type PostItemProps = {
   nickname: string;
   countryName: string;
   age: number;
   image: string;
+  member_id: number;
 };
 
-const PostItem = ({ nickname, age, image }: PostItemProps) => {
+const PostItem = ({ nickname, age, image, member_id }: PostItemProps) => {
   const [isLike, setLike] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
+  const setHomepageView = useHomepageViewStore((state) => state.setView);
+  const setSelectedProfileId = useHomepageViewStore(
+    (state) => state.setSelectedProfileId
+  );
+  const handlePostItemClick = () => {
+    setSelectedProfileId(member_id);
+    setHomepageView("PROFILE");
+  };
+
   return (
     <div className="transition ease-in duration-300 transform border rounded-md">
       <div className="flex flex-col items-center justify-end h-full">
@@ -32,7 +43,10 @@ const PostItem = ({ nickname, age, image }: PostItemProps) => {
             <div className="absolute bottom-0 w-full">
               <div className="flex flex-row w-full justify-between">
                 <div className="flex flex-col p-8">
-                  <p className="text-white text-2xl mb-3">
+                  <p
+                    className="text-white text-2xl mb-3 hover:underline hover:cursor-pointer select-none"
+                    onClick={() => handlePostItemClick()}
+                  >
                     {`${nickname}, ${age}`}
                   </p>
                   {/* <p className="text-white text-sm">{countryName}</p> */}
@@ -55,9 +69,7 @@ const PostItem = ({ nickname, age, image }: PostItemProps) => {
                         />
                       </TooltipTrigger>
                       <TooltipContent className="mr-4">
-                        <p className="text-xs">
-                          Add to Likes
-                        </p>
+                        <p className="text-xs">Add to Likes</p>
                       </TooltipContent>
                     </Tooltip>
                     <Tooltip>
