@@ -6,16 +6,16 @@ import Footer from "./components/footer";
 import pageRoutes, { routesWithFooterAndTopNav } from "./lib/routes";
 import { useUserStore } from "./zustand/auth/user";
 import { cn } from "./lib/utils";
+import ViewUser from "./components/profile/viewUser";
 
 function App() {
   const [location] = useLocation();
   const user = useUserStore((state) => state.user);
-  console.log(location.startsWith("/auth"));
 
   return (
     <div
       className={cn(
-        location.startsWith("/auth") ? "h-screen flex flex-col overflow-clip" : "h-full",
+        location == "/auth/signin" ? "h-screen flex flex-col" : "h-full",
       )}
     >
       <div className="h-max">
@@ -72,6 +72,9 @@ function App() {
             path={pageRoutes.likesAndFavorites.path}
             component={pageRoutes.likesAndFavorites.component}
           />
+          <Route path="/users/:id">
+          {params => <ViewUser id={params.id} />}
+          </Route>
         </>
       )}
 
