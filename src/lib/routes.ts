@@ -9,6 +9,7 @@ import SignInPage from "@/pages/auth/signInPage";
 import HomePage from "@/pages/homePage";
 import ProfilePage from "@/pages/authenticatedPages/profilePage";
 import LikesAndFavouritesPage from "@/pages/authenticatedPages/likesAndFavouritesPage";
+import ActivateAccount from "@/pages/authenticatedPages/accountActivationPage";
 
 export const routesWithFooterAndTopNav = [
   "/",
@@ -17,6 +18,7 @@ export const routesWithFooterAndTopNav = [
   "/release-notes",
   "/auth/signup",
   "/auth/signin",
+  "/activate"
 ];
 
 const pageRoutes = {
@@ -63,6 +65,10 @@ const pageRoutes = {
   likesAndFavorites: {
     path: '/likes-and-favourites',
     component: LikesAndFavouritesPage
+  },
+  activateAccount: {
+    path: "/activate",
+    component: ActivateAccount
   }
 };
 

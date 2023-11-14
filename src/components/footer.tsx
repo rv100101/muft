@@ -8,7 +8,7 @@ import SmallFooter from "./smallFooter";
 const Footer = () => {
   const [location] = useLocation();
 
-  if (location.includes("/auth/")) {
+  if (location.includes("/auth/") || location.includes("/activate")) {
     return (
       <div className="w-full h-max">
         <SmallFooter />
