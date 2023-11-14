@@ -39,9 +39,9 @@ const SendResetPin = () => {
           });
           return; 
         }else{
-          if (res.data.Status === "Succeeded") {
+          if (res.data !== '') {
             changePasswordResetState("VERIFY");
-            setEmail(res.data.email);
+            setEmail(res.data.email_address);
             toast({
               title: 'Password reset pin sent to your email',
               description: "Check your email for the pin to change your password"

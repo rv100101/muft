@@ -7,10 +7,20 @@ import pageRoutes, { routesWithFooterAndTopNav } from "./lib/routes";
 import { useUserStore } from "./zustand/auth/user";
 import { cn } from "./lib/utils";
 import ViewUser from "./components/profile/viewUser";
+import { useEffect } from "react";
 
 function App() {
-  const [location] = useLocation();
+  const [location, setLocation] = useLocation();
   const user = useUserStore((state) => state.user);
+  console.log(user);
+
+  useEffect(() => {
+    if (user) {
+      if (!user.is_active) {
+        setLocation("/activate");
+      }
+    }
+  }, [user]);
 
   return (
     <div
@@ -19,7 +29,7 @@ function App() {
       )}
     >
       <div className="h-max">
-        {routesWithFooterAndTopNav.includes(location) && !user && <TopNav />}
+        {routesWithFooterAndTopNav.includes(location) && (!user || !user.is_active) && <TopNav />}
       </div>
       <Route
         path="/"
@@ -35,6 +45,10 @@ function App() {
         <Route
           path={pageRoutes.signIn.path}
           component={pageRoutes.signIn.component}
+        />
+        <Route
+          path={pageRoutes.activateAccount.path}
+          component={pageRoutes.activateAccount.component}
         />
       </div>
 
@@ -73,7 +87,7 @@ function App() {
             component={pageRoutes.likesAndFavorites.component}
           />
           <Route path="/users/:id">
-          {params => <ViewUser id={params.id} />}
+            {(params) => <ViewUser id={params.id} />}
           </Route>
         </>
       )}
@@ -83,7 +97,7 @@ function App() {
           location === pageRoutes.notificationsPage.path) &&
         <Redirect to="/auth/signin" />}
 
-      {routesWithFooterAndTopNav.includes(location) && !user && (
+      {routesWithFooterAndTopNav.includes(location) && (!user || !user.is_active) && (
         <div className="bg-[#0C1223] h-max">
           <Footer />
         </div>

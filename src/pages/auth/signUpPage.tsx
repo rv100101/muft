@@ -1,7 +1,7 @@
 import { useState } from "react";
 import logo from "@/assets/logo.svg";
 import helpIcon from "@/assets/auth/help-icon.png";
-import { UserIcon } from "lucide-react";
+import { Loader2, UserIcon } from "lucide-react";
 import { MailIcon } from "lucide-react";
 import { LockIcon } from "lucide-react";
 import { InfoIcon } from "lucide-react";
@@ -109,90 +109,94 @@ const SignUpPage = () => {
             onSubmit={formik.handleSubmit}
             className="space-y-5 w-full"
           >
-              {/* first_name */}
-              <div className="flex flex-col space-y-1">
-                <label
-                  htmlFor="first_name"
-                  className="text-sm text-semibold ml-5 mb-2"
-                >
-                  First name
-                </label>
-                <div
-                  className={`flex items-center h-max flex-row border rounded-full py-1 px-5 m-3 ${
+            {/* first_name */}
+            <div className="flex flex-col space-y-1">
+              <label
+                htmlFor="first_name"
+                className="text-sm text-semibold ml-5 mb-2"
+              >
+                First name
+              </label>
+              <div
+                className={`flex items-center h-max flex-row border rounded-full py-1 px-5 m-3 ${
+                  formik.touched.first_name && formik.errors.first_name
+                    ? "border-rose-500"
+                    : ""
+                }`}
+              >
+                <UserIcon color="#98A2B3" size={20} className="mt-1" />
+                <input
+                  type="text"
+                  className="ml-2 border-0 rounded-full py-1 px-4 text-normal focus:outline-0 w-full"
+                  placeholder="First Name"
+                  {...formik.getFieldProps("first_name")}
+                  name="first_name"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                />
+                <InfoIcon
+                  color="#D92D20"
+                  size={20}
+                  className={`mt-1 ${
                     formik.touched.first_name && formik.errors.first_name
-                      ? "border-rose-500"
-                      : ""
+                      ? "visible"
+                      : "hidden"
                   }`}
-                >
-                  <UserIcon color="#98A2B3" size={20} className="mt-1" />
-                  <input
-                    type="text"
-                    className="ml-2 border-0 rounded-full py-1 px-4 text-normal focus:outline-0 w-full"
-                    placeholder="First Name"
-                    {...formik.getFieldProps("first_name")}
-                    name="first_name"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                  />
-                  <InfoIcon
-                    color="#D92D20"
-                    size={20}
-                    className={`mt-1 ${
-                      formik.touched.first_name && formik.errors.first_name
-                        ? "visible"
-                        : "hidden"
-                    }`}
-                  />
-                </div>
-                {formik.touched.first_name && formik.errors.first_name ? (
+                />
+              </div>
+              {formik.touched.first_name && formik.errors.first_name
+                ? (
                   <div className="error text-red-500 text-sm ml-5 pt-2">
                     {formik.errors.first_name}
                   </div>
-                ) : null}
-              </div>
+                )
+                : null}
+            </div>
 
-              {/* last_name */}
-              <div className="flex flex-col space-y-1">
-                <label
-                  htmlFor="last_name"
-                  className="text-sm text-semibold  ml-5 mb-2"
-                >
-                  Last name
-                </label>
+            {/* last_name */}
+            <div className="flex flex-col space-y-1">
+              <label
+                htmlFor="last_name"
+                className="text-sm text-semibold  ml-5 mb-2"
+              >
+                Last name
+              </label>
 
-                <div
-                  className={`flex items-center border rounded-full py-1 px-5 m-3 ${
+              <div
+                className={`flex items-center border rounded-full py-1 px-5 m-3 ${
+                  formik.touched.last_name && formik.errors.last_name
+                    ? "border-rose-500"
+                    : ""
+                }`}
+              >
+                <UserIcon color="#98A2B3" size={20} className="mt-1" />
+                <input
+                  type="text"
+                  className="ml-2 border-0 w-full rounded-full py-1 px-5 text-normal focus:outline-0 w-full"
+                  placeholder="Last Name"
+                  {...formik.getFieldProps("last_name")}
+                  name="last_name"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                />
+                <InfoIcon
+                  color="#D92D20"
+                  size={20}
+                  className={`mt-1 ${
                     formik.touched.last_name && formik.errors.last_name
-                      ? "border-rose-500"
-                      : ""
+                      ? "visible"
+                      : "hidden"
                   }`}
-                >
-                  <UserIcon color="#98A2B3" size={20} className="mt-1" />
-                  <input
-                    type="text"
-                    className="ml-2 border-0 w-full rounded-full py-1 px-5 text-normal focus:outline-0 w-full"
-                    placeholder="Last Name"
-                    {...formik.getFieldProps("last_name")}
-                    name="last_name"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                  />
-                  <InfoIcon
-                    color="#D92D20"
-                    size={20}
-                    className={`mt-1 ${
-                      formik.touched.last_name && formik.errors.last_name
-                        ? "visible"
-                        : "hidden"
-                    }`}
-                  />
-                </div>
-                {formik.touched.last_name && formik.errors.last_name ? (
+                />
+              </div>
+              {formik.touched.last_name && formik.errors.last_name
+                ? (
                   <div className="error text-red-500 text-sm ml-5 pt-2">
                     {formik.errors.last_name}
                   </div>
-                ) : null}
-              </div>
+                )
+                : null}
+            </div>
             {/* email */}
             <div className="flex flex-col space-y-1">
               <label
@@ -228,11 +232,13 @@ const SignUpPage = () => {
                   }`}
                 />
               </div>
-              {formik.touched.email && formik.errors.email ? (
-                <div className="error text-red-500 ml-5 text-sm pt-2">
-                  {formik.errors.email}
-                </div>
-              ) : null}
+              {formik.touched.email && formik.errors.email
+                ? (
+                  <div className="error text-red-500 ml-5 text-sm pt-2">
+                    {formik.errors.email}
+                  </div>
+                )
+                : null}
             </div>
 
             {/* password */}
@@ -270,11 +276,13 @@ const SignUpPage = () => {
                   }`}
                 />
               </div>
-              {formik.touched.password && formik.errors.password ? (
-                <div className="error text-red-500 ml-5 text-sm pt-2">
-                  {formik.errors.password}
-                </div>
-              ) : null}
+              {formik.touched.password && formik.errors.password
+                ? (
+                  <div className="error text-red-500 ml-5 text-sm pt-2">
+                    {formik.errors.password}
+                  </div>
+                )
+                : null}
             </div>
             {/* button */}
             <div className="px-3">
@@ -282,23 +290,28 @@ const SignUpPage = () => {
                 type="submit"
                 className={cn(
                   "text-white w-full rounded-full hover:bg-[#FF599B]/90",
-                  isLoading ? "bg-[#FF8AB3]" : "bg-primary"
+                  isLoading ? "bg-[#FF8AB3]" : "bg-primary",
                 )}
               >
-                {isLoading ? "Creating user..." : "Sign Up"}
+                {isLoading
+                  ? <Loader2 className="ml-2 h-full w-full animate-spin" />
+                  : "Sign Up"}
               </Button>
             </div>
           </form>
 
           {/* or */}
-          {/* <div className="flex w-full item-center">
+          {
+            /* <div className="flex w-full item-center">
             <div className="border-b border-black mt-3 h-[1px] w-full"></div>
             <div className="mx-2 text-black font-bold">or</div>
             <div className="border-b border-black mt-3 h-[1px] w-full"></div>
-          </div> */}
+          </div> */
+          }
 
           {/* social icons */}
-          {/* <div className="flex flex-row space-x-5">
+          {
+            /* <div className="flex flex-row space-x-5">
             <img
               src={fbLogo}
               alt="facebook-logo"
@@ -309,11 +322,12 @@ const SignUpPage = () => {
               alt="google-logo"
               className="hover:cursor-pointer"
             />
-          </div> */}
+          </div> */
+          }
           <Link
             onClick={scrollToTop}
             href="/auth/signin"
-            className="mt-8 underline text-[#4635E2] text-sm" 
+            className="mt-8 underline text-[#4635E2] text-sm"
           >
             Already have an account?
           </Link>
