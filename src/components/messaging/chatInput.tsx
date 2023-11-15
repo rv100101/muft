@@ -58,7 +58,7 @@ const ChatInput = () => {
 
   useEffect(()=>{
     setInputMessage('');
-  }, [currentSelectedConversation]);
+  }, [currentSelectedConversation, setInputMessage]);
 
   const handleMessageSend = () => {
     if (senderInfo && inputMessageValue.length !== 0) {

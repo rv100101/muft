@@ -1,9 +1,5 @@
-// import { Skeleton } from "@/components/ui/skeleton";
 import { Skeleton } from "@/components/ui/skeleton";
-import axiosQuery from "@/queries/axios";
-// import { useUserStore } from "@/zustand/auth/user";
-import { useDetailsStore } from "@/zustand/profile/about/useDetailsStore";
-import { useQuery } from "@tanstack/react-query";
+import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
 import {
   Drumstick,
   Dumbbell,
@@ -12,6 +8,7 @@ import {
   Ruler,
   User2,
 } from "lucide-react";
+import { useState } from "react";
 
 type FavoriteFood = {
   authorized: boolean;
@@ -19,13 +16,6 @@ type FavoriteFood = {
   favorite_food_id: number;
   favorite_food_name: string;
 };
-
-// type Interest = {
-//   authorized: boolean;
-//   ip_address: string;
-//   interest_id: number;
-//   interest_name: string;
-// };
 
 type BodyType = {
   authorized: boolean;
@@ -35,103 +25,14 @@ type BodyType = {
 };
 
 const DetailsForm = () => {
-  // const { user } = useUserStore();
-
-  const { formData, setFormData, globalEditMode: editMode } = useDetailsStore();
-
+  const isLoading = profileAboutContentStore(state => state.isLoading);
+  const data = profileAboutContentStore(state => state.data);
   const handleInputChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    // event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
-    const { name, value } = event.target;
-    setFormData({ ...formData, [name]: value });
   };
-
-  // const fetchInitialData = async () => {
-  //   try {
-  //     const response1 = await axiosQuery.post(
-  //       "https://muffinfunction.azurewebsites.net/api/GetHeight",
-  //       { member: user?.member_id }
-  //     );
-
-  //     const response2 = await axiosQuery.post(
-  //       "https://muffinfunction.azurewebsites.net/api/GetWeight",
-  //       { member: user?.member_id }
-  //     );
-
-  //     const response3 = await axiosQuery.post(
-  //       "https://muffinfunction.azurewebsites.net/api/GetAppearance",
-  //       { member: user?.member_id }
-  //     );
-
-  //     const response4 = await axiosQuery.post(
-  //       "https://muffinfunction.azurewebsites.net/api/GetFavoriteFood",
-  //       { member: user?.member_id }
-  //     );
-
-  //     const { height } = response1.data[0];
-
-  //     const { weight } = response2.data[0];
-  //     const { body_type_id } = response3.data;
-  //     const { favorite_food_id } = response4.data[0];
-
-  //     setFormData({
-  //       ...formData,
-  //       height: height,
-  //       weight: weight,
-  //       bodyType: body_type_id,
-  //       favoriteFood: favorite_food_id,
-  //     });
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-
-  // fetch select options
-  const fetchFavoriteFood = async () => {
-    const response = await axiosQuery.post(
-      "https://muffinfunction.azurewebsites.net/api/FavoriteFoods",
-      { member: 32 }
-    );
-
-    return response.data;
-  };
-
-  // const fetchInterest = async () => {
-  //   const response = await axiosQuery.post(
-  //     "https://muffinfunction.azurewebsites.net/api/Interests",
-  //     { member: 32 }
-  //   );
-
-  //   return response.data;
-  // };
-
-  const fetchBodyTypes = async () => {
-    const response = await axiosQuery.post(
-      "https://muffinfunction.azurewebsites.net/api/BodyTypes"
-      // { member: 32 }
-    );
-
-    return response.data;
-  };
-
-  // useQuery instances
-  const { data: favoriteFoods } = useQuery(
-    ["favoriteFoods"],
-    fetchFavoriteFood
-  );
-  // const { data: Interests } = useQuery(["Interests"], fetchInterest);
-  const { data: BodyTypes, isLoading } = useQuery(
-    ["BodyTypes"],
-    fetchBodyTypes
-  );
-
-  // const { isLoading: initialDataLoading } = useQuery(
-  //   ["initialData"],
-  //   fetchInitialData
-  // );
-
+  const [editMode] = useState(false);
   if (isLoading) {
-    // return <>Loading...</>;
     return (
       <div className="flex justify-start items-start space-x-4 w-full ml-5">
         <div className="space-y-2">
@@ -159,7 +60,7 @@ const DetailsForm = () => {
             />
             <input
               type="text"
-              value={formData.height}
+              value={data!.height}
               onChange={(e) => handleInputChange(e)}
               autoFocus
               className="outline-0 text-[#FF599B] border border rounded-lg lg:w-3/4 w-full py-3 px-5"
@@ -170,7 +71,7 @@ const DetailsForm = () => {
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
             <Ruler color="#727272" size={20} className="hover:cursor-pointer" />
             <p className="text-[#727272]">
-              {formData.height ? `${formData.height} cm` : "Add Height"}
+              {data!.height ? `${data!.height} cm` : "Add Height"}
             </p>
           </div>
         )}
@@ -193,7 +94,7 @@ const DetailsForm = () => {
             />
             <input
               type="text"
-              value={formData.weight}
+              value={data!.weight}
               onChange={(e) => handleInputChange(e)}
               autoFocus
               className="outline-0 text-[#FF599B] border rounded-lg lg:w-3/4 w-full py-3 px-5"
@@ -208,7 +109,7 @@ const DetailsForm = () => {
               className="hover:cursor-pointer"
             />
             <p className="text-[#727272]">
-              {formData.weight ? `${formData.weight} kg` : "Add Weight"}
+              {data!.weight ? `${data!.weight} kg` : "Add Weight"}
             </p>
           </div>
         )}
@@ -232,7 +133,7 @@ const DetailsForm = () => {
             />
             <select
               // type="text"
-              value={formData.bodyType}
+              value={data!.bodyType}
               onChange={(e) => handleInputChange(e)}
               autoFocus
               className="outline-0 text-[#FF599B] border rounded-lg lg:w-3/4 w-full py-3 px-5"
@@ -253,7 +154,7 @@ const DetailsForm = () => {
             </select>
             {/* <input
               type="text"
-              value={formData.bodyType}
+              value={data!.bodyType}
               onChange={(e) => handleInputChange(e)}
               autoFocus
               className="outline-0 text-[#FF599B]"
@@ -264,7 +165,7 @@ const DetailsForm = () => {
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
             <User2 color="#727272" size={20} className="hover:cursor-pointer" />
             <p className="text-[#727272]">
-              {formData.bodyType ? formData.bodyType : "Add Body Type"}
+              {data!.bodyType ? data!.bodyType : "Add Body Type"}
             </p>
           </div>
         )}
@@ -287,7 +188,7 @@ const DetailsForm = () => {
             />
             <select
               // type="text"
-              value={formData.interest}
+              value={data!.interest}
               onChange={(e) => handleInputChange(e)}
               autoFocus
               className="outline-0 text-[#FF599B]"
@@ -315,7 +216,7 @@ const DetailsForm = () => {
               className="hover:cursor-pointer"
             />
             <p className="text-[#727272]">
-              {formData.interest ? formData.interest : "Add Interests"}
+              {data!.interest ? data!.interest : "Add Interests"}
             </p>
           </div>
         )}
@@ -338,7 +239,7 @@ const DetailsForm = () => {
             />
             <select
               // type="text"
-              value={formData.favoriteFood}
+              value={data!.favoriteFood}
               onChange={(e) => handleInputChange(e)}
               autoFocus
               className="outline-0 text-[#FF599B] border rounded-lg lg:w-3/4 w-full py-3 px-5"
@@ -360,7 +261,7 @@ const DetailsForm = () => {
             </select>
             {/* <input
               type="text"
-              value={formData.favoriteFood}
+              value={data!.favoriteFood}
               onChange={(e) => handleInputChange(e)}
               autoFocus
               className="outline-0 text-[#FF599B]"
@@ -375,8 +276,8 @@ const DetailsForm = () => {
               className="hover:cursor-pointer"
             />
             <p className="text-[#727272]">
-              {formData.favoriteFood
-                ? formData.favoriteFood
+              {data!.favoriteFood
+                ? data!.favoriteFood
                 : "Add Favorite Food"}
             </p>
           </div>

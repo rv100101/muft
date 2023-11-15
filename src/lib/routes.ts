@@ -7,7 +7,6 @@ import NotificationsPage from "@/pages/authenticatedPages/notificationsPage";
 import SignUpPage from "@/pages/auth/signUpPage";
 import SignInPage from "@/pages/auth/signInPage";
 import HomePage from "@/pages/homePage";
-import ProfilePage from "@/pages/authenticatedPages/profilePage";
 import LikesAndFavouritesPage from "@/pages/authenticatedPages/likesAndFavouritesPage";
 import ActivateAccount from "@/pages/authenticatedPages/accountActivationPage";
 
@@ -47,8 +46,8 @@ const pageRoutes = {
     component: NotificationsPage,
   },
   profilePage: {
-    path: "/profile",
-    component: ProfilePage,
+    path: null,
+    component: null,
   },
   signUp: {
     path: "/auth/signup",

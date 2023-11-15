@@ -1,9 +1,5 @@
-// import { Skeleton } from "@/components/ui/skeleton";
 import { Skeleton } from "@/components/ui/skeleton";
-import axiosQuery from "@/queries/axios";
-// import { useUserStore } from "@/zustand/auth/user";
-import { useWorkEducationStore } from "@/zustand/profile/about/useWorkEducationStore";
-import { useQuery } from "@tanstack/react-query";
+import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
 import {
   Briefcase,
   DollarSign,
@@ -12,6 +8,7 @@ import {
   PlusCircle,
   User,
 } from "lucide-react";
+import { useState } from "react";
 
 type Education = {
   authorized: boolean;
@@ -34,106 +31,19 @@ type Income = {
   income_range: string;
 };
 
-// type EmploymentStatus = {
-//   authorized: boolean;
-//   ip_address: string;
-//   employment_status_id: number;
-//   employment_status_name: string;
-// };
-
 const WorkEducationForm = () => {
-  // const { user } = useUserStore();
 
-  const {
-    formData,
-    setFormData,
-    globalEditMode: editMode,
-  } = useWorkEducationStore();
+  const isLoading = profileAboutContentStore(state => state.isLoading);
+  const data = profileAboutContentStore(state => state.data);
 
   const handleInputChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    // event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
-    const { name, value } = event.target;
-    setFormData({ ...formData, [name]: value });
   };
+  
+  const [editMode] = useState(false)
 
-  // select options
-  const fetchEducations = async () => {
-    const response = await axiosQuery.post(
-      "https://muffinfunction.azurewebsites.net/api/Education"
-    );
-
-    return response.data;
-  };
-
-  const fetchOccupations = async () => {
-    const response = await axiosQuery.post(
-      "https://muffinfunction.azurewebsites.net/api/Occupation"
-    );
-
-    return response.data;
-  };
-
-  // const fetchEmploymentStatus = async () => {
-  //   const response = await axiosQuery.post(
-  //     "https://muffinfunction.azurewebsites.net/api/EmploymentStatus"
-  //   );
-
-  //   return response.data;
-  // };
-
-  const fetchIncomes = async () => {
-    const response = await axiosQuery.post(
-      "https://muffinfunction.azurewebsites.net/api/Income"
-    );
-
-    return response.data;
-  };
-
-  // const fetchInitialData = async () => {
-  //   try {
-  //     const response1 = await axiosQuery.post(
-  //       "https://muffinfunction.azurewebsites.net/api/GetBackground",
-  //       { member: user?.member_id }
-  //     );
-
-  //     const response2 = await axiosQuery.post(
-  //       "https://muffinfunction.azurewebsites.net/api/GetEmployment",
-  //       { member: user?.member_id }
-  //     );
-
-  //     const { education_name } = response1.data;
-  //     const { employment_status_name, occupation_title, income_range } =
-  //       response2.data;
-
-  //     setFormData({
-  //       ...formData,
-  //       education: education_name,
-  //       employmentStatus: employment_status_name,
-  //       occupationTitle: occupation_title,
-  //       income: income_range,
-  //     });
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-
-  const { data: educations } = useQuery(["educations"], fetchEducations);
-  const { data: occupations, isLoading: occupationsLoading } = useQuery(
-    ["occupations"],
-    fetchOccupations
-  );
-  const { data: incomes, isLoading: incomeLoading } = useQuery(
-    ["incomes"],
-    fetchIncomes
-  );
-  // const { isLoading: initialDataLoading } = useQuery(
-  //   ["initialData"],
-  //   fetchInitialData
-  // );
-
-  if (incomeLoading || occupationsLoading) {
-    // return <>Loading...</>;
+  if (isLoading) {
     return (
       <div className="flex justify-start items-start space-x-4 w-full ml-5">
         <div className="space-y-2">
@@ -148,54 +58,53 @@ const WorkEducationForm = () => {
       </div>
     );
   }
-  // const { data: employmentStatus } = useQuery(
-  //   ["employmentStatus"],
-  //   fetchEmploymentStatus
-  // );
+
   return (
     <div className="flex flex-col w-full space-y-5 py-5">
       <div className="flex flex-row justify-between w-full px-5">
-        {editMode == true ? (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer w-full items-center ">
-            <PlusCircle
-              color="#FF599B"
-              size={20}
-              className="hover:cursor-pointer"
-            />
-            <select
-              // type="text"
-              value={formData.education}
-              onChange={(e) => handleInputChange(e)}
-              autoFocus
-              className="outline-0 text-[#FF599B] border border rounded-lg lg:w-3/4 w-full py-3 px-5"
-              name="education"
-            >
-              <option value="" disabled>
-                Select Education Attainment
-              </option>
-              {educations &&
-                educations.map((data: Education) => {
-                  const { education_name: education, education_id } = data;
-                  return (
-                    <option value={education_id} key={education_id}>
-                      {education}
-                    </option>
-                  );
-                })}
-            </select>
-          </div>
-        ) : (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
-            <GraduationCap
-              color="#727272"
-              size={20}
-              className="hover:cursor-pointer"
-            />
-            <p className="text-[#727272]">
-              {formData.education ? formData.education : "Add education info"}
-            </p>
-          </div>
-        )}
+        {editMode == true
+          ? (
+            <div className="flex flex-row space-x-2 hover:cursor-pointer w-full items-center ">
+              <PlusCircle
+                color="#FF599B"
+                size={20}
+                className="hover:cursor-pointer"
+              />
+              <select
+                // type="text"
+                value={data!.education}
+                onChange={(e) => handleInputChange(e)}
+                autoFocus
+                className="outline-0 text-[#FF599B] border border rounded-lg lg:w-3/4 w-full py-3 px-5"
+                name="education"
+              >
+                <option value="" disabled>
+                  Select Education Attainment
+                </option>
+                {educations &&
+                  educations.map((data: Education) => {
+                    const { education_name: education, education_id } = data;
+                    return (
+                      <option value={education_id} key={education_id}>
+                        {education}
+                      </option>
+                    );
+                  })}
+              </select>
+            </div>
+          )
+          : (
+            <div className="flex flex-row space-x-2 hover:cursor-pointer">
+              <GraduationCap
+                color="#727272"
+                size={20}
+                className="hover:cursor-pointer"
+              />
+              <p className="text-[#727272]">
+                {data!.education ? data!.education : "Add education info"}
+              </p>
+            </div>
+          )}
         {!editMode && (
           <MoreHorizontal
             color="#727272"
@@ -206,58 +115,38 @@ const WorkEducationForm = () => {
       </div>
 
       <div className="flex flex-row justify-between w-full px-5">
-        {editMode ? (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer w-full items-center ">
-            <PlusCircle
-              color="#FF599B"
-              size={20}
-              className="hover:cursor-pointer"
-            />
-            {/* <select
-              value={formData.employmentStatus}
-              onChange={(e) => handleInputChange(e)}
-              autoFocus
-              className="outline-0 text-[#FF599B] border border rounded-lg lg:w-3/4 w-full py-3 px-5"
-              name="employmentStatus"
-            >
-              <option value="" disabled>
-                Select Employment Status
-              </option>
-              {employmentStatus.map((data: EmploymentStatus) => {
-                const {
-                  employment_status_name: employmentStatus,
-                  employment_status_id,
-                } = data;
-                return (
-                  <option value={employmentStatus} key={employment_status_id}>
-                    {employmentStatus}
-                  </option>
-                );
-              })}
-            </select> */}
-            <input
-              type="text"
-              value={formData.employmentStatus}
-              onChange={(e) => handleInputChange(e)}
-              autoFocus
-              className="outline-0 text-[#FF599B] border border rounded-lg lg:w-3/4 w-full py-3 px-5"
-              name="employmentStatus"
-            />
-          </div>
-        ) : (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
-            <Briefcase
-              color="#727272"
-              size={20}
-              className="hover:cursor-pointer"
-            />
-            <p className="text-[#727272]">
-              {formData.employmentStatus
-                ? formData.employmentStatus
-                : "Add Employment Status"}
-            </p>
-          </div>
-        )}
+        {editMode
+          ? (
+            <div className="flex flex-row space-x-2 hover:cursor-pointer w-full items-center ">
+              <PlusCircle
+                color="#FF599B"
+                size={20}
+                className="hover:cursor-pointer"
+              />
+              <input
+                type="text"
+                value={data!.employmentStatus}
+                onChange={(e) => handleInputChange(e)}
+                autoFocus
+                className="outline-0 text-[#FF599B] border border rounded-lg lg:w-3/4 w-full py-3 px-5"
+                name="employmentStatus"
+              />
+            </div>
+          )
+          : (
+            <div className="flex flex-row space-x-2 hover:cursor-pointer">
+              <Briefcase
+                color="#727272"
+                size={20}
+                className="hover:cursor-pointer"
+              />
+              <p className="text-[#727272]">
+                {data!.employmentStatus
+                  ? data!.employmentStatus
+                  : "Add Employment Status"}
+              </p>
+            </div>
+          )}
         {!editMode && (
           <MoreHorizontal
             color="#727272"
@@ -269,44 +158,51 @@ const WorkEducationForm = () => {
 
       {/* add new */}
       <div className="flex flex-row justify-between w-full px-5">
-        {editMode ? (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer w-full items-center">
-            <PlusCircle
-              color="#FF599B"
-              size={20}
-              className="hover:cursor-pointer"
-            />
-            <select
-              value={formData.occupationTitle}
-              onChange={(e) => handleInputChange(e)}
-              autoFocus
-              className="outline-0 text-[#FF599B] border border rounded-lg lg:w-3/4 w-full py-3 px-5"
-              name="occupationTitle"
-            >
-              <option value="" disabled>
-                Select Occupation
-              </option>
-              {occupations &&
-                occupations.map((data: Occupation) => {
-                  const { occupation_title: occupation, occupation_id } = data;
-                  return (
-                    <option value={occupation_id} key={occupation_id}>
-                      {occupation}
-                    </option>
-                  );
-                })}
-            </select>
-          </div>
-        ) : (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
-            <User color="#727272" size={20} className="hover:cursor-pointer" />
-            <p className="text-[#727272]">
-              {formData.occupationTitle
-                ? formData.occupationTitle
-                : "Add Job Title"}
-            </p>
-          </div>
-        )}
+        {editMode
+          ? (
+            <div className="flex flex-row space-x-2 hover:cursor-pointer w-full items-center">
+              <PlusCircle
+                color="#FF599B"
+                size={20}
+                className="hover:cursor-pointer"
+              />
+              <select
+                value={data!.occupationTitle}
+                onChange={(e) => handleInputChange(e)}
+                autoFocus
+                className="outline-0 text-[#FF599B] border border rounded-lg lg:w-3/4 w-full py-3 px-5"
+                name="occupationTitle"
+              >
+                <option value="" disabled>
+                  Select Occupation
+                </option>
+                {occupations &&
+                  occupations.map((data: Occupation) => {
+                    const { occupation_title: occupation, occupation_id } =
+                      data;
+                    return (
+                      <option value={occupation_id} key={occupation_id}>
+                        {occupation}
+                      </option>
+                    );
+                  })}
+              </select>
+            </div>
+          )
+          : (
+            <div className="flex flex-row space-x-2 hover:cursor-pointer">
+              <User
+                color="#727272"
+                size={20}
+                className="hover:cursor-pointer"
+              />
+              <p className="text-[#727272]">
+                {data!.occupationTitle
+                  ? data!.occupationTitle
+                  : "Add Job Title"}
+              </p>
+            </div>
+          )}
         {!editMode && (
           <MoreHorizontal
             color="#727272"
@@ -317,54 +213,48 @@ const WorkEducationForm = () => {
       </div>
 
       <div className="flex flex-row justify-between w-full px-5">
-        {editMode ? (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer w-full items-center">
-            <PlusCircle
-              color="#FF599B"
-              size={20}
-              className="hover:cursor-pointer"
-            />
-            <select
-              value={formData.income}
-              onChange={(e) => handleInputChange(e)}
-              autoFocus
-              className="outline-0 text-[#FF599B] border border rounded-lg lg:w-3/4 w-full py-3 px-5"
-              name="income"
-            >
-              <option value="" disabled>
-                Select Income Range
-              </option>
-              {incomes &&
-                incomes.map((data: Income) => {
-                  const { income_range: income, income_id } = data;
-                  return (
-                    <option value={income_id} key={income_id}>
-                      {income}
-                    </option>
-                  );
-                })}
-            </select>
-            {/* <input
-              type="text"
-              value={formData.income}
-              onChange={(e) => handleInputChange(e)}
-              autoFocus
-              className="outline-0 text-[#FF599B] border border rounded-lg lg:w-3/4 w-full py-3 px-5"
-              name="income"
-            /> */}
-          </div>
-        ) : (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
-            <DollarSign
-              color="#727272"
-              size={20}
-              className="hover:cursor-pointer"
-            />
-            <p className="text-[#727272]">
-              {formData.income ? formData.income : "Add income range"}
-            </p>
-          </div>
-        )}
+        {editMode
+          ? (
+            <div className="flex flex-row space-x-2 hover:cursor-pointer w-full items-center">
+              <PlusCircle
+                color="#FF599B"
+                size={20}
+                className="hover:cursor-pointer"
+              />
+              <select
+                value={data!.income}
+                onChange={(e) => handleInputChange(e)}
+                autoFocus
+                className="outline-0 text-[#FF599B] border border rounded-lg lg:w-3/4 w-full py-3 px-5"
+                name="income"
+              >
+                <option value="" disabled>
+                  Select Income Range
+                </option>
+                {incomes &&
+                  incomes.map((data: Income) => {
+                    const { income_range: income, income_id } = data;
+                    return (
+                      <option value={income_id} key={income_id}>
+                        {income}
+                      </option>
+                    );
+                  })}
+              </select>
+            </div>
+          )
+          : (
+            <div className="flex flex-row space-x-2 hover:cursor-pointer">
+              <DollarSign
+                color="#727272"
+                size={20}
+                className="hover:cursor-pointer"
+              />
+              <p className="text-[#727272]">
+                {data!.income ? data!.income : "Add income range"}
+              </p>
+            </div>
+          )}
         {!editMode && (
           <MoreHorizontal
             color="#727272"
