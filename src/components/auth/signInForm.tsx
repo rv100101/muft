@@ -7,7 +7,7 @@ import { Link, useLocation } from "wouter";
 import { cn, scrollToTop } from "@/lib/utils";
 import logo from "@/assets/logo.svg";
 import helpIcon from "@/assets/auth/help-icon.png";
-import { MailIcon } from "lucide-react";
+import { Loader2, MailIcon } from "lucide-react";
 import { LockIcon } from "lucide-react";
 import { InfoIcon } from "lucide-react";
 import authQuery from "@/queries/auth";
@@ -56,6 +56,10 @@ const SignInForm = () => {
         setIsLoading(false);
         formik.setFieldError("email", "Invalid credentials");
         formik.setFieldError("password", "Invalid credentials");
+        toast({
+          title: "Invalid username or password.",
+          description: "Please check your credentials and try again",
+        });
         return;
       }
       const profilePhotoData = await authQuery.getProfilePhoto(
@@ -105,13 +109,11 @@ const SignInForm = () => {
           Enter your E-Mail and Password
         </p>
       </div>
-      {/* form */}
       <form
         action="post"
         onSubmit={formik.handleSubmit}
         className="space-y-2 w-full p-2"
       >
-        {/* email */}
         <div className="flex flex-col space-y-1">
           <label htmlFor="email" className="text-xs text-sm text-semibold mb-2">
             Email
@@ -152,7 +154,6 @@ const SignInForm = () => {
             : null}
         </div>
 
-        {/* password */}
         <div className="flex flex-col justify-center space-y-1">
           <label
             htmlFor="password"
@@ -170,7 +171,7 @@ const SignInForm = () => {
             <LockIcon color="#98A2B3" size={20} className="mt-1" />
             <Input
               type="password"
-              className="mx-2 h-8 focus-visible:ring-offset-0 focus-visible:ring-0  border-0 rounded-full py-1 px-5 text-normal focus-visble:outline-0 focus:ring-0 focus-visble:ring-none active:bg-transparent w-full"
+              className="mx-2 text-xs h-8 focus-visible:ring-offset-0 focus-visible:ring-0  border-0 rounded-full py-1 px-5 text-normal focus-visble:outline-0 focus:ring-0 focus-visble:ring-none active:bg-transparent w-full"
               placeholder="Password"
               {...formik.getFieldProps("password")}
               name="password"
@@ -195,17 +196,20 @@ const SignInForm = () => {
             )
             : null}
         </div>
-        {/* button */}
         <div>
           <Button
             disabled={isLoading}
             type="submit"
             className={cn(
-              "text-white mt-4 h-10 w-full rounded-full py-2 hover:bg-[#FF599B]/90",
+              "text-white mt-4 h-10 w-full text-sm rounded-full py-2 hover:bg-[#FF599B]/90",
               isLoading ? "bg-[#FF8AB3]" : "bg-primary",
             )}
           >
-            {isLoading ? "Signing In..." : "Sign In"}
+            {isLoading
+              ? (
+                <Loader2 className="ml-2 h-full w-full animate-spin" />
+              )
+              : "Sign In"}
           </Button>
         </div>
         <div className="w-full">
@@ -216,7 +220,6 @@ const SignInForm = () => {
               }
             }}
           >
-            {/* Dialog here */}
             <DialogTrigger className="float-right underline text-[#4635E2] text-xs">
               Forgot Password?
             </DialogTrigger>

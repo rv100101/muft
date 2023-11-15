@@ -13,6 +13,8 @@ const EnterResetCode = () => {
     state.changeState
   );
   const email = usePasswordResetState((state) => state.email);
+  console.log(email);
+
   const pinForm = useFormik({
     initialValues: { pin: "" },
     validationSchema: Yup.object({
@@ -27,21 +29,22 @@ const EnterResetCode = () => {
     {
       mutationFn: passwordResetQuery.verifyPasswordPin,
       onSuccess: (res) => {
-        if (typeof res.data == "string") {
+        console.log(res);
+        
+        if (!res.data[0].verified) {
           toast({
+            duration: 1500,
             variant: "destructive",
             title: "Please try again",
             description: "Invalid pin",
           });
           return;
         } else {
-          if (res.data.Status === "Succeeded") {
-            changePasswordResetState("CHANGE");
-            toast({
-              title: "Pin verified!",
-              description: "Enter your new password",
-            });
-          }
+          changePasswordResetState("CHANGE");
+          toast({
+            title: "Pin verified!",
+            description: "Enter your new password",
+          });
         }
       },
     },

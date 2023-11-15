@@ -21,6 +21,9 @@ const GallerySection = () => {
   const { user } = useUserStore();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  console.log(user?.member_id);
+  
+
   const handleGalleryUpload = () => {
     // Trigger a click event on the hidden file input
     if (fileInputRef.current) {

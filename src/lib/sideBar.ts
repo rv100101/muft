@@ -18,7 +18,7 @@ const links: SideBarLinks = [
     name: "Notifications",
   },
   {
-    path: "/profile",
+    path:"/profile",
     icon: UserIcon,
     name: "Profile",
   },
