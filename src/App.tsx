@@ -20,7 +20,7 @@ function App() {
         setLocation("/activate");
       }
     }
-  }, [user]);
+  }, [user, setLocation]);
 
   return (
     <div
@@ -29,7 +29,8 @@ function App() {
       )}
     >
       <div className="h-max">
-        {routesWithFooterAndTopNav.includes(location) && (!user || !user.is_active) && <TopNav />}
+        {routesWithFooterAndTopNav.includes(location) &&
+          (!user || !user.is_active) && <TopNav />}
       </div>
       <Route
         path="/"
@@ -79,9 +80,10 @@ function App() {
             component={pageRoutes.notificationsPage.component}
           />
           <Route
-            path={pageRoutes.profilePage.path}
-            component={pageRoutes.profilePage.component}
-          />
+            path={"/profile/:id"}
+          >
+            {(params) => <ViewUser id={params.id} />}
+          </Route>
           <Route
             path={pageRoutes.likesAndFavorites.path}
             component={pageRoutes.likesAndFavorites.component}
@@ -97,7 +99,8 @@ function App() {
           location === pageRoutes.notificationsPage.path) &&
         <Redirect to="/auth/signin" />}
 
-      {routesWithFooterAndTopNav.includes(location) && (!user || !user.is_active) && (
+      {routesWithFooterAndTopNav.includes(location) &&
+        (!user || !user.is_active) && (
         <div className="bg-[#0C1223] h-max">
           <Footer />
         </div>

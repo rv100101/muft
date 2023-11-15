@@ -5,6 +5,7 @@ import { Link, useLocation } from "wouter";
 import { useUserStore } from "@/zustand/auth/user";
 import { cn } from "@/lib/utils";
 import useHomepageViewStore from "@/zustand/home/homepageView";
+import { useQueryClient } from "@tanstack/react-query";
 
 const SideBar = () => {
   const signOut = useUserStore((state) => state.reset);
@@ -12,26 +13,33 @@ const SideBar = () => {
     state.setSelectedProfileId
   );
   const [location] = useLocation();
+  const queryClient = useQueryClient();
+  const user = useUserStore(state => state.user);
   const navLinks = links.map((link, index) => {
     return (
       <li key={index} className="w-full">
         <Link
           className={cn(
             "h-10 px-4 py-2 hover:bg-accent hover:text-accent-foreground flex justify-start items-center space-x-2",
-            location.endsWith(link.path)
+            location.startsWith('/profile') && link.path.startsWith('/profile') ? 
+               "font-semibold bg-accent"
+            : location.endsWith(link.path)
               ? "font-semibold bg-accent"
               : "font-normal",
           )}
-          href={link.path}
+          href={link.name == "Profile" ? `/profile/${user!.member_id}` : link.path}
           onClick={() => {
             if (link.name == "Profile") {
+              console.log('invalidated');
               setSelectedProfileId(null);
+              queryClient.invalidateQueries({queryKey: ['profileHeader']})
             }
           }}
         >
           {
             <link.icon
-              fill={location.endsWith(link.path) ? "black" : "white"}
+              fill={location.startsWith('/profile') && link.path.startsWith('/profile') ? "black" : 
+                location.endsWith(link.path) ? "black" : "white"}
               stroke={link.name == "Home" && location.endsWith(link.path)
                 ? "white"
                 : "black"}
