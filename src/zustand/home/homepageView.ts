@@ -10,6 +10,7 @@ type Member = {
   imagePath: string;
   ip_address: string;
   isLiked: boolean;
+  isFavorite: boolean;
   last_active: string;
   member_id: number;
   member_uuid: string;

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import PostHeader from "@/components/home/postHeader";
 import AuthenticatedLayout from "./authenticatedPages/layout";
 import Suggestions from "@/components/suggestions";
@@ -7,6 +7,26 @@ import { useQuery } from "@tanstack/react-query";
 import membersQuery from "@/queries/home";
 import { Skeleton } from "@/components/ui/skeleton";
 import useHomepageViewStore from "@/zustand/home/homepageView";
+
+type Member = {
+  age: number;
+  authorized: boolean;
+  country_code: string;
+  country_name: string;
+  gallery_uuid: string;
+  gender: string;
+  imagePath: string;
+  ip_address: string;
+  isLiked: boolean;
+  isFavorite: boolean;
+  last_active: string;
+  member_id: number;
+  member_uuid: string;
+  nationality: string;
+  nickname: string;
+  state_name: string;
+  countryName: string;
+};
 
 const HomePage = () => {
   const setSelectedProfileId = useHomepageViewStore(
@@ -19,15 +39,23 @@ const HomePage = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const getMembers = membersQuery.getMembers(69);
   const getMemberLikes = membersQuery.getMemberLikes(69);
+  const getMemberFavorites = membersQuery.getMemberFavorites(69);
 
   const { data: members, isLoading } = useQuery({
     queryKey: ["home-members"],
     queryFn: () => getMembers,
   });
 
+  // likes
   const { data: memberLikes, isLoading: likesLoading } = useQuery({
     queryKey: ["home-members-likes"],
     queryFn: () => getMemberLikes,
+  });
+
+  // favorites
+  const { data: memberFavorites, isLoading: favoritesLoading } = useQuery({
+    queryKey: ["home-members-favs"],
+    queryFn: () => getMemberFavorites,
   });
 
   const handleScroll = () => {
@@ -55,32 +83,48 @@ const HomePage = () => {
 
   useEffect(() => {
     if (memberLikes && members) {
-      const updatedMemberList = members.map((member) => {
-        const memberhasLikes = memberLikes.find(
-          (likes) => member.member_id === likes.member_id
+      const updatedMemberList = members.map((member: Member) => {
+        const memberHasLikes = memberLikes.find(
+          (likes: Member) => member.member_id === likes.member_id
+        );
+
+        const memberHasFavorites = memberFavorites.find(
+          (favs: Member) => member.member_id === favs.member_id
         );
 
         // If a match is found, update the object in the first array
-        if (memberhasLikes) {
+        if (memberHasLikes && memberHasFavorites) {
           return {
             ...member,
             isLiked: true,
+            isFavorite: true,
+          };
+        } else if (!memberHasLikes && memberHasFavorites) {
+          return {
+            ...member,
+            isLiked: false,
+            isFavorite: true,
+          };
+        } else if (memberHasLikes && !memberHasFavorites) {
+          return {
+            ...member,
+            isLiked: true,
+            isFavorite: false,
           };
         } else {
           return {
             ...member,
             isLiked: false,
+            isFavorite: false,
           };
         }
-
-        return member;
       });
       // Update state with the modified array
       setMemberList(updatedMemberList);
     }
-  }, [memberLikes, members, setMemberList]);
+  }, [memberLikes, memberFavorites, members, setMemberList]);
 
-  if (likesLoading) {
+  if (likesLoading || favoritesLoading) {
     return <p>Loading...</p>;
   }
 
@@ -119,6 +163,7 @@ const HomePage = () => {
                       image={post.imagePath}
                       member_id={post.member_id}
                       isLiked={post.isLiked}
+                      isFavorite={post.isFavorite}
                     />
                   );
                 })}

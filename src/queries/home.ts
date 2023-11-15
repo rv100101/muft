@@ -45,26 +45,22 @@ const getMemberLikes = async (memberId: number) => {
   }
 };
 
-const toggleLikeButton = async (memberId: number, likedMemberId: number) => {
-  console.log("this is triggered!"); // return await axiosQuery.post("/Like", {
-  //   member: memberId,
-  //   like: likedMemberId,
-  // });
-  // try {
-  //   const res = await axiosQuery.post(
-  //     "https://muffinfunction.azurewebsites.net/api/Like",
-  //     { member: memberId, liked: likedMemberId }
-  //   );
-  //   return res;
-  // } catch (error) {
-  //   console.log(error);
-  // }
+const getMemberFavorites = async (memberId: number) => {
+  try {
+    const res = await axiosQuery.post(
+      "https://muffinfunction.azurewebsites.net/api/MemberFavorites",
+      { member: memberId }
+    );
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const membersQuery = {
   getMembers,
   getMemberLikes,
-  toggleLikeButton,
+  getMemberFavorites,
 };
 
 export default membersQuery;

@@ -41,7 +41,6 @@ const LikesAndFavouritesPage = () => {
     if (filter === "CURRENT-COUNTRY") {
       match = like.country_name.toLowerCase() === userCountry?.toLowerCase();
     }
-    console.log(match);
 
     return match;
   };
@@ -59,7 +58,7 @@ const LikesAndFavouritesPage = () => {
               src={getImagePath(
                 like.gallery_uuid,
                 like.gender,
-                like.member_uuid,
+                like.member_uuid
               )}
               alt="user"
             />
@@ -68,9 +67,7 @@ const LikesAndFavouritesPage = () => {
             <p className="font-semibold text-xl">
               {like.nickname}, <span className="text-2xl">{like.age}</span>
             </p>
-            <p className="text-sm">
-              {like.country_name}
-            </p>
+            <p className="text-sm">{like.country_name}</p>
           </div>
         </div>
         <button>
@@ -82,12 +79,9 @@ const LikesAndFavouritesPage = () => {
 
   const likes = likesQueryResults.data?.filter(handleFilter).map(handleMap);
 
-  const favourites = favouritesQueryResults.data?.filter(handleFilter).map(
-    handleMap,
-  );
-
-  console.log(likesQueryResults.isLoading);
-  
+  const favourites = favouritesQueryResults.data
+    ?.filter(handleFilter)
+    .map(handleMap);
 
   return (
     <AuthenticatedLayout>
@@ -109,7 +103,7 @@ const LikesAndFavouritesPage = () => {
             }}
             className={cn(
               "w-full rounded-0 bg-transparent text-black border-r border-t rounded-none border-b p-8 text-[#727272] text-lg",
-              tab == "LIKES" && "border-b-4 border-b-[#404040]",
+              tab == "LIKES" && "border-b-4 border-b-[#404040]"
             )}
           >
             LIKES
@@ -120,7 +114,7 @@ const LikesAndFavouritesPage = () => {
             }}
             className={cn(
               "w-full rounded-0 bg-transparent text-black border-r border-t rounded-none border-b text-[#727272] text-lg p-8",
-              tab == "FAVOURITES" && "border-b-4 border-b-[#404040]",
+              tab == "FAVOURITES" && "border-b-4 border-b-[#404040]"
             )}
           >
             FAVOURITES
@@ -144,7 +138,7 @@ const LikesAndFavouritesPage = () => {
               variant={"ghost"}
               className={cn(
                 "rounded-none",
-                filter === "CURRENT-COUNTRY" && "border-b",
+                filter === "CURRENT-COUNTRY" && "border-b"
               )}
             >
               Current Country
@@ -159,7 +153,7 @@ const LikesAndFavouritesPage = () => {
               className="h-4 border-0 focus:outline-0 w-full"
               placeholder="Search"
             />
-            <SearchIcon color="gray"/>
+            <SearchIcon color="gray" />
           </div>
         </div>
         <div className="grid gap-4 py-2 px-8 grid overflow-y-auto grid-cols-2 rows-auto">

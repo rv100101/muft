@@ -16,6 +16,7 @@ type PostItemProps = {
   image: string;
   member_id: number;
   isLiked: boolean;
+  isFavorite: boolean;
 };
 
 const PostItem = ({
@@ -24,25 +25,46 @@ const PostItem = ({
   image,
   member_id,
   isLiked,
+  isFavorite,
 }: PostItemProps) => {
   const [, setLocation] = useLocation();
-  // const [isLike, setLike] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(false);
+  const [likeTriggered, setLikeTriggered] = useState(false);
+  const [favoriteTriggered, setFavoriteTriggered] = useState(false);
+  // const [isFavorite, setIsFavorite] = useState(false);
 
   // const getMemberLikes = membersQuery.toggleLikeButton(69, member_id);
 
   const toggleLike = useMutation({
-    mutationFn: async ({ member, liked }) => {
+    mutationFn: async ({
+      member,
+      liked,
+    }: {
+      member: number;
+      liked: number;
+    }) => {
+      setLikeTriggered((prev) => !prev);
       const res = await axiosQuery.post("/Like", {
         member: member,
         liked: liked,
       });
       return res.data;
     },
-    // Add an onSuccess callback to handle successful mutations
-    onSuccess: (data) => {
-      // Handle success if needed
-      console.log("Mutation was successful", data);
+  });
+
+  const toggleFavorite = useMutation({
+    mutationFn: async ({
+      member,
+      favored,
+    }: {
+      member: number;
+      favored: number;
+    }) => {
+      setFavoriteTriggered((prev) => !prev);
+      const res = await axiosQuery.post("/Favorite", {
+        member: member,
+        favored: favored,
+      });
+      return res.data;
     },
   });
 
@@ -83,7 +105,13 @@ const PostItem = ({
                       <TooltipTrigger>
                         <Heart
                           color="#FF599B"
-                          fill={isLiked ? "#FF599B" : "white"}
+                          fill={
+                            isLiked && !likeTriggered
+                              ? "#FF599B"
+                              : !isLiked && likeTriggered
+                              ? "#FF599B"
+                              : "white"
+                          }
                           strokeWidth={1.5}
                           stroke={!isLiked ? "#FF599B" : "white"}
                           size={50}
@@ -104,11 +132,22 @@ const PostItem = ({
                       <TooltipTrigger>
                         <Star
                           color="#FF599B"
-                          fill={isFavorite ? "#FF599B" : "white"}
+                          fill={
+                            isFavorite && !favoriteTriggered
+                              ? "#FF599B"
+                              : !isFavorite && favoriteTriggered
+                              ? "#FF599B"
+                              : "white"
+                          }
                           stroke={!isFavorite ? "#FF599B" : "white"}
                           size={50}
                           strokeWidth={1.5}
-                          onClick={() => setIsFavorite((prev) => !prev)}
+                          onClick={() =>
+                            toggleFavorite.mutate({
+                              member: 69,
+                              favored: member_id,
+                            })
+                          }
                           className="mt-1 hover:cursor-pointer transition duration-300 ease-in-out mr-4"
                         />
                       </TooltipTrigger>
