@@ -6,25 +6,48 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip";
-import useHomepageViewStore from "@/zustand/home/homepageView";
+import { useLocation } from "wouter";
+import { useMutation } from "@tanstack/react-query";
+import axiosQuery from "@/queries/axios";
 type PostItemProps = {
   nickname: string;
   countryName: string;
   age: number;
   image: string;
   member_id: number;
+  isLiked: boolean;
 };
 
-const PostItem = ({ nickname, age, image, member_id }: PostItemProps) => {
-  const [isLike, setLike] = useState(false);
+const PostItem = ({
+  nickname,
+  age,
+  image,
+  member_id,
+  isLiked,
+}: PostItemProps) => {
+  const [, setLocation] = useLocation();
+  // const [isLike, setLike] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
-  const setHomepageView = useHomepageViewStore((state) => state.setView);
-  const setSelectedProfileId = useHomepageViewStore(
-    (state) => state.setSelectedProfileId
-  );
+
+  // const getMemberLikes = membersQuery.toggleLikeButton(69, member_id);
+
+  const toggleLike = useMutation({
+    mutationFn: async ({ member, liked }) => {
+      const res = await axiosQuery.post("/Like", {
+        member: member,
+        liked: liked,
+      });
+      return res.data;
+    },
+    // Add an onSuccess callback to handle successful mutations
+    onSuccess: (data) => {
+      // Handle success if needed
+      console.log("Mutation was successful", data);
+    },
+  });
+
   const handlePostItemClick = () => {
-    setSelectedProfileId(member_id);
-    setHomepageView("PROFILE");
+    setLocation(`/users/${member_id}`);
   };
 
   return (
@@ -60,11 +83,16 @@ const PostItem = ({ nickname, age, image, member_id }: PostItemProps) => {
                       <TooltipTrigger>
                         <Heart
                           color="#FF599B"
-                          fill={isLike ? "#FF599B" : "white"}
+                          fill={isLiked ? "#FF599B" : "white"}
                           strokeWidth={1.5}
-                          stroke={!isLike ? "#FF599B" : "white"}
+                          stroke={!isLiked ? "#FF599B" : "white"}
                           size={50}
-                          onClick={() => setLike((prev) => !prev)}
+                          onClick={() =>
+                            toggleLike.mutate({
+                              member: 69,
+                              liked: member_id,
+                            })
+                          }
                           className="mt-1 hover:cursor-pointer transition duration-300 ease-in-out"
                         />
                       </TooltipTrigger>
