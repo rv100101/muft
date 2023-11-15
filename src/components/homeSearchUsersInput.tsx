@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useDebounce } from "usehooks-ts";
 import { Button } from "./ui/button";
 import { getImagePath } from "@/lib/images";
-import useHomepageViewStore from "@/zustand/home/homepageView";
+import { useLocation } from "wouter";
 
 type SearchResultItem = {
   member_id: number;
@@ -21,12 +21,14 @@ type SearchResultItem = {
 
 const HomepageSearchInput = () => {
   const [searchResults, setSearchResults] = useState([]);
-  const setSelectedProfileId = useHomepageViewStore((state) =>
-    state.setSelectedProfileId
-  );
+  const [, setLocation] = useLocation();
+
+  const searchClickHandler = (member_id: number) => {
+    setLocation(`/users/${member_id}`);
+  };
   const user = useUserStore((state) => state.user);
   const setSearchValue = useHomepageSearchStore(
-    (state) => state.setSearchValue,
+    (state) => state.setSearchValue
   );
   const searchValue = useHomepageSearchStore((state) => state.value);
   const debouncedSearchValue = useDebounce(searchValue, 300);
@@ -65,23 +67,23 @@ const HomepageSearchInput = () => {
         />
         <SearchIcon />
       </div>
-      {searchResults.length !== 0 &&
-        (
+      {debouncedSearchValue.length > 0 ? (
+        searchResults.length !== 0 ? (
           <div className="mt-1 sticky z-40 h-min max-h-[200px] border rounded-b-md w-[330px] bg-white overflow-y-auto">
             {searchResults.map((result: SearchResultItem) => {
               return (
                 <Button
                   onClick={() => {
-                    setSelectedProfileId(result!.member_id!);
+                    searchClickHandler(result!.member_id!);
                   }}
-                  className="bg-white border-b h-max w-full"
+                  className="bg-white border-b h-max w-full hover:bg-slate-100"
                 >
                   <div className="flex text-black space-x-2 w-full items-center justify-start">
                     <img
                       src={getImagePath(
                         result.gallery_uuid,
                         result.gender,
-                        result.member_uuid,
+                        result.member_uuid
                       )}
                       className="h-12 rounded-full"
                     />
@@ -96,7 +98,16 @@ const HomepageSearchInput = () => {
               );
             })}
           </div>
-        )}
+        ) : (
+          <Button className="bg-white border-b h-max w-full hover:bg-slate-100">
+            <div className="flex text-black space-x-2 w-full items-center justify-start">
+              <div className="w-full text-start">
+                <p>No Records Found</p>
+              </div>
+            </div>
+          </Button>
+        )
+      ) : null}
     </div>
   );
 };
