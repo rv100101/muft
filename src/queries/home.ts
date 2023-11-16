@@ -32,8 +32,35 @@ const getMembers = async (memberId: number) => {
   }
 };
 
+const getMemberLikes = async (memberId: number) => {
+  try {
+    const res = await axiosQuery.post(
+      "https://muffinfunction.azurewebsites.net/api/MemberLikes",
+      { member: memberId }
+    );
+
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getMemberFavorites = async (memberId: number) => {
+  try {
+    const res = await axiosQuery.post(
+      "https://muffinfunction.azurewebsites.net/api/MemberFavorites",
+      { member: memberId }
+    );
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const membersQuery = {
   getMembers,
+  getMemberLikes,
+  getMemberFavorites,
 };
 
 export default membersQuery;
