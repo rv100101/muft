@@ -1,5 +1,4 @@
 import { Codepen, Heart, Star } from "lucide-react";
-import { useState } from "react";
 import {
   Tooltip,
   TooltipContent,
@@ -9,6 +8,7 @@ import {
 import { useLocation } from "wouter";
 import { useMutation } from "@tanstack/react-query";
 import axiosQuery from "@/queries/axios";
+import useHomepageViewStore from "@/zustand/home/homepageView";
 type PostItemProps = {
   nickname: string;
   countryName: string;
@@ -28,12 +28,16 @@ const PostItem = ({
   isFavorite,
 }: PostItemProps) => {
   const [, setLocation] = useLocation();
-  const [likeTriggered, setLikeTriggered] = useState(false);
-  const [favoriteTriggered, setFavoriteTriggered] = useState(false);
-  // const [isFavorite, setIsFavorite] = useState(false);
+  // const [likeTriggered, setLikeTriggered] = useState(false);
+  // const [favoriteTriggered, setFavoriteTriggered] = useState(false);
 
-  // const getMemberLikes = membersQuery.toggleLikeButton(69, member_id);
+  const likeTriggered = useHomepageViewStore((state) => state.isLiked);
+  const favoriteTriggered = useHomepageViewStore((state) => state.isFavored);
+  const toggleLikeIcon = useHomepageViewStore((state) => state.toggleIsLiked);
 
+  const toggleFavoriteIcon = useHomepageViewStore(
+    (state) => state.toggleIsFavored
+  );
   const toggleLike = useMutation({
     mutationFn: async ({
       member,
@@ -42,7 +46,7 @@ const PostItem = ({
       member: number;
       liked: number;
     }) => {
-      setLikeTriggered((prev) => !prev);
+      toggleLikeIcon();
       const res = await axiosQuery.post("/Like", {
         member: member,
         liked: liked,
@@ -59,7 +63,7 @@ const PostItem = ({
       member: number;
       favored: number;
     }) => {
-      setFavoriteTriggered((prev) => !prev);
+      toggleFavoriteIcon();
       const res = await axiosQuery.post("/Favorite", {
         member: member,
         favored: favored,
