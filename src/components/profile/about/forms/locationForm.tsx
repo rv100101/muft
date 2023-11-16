@@ -1,51 +1,32 @@
-import axiosQuery from "@/queries/axios";
-import { useLocationStore } from "@/zustand/profile/about/useLocationStore";
-import { useQuery } from "@tanstack/react-query";
+import { Skeleton } from "@/components/ui/skeleton";
+import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
 import { Briefcase, MapPin, MoreHorizontal, PlusCircle } from "lucide-react";
 import { useState } from "react";
 
-type Country = {
-  authorized: boolean;
-  ip_address: string;
-  country_code: string;
-  country_name: string;
-  region_name: string;
-};
-
 const LocationForm = () => {
-  const [countryInfo, setCountryInfo] = useState([]);
-  const {
-    formData,
-    setFormData,
-    globalEditMode: editMode,
-  } = useLocationStore();
-
+  const isLoading = profileAboutContentStore(state => state.isLoading);
+  const data = profileAboutContentStore(state => state.data);
+  const [editMode] = useState(false);
   const handleInputChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    // event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
-    const { value } = event.target;
-    const foundCountryInfo = countryInfo.find(
-      ({ country_code }) => country_code === value
-    );
-
-    if (foundCountryInfo) {
-      const { region_name } = foundCountryInfo;
-      setFormData({ ...formData, country: value, region: region_name });
-    }
   };
 
-  const fetchCountries = async () => {
-    const response = await axiosQuery.post(
-      "https://muffinfunction.azurewebsites.net/api/Countries"
-      // { member: 32 }
+  if (isLoading) {
+    return (
+      <div className="flex justify-start items-start space-x-4 w-full ml-5">
+        <div className="space-y-2">
+          <Skeleton className="h-6 w-[400px]" />
+          <Skeleton className="h-6 w-[375px]" />
+          <Skeleton className="h-6 w-[375px]" />
+          <Skeleton className="h-6 w-[350px]" />
+          <Skeleton className="h-6 w-[350px]" />
+          <Skeleton className="h-6 w-[300px]" />
+          <Skeleton className="h-6 w-[300px]" />
+        </div>
+      </div>
     );
-    setCountryInfo(response.data);
-
-    return response.data;
-  };
-
-  const { data: Countries } = useQuery(["Countries"], fetchCountries);
-
+  }
   return (
     <div className="flex flex-col w-full space-y-5 py-5">
       <div className="flex flex-row justify-between w-full px-5">
@@ -56,35 +37,6 @@ const LocationForm = () => {
               size={20}
               className="hover:cursor-pointer"
             />
-            <select
-              // type="text"
-              value={formData.country}
-              onChange={(e) => handleInputChange(e)}
-              autoFocus
-              className="outline-0 text-[#FF599B] border rounded-lg lg:w-3/4 w-full py-3 px-5"
-              name="country"
-            >
-              <option value="" disabled>
-                Select Country
-              </option>
-              {Countries &&
-                Countries.map((data: Country) => {
-                  const { country_name, country_code } = data;
-                  return (
-                    <option value={country_code} key={country_code}>
-                      {country_name}
-                    </option>
-                  );
-                })}
-            </select>
-            {/* <input
-              type="text"
-              value={formData.country}
-              onChange={(e) => handleInputChange(e)}
-              autoFocus
-              className="outline-0 text-[#FF599B] border border rounded-lg lg:w-3/4 w-full py-3 px-5"
-              name="country"
-            /> */}
           </div>
         ) : (
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
@@ -94,7 +46,7 @@ const LocationForm = () => {
               className="hover:cursor-pointer"
             />
             <p className="text-[#727272]">
-              {formData.country ? formData.country : "Add country info"}
+              {data!.country ? data!.country : "Add country info"}
             </p>
           </div>
         )}
@@ -117,7 +69,7 @@ const LocationForm = () => {
             />
             <input
               type="text"
-              value={formData.region}
+              value={data!.region}
               onChange={(e) => handleInputChange(e)}
               autoFocus
               className="outline-0 text-[#FF599B] border border rounded-lg lg:w-3/4 w-full py-3 px-5"
@@ -133,7 +85,7 @@ const LocationForm = () => {
               className="hover:cursor-pointer"
             />
             <p className="text-[#727272]">
-              {formData.region ? formData.region : "Add Region Info"}
+              {data!.region ? data!.region : "Add Region Info"}
             </p>
           </div>
         )}
