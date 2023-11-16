@@ -41,7 +41,7 @@ const HomePage = () => {
   const getMemberLikes = membersQuery.getMemberLikes(69);
   const getMemberFavorites = membersQuery.getMemberFavorites(69);
 
-  const { data: members, isLoading } = useQuery({
+  const { data: members, isLoading: retrievingMemberData } = useQuery({
     queryKey: ["home-members"],
     queryFn: () => getMembers,
   });
@@ -125,7 +125,7 @@ const HomePage = () => {
   }, [memberLikes, memberFavorites, members, setMemberList]);
 
   if (likesLoading || favoritesLoading) {
-    return <p>Loading...</p>;
+    return;
   }
 
   return (
@@ -133,18 +133,29 @@ const HomePage = () => {
       <div className="flex justify-center lg:grid-cols-9 grid-cols-1 gap-4">
         <div className="hidden lg:block w-32"></div>
         <div className="col-span-4 w-min overflow-auto no-scrollbar">
-          {isLoading && !memberList ? (
-            <div className="flex justify-center space-x-4 w-full ml-5 mt-10 bg-red">
-              <div className="space-y-2 ">
-                <Skeleton className="h-6 w-[400px]" />
-                <Skeleton className="h-6 w-[375px]" />
-                <Skeleton className="h-6 w-[375px]" />
-                <Skeleton className="h-6 w-[350px]" />
-                <Skeleton className="h-6 w-[350px]" />
-                <Skeleton className="h-6 w-[300px]" />
-                <Skeleton className="h-6 w-[300px]" />
+          {retrievingMemberData ? (
+            <>
+              <div className="flex justify-center space-x-4 w-full ml-5 mt-10">
+                <div className="flex flex-col items-center space-y-2 p-5 border bg-white m-5 w-[350px]">
+                  <Skeleton className="h-[300px] w-full" />
+
+                  <Skeleton className="h-6  w-full" />
+                  <Skeleton className="h-6  w-full" />
+                  <Skeleton className="h-6  w-full" />
+                  <Skeleton className="h-6  w-full" />
+                </div>
               </div>
-            </div>
+              <div className="flex justify-center space-x-4 w-full ml-5 mt-10">
+                <div className="flex flex-col items-center space-y-2 p-5 border bg-white m-5 w-[350px]">
+                  <Skeleton className="h-[300px] w-full" />
+
+                  <Skeleton className="h-6  w-full" />
+                  <Skeleton className="h-6  w-full" />
+                  <Skeleton className="h-6  w-full" />
+                  <Skeleton className="h-6  w-full" />
+                </div>
+              </div>
+            </>
           ) : (
             <>
               <PostHeader />

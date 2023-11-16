@@ -84,6 +84,24 @@ const Suggestions = ({ members }: { members: Member[] }) => {
     },
   });
 
+  // // TODO: add this feature once you are able to retrieve list of block users
+  // const toggleBlock = useMutation({
+  //   mutationFn: async ({
+  //     member,
+  //     blocked,
+  //   }: {
+  //     member: number;
+  //     blocked: number;
+  //   }) => {
+  //     toggleLikeIcon();
+  //     const res = await axiosQuery.post("/Block", {
+  //       member: member,
+  //       blocked: blocked,
+  //     });
+  //     return res.data;
+  //   },
+  // });
+
   const handleSuggestionSelect = (suggestion: Member) => {
     setLocation(`/users/${suggestion.member_id}`);
   };
