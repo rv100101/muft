@@ -1,4 +1,6 @@
 import { releaseNotesData } from "@/lib/releaseNotes";
+import { Undo2 } from "lucide-react";
+import { Link } from "wouter";
 
 const ReleaseNotesPage = () => {
   const notes = releaseNotesData.map((data, index) => (
@@ -19,9 +21,14 @@ const ReleaseNotesPage = () => {
   ));
   return (
     <div className="md:space-y-8 space-y-2 md:my-8 py-4 md:py-8 px-4 md:px-6 md:rounded-2xl bg-secondaryBackground">
-      <h1 className="text-2xl md:text-4xl font-bold text-[#1B2950]">
-        Release Notes
-      </h1>
+      <div className="flex flex-row space-x-5 items-center">
+        <Link href="/">
+          <Undo2 color="#1B2950" size={30} className="hover:cursor-pointer" />
+        </Link>
+        <h1 className="text-2xl md:text-4xl font-bold text-[#1B2950]">
+          Release Notes
+        </h1>
+      </div>
       <div className="space-y-4">{notes}</div>
     </div>
   );

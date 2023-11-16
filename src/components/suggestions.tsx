@@ -41,11 +41,6 @@ type Member = {
 };
 
 const Suggestions = ({ members }: { members: Member[] }) => {
-  // const [likeTriggered, setLikeTriggered] = useState(false);
-  // const [favoriteTriggered, setFavoriteTriggered] = useState(false);
-  // const getMembers = membersQuery.getMembers(69);
-  // const getMemberLikes = membersQuery.getMemberLikes(69);
-  // const getMemberFavorites = membersQuery.getMemberFavorites(69);
   const likeTriggered = useHomepageViewStore((state) => state.isLiked);
   const favoriteTriggered = useHomepageViewStore((state) => state.isFavored);
   const toggleLikeIcon = useHomepageViewStore((state) => state.toggleIsLiked);
@@ -88,22 +83,6 @@ const Suggestions = ({ members }: { members: Member[] }) => {
       return res.data;
     },
   });
-  // const members = useQuery({
-  //   queryKey: ["home-members"],
-  //   queryFn: () => getMembers,
-  // });
-
-  // // likes
-  // const { data: memberLikes, isLoading: likesLoading } = useQuery({
-  //   queryKey: ["home-members-likes"],
-  //   queryFn: () => getMemberLikes,
-  // });
-
-  // // favorites
-  // const { data: memberFavorites, isLoading: favoritesLoading } = useQuery({
-  //   queryKey: ["home-members-favs"],
-  //   queryFn: () => getMemberFavorites,
-  // });
 
   const handleSuggestionSelect = (suggestion: Member) => {
     setLocation(`/users/${suggestion.member_id}`);
@@ -112,10 +91,6 @@ const Suggestions = ({ members }: { members: Member[] }) => {
   const suggestions = members
     ?.slice(0, 3)
     .map((suggestion: Member, index: number) => {
-      console.log(
-        "🚀 ~ file: suggestions.tsx:79 ~ .map ~ suggestion:",
-        suggestion
-      );
       const imagePath = getImagePath(
         suggestion.gallery_uuid,
         suggestion.gender,
