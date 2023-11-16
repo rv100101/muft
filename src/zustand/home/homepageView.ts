@@ -24,12 +24,17 @@ interface ViewState {
   modifiedMemberList: Array<Member>;
   setSelectedProfileId: (id: number | null) => void;
   setModifiedMemberList: (member: Member[]) => void;
+  toggleIsLiked: () => void;
+  toggleIsFavored: () => void;
+  isLiked: boolean;
+  isFavored: boolean;
 }
 const useHomepageViewStore = create<ViewState>()((set) => ({
   selectedProfileId: null,
-  // selectedProfileId: null,
-
+  isLiked: false,
+  isFavored: false,
   modifiedMemberList: [],
+
   setSelectedProfileId: (id) =>
     set(() => ({
       selectedProfileId: id,
@@ -38,6 +43,18 @@ const useHomepageViewStore = create<ViewState>()((set) => ({
   setModifiedMemberList: (members: Member[]) => {
     set(() => ({
       modifiedMemberList: members,
+    }));
+  },
+
+  toggleIsLiked: () => {
+    set((state) => ({
+      isLiked: !state.isLiked,
+    }));
+  },
+
+  toggleIsFavored: () => {
+    set((state) => ({
+      isFavored: !state.isFavored,
     }));
   },
 }));

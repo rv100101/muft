@@ -5,8 +5,8 @@ import {
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { getImagePath } from "@/lib/images";
-import membersQuery from "@/queries/home";
-import { useQuery } from "@tanstack/react-query";
+// import membersQuery from "@/queries/home";
+// import { useQuery } from "@tanstack/react-query";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,32 +16,106 @@ import {
 import { Link, useLocation } from "wouter";
 import { scrollToTop } from "@/lib/utils";
 import HomepageSearchInput from "./homeSearchUsersInput";
+import { useMutation } from "@tanstack/react-query";
+import axiosQuery from "@/queries/axios";
+import useHomepageViewStore from "@/zustand/home/homepageView";
 
 type Member = {
-  nickname: string;
   age: number;
+  authorized: boolean;
+  country_code: string;
   country_name: string;
-  member_uuid: string;
   gallery_uuid: string;
   gender: string;
+  imagePath: string;
+  ip_address: string;
+  isLiked: boolean;
+  isFavorite: boolean;
+  last_active: string;
   member_id: number;
+  member_uuid: string;
+  nationality: string;
+  nickname: string;
+  state_name: string;
+  countryName: string;
 };
 
-const Suggestions = () => {
-  const getMembers = membersQuery.getMembers(69);
+const Suggestions = ({ members }: { members: Member[] }) => {
+  // const [likeTriggered, setLikeTriggered] = useState(false);
+  // const [favoriteTriggered, setFavoriteTriggered] = useState(false);
+  // const getMembers = membersQuery.getMembers(69);
+  // const getMemberLikes = membersQuery.getMemberLikes(69);
+  // const getMemberFavorites = membersQuery.getMemberFavorites(69);
+  const likeTriggered = useHomepageViewStore((state) => state.isLiked);
+  const favoriteTriggered = useHomepageViewStore((state) => state.isFavored);
+  const toggleLikeIcon = useHomepageViewStore((state) => state.toggleIsLiked);
+
+  const toggleFavoriteIcon = useHomepageViewStore(
+    (state) => state.toggleIsFavored
+  );
+
   const [, setLocation] = useLocation();
-  const members = useQuery({
-    queryKey: ["home-members"],
-    queryFn: () => getMembers,
+  const toggleLike = useMutation({
+    mutationFn: async ({
+      member,
+      liked,
+    }: {
+      member: number;
+      liked: number;
+    }) => {
+      toggleLikeIcon();
+      const res = await axiosQuery.post("/Like", {
+        member: member,
+        liked: liked,
+      });
+      return res.data;
+    },
   });
+
+  const toggleFavorite = useMutation({
+    mutationFn: async ({
+      member,
+      favored,
+    }: {
+      member: number;
+      favored: number;
+    }) => {
+      toggleFavoriteIcon();
+      const res = await axiosQuery.post("/Favorite", {
+        member: member,
+        favored: favored,
+      });
+      return res.data;
+    },
+  });
+  // const members = useQuery({
+  //   queryKey: ["home-members"],
+  //   queryFn: () => getMembers,
+  // });
+
+  // // likes
+  // const { data: memberLikes, isLoading: likesLoading } = useQuery({
+  //   queryKey: ["home-members-likes"],
+  //   queryFn: () => getMemberLikes,
+  // });
+
+  // // favorites
+  // const { data: memberFavorites, isLoading: favoritesLoading } = useQuery({
+  //   queryKey: ["home-members-favs"],
+  //   queryFn: () => getMemberFavorites,
+  // });
 
   const handleSuggestionSelect = (suggestion: Member) => {
     setLocation(`/users/${suggestion.member_id}`);
   };
 
-  const suggestions = members.data
+  const suggestions = members
     ?.slice(0, 3)
     .map((suggestion: Member, index: number) => {
+      console.log(
+        "🚀 ~ file: suggestions.tsx:79 ~ .map ~ suggestion:",
+        suggestion
+      );
       const imagePath = getImagePath(
         suggestion.gallery_uuid,
         suggestion.gender,
@@ -69,8 +143,36 @@ const Suggestions = () => {
                 <MoreVerticalIcon height={20} />{" "}
               </DropdownMenuTrigger>
               <DropdownMenuContent className="flex flex-col">
-                <Button variant={"ghost"}>Like</Button>
-                <Button variant={"ghost"}>Favourite</Button>
+                <Button
+                  variant={"ghost"}
+                  onClick={() =>
+                    toggleLike.mutate({
+                      member: 69,
+                      liked: suggestion.member_id,
+                    })
+                  }
+                >
+                  {suggestion.isLiked && !likeTriggered
+                    ? "Unlike"
+                    : !suggestion.isLiked && likeTriggered
+                    ? "Unlike"
+                    : "Like"}
+                </Button>
+                <Button
+                  variant={"ghost"}
+                  onClick={() =>
+                    toggleFavorite.mutate({
+                      member: 69,
+                      favored: suggestion.member_id,
+                    })
+                  }
+                >
+                  {suggestion.isFavorite && !favoriteTriggered
+                    ? "UnFavorite"
+                    : !suggestion.isFavorite && favoriteTriggered
+                    ? "UnFavorite"
+                    : "Favorite"}
+                </Button>
                 <Button variant={"ghost"}>Send Message</Button>
                 <DropdownMenuSeparator />
                 <Button variant={"ghost"}>Block</Button>
