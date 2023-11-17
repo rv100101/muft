@@ -6,9 +6,9 @@ import ProfileHeaderSkeleton from "./profileHeaderSkeleton";
 import { Button } from "../ui/button";
 import { Pencil } from "lucide-react";
 import { useUserStore } from "@/zustand/auth/user";
-import { useState } from "react";
 import { cn } from "@/lib/utils";
 import profileQuery from "@/queries/profile/profileHeader";
+import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
 
 const ProfileHeader = ({ userId }: { userId: string }) => {
   const headerValues = profileHeaderStore((state) => state.headerValues);
@@ -16,7 +16,8 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
   const fetchInitialData = async () =>
     await profileQuery.getProfileHeader(parseInt(userId));
   const user = useUserStore((state) => state.user);
-  const [isEditing, setIsEditing] = useState(false);
+  const toggleEditMode = profileAboutContentStore((state) => state.toggleEditMode);
+  const isEditing = profileAboutContentStore(state => state.editMode);
   const { isLoading, isRefetching } = useQuery(
     {
       queryKey: ["profileHeader", userId],
@@ -61,8 +62,9 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
             </div>
             {userId === user!.member_id.toString() && (
               <Button
+                type={isEditing ? "button" : "submit"}
                 onClick={() => {
-                  setIsEditing(!isEditing);
+                  toggleEditMode()
                 }}
                 className={cn(
                   "text-xs rounded-2xl h-max",

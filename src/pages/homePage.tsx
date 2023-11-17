@@ -88,7 +88,7 @@ const HomePage = () => {
           (likes: Member) => member.member_id === likes.member_id
         );
 
-        const memberHasFavorites = memberFavorites.find(
+        const memberHasFavorites = memberFavorites?.find(
           (favs: Member) => member.member_id === favs.member_id
         );
 
