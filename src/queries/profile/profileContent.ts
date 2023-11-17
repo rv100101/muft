@@ -152,11 +152,121 @@ const fetchLocationInitialData = async (userId: number) => {
   }
 };
 
+// nationality
+// ethnicity
+// maritalStatus
+// languages
+
+const getNationality = async () => {
+  try {
+    const response = await axiosQuery.post("/Nationalities");
+    return response.data;
+  } catch (error) {
+    return [];
+  }
+};
+
+const getEthnicity = async () => {
+  try {
+    const response = await axiosQuery.post("/Ethnicity");
+    return response.data;
+  } catch (error) {
+    return [];
+  }
+};
+
+const getMaritalStatus = async () => {
+  try {
+    const response = await axiosQuery.post("/MaritalStatus");
+    return response.data;
+  } catch (error) {
+    return [];
+  }
+};
+
+const getLanguages = async (userId: number) => {
+  try {
+    const response = await axiosQuery.post("/Languages", {
+      member: userId
+    });
+    return response.data;
+  } catch (error) {
+    return [];
+  }
+};
+
+// education
+// occupations
+// incomes
+
+const getEducation = async () => {
+  try {
+    const response = await axiosQuery.post("/Education");
+    return response.data;
+  } catch (error) {
+    return [];
+  }
+};
+
+
+const getOccupations = async () => {
+  try {
+    const response = await axiosQuery.post("/Occupation");
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    return [];
+  }
+};
+
+const getIncomes = async () => {
+  try {
+    const response = await axiosQuery.post("/Income");
+    return response.data;
+  } catch (error) {
+    return [];
+  }
+};
+
+// favoriteFood
+// bodyTypes
+
+const getFavoriteFoods = async (userId: number) => {
+  try {
+    const response = await axiosQuery.post("/FavoriteFoods", {
+      member: userId
+    });
+    return response.data;
+  } catch (error) {
+    return [];
+  }
+};
+
+const getBodyTypes = async () => {
+  try {
+    const response = await axiosQuery.post("/BodyTypes");
+    return response.data;
+  } catch (error) {
+    return [];
+  }
+};
+
 const profileContentQuery = {
   fetchBasicInfoInitialData,
   fetchWorkEducationInitialData,
   fetchDetailsInitialData,
   fetchLocationInitialData,
+  editOptions: {
+    getNationality,
+    getEthnicity,
+    getMaritalStatus,
+    getLanguages,
+    getOccupations,
+    getEducation,
+    getIncomes,
+    getFavoriteFoods,
+    getBodyTypes
+  },
 };
 
 export default profileContentQuery;
