@@ -1,12 +1,12 @@
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
-import { Briefcase, MapPin} from "lucide-react";
+import { Briefcase, MapPin } from "lucide-react";
 import FormSkeletonLoading from "./formSkeletonLoading";
 import { Input } from "@/components/ui/input";
 
 const LocationForm = () => {
-  const isLoading = profileAboutContentStore(state => state.isLoading);
-  const data = profileAboutContentStore(state => state.data);
-  const editMode = profileAboutContentStore(state => state.editMode);
+  const isLoading = profileAboutContentStore((state) => state.isLoading);
+  const data = profileAboutContentStore((state) => state.data);
+  const editMode = profileAboutContentStore((state) => state.editMode);
   const handleInputChange = (
     // event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -23,55 +23,59 @@ const LocationForm = () => {
   return (
     <div className="flex flex-col w-full space-y-5 py-5">
       <div className="flex flex-row justify-between w-full px-5">
-        {editMode ? (
+        {editMode
+          ? (
             <div className="flex flex-row space-x-2 hover:cursor-pointer w-full items-center">
               <Input
                 type="text"
-                value={''}
+                value={""}
                 onChange={() => handleInputChange()}
                 autoFocus
                 className="outline-0 text-[#FF599B] border rounded-lg w-full py-3 px-5"
                 name="country"
               />
             </div>
-        ) : (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
-            <MapPin
-              color="#727272"
-              size={20}
-              className="hover:cursor-pointer"
-            />
-            <p className="text-[#727272]">
-              {data!.country ? data!.country : "Add country info"}
-            </p>
-          </div>
-        )}
+          )
+          : (
+            <div className="flex flex-row space-x-2 hover:cursor-pointer">
+              <MapPin
+                color="#727272"
+                size={20}
+                className="hover:cursor-pointer"
+              />
+              <p className="text-[#727272]">
+                {data!.country ? data!.country : "Add country info"}
+              </p>
+            </div>
+          )}
       </div>
       <div className="flex flex-row justify-between w-full px-5">
-        {editMode ? (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer w-full items-center">
-            <Input
-              type="text"
-              value={""}
-              onChange={() => handleInputChange()}
-              autoFocus
-              className="outline-0 text-[#FF599B] border border rounded-lg w-full py-3 px-5"
-              name="state"
-              readOnly
-            />
-          </div>
-        ) : (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
-            <Briefcase
-              color="#727272"
-              size={20}
-              className="hover:cursor-pointer"
-            />
-            <p className="text-[#727272]">
-              {data!.region ? data!.region : "Add Region Info"}
-            </p>
-          </div>
-        )}
+        {editMode
+          ? (
+            <div className="flex flex-row space-x-2 hover:cursor-pointer w-full items-center">
+              <Input
+                type="text"
+                value={""}
+                onChange={() => handleInputChange()}
+                autoFocus
+                className="outline-0 text-[#FF599B] border border rounded-lg w-full py-3 px-5"
+                name="state"
+                readOnly
+              />
+            </div>
+          )
+          : (
+            <div className="flex flex-row space-x-2 hover:cursor-pointer">
+              <Briefcase
+                color="#727272"
+                size={20}
+                className="hover:cursor-pointer"
+              />
+              <p className="text-[#727272]">
+                {data!.region ? data!.region : "Add Region Info"}
+              </p>
+            </div>
+          )}
       </div>
     </div>
   );
