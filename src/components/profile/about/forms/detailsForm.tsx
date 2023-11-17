@@ -38,17 +38,19 @@ const DetailsForm = () => {
   }
 
   return (
-    <div className="flex flex-col w-full space-y-5 py-5">
+    <div className="flex flex-col w-full space-y-4">
       <div className="flex flex-row justify-between w-full px-5">
         {editMode
           ? (
-            <div className="flex flex-row space-x-2 hover:cursor-pointer  w-full items-center">
+            <div className="space-y-1 hover:cursor-pointer w-full items-center">
+              <label className="text-primary" htmlFor="height">Height</label>
               <Input
+                placeholder="Enter height"
                 type="text"
                 value={data!.height}
                 onChange={() => handleInputChange()}
                 autoFocus
-                className="outline-0 text-[#FF599B] border border rounded-lg w-full py-3 px-5"
+                className="outline-0 border border rounded-lg w-full py-3 px-5"
                 name="height"
               />
             </div>
@@ -76,13 +78,15 @@ const DetailsForm = () => {
       <div className="flex flex-row justify-between w-full px-5">
         {editMode
           ? (
-            <div className="flex flex-row space-x-2 hover:cursor-pointer w-full items-center">
+            <div className="space-y-1 hover:cursor-pointer w-full items-center">
+              <label className="text-primary" htmlFor="weight">Weight</label>
               <Input
+                placeholder="Enter weight"
                 type="text"
                 value={data!.weight}
                 onChange={() => handleInputChange()}
                 autoFocus
-                className="outline-0 text-[#FF599B] border rounded-lg w-full py-3 px-5"
+                className="outline-0 border rounded-lg w-full py-3 px-5"
                 name="weight"
               />
             </div>
@@ -111,7 +115,8 @@ const DetailsForm = () => {
       <div className="flex flex-row justify-between w-full px-5">
         {editMode
           ? (
-            <div className="flex flex-row items-center space-x-2 hover:cursor-pointer w-full">
+            <div className="space-y-1 hover:cursor-pointer w-full items-center">
+              <label className="text-primary" htmlFor="bodyTypes">Body Type</label>
               <Select name="bodyTypes">
                 <SelectTrigger>
                   <SelectValue
@@ -158,7 +163,8 @@ const DetailsForm = () => {
       <div className="flex flex-row justify-between w-full px-5">
         {editMode
           ? (
-            <div className="flex flex-row items-center space-x-2 hover:cursor-pointer w-full">
+            <div className="space-y-1 hover:cursor-pointer w-full items-center">
+              <label className="text-primary" htmlFor="favoritesFoods">Favorite Food</label>
               <Select name="favoritesFoods">
                 <SelectTrigger>
                   <SelectValue

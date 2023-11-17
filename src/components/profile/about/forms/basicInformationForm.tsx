@@ -48,8 +48,8 @@ const BasicInformationForm = () => {
   }
 
   return (
-    <div className="flex flex-col space-y-2 h-max w-full justify-center items-center">
-      <div className="text-sm space-y-2 justify-between w-full px-5">
+    <div className="flex flex-col space-y-4 h-max w-full justify-center items-center">
+      <div className="text-sm space-y-1 justify-between w-full px-5">
         {editMode
           ? (
             <>
@@ -81,7 +81,8 @@ const BasicInformationForm = () => {
       <div className="flex flex-row justify-between h-max w-full px-5">
         {editMode
           ? (
-            <div className="flex flex-row space-x-2 hover:cursor-pointer w-full items-center">
+            <div className="space-y-1 hover:cursor-pointer w-full items-center">
+              <label className="text-primary" htmlFor="nationality">Nationality</label>
               <Select // value={data?.gender}
                name="nationalities">
                 <SelectTrigger>
@@ -116,14 +117,15 @@ const BasicInformationForm = () => {
       <div className="flex flex-row justify-between w-full px-5">
         {editMode
           ? (
-            <div className="flex flex-row space-x-2 hover:cursor-pointer w-full items-center">
+            <div className="space-y-1 hover:cursor-pointer w-full items-center">
+              <label className="text-primary" htmlFor="birthInfo">Birthday</label>
               <Input
+                name="birthInfo"
                 type="date"
                 value={data?.birthInfo}
                 onChange={() => handleInputChange()}
                 autoFocus
-                className="outline-0 text-[#FF599B] border border rounded-lg w-full py-3 px-5"
-                name="birthInfo"
+                className="outline-0 border border rounded-lg w-full py-3 px-5"
               />
             </div>
           )
@@ -142,16 +144,18 @@ const BasicInformationForm = () => {
       </div>
 
       {/* add new */}
-      <div className="flex flex-row justify-between w-full px-5 hidden">
+      <div className="flex flex-row justify-between w-full px-5">
         {editMode
           ? (
-            <div className="flex flex-row space-x-2 hover:cursor-pointer w-full items-center ">
+            <div className="space-y-1 hover:cursor-pointer w-full items-center">
+              <label className="text-primary" htmlFor="age">Age</label>
               <Input
+                placeholder="Enter age"
                 type="text"
                 value={data?.age}
                 onChange={() => handleInputChange()}
                 autoFocus
-                className="outline-0 text-[#FF599B] border border rounded-lg lg:w-3/4 w-full py-3 px-5"
+                className="outline-0 border border rounded-lg w-full py-3 px-5"
                 name="age"
                 readOnly
               />
@@ -178,7 +182,8 @@ const BasicInformationForm = () => {
       <div className="flex flex-row justify-between w-full px-5">
         {editMode
           ? (
-            <div className="flex flex-row space-x-2 hover:cursor-pointer w-full items-center">
+            <div className="space-y-1 hover:cursor-pointer w-full items-center">
+              <label className="text-primary" htmlFor="ethnicities">Ethnicity</label>
               <Select name="ethnicities">
                 <SelectTrigger>
                   <SelectValue placeholder={ethnicities[0]?.ethnicity_name} />
@@ -216,7 +221,8 @@ const BasicInformationForm = () => {
       <div className="flex flex-row justify-between w-full px-5">
         {editMode
           ? (
-            <div className="flex flex-row space-x-2 hover:cursor-pointer w-full items-center">
+            <div className="space-y-1 hover:cursor-pointer w-full items-center">
+              <label className="text-primary" htmlFor="maritalStatus">Marital Status</label>
               <Select name="maritalStatus">
                 <SelectTrigger>
                   <SelectValue
@@ -257,7 +263,8 @@ const BasicInformationForm = () => {
       <div className="flex flex-row justify-between w-full px-5">
         {editMode
           ? (
-            <div className="flex flex-row space-x-2 hover:cursor-pointer w-full items-center">
+            <div className="space-y-1 hover:cursor-pointer w-full items-center">
+              <label className="text-primary" htmlFor="languages">Languages</label>
               <Select name="languages">
                 <SelectTrigger>
                   <SelectValue
