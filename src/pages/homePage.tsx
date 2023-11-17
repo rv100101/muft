@@ -172,7 +172,7 @@ const HomePage = () => {
           )}
         </div>
         <div className="md:col-span-3 col-span-0 xs:hidden overflow-auto no-scrollbar">
-          <Suggestions />
+          <Suggestions members={memberList} />
         </div>
       </div>
     </AuthenticatedLayout>
