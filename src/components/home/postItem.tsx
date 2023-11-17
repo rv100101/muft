@@ -28,8 +28,6 @@ const PostItem = ({
   isFavorite,
 }: PostItemProps) => {
   const [, setLocation] = useLocation();
-  // const [likeTriggered, setLikeTriggered] = useState(false);
-  // const [favoriteTriggered, setFavoriteTriggered] = useState(false);
 
   const likeTriggered = useHomepageViewStore((state) => state.isLiked);
   const favoriteTriggered = useHomepageViewStore((state) => state.isFavored);

@@ -10,7 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Menu } from "lucide-react";
+import { HelpCircle, Menu } from "lucide-react";
 import { motion } from "framer-motion";
 import { useLocation } from "wouter";
 import { cn } from "@/lib/utils";
@@ -37,7 +37,8 @@ function TopNav() {
   return (
     <motion.nav
       className={cn(
-        "flex items-center justify-between mx-8 md:mx-12 lg:mx-36", location.startsWith('/auth') ? "my-2" : "my-4"
+        "flex items-center justify-between mx-8 md:mx-12 lg:mx-36",
+        location.startsWith("/auth") ? "my-2" : "my-4"
       )}
     >
       <motion.a
@@ -49,7 +50,14 @@ function TopNav() {
         viewport={{ once: true }}
         href="/"
       >
-        <img className={cn("w-24", location.startsWith('/auth') ? "md:w-24" : "md:w-36")} src={logo} alt="muffin-logo" />
+        <img
+          className={cn(
+            "w-24",
+            location.startsWith("/auth") ? "md:w-24" : "md:w-36"
+          )}
+          src={logo}
+          alt="muffin-logo"
+        />
       </motion.a>
       <motion.ul
         variants={container}
@@ -58,10 +66,24 @@ function TopNav() {
         className="space-x-4 hidden md:flex"
       >
         <motion.li variants={motionTop80}>
-          <Button variant={"ghost"} className="font-light">
-            <a className={cn(location.startsWith('/auth') ? "text-xs" : "text-md")} href="https://support.softnames.com/" target="_blank">
-              Contact Us
+          <Button
+            variant={"ghost"}
+            className="font-light flex flex-row space-x-2"
+          >
+            <a
+              className={cn(
+                location.startsWith("/auth") ? "text-xs" : "text-md"
+              )}
+              href="https://support.softnames.com/"
+              target="_blank"
+            >
+              Help
             </a>
+            <HelpCircle
+              color="#1B2950"
+              size={20}
+              className="hover:cursor-pointer"
+            />
           </Button>
         </motion.li>
         {/* <motion.li variants={motionTop80}>

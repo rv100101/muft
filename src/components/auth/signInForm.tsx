@@ -5,8 +5,7 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import ForgotPassword from "@/components/auth/forgotPassword";
 import { Link, useLocation } from "wouter";
 import { cn, scrollToTop } from "@/lib/utils";
-import logo from "@/assets/logo.svg";
-import helpIcon from "@/assets/auth/help-icon.png";
+// import logo from "@/assets/logo.svg";
 import { Loader2, MailIcon } from "lucide-react";
 import { LockIcon } from "lucide-react";
 import { InfoIcon } from "lucide-react";
@@ -30,8 +29,8 @@ const SignInForm = () => {
   const updateUser = useUserStore((state) => state.updateUser);
   const updateUserAvatar = useUserAvatar((state) => state.setAvatar);
   const updateUserCountry = useUserCountry((state) => state.setCountry);
-  const changePasswordResetState = usePasswordResetState((state) =>
-    state.changeState
+  const changePasswordResetState = usePasswordResetState(
+    (state) => state.changeState
   );
   const formik = useFormik({
     initialValues: {
@@ -63,7 +62,7 @@ const SignInForm = () => {
         return;
       }
       const profilePhotoData = await authQuery.getProfilePhoto(
-        signInData.data.member_id,
+        signInData.data.member_id
       );
       const countryData: {
         data: {
@@ -96,7 +95,7 @@ const SignInForm = () => {
 
   return (
     <div className="flex h-max sm:w-max flex-col items-center lg:shadow-xl rounded-lg p-8 lg:border space-y-2">
-      <div className="flex w-full justify-end">
+      {/* <div className="flex w-full justify-end">
         <img
           src={helpIcon}
           alt="help icon"
@@ -108,20 +107,20 @@ const SignInForm = () => {
         <p className="text-[#1B2950] text-xs font-bold text-center">
           Enter your E-Mail and Password
         </p>
-      </div>
+      </div> */}
       <form
         action="post"
         onSubmit={formik.handleSubmit}
-        className="space-y-2 w-full p-2"
+        className="space-y-3 w-full p-2"
       >
-        <div className="flex flex-col space-y-1">
-          <label htmlFor="email" className="text-xs text-sm text-semibold mb-2">
+        <div className="flex flex-col space-y-1 pt-3">
+          {/* <label htmlFor="email" className="text-xs text-sm text-semibold mb-2">
             Email
-          </label>
+          </label> */}
           <div
             className={`flex items-center flex-row border rounded-full h-max py-1 px-5 ${
               formik.touched.email && formik.errors.email
-                ? "border-rose-500"
+                ? "border-rose-500 p-0"
                 : ""
             }`}
           >
@@ -129,7 +128,7 @@ const SignInForm = () => {
             <Input
               type="text"
               className="autofill:bg-yellow-200 mx-2 text-xs h-8 focus-visible:ring-offset-0 focus-visible:ring-0 border-0 rounded-full py-1 px-5 text-normal w-full"
-              placeholder="example@email.com"
+              placeholder="Email Address"
               {...formik.getFieldProps("email")}
               onChange={formik.handleChange}
               name="email"
@@ -145,22 +144,17 @@ const SignInForm = () => {
               }`}
             />
           </div>
-          {formik.touched.email && formik.errors.email
-            ? (
-              <div className="error text-sm text-red-500 ml-5 pt-2">
-                {formik.errors.email}
-              </div>
-            )
-            : null}
+          {formik.touched.email && formik.errors.email ? (
+            <div className="error text-xs text-red-500 ml-5 pt-2">
+              {formik.errors.email}
+            </div>
+          ) : null}
         </div>
 
-        <div className="flex flex-col justify-center space-y-1">
-          <label
-            htmlFor="password"
-            className="text-xs text-semibold mb-2"
-          >
+        <div className="flex flex-col justify-center space-y-1 pt-3">
+          {/* <label htmlFor="password" className="text-xs text-semibold mb-2">
             Password
-          </label>
+          </label> */}
           <div
             className={`flex h-max flex-row border items-center rounded-full py-1 px-5 ${
               formik.touched.password && formik.errors.password
@@ -188,28 +182,26 @@ const SignInForm = () => {
               }`}
             />
           </div>
-          {formik.touched.password && formik.errors.password
-            ? (
-              <div className="error text-red-500 text-sm ml-5 pt-2">
-                {formik.errors.password}
-              </div>
-            )
-            : null}
+          {formik.touched.password && formik.errors.password ? (
+            <div className="error text-red-500 text-xs ml-5 pt-2">
+              {formik.errors.password}
+            </div>
+          ) : null}
         </div>
         <div>
           <Button
             disabled={isLoading}
             type="submit"
             className={cn(
-              "text-white mt-4 h-10 w-full text-sm rounded-full py-2 hover:bg-[#FF599B]/90",
-              isLoading ? "bg-[#FF8AB3]" : "bg-primary",
+              "text-white mt-4 h-10 w-full text-sm rounded-full py-2 hover:bg-[#FF599B]/90 mt-5",
+              isLoading ? "bg-[#FF8AB3]" : "bg-primary"
             )}
           >
-            {isLoading
-              ? (
-                <Loader2 className="ml-2 h-full w-full animate-spin" />
-              )
-              : "Sign In"}
+            {isLoading ? (
+              <Loader2 className="ml-2 h-full w-full animate-spin" />
+            ) : (
+              "Sign In"
+            )}
           </Button>
         </div>
         <div className="w-full">
@@ -220,7 +212,7 @@ const SignInForm = () => {
               }
             }}
           >
-            <DialogTrigger className="float-right underline text-[#4635E2] text-xs">
+            <DialogTrigger className="float-right underline text-[#4635E2] hover:text-[#FF8AB3] text-xs mt-2">
               Forgot Password?
             </DialogTrigger>
             <DialogContent className="w-72 md:w-full">
@@ -234,7 +226,7 @@ const SignInForm = () => {
         <Link
           href="/auth/signup"
           onClick={scrollToTop}
-          className="text-xs underline text-[#4635E2] mt-4"
+          className="text-xs underline text-[#4635E2] mt-4 hover:text-[#FF8AB3]"
         >
           Sign up here
         </Link>
