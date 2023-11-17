@@ -30,6 +30,9 @@ interface ProfileAboutState {
   setIsLoading: (val: boolean) => void;
   refetch: boolean;
   setRefetch: (val: boolean) => void;
+  editMode: boolean;
+  toggleEditMode: () => void;
+  setEditModeFalse: () => void;
 }
 
 const profileAboutContentStore = create<ProfileAboutState>((set) => (
@@ -45,6 +48,13 @@ const profileAboutContentStore = create<ProfileAboutState>((set) => (
     refetch: false,
     setRefetch: (val) => set(()=>({
       isLoading: val
+    })),
+    editMode: false,
+    toggleEditMode: () => set((state) => ({
+      editMode: !state.editMode
+    })),
+    setEditModeFalse: () => set(()=>({
+      editMode: false, 
     })),
   }
 ))
