@@ -16,9 +16,13 @@ import {
 import { Link, useLocation } from "wouter";
 import { scrollToTop } from "@/lib/utils";
 import HomepageSearchInput from "./homeSearchUsersInput";
+
+import { ReactNode, useState } from "react";
+
 import { useMutation } from "@tanstack/react-query";
 import axiosQuery from "@/queries/axios";
 import useHomepageViewStore from "@/zustand/home/homepageView";
+
 
 type Member = {
   age: number;
@@ -55,6 +59,80 @@ const Suggestions = ({ members }: { members: Member[] }) => {
   );
 
   const [, setLocation] = useLocation();
+  const [suggestions, setSuggestions] = useState<ReactNode[]>([]);
+  useQuery({
+    queryKey: ["home-members"],
+    queryFn: () => getMembers,
+    onSuccess: (data) => {
+      const results = data
+        ?.slice(0, 3)
+        .map((suggestion: Member, index: number) => {
+          const imagePath = getImagePath(
+            suggestion.gallery_uuid,
+            suggestion.gender,
+            suggestion.member_uuid,
+          );
+
+          return (
+            <li
+              key={index}
+              className="h-36 border rounded-xl lg:h-340 w-full relative"
+            >
+              <img
+                className="h-full w-full rounded-xl "
+                src=""
+                alt="cover photo"
+                onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+                  const imgElement = e.target as HTMLImageElement;
+                  imgElement.src =
+                    "https://dummyimage.com/600x400/f6f6f6/f6f6f6.png";
+                }}
+              />
+              <div className="absolute top-0 right-0 mt-2 mr-1">
+                <DropdownMenu>
+                  <DropdownMenuTrigger>
+                    <MoreVerticalIcon height={20} />
+                    {" "}
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="flex flex-col">
+                    <Button variant={"ghost"}>Like</Button>
+                    <Button variant={"ghost"}>Favourite</Button>
+                    <Button variant={"ghost"}>Send Message</Button>
+                    <DropdownMenuSeparator />
+                    <Button variant={"ghost"}>Block</Button>
+                    <Button variant={"destructive"}>Report</Button>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+              <div className="absolute flex bottom-4 left-4 z-20 space-x-2 items-end hover:underline">
+                <img
+                  onClick={() => handleSuggestionSelect(suggestion)}
+                  className="rounded-full h-10 lg:h-16 ring-2 ring-primary hover:cursor-pointer"
+                  src={imagePath}
+                  alt="user avatar"
+                />
+                <div>
+                  <p
+                    onClick={() => handleSuggestionSelect(suggestion)}
+                    className="font-semibold text-xs  hover:cursor-pointer lg:text-lg"
+                  >
+                    {suggestion.nickname},{" "}
+                    <span className="font-bold">{suggestion.age}</span>
+                  </p>
+                  <p
+                    onClick={() => handleSuggestionSelect(suggestion)}
+                    className="text-xs lg:text-md  hover:cursor-pointer"
+                  >
+                    {suggestion.country_name}
+                  </p>
+                </div>
+              </div>
+            </li>
+          );
+        });
+
+      setSuggestions(results);
+      
   const toggleLike = useMutation({
     mutationFn: async ({
       member,
@@ -88,124 +166,10 @@ const Suggestions = ({ members }: { members: Member[] }) => {
       return res.data;
     },
   });
-  // const members = useQuery({
-  //   queryKey: ["home-members"],
-  //   queryFn: () => getMembers,
-  // });
-
-  // // likes
-  // const { data: memberLikes, isLoading: likesLoading } = useQuery({
-  //   queryKey: ["home-members-likes"],
-  //   queryFn: () => getMemberLikes,
-  // });
-
-  // // favorites
-  // const { data: memberFavorites, isLoading: favoritesLoading } = useQuery({
-  //   queryKey: ["home-members-favs"],
-  //   queryFn: () => getMemberFavorites,
-  // });
 
   const handleSuggestionSelect = (suggestion: Member) => {
     setLocation(`/users/${suggestion.member_id}`);
   };
-
-  const suggestions = members
-    ?.slice(0, 3)
-    .map((suggestion: Member, index: number) => {
-      console.log(
-        "🚀 ~ file: suggestions.tsx:79 ~ .map ~ suggestion:",
-        suggestion
-      );
-      const imagePath = getImagePath(
-        suggestion.gallery_uuid,
-        suggestion.gender,
-        suggestion.member_uuid
-      );
-
-      return (
-        <li
-          key={index}
-          className="h-36 border rounded-xl lg:h-340 w-full relative"
-        >
-          <img
-            className="h-full w-full rounded-xl "
-            src=""
-            alt="cover photo"
-            onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-              const imgElement = e.target as HTMLImageElement;
-              imgElement.src =
-                "https://dummyimage.com/600x400/f6f6f6/f6f6f6.png";
-            }}
-          />
-          <div className="absolute top-0 right-0 mt-2 mr-1">
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <MoreVerticalIcon height={20} />{" "}
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="flex flex-col">
-                <Button
-                  variant={"ghost"}
-                  onClick={() =>
-                    toggleLike.mutate({
-                      member: 69,
-                      liked: suggestion.member_id,
-                    })
-                  }
-                >
-                  {suggestion.isLiked && !likeTriggered
-                    ? "Unlike"
-                    : !suggestion.isLiked && likeTriggered
-                    ? "Unlike"
-                    : "Like"}
-                </Button>
-                <Button
-                  variant={"ghost"}
-                  onClick={() =>
-                    toggleFavorite.mutate({
-                      member: 69,
-                      favored: suggestion.member_id,
-                    })
-                  }
-                >
-                  {suggestion.isFavorite && !favoriteTriggered
-                    ? "UnFavorite"
-                    : !suggestion.isFavorite && favoriteTriggered
-                    ? "UnFavorite"
-                    : "Favorite"}
-                </Button>
-                <Button variant={"ghost"}>Send Message</Button>
-                <DropdownMenuSeparator />
-                <Button variant={"ghost"}>Block</Button>
-                <Button variant={"destructive"}>Report</Button>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-          <div className="absolute flex bottom-4 left-4 z-20 space-x-2 items-end hover:underline">
-            <img
-              onClick={() => handleSuggestionSelect(suggestion)}
-              className="rounded-full h-10 lg:h-16 ring-2 ring-primary hover:cursor-pointer"
-              src={imagePath}
-              alt="user avatar"
-            />
-            <div>
-              <p
-                onClick={() => handleSuggestionSelect(suggestion)}
-                className="font-semibold text-xs  hover:cursor-pointer lg:text-lg"
-              >
-                {suggestion.nickname},{" "}
-                <span className="font-bold">{suggestion.age}</span>
-              </p>
-              <p
-                onClick={() => handleSuggestionSelect(suggestion)}
-                className="text-xs lg:text-md  hover:cursor-pointer"
-              >
-                {suggestion.country_name}
-              </p>
-            </div>
-          </div>
-        </li>
-      );
-    });
 
   return (
     <div className="w-[380px] h-5/6 pt-4 px-5 lg:p-4 sm:flex flex-col hidden ">
