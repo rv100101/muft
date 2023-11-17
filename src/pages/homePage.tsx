@@ -47,13 +47,13 @@ const HomePage = () => {
   });
 
   // likes
-  const { data: memberLikes, isLoading: likesLoading } = useQuery({
+  const { data: memberLikes } = useQuery({
     queryKey: ["home-members-likes"],
     queryFn: () => getMemberLikes,
   });
 
   // favorites
-  const { data: memberFavorites, isLoading: favoritesLoading } = useQuery({
+  const { data: memberFavorites } = useQuery({
     queryKey: ["home-members-favs"],
     queryFn: () => getMemberFavorites,
   });
@@ -82,7 +82,7 @@ const HomePage = () => {
   });
 
   useEffect(() => {
-    if (memberLikes && members) {
+    if (!retrievingMemberData && memberLikes && memberFavorites && members) {
       const updatedMemberList = members.map((member: Member) => {
         const memberHasLikes = memberLikes.find(
           (likes: Member) => member.member_id === likes.member_id
@@ -122,11 +122,17 @@ const HomePage = () => {
       // Update state with the modified array
       setMemberList(updatedMemberList);
     }
-  }, [memberLikes, memberFavorites, members, setMemberList]);
+  }, [
+    memberLikes,
+    memberFavorites,
+    members,
+    setMemberList,
+    retrievingMemberData,
+  ]);
 
-  if (likesLoading || favoritesLoading) {
-    return;
-  }
+  // if (likesLoading || favoritesLoading) {
+  //   return <></>;
+  // }
 
   return (
     <AuthenticatedLayout>
@@ -135,26 +141,21 @@ const HomePage = () => {
         <div className="col-span-4 w-min overflow-auto no-scrollbar">
           {retrievingMemberData ? (
             <>
-              <div className="flex justify-center space-x-4 w-full ml-5 mt-10">
-                <div className="flex flex-col items-center space-y-2 p-5 border bg-white m-5 w-[350px]">
-                  <Skeleton className="h-[300px] w-full" />
-
-                  <Skeleton className="h-6  w-full" />
-                  <Skeleton className="h-6  w-full" />
-                  <Skeleton className="h-6  w-full" />
-                  <Skeleton className="h-6  w-full" />
-                </div>
+              {/* <div className="flex flex-col justify-center space-x-4 w-full ml-5 mt-10 border w-full"> */}
+              <div className="flex flex-col items-start space-y-2 p-5 border bg-white m-5 w-[470px]">
+                <Skeleton className="h-[50px] w-full" />
               </div>
-              <div className="flex justify-center space-x-4 w-full ml-5 mt-10">
-                <div className="flex flex-col items-center space-y-2 p-5 border bg-white m-5 w-[350px]">
-                  <Skeleton className="h-[300px] w-full" />
 
-                  <Skeleton className="h-6  w-full" />
-                  <Skeleton className="h-6  w-full" />
-                  <Skeleton className="h-6  w-full" />
-                  <Skeleton className="h-6  w-full" />
-                </div>
+              <div className="flex flex-col items-center space-y-2 p-5 border bg-white m-5 w-[470px]">
+                <Skeleton className="h-[500px] w-full" />
               </div>
+              <div className="flex flex-col items-center space-y-2 p-5 border bg-white m-5 w-[470px]">
+                <Skeleton className="h-[300px] w-full" />
+              </div>
+              <div className="flex flex-col items-center space-y-2 p-5 border bg-white m-5 w-[470px]">
+                <Skeleton className="h-[300px] w-full" />
+              </div>
+              {/* </div> */}
             </>
           ) : (
             <>
