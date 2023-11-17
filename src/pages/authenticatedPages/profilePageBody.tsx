@@ -1,13 +1,6 @@
 import AboutAccordion from "@/components/profile/about/aboutAccordion";
 import ProfileHeader from "@/components/profile/profileHeader";
 import ProfileTopNav from "@/components/profile/profileTopNav";
-import { Formik } from "formik";
-// import * as Yup from "yup";
-// const ProfileSchema = Yup.object().shape(
-//   {
-//     gender: Yup.string().required(),
-//   },
-// );
 
 const ProfilePageBody = ({ userId }: { userId: string }) => {
    return (
