@@ -24,16 +24,20 @@ import {
 import FormSkeletonLoading from "./formSkeletonLoading";
 import { Input } from "@/components/ui/input";
 import selectOptions from "@/zustand/profile/selectData/selectOptions";
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { useFormContext } from "react-hook-form";
 
 const BasicInformationForm = () => {
-  const handleInputChange = (
-    // event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
-  ) => {
-  };
+  const { control } = useFormContext();
   const { nationalities, ethnicities, maritalStatus, languages } =
     selectOptions();
-  const { editMode, isLoading } = profileAboutContentStore();
-  const data = profileAboutContentStore((state) => state.data);
+  const { data, editMode, isLoading } = profileAboutContentStore();
 
   if (
     isLoading
@@ -52,18 +56,36 @@ const BasicInformationForm = () => {
       <div className="text-sm space-y-1 justify-between w-full px-5">
         {editMode
           ? (
-            <>
-              <label className="text-primary" htmlFor="gender">Gender</label>
-              <Select name="gender">
-                <SelectTrigger id="gender">
-                  <SelectValue placeholder="Select gender" />
-                </SelectTrigger>
-                <SelectContent id="gender">
-                  <SelectItem value="M">Male</SelectItem>
-                  <SelectItem value="F">Female</SelectItem>
-                </SelectContent>
-              </Select>
-            </>
+            <div className="flex flex-col space-y-1">
+              <FormField
+                name="gender"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-primary" htmlFor="gender">
+                      Gender
+                    </FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue
+                            placeholder={"Select gender"}
+                          />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value={"M"}>Male</SelectItem>
+                        <SelectItem value={"F"}>Female</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+                control={control}
+              />
+            </div>
           )
           : (
             <div className="flex flex-row space-x-2 hover:cursor-pointer">
@@ -81,20 +103,23 @@ const BasicInformationForm = () => {
       <div className="flex flex-row justify-between h-max w-full px-5">
         {editMode
           ? (
-            <div className="space-y-1 hover:cursor-pointer w-full items-center">
-              <label className="text-primary" htmlFor="nationality">Nationality</label>
-              <Select // value={data?.gender}
-               name="nationalities">
+            <div className="flex flex-col space-y-1 w-full">
+              <label className="text-primary" htmlFor="gender">
+                Nationality
+              </label>
+              <Select>
                 <SelectTrigger>
-                  <SelectValue placeholder={nationalities[0]?.nationality} />
+                  <SelectValue
+                    placeholder={"Select nationality"}
+                  />
                 </SelectTrigger>
-                <SelectContent className="h-72">
+                <SelectContent>
                   {nationalities.map((data: Nationality, index: number) => {
                     const { nationality, country_code } = data;
                     return (
-                      <SelectItem value={country_code} key={index}>
+                      <option value={country_code} key={index}>
                         {nationality}
-                      </SelectItem>
+                      </option>
                     );
                   })}
                 </SelectContent>
@@ -118,12 +143,11 @@ const BasicInformationForm = () => {
         {editMode
           ? (
             <div className="space-y-1 hover:cursor-pointer w-full items-center">
-              <label className="text-primary" htmlFor="birthInfo">Birthday</label>
+              <label className="text-primary" htmlFor="birthInfo">
+                Birthday
+              </label>
               <Input
-                name="birthInfo"
                 type="date"
-                value={data?.birthInfo}
-                onChange={() => handleInputChange()}
                 autoFocus
                 className="outline-0 border border rounded-lg w-full py-3 px-5"
               />
@@ -152,7 +176,6 @@ const BasicInformationForm = () => {
               <Input
                 placeholder="Enter age"
                 type="text"
-                value={data?.age}
                 onChange={() => handleInputChange()}
                 autoFocus
                 className="outline-0 border border rounded-lg w-full py-3 px-5"
@@ -183,17 +206,21 @@ const BasicInformationForm = () => {
         {editMode
           ? (
             <div className="space-y-1 hover:cursor-pointer w-full items-center">
-              <label className="text-primary" htmlFor="ethnicities">Ethnicity</label>
-              <Select name="ethnicities">
+              <label className="text-primary" htmlFor="ethnicity">
+                Ethnicity
+              </label>
+              <Select>
                 <SelectTrigger>
-                  <SelectValue placeholder={ethnicities[0]?.ethnicity_name} />
+                  <SelectValue
+                    placeholder={"Select ethnicity"}
+                  />
                 </SelectTrigger>
                 <SelectContent>
                   {ethnicities.map((data: Ethnicity) => {
                     const { ethnicity_name, ethnicity_id } = data;
                     return (
                       <SelectItem
-                        value={ethnicity_id.toString()}
+                        value={ethnicity_name}
                         key={ethnicity_id}
                       >
                         {ethnicity_name}
@@ -202,6 +229,7 @@ const BasicInformationForm = () => {
                   })}
                 </SelectContent>
               </Select>
+              );
             </div>
           )
           : (
@@ -222,7 +250,9 @@ const BasicInformationForm = () => {
         {editMode
           ? (
             <div className="space-y-1 hover:cursor-pointer w-full items-center">
-              <label className="text-primary" htmlFor="maritalStatus">Marital Status</label>
+              <label className="text-primary" htmlFor="maritalStatus">
+                Marital Status
+              </label>
               <Select name="maritalStatus">
                 <SelectTrigger>
                   <SelectValue
@@ -264,7 +294,9 @@ const BasicInformationForm = () => {
         {editMode
           ? (
             <div className="space-y-1 hover:cursor-pointer w-full items-center">
-              <label className="text-primary" htmlFor="languages">Languages</label>
+              <label className="text-primary" htmlFor="languages">
+                Languages
+              </label>
               <Select name="languages">
                 <SelectTrigger>
                   <SelectValue

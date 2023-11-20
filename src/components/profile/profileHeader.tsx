@@ -16,8 +16,10 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
   const fetchInitialData = async () =>
     await profileQuery.getProfileHeader(parseInt(userId));
   const user = useUserStore((state) => state.user);
-  const toggleEditMode = profileAboutContentStore((state) => state.toggleEditMode);
-  const isEditing = profileAboutContentStore(state => state.editMode);
+  const toggleEditMode = profileAboutContentStore((state) =>
+    state.toggleEditMode
+  );
+  const isEditing = profileAboutContentStore((state) => state.editMode);
   const { isLoading, isRefetching } = useQuery(
     {
       queryKey: ["profileHeader", userId],
@@ -64,7 +66,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
               <Button
                 type={isEditing ? "button" : "submit"}
                 onClick={() => {
-                  toggleEditMode()
+                  toggleEditMode();
                 }}
                 className={cn(
                   "text-xs rounded-2xl h-max",

@@ -12,7 +12,7 @@ import profileAboutContentStore, {
 } from "@/zustand/profile/profileAboutStore";
 import { useEffect } from "react";
 import {
-    BodyType,
+  BodyType,
   Education,
   Ethnicity,
   FavoriteFood,
