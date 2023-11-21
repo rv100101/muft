@@ -11,15 +11,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useFormContext } from "react-hook-form";
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 
 const WorkEducationForm = () => {
-  const isLoading = profileAboutContentStore((state) => state.isLoading);
-  const data = profileAboutContentStore((state) => state.data);
-  const editMode = profileAboutContentStore((state) => state.editMode);
-  const handleInputChange = (
-    // event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
-  ) => {
-  };
+  const { control } = useFormContext();
+  const { data, editMode, isLoading } = profileAboutContentStore();
 
   const { educations, incomes, occupations } = selectOptions();
 
@@ -33,33 +36,56 @@ const WorkEducationForm = () => {
     );
   }
 
+  console.log(educations);
+
   return (
     <div className="flex flex-col w-full space-y-4">
       <div className="flex flex-row justify-between w-full px-5">
         {editMode == true
           ? (
             <div className="space-y-1 hover:cursor-pointer w-full items-center">
-              <label className="text-primary" htmlFor="education">Education</label>
-              <Select // value={data?.gender}
-               name="education">
-                <SelectTrigger>
-                  <SelectValue placeholder={educations[0]?.education_name} />
-                </SelectTrigger>
-                <SelectContent>
-                  {educations &&
-                    educations.map((data: Education) => {
-                      const { education_name: education, education_id } = data;
-                      return (
-                        <SelectItem
-                          value={education_id.toString()}
-                          key={education_id}
-                        >
-                          {education}
-                        </SelectItem>
-                      );
-                    })}
-                </SelectContent>
-              </Select>
+              <FormField
+                name="education"
+                render={({ field }) => {
+                  return (
+                    <FormItem>
+                      <FormLabel className="text-primary" htmlFor="education">
+                        Education
+                      </FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue
+                              placeholder={"Select education"}
+                            />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {educations &&
+                            educations.map((data: Education, index) => {
+                              const {
+                                education_name: education,
+                              } = data;
+                              return (
+                                <SelectItem
+                                  value={education}
+                                  key={index}
+                                >
+                                  {education}
+                                </SelectItem>
+                              );
+                            })}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  );
+                }}
+                control={control}
+              />
             </div>
           )
           : (
@@ -80,15 +106,27 @@ const WorkEducationForm = () => {
         {editMode
           ? (
             <div className="space-y-1 hover:cursor-pointer w-full items-center">
-              <label className="text-primary" htmlFor="employmentStatus">Employment Status</label>
-              <Input
-                placeholder="Enter employment status"
-                type="text"
-                value={data!.employmentStatus}
-                onChange={() => handleInputChange()}
-                autoFocus
-                className="outline-0 border border rounded-lg w-full py-3 px-5"
+              <FormField
                 name="employmentStatus"
+                render={({ field }) => {
+                  return (
+                    <FormItem>
+                      <FormLabel
+                        className="text-primary"
+                        htmlFor="employmentStatus"
+                      >
+                        Employment Status
+                      </FormLabel>
+                      <Input
+                        placeholder="Enter employment status"
+                        defaultValue={field.value}
+                        onChange={field.onChange}
+                        className="outline-0 border border rounded-lg w-full py-3 px-5"
+                      />
+                      <FormMessage />
+                    </FormItem>
+                  );
+                }}
               />
             </div>
           )
@@ -113,28 +151,53 @@ const WorkEducationForm = () => {
         {editMode
           ? (
             <div className="space-y-1 hover:cursor-pointer w-full items-center">
-              <label className="text-primary" htmlFor="occupations">Occupation</label>
-              <Select // value={data?.gender}
-               name="occupations">
-                <SelectTrigger>
-                  <SelectValue placeholder={occupations[0]?.occupation_title} />
-                </SelectTrigger>
-                <SelectContent>
-                  {occupations &&
-                    occupations.map((data: Occupation) => {
-                      const { occupation_title: occupation, occupation_id } =
-                        data;
-
-                      console.log(occupation);
-
-                      return (
-                        <SelectItem value={occupation} key={occupation_id}>
-                          {occupation}
-                        </SelectItem>
-                      );
-                    })}
-                </SelectContent>
-              </Select>
+              <FormField
+                name="occupationTitle"
+                render={({ field }) => {
+                  console.log(field);
+                  return (
+                    <FormItem>
+                      <FormLabel
+                        className="text-primary"
+                        htmlFor="occupationTitle"
+                      >
+                        Occupation
+                      </FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue
+                              placeholder={"Select occupation"}
+                            />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {occupations &&
+                            occupations.map((data: Occupation, index) => {
+                              const {
+                                occupation_title: occupation,
+                                occupation_id
+                              } = data;
+                              return (
+                                <SelectItem
+                                  value={occupation}
+                                  key={index}
+                                >
+                                  {occupation}
+                                </SelectItem>
+                              );
+                            })}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  );
+                }}
+                control={control}
+              />
             </div>
           )
           : (
@@ -157,26 +220,49 @@ const WorkEducationForm = () => {
         {editMode
           ? (
             <div className="space-y-1 hover:cursor-pointer w-full items-center">
-              <label className="text-primary" htmlFor="incomes">Income</label>
-              <Select name="incomes">
-                <SelectTrigger>
-                  <SelectValue placeholder={incomes[0]?.income_range} />
-                </SelectTrigger>
-                <SelectContent>
-                  {incomes &&
-                    incomes.map((data: Income) => {
-                      const { income_range: income, income_id } = data;
-                      return (
-                        <SelectItem
-                          value={income_id.toString()}
-                          key={income_id}
-                        >
-                          {income}
-                        </SelectItem>
-                      );
-                    })}
-                </SelectContent>
-              </Select>
+              <FormField
+                name="income"
+                render={({ field }) => {
+                  return (
+                    <FormItem>
+                      <FormLabel
+                        className="text-primary"
+                        htmlFor="income"
+                      >
+                        Income Range
+                      </FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue
+                              placeholder={"Select Income Range"}
+                            />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {incomes &&
+                            incomes.map((data: Income, index) => {
+                              const { income_range: income } = data;
+                              return (
+                                <SelectItem
+                                  value={income}
+                                  key={index}
+                                >
+                                  {income}
+                                </SelectItem>
+                              );
+                            })}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  );
+                }}
+                control={control}
+              />
             </div>
           )
           : (

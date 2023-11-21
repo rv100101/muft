@@ -1,20 +1,78 @@
 import AboutAccordion from "@/components/profile/about/aboutAccordion";
 import ProfileHeader from "@/components/profile/profileHeader";
 import ProfileTopNav from "@/components/profile/profileTopNav";
-import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
 import { FormProvider, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
+import { ProfileFormSchema } from "@/lib/profileZodSchema";
+import { useEffect } from "react";
+import { useUserStore } from "@/zustand/auth/user";
+import profileHeaderStore from "@/zustand/profile/profileHeaderStore";
+
 const ProfilePageBody = ({ userId }: { userId: string }) => {
-  const data = profileAboutContentStore((state) => state.data);
+  const toggleEditMode = profileAboutContentStore((state) =>
+    state.toggleEditMode
+  );
+  const headerValues = profileHeaderStore((state) => state.headerValues);
+  const { data } = profileAboutContentStore();
+  const emptyDefault = {
+    gender: "",
+    nationality: "",
+    birthInfo: "",
+    age: 18,
+    ethnicity: "",
+    maritalStatus: "",
+    language: "",
+    education: "",
+    employmentStatus: "",
+    occupationTitle: "",
+    income: "",
+    height: "",
+    weight: "",
+    bodyType: "",
+    favoriteFood: "",
+    country: "",
+    region: "",
+    nickname: "",
+  };
+
   console.log(data);
   
   const methods = useForm({
-    defaultValues: {
-      ...data
-    },
+    defaultValues: emptyDefault,
+    resolver: zodResolver(ProfileFormSchema),
   });
-  console.log(methods);
-  
+
+  useEffect(
+    () => {
+      if (data && headerValues) {
+        methods.reset({
+          gender: data.gender,
+          nationality: data.nationality,
+          birthInfo: data.birthInfo,
+          age: parseInt(data.age),
+          ethnicity: data.ethnicity,
+          maritalStatus: data.maritalStatus,
+          language: data.language,
+          education: data.education,
+          employmentStatus: data.employmentStatus,
+          occupationTitle: data.occupationTitle,
+          income: data.income,
+          height: data.height,
+          weight: data.weight,
+          bodyType: data.bodyType,
+          favoriteFood: data.favoriteFood,
+          country: data.country,
+          region: data.region,
+          nickname: headerValues?.nickname ?? ''
+        });
+      }
+    },
+    [data, headerValues],
+  );
+
   const onSubmit = (data: any) => {
+    toggleEditMode();
     console.log(data);
   };
   return (
