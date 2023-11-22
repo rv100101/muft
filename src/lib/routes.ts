@@ -19,7 +19,7 @@ export const routesWithFooterAndTopNav = [
   "/auth/signup",
   "/auth/signin",
   "/activate",
-  '/about'
+  // '/about'
 ];
 
 const pageRoutes = {

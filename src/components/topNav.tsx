@@ -90,21 +90,23 @@ function TopNav() {
             </motion.li>
           </div>
         )}
-        {!location.startsWith('/auth') &&
+        {!location.startsWith("/auth") &&
           (
             <div className="flex">
-              <motion.li variants={motionTop80}>
-                <Button variant={"ghost"} className="font-light">
-                  <a
-                    className={cn(
-                      "text-md",
-                    )}
-                    href="/about"
-                  >
-                    About Us
-                  </a>
-                </Button>
-              </motion.li>
+              {
+                // <motion.li variants={motionTop80}>
+                //   <Button variant={"ghost"} className="font-light">
+                //     <a
+                //       className={cn(
+                //         "text-md",
+                //       )}
+                //       href="/about"
+                //     >
+                //       About Us
+                //     </a>
+                //   </Button>
+                // </motion.li>
+              }
               <motion.li variants={motionTop80}>
                 <Button variant={"ghost"} className="font-light">
                   <a
