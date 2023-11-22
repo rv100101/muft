@@ -12,7 +12,6 @@ import { useEffect } from "react";
 function App() {
   const [location, setLocation] = useLocation();
   const user = useUserStore((state) => state.user);
-  console.log(user);
 
   useEffect(() => {
     if (user) {
@@ -68,12 +67,11 @@ function App() {
         />
       </div>
 
-      {
-        // <Route
-        //         path={pageRoutes.about.path}
-        //         component={pageRoutes.about.component}
-        //       />
-      }
+      <Route
+        path={pageRoutes.about.path}
+        component={pageRoutes.about.component}
+      />
+
       {/* Authenticated routes */}
       {user && (
         <>
