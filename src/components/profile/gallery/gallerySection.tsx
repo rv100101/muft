@@ -98,10 +98,6 @@ const GallerySection = () => {
     }
   };
 
-  if (isLoading) {
-    return <></>;
-  }
-
   return (
     <div className="flex flex-col">
       <div className="flex justify-between items-center p-5 border-b space-x-5">
@@ -170,7 +166,7 @@ const GallerySection = () => {
         </div>
       </div>
       {/* photos section */}
-      <div className="grid grid-cols-3 gap-5 p-5 flex overflow-y-scroll">
+      {!isLoading && <div className="grid grid-cols-3 gap-5 p-5 flex overflow-y-scroll">
         {gallery.map((pic: Gallery, index: number) => {
           const path = getImagePath(pic.gallery_uuid, null, pic.member_uuid);
           return (
@@ -186,7 +182,7 @@ const GallerySection = () => {
             />
           );
         })}
-      </div>
+      </div>}
     </div>
   );
 };
