@@ -15,7 +15,7 @@ const AboutPage = () => {
           About us
         </h1>
       </div>
-      <div id="section1" className="relative w-full mt-16 flex">
+      <div id="section1" className="relative w-full mt-8 flex">
         <div className="relative flex flex-row bg-secondaryBackground pl-56 py-16 pr-16 space-y-4 w-3/5 rounded-r-lg">
           <div className="w-3/4 space-y-4 text-[#1B2950]">
             <h2 className="font-semibold text-3xl">
@@ -38,11 +38,11 @@ const AboutPage = () => {
           </div>
           <img
             src={AboutPlaceholderImg}
-            className="absolute right-0 top-8 -right-96 h-96"
+            className="absolute top-10 -right-96 h-96"
           />
         </div>
       </div>
-      <div id="section2" className="bg-primary mt-16 text-center p-32">
+      <div id="section2" className="bg-primary mt-8 text-center p-32">
         <h3 className="font-semibold text-3xl text-white">
           Medium length section heading goes here
         </h3>
@@ -83,7 +83,7 @@ const AboutPage = () => {
         </div>
       </div>
       <div id="FAQ" className="flex justify-center">
-        <div className="mt-16 w-1/2 text-[#1B2950] flex flex-col items-center space-y-8">
+        <div className="mt-8 w-1/2 text-[#1B2950] flex flex-col items-center space-y-8">
           <p className="text-4xl font-semibold text-[#1B2950]">FAQs</p>{" "}
           <p className="text-[#1B2950]">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
