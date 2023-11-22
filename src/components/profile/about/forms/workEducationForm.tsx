@@ -179,7 +179,6 @@ const WorkEducationForm = () => {
                             occupations.map((data: Occupation, index) => {
                               const {
                                 occupation_title: occupation,
-                                occupation_id
                               } = data;
                               return (
                                 <SelectItem
