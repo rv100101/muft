@@ -22,7 +22,6 @@ const GallerySection = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   console.log(user?.member_id);
-  
 
   const handleGalleryUpload = () => {
     // Trigger a click event on the hidden file input
@@ -82,7 +81,7 @@ const GallerySection = () => {
           formData,
           {
             headers: { "Content-Type": "multipart/form-data" },
-          }
+          },
         );
 
         if (response.status === 200) {
@@ -104,8 +103,8 @@ const GallerySection = () => {
   }
 
   return (
-    <div className="h-full">
-      <div className="flex flex-row justify-between items-center p-5 border-b space-x-5">
+    <div className="flex flex-col">
+      <div className="flex justify-between items-center p-5 border-b space-x-5">
         <p className="uppercase font-[500] text-[#727272] no-underline">
           Gallery
         </p>
@@ -153,14 +152,17 @@ const GallerySection = () => {
               className="flex items-center rounded-full bg-[#fe599b] px-3 py-2 space-x-2 hover:cursor-pointer"
             >
               <div className="text-white">
-                {isUploading ? (
-                  <div className="flex flex-row text-xs items-center space-x-5 text-green">
-                    Uploading
-                    <div className="ml-5 w-5 h-5 border-t-4 border-pink-500 border-solid rounded-full animate-spin"></div>
-                  </div>
-                ) : (
-                  "Upload"
-                )}
+                {isUploading
+                  ? (
+                    <div className="flex flex-row text-xs items-center space-x-5 text-green">
+                      Uploading
+                      <div className="ml-5 w-5 h-5 border-t-4 border-pink-500 border-solid rounded-full animate-spin">
+                      </div>
+                    </div>
+                  )
+                  : (
+                    "Upload"
+                  )}
               </div>
               {/* <p className="text-white">Upload</p> */}
             </div>
@@ -168,10 +170,9 @@ const GallerySection = () => {
         </div>
       </div>
       {/* photos section */}
-      <div className="grid grid-cols-3 gap-5 p-5 h-full lg:overflow-hidden overflow-scroll">
+      <div className="grid grid-cols-3 gap-5 p-5 flex overflow-y-scroll">
         {gallery.map((pic: Gallery, index: number) => {
           const path = getImagePath(pic.gallery_uuid, null, pic.member_uuid);
-
           return (
             <img
               key={index} // Don't forget to add a unique key to each image

@@ -12,7 +12,7 @@ import profileAboutContentStore, {
 } from "@/zustand/profile/profileAboutStore";
 import { useEffect } from "react";
 import {
-    BodyType,
+  BodyType,
   Education,
   Ethnicity,
   FavoriteFood,
@@ -39,7 +39,7 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
     setIncomes,
     setOccupations,
     setFavoriteFoods,
-    setBodyTypes
+    setBodyTypes,
   } = selectOptions();
 
   const [location] = useLocation();
@@ -88,7 +88,7 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
   });
 
   useQuery({
-    queryFn: () => profileContentQuery.editOptions.getLanguages(userId),
+    queryFn: () => profileContentQuery.editOptions.getLanguages(),
     refetchInterval: Infinity,
     queryKey: ["languages"],
     onSuccess: (data: Languages[]) => {
@@ -142,7 +142,7 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
   });
 
   useQuery({
-    queryFn: () => profileContentQuery.editOptions.getFavoriteFoods(userId),
+    queryFn: () => profileContentQuery.editOptions.getFavoriteFoods(),
     refetchInterval: Infinity,
     queryKey: ["favoriteFoods"],
     onSuccess: (data: FavoriteFood[]) => {

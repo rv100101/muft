@@ -1,3 +1,4 @@
+import { ProfileAbout } from "@/zustand/profile/profileAboutStore";
 import axiosQuery from "../axios";
 
 const removeNull = (obj: Record<string, string>): Record<string, string> => {
@@ -26,14 +27,18 @@ const fetchBasicInfoInitialData = async (userId: number) => {
       "/GetMaritalStatus",
       { member: userId },
     );
-    const languages = await axiosQuery.post(
+    const languages: { data: [] } = await axiosQuery.post(
       "/GetLanguages",
       { member: userId },
     );
+
     const { gender, nationality, date_of_birth, age } = basic.data;
     const { religion_name, ethnicity_name } = background.data;
     const { marital_status_name } = maritalStatus.data;
-    const { language_name } = languages.data[0];
+    const { language_code, language_name } =
+      languages.data[languages.data.length - 1];
+    console.log(language_name);
+
     const formattedDate = new Date(date_of_birth).toLocaleDateString(
       "en-US",
       {
@@ -50,7 +55,7 @@ const fetchBasicInfoInitialData = async (userId: number) => {
       religion: religion_name,
       ethnicity: ethnicity_name,
       maritalStatus: marital_status_name,
-      language: language_name,
+      language: language_code,
     };
     basicInformation = removeNull(basicInformation);
     return basicInformation;
@@ -184,10 +189,10 @@ const getMaritalStatus = async () => {
   }
 };
 
-const getLanguages = async (userId: number) => {
+const getLanguages = async () => {
   try {
     const response = await axiosQuery.post("/Languages", {
-      member: userId
+      member: 999,
     });
     return response.data;
   } catch (error) {
@@ -207,7 +212,6 @@ const getEducation = async () => {
     return [];
   }
 };
-
 
 const getOccupations = async () => {
   try {
@@ -231,10 +235,10 @@ const getIncomes = async () => {
 // favoriteFood
 // bodyTypes
 
-const getFavoriteFoods = async (userId: number) => {
+const getFavoriteFoods = async () => {
   try {
     const response = await axiosQuery.post("/FavoriteFoods", {
-      member: userId
+      member: 9999,
     });
     return response.data;
   } catch (error) {
@@ -248,6 +252,151 @@ const getBodyTypes = async () => {
     return response.data;
   } catch (error) {
     return [];
+  }
+};
+
+const saveInformation = async (profile: ProfileAbout, userId: number) => {
+  try {
+    // gender
+    if (profile.gender) {
+      await axiosQuery.post("/SaveGender", {
+        gender: profile.gender,
+        member: userId,
+      });
+    }
+
+    // nationality
+    if (profile.nationality) {
+      await axiosQuery.post("/SaveNationality", {
+        nationality: profile.nationality,
+        member: userId,
+      });
+    }
+
+    // birthInfo
+    if (profile.birthInfo) {
+      await axiosQuery.post("/SaveBirthInfo", {
+        birthday: profile.birthInfo,
+        member: userId,
+      });
+    }
+
+    // age
+    if (profile.age) {
+      await axiosQuery.post("/SaveAge", {
+        age: profile.age,
+        member: userId,
+      });
+    }
+
+    // ethnicity
+    if (profile.ethnicity) {
+      await axiosQuery.post("/SaveEthnicity", {
+        ethnicity: profile.ethnicity,
+        member: userId,
+      });
+    }
+
+    // maritalStatus
+    if (profile.maritalStatus) {
+      await axiosQuery.post("/SaveMaritalStatus", {
+        maritalStatus: profile.maritalStatus,
+        member: userId,
+      });
+    }
+
+    // language
+    if (profile.language) {
+      await axiosQuery.post("/SaveLanguage", {
+        language: profile.language,
+        member: userId,
+      });
+    }
+
+    // education
+    if (profile.education) {
+      await axiosQuery.post("/SaveEducation", {
+        education: profile.education,
+        member: userId,
+      });
+    }
+
+    // employmentStatus
+    if (profile.employmentStatus) {
+      await axiosQuery.post("/SaveEmploymentStatus", {
+        employmentStatus: profile.employmentStatus,
+        member: userId,
+      });
+    }
+
+    // // occupation
+    // if (profile.occupationId) {
+    //   await axiosQuery.post("/SaveOccupation", {
+    //     occupation: profile.occupationId,
+    //     member: userId,
+    //   });
+    // }
+    //
+    // // income_range
+    // if (profile.income_range) {
+    //   await axiosQuery.post("/SaveIncomeRange", {
+    //     income_range: profile.income_range,
+    //     member: userId,
+    //   });
+    // }
+
+    // height
+    if (profile.height) {
+      await axiosQuery.post("/SaveHeight", {
+        height: profile.height,
+        member: userId,
+      });
+    }
+
+    // weight
+    if (profile.weight) {
+      await axiosQuery.post("/SaveWeight", {
+        weight: profile.weight,
+        member: userId,
+      });
+    }
+
+    // bodyType
+    if (profile.bodyType) {
+      await axiosQuery.post("/SaveBodyType", {
+        bodyType: profile.bodyType,
+        member: userId,
+      });
+    }
+
+    // favoriteFood
+    if (profile.favoriteFood) {
+      await axiosQuery.post("/SaveFavoriteFood", {
+        favoriteFood: profile.favoriteFood,
+        member: userId,
+      });
+    }
+
+    // country
+    if (profile.country) {
+      await axiosQuery.post("/SaveCountry", {
+        country: profile.country,
+        member: userId,
+      });
+    }
+
+    // state
+    if (profile.state) {
+      await axiosQuery.post("/SaveState", {
+        state: profile.state,
+        member: userId,
+      });
+    }
+
+    // Add similar blocks for other fields...
+  } catch (error) {
+    // Handle errors
+    console.error("Error saving information:", error);
   }
 };
 
@@ -265,7 +414,7 @@ const profileContentQuery = {
     getEducation,
     getIncomes,
     getFavoriteFoods,
-    getBodyTypes
+    getBodyTypes,
   },
 };
 
