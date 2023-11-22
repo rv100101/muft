@@ -16,7 +16,7 @@ const AboutPage = () => {
         </h1>
       </div>
       <div id="section1" className="relative w-full mt-8 flex">
-        <div className="relative flex flex-row bg-secondaryBackground pl-56 py-16 pr-16 space-y-4 w-3/5 rounded-r-lg">
+        <div className="relative flex flex-row justify-center items-center bg-secondaryBackground pl-56 py-16 pr-16 space-y-4 w-3/5 rounded-r-lg">
           <div className="w-3/4 space-y-4 text-[#1B2950]">
             <h2 className="font-semibold text-3xl">
               Medium length section heading goes here
@@ -38,7 +38,7 @@ const AboutPage = () => {
           </div>
           <img
             src={AboutPlaceholderImg}
-            className="absolute top-10 -right-96 h-96"
+            className="absolute h-96 -right-"
           />
         </div>
       </div>
