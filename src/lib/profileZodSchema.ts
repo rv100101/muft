@@ -1,4 +1,26 @@
 import * as z from "zod";
+
+export const emptyDefault = {
+  gender: "",
+  nationality: "",
+  birthInfo: "",
+  age: 18,
+  ethnicity: "",
+  maritalStatus: "",
+  language: "",
+  education: "",
+  employmentStatus: "",
+  occupationTitle: "",
+  income: "",
+  height: "",
+  weight: "",
+  bodyType: "",
+  favoriteFood: "",
+  country: "",
+  region: "",
+  nickname: "",
+};
+
 export const ProfileFormSchema = z.object({
   gender: z
     .string({
@@ -60,11 +82,11 @@ export const ProfileFormSchema = z.object({
   }),
   country: z.string({
     required_error: "Country is required",
-  }).min(2, {message: "Invalid country"}),
+  }).min(2, { message: "Invalid country" }),
   region: z.string({
     required_error: "Region is required",
-  }).min(2, {message: "Invalid region"}),
+  }).min(2, { message: "Invalid region" }),
   nickname: z.string({
-    required_error: "Occupation information is required",
-  }),
+    required_error: "Nickname required",
+  }).min(2, { message: "Nickname is required" }),
 });

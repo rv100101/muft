@@ -31,7 +31,6 @@ const fetchBasicInfoInitialData = async (userId: number) => {
       "/GetLanguages",
       { member: userId },
     );
-    console.log(languages);
 
     const { gender, nationality, date_of_birth, age } = basic.data;
     const { religion_name, ethnicity_name } = background.data;

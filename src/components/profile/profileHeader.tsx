@@ -12,6 +12,8 @@ import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
 import { FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
 import { useState } from "react";
+import { useFormContext } from "react-hook-form";
+import { toast } from "../ui/use-toast";
 
 const ProfileHeader = ({ userId }: { userId: string }) => {
   const [showCamera, setShowCamera] = useState(false);
@@ -23,6 +25,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
   const toggleEditMode = profileAboutContentStore((state) =>
     state.toggleEditMode
   );
+  const { formState } = useFormContext();
   const isEditing = profileAboutContentStore((state) => state.editMode);
   const { isLoading, isRefetching } = useQuery(
     {
@@ -95,7 +98,6 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                           onChange={field.onChange}
                           className="outline-0 border border rounded-lg w-full py-3 px-5"
                           name="nickname"
-                          readOnly
                         />
                         <FormMessage />
                       </FormItem>
@@ -116,6 +118,17 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                   {isEditing && (
                     <div className="flex space-x-2">
                       <Button
+                        onClick={() => {
+                          if (isEditing && !formState.isValid) {
+                            toast({
+                              variant: "destructive",
+                              title: "Cannot save your profile",
+                              description:
+                                "Please make sure all the required fields are satisfied.",
+                              duration: 1.5,
+                            });
+                          }
+                        }}
                         type={"submit"}
                         className={cn(
                           "text-xs rounded-2xl h-max",

@@ -53,7 +53,7 @@ const BasicInformationForm = () => {
   }
 
   return (
-    <div className="flex flex-col space-y-4 h-max w-full justify-center items-center">
+    <div className="flex overflow-y-auto min-h-max max-h-[360px] flex-col space-y-4 w-full">
       <div className="text-sm space-y-1 justify-between w-full px-5">
         {editMode
           ? (
