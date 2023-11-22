@@ -1,4 +1,3 @@
- 
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -20,6 +19,16 @@ import HomepageSearchInput from "./homeSearchUsersInput";
 import { useMutation } from "@tanstack/react-query";
 import axiosQuery from "@/queries/axios";
 import useHomepageViewStore from "@/zustand/home/homepageView";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./ui/dialog";
+import { Input } from "./ui/input";
 
 type Member = {
   age: number;
@@ -42,6 +51,9 @@ type Member = {
 };
 
 const Suggestions = ({ members }: { members: Member[] }) => {
+  const dialogOpen = useHomepageViewStore((state) => state.dialogOpen);
+
+  const toggleDialog = useHomepageViewStore((state) => state.toggleDialog);
   const likeTriggered = useHomepageViewStore((state) => state.isLiked);
   const favoriteTriggered = useHomepageViewStore((state) => state.isFavored);
   const toggleLikeIcon = useHomepageViewStore((state) => state.toggleIsLiked);
@@ -132,47 +144,81 @@ const Suggestions = ({ members }: { members: Member[] }) => {
             }}
           />
           <div className="absolute top-0 right-0 mt-2 mr-1">
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <MoreVerticalIcon height={20} />{" "}
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="flex flex-col">
-                <Button
-                  variant={"ghost"}
-                  onClick={() =>
-                    toggleLike.mutate({
-                      member: 69,
-                      liked: suggestion.member_id,
-                    })
-                  }
-                >
-                  {suggestion.isLiked && !likeTriggered
-                    ? "Unlike"
-                    : !suggestion.isLiked && likeTriggered
-                    ? "Unlike"
-                    : "Like"}
-                </Button>
-                <Button
-                  variant={"ghost"}
-                  onClick={() =>
-                    toggleFavorite.mutate({
-                      member: 69,
-                      favored: suggestion.member_id,
-                    })
-                  }
-                >
-                  {suggestion.isFavorite && !favoriteTriggered
-                    ? "UnFavorite"
-                    : !suggestion.isFavorite && favoriteTriggered
-                    ? "UnFavorite"
-                    : "Favorite"}
-                </Button>
-                <Button variant={"ghost"}>Send Message</Button>
-                <DropdownMenuSeparator />
-                <Button variant={"ghost"}>Block</Button>
-                <Button variant={"destructive"}>Report</Button>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <Dialog>
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <MoreVerticalIcon height={20} />{" "}
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="flex flex-col">
+                  <Button
+                    variant={"ghost"}
+                    onClick={() =>
+                      toggleLike.mutate({
+                        member: 69,
+                        liked: suggestion.member_id,
+                      })
+                    }
+                  >
+                    {suggestion.isLiked && !likeTriggered
+                      ? "Unlike"
+                      : !suggestion.isLiked && likeTriggered
+                      ? "Unlike"
+                      : "Like"}
+                  </Button>
+                  <Button
+                    variant={"ghost"}
+                    onClick={() =>
+                      toggleFavorite.mutate({
+                        member: 69,
+                        favored: suggestion.member_id,
+                      })
+                    }
+                  >
+                    {suggestion.isFavorite && !favoriteTriggered
+                      ? "UnFavorite"
+                      : !suggestion.isFavorite && favoriteTriggered
+                      ? "UnFavorite"
+                      : "Favorite"}
+                  </Button>
+                  <Button variant={"ghost"}>Send Message</Button>
+                  <DropdownMenuSeparator />
+                  <Button variant={"ghost"}>Block</Button>
+                  {/* <DialogTrigger asChild> */}
+                  <DialogTrigger asChild>
+                    <Button variant={"destructive"}>Report</Button>
+                  </DialogTrigger>
+                  {/* </DialogTrigger> */}
+                </DropdownMenuContent>
+              </DropdownMenu>
+              <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                  <DialogTitle>Edit profile</DialogTitle>
+                  <DialogDescription>
+                    Make changes to your profile here. Click save when you're
+                    done.
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="grid gap-4 py-4">
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <Input
+                      id="name"
+                      value="Pedro Duarte"
+                      className="col-span-3"
+                    />
+                  </div>
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <Input
+                      id="username"
+                      value="@peduarte"
+                      className="col-span-3"
+                    />
+                  </div>
+                </div>
+                <DialogFooter>
+                  <Button type="submit">Save changes</Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
           </div>
           <div className="absolute flex bottom-4 left-4 z-20 space-x-2 items-end hover:underline">
             <img

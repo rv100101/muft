@@ -82,8 +82,8 @@ const PostItem = ({
             <img
               src={image}
               alt="post-img"
-              width={520}
-              className="rounded-t-md w-[460px] h-[554px] object-cover"
+              // width={520}
+              className="rounded-t-md lg:w-[460px] w-[350px] h-[554px] object-cover"
               // height={1000}
               // className="h-2/4 "
             />
