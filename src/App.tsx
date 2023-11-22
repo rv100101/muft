@@ -68,6 +68,11 @@ function App() {
         />
       </div>
 
+      <Route
+        path={pageRoutes.about.path}
+        component={pageRoutes.about.component}
+      />
+
       {/* Authenticated routes */}
       {user && (
         <>
