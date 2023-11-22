@@ -14,7 +14,6 @@ import { HelpCircle, Menu } from "lucide-react";
 import { motion } from "framer-motion";
 import { useLocation } from "wouter";
 import { cn } from "@/lib/utils";
-import { useUserStore } from "@/zustand/auth/user";
 const container = {
   none: { opacity: 1 },
   hidden: { opacity: 0 },

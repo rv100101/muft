@@ -1,6 +1,5 @@
 import AboutPlaceholderImg from "@/assets/about-placeholder.png";
 import Cta from "@/components/cta";
-import { Button } from "@/components/ui/button";
 import {
   Accordion,
   AccordionContent,
@@ -8,7 +7,6 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { BoxIcon } from "lucide-react";
-import { Link } from "wouter";
 const AboutPage = () => {
   return (
     <div>
@@ -134,7 +132,7 @@ const AboutPage = () => {
             Lorem ipsum dolor sit amet, consectetur adipiscing elit.
           </p>
           <a
-            className="border border-primary rounded-full text-md text-primary px-4 py-2" 
+            className="border border-primary rounded-full text-md text-primary px-4 py-2"
             href="https://support.softnames.com/"
             target="_blank"
           >
