@@ -156,7 +156,7 @@ const LikesAndFavouritesPage = () => {
             <SearchIcon color="gray" />
           </div>
         </div>
-        <div className="grid gap-4 py-2 px-8 grid overflow-y-auto grid-cols-2 rows-auto">
+        <div className="grid gap-4 py-2 lg:px-8 px-3 grid overflow-y-auto lg:grid-cols-2 rows-auto">
           {likesQueryResults.isLoading && <SkeletonLoading />}
           {favouritesQueryResults.isLoading && <SkeletonLoading />}
           {tab == "LIKES" && likes}

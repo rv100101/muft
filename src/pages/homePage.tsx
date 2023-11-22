@@ -29,6 +29,8 @@ type Member = {
 };
 
 const HomePage = () => {
+  // const toggleDialog = useHomepageViewStore((state) => state.toggleDialog);
+
   const setSelectedProfileId = useHomepageViewStore(
     (state) => state.setSelectedProfileId
   );
@@ -41,19 +43,19 @@ const HomePage = () => {
   const getMemberLikes = membersQuery.getMemberLikes(69);
   const getMemberFavorites = membersQuery.getMemberFavorites(69);
 
-  const { data: members, isLoading } = useQuery({
+  const { data: members, isLoading: retrievingMemberData } = useQuery({
     queryKey: ["home-members"],
     queryFn: () => getMembers,
   });
 
   // likes
-  const { data: memberLikes, isLoading: likesLoading } = useQuery({
+  const { data: memberLikes } = useQuery({
     queryKey: ["home-members-likes"],
     queryFn: () => getMemberLikes,
   });
 
   // favorites
-  const { data: memberFavorites, isLoading: favoritesLoading } = useQuery({
+  const { data: memberFavorites } = useQuery({
     queryKey: ["home-members-favs"],
     queryFn: () => getMemberFavorites,
   });
@@ -82,7 +84,7 @@ const HomePage = () => {
   });
 
   useEffect(() => {
-    if (memberLikes && members) {
+    if (!retrievingMemberData && memberLikes && memberFavorites && members) {
       const updatedMemberList = members.map((member: Member) => {
         const memberHasLikes = memberLikes.find(
           (likes: Member) => member.member_id === likes.member_id
@@ -122,34 +124,46 @@ const HomePage = () => {
       // Update state with the modified array
       setMemberList(updatedMemberList);
     }
-  }, [memberLikes, memberFavorites, members, setMemberList]);
+  }, [
+    memberLikes,
+    memberFavorites,
+    members,
+    setMemberList,
+    retrievingMemberData,
+  ]);
 
-  if (likesLoading || favoritesLoading) {
-    return <p>Loading...</p>;
-  }
+  // if (likesLoading || favoritesLoading) {
+  //   return <></>;
+  // }
 
   return (
     <AuthenticatedLayout>
       <div className="flex justify-center lg:grid-cols-9 grid-cols-1 gap-4">
         <div className="hidden lg:block w-32"></div>
         <div className="col-span-4 w-min overflow-auto no-scrollbar">
-          {isLoading && !memberList ? (
-            <div className="flex justify-center space-x-4 w-full ml-5 mt-10 bg-red">
-              <div className="space-y-2 ">
-                <Skeleton className="h-6 w-[400px]" />
-                <Skeleton className="h-6 w-[375px]" />
-                <Skeleton className="h-6 w-[375px]" />
-                <Skeleton className="h-6 w-[350px]" />
-                <Skeleton className="h-6 w-[350px]" />
-                <Skeleton className="h-6 w-[300px]" />
-                <Skeleton className="h-6 w-[300px]" />
+          {retrievingMemberData ? (
+            <>
+              {/* <div className="flex flex-col justify-center space-x-4 w-full ml-5 mt-10 border w-full"> */}
+              <div className="flex flex-col items-start space-y-2 p-5 border bg-white m-5 w-[470px]">
+                <Skeleton className="h-[50px] w-full" />
               </div>
-            </div>
+
+              <div className="flex flex-col items-center space-y-2 p-5 border bg-white m-5 w-[470px]">
+                <Skeleton className="h-[500px] w-full" />
+              </div>
+              <div className="flex flex-col items-center space-y-2 p-5 border bg-white m-5 w-[470px]">
+                <Skeleton className="h-[300px] w-full" />
+              </div>
+              <div className="flex flex-col items-center space-y-2 p-5 border bg-white m-5 w-[470px]">
+                <Skeleton className="h-[300px] w-full" />
+              </div>
+              {/* </div> */}
+            </>
           ) : (
             <>
               <PostHeader />
               <div
-                className="no-scrollbar p-8 rounded-b-xl space-y-4 border border-[#E0E0E0] h-min overflow-y-auto scroll-smooth"
+                className="no-scrollbar lg:p-8 px-0 lg:w-full h-screen w-screen rounded-b-xl space-y-4 border border-[#E0E0E0] lg:h-min overflow-y-auto scroll-smooth"
                 ref={containerRef}
               >
                 {memberList.map((post, index: number) => {

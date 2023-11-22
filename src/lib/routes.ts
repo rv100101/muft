@@ -9,6 +9,7 @@ import SignInPage from "@/pages/auth/signInPage";
 import HomePage from "@/pages/homePage";
 import LikesAndFavouritesPage from "@/pages/authenticatedPages/likesAndFavouritesPage";
 import ActivateAccount from "@/pages/authenticatedPages/accountActivationPage";
+import AboutPage from "@/pages/aboutPage";
 
 export const routesWithFooterAndTopNav = [
   "/",
@@ -17,7 +18,8 @@ export const routesWithFooterAndTopNav = [
   "/release-notes",
   "/auth/signup",
   "/auth/signin",
-  "/activate"
+  "/activate",
+  // '/about'
 ];
 
 const pageRoutes = {
@@ -68,6 +70,10 @@ const pageRoutes = {
   activateAccount: {
     path: "/activate",
     component: ActivateAccount
+  },
+  about: {
+    path: '/about',
+    component: AboutPage
   }
 };
 
