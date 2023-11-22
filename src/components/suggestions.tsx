@@ -51,9 +51,6 @@ type Member = {
 };
 
 const Suggestions = ({ members }: { members: Member[] }) => {
-  const dialogOpen = useHomepageViewStore((state) => state.dialogOpen);
-
-  const toggleDialog = useHomepageViewStore((state) => state.toggleDialog);
   const likeTriggered = useHomepageViewStore((state) => state.isLiked);
   const favoriteTriggered = useHomepageViewStore((state) => state.isFavored);
   const toggleLikeIcon = useHomepageViewStore((state) => state.toggleIsLiked);
