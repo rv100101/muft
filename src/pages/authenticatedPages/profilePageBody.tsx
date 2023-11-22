@@ -10,7 +10,7 @@ import profileHeaderStore from "@/zustand/profile/profileHeaderStore";
 import GallerySection from "@/components/profile/gallery/gallerySection";
 
 const ProfilePageBody = ({ userId }: { userId: string }) => {
-  const { toggleEditMode, editMode: isEditing } = profileAboutContentStore();
+  const { toggleEditMode } = profileAboutContentStore();
   const headerValues = profileHeaderStore((state) => state.headerValues);
   const { data } = profileAboutContentStore();
 

@@ -31,6 +31,7 @@ const fetchBasicInfoInitialData = async (userId: number) => {
       "/GetLanguages",
       { member: userId },
     );
+    console.log(languages);
 
     const { gender, nationality, date_of_birth, age } = basic.data;
     const { religion_name, ethnicity_name } = background.data;
@@ -386,12 +387,12 @@ const saveInformation = async (profile: ProfileAbout, userId: number) => {
     }
 
     // state
-    if (profile.state) {
-      await axiosQuery.post("/SaveState", {
-        state: profile.state,
-        member: userId,
-      });
-    }
+    // if (profile.state) {
+    //   await axiosQuery.post("/SaveState", {
+    //     state: profile.state,
+    //     member: userId,
+    //   });
+    // }
 
     // Add similar blocks for other fields...
   } catch (error) {
@@ -416,6 +417,7 @@ const profileContentQuery = {
     getFavoriteFoods,
     getBodyTypes,
   },
+  saveInformation,
 };
 
 export default profileContentQuery;
