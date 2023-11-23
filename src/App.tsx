@@ -11,18 +11,11 @@ import { useEffect } from "react";
 import runOneSignal from "./lib/oneSignal";
 
 function App() {
-  const [location, setLocation] = useLocation();
+  const [location] = useLocation();
   const user = useUserStore((state) => state.user);
   useEffect(() => {
     runOneSignal();
   },[]);
-  useEffect(() => {
-    if (user) {
-      if (!user.is_active) {
-        setLocation("/activate");
-      }
-    }
-  }, [user, setLocation]);
 
   return (
     <div
