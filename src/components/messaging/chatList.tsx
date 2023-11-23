@@ -34,6 +34,8 @@ const ChatList = () => {
     (state) => state.toggle,
   );
 
+  console.log(data);
+  
   useEffect(() => {
     if (!selectedConversation && data && data.length !== 0) {
       setConversation(

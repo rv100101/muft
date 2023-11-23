@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import membersQuery from "@/queries/home";
 import { Skeleton } from "@/components/ui/skeleton";
 import useHomepageViewStore from "@/zustand/home/homepageView";
+import { useUserStore } from "@/zustand/auth/user";
 
 type Member = {
   age: number;
@@ -29,19 +30,18 @@ type Member = {
 };
 
 const HomePage = () => {
-  // const toggleDialog = useHomepageViewStore((state) => state.toggleDialog);
-
   const setSelectedProfileId = useHomepageViewStore(
-    (state) => state.setSelectedProfileId
+    (state) => state.setSelectedProfileId,
   );
   const setMemberList = useHomepageViewStore(
-    (state) => state.setModifiedMemberList
+    (state) => state.setModifiedMemberList,
   );
+  const {user} = useUserStore();
   const memberList = useHomepageViewStore((state) => state.modifiedMemberList);
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const getMembers = membersQuery.getMembers(69);
-  const getMemberLikes = membersQuery.getMemberLikes(69);
-  const getMemberFavorites = membersQuery.getMemberFavorites(69);
+  const getMembers = membersQuery.getMembers(user!.member_id);
+  const getMemberLikes = membersQuery.getMemberLikes(user!.member_id);
+  const getMemberFavorites = membersQuery.getMemberFavorites(user!.member_id);
 
   const { data: members, isLoading: retrievingMemberData } = useQuery({
     queryKey: ["home-members"],
@@ -87,11 +87,11 @@ const HomePage = () => {
     if (!retrievingMemberData && memberLikes && memberFavorites && members) {
       const updatedMemberList = members.map((member: Member) => {
         const memberHasLikes = memberLikes.find(
-          (likes: Member) => member.member_id === likes.member_id
+          (likes: Member) => member.member_id === likes.member_id,
         );
 
         const memberHasFavorites = memberFavorites?.find(
-          (favs: Member) => member.member_id === favs.member_id
+          (favs: Member) => member.member_id === favs.member_id,
         );
 
         // If a match is found, update the object in the first array
@@ -141,49 +141,51 @@ const HomePage = () => {
       <div className="flex justify-center lg:grid-cols-9 grid-cols-1 gap-4">
         <div className="hidden lg:block w-32"></div>
         <div className="col-span-4 w-min overflow-auto no-scrollbar">
-          {retrievingMemberData ? (
-            <>
-              {/* <div className="flex flex-col justify-center space-x-4 w-full ml-5 mt-10 border w-full"> */}
-              <div className="flex flex-col items-start space-y-2 p-5 border bg-white m-5 w-[470px]">
-                <Skeleton className="h-[50px] w-full" />
-              </div>
+          {retrievingMemberData
+            ? (
+              <>
+                {/* <div className="flex flex-col justify-center space-x-4 w-full ml-5 mt-10 border w-full"> */}
+                <div className="flex flex-col items-start space-y-2 p-5 border bg-white m-5 w-[470px]">
+                  <Skeleton className="h-[50px] w-full" />
+                </div>
 
-              <div className="flex flex-col items-center space-y-2 p-5 border bg-white m-5 w-[470px]">
-                <Skeleton className="h-[500px] w-full" />
-              </div>
-              <div className="flex flex-col items-center space-y-2 p-5 border bg-white m-5 w-[470px]">
-                <Skeleton className="h-[300px] w-full" />
-              </div>
-              <div className="flex flex-col items-center space-y-2 p-5 border bg-white m-5 w-[470px]">
-                <Skeleton className="h-[300px] w-full" />
-              </div>
-              {/* </div> */}
-            </>
-          ) : (
-            <>
-              <PostHeader />
-              <div
-                className="no-scrollbar lg:p-8 px-0 lg:w-full h-screen w-screen rounded-b-xl space-y-4 border border-[#E0E0E0] lg:h-min overflow-y-auto scroll-smooth"
-                ref={containerRef}
-              >
-                {memberList.map((post, index: number) => {
-                  return (
-                    // <h1 className="bg-red-500">{post.nickname}</h1>
-                    <PostItem
-                      key={index}
-                      nickname={post.nickname}
-                      countryName={post.countryName}
-                      age={post.age}
-                      image={post.imagePath}
-                      member_id={post.member_id}
-                      isLiked={post.isLiked}
-                      isFavorite={post.isFavorite}
-                    />
-                  );
-                })}
-              </div>
-            </>
-          )}
+                <div className="flex flex-col items-center space-y-2 p-5 border bg-white m-5 w-[470px]">
+                  <Skeleton className="h-[500px] w-full" />
+                </div>
+                <div className="flex flex-col items-center space-y-2 p-5 border bg-white m-5 w-[470px]">
+                  <Skeleton className="h-[300px] w-full" />
+                </div>
+                <div className="flex flex-col items-center space-y-2 p-5 border bg-white m-5 w-[470px]">
+                  <Skeleton className="h-[300px] w-full" />
+                </div>
+                {/* </div> */}
+              </>
+            )
+            : (
+              <>
+                <PostHeader />
+                <div
+                  className="no-scrollbar lg:p-8 px-0 lg:w-full h-screen w-screen rounded-b-xl space-y-4 border border-[#E0E0E0] lg:h-min overflow-y-auto scroll-smooth"
+                  ref={containerRef}
+                >
+                  {memberList.map((post, index: number) => {
+                    return (
+                      // <h1 className="bg-red-500">{post.nickname}</h1>
+                      <PostItem
+                        key={index}
+                        nickname={post.nickname}
+                        countryName={post.countryName}
+                        age={post.age}
+                        image={post.imagePath}
+                        member_id={post.member_id}
+                        isLiked={post.isLiked}
+                        isFavorite={post.isFavorite}
+                      />
+                    );
+                  })}
+                </div>
+              </>
+            )}
         </div>
         <div className="md:col-span-3 col-span-0 xs:hidden overflow-auto no-scrollbar">
           <Suggestions members={memberList} />

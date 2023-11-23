@@ -22,6 +22,9 @@ const ChatMessages = () => {
     console.log(conversationMessages![conversationMessages!.length - 1]);
   }
 
+  console.log(latestConversation);
+  
+
   const { isLoading, isSuccess, data } = useQuery({
     queryKey: ["current-selected-conversation", latestConversation],
     enabled: latestConversation != null,
@@ -97,10 +100,10 @@ const ChatMessages = () => {
       ref={scrollableDivRef}
       className={cn(
         "h-full w-full space-y-4 overflow-y-scroll p-4 bg-[#F7F8FA]",
-        isLoading && "bg-white",
+        isLoading && "bg-white", !latestConversation && 'bg-[#F7F8FA] overflow-y-auto'
       )}
     >
-      {isLoading && <ChatMessagesLoadingSkeleton />}
+      {latestConversation && isLoading && <ChatMessagesLoadingSkeleton />}
       {isSuccess && data && messages}
     </div>
   );
