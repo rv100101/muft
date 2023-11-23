@@ -1,146 +1,75 @@
 import AboutPlaceholderImg from "@/assets/about-placeholder.png";
+import AboutPinkBgShape from "@/assets/about-image-bg.png";
 import Cta from "@/components/cta";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import { BoxIcon } from "lucide-react";
 const AboutPage = () => {
   return (
     <div>
-      <div id="header" className="p-16 bg-secondaryBackground">
-        <h1 className="text-center font-semibold text-4xl text-[#1B2950]">
+      <div id="header" className="p-8 lg:p-16 bg-secondaryBackground">
+        <h1 className="text-center font-semibold text-3xl sm:text-6xl text-[#1B2950]">
           About us
         </h1>
       </div>
-      <div id="section1" className="relative w-full mt-8 flex">
-        <div className="relative flex flex-row bg-secondaryBackground pl-56 py-16 pr-16 space-y-4 w-3/5 rounded-r-lg">
-          <div className="w-3/4 space-y-4 text-[#1B2950]">
-            <h2 className="font-semibold text-3xl">
-              Medium length section heading goes here
-            </h2>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse varius enim in eros elementum tristique. Duis cursus,
-              mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam
-              libero vitae erat.
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Elit
-              duis tristique sollicitudin nibh sit amet commodo nulla. At tempor
-              commodo ullamcorper a. Tempus imperdiet nulla malesuada
-              pellentesque elit. Tortor at auctor urna nunc id cursus metus.
-              Bibendum neque egestas congue quisque egestas.
-            </p>
+      <div id="section1" className="w-full flex justify-center mt-8 lg:mt-16">
+        <div className="md:grid flex flex-col md:gap-24 md:grid md:grid-cols-2 md:px-32">
+          <div className="relative flex justify-center sm:items-center">
+            <img src={AboutPlaceholderImg} className="h-4/5 sm:h-min" />
+            <img
+              className="hidden sm:block absolute justify-center translate-x-8 translate-y-8 sm:translate-x-12 sm:translate-y-[60px] h-3/4 sm:h-min"
+              src={AboutPlaceholderImg}
+            />
           </div>
-          <img
-            src={AboutPlaceholderImg}
-            className="absolute top-10 -right-96 h-96"
-          />
-        </div>
-      </div>
-      <div id="section2" className="bg-primary mt-8 text-center p-32">
-        <h3 className="font-semibold text-3xl text-white">
-          Medium length section heading goes here
-        </h3>
-        <div className="grid grid-cols-3 gap-8 mt-8">
-          <div className="space-y-2 flex flex-col justify-center items-center">
-            <BoxIcon className="text-white" />
-            <p className="text-white font-semibold text-lg">
-              Misson
+          <div className="space-y-4 px-4 sm:px-0">
+            <p className="font-semibold text-2xl sm:text-5xl text-[#1B2950] sm:pt-12">
+              About Muffin
             </p>
-            <p className="font-light text-white">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse varius enim in eros elementum tristique. Duis cursus,
-              mi quis viverra ornare, eros dolor interdum nulla.
+            <p className="sm:text-lg font-light text-sm">
+              Muffin is where we transform the landscape of modern dating. In a
+              world of fleeting swipes and transient connections, Muffin stands
+              as a beacon for those seeking meaningful relationships and lasting
+              love. Join us on a journey where every swipe is a step closer to
+              romance, and every match is an opportunity for something
+              beautiful.
             </p>
-          </div>{" "}
-          <div className="space-y-2 flex flex-col justify-center items-center">
-            <BoxIcon className="text-white" />
-            <p className="text-white font-semibold text-lg">
-              Vision
-            </p>
-            <p className="font-light text-white">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse varius enim in eros elementum tristique. Duis cursus,
-              mi quis viverra ornare, eros dolor interdum nulla.
-            </p>
-          </div>
-          <div className="space-y-2 flex flex-col justify-center items-center">
-            <BoxIcon className="text-white" />
-            <p className="text-white font-semibold text-lg">
-              Core Values
-            </p>
-            <p className="font-light text-white">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse varius enim in eros elementum tristique. Duis cursus,
-              mi quis viverra ornare, eros dolor interdum nulla.
+            <p className="sm:text-lg font-light text-sm">
+              At Muffin, we believe in the power of connection. We understand
+              that true chemistry extends beyond a profile picture. It's about
+              shared interests, values, and dreams. Our advanced algorithm
+              doesn't just offer matches; it curates potential life partners by
+              focusing on deep compatibility. It's not about the quantity of
+              connections, but the quality of the bonds you form.
             </p>
           </div>
         </div>
       </div>
-      <div id="FAQ" className="flex justify-center">
-        <div className="mt-8 w-1/2 text-[#1B2950] flex flex-col items-center space-y-8">
-          <p className="text-4xl font-semibold text-[#1B2950]">FAQs</p>{" "}
-          <p className="text-[#1B2950]">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            varius enim in eros elementum tristique.
-          </p>
-          <div id="accordionFaq" className="w-full">
-            <Accordion type="single" collapsible className="w-full">
-              <AccordionItem value="item-1">
-                <AccordionTrigger>Question text goes here</AccordionTrigger>
-                <AccordionContent>
-                  Yes. It adheres to the WAI-ARIA design pattern.
-                </AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="item-2">
-                <AccordionTrigger>Question text goes here</AccordionTrigger>
-                <AccordionContent>
-                  Yes. It comes with default styles that matches the other
-                  components&apos; aesthetic.
-                </AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="item-3">
-                <AccordionTrigger>Question text goes here</AccordionTrigger>
-                <AccordionContent>
-                  Yes. It&apos;s animated by default, but you can disable it if
-                  you prefer.
-                </AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="item-4">
-                <AccordionTrigger>Question text goes here</AccordionTrigger>
-                <AccordionContent>
-                  Yes. It&apos;s animated by default, but you can disable it if
-                  you prefer.
-                </AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="item-5">
-                <AccordionTrigger>Question text goes here</AccordionTrigger>
-                <AccordionContent>
-                  Yes. It&apos;s animated by default, but you can disable it if
-                  you prefer.
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
+      <div id="section2" className="w-full flex justify-center mt-8 sm:mt-16">
+        <div className="px-4 md:px-0 md:grid flex flex-col md:gap-24 md:grid md:grid-cols-2 md:px-32">
+          <div className="space-y-4 flex flex-col justify-end sm:pl-32 sm:justify-center">
+            <p className="font-semibold text-2xl sm:text-5xl text-[#1B2950]">
+              Our Promise
+            </p>
+            <p className="text-sm sm:text-lg font-light">
+              Muffin is more than just a dating platform; it's a platform for
+              love, connection, and genuine relationships. We're dedicated to
+              helping you find someone who not only matches your interests but
+              resonates with your heart. It's time to turn swipes into lasting
+              connections and moments into memories.
+            </p>{" "}
+            <p className="text-sm sm:text-lg font-light">
+              Join Muffin today and embark on a journey where love is just a
+              swipe away. Let's redefine the rules of romance and make every
+              moment count in your quest for love.
+            </p>
           </div>
-          <p className="text-2xl font-semibold">Still have a question?</p>
-          <p className="text-sm">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          </p>
-          <a
-            className="border border-primary rounded-full text-md text-primary px-4 py-2"
-            href="https://support.softnames.com/"
-            target="_blank"
-          >
-            Contact
-          </a>
+          <div className="relative flex justify-center items-center sm:justify-center">
+            <img src={AboutPinkBgShape} />
+            <img
+              className="absolute h-48 sm:h-1/2"
+              src={AboutPlaceholderImg}
+            />
+          </div>
         </div>
       </div>
-      <div className="bg-primary">
+      <div className="bg-[#FF7AAF]">
         <Cta />
       </div>
     </div>
