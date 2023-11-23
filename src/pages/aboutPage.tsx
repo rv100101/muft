@@ -38,7 +38,7 @@ const AboutPage = () => {
           </div>
           <img
             src={AboutPlaceholderImg}
-            className="absolute h-96 -right-"
+            className="absolute h-96"
           />
         </div>
       </div>
