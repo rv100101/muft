@@ -54,7 +54,7 @@ const GallerySection = () => {
   };
   const {
     data: gallery,
-    isLoading,
+    // isLoading,
     refetch,
   } = useQuery(["gallery"], fetchGallery);
   const handleUploadButtonClick = async () => {
@@ -182,7 +182,7 @@ const GallerySection = () => {
             />
           );
         })}
-      </div>}
+      </div>
     </div>
   );
 };
