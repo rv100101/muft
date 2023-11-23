@@ -1,4 +1,4 @@
-import { MenuIcon, Settings2Icon } from "lucide-react";
+import { LogOutIcon, MenuIcon, Settings2Icon } from "lucide-react";
 import { ReactNode } from "react";
 import {
   Sheet,
@@ -10,8 +10,10 @@ import {
 import { Link } from "wouter";
 import logo from "@/assets/logo.svg";
 import links from "@/lib/sideBar";
+import { useUserStore } from "@/zustand/auth/user";
 
 const TopBar2 = ({ children }: { children: ReactNode }) => {
+  const signOut = useUserStore((state) => state.reset);
   let navLinks = links.map((link, index) => {
     return (
       <li key={index} className="w-full">
@@ -32,7 +34,14 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
         className="h-10 px-4 py-2 hover:bg-accent hover:text-accent-foreground flex justify-start items-center space-x-2"
         href={"/settings"}
       >
-        <Settings2Icon /> <p>Settings</p>
+        <Link
+          onClick={signOut}
+          className="h-10 px-4 py-2 hover:bg-accent hover:text-accent-foreground flex justify-start items-center space-x-2"
+          href={"/"}
+        >
+          {<LogOutIcon size={20} />} <p className="text-sm">Sign out</p>
+        </Link>
+        {/* <Settings2Icon /> <p>Settings</p> */}
       </Link>
     </li>,
   ];
