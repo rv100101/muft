@@ -21,6 +21,7 @@ const AboutPage = () => {
           <div className="space-y-4 px-4 sm:px-0">
             <p className="font-semibold text-2xl sm:text-5xl text-[#1B2950] sm:pt-12">
               About Muffin
+
             </p>
             <p className="sm:text-lg font-light text-sm">
               Muffin is where we transform the landscape of modern dating. In a

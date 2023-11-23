@@ -16,7 +16,7 @@ function App() {
   useEffect(() => {
     runOneSignal();
   }, []);
-
+  
   return (
     <div
       className={cn(
