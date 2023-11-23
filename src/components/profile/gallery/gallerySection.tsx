@@ -98,10 +98,6 @@ const GallerySection = () => {
     }
   };
 
-  if (isLoading) {
-    return <></>;
-  }
-
   return (
     <div className="flex flex-col">
       <div className="flex justify-between items-center p-5 border-b space-x-5">
@@ -186,7 +182,7 @@ const GallerySection = () => {
             />
           );
         })}
-      </div>
+      </div>}
     </div>
   );
 };
