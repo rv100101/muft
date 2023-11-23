@@ -14,7 +14,6 @@ import { Input } from "../ui/input";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { toast } from "../ui/use-toast";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const ProfileHeader = ({ userId }: { userId: string }) => {
   const [showCamera, setShowCamera] = useState(false);
