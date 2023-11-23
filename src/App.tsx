@@ -8,12 +8,14 @@ import { useUserStore } from "./zustand/auth/user";
 import { cn } from "./lib/utils";
 import ViewUser from "./components/profile/viewUser";
 import { useEffect } from "react";
+import runOneSignal from "./lib/oneSignal";
 
 function App() {
   const [location, setLocation] = useLocation();
   const user = useUserStore((state) => state.user);
-  console.log(user);
-
+  useEffect(() => {
+    runOneSignal();
+  },[]);
   useEffect(() => {
     if (user) {
       if (!user.is_active) {
@@ -71,6 +73,11 @@ function App() {
       <Route
         path={pageRoutes.about.path}
         component={pageRoutes.about.component}
+      />
+
+      <Route
+        path={pageRoutes.subscription.path}
+        component={pageRoutes.subscription.component}
       />
 
       {/* Authenticated routes */}

@@ -45,37 +45,36 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
 
   if (isLoading || isRefetching) {
     return <ProfileHeaderSkeleton />;
-  }
+ }
 
   return (
-    <div className="items-start p-5 border-b select-none w-full">
-      <div className="flex flex-row space-x-5 items-center w-full justify-start ">
-        <Button
-          disabled={!isEditing}
-          type="button"
-          onMouseOver={() => {
-            if (isEditing) {
-              setShowCamera(true);
-            }
-          }}
-          onMouseOut={() => {
-            if (isEditing) {
-              setShowCamera(false);
-            }
-          }}
-          className="relative disabled:opacity-100 w-28 h-full rounded-full p-0"
-        >
-          {showCamera && <CameraIcon className="absolute" />}
-          <img
-            className={`user-drag-none rounded-full object-cover w-full h-full border-primary border-4 transition-all duration-300 filter`}
-            src={getImagePath(
-              headerValues.gallery_uuid,
-              headerValues.gender,
-              headerValues.member_uuid?.toString(),
-            )}
-            alt="no image selected"
-          />
-        </Button>
+    <div className="items-start p-5 border-b w-full">
+      <div className="flex justify-start items-start space-x-2">
+        {
+          <Button
+            variant={"ghost"}
+            disabled={!isEditing}
+            type="button"
+            onMouseOver={() => {
+              if (isEditing) setShowCamera(true);
+            }}
+            onMouseOut={() => {
+              if (isEditing) setShowCamera(false);
+            }}
+            className="relative disabled:opacity-100 h-full w-40 bg-transparent py-0 px-0"
+          >
+            {showCamera && <CameraIcon className="absolute" fill="white" />}
+            <img
+              className={`select-none object-cover h-32 w-32 overflow-clip border-4 border-primary rounded-full`}
+              src={getImagePath(
+                headerValues.gallery_uuid,
+                headerValues.gender,
+                headerValues.member_uuid?.toString(),
+              )}
+              alt="no image selected"
+            />
+          </Button>
+        }
         <div className="w-full">
           <div className="flex w-full justify-between">
             <div className="w-42">

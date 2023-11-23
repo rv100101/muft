@@ -26,14 +26,17 @@ interface ViewState {
   setModifiedMemberList: (member: Member[]) => void;
   toggleIsLiked: () => void;
   toggleIsFavored: () => void;
+  toggleDialog: () => void;
   isLiked: boolean;
   isFavored: boolean;
+  dialogOpen: boolean;
 }
 const useHomepageViewStore = create<ViewState>()((set) => ({
   selectedProfileId: null,
   isLiked: false,
   isFavored: false,
   modifiedMemberList: [],
+  dialogOpen: false,
 
   setSelectedProfileId: (id) =>
     set(() => ({
@@ -55,6 +58,12 @@ const useHomepageViewStore = create<ViewState>()((set) => ({
   toggleIsFavored: () => {
     set((state) => ({
       isFavored: !state.isFavored,
+    }));
+  },
+
+  toggleDialog: () => {
+    set((state) => ({
+      dialogOpen: !state.dialogOpen,
     }));
   },
 }));

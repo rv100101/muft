@@ -29,6 +29,8 @@ type Member = {
 };
 
 const HomePage = () => {
+  // const toggleDialog = useHomepageViewStore((state) => state.toggleDialog);
+
   const setSelectedProfileId = useHomepageViewStore(
     (state) => state.setSelectedProfileId
   );
@@ -161,7 +163,7 @@ const HomePage = () => {
             <>
               <PostHeader />
               <div
-                className="no-scrollbar p-8 rounded-b-xl space-y-4 border border-[#E0E0E0] h-min overflow-y-auto scroll-smooth"
+                className="no-scrollbar lg:p-8 px-0 lg:w-full h-screen w-screen rounded-b-xl space-y-4 border border-[#E0E0E0] lg:h-min overflow-y-auto scroll-smooth"
                 ref={containerRef}
               >
                 {memberList.map((post, index: number) => {

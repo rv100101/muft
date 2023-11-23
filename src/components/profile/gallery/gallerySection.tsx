@@ -54,7 +54,7 @@ const GallerySection = () => {
   };
   const {
     data: gallery,
-    isLoading,
+    // isLoading,
     refetch,
   } = useQuery(["gallery"], fetchGallery);
   const handleUploadButtonClick = async () => {
@@ -97,10 +97,6 @@ const GallerySection = () => {
       console.error("No file selected or user not available.");
     }
   };
-
-  if (isLoading) {
-    return <></>;
-  }
 
   return (
     <div className="flex flex-col">
@@ -170,8 +166,8 @@ const GallerySection = () => {
         </div>
       </div>
       {/* photos section */}
-      <div className="grid grid-cols-3 gap-5 p-5 flex overflow-y-scroll">
-        {gallery.map((pic: Gallery, index: number) => {
+      <div className="grid grid-cols-3 gap-5 p-5 flex">
+        {gallery && gallery.length !== 0 && gallery.map((pic: Gallery, index: number) => {
           const path = getImagePath(pic.gallery_uuid, null, pic.member_uuid);
           return (
             <img
