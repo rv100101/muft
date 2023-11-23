@@ -93,20 +93,30 @@ function TopNav() {
         {!location.startsWith("/auth") &&
           (
             <div className="flex">
-              {
-                <motion.li variants={motionTop80}>
-                  <Button variant={"ghost"} className="font-light">
-                    <a
-                      className={cn(
-                        "text-md",
-                      )}
-                      href="/about"
-                    >
-                      About Us
-                    </a>
-                  </Button>
-                </motion.li>
-              }
+              <motion.li variants={motionTop80}>
+                <Button variant={"ghost"} className="font-light">
+                  <a
+                    className={cn(
+                      "text-md",
+                    )}
+                    href="/about"
+                  >
+                    About Us
+                  </a>
+                </Button>
+              </motion.li>
+              <motion.li variants={motionTop80}>
+                <Button variant={"ghost"} className="font-light">
+                  <a
+                    className={cn(
+                      "text-md",
+                    )}
+                    href="/subscription"
+                  >
+                    Subscription
+                  </a>
+                </Button>
+              </motion.li>
               <motion.li variants={motionTop80}>
                 <Button variant={"ghost"} className="font-light">
                   <a
@@ -116,7 +126,33 @@ function TopNav() {
                     href="https://support.softnames.com/"
                     target="_blank"
                   >
-                    Contact 
+                    FAQ
+                  </a>
+                </Button>
+              </motion.li>
+              <motion.li variants={motionTop80}>
+                <Button variant={"ghost"} className="font-light">
+                  <a
+                    className={cn(
+                      "text-md",
+                    )}
+                    href="https://support.softnames.com/"
+                    target="_blank"
+                  >
+                    Contact
+                  </a>
+                </Button>
+              </motion.li>
+              <motion.li variants={motionTop80}>
+                <Button variant={"ghost"} className="font-light">
+                  <a
+                    className={cn(
+                      "text-md",
+                    )}
+                    href="https://support.softnames.com/"
+                    target="_blank"
+                  >
+                    Support
                   </a>
                 </Button>
               </motion.li>
@@ -148,8 +184,28 @@ function TopNav() {
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
             <DropdownMenuItem>
+              <a href="/about">
+                About Us
+              </a>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <a href="/subscription">
+                Subscription
+              </a>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <a target="_blank" href="https://support.softnames.com/">
+                FAQ
+              </a>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
               <a target="_blank" href="https://support.softnames.com/">
                 Contact Us
+              </a>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <a target="_blank" href="https://support.softnames.com/">
+                Support
               </a>
             </DropdownMenuItem>
           </DropdownMenuGroup>
