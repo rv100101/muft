@@ -170,7 +170,7 @@ const GallerySection = () => {
         </div>
       </div>
       {/* photos section */}
-      <div className="grid grid-cols-3 gap-5 p-5 flex overflow-y-scroll">
+      <div className="grid grid-cols-3 gap-5 p-5 flex">
         {gallery.map((pic: Gallery, index: number) => {
           const path = getImagePath(pic.gallery_uuid, null, pic.member_uuid);
           return (
