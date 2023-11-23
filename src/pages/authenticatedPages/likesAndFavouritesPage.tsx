@@ -11,12 +11,14 @@ import favouritesQuery from "@/queries/favourites";
 import { cn } from "@/lib/utils";
 import { useUserCountry } from "@/zustand/auth/country";
 import SkeletonLoading from "@/components/likesAndFavourites/skeletonLoading";
+import { useUserStore } from "@/zustand/auth/user";
 const LikesAndFavouritesPage = () => {
   const [tab, setTab] = useState<"LIKES" | "FAVOURITES">("LIKES");
   const [filter, setFilter] = useState<"ALL" | "CURRENT-COUNTRY">("ALL");
   const [search, setSearch] = useState<string>("");
-  const getMemberLikes = likesQuery.getLikes(69);
-  const getMemberFavourites = favouritesQuery.getFavourites(69);
+  const { user } = useUserStore();
+  const getMemberLikes = likesQuery.getLikes(user!.member_id);
+  const getMemberFavourites = favouritesQuery.getFavourites(user!.member_id);
   const userCountry = useUserCountry((state) => state.country);
 
   const likesQueryResults = useQuery({
@@ -58,7 +60,7 @@ const LikesAndFavouritesPage = () => {
               src={getImagePath(
                 like.gallery_uuid,
                 like.gender,
-                like.member_uuid
+                like.member_uuid,
               )}
               alt="user"
             />
@@ -103,7 +105,7 @@ const LikesAndFavouritesPage = () => {
             }}
             className={cn(
               "w-full rounded-0 bg-transparent text-black border-r border-t rounded-none border-b p-8 text-[#727272] text-lg",
-              tab == "LIKES" && "border-b-4 border-b-[#404040]"
+              tab == "LIKES" && "border-b-4 border-b-[#404040]",
             )}
           >
             LIKES
@@ -114,7 +116,7 @@ const LikesAndFavouritesPage = () => {
             }}
             className={cn(
               "w-full rounded-0 bg-transparent text-black border-r border-t rounded-none border-b text-[#727272] text-lg p-8",
-              tab == "FAVOURITES" && "border-b-4 border-b-[#404040]"
+              tab == "FAVOURITES" && "border-b-4 border-b-[#404040]",
             )}
           >
             FAVOURITES
@@ -138,7 +140,7 @@ const LikesAndFavouritesPage = () => {
               variant={"ghost"}
               className={cn(
                 "rounded-none",
-                filter === "CURRENT-COUNTRY" && "border-b"
+                filter === "CURRENT-COUNTRY" && "border-b",
               )}
             >
               Current Country
@@ -160,6 +162,12 @@ const LikesAndFavouritesPage = () => {
           {likesQueryResults.isLoading && <SkeletonLoading />}
           {favouritesQueryResults.isLoading && <SkeletonLoading />}
           {tab == "LIKES" && likes}
+          {!likesQueryResults.isLoading && likes.length == 0 && tab == 'LIKES' && (
+            <p>No likes</p>
+          )}
+          {!favouritesQueryResults.isLoading && favourites.length  == 0 && tab == 'FAVOURITES' && (
+            <p>No favourites</p>
+          )}
           {tab == "FAVOURITES" && favourites}
         </div>
       </div>

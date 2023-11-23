@@ -40,8 +40,8 @@ const SignInForm = () => {
     validationSchema: Yup.object({
       email: Yup.string()
         .email("Invalid email address")
-        .required("Email is required"),
-      password: Yup.string().required("Password is required"),
+        .required("Invalid credentials"),
+      password: Yup.string().required("Invalid credentials"),
     }),
     onSubmit: (values: FormDataType) => handleSignIn(values),
   });
@@ -49,10 +49,12 @@ const SignInForm = () => {
   const handleSignIn = async (values: FormDataType) => {
     try {
       setIsLoading(true);
+
       const signInData = await authQuery.signIn(values.email, values.password);
       console.log(signInData);
       if (typeof signInData.data == "string") {
         setIsLoading(false);
+        formik.values.password = "";
         formik.setFieldError("email", "Invalid credentials");
         formik.setFieldError("password", "Invalid credentials");
         toast({

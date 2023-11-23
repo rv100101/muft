@@ -3,9 +3,11 @@ import AuthenticatedLayout from "./layout";
 import Suggestions from "@/components/suggestions";
 import membersQuery from "@/queries/home";
 import { useQuery } from "@tanstack/react-query";
+import { useUserStore } from "@/zustand/auth/user";
 
 const NotificationsPage = () => {
-  const getMembers = membersQuery.getMembers(69);
+  const {user} = useUserStore();
+  const getMembers = membersQuery.getMembers(user!.member_id);
   const { data: members, isLoading } = useQuery({
     queryKey: ["home-members"],
     queryFn: () => getMembers,

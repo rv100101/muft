@@ -1,6 +1,4 @@
 import { useState } from "react";
-import logo from "@/assets/logo.svg";
-import helpIcon from "@/assets/auth/help-icon.png";
 import { Loader2, UserIcon } from "lucide-react";
 import { MailIcon } from "lucide-react";
 import { LockIcon } from "lucide-react";
@@ -34,12 +32,18 @@ const SignUpPage = () => {
       password: "",
     },
     validationSchema: Yup.object({
-      first_name: Yup.string().required("First name is required"),
-      last_name: Yup.string().required("Last name is required"),
+      first_name: Yup.string()
+        .matches(/^[^\s]+$/, "Field cannot start with whitespace")
+        .required("First name is required"),
+      last_name: Yup.string()
+        .matches(/^[^\s]+$/, "Field cannot start with whitespace")
+        .required("Last name is required"),
       email: Yup.string()
         .email("Invalid email address")
         .required("Email is required"),
-      password: Yup.string().required("Password is required"),
+      password: Yup.string()
+        .required("Password is required")
+        .matches(/^\S*$/, "Password cannot contain spaces"),
     }),
     onSubmit: (values: FormDataType) => signUp.mutate(values),
   });
@@ -90,8 +94,8 @@ const SignUpPage = () => {
     <>
       <div className="flex justify-center lg:items-center min-h-[calc(100vh-70px)] md:h-max border-t lg:p-8">
         <div className="flex h-max w-[460px] flex-col items-center md:shadow-xl rounded-lg p-4 md:border">
-          <div className="flex w-full justify-end">
-            <img
+          <div className="flex w-full justify-end pb-5">
+            {/* <img
               src={helpIcon}
               alt="help icon"
               className="w-8 md:w-8 hover:cursor-pointer"
@@ -101,7 +105,7 @@ const SignUpPage = () => {
             <img className="w-36" src={logo} alt="muffin-logo" />
             <p className="text-[#1B2950] text-md mt-4 mb-4 font-bold">
               Welcome!
-            </p>
+            </p> */}
           </div>
           {/* form */}
           <form
@@ -110,13 +114,13 @@ const SignUpPage = () => {
             className="space-y-5 w-full"
           >
             {/* first_name */}
-            <div className="flex flex-col space-y-1">
-              <label
+            <div className="flex flex-col space-y-1 px-5">
+              {/* <label
                 htmlFor="first_name"
                 className="text-sm text-semibold ml-5 mb-2"
               >
                 First name
-              </label>
+              </label> */}
               <div
                 className={`flex items-center h-max flex-row border rounded-full py-1 px-5 m-3 ${
                   formik.touched.first_name && formik.errors.first_name
@@ -127,7 +131,7 @@ const SignUpPage = () => {
                 <UserIcon color="#98A2B3" size={20} className="mt-1" />
                 <input
                   type="text"
-                  className="ml-2 border-0 rounded-full py-1 px-4 text-normal focus:outline-0 w-full"
+                  className="ml-2 border-0 rounded-full py-2 px-4 text-normal focus:outline-0 w-full"
                   placeholder="First Name"
                   {...formik.getFieldProps("first_name")}
                   name="first_name"
@@ -144,23 +148,21 @@ const SignUpPage = () => {
                   }`}
                 />
               </div>
-              {formik.touched.first_name && formik.errors.first_name
-                ? (
-                  <div className="error text-red-500 text-sm ml-5 pt-2">
-                    {formik.errors.first_name}
-                  </div>
-                )
-                : null}
+              {formik.touched.first_name && formik.errors.first_name ? (
+                <div className="error text-red-500 text-sm ml-5 pt-2">
+                  {formik.errors.first_name}
+                </div>
+              ) : null}
             </div>
 
             {/* last_name */}
-            <div className="flex flex-col space-y-1">
-              <label
+            <div className="flex flex-col space-y-1 px-5">
+              {/* <label
                 htmlFor="last_name"
                 className="text-sm text-semibold  ml-5 mb-2"
               >
                 Last name
-              </label>
+              </label> */}
 
               <div
                 className={`flex items-center border rounded-full py-1 px-5 m-3 ${
@@ -172,7 +174,7 @@ const SignUpPage = () => {
                 <UserIcon color="#98A2B3" size={20} className="mt-1" />
                 <input
                   type="text"
-                  className="ml-2 border-0 w-full rounded-full py-1 px-5 text-normal focus:outline-0 w-full"
+                  className="ml-2 border-0 w-full rounded-full py-2 px-5 text-normal focus:outline-0 w-full"
                   placeholder="Last Name"
                   {...formik.getFieldProps("last_name")}
                   name="last_name"
@@ -189,22 +191,20 @@ const SignUpPage = () => {
                   }`}
                 />
               </div>
-              {formik.touched.last_name && formik.errors.last_name
-                ? (
-                  <div className="error text-red-500 text-sm ml-5 pt-2">
-                    {formik.errors.last_name}
-                  </div>
-                )
-                : null}
+              {formik.touched.last_name && formik.errors.last_name ? (
+                <div className="error text-red-500 text-sm ml-5 pt-2">
+                  {formik.errors.last_name}
+                </div>
+              ) : null}
             </div>
             {/* email */}
-            <div className="flex flex-col space-y-1">
-              <label
+            <div className="flex flex-col space-y-1 px-5">
+              {/* <label
                 htmlFor="email"
                 className="text-sm text-semibold  ml-5 mb-2"
               >
                 Email
-              </label>
+              </label> */}
               <div
                 className={`flex justify-center items-center flex-row border rounded-full py-1 px-5 m-3 ${
                   formik.touched.email && formik.errors.email
@@ -215,7 +215,7 @@ const SignUpPage = () => {
                 <MailIcon color="#98A2B3" size={20} className="mt-1" />
                 <input
                   type="text"
-                  className="ml-2 border-0 rounded-full py-1 px-5 text-normal focus:outline-0 w-full"
+                  className="ml-2 border-0 rounded-full py-2 px-5 text-normal focus:outline-0 w-full"
                   placeholder="example@email.com"
                   {...formik.getFieldProps("email")}
                   onChange={formik.handleChange}
@@ -232,23 +232,21 @@ const SignUpPage = () => {
                   }`}
                 />
               </div>
-              {formik.touched.email && formik.errors.email
-                ? (
-                  <div className="error text-red-500 ml-5 text-sm pt-2">
-                    {formik.errors.email}
-                  </div>
-                )
-                : null}
+              {formik.touched.email && formik.errors.email ? (
+                <div className="error text-red-500 ml-5 text-sm pt-2">
+                  {formik.errors.email}
+                </div>
+              ) : null}
             </div>
 
             {/* password */}
-            <div className="flex flex-col space-y-1">
-              <label
+            <div className="flex flex-col space-y-1 px-5">
+              {/* <label
                 htmlFor="password"
                 className="text-sm text-semibold ml-5 mb-2"
               >
                 Password
-              </label>
+              </label> */}
               <div
                 className={`flex items-center flex-row border rounded-full py-1 px-5 m-3 ${
                   formik.touched.password && formik.errors.password
@@ -259,7 +257,7 @@ const SignUpPage = () => {
                 <LockIcon color="#98A2B3" size={20} className="mt-1" />
                 <input
                   type="password"
-                  className="border-0 rounded-full py-1 px-5 text-normal focus:outline-0 w-full"
+                  className="border-0 rounded-full py-2 px-5 text-normal focus:outline-0 w-full"
                   placeholder="Password"
                   {...formik.getFieldProps("password")}
                   name="password"
@@ -276,42 +274,39 @@ const SignUpPage = () => {
                   }`}
                 />
               </div>
-              {formik.touched.password && formik.errors.password
-                ? (
-                  <div className="error text-red-500 ml-5 text-sm pt-2">
-                    {formik.errors.password}
-                  </div>
-                )
-                : null}
+              {formik.touched.password && formik.errors.password ? (
+                <div className="error text-red-500 ml-5 text-sm pt-2">
+                  {formik.errors.password}
+                </div>
+              ) : null}
             </div>
             {/* button */}
-            <div className="px-3">
+            <div className="px-8">
               <Button
                 type="submit"
                 className={cn(
                   "text-white w-full rounded-full hover:bg-[#FF599B]/90",
-                  isLoading ? "bg-[#FF8AB3]" : "bg-primary",
+                  isLoading ? "bg-[#FF8AB3]" : "bg-primary"
                 )}
               >
-                {isLoading
-                  ? <Loader2 className="ml-2 h-full w-full animate-spin" />
-                  : "Sign Up"}
+                {isLoading ? (
+                  <Loader2 className="ml-2 h-full w-full animate-spin" />
+                ) : (
+                  "Sign Up"
+                )}
               </Button>
             </div>
           </form>
 
           {/* or */}
-          {
-            /* <div className="flex w-full item-center">
+          {/* <div className="flex w-full item-center">
             <div className="border-b border-black mt-3 h-[1px] w-full"></div>
             <div className="mx-2 text-black font-bold">or</div>
             <div className="border-b border-black mt-3 h-[1px] w-full"></div>
-          </div> */
-          }
+          </div> */}
 
           {/* social icons */}
-          {
-            /* <div className="flex flex-row space-x-5">
+          {/* <div className="flex flex-row space-x-5">
             <img
               src={fbLogo}
               alt="facebook-logo"
@@ -322,8 +317,7 @@ const SignUpPage = () => {
               alt="google-logo"
               className="hover:cursor-pointer"
             />
-          </div> */
-          }
+          </div> */}
           <Link
             onClick={scrollToTop}
             href="/auth/signin"

@@ -15,25 +15,27 @@ import { useUserStore } from "@/zustand/auth/user";
 const ChatList = () => {
   const matches = useMediaQuery("(min-width: 640px)");
   const setConversation = useLatestConversationStore(
-    (state) => state.setConversation
+    (state) => state.setConversation,
   );
   const user = useUserStore((state) => state.user);
   const selectedConversation = useLatestConversationStore(
-    (state) => state.conversation
+    (state) => state.conversation,
   );
   const setSenderUserInfo = useSenderInfo((state) => state.setInfo);
   const { isLoading, isSuccess, data } = useQuery({
     queryKey: ["conversations"],
-    queryFn: () => messagingQuery.getConversations(69),
+    queryFn: () => messagingQuery.getConversations(user!.member_id),
   });
 
   const searchFilterValue = useSearchFilterStore((state) => state.value);
 
   // This is used for page view switching in mobile view
   const updateMessagingPageView = useMobileMessagingViewStore(
-    (state) => state.toggle
+    (state) => state.toggle,
   );
 
+  console.log(data);
+  
   useEffect(() => {
     if (!selectedConversation && data && data.length !== 0) {
       setConversation(
@@ -43,7 +45,7 @@ const ChatList = () => {
         data[0].gender,
         data[0].recipient_uuid,
         data[0].recipient_nickname,
-        data[0].conversation_uuid
+        data[0].conversation_uuid,
       );
       setSenderUserInfo({
         conversation_history_id: data[0].conversation_id,
@@ -64,11 +66,9 @@ const ChatList = () => {
       return dateA.getTime() - dateB.getTime();
     })
     .filter((conversation) =>
-      searchFilterValue.length === 0
-        ? true
-        : conversation.recipient_nickname
-            .toLowerCase()
-            .includes(searchFilterValue.toLowerCase())
+      searchFilterValue.length === 0 ? true : conversation.recipient_nickname
+        .toLowerCase()
+        .includes(searchFilterValue.toLowerCase())
     )
     .map((conversation, index) => {
       return (
@@ -87,7 +87,7 @@ const ChatList = () => {
                 conversation.gender,
                 conversation.recipient_uuid,
                 conversation.recipient_nickname,
-                conversation.conversation_uuid
+                conversation.conversation_uuid,
               );
             }}
           >
@@ -97,7 +97,7 @@ const ChatList = () => {
                 src={getImagePath(
                   conversation.gallery_uuid,
                   conversation.gender,
-                  conversation.recipient_uuid
+                  conversation.recipient_uuid,
                 )}
                 alt="user profile"
               />

@@ -55,15 +55,22 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
   };
 
   return (
-    <div className="flex flex-col h-max justify-start w-full lg:w-3/4 border mx-auto">
+    <div className="flex h-full flex-col justify-start w-full lg:w-3/4 border mx-auto">
       <ProfileTopNav />
-      <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(onSubmit)}>
-          <ProfileHeader userId={userId} />
-          <AboutAccordion userId={parseInt(userId)} />
-        </form>
-      </FormProvider>
-      <GallerySection />
+      <div className="h-full overflow-y-scroll flex flex-col">
+        <FormProvider {...methods}>
+          <div className="flex flex-col">
+            <form
+              className="flex flex-col"
+              onSubmit={methods.handleSubmit(onSubmit)}
+            >
+              <ProfileHeader userId={userId} />
+              <AboutAccordion userId={parseInt(userId)} />
+            </form>
+            <GallerySection />
+          </div>
+        </FormProvider>
+      </div>
     </div>
   );
 };
