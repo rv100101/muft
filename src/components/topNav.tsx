@@ -94,18 +94,18 @@ function TopNav() {
           (
             <div className="flex">
               {
-                // <motion.li variants={motionTop80}>
-                //   <Button variant={"ghost"} className="font-light">
-                //     <a
-                //       className={cn(
-                //         "text-md",
-                //       )}
-                //       href="/about"
-                //     >
-                //       About Us
-                //     </a>
-                //   </Button>
-                // </motion.li>
+                <motion.li variants={motionTop80}>
+                  <Button variant={"ghost"} className="font-light">
+                    <a
+                      className={cn(
+                        "text-md",
+                      )}
+                      href="/about"
+                    >
+                      About Us
+                    </a>
+                  </Button>
+                </motion.li>
               }
               <motion.li variants={motionTop80}>
                 <Button variant={"ghost"} className="font-light">
@@ -116,7 +116,7 @@ function TopNav() {
                     href="https://support.softnames.com/"
                     target="_blank"
                   >
-                    Contact Us
+                    Contact 
                   </a>
                 </Button>
               </motion.li>
