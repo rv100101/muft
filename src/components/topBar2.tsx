@@ -1,4 +1,4 @@
-import { LogOutIcon, MenuIcon, Settings2Icon } from "lucide-react";
+import { LogOutIcon, MenuIcon } from "lucide-react";
 import { ReactNode } from "react";
 import {
   Sheet,

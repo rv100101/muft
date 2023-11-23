@@ -1,6 +1,4 @@
 import { useState } from "react";
-import logo from "@/assets/logo.svg";
-import helpIcon from "@/assets/auth/help-icon.png";
 import { Loader2, UserIcon } from "lucide-react";
 import { MailIcon } from "lucide-react";
 import { LockIcon } from "lucide-react";
