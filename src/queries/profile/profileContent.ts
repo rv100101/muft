@@ -56,7 +56,7 @@ const fetchBasicInfoInitialData = async (userId: number) => {
       religion: religion_name,
       ethnicity: ethnicity_name,
       maritalStatus: marital_status_name,
-      language: language_code,
+      language: language_name,
     };
     basicInformation = removeNull(basicInformation);
     return basicInformation;
@@ -256,7 +256,13 @@ const getBodyTypes = async () => {
   }
 };
 
-const saveInformation = async (profile: ProfileAbout, userId: number) => {
+type ProfileContent = ProfileAbout & {
+  nickname: string
+};
+
+const saveInformation = async (profile: ProfileContent, userId: number) => {
+  console.log(profile);
+  
   try {
     // gender
     if (profile.gender) {
@@ -276,20 +282,20 @@ const saveInformation = async (profile: ProfileAbout, userId: number) => {
 
     // birthInfo
     if (profile.birthInfo) {
-      await axiosQuery.post("/SaveBirthInfo", {
+      await axiosQuery.post("/SaveBirthday", {
         birthday: profile.birthInfo,
         member: userId,
       });
     }
 
     // age
-    if (profile.age) {
-      await axiosQuery.post("/SaveAge", {
-        age: profile.age,
-        member: userId,
-      });
-    }
-
+    // if (profile.age) {
+    //   await axiosQuery.post("/SaveAge", {
+    //     age: profile.age,
+    //     member: userId,
+    //   });
+    // }
+    //
     // ethnicity
     if (profile.ethnicity) {
       await axiosQuery.post("/SaveEthnicity", {
@@ -301,7 +307,7 @@ const saveInformation = async (profile: ProfileAbout, userId: number) => {
     // maritalStatus
     if (profile.maritalStatus) {
       await axiosQuery.post("/SaveMaritalStatus", {
-        maritalStatus: profile.maritalStatus,
+        marital_status: profile.maritalStatus,
         member: userId,
       });
     }
@@ -323,12 +329,12 @@ const saveInformation = async (profile: ProfileAbout, userId: number) => {
     }
 
     // employmentStatus
-    if (profile.employmentStatus) {
-      await axiosQuery.post("/SaveEmploymentStatus", {
-        employmentStatus: profile.employmentStatus,
-        member: userId,
-      });
-    }
+    // if (profile.employmentStatus) {
+    //   await axiosQuery.post("/SaveEmploymentStatus", {
+    //     employmentStatus: profile.employmentStatus,
+    //     member: userId,
+    //   });
+    // }
 
     // // occupation
     // if (profile.occupationId) {
@@ -363,25 +369,32 @@ const saveInformation = async (profile: ProfileAbout, userId: number) => {
     }
 
     // bodyType
-    if (profile.bodyType) {
-      await axiosQuery.post("/SaveBodyType", {
-        bodyType: profile.bodyType,
-        member: userId,
-      });
-    }
+    // if (profile.bodyType) {
+    //   await axiosQuery.post("/SaveBodyType", {
+    //     bodyType: profile.bodyType,
+    //     member: userId,
+    //   });
+    // }
 
     // favoriteFood
-    if (profile.favoriteFood) {
-      await axiosQuery.post("/SaveFavoriteFood", {
-        favoriteFood: profile.favoriteFood,
-        member: userId,
-      });
-    }
+    // if (profile.favoriteFood) {
+    //   await axiosQuery.post("/SaveFavoriteFood", {
+    //     favoriteFood: profile.favoriteFood,
+    //     member: userId,
+    //   });
+    // }
 
     // country
-    if (profile.country) {
-      await axiosQuery.post("/SaveCountry", {
-        country: profile.country,
+    // if (profile.country) {
+    //   await axiosQuery.post("/SaveCountry", {
+    //     country: profile.country,
+    //     member: userId,
+    //   });
+    // }
+
+    if (profile.nickname) {
+      await axiosQuery.post("/SaveNickname", {
+        nickname: profile.nickname,
         member: userId,
       });
     }
@@ -394,9 +407,7 @@ const saveInformation = async (profile: ProfileAbout, userId: number) => {
     //   });
     // }
 
-    // Add similar blocks for other fields...
   } catch (error) {
-    // Handle errors
     console.error("Error saving information:", error);
   }
 };

@@ -204,7 +204,8 @@ const BasicInformationForm = () => {
       </div>
 
       {/* add new */}
-      <div className="flex flex-row justify-between w-full px-5">
+      {
+        /* <div className="flex flex-row justify-between w-full px-5">
         {editMode
           ? (
             <div className="space-y-1 hover:cursor-pointer w-full items-center">
@@ -254,7 +255,8 @@ const BasicInformationForm = () => {
               </p>
             </div>
           )}
-      </div>
+      </div> */
+      }
       <div className="flex flex-row justify-between w-full px-5">
         {editMode
           ? (
@@ -406,9 +408,9 @@ const BasicInformationForm = () => {
                         </FormControl>
                         <SelectContent className="w-min">
                           {languages.map((data: Languages, index: number) => {
-                            const { language_code, language_name } = data;
+                            const { language_name } = data;
                             return (
-                              <SelectItem value={language_code} key={index}>
+                              <SelectItem value={language_name} key={index}>
                                 {language_name}
                               </SelectItem>
                             );
