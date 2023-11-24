@@ -28,6 +28,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
     (state) => state.toggleEditMode
   );
   const { formState } = useFormContext();
+  const isSaving = profileAboutContentStore(state => state.isSaving);
   const isEditing = profileAboutContentStore((state) => state.editMode);
   const { isLoading, isRefetching } = useQuery({
     queryKey: ["profileHeader", userId],
@@ -128,6 +129,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                       !user!.is_active ? "pl-3" : ""
                     }`}
                   >
+
                     @{`${headerValues.nickname?.toLowerCase()}`}
                   </p>
                 )}
@@ -137,17 +139,18 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                   {isEditing && (
                     <div className="flex space-x-2">
                       <Button
-                        onClick={() => {
-                          if (isEditing && !formState.isValid) {
-                            toast({
-                              variant: "destructive",
-                              title: "Cannot save your profile",
-                              description:
-                                "Please make sure all the required fields are satisfied.",
-                              duration: 1.5,
-                            });
-                          }
+                        onClick={!formState.isDirty ? ()=>{} : () => {
+                          // if (isEditing && !formState.isValid) {
+                          //   toast({
+                          //     variant: "destructive",
+                          //     title: "Cannot save your profile",
+                          //     description:
+                          //       "Please make sure all the required fields are satisfied.",
+                          //     duration: 4000,
+                          //   });
+                          // }
                         }}
+                        disabled={isSaving}
                         type={"submit"}
                         className={cn(
                           "text-xs rounded-2xl h-max",

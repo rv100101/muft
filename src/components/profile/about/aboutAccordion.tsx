@@ -13,6 +13,7 @@ import profileAboutContentStore, {
 import { useEffect } from "react";
 import {
   BodyType,
+  Country,
   Education,
   Ethnicity,
   FavoriteFood,
@@ -21,10 +22,12 @@ import {
   MaritalStatus,
   Nationality,
   Occupation,
+  State,
 } from "@/types/profile";
 import selectOptions from "@/zustand/profile/selectData/selectOptions";
 import { useLocation } from "wouter";
 const AboutAccordion = ({ userId }: { userId: number }) => {
+  const { data } = profileAboutContentStore();
   const setIsLoading = profileAboutContentStore((state) => state.setIsLoading);
   const setAboutData = profileAboutContentStore((state) => state.setData);
   const setEditModeFalse = profileAboutContentStore((state) =>
@@ -40,6 +43,9 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
     setOccupations,
     setFavoriteFoods,
     setBodyTypes,
+    setCountries,
+    setStates,
+    selectedCountryCode,
   } = selectOptions();
 
   const [location] = useLocation();
@@ -156,6 +162,37 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
     queryKey: ["bodyTypes"],
     onSuccess: (data: BodyType[]) => {
       setBodyTypes(data);
+    },
+  });
+
+  useQuery({
+    queryFn: () => profileContentQuery.editOptions.getCountries(),
+    refetchInterval: Infinity,
+    queryKey: ["countries"],
+    onSuccess: (data: Country[]) => {
+      setCountries(data);
+    },
+  });
+
+  const {
+    countries,
+  } = selectOptions();
+
+  const getCountryData = (name: string | null) => {
+    if (name) {
+      return countries.find((c) => c.country_name === name);
+    }
+    return null;
+  };
+
+  useQuery({
+    queryFn: () =>
+      profileContentQuery.editOptions.getStates(
+        getCountryData(data ? data.country : null)?.country_code ?? "",
+      ),
+    queryKey: ["states", selectedCountryCode],
+    onSuccess: (data: State[]) => {
+      setStates(data);
     },
   });
 
