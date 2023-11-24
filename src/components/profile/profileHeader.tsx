@@ -13,7 +13,6 @@ import { FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { toast } from "../ui/use-toast";
 import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
 import ActivateAccount from "@/pages/authenticatedPages/accountActivationPage";
 

@@ -9,20 +9,20 @@ import { useEffect } from "react";
 import profileHeaderStore from "@/zustand/profile/profileHeaderStore";
 import GallerySection from "@/components/profile/gallery/gallerySection";
 import profileContentQuery from "@/queries/profile/profileContent";
+import selectOptions from "@/zustand/profile/selectData/selectOptions";
 import { useUserStore } from "@/zustand/auth/user";
 import { useQueryClient } from "@tanstack/react-query";
-import selectOptions from "@/zustand/profile/selectData/selectOptions";
 const ProfilePageBody = ({ userId }: { userId: string }) => {
   const { toggleEditMode } = profileAboutContentStore();
   const headerValues = profileHeaderStore((state) => state.headerValues);
   const { data } = profileAboutContentStore();
-
-
+  const {setIsSaving} = profileAboutContentStore();
+  const {user} = useUserStore();
+  const queryClient = useQueryClient();
   const methods = useForm({
     defaultValues: emptyDefault,
     resolver: zodResolver(ProfileFormSchema),
   });
-
 
   useEffect(() => {
     if (data && headerValues) {
@@ -30,7 +30,6 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
         gender: data.gender,
         nationality: data.nationality,
         birthInfo: data.birthInfo,
-        age: parseInt(data.age),
         ethnicity: data.ethnicity,
         maritalStatus: data.maritalStatus,
         language: data.language,
@@ -132,8 +131,6 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
         country: country?.country_code,
         region: region?.state_id,
       };
-
-      console.log(finalFormData);
       await profileContentQuery.saveInformation(finalFormData, user!.member_id);
       queryClient.invalidateQueries({
         queryKey: ["profileHeader"],
