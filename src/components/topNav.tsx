@@ -93,7 +93,8 @@ function TopNav() {
         {!location.startsWith("/auth") &&
           (
             <div className="flex">
-              <motion.li variants={motionTop80}>
+              {
+                /* <motion.li variants={motionTop80}>
                 <Button variant={"ghost"} className="font-light">
                   <a
                     className={cn(
@@ -116,7 +117,8 @@ function TopNav() {
                     Subscription
                   </a>
                 </Button>
-              </motion.li>
+              </motion.li> */
+              }
               <motion.li variants={motionTop80}>
                 <Button variant={"ghost"} className="font-light">
                   <a
