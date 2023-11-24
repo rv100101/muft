@@ -39,7 +39,7 @@ const HomePage = () => {
   const { user } = useUserStore();
   const memberList = useHomepageViewStore((state) => state.modifiedMemberList);
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const getMembers = membersQuery.getMembers(user?.gender == 'F' ? 403 : 69);
+  const getMembers = membersQuery.getMembers(user?.gender == "F" ? 403 : 69);
   const getMemberLikes = membersQuery.getMemberLikes(user!.member_id);
   const getMemberFavorites = membersQuery.getMemberFavorites(user!.member_id);
 
@@ -135,7 +135,6 @@ const HomePage = () => {
   // if (likesLoading || favoritesLoading) {
   //   return <></>;
   // }
-
   return (
     <AuthenticatedLayout>
       <div className="flex justify-center lg:grid-cols-9 grid-cols-1 gap-4">

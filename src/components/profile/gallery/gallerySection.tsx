@@ -44,6 +44,10 @@ const GallerySection = ({ userId }: { userId: number }) => {
       const response = await axiosQuery.post("/Gallery", {
         member: user?.member_id,
       });
+<<<<<<< HEAD
+=======
+
+>>>>>>> f4325bee12eea5fae75341a68846d254a57bad1d
       return response.data;
     } catch (error) {
       console.error(error);
@@ -79,7 +83,7 @@ const GallerySection = ({ userId }: { userId: number }) => {
           formData,
           {
             headers: { "Content-Type": "multipart/form-data" },
-          },
+          }
         );
 
         if (response.status === 200) {
@@ -87,7 +91,6 @@ const GallerySection = ({ userId }: { userId: number }) => {
           setIsUploading(false);
           refetch();
         }
-        console.log(response);
       } catch (error) {
         console.error("Error uploading file:", error);
       }
@@ -146,17 +149,14 @@ const GallerySection = ({ userId }: { userId: number }) => {
               className="flex items-center rounded-full bg-[#fe599b] px-3 py-2 space-x-2 hover:cursor-pointer"
             >
               <div className="text-white">
-                {isUploading
-                  ? (
-                    <div className="flex flex-row text-xs items-center space-x-5 text-green">
-                      Uploading
-                      <div className="ml-5 w-5 h-5 border-t-4 border-pink-500 border-solid rounded-full animate-spin">
-                      </div>
-                    </div>
-                  )
-                  : (
-                    "Upload"
-                  )}
+                {isUploading ? (
+                  <div className="flex flex-row text-xs items-center space-x-5 text-green">
+                    Uploading
+                    <div className="ml-5 w-5 h-5 border-t-4 border-pink-500 border-solid rounded-full animate-spin"></div>
+                  </div>
+                ) : (
+                  "Upload"
+                )}
               </div>
               {/* <p className="text-white">Upload</p> */}
             </div>
@@ -165,6 +165,7 @@ const GallerySection = ({ userId }: { userId: number }) => {
       </div>
       {/* photos section */}
       <div className="grid grid-cols-3 gap-5 p-5 flex w-full">
+<<<<<<< HEAD
         {gallery && gallery.length !== 0 &&
           gallery.map((pic: Gallery, index: number) => {
             const path = getImagePathGallery(
@@ -172,6 +173,12 @@ const GallerySection = ({ userId }: { userId: number }) => {
               null,
               pic.member_uuid,
             );
+=======
+        {gallery &&
+          gallery.length !== 0 &&
+          gallery.map((pic: Gallery, index: number) => {
+            const path = getImagePath(pic.gallery_uuid, null, pic.member_uuid);
+>>>>>>> f4325bee12eea5fae75341a68846d254a57bad1d
             return (
               <img
                 key={index} // Don't forget to add a unique key to each image

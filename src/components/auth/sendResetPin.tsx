@@ -30,7 +30,6 @@ const SendResetPin = () => {
   const sendResetPinMutation = useMutation({
     mutationFn: passwordResetQuery.getPasswordPin,
     onSuccess: (res) => {
-      console.log(res);
       if (typeof res.data == "string") {
         toast({
           variant: "destructive",
