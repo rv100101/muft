@@ -11,7 +11,7 @@ import profileQuery from "@/queries/profile/profileHeader";
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
 import { FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
-import { useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
 import ActivateAccount from "@/pages/authenticatedPages/accountActivationPage";
@@ -27,8 +27,10 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
     (state) => state.toggleEditMode
   );
   const { formState } = useFormContext();
-  const isSaving = profileAboutContentStore(state => state.isSaving);
+  const isSaving = profileAboutContentStore((state) => state.isSaving);
   const isEditing = profileAboutContentStore((state) => state.editMode);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [selectedFile, setSelectedFile] = useState<string | null>(null);
   const { isLoading, isRefetching } = useQuery({
     queryKey: ["profileHeader", userId],
     queryFn: fetchInitialData,
@@ -44,6 +46,24 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
   if (isLoading || isRefetching) {
     return <ProfileHeaderSkeleton />;
   }
+
+  const handleGalleryUpload = () => {
+    // Trigger a click event on the hidden file input
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result as string; // Result is a data URL
+        setSelectedFile(base64String);
+      };
+      reader.readAsDataURL(file); // Read file as data URL
+    }
+  };
 
   return (
     <Dialog>
@@ -64,16 +84,28 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                 if (isEditing) setShowCamera(false);
               }}
               className="relative disabled:opacity-100 h-full w-40 bg-transparent py-0 px-0"
+              onClick={handleGalleryUpload}
             >
               {showCamera && <CameraIcon className="absolute" fill="white" />}
               <img
                 className={`select-none object-cover h-32 w-32 overflow-clip border-4 border-primary rounded-full`}
-                src={getImagePath(
-                  headerValues.gallery_uuid,
-                  headerValues.gender,
-                  headerValues.member_uuid?.toString()
-                )}
+                src={
+                  selectedFile
+                    ? selectedFile
+                    : getImagePath(
+                        headerValues.gallery_uuid,
+                        headerValues.gender,
+                        headerValues.member_uuid?.toString()
+                      )
+                }
                 alt="no image selected"
+              />
+              <input
+                type="file"
+                name="profilePhoto"
+                onChange={handleFileChange}
+                className="invisible w-0 h-0"
+                ref={fileInputRef}
               />
             </Button>
           }
@@ -89,14 +121,16 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                     <p className="font-semibold text-[#171717] text-lg ">
                       {headerValues.nickname}
                     </p>
-                    <DialogTrigger>
-                      <button
-                        type="button"
-                        className="rounded-full bg-green-300 px-4 py-2 text-xs text-green-600 border hover:text-white hover:bg-green-500"
-                      >
-                        Activate Account
-                      </button>
-                    </DialogTrigger>
+                    {!user!.is_active && (
+                      <DialogTrigger>
+                        <button
+                          type="button"
+                          className="rounded-full bg-green-300 px-4 py-2 text-xs text-green-600 border hover:text-white hover:bg-green-500"
+                        >
+                          Activate Account
+                        </button>
+                      </DialogTrigger>
+                    )}
                   </div>
                 )}
                 {isEditing && (
@@ -128,7 +162,6 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                       !user!.is_active ? "pl-3" : ""
                     }`}
                   >
-
                     @{`${headerValues.nickname?.toLowerCase()}`}
                   </p>
                 )}
@@ -138,17 +171,21 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                   {isEditing && (
                     <div className="flex space-x-2">
                       <Button
-                        onClick={!formState.isDirty ? ()=>{} : () => {
-                          // if (isEditing && !formState.isValid) {
-                          //   toast({
-                          //     variant: "destructive",
-                          //     title: "Cannot save your profile",
-                          //     description:
-                          //       "Please make sure all the required fields are satisfied.",
-                          //     duration: 4000,
-                          //   });
-                          // }
-                        }}
+                        onClick={
+                          !formState.isDirty
+                            ? () => {}
+                            : () => {
+                                // if (isEditing && !formState.isValid) {
+                                //   toast({
+                                //     variant: "destructive",
+                                //     title: "Cannot save your profile",
+                                //     description:
+                                //       "Please make sure all the required fields are satisfied.",
+                                //     duration: 4000,
+                                //   });
+                                // }
+                              }
+                        }
                         disabled={isSaving}
                         type={"submit"}
                         className={cn(

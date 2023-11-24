@@ -29,8 +29,6 @@ const EnterResetCode = () => {
   const verifyPinMutation = useMutation({
     mutationFn: passwordResetQuery.verifyPasswordPin,
     onSuccess: (res) => {
-      console.log(res);
-
       if (!res.data[0].verified) {
         pinForm.setFieldError("pin", "Invalid pin");
         toast({

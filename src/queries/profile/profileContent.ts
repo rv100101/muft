@@ -30,7 +30,6 @@ const fetchBasicInfoInitialData = async (userId: number) => {
     const { religion_name, ethnicity_name } = background.data;
     const { marital_status_name } = maritalStatus.data;
     const { language_name } = languages.data[languages.data.length - 1];
-    console.log(language_name);
 
     const formattedDate = new Date(date_of_birth).toLocaleDateString("en-US", {
       year: "numeric",
@@ -187,7 +186,6 @@ const getEducation = async () => {
 const getOccupations = async () => {
   try {
     const response = await axiosQuery.post("/Occupation");
-    console.log(response);
     return response.data;
   } catch (error) {
     return [];
