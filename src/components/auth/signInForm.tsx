@@ -51,7 +51,6 @@ const SignInForm = () => {
       setIsLoading(true);
 
       const signInData = await authQuery.signIn(values.email, values.password);
-      console.log(signInData);
       if (typeof signInData.data == "string") {
         setIsLoading(false);
         formik.values.password = "";

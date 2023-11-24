@@ -23,29 +23,28 @@ const ChatInput = () => {
   const inputMessageValue = useMessageInputStore((state) => state.value);
   const [finalInputMessage, setfinalInputMessage] = useState(inputMessageValue);
   const currentConversation = useConversationHistoryStore(
-    (state) => state.conversation,
+    (state) => state.conversation
   );
   const updateLastSentMessageStatus = useSelectedConversationData(
-    (status) => status.updateMessageStatus,
+    (status) => status.updateMessageStatus
   );
   const senderInfo = useSenderInfo((state) => state.senderInfo);
 
   const appendNewMessage = useSelectedConversationData(
-    (state) => state.appendNewMessage,
+    (state) => state.appendNewMessage
   );
 
   const sendMessage = async () => {
     await messagingQuery.sendMessage(
       currentConversation!.conversation_uuid,
       finalInputMessage,
-      currentConversation!.memberId,
+      currentConversation!.memberId
     );
   };
 
   const mutateConversation = useMutation({
     mutationFn: sendMessage,
     onSuccess: () => {
-      console.log("invalidated");
       queryClient.invalidateQueries({
         queryKey: ["current-selected-conversation"],
       });
@@ -56,8 +55,8 @@ const ChatInput = () => {
     },
   });
 
-  useEffect(()=>{
-    setInputMessage('');
+  useEffect(() => {
+    setInputMessage("");
   }, [currentSelectedConversation, setInputMessage]);
 
   const handleMessageSend = () => {

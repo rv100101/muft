@@ -13,7 +13,6 @@ const EnterResetCode = () => {
     (state) => state.changeState
   );
   const email = usePasswordResetState((state) => state.email);
-  console.log(email);
 
   const pinForm = useFormik({
     initialValues: { pin: "" },

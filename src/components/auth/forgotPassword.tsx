@@ -5,8 +5,7 @@ import { usePasswordResetState } from "@/zustand/auth/passwordReset";
 
 const ForgotPassword = () => {
   const passwordResetState = usePasswordResetState((state) => state.phase);
-  console.log(passwordResetState);
-  
+
   if (passwordResetState === "SEND") {
     return <SendResetPin />;
   }

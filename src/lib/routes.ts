@@ -8,7 +8,7 @@ import SignUpPage from "@/pages/auth/signUpPage";
 import SignInPage from "@/pages/auth/signInPage";
 import HomePage from "@/pages/homePage";
 import LikesAndFavouritesPage from "@/pages/authenticatedPages/likesAndFavouritesPage";
-import ActivateAccount from "@/pages/authenticatedPages/accountActivationPage";
+// import ActivateAccount from "@/pages/authenticatedPages/accountActivationPage";
 import AboutPage from "@/pages/aboutPage";
 import SubscriptionPage from "@/pages/subscriptionPage";
 
@@ -19,9 +19,9 @@ export const routesWithFooterAndTopNav = [
   "/release-notes",
   "/auth/signup",
   "/auth/signin",
-  "/activate",
-  '/about',
-  '/subscription'
+  // "/activate",
+  "/about",
+  "/subscription",
 ];
 
 const pageRoutes = {
@@ -66,21 +66,21 @@ const pageRoutes = {
     component: HomePage,
   },
   likesAndFavorites: {
-    path: '/likes-and-favourites',
-    component: LikesAndFavouritesPage
+    path: "/likes-and-favourites",
+    component: LikesAndFavouritesPage,
   },
-  activateAccount: {
-    path: "/activate",
-    component: ActivateAccount
-  },
+  // activateAccount: {
+  //   path: "/activate",
+  //   component: ActivateAccount,
+  // },
   about: {
-    path: '/about',
-    component: AboutPage
+    path: "/about",
+    component: AboutPage,
   },
   subscription: {
-    path: '/subscription',
-    component: SubscriptionPage
-  }
+    path: "/subscription",
+    component: SubscriptionPage,
+  },
 };
 
 export default pageRoutes;

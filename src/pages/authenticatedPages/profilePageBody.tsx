@@ -14,40 +14,35 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
   const headerValues = profileHeaderStore((state) => state.headerValues);
   const { data } = profileAboutContentStore();
 
-  console.log(data);
-
   const methods = useForm({
     defaultValues: emptyDefault,
     resolver: zodResolver(ProfileFormSchema),
   });
 
-  useEffect(
-    () => {
-      if (data && headerValues) {
-        methods.reset({
-          gender: data.gender,
-          nationality: data.nationality,
-          birthInfo: data.birthInfo,
-          age: parseInt(data.age),
-          ethnicity: data.ethnicity,
-          maritalStatus: data.maritalStatus,
-          language: data.language,
-          education: data.education,
-          employmentStatus: data.employmentStatus,
-          occupationTitle: data.occupationTitle,
-          income: data.income,
-          height: data.height,
-          weight: data.weight,
-          bodyType: data.bodyType,
-          favoriteFood: data.favoriteFood,
-          country: data.country,
-          region: data.region,
-          nickname: headerValues?.nickname ?? "",
-        });
-      }
-    },
-    [data, headerValues],
-  );
+  useEffect(() => {
+    if (data && headerValues) {
+      methods.reset({
+        gender: data.gender,
+        nationality: data.nationality,
+        birthInfo: data.birthInfo,
+        age: parseInt(data.age),
+        ethnicity: data.ethnicity,
+        maritalStatus: data.maritalStatus,
+        language: data.language,
+        education: data.education,
+        employmentStatus: data.employmentStatus,
+        occupationTitle: data.occupationTitle,
+        income: data.income,
+        height: data.height,
+        weight: data.weight,
+        bodyType: data.bodyType,
+        favoriteFood: data.favoriteFood,
+        country: data.country,
+        region: data.region,
+        nickname: headerValues?.nickname ?? "",
+      });
+    }
+  }, [data, headerValues, methods]);
 
   const onSubmit = (data: any) => {
     toggleEditMode();

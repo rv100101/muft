@@ -3,10 +3,13 @@ import axiosQuery from "./axios";
 
 const getMembers = async (memberId: number) => {
   try {
+    // console.log("member: ", memberId);
     const res = await axiosQuery.post(
       "https://muffinfunction.azurewebsites.net/api/HomePage",
       { member: memberId }
+      // { member: 403 }
     );
+
     // Loop through the response array and add imagePath property to each member object
     const membersWithImagePath = res.data.map(
       (member: {

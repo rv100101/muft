@@ -15,23 +15,16 @@ const removeNull = (obj: Record<string, string>): Record<string, string> => {
 
 const fetchBasicInfoInitialData = async (userId: number) => {
   try {
-    const basic = await axiosQuery.post(
-      "/GetBasicInfo",
-      { member: userId },
-    );
-    const background = await axiosQuery.post(
-      "/GetBackground",
-      { member: userId },
-    );
-    const maritalStatus = await axiosQuery.post(
-      "/GetMaritalStatus",
-      { member: userId },
-    );
-    const languages: { data: [] } = await axiosQuery.post(
-      "/GetLanguages",
-      { member: userId },
-    );
-    console.log(languages);
+    const basic = await axiosQuery.post("/GetBasicInfo", { member: userId });
+    const background = await axiosQuery.post("/GetBackground", {
+      member: userId,
+    });
+    const maritalStatus = await axiosQuery.post("/GetMaritalStatus", {
+      member: userId,
+    });
+    const languages: { data: [] } = await axiosQuery.post("/GetLanguages", {
+      member: userId,
+    });
 
     const { gender, nationality, date_of_birth, age } = basic.data;
     const { religion_name, ethnicity_name } = background.data;
@@ -40,14 +33,11 @@ const fetchBasicInfoInitialData = async (userId: number) => {
       languages.data[languages.data.length - 1];
     console.log(language_name);
 
-    const formattedDate = new Date(date_of_birth).toLocaleDateString(
-      "en-US",
-      {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      },
-    );
+    const formattedDate = new Date(date_of_birth).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
     let basicInformation: Record<string, string> = {
       gender: gender,
       nationality: nationality,
@@ -70,15 +60,13 @@ const fetchBasicInfoInitialData = async (userId: number) => {
 
 const fetchWorkEducationInitialData = async (userId: number) => {
   try {
-    const response1 = await axiosQuery.post(
-      "/GetBackground",
-      { member: userId },
-    );
+    const response1 = await axiosQuery.post("/GetBackground", {
+      member: userId,
+    });
 
-    const response2 = await axiosQuery.post(
-      "/GetEmployment",
-      { member: userId },
-    );
+    const response2 = await axiosQuery.post("/GetEmployment", {
+      member: userId,
+    });
 
     const { education_name } = response1.data;
     const { employment_status_name, occupation_title, income_range } =
@@ -91,7 +79,6 @@ const fetchWorkEducationInitialData = async (userId: number) => {
       income: income_range,
     };
     workEducationData = removeNull(workEducationData);
-    console.log(workEducationData);
 
     return workEducationData;
   } catch (err) {
@@ -101,25 +88,17 @@ const fetchWorkEducationInitialData = async (userId: number) => {
 
 const fetchDetailsInitialData = async (userId: number) => {
   try {
-    const response1 = await axiosQuery.post(
-      "/GetHeight",
-      { member: userId },
-    );
+    const response1 = await axiosQuery.post("/GetHeight", { member: userId });
 
-    const response2 = await axiosQuery.post(
-      "/GetWeight",
-      { member: userId },
-    );
+    const response2 = await axiosQuery.post("/GetWeight", { member: userId });
 
-    const response3 = await axiosQuery.post(
-      "/GetAppearance",
-      { member: userId },
-    );
+    const response3 = await axiosQuery.post("/GetAppearance", {
+      member: userId,
+    });
 
-    const response4 = await axiosQuery.post(
-      "/GetFavoriteFood",
-      { member: userId },
-    );
+    const response4 = await axiosQuery.post("/GetFavoriteFood", {
+      member: userId,
+    });
 
     const { height } = response1.data[0];
 
@@ -142,10 +121,7 @@ const fetchDetailsInitialData = async (userId: number) => {
 
 const fetchLocationInitialData = async (userId: number) => {
   try {
-    const response = await axiosQuery.post(
-      "/GetCountry",
-      { member: userId },
-    );
+    const response = await axiosQuery.post("/GetCountry", { member: userId });
     const { country_name, region_name } = response.data[0];
     let locationData: Record<string, string> = {
       region: region_name,

@@ -16,22 +16,23 @@ function App() {
   useEffect(() => {
     runOneSignal();
   }, []);
-  
+
   return (
     <div
       className={cn(
-        location == "/auth/signin" ? "h-screen flex flex-col" : "h-full",
+        location == "/auth/signin" ? "h-screen flex flex-col" : "h-full"
       )}
     >
       <div className="h-max">
-        {routesWithFooterAndTopNav.includes(location) &&
-          (!user || !user.is_active) && <TopNav />}
+        {routesWithFooterAndTopNav.includes(location) && !user && <TopNav />}
       </div>
       <Route
         path="/"
-        component={user
-          ? pageRoutes.homePage.component
-          : pageRoutes.landingPage.component}
+        component={
+          user
+            ? pageRoutes.homePage.component
+            : pageRoutes.landingPage.component
+        }
       />
       <div className="flex-auto h-full">
         <Route
@@ -42,10 +43,10 @@ function App() {
           path={pageRoutes.signIn.path}
           component={pageRoutes.signIn.component}
         />
-        <Route
+        {/* <Route
           path={pageRoutes.activateAccount.path}
           component={pageRoutes.activateAccount.component}
-        />
+        /> */}
       </div>
 
       <div className="md:mx-12 lg:mx-36">
@@ -84,9 +85,7 @@ function App() {
             path={pageRoutes.notificationsPage.path}
             component={pageRoutes.notificationsPage.component}
           />
-          <Route
-            path={"/profile/:id"}
-          >
+          <Route path={"/profile/:id"}>
             {(params) => <ViewUser id={params.id} />}
           </Route>
           <Route
@@ -101,11 +100,11 @@ function App() {
 
       {!user &&
         (location === pageRoutes.messagingPage.path ||
-          location === pageRoutes.notificationsPage.path) &&
-        <Redirect to="/auth/signin" />}
+          location === pageRoutes.notificationsPage.path) && (
+          <Redirect to="/auth/signin" />
+        )}
 
-      {routesWithFooterAndTopNav.includes(location) &&
-        (!user || !user.is_active) && (
+      {routesWithFooterAndTopNav.includes(location) && !user && (
         <div className="bg-[#0C1223] h-max">
           <Footer />
         </div>

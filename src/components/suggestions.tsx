@@ -259,7 +259,11 @@ const Suggestions = ({ members }: { members: Member[] }) => {
         </div>
       </div>
       <ul className="no-scrollbar border-top h-full p-2 space-y-2 lg:space-y-4 overflow-y-auto rounded-lg mb-5">
-        {suggestions}
+        {members.length > 0 ? (
+          suggestions
+        ) : (
+          <div className="p-3">No Suggestions</div>
+        )}
       </ul>
       <div className="w-full border-t pt-2 hidden lg:block">
         <ul className="flex items-center justify-center list-none space-x-4 text-xs md:text-md">
