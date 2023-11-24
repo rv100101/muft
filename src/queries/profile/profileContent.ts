@@ -256,7 +256,13 @@ const getBodyTypes = async () => {
   }
 };
 
-const saveInformation = async (profile: ProfileAbout, userId: number) => {
+type ProfileContent = ProfileAbout & {
+  nickname: string
+};
+
+const saveInformation = async (profile: ProfileContent, userId: number) => {
+  console.log(profile);
+  
   try {
     // gender
     if (profile.gender) {
@@ -386,6 +392,13 @@ const saveInformation = async (profile: ProfileAbout, userId: number) => {
       });
     }
 
+    if (profile.nickname) {
+      await axiosQuery.post("/SaveNickname", {
+        name: profile.nickname,
+        member: userId,
+      });
+    }
+
     // state
     // if (profile.state) {
     //   await axiosQuery.post("/SaveState", {
@@ -394,9 +407,7 @@ const saveInformation = async (profile: ProfileAbout, userId: number) => {
     //   });
     // }
 
-    // Add similar blocks for other fields...
   } catch (error) {
-    // Handle errors
     console.error("Error saving information:", error);
   }
 };

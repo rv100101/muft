@@ -8,18 +8,22 @@ import { emptyDefault, ProfileFormSchema } from "@/lib/profileZodSchema";
 import { useEffect } from "react";
 import profileHeaderStore from "@/zustand/profile/profileHeaderStore";
 import GallerySection from "@/components/profile/gallery/gallerySection";
+import profileContentQuery from "@/queries/profile/profileContent";
+import { useUserStore } from "@/zustand/auth/user";
 
 const ProfilePageBody = ({ userId }: { userId: string }) => {
   const { toggleEditMode } = profileAboutContentStore();
   const headerValues = profileHeaderStore((state) => state.headerValues);
   const { data } = profileAboutContentStore();
-
-  console.log(data);
-
+  const { user } = useUserStore();
   const methods = useForm({
     defaultValues: emptyDefault,
     resolver: zodResolver(ProfileFormSchema),
   });
+
+  const setIsSaving  = profileAboutContentStore((state) =>
+    state.setIsSaving
+  );
 
   useEffect(
     () => {
@@ -49,9 +53,20 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
     [data, headerValues],
   );
 
-  const onSubmit = (data: any) => {
+  const onSubmit = async (formData: any) => {
+    console.log(formData);
+    if (!methods.formState.isDirty) {
+      toggleEditMode();
+      return;
+    }
+    setIsSaving(true);
+    try {
+      await profileContentQuery.saveInformation(formData, user!.member_id);
+    } catch (error) {
+      console.log(error);
+    }
+    setIsSaving(false);
     toggleEditMode();
-    console.log(data);
   };
 
   return (

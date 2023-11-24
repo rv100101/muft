@@ -21,8 +21,6 @@ const GallerySection = () => {
   const { user } = useUserStore();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  console.log(user?.member_id);
-
   const handleGalleryUpload = () => {
     // Trigger a click event on the hidden file input
     if (fileInputRef.current) {
@@ -166,7 +164,7 @@ const GallerySection = () => {
         </div>
       </div>
       {/* photos section */}
-      <div className="grid grid-cols-3 gap-5 p-5 flex">
+      <div className="grid grid-cols-3 gap-5 p-5 flex w-full">
         {gallery && gallery.length !== 0 && gallery.map((pic: Gallery, index: number) => {
           const path = getImagePath(pic.gallery_uuid, null, pic.member_uuid);
           return (

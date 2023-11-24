@@ -26,6 +26,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
     state.toggleEditMode
   );
   const { formState } = useFormContext();
+  const isSaving = profileAboutContentStore(state => state.isSaving);
   const isEditing = profileAboutContentStore((state) => state.editMode);
   const { isLoading, isRefetching } = useQuery(
     {
@@ -85,6 +86,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
               )}
               {isEditing && (
                 <FormField
+                  disabled={isSaving}
                   name="nickname"
                   render={({ field }) => {
                     return (
@@ -128,6 +130,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                             });
                           }
                         }}
+                        disabled={isSaving}
                         type={"submit"}
                         className={cn(
                           "text-xs rounded-2xl h-max",

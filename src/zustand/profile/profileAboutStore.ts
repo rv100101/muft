@@ -33,29 +33,41 @@ interface ProfileAboutState {
   editMode: boolean;
   toggleEditMode: () => void;
   setEditModeFalse: () => void;
+  isSaving: boolean;
+  setIsSaving: (val: boolean) => void;
 }
 
 const profileAboutContentStore = create<ProfileAboutState>((set) => (
   {
     data: null,
-    setData: (val) => set(()=>({
-      data: val
-    })),
+    setData: (val) =>
+      set(() => ({
+        data: val,
+      })),
     isLoading: false,
-    setIsLoading: (val) => set(()=>({
-      isLoading: val
-    })),
+    setIsLoading: (val) =>
+      set(() => ({
+        isLoading: val,
+      })),
     refetch: false,
-    setRefetch: (val) => set(()=>({
-      isLoading: val
-    })),
+    setRefetch: (val) =>
+      set(() => ({
+        isLoading: val,
+      })),
     editMode: false,
-    toggleEditMode: () => set((state) => ({
-      editMode: !state.editMode
-    })),
-    setEditModeFalse: () => set(()=>({
-      editMode: false, 
-    })),
+    toggleEditMode: () =>
+      set((state) => ({
+        editMode: !state.editMode,
+      })),
+    setEditModeFalse: () =>
+      set(() => ({
+        editMode: false,
+      })),
+    isSaving: false,
+    setIsSaving: (val: boolean) =>
+      set(() => {
+        return { isSaving: val };
+      }),
   }
-))
+));
 export default profileAboutContentStore;
