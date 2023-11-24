@@ -10,20 +10,17 @@ const ChatMessages = () => {
   const scrollableDivRef = useRef<HTMLDivElement | null>(null);
 
   const latestConversation = useLatestConversationStore(
-    (state) => state.conversation,
+    (state) => state.conversation
   );
   const conversationMessages = useSelectedConversationData(
-    (state) => state.messages,
+    (state) => state.messages
   );
   const setConversationMessages = useSelectedConversationData(
-    (state) => state.setMessages,
+    (state) => state.setMessages
   );
   if (conversationMessages) {
     console.log(conversationMessages![conversationMessages!.length - 1]);
   }
-
-  console.log(latestConversation);
-  
 
   const { isLoading, isSuccess, data } = useQuery({
     queryKey: ["current-selected-conversation", latestConversation],
@@ -33,7 +30,7 @@ const ChatMessages = () => {
     queryFn: () =>
       messagingQuery.getConversationHistory(
         latestConversation!.conversationId,
-        latestConversation!.memberId,
+        latestConversation!.memberId
       ),
   });
 
@@ -53,8 +50,10 @@ const ChatMessages = () => {
 
   const messages = conversationMessages?.map((message, index) => {
     const gray = message.created_user == latestConversation?.memberId;
-    let date = moment(message.created_date, moment.ISO_8601, true).isValid() ? `${message.created_date}Z` : "isLoading";
-    
+    let date = moment(message.created_date, moment.ISO_8601, true).isValid()
+      ? `${message.created_date}Z`
+      : "isLoading";
+
     if (date !== "isLoading" && date !== "failed") {
       date = moment(date).fromNow();
       console.log(date);
@@ -68,7 +67,7 @@ const ChatMessages = () => {
       <div
         className={cn(
           "flex flex-col w-full space-y-1",
-          gray ? "items-end" : "items-start",
+          gray ? "items-end" : "items-start"
         )}
         key={index}
       >
@@ -77,7 +76,7 @@ const ChatMessages = () => {
             "p-4 rounded-lg",
             gray
               ? "items-start bg-[#E8ECEF]"
-              : "items-end bg-primary text-white",
+              : "items-end bg-primary text-white"
           )}
         >
           <p className="text-sm">{message.conversation_text}</p>
@@ -100,7 +99,8 @@ const ChatMessages = () => {
       ref={scrollableDivRef}
       className={cn(
         "h-full w-full space-y-4 overflow-y-scroll p-4 bg-[#F7F8FA]",
-        isLoading && "bg-white", !latestConversation && 'bg-[#F7F8FA] overflow-y-auto'
+        isLoading && "bg-white",
+        !latestConversation && "bg-[#F7F8FA] overflow-y-auto"
       )}
     >
       {latestConversation && isLoading && <ChatMessagesLoadingSkeleton />}

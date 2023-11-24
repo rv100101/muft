@@ -16,8 +16,8 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
   const { toggleEditMode } = profileAboutContentStore();
   const headerValues = profileHeaderStore((state) => state.headerValues);
   const { data } = profileAboutContentStore();
-  const {setIsSaving} = profileAboutContentStore();
-  const {user} = useUserStore();
+  const { setIsSaving } = profileAboutContentStore();
+  const { user } = useUserStore();
   const queryClient = useQueryClient();
   const methods = useForm({
     defaultValues: emptyDefault,
@@ -47,7 +47,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
       });
     }
   }, [data, headerValues, methods]);
-  
+
   const {
     educations,
     incomes,
@@ -69,8 +69,8 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
     ethnicities.find((ethnicity) => ethnicity.ethnicity_name === ethnicityName);
 
   const getNationality = (nationalityName: string) =>
-    nationalities.find((nationality) =>
-      nationality.nationality === nationalityName
+    nationalities.find(
+      (nationality) => nationality.nationality === nationalityName
     );
 
   const getEducation = (name: string) =>
