@@ -13,7 +13,6 @@ import { FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { toast } from "../ui/use-toast";
 
 const ProfileHeader = ({ userId }: { userId: string }) => {
   const [showCamera, setShowCamera] = useState(false);
@@ -120,15 +119,15 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                     <div className="flex space-x-2">
                       <Button
                         onClick={!formState.isDirty ? ()=>{} : () => {
-                          if (isEditing && !formState.isValid) {
-                            toast({
-                              variant: "destructive",
-                              title: "Cannot save your profile",
-                              description:
-                                "Please make sure all the required fields are satisfied.",
-                              duration: 1.5,
-                            });
-                          }
+                          // if (isEditing && !formState.isValid) {
+                          //   toast({
+                          //     variant: "destructive",
+                          //     title: "Cannot save your profile",
+                          //     description:
+                          //       "Please make sure all the required fields are satisfied.",
+                          //     duration: 4000,
+                          //   });
+                          // }
                         }}
                         disabled={isSaving}
                         type={"submit"}

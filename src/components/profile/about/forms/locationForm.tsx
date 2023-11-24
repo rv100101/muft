@@ -1,18 +1,34 @@
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
 import { Briefcase, MapPin } from "lucide-react";
 import FormSkeletonLoading from "./formSkeletonLoading";
-import { Input } from "@/components/ui/input";
 import {
+  FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import selectOptions from "@/zustand/profile/selectData/selectOptions";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useFormContext } from "react-hook-form";
+import { Country, State } from "@/types/profile";
 
 const LocationForm = () => {
+  const { control } = useFormContext();
   const isLoading = profileAboutContentStore((state) => state.isLoading);
   const data = profileAboutContentStore((state) => state.data);
   const editMode = profileAboutContentStore((state) => state.editMode);
+  const countries = selectOptions((state) => state.countries);
+  const states = selectOptions((state) => state.states);
+  const setSelectedCountryCode = selectOptions((state) =>
+    state.setSelectedCountryCode
+  );
 
   if (isLoading) {
     return (
@@ -23,6 +39,10 @@ const LocationForm = () => {
       </div>
     );
   }
+
+  const getCountryData = (name: string) =>
+    countries.find((c) => c.country_name === name);
+
   return (
     <div className="flex flex-col w-full space-y-4">
       <div className="flex flex-row justify-between w-full px-5">
@@ -34,21 +54,46 @@ const LocationForm = () => {
                 render={({ field }) => {
                   return (
                     <FormItem>
-                      <FormLabel className="text-primary" htmlFor="country">
-                        Country 
+                      <FormLabel
+                        className="text-primary"
+                        htmlFor="country"
+                      >
+                        Country
                       </FormLabel>
-                      <Input
-                        placeholder="Enter country"
-                        type="text"
-                        value={field.value}
-                        onChange={field.onChange}
-                        className="outline-0 border rounded-lg w-full py-3 px-5"
-                        name="country"
-                      />
+                      <Select
+                        onValueChange={(e) => {
+                          field.onChange(e);
+                          const country = getCountryData(e);
+                          setSelectedCountryCode(country!.country_code);
+                        }}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue
+                              placeholder={"Select country"}
+                            />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {countries &&
+                            countries.map((data: Country, index: number) => {
+                              return (
+                                <SelectItem
+                                  value={data.country_name}
+                                  key={index}
+                                >
+                                  {data.country_name}
+                                </SelectItem>
+                              );
+                            })}
+                        </SelectContent>
+                      </Select>
                       <FormMessage />
                     </FormItem>
                   );
                 }}
+                control={control}
               />
             </div>
           )
@@ -74,22 +119,42 @@ const LocationForm = () => {
                 render={({ field }) => {
                   return (
                     <FormItem>
-                      <FormLabel className="text-primary" htmlFor="region">
-                        Region/State
+                      <FormLabel
+                        className="text-primary"
+                        htmlFor="region"
+                      >
+                        State
                       </FormLabel>
-                      <Input
-                        placeholder="Enter state"
-                        type="text"
+                      <Select
+                        onValueChange={field.onChange}
                         defaultValue={field.value}
-                        onChange={field.onChange}
-                        className="outline-0 border border rounded-lg w-full py-3 px-5"
-                        name="region"
-                        readOnly
-                      />
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue
+                              placeholder={"Select state"}
+                            />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {states &&
+                            states.map((data: State, index: number) => {
+                              return (
+                                <SelectItem
+                                  value={data.state_name}
+                                  key={index}
+                                >
+                                  {data.state_name}
+                                </SelectItem>
+                              );
+                            })}
+                        </SelectContent>
+                      </Select>
                       <FormMessage />
                     </FormItem>
                   );
                 }}
+                control={control}
               />
             </div>
           )

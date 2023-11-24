@@ -1,4 +1,16 @@
-import { BodyType, Education, Ethnicity, FavoriteFood, Income, Languages, MaritalStatus, Nationality, Occupation } from "@/types/profile";
+import {
+  BodyType,
+  Country,
+  Education,
+  Ethnicity,
+  FavoriteFood,
+  Income,
+  Languages,
+  MaritalStatus,
+  Nationality,
+  Occupation,
+  State,
+} from "@/types/profile";
 import { create } from "zustand";
 
 interface SelectOptions {
@@ -12,7 +24,7 @@ interface SelectOptions {
   setLanguages: (val: Languages[]) => void;
   educations: Education[];
   setEducations: (val: Education[]) => void;
-  incomes : Income[];
+  incomes: Income[];
   setIncomes: (val: Income[]) => void;
   occupations: Occupation[];
   setOccupations: (val: Occupation[]) => void;
@@ -20,6 +32,12 @@ interface SelectOptions {
   setBodyTypes: (val: BodyType[]) => void;
   favoriteFoods: FavoriteFood[];
   setFavoriteFoods: (val: FavoriteFood[]) => void;
+  countries: Country[];
+  setCountries: (val: Country[]) => void;
+  states: State[];
+  setStates: (val: State[]) => void;
+  selectedCountryCode: string;
+  setSelectedCountryCode: (val: string) => void;
 }
 
 const selectOptions = create<SelectOptions>((set) => ({
@@ -32,33 +50,57 @@ const selectOptions = create<SelectOptions>((set) => ({
   incomes: [],
   bodyTypes: [],
   favoriteFoods: [],
-  setNationalities: (val) => set(()=>({
-    nationalities: val
-  })),
-  setEthnicities: (val) => set(()=>({
-    ethnicities: val
-  })),
-  setMaritalStatus: (val) => set(()=>({
-    maritalStatus: val
-  })),
-  setLanguages: (val) => set(()=>({
-    languages: val
-  })),
-  setOccupations: (val) => set(()=>({
-    occupations: val
-  })),
-  setIncomes: (val) => set(()=>({
-    incomes: val
-  })),
-  setEducations: (val) => set(()=>({
-    educations: val
-  })),
-  setBodyTypes: (val) => set(()=>({
-    bodyTypes: val
-  })),
-  setFavoriteFoods: (val) => set(()=>({
-    favoriteFoods: val
-  })),
+  countries: [],
+  states: [],
+  selectedCountryCode: '',
+  setSelectedCountryCode:  (val) =>
+    set(() => ({
+      selectedCountryCode: val,
+    })),
+  setNationalities: (val) =>
+    set(() => ({
+      nationalities: val,
+    })),
+  setEthnicities: (val) =>
+    set(() => ({
+      ethnicities: val,
+    })),
+  setMaritalStatus: (val) =>
+    set(() => ({
+      maritalStatus: val,
+    })),
+  setLanguages: (val) =>
+    set(() => ({
+      languages: val,
+    })),
+  setOccupations: (val) =>
+    set(() => ({
+      occupations: val,
+    })),
+  setIncomes: (val) =>
+    set(() => ({
+      incomes: val,
+    })),
+  setEducations: (val) =>
+    set(() => ({
+      educations: val,
+    })),
+  setBodyTypes: (val) =>
+    set(() => ({
+      bodyTypes: val,
+    })),
+  setFavoriteFoods: (val) =>
+    set(() => ({
+      favoriteFoods: val,
+    })),
+  setCountries: (val) =>
+    set(() => ({
+      countries: val,
+    })),
+  setStates: (val) =>
+    set(() => ({
+      states: val,
+    })),
 }));
 
 export default selectOptions;

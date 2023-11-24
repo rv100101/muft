@@ -1,9 +1,8 @@
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
-import { Briefcase, DollarSign, GraduationCap, User } from "lucide-react";
+import { DollarSign, GraduationCap, User } from "lucide-react";
 import FormSkeletonLoading from "./formSkeletonLoading";
 import { Education, Income, Occupation } from "@/types/profile";
 import selectOptions from "@/zustand/profile/selectData/selectOptions";
-import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -102,7 +101,6 @@ const WorkEducationForm = () => {
           )}
       </div>
       {/*
-
       <div className="flex flex-row justify-between w-full px-5">
         {editMode
           ? (

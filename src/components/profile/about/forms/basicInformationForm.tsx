@@ -14,7 +14,6 @@ import {
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
 import {
   Cake,
-  CalendarClock,
   Flag,
   Ghost,
   Heart,
