@@ -36,8 +36,7 @@ const fetchBasicInfoInitialData = async (userId: number) => {
     const { gender, nationality, date_of_birth, age } = basic.data;
     const { religion_name, ethnicity_name } = background.data;
     const { marital_status_name } = maritalStatus.data;
-    const { language_code, language_name } =
-      languages.data[languages.data.length - 1];
+    const { language_name } = languages.data[languages.data.length - 1];
     console.log(language_name);
 
     const formattedDate = new Date(date_of_birth).toLocaleDateString(
@@ -126,7 +125,6 @@ const fetchDetailsInitialData = async (userId: number) => {
     const { weight } = response2.data[0];
     const { body_type_name } = response3.data;
     const { favorite_food_name } = response4.data[0];
-
     let detailsData: Record<string, string> = {
       height: height,
       weight: weight,
@@ -201,10 +199,6 @@ const getLanguages = async () => {
   }
 };
 
-// education
-// occupations
-// incomes
-
 const getEducation = async () => {
   try {
     const response = await axiosQuery.post("/Education");
@@ -233,9 +227,6 @@ const getIncomes = async () => {
   }
 };
 
-// favoriteFood
-// bodyTypes
-
 const getFavoriteFoods = async () => {
   try {
     const response = await axiosQuery.post("/FavoriteFoods", {
@@ -256,13 +247,31 @@ const getBodyTypes = async () => {
   }
 };
 
+const getCountries = async () => {
+  try {
+    const response = await axiosQuery.post("/Countries");
+    return response.data;
+  } catch (error) {
+    return [];
+  }
+};
+
+const getStates = async (countryCode: string) => {
+  try {
+    const response = await axiosQuery.post("/States", {
+      country: countryCode,
+    });
+    return response.data;
+  } catch (error) {
+    return [];
+  }
+};
+
 type ProfileContent = ProfileAbout & {
-  nickname: string
+  nickname: string;
 };
 
 const saveInformation = async (profile: ProfileContent, userId: number) => {
-  console.log(profile);
-  
   try {
     // gender
     if (profile.gender) {
@@ -295,7 +304,7 @@ const saveInformation = async (profile: ProfileContent, userId: number) => {
     //     member: userId,
     //   });
     // }
-    //
+
     // ethnicity
     if (profile.ethnicity) {
       await axiosQuery.post("/SaveEthnicity", {
@@ -337,20 +346,20 @@ const saveInformation = async (profile: ProfileContent, userId: number) => {
     // }
 
     // // occupation
-    // if (profile.occupationId) {
-    //   await axiosQuery.post("/SaveOccupation", {
-    //     occupation: profile.occupationId,
-    //     member: userId,
-    //   });
-    // }
+    if (profile.occupationTitle) {
+      await axiosQuery.post("/SaveOccupation", {
+        occupation: profile.occupationTitle,
+        member: userId,
+      });
+    }
     //
     // // income_range
-    // if (profile.income_range) {
-    //   await axiosQuery.post("/SaveIncomeRange", {
-    //     income_range: profile.income_range,
-    //     member: userId,
-    //   });
-    // }
+    if (profile.income) {
+      await axiosQuery.post("/SaveIncome", {
+        income: profile.income,
+        member: userId,
+      });
+    }
 
     // height
     if (profile.height) {
@@ -369,28 +378,28 @@ const saveInformation = async (profile: ProfileContent, userId: number) => {
     }
 
     // bodyType
-    // if (profile.bodyType) {
-    //   await axiosQuery.post("/SaveBodyType", {
-    //     bodyType: profile.bodyType,
-    //     member: userId,
-    //   });
-    // }
+    if (profile.bodyType) {
+      await axiosQuery.post("/SaveBodyType", {
+        body_type: profile.bodyType,
+        member: userId,
+      });
+    }
 
     // favoriteFood
-    // if (profile.favoriteFood) {
-    //   await axiosQuery.post("/SaveFavoriteFood", {
-    //     favoriteFood: profile.favoriteFood,
-    //     member: userId,
-    //   });
-    // }
+    if (profile.favoriteFood) {
+      await axiosQuery.post("/SaveFavoriteFood", {
+        favoriteFood: profile.favoriteFood,
+        member: userId,
+      });
+    }
 
     // country
-    // if (profile.country) {
-    //   await axiosQuery.post("/SaveCountry", {
-    //     country: profile.country,
-    //     member: userId,
-    //   });
-    // }
+    if (profile.country) {
+      await axiosQuery.post("/SaveCountry", {
+        country: profile.country,
+        member: userId,
+      });
+    }
 
     if (profile.nickname) {
       await axiosQuery.post("/SaveNickname", {
@@ -400,13 +409,12 @@ const saveInformation = async (profile: ProfileContent, userId: number) => {
     }
 
     // state
-    // if (profile.state) {
-    //   await axiosQuery.post("/SaveState", {
-    //     state: profile.state,
-    //     member: userId,
-    //   });
-    // }
-
+    if (profile.region) {
+      await axiosQuery.post("/SaveState", {
+        state: profile.region,
+        member: userId,
+      });
+    }
   } catch (error) {
     console.error("Error saving information:", error);
   }
@@ -427,6 +435,8 @@ const profileContentQuery = {
     getIncomes,
     getFavoriteFoods,
     getBodyTypes,
+    getStates,
+    getCountries,
   },
   saveInformation,
 };

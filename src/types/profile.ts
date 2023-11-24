@@ -61,3 +61,13 @@ export type BodyType = {
   body_type_id: number;
   body: string;
 };
+
+export type Country = {
+  country_code: string,
+  country_name: string,
+}
+
+export type State = {
+  state_id: string,
+  state_name: string
+}

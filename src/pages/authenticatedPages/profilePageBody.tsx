@@ -33,7 +33,6 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
           gender: data.gender,
           nationality: data.nationality,
           birthInfo: data.birthInfo,
-          age: parseInt(data.age),
           ethnicity: data.ethnicity,
           maritalStatus: data.maritalStatus,
           language: data.language,
@@ -54,8 +53,19 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
     [data, headerValues],
   );
 
-  const {educations, nationalities, ethnicities, maritalStatus, languages } =
-    selectOptions();
+  const {
+    educations,
+    incomes,
+    occupations,
+    nationalities,
+    ethnicities,
+    maritalStatus,
+    languages,
+    bodyTypes,
+    favoriteFoods,
+    countries,
+    states,
+  } = selectOptions();
 
   const getLanguage = (languageName: string) =>
     languages.find((language) => language.language_name === languageName);
@@ -69,12 +79,28 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
     );
 
   const getEducation = (name: string) =>
-    educations.find((e) =>
-      e.education_name === name
-    );
+    educations.find((e) => e.education_name === name);
+
+  const getOccupation = (name: string) =>
+    occupations.find((e) => e.occupation_title === name);
 
   const getMaritalStatus = (maritalStatusName: string) =>
     maritalStatus.find((ms) => ms.marital_status_name === maritalStatusName);
+
+  const getIncome = (name: string) =>
+    incomes.find((income) => income.income_range === name);
+
+  const getBodyType = (name: string) =>
+    bodyTypes.find((bt) => bt.body === name);
+
+  const getFavoriteFoods = (name: string) =>
+    favoriteFoods.find((ff) => ff.favorite_food_name === name);
+
+  const getCountryData = (name: string) =>
+    countries.find((c) => c.country_name === name);
+
+  const getStateData = (name: string) =>
+    states.find((s) => s.state_name === name);
 
   const onSubmit = async (formData: any) => {
     console.log(formData);
@@ -90,18 +116,31 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
       const nationality = getNationality(formData.nationality);
       const maritalStatus = getMaritalStatus(formData.maritalStatus);
       const education = getEducation(formData.education);
+      const occupation = getOccupation(formData.occupation_title);
+      const income = getIncome(formData.income_range);
+      const bodyType = getBodyType(formData.bodyType);
+      const favoriteFood = getFavoriteFoods(formData.favoriteFood);
+      const country = getCountryData(formData.country);
+      const region = getStateData(formData.region);
       finalFormData = {
         ...finalFormData,
         language: language?.language_code,
         ethnicity: ethnicity?.ethnicity_id,
         nationality: nationality?.country_code,
         maritalStatus: maritalStatus?.marital_status_id,
-        education: education?.education_id
+        education: education?.education_id,
+        occupationTitle: occupation?.occupation_id,
+        income: income?.income_id,
+        bodyType: bodyType?.body_type_id,
+        favoriteFood: favoriteFood?.favorite_food_id,
+        country: country?.country_code,
+        region: region?.state_id,
       };
+
       console.log(finalFormData);
       await profileContentQuery.saveInformation(finalFormData, user!.member_id);
       queryClient.invalidateQueries({
-        queryKey: ["profileHeader", "profileContent"],
+        queryKey: ["profileHeader"],
       });
     } catch (error) {
       console.log(error);
