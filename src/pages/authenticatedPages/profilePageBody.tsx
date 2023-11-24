@@ -155,7 +155,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
               <ProfileHeader userId={userId} />
               <AboutAccordion userId={parseInt(userId)} />
             </form>
-            <GallerySection />
+            <GallerySection userId={userId} />
           </div>
         </FormProvider>
       </div>

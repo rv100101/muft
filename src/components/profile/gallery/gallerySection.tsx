@@ -1,4 +1,4 @@
-import { getImagePath } from "@/lib/images";
+import { getImagePath, getImagePathGallery } from "@/lib/images";
 import axiosQuery from "@/queries/axios";
 import { useUserStore } from "@/zustand/auth/user";
 import { useQuery } from "@tanstack/react-query";
@@ -14,7 +14,7 @@ type Gallery = {
   gallery_uuid: string;
 };
 
-const GallerySection = () => {
+const GallerySection = ({ userId }: { userId: number }) => {
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
 
@@ -44,18 +44,17 @@ const GallerySection = () => {
       const response = await axiosQuery.post("/Gallery", {
         member: user?.member_id,
       });
-      console.log(response);
-      
       return response.data;
     } catch (error) {
       console.error(error);
     }
   };
+
   const {
     data: gallery,
-    // isLoading,
     refetch,
-  } = useQuery(["gallery"], fetchGallery);
+  } = useQuery(["gallery", userId], fetchGallery);
+
   const handleUploadButtonClick = async () => {
     setIsUploading(true);
     if (selectedFile && user) {
@@ -166,21 +165,26 @@ const GallerySection = () => {
       </div>
       {/* photos section */}
       <div className="grid grid-cols-3 gap-5 p-5 flex w-full">
-        {gallery && gallery.length !== 0 && gallery.map((pic: Gallery, index: number) => {
-          const path = getImagePath(pic.gallery_uuid, null, pic.member_uuid);
-          return (
-            <img
-              key={index} // Don't forget to add a unique key to each image
-              src={path}
-              alt="test"
-              className="object-cover"
-              onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-                const imgElement = e.target as HTMLImageElement;
-                imgElement.src = sampleGalleryImage;
-              }}
-            />
-          );
-        })}
+        {gallery && gallery.length !== 0 &&
+          gallery.map((pic: Gallery, index: number) => {
+            const path = getImagePathGallery(
+              pic.gallery_uuid,
+              null,
+              pic.member_uuid,
+            );
+            return (
+              <img
+                key={index} // Don't forget to add a unique key to each image
+                src={path}
+                alt="test"
+                className="object-cover"
+                onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+                  const imgElement = e.target as HTMLImageElement;
+                  imgElement.src = sampleGalleryImage;
+                }}
+              />
+            );
+          })}
       </div>
     </div>
   );
