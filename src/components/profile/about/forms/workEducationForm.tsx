@@ -101,6 +101,7 @@ const WorkEducationForm = () => {
             </div>
           )}
       </div>
+      {/*
 
       <div className="flex flex-row justify-between w-full px-5">
         {editMode
@@ -144,7 +145,7 @@ const WorkEducationForm = () => {
               </p>
             </div>
           )}
-      </div>
+      </div> */}
 
       {/* add new */}
       <div className="flex flex-row justify-between w-full px-5">

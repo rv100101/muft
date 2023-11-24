@@ -50,7 +50,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
 
   return (
     <div className="items-start p-5 border-b w-full">
-      <div className="flex justify-start items-start space-x-2">
+      <div className="flex justify-start items-start space-x-4">
         {
           <Button
             variant={"ghost"}
@@ -119,7 +119,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                   {isEditing && (
                     <div className="flex space-x-2">
                       <Button
-                        onClick={() => {
+                        onClick={!formState.isDirty ? ()=>{} : () => {
                           if (isEditing && !formState.isValid) {
                             toast({
                               variant: "destructive",

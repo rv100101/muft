@@ -44,7 +44,8 @@ const GallerySection = () => {
       const response = await axiosQuery.post("/Gallery", {
         member: user?.member_id,
       });
-
+      console.log(response);
+      
       return response.data;
     } catch (error) {
       console.error(error);
