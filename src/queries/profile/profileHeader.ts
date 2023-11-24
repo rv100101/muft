@@ -47,7 +47,6 @@ const getProfileHeader = async (member: number) => {
         nickname: nickName.data[0].nickname,
       };
     }
-    console.log(nickName);
 
     const height = await getHeight(member);
     if (height.data !== "") {
@@ -56,8 +55,6 @@ const getProfileHeader = async (member: number) => {
         height: height.data[0].height,
       };
     }
-
-    console.log(height);
 
     const maritalStatus = await getMaritalStatus(member);
     if (maritalStatus.data !== "") {
@@ -74,7 +71,6 @@ const getProfileHeader = async (member: number) => {
       };
     }
     const country = await getCountry(member);
-    console.log(country);
 
     if (country.data !== "") {
       profileHeader = {

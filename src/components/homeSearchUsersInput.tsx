@@ -41,7 +41,6 @@ const HomepageSearchInput = () => {
     queryKey: ["searchUsers", debouncedSearchValue],
     enabled: debouncedSearchValue.length !== 0,
     onSuccess: (data) => {
-      console.log(data);
       if (data !== undefined && data) {
         setSearchResults(data.data);
       }

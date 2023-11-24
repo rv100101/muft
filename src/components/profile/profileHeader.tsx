@@ -13,6 +13,9 @@ import { FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
+import { toast } from "../ui/use-toast";
+import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
+import ActivateAccount from "@/pages/authenticatedPages/accountActivationPage";
 
 const ProfileHeader = ({ userId }: { userId: string }) => {
   const [showCamera, setShowCamera] = useState(false);
@@ -21,99 +24,117 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
   const fetchInitialData = async () =>
     await profileQuery.getProfileHeader(parseInt(userId));
   const user = useUserStore((state) => state.user);
-  const toggleEditMode = profileAboutContentStore((state) =>
-    state.toggleEditMode
+  const toggleEditMode = profileAboutContentStore(
+    (state) => state.toggleEditMode
   );
   const { formState } = useFormContext();
   const isSaving = profileAboutContentStore(state => state.isSaving);
   const isEditing = profileAboutContentStore((state) => state.editMode);
-  const { isLoading, isRefetching } = useQuery(
-    {
-      queryKey: ["profileHeader", userId],
-      queryFn: fetchInitialData,
-      refetchInterval: Infinity,
-      refetchOnWindowFocus: false,
-      onSuccess: (data: ProfileHeaderType | null) => {
-        console.log(data);
-        if (data) {
-          console.log(data);
-          setHeaderValues(data);
-        }
-      },
+  const { isLoading, isRefetching } = useQuery({
+    queryKey: ["profileHeader", userId],
+    queryFn: fetchInitialData,
+    refetchInterval: Infinity,
+    refetchOnWindowFocus: false,
+    onSuccess: (data: ProfileHeaderType | null) => {
+      if (data) {
+        setHeaderValues(data);
+      }
     },
-  );
+  });
 
   if (isLoading || isRefetching) {
     return <ProfileHeaderSkeleton />;
- }
+  }
 
   return (
-    <div className="items-start p-5 border-b w-full">
-      <div className="flex justify-start items-start space-x-4">
-        {
-          <Button
-            variant={"ghost"}
-            disabled={!isEditing}
-            type="button"
-            onMouseOver={() => {
-              if (isEditing) setShowCamera(true);
-            }}
-            onMouseOut={() => {
-              if (isEditing) setShowCamera(false);
-            }}
-            className="relative disabled:opacity-100 h-full w-40 bg-transparent py-0 px-0"
-          >
-            {showCamera && <CameraIcon className="absolute" fill="white" />}
-            <img
-              className={`select-none object-cover h-32 w-32 overflow-clip border-4 border-primary rounded-full`}
-              src={getImagePath(
-                headerValues.gallery_uuid,
-                headerValues.gender,
-                headerValues.member_uuid?.toString(),
-              )}
-              alt="no image selected"
-            />
-          </Button>
-        }
-        <div className="w-full">
-          <div className="flex w-full justify-between">
-            <div className="w-42">
-              {!isEditing && (
-                <p className="font-semibold text-[#171717] text-lg">
-                  {headerValues.nickname}
-                </p>
-              )}
-              {isEditing && (
-                <FormField
-                  disabled={isSaving}
-                  name="nickname"
-                  render={({ field }) => {
-                    return (
-                      <FormItem>
-                        <FormLabel className="text-primary">Nickname</FormLabel>
-                        <Input
-                          placeholder="Enter nickname"
-                          type="text"
-                          defaultValue={field.value}
-                          onChange={field.onChange}
-                          className="outline-0 border border rounded-lg w-full py-3 px-5"
-                          name="nickname"
-                        />
-                        <FormMessage />
-                      </FormItem>
-                    );
-                  }}
-                />
-              )}
-              {!isEditing &&
-                (
-                  <p className="text-[#727272] text-sm">
+    <Dialog>
+      <DialogContent className="sm:max-w-[425px]">
+        <ActivateAccount />
+      </DialogContent>
+      <div className="items-start p-5 border-b w-full">
+        <div className="flex justify-start items-start space-x-2">
+          {
+            <Button
+              variant={"ghost"}
+              disabled={!isEditing}
+              type="button"
+              onMouseOver={() => {
+                if (isEditing) setShowCamera(true);
+              }}
+              onMouseOut={() => {
+                if (isEditing) setShowCamera(false);
+              }}
+              className="relative disabled:opacity-100 h-full w-40 bg-transparent py-0 px-0"
+            >
+              {showCamera && <CameraIcon className="absolute" fill="white" />}
+              <img
+                className={`select-none object-cover h-32 w-32 overflow-clip border-4 border-primary rounded-full`}
+                src={getImagePath(
+                  headerValues.gallery_uuid,
+                  headerValues.gender,
+                  headerValues.member_uuid?.toString()
+                )}
+                alt="no image selected"
+              />
+            </Button>
+          }
+          <div className="w-full">
+            <div className="flex w-full justify-between">
+              <div className="w-42">
+                {!isEditing && (
+                  <div
+                    className={`flex flex-row space-x-5 ${
+                      !user!.is_active ? "pt-5 pl-3" : ""
+                    }`}
+                  >
+                    <p className="font-semibold text-[#171717] text-lg ">
+                      {headerValues.nickname}
+                    </p>
+                    <DialogTrigger>
+                      <button
+                        type="button"
+                        className="rounded-full bg-green-300 px-4 py-2 text-xs text-green-600 border hover:text-white hover:bg-green-500"
+                      >
+                        Activate Account
+                      </button>
+                    </DialogTrigger>
+                  </div>
+                )}
+                {isEditing && (
+                  <FormField
+                    name="nickname"
+                    render={({ field }) => {
+                      return (
+                        <FormItem>
+                          <FormLabel className="text-primary">
+                            Nickname
+                          </FormLabel>
+                          <Input
+                            placeholder="Enter nickname"
+                            type="text"
+                            defaultValue={field.value}
+                            onChange={field.onChange}
+                            className="outline-0 border border rounded-lg w-full py-3 px-5"
+                            name="nickname"
+                          />
+                          <FormMessage />
+                        </FormItem>
+                      );
+                    }}
+                  />
+                )}
+                {!isEditing && (
+                  <p
+                    className={`text-[#727272] text-sm ${
+                      !user!.is_active ? "pl-3" : ""
+                    }`}
+                  >
+
                     @{`${headerValues.nickname?.toLowerCase()}`}
                   </p>
                 )}
-            </div>
-            {userId === user!.member_id.toString() &&
-              (
+              </div>
+              {userId === user!.member_id.toString() && (
                 <>
                   {isEditing && (
                     <div className="flex space-x-2">
@@ -133,7 +154,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                         type={"submit"}
                         className={cn(
                           "text-xs rounded-2xl h-max",
-                          "hover:bg-green-400/80 bg-green-400",
+                          "hover:bg-green-400/80 bg-green-400"
                         )}
                       >
                         <p>Save</p>
@@ -143,7 +164,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                         onClick={() => toggleEditMode()}
                         className={cn(
                           "text-xs rounded-2xl h-max",
-                          "text-[#727272] bg-[#E8ECEF] hover:bg-[#E8ECEF]/80",
+                          "text-[#727272] bg-[#E8ECEF] hover:bg-[#E8ECEF]/80"
                         )}
                       >
                         <p>Cancel</p>
@@ -160,7 +181,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                       }}
                       className={cn(
                         "text-xs rounded-2xl h-max",
-                        "text-[#727272] bg-[#E8ECEF] hover:bg-[#E8ECEF]/80",
+                        "text-[#727272] bg-[#E8ECEF] hover:bg-[#E8ECEF]/80"
                       )}
                     >
                       <>
@@ -171,32 +192,33 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                   )}
                 </>
               )}
-          </div>
-          {!isEditing && (
-            <div className="h-full hidden lg:block">
-              <div className="pt-5 flex w-full justify-start items-start flex-wrap text-xs space-x-2">
-                <p className="rounded-md w-max h-max bg-[#FFF2F7] text-[#FF599B] p-2 mb-2">
-                  {`${headerValues.height} cm`}
-                </p>
-                <p className="rounded-md w-max h-max bg-[#FFF2F7] text-[#FF599B] px-5 py-1 mb-2">
-                  {headerValues.gender == "F" && "Female"}
-                  {headerValues.gender == "M" && "Male"}
-                </p>{" "}
-                <p className="rounded-md w-max h-max bg-[#FFF2F7] text-[#FF599B] px-5 py-1 mb-2">
-                  {headerValues.maritalStatus}
-                </p>
-                <p className="rounded-full w-max h-max bg-[#FFF2F7] text-[#FF599B] px-5 py-1 mb-2">
-                  {headerValues.country_name}
-                </p>
-                <p className="rounded-full w-max h-max bg-[#FFF2F7] text-[#FF599B] px-5 py-1 mb-2">
-                  {headerValues.occupation_title}
-                </p>
-              </div>
             </div>
-          )}
+            {!isEditing && user!.is_active && (
+              <div className="h-full hidden lg:block">
+                <div className="pt-5 flex w-full justify-start items-start flex-wrap text-xs space-x-2">
+                  <p className="rounded-md w-max h-max bg-[#FFF2F7] text-[#FF599B] p-2 mb-2">
+                    {`${headerValues.height} cm`}
+                  </p>
+                  <p className="rounded-md w-max h-max bg-[#FFF2F7] text-[#FF599B] px-5 py-1 mb-2">
+                    {headerValues.gender == "F" && "Female"}
+                    {headerValues.gender == "M" && "Male"}
+                  </p>{" "}
+                  <p className="rounded-md w-max h-max bg-[#FFF2F7] text-[#FF599B] px-5 py-1 mb-2">
+                    {headerValues.maritalStatus}
+                  </p>
+                  <p className="rounded-full w-max h-max bg-[#FFF2F7] text-[#FF599B] px-5 py-1 mb-2">
+                    {headerValues.country_name}
+                  </p>
+                  <p className="rounded-full w-max h-max bg-[#FFF2F7] text-[#FF599B] px-5 py-1 mb-2">
+                    {headerValues.occupation_title}
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </Dialog>
   );
 };
 

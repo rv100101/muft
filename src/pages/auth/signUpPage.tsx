@@ -52,11 +52,9 @@ const SignUpPage = () => {
     try {
       setIsLoading(true);
       const response = await axiosQuery.post("/Signup", values);
-      console.log("response: ", response);
       const data = await response.data;
       if (data) {
         setIsLoading(false);
-        console.log("response: ", data);
         return data;
       }
     } catch (err: unknown) {
@@ -67,8 +65,6 @@ const SignUpPage = () => {
   const signUp = useMutation({
     mutationFn: handleSignUp,
     onSuccess: async (data) => {
-      console.log("invalidated");
-      console.log(data);
       if (data.member_exists) {
         toast({
           variant: "destructive",

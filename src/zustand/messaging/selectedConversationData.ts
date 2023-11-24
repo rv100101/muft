@@ -29,7 +29,6 @@ export const useSelectedConversationData = create<SelectedConversationData>(
           const messages = state.messages;
           const lastMessage = state.messages[state.messages.length - 1];
           messages[messages.length - 1] = { ...lastMessage, created_date: val };
-          console.log(val);
 
           return {
             messages: [...state.messages],
