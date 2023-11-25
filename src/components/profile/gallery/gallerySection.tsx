@@ -14,7 +14,7 @@ type Gallery = {
   gallery_uuid: string;
 };
 
-const GallerySection = ({ userId }: { userId: number }) => {
+const GallerySection = ({ userId }: { userId: string }) => {
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
 
