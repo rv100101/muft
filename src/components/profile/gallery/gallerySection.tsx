@@ -1,4 +1,4 @@
-import { getImagePath, getImagePathGallery } from "@/lib/images";
+import { getImagePathGallery } from "@/lib/images";
 import axiosQuery from "@/queries/axios";
 import { useUserStore } from "@/zustand/auth/user";
 import { useQuery } from "@tanstack/react-query";

@@ -70,7 +70,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
 
   const getNationality = (nationalityName: string) =>
     nationalities.find(
-      (nationality) => nationality.nationality === nationalityName
+      (nationality) => nationality.nationality === nationalityName,
     );
 
   const getEducation = (name: string) =>
