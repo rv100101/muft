@@ -132,7 +132,7 @@ const ChangePassword = () => {
             : null}
         </div>
         <div className="flex justify-end">
-          <Button className="hover:bg-primary" type="submit">Save</Button>
+          <Button disabled={isLoading} className="hover:bg-primary" type="submit">Save</Button>
         </div>
       </form>
     </div>
