@@ -5,6 +5,12 @@ import { useQuery } from "@tanstack/react-query";
 import { PlusCircle, X } from "lucide-react";
 import { ChangeEvent, useRef, useState } from "react";
 import sampleGalleryImage from "../../../assets/profile/sample-gallery.png";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "../../ui/accordion";
 
 type Gallery = {
   authorized: boolean;
@@ -96,96 +102,116 @@ const GallerySection = ({ userId }: { userId: string }) => {
   };
 
   return (
-    <div className="flex flex-col">
-      <div className="flex justify-between items-center p-5 border-b space-x-5">
-        <p className="uppercase font-[500] text-[#727272] no-underline">
-          Gallery
-        </p>
-        <div className="flex flex-row space-x-5">
-          {/* Display the selected file name */}
-          {selectedFile && (
-            <div className="flex flex-row space-x-3 items-center w-1/2">
-              <div className="truncate overflow-hidden">
-                <p className="text-slate-400 mt-1 ">
-                  {/* Selected File: {typeof selectedFile === 'string' ? 'Base64 String' : selectedFile.name} */}
-                </p>
+    <Accordion
+      type="single"
+      collapsible
+      className="w-full underline-0"
+      defaultValue="item-1"
+    >
+      <AccordionItem value="item-1" className="px-5 py-1">
+        <AccordionTrigger className="flex space-x-5 hover:no-underline">
+          <div className="flex items-center space-x-5">
+            <p className="uppercase font-[500] text-[#727272] no-underline">
+              Gallery
+            </p>
+            {selectedFile && (
+              <div className="flex flex-row space-x-3 items-center w-1/2">
+                <div className="truncate overflow-hidden">
+                  <p className="text-slate-400 mt-1 ">
+                    {/* Selected File: {typeof selectedFile === 'string' ? 'Base64 String' : selectedFile.name} */}
+                  </p>
+                </div>
+                <X
+                  // color="White"
+                  size={15}
+                  className="hover:cursor-pointer"
+                  onClick={() => setSelectedFile(null)}
+                />
               </div>
-              <X
-                // color="White"
-                size={15}
-                className="hover:cursor-pointer"
-                onClick={() => setSelectedFile(null)}
-              />
-            </div>
-          )}
-
-          {/* Button to trigger the upload */}
-          <div
-            onClick={handleGalleryUpload}
-            className="flex items-center rounded-full bg-[#fe599b] px-3 py-2 space-x-2 hover:cursor-pointer"
-          >
-            <PlusCircle
-              color="White"
-              size={20}
-              className="hover:cursor-pointer"
-            />
-            <div className="flex flex-col">
-              <input
-                type="file"
-                onChange={handleFileChange}
-                className="invisible w-0 h-0"
-                ref={fileInputRef}
-              />
-              <p className="text-white text-sm">Add Photos</p>
-            </div>
-          </div>
-          {selectedFile && (
+            )}
             <div
-              onClick={handleUploadButtonClick}
+              onClick={handleGalleryUpload}
               className="flex items-center rounded-full bg-[#fe599b] px-3 py-2 space-x-2 hover:cursor-pointer"
             >
-              <div className="text-white">
-                {isUploading
-                  ? (
-                    <div className="flex flex-row text-xs items-center space-x-5 text-green">
-                      Uploading
-                      <div className="ml-5 w-5 h-5 border-t-4 border-pink-500 border-solid rounded-full animate-spin">
-                      </div>
-                    </div>
-                  )
-                  : (
-                    "Upload"
-                  )}
-              </div>
-              {/* <p className="text-white">Upload</p> */}
-            </div>
-          )}
-        </div>
-      </div>
-      {/* photos section */}
-      <div className="grid grid-cols-3 gap-5 p-5 flex w-full">
-        {gallery && gallery.length !== 0 &&
-          gallery.map((pic: Gallery, index: number) => {
-            const path = getImagePathGallery(
-              pic.gallery_uuid,
-              null,
-              pic.member_uuid,
-            );
-            return (
-              <img
-                key={index} // Don't forget to add a unique key to each image
-                src={path}
-                alt="test"
-                className="object-cover"
-                onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-                  const imgElement = e.target as HTMLImageElement;
-                  imgElement.src = sampleGalleryImage;
-                }}
+              <PlusCircle
+                color="White"
+                size={20}
+                className="hover:cursor-pointer"
               />
-            );
-          })}
-      </div>
-    </div>
+              <div className="flex flex-col">
+                <input
+                  type="file"
+                  onChange={handleFileChange}
+                  className="invisible w-0 h-0"
+                  ref={fileInputRef}
+                />
+                <p className="text-white text-sm">Add Photo</p>
+              </div>
+            </div>
+          </div>
+        </AccordionTrigger>
+        <AccordionContent>
+          <div className="flex flex-col w-full">
+            <div className="flex justify-between items-center p-5 border-b space-x-5">
+              <div className="flex flex-row w-full justify-end space-x-5">
+                {/* Button to trigger the upload */}
+                {selectedFile && (
+                  <div
+                    onClick={handleUploadButtonClick}
+                    className="flex items-center rounded-full bg-[#fe599b] px-3 py-2 space-x-2 hover:cursor-pointer"
+                  >
+                    <div className="text-white">
+                      {isUploading
+                        ? (
+                          <div className="flex flex-row text-xs items-center space-x-5 text-green">
+                            Uploading
+                            <div className="ml-5 w-5 h-5 border-t-4 border-pink-500 border-solid rounded-full animate-spin">
+                            </div>
+                          </div>
+                        )
+                        : (
+                          "Upload"
+                        )}
+                    </div>
+                    {/* <p className="text-white">Upload</p> */}
+                  </div>
+                )}
+              </div>
+            </div>
+            {/* photos section */}
+            <div className="grid grid-cols-3 gap-5 p-5 flex w-full">
+              {gallery && gallery.length !== 0 &&
+                gallery.map((pic: Gallery, index: number) => {
+                  const path = getImagePathGallery(
+                    pic.gallery_uuid,
+                    null,
+                    pic.member_uuid,
+                  );
+                  return (
+                    <img
+                      key={index} // Don't forget to add a unique key to each image
+                      src={path}
+                      alt="test"
+                      className="object-cover"
+                      onError={(
+                        e: React.SyntheticEvent<HTMLImageElement, Event>,
+                      ) => {
+                        const imgElement = e.target as HTMLImageElement;
+                        imgElement.src = sampleGalleryImage;
+                      }}
+                    />
+                  );
+                })}
+            </div>
+            {gallery && gallery.length == 0 && (
+              <div className="flex w-full items-center h-full justify-center">
+                <p className="font-semibold text-lg">No photos</p>
+              </div>
+            )}
+          </div>
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
   );
 };
 

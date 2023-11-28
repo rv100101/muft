@@ -1,12 +1,8 @@
 import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
   MoreVerticalIcon,
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { getImagePath } from "@/lib/images";
-// import membersQuery from "@/queries/home";
-// import { useQuery } from "@tanstack/react-query";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -56,7 +52,7 @@ const Suggestions = ({ members }: { members: Member[] }) => {
   const toggleLikeIcon = useHomepageViewStore((state) => state.toggleIsLiked);
 
   const toggleFavoriteIcon = useHomepageViewStore(
-    (state) => state.toggleIsFavored
+    (state) => state.toggleIsFavored,
   );
 
   const [, setLocation] = useLocation();
@@ -122,9 +118,8 @@ const Suggestions = ({ members }: { members: Member[] }) => {
       const imagePath = getImagePath(
         suggestion.gallery_uuid,
         suggestion.gender,
-        suggestion.member_uuid
+        suggestion.member_uuid,
       );
-
       return (
         <li
           key={index}
@@ -144,7 +139,8 @@ const Suggestions = ({ members }: { members: Member[] }) => {
             <Dialog>
               <DropdownMenu>
                 <DropdownMenuTrigger>
-                  <MoreVerticalIcon height={20} />{" "}
+                  <MoreVerticalIcon height={20} />
+                  {" "}
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="flex flex-col">
                   <Button
@@ -153,8 +149,7 @@ const Suggestions = ({ members }: { members: Member[] }) => {
                       toggleLike.mutate({
                         member: 69,
                         liked: suggestion.member_id,
-                      })
-                    }
+                      })}
                   >
                     {suggestion.isLiked && !likeTriggered
                       ? "Unlike"
@@ -168,8 +163,7 @@ const Suggestions = ({ members }: { members: Member[] }) => {
                       toggleFavorite.mutate({
                         member: 69,
                         favored: suggestion.member_id,
-                      })
-                    }
+                      })}
                   >
                     {suggestion.isFavorite && !favoriteTriggered
                       ? "UnFavorite"
@@ -249,21 +243,21 @@ const Suggestions = ({ members }: { members: Member[] }) => {
       <HomepageSearchInput />
       <div className="h-max w-full flex justify-between mt-4 items-center">
         <p className=" lg:text-md px-5 py-2 font-semibold">SUGGESTIONS</p>
-        <div className="flex px-5">
-          <Button variant={"ghost"} className="p-0">
-            <ChevronLeftIcon size={20} />
-          </Button>
-          <Button variant={"ghost"} className="p-0">
-            <ChevronRightIcon size={20} />
-          </Button>
-        </div>
+        {
+          // <div className="flex px-5">
+          //   <Button variant={"ghost"} className="p-0">
+          //     <ChevronLeftIcon size={20} />
+          //   </Button>
+          //   <Button variant={"ghost"} className="p-0">
+          //     <ChevronRightIcon size={20} />
+          //   </Button>
+          // </div>
+        }
       </div>
       <ul className="no-scrollbar border-top h-full p-2 space-y-2 lg:space-y-4 overflow-y-auto rounded-lg mb-5">
-        {members.length > 0 ? (
-          suggestions
-        ) : (
-          <div className="p-3">No Suggestions</div>
-        )}
+        {members.length > 0
+          ? suggestions
+          : <div className="p-3">No Suggestions</div>}
       </ul>
       <div className="w-full border-t pt-2 hidden lg:block">
         <ul className="flex items-center justify-center list-none space-x-4 text-xs md:text-md">

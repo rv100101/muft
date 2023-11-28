@@ -24,7 +24,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
     await profileQuery.getProfileHeader(parseInt(userId));
   const user = useUserStore((state) => state.user);
   const toggleEditMode = profileAboutContentStore(
-    (state) => state.toggleEditMode
+    (state) => state.toggleEditMode,
   );
   const { formState } = useFormContext();
   const isSaving = profileAboutContentStore((state) => state.isSaving);
@@ -89,15 +89,11 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
               {showCamera && <CameraIcon className="absolute" fill="white" />}
               <img
                 className={`select-none object-cover h-32 w-32 overflow-clip border-4 border-primary rounded-full`}
-                src={
-                  selectedFile
-                    ? selectedFile
-                    : getImagePath(
-                        headerValues.gallery_uuid,
-                        headerValues.gender,
-                        headerValues.member_uuid?.toString()
-                      )
-                }
+                src={selectedFile ? selectedFile : getImagePath(
+                  headerValues.gallery_uuid,
+                  headerValues.gender,
+                  headerValues.member_uuid?.toString(),
+                )}
                 alt="no image selected"
               />
               <input
@@ -171,26 +167,22 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                   {isEditing && (
                     <div className="flex space-x-2">
                       <Button
-                        onClick={
-                          !formState.isDirty
-                            ? () => {}
-                            : () => {
-                                // if (isEditing && !formState.isValid) {
-                                //   toast({
-                                //     variant: "destructive",
-                                //     title: "Cannot save your profile",
-                                //     description:
-                                //       "Please make sure all the required fields are satisfied.",
-                                //     duration: 4000,
-                                //   });
-                                // }
-                              }
-                        }
+                        onClick={!formState.isDirty ? () => {} : () => {
+                          // if (isEditing && !formState.isValid) {
+                          //   toast({
+                          //     variant: "destructive",
+                          //     title: "Cannot save your profile",
+                          //     description:
+                          //       "Please make sure all the required fields are satisfied.",
+                          //     duration: 4000,
+                          //   });
+                          // }
+                        }}
                         disabled={isSaving}
                         type={"submit"}
                         className={cn(
                           "text-xs rounded-2xl h-max",
-                          "hover:bg-green-400/80 bg-green-400"
+                          "hover:bg-green-400/80 bg-green-400",
                         )}
                       >
                         <p>Save</p>
@@ -200,7 +192,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                         onClick={() => toggleEditMode()}
                         className={cn(
                           "text-xs rounded-2xl h-max",
-                          "text-[#727272] bg-[#E8ECEF] hover:bg-[#E8ECEF]/80"
+                          "text-[#727272] bg-[#E8ECEF] hover:bg-[#E8ECEF]/80",
                         )}
                       >
                         <p>Cancel</p>
@@ -217,7 +209,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                       }}
                       className={cn(
                         "text-xs rounded-2xl h-max",
-                        "text-[#727272] bg-[#E8ECEF] hover:bg-[#E8ECEF]/80"
+                        "text-[#727272] bg-[#E8ECEF] hover:bg-[#E8ECEF]/80",
                       )}
                     >
                       <>
@@ -232,22 +224,36 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
             {!isEditing && user!.is_active && (
               <div className="h-full hidden lg:block">
                 <div className="pt-5 flex w-full justify-start items-start flex-wrap text-xs space-x-2">
-                  <p className="rounded-md w-max h-max bg-[#FFF2F7] text-[#FF599B] p-2 mb-2">
-                    {`${headerValues.height} cm`}
-                  </p>
-                  <p className="rounded-md w-max h-max bg-[#FFF2F7] text-[#FF599B] px-5 py-1 mb-2">
-                    {headerValues.gender == "F" && "Female"}
-                    {headerValues.gender == "M" && "Male"}
-                  </p>{" "}
-                  <p className="rounded-md w-max h-max bg-[#FFF2F7] text-[#FF599B] px-5 py-1 mb-2">
-                    {headerValues.maritalStatus}
-                  </p>
-                  <p className="rounded-full w-max h-max bg-[#FFF2F7] text-[#FF599B] px-5 py-1 mb-2">
-                    {headerValues.country_name}
-                  </p>
-                  <p className="rounded-full w-max h-max bg-[#FFF2F7] text-[#FF599B] px-5 py-1 mb-2">
-                    {headerValues.occupation_title}
-                  </p>
+                  {headerValues.height && (
+                    <p className="rounded-md w-max h-max bg-[#FFF2F7] text-[#FF599B] p-2 mb-2">
+                      {`${headerValues.height} cm`}
+                    </p>
+                  )}
+                  {headerValues.gender &&
+                    (
+                      <p className="rounded-md w-max h-max bg-[#FFF2F7] text-[#FF599B] px-5 py-1 mb-2">
+                        {headerValues.gender == "F" && "Female"}
+                        {headerValues.gender == "M" && "Male"}
+                      </p>
+                    )}
+                  {headerValues.maritalStatus &&
+                    (
+                      <p className="rounded-md w-max h-max bg-[#FFF2F7] text-[#FF599B] px-5 py-1 mb-2">
+                        {headerValues.maritalStatus}
+                      </p>
+                    )}
+                  {headerValues.country_name &&
+                    (
+                      <p className="rounded-full w-max h-max bg-[#FFF2F7] text-[#FF599B] px-5 py-1 mb-2">
+                        {headerValues.country_name}
+                      </p>
+                    )}
+                  {headerValues.occupation_title &&
+                    (
+                      <p className="rounded-full w-max h-max bg-[#FFF2F7] text-[#FF599B] px-5 py-1 mb-2">
+                        {headerValues.occupation_title}
+                      </p>
+                    )}
                 </div>
               </div>
             )}
