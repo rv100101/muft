@@ -44,7 +44,6 @@ const HomePage = () => {
   const getMemberFavorites = membersQuery.getMemberFavorites(user!.member_id);
 
   const { data: members, isLoading: retrievingMemberData } = useQuery({
-    refetchInterval: Infinity,
     refetchOnMount: false,
     queryKey: ["home-members"],
     queryFn: () => getMembers,

@@ -1,7 +1,7 @@
 import axiosQuery from "./axios";
 
 const getPasswordPin = async ({email}: {email: string}) => {
-  return await axiosQuery.post("/ForgotPassword", { email });
+  return await axiosQuery.post("/ResendPasswordPin", { email });
 };
 
 const verifyPasswordPin = async ({email, pin}: {email: string, pin: string}) => {
