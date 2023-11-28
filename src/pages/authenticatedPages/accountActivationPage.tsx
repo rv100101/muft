@@ -3,7 +3,7 @@ import { toast } from "@/components/ui/use-toast";
 import accountActivationQuery from "@/queries/accountActivation";
 import { useUserStore } from "@/zustand/auth/user";
 import { Loader2 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useLocation } from "wouter";
 import * as Yup from "yup";
 import { Field, Form, Formik } from "formik";
@@ -12,66 +12,50 @@ const pinSchema = Yup.object().shape({
 });
 
 const ActivateAccount = () => {
-  const [timer, setTimer] = useState<null | number>(null);
-  const [startTimer, setStartTimer] = useState(false);
   const [, setLocation] = useLocation();
-  const [resendPinIsLoading, setResendPinIsLoading] = useState(false);
   const [activateIsLoading, setActivateIsLoading] = useState(false);
 
   type FormDataType = {
     pin: string;
   };
 
-  useEffect(() => {
-    if (timer! > 0) {
-      setTimer(null);
-    }
-    if (timer && timer > 0) {
-      setTimeout(() => {
-        if (startTimer && !resendPinIsLoading) {
-          setTimer((prev) => prev! - 1);
-        }
-      }, 1000);
-    }
-  }, [startTimer, timer, resendPinIsLoading]);
-
   const user = useUserStore((state) => state.user);
-  const handleResendPin = async () => {
-    setResendPinIsLoading(true);
-    try {
-      setTimer(90);
-      const res = await accountActivationQuery.resendPin(user!.email_address);
-
-      if (res.data == "") {
-        toast({
-          variant: "destructive",
-          title: "Something went wrong",
-          description: "Please try again",
-        });
-        setStartTimer(false);
-      } else {
-        toast({
-          title: "Successfuly sent a new PIN",
-          description: "Please check your email",
-        });
-        setStartTimer(true);
-      }
-    } catch (e) {
-      toast({
-        variant: "destructive",
-        title: "Something went wrong",
-        description: "Please try again",
-      });
-    }
-    setResendPinIsLoading(false);
-  };
+  // const handleResendPin = async () => {
+  //   setResendPinIsLoading(true);
+  //   try {
+  //     setTimer(90);
+  //     const res = await accountActivationQuery.resendPin(user!.email_address);
+  //
+  //     if (res.data == "") {
+  //       toast({
+  //         variant: "destructive",
+  //         title: "Something went wrong",
+  //         description: "Please try again",
+  //       });
+  //       setStartTimer(false);
+  //     } else {
+  //       toast({
+  //         title: "Successfuly sent a new PIN",
+  //         description: "Please check your email",
+  //       });
+  //       setStartTimer(true);
+  //     }
+  //   } catch (e) {
+  //     toast({
+  //       variant: "destructive",
+  //       title: "Something went wrong",
+  //       description: "Please try again",
+  //     });
+  //   }
+  //   setResendPinIsLoading(false);
+  // };
 
   const handleActivate = async ({ pin }: FormDataType) => {
     setActivateIsLoading(true);
     try {
       const res = await accountActivationQuery.activate(
         user!.email_address,
-        parseInt(pin)
+        parseInt(pin),
       );
       if (!res.data.activated) {
         toast({
@@ -128,30 +112,26 @@ const ActivateAccount = () => {
               placeholder="Activation PIN"
             />
           </div>
-          {errors.pin ? (
-            <p className="text-red-500 text-xs pl-2 pt-3">{errors.pin}</p>
-          ) : null}
+          {errors.pin
+            ? <p className="text-red-500 text-xs pl-2 pt-3">{errors.pin}</p>
+            : null}
           <div className="flex w-full justify-end space-x-2 py-4">
             <div className="flex-col items-center w-max h-full">
-              <Button
-                type="button"
-                disabled={
-                  (timer && timer <= 90 && timer > 0) || resendPinIsLoading
-                }
-                onClick={handleResendPin}
-                className="text-xs w-full"
-                variant={"outline"}
-              >
-                Send PIN{" "}
-                {resendPinIsLoading && (
-                  <Loader2 className="ml-2 h-4 w-4 animate-spin" />
-                )}
-              </Button>
-              {startTimer && timer && (
-                <p className="w-full flex justify-center text-xs mt-1">
-                  Please wait for {`${timer}s`}
-                </p>
-              )}
+              {
+                // <Button
+                //   type="button"
+                //   disabled={(timer && timer <= 90 && timer > 0) ||
+                //     resendPinIsLoading}
+                //   onClick={handleResendPin}
+                //   className="text-xs w-full"
+                //   variant={"outline"}
+                // >
+                //   Send PIN{" "}
+                //   {resendPinIsLoading && (
+                //     <Loader2 className="ml-2 h-4 w-4 animate-spin" />
+                //   )}
+                // </Button>
+              }
             </div>
             <Button
               disabled={activateIsLoading}

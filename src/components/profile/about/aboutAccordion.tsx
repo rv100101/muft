@@ -205,11 +205,11 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
       <Accordion
         type="single"
         collapsible
-        className="w-full underline-0"
+        className="w-full"
         defaultValue="item-1"
       >
         <AccordionItem value="item-1" className="px-5 py-1">
-          <AccordionTrigger className="">
+          <AccordionTrigger className="hover:no-underline">
             <p className="uppercase font-[500] text-[#727272] no-underline">
               About
             </p>
