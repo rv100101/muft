@@ -2,7 +2,7 @@ import searchQuery from "@/queries/search";
 import { useUserStore } from "@/zustand/auth/user";
 import useHomepageSearchStore from "@/zustand/home/searchValue";
 import { useQuery } from "@tanstack/react-query";
-import { SearchIcon } from "lucide-react";
+import { Loader2, SearchIcon } from "lucide-react";
 import { useState } from "react";
 import { useDebounce } from "usehooks-ts";
 import { Button } from "./ui/button";
@@ -28,19 +28,24 @@ const HomepageSearchInput = () => {
   };
   const user = useUserStore((state) => state.user);
   const setSearchValue = useHomepageSearchStore(
-    (state) => state.setSearchValue
+    (state) => state.setSearchValue,
   );
   const searchValue = useHomepageSearchStore((state) => state.value);
   const debouncedSearchValue = useDebounce(searchValue, 300);
 
   const searchUsers = async () =>
-    await searchQuery.search(debouncedSearchValue, user!.member_id);
+    await searchQuery.search(
+      debouncedSearchValue,
+      user?.gender == "F" ? 403 : 69,
+    );
+  console.log(user);
 
-  useQuery({
+  const { isLoading } = useQuery({
     queryFn: searchUsers,
     queryKey: ["searchUsers", debouncedSearchValue],
     enabled: debouncedSearchValue.length !== 0,
     onSuccess: (data) => {
+      console.log(data);
       if (data !== undefined && data) {
         setSearchResults(data.data);
       }
@@ -66,47 +71,65 @@ const HomepageSearchInput = () => {
         />
         <SearchIcon />
       </div>
-      {debouncedSearchValue.length > 0 ? (
-        searchResults.length !== 0 ? (
-          <div className="mt-1 sticky z-40 h-min max-h-[200px] border rounded-b-md w-[330px] bg-white overflow-y-auto">
-            {searchResults.map((result: SearchResultItem) => {
-              return (
-                <Button
-                  onClick={() => {
-                    searchClickHandler(result!.member_id!);
-                  }}
-                  className="bg-white border-b h-max w-full hover:bg-slate-100"
-                >
-                  <div className="flex text-black space-x-2 w-full items-center justify-start">
-                    <img
-                      src={getImagePath(
-                        result.gallery_uuid,
-                        result.gender,
-                        result.member_uuid
-                      )}
-                      className="h-12 rounded-full"
-                    />
-                    <div className="w-full text-start">
-                      <p>
-                        {result.nickname}, <span>{result.age}</span>
-                      </p>
-                      <p>{result.country_name}</p>
-                    </div>
-                  </div>
-                </Button>
-              );
-            })}
-          </div>
-        ) : (
-          <Button className="bg-white border-b h-max w-full hover:bg-slate-100">
-            <div className="flex text-black space-x-2 w-full items-center justify-start">
-              <div className="w-full text-start">
-                <p>No Records Found</p>
+      {debouncedSearchValue.length > 0
+        ? (
+          searchResults.length !== 0
+            ? (
+              <div className="mt-1 sticky z-40 h-min max-h-[200px] border rounded-b-md w-[330px] bg-white overflow-y-auto">
+                {searchResults.map((result: SearchResultItem) => {
+                  return (
+                    <Button
+                      onClick={() => {
+                        searchClickHandler(result!.member_id!);
+                      }}
+                      className="bg-white border-b h-max w-full hover:bg-slate-100"
+                    >
+                      <div className="flex text-black space-x-2 w-full items-center justify-start">
+                        <img
+                          src={getImagePath(
+                            result.gallery_uuid,
+                            result.gender,
+                            result.member_uuid,
+                          )}
+                          className="h-12 rounded-full"
+                        />
+                        <div className="w-full text-start">
+                          <p>
+                            {result.nickname}, <span>{result.age}</span>
+                          </p>
+                          <p>{result.country_name}</p>
+                        </div>
+                      </div>
+                    </Button>
+                  );
+                })}
               </div>
-            </div>
-          </Button>
+            )
+            : isLoading
+            ? (
+              <Button
+                disabled
+                className="bg-white border-b h-max w-full hover:bg-slate-100"
+              >
+                <div className="flex text-black flex space-x-2 w-full items-center justify-center">
+                  <Loader2 className="ml-2 animate-spin" />
+                </div>
+              </Button>
+            )
+            : (
+              <Button
+                disabled
+                className="bg-white border-b h-max w-full hover:bg-slate-100"
+              >
+                <div className="flex text-black space-x-2 w-full items-center justify-start">
+                  <div className="w-full text-start">
+                    <p>No Records Found</p>
+                  </div>
+                </div>
+              </Button>
+            )
         )
-      ) : null}
+        : null}
     </div>
   );
 };
