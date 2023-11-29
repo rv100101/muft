@@ -113,7 +113,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                 className="relative disabled:opacity-100 h-full w-40 bg-transparent py-0 px-0"
                 onClick={handleGalleryUpload}
               >
-                {showCamera && <CameraIcon className="absolute" fill="white" />}
+                {showCamera && <CameraIcon className="absolute" fill="pink" />}
                 {isUploading &&
                   <Loader2 className="absolute animate-spin text-primary" />}
                 <img
