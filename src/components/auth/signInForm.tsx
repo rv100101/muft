@@ -5,7 +5,6 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import ForgotPassword from "@/components/auth/forgotPassword";
 import { Link, useLocation } from "wouter";
 import { cn, scrollToTop } from "@/lib/utils";
-// import logo from "@/assets/logo.svg";
 import { Loader2, MailIcon } from "lucide-react";
 import { LockIcon } from "lucide-react";
 import { InfoIcon } from "lucide-react";
