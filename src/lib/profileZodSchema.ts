@@ -34,24 +34,24 @@ export const ProfileFormSchema = z.object({
       required_error: "This field is required",
     })
     .min(2, { message: "Please enter your birthday" }),
-  ethnicity: z
-    .string({
-      required_error: "This field is required",
-    })
-    .min(2, { message: "Please select an ethnicity" })
-    .nullable(),
-  maritalStatus: z
-    .string({
-      required_error: "This field is required",
-    })
-    .min(2, { message: "Please select a marital status" })
-    .nullable(),
-  language: z
-    .string({
-      required_error: "This field is required",
-    })
-    .min(2, { message: "Please select a language" })
-    .nullable(),
+  // ethnicity: z
+  //   .string({
+  //     required_error: "This field is required",
+  //   })
+  //   .min(2, { message: "Please select an ethnicity" })
+  //   .nullable(),
+  // maritalStatus: z
+  //   .string({
+  //     required_error: "This field is required",
+  //   })
+  //   .min(2, { message: "Please select a marital status" })
+  //   .nullable(),
+  // language: z
+  //   .string({
+  //     required_error: "This field is required",
+  //   })
+  //   .min(2, { message: "Please select a language" })
+  //   .nullable(),
   education: z
     .string({
       required_error: "Education information is required",
@@ -71,30 +71,30 @@ export const ProfileFormSchema = z.object({
       required_error: "Income information is required",
     })
     .nullable(),
-  height: z
-    .number({
-      required_error: "Height is required",
-      invalid_type_error: "Height must be a number",
-    })
-    .nonnegative({ message: "Invalid height" })
-    .nullable(),
-  weight: z
-    .number({
-      required_error: "Weight is required",
-      invalid_type_error: "Weight must be a number",
-    })
-    .nonnegative({ message: "Invalid weight" })
-    .nullable(),
-  bodyType: z
-    .string({
-      required_error: "Please select body type that matches you",
-    })
-    .nullable(),
-  favoriteFood: z
-    .string({
-      required_error: "Please select your preferred food",
-    })
-    .nullable(),
+  // height: z
+  //   .number({
+  //     required_error: "Height is required",
+  //     invalid_type_error: "Height must be a number",
+  //   })
+  //   .nonnegative({ message: "Invalid height" })
+  //   .nullable(),
+  // weight: z
+  //   .number({
+  //     required_error: "Weight is required",
+  //     invalid_type_error: "Weight must be a number",
+  //   })
+  //   .nonnegative({ message: "Invalid weight" })
+  //   .nullable(),
+  // bodyType: z
+  //   .string({
+  //     required_error: "Please select body type that matches you",
+  //   })
+  //   .nullable(),
+  // favoriteFood: z
+  //   .string({
+  //     required_error: "Please select your preferred food",
+  //   })
+  // .nullable(),
   country: z
     .string({
       required_error: "Country is required",

@@ -71,7 +71,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
 
   const getNationality = (nationalityName: string) =>
     nationalities.find(
-      (nationality) => nationality.nationality === nationalityName,
+      (nationality) => nationality.nationality === nationalityName
     );
 
   const getEducation = (name: string) =>
@@ -99,7 +99,6 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
     states.find((s) => s.state_name === name);
 
   const onSubmit = async (formData: any) => {
-    console.log(formData);
     if (!methods.formState.isDirty) {
       toggleEditMode();
       return;

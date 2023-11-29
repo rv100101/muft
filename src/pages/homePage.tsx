@@ -138,61 +138,63 @@ const HomePage = () => {
   // }
   return (
     <AuthenticatedLayout>
-      <div className="flex justify-center lg:grid-cols-9 grid-cols-1 gap-4">
-        <div className="hidden lg:block w-32"></div>
-        <div className="col-span-4 w-min overflow-auto no-scrollbar">
-          {retrievingMemberData ? (
-            <>
-              {/* <div className="flex flex-col justify-center space-x-4 w-full ml-5 mt-10 border w-full"> */}
-              <div className="flex flex-col items-start space-y-2 p-5 border bg-white m-5 w-[470px]">
-                <Skeleton className="h-[50px] w-full" />
-              </div>
+      <div className="flex justify-center w-full">
+        <div className="flex justify-center lg:grid-cols-9 grid-cols-1 gap-4">
+          <div className="hidden lg:block w-32"></div>
+          <div className="col-span-4 w-min overflow-auto no-scrollbar 2xl:w-1/2">
+            {retrievingMemberData ? (
+              <>
+                {/* <div className="flex flex-col justify-center space-x-4 w-full ml-5 mt-10 border w-full"> */}
+                <div className="flex flex-col items-start space-y-2 p-5 border bg-white m-5 w-[470px]">
+                  <Skeleton className="h-[50px] w-full" />
+                </div>
 
-              <div className="flex flex-col items-center space-y-2 p-5 border bg-white m-5 w-[470px]">
-                <Skeleton className="h-[500px] w-full" />
-              </div>
-              <div className="flex flex-col items-center space-y-2 p-5 border bg-white m-5 w-[470px]">
-                <Skeleton className="h-[300px] w-full" />
-              </div>
-              <div className="flex flex-col items-center space-y-2 p-5 border bg-white m-5 w-[470px]">
-                <Skeleton className="h-[300px] w-full" />
-              </div>
-              {/* </div> */}
-            </>
-          ) : (
-            <>
-              <PostHeader />
-              <div
-                className="no-scrollbar lg:p-8 px-0 lg:w-full h-screen w-screen rounded-b-xl space-y-4 border border-[#E0E0E0] lg:h-min overflow-y-auto scroll-smooth"
-                ref={containerRef}
-              >
-                {memberList.length > 0 ? (
-                  memberList.map((post, index: number) => {
-                    return (
-                      // <h1 className="bg-red-500">{post.nickname}</h1>
-                      <PostItem
-                        key={index}
-                        nickname={post.nickname}
-                        countryName={post.countryName}
-                        age={post.age}
-                        image={post.imagePath}
-                        member_id={post.member_id}
-                        isLiked={post.isLiked}
-                        isFavorite={post.isFavorite}
-                      />
-                    );
-                  })
-                ) : (
-                  <div className="rounded-t-md lg:w-[460px] w-[350px] h-[554px] object-cover h-screen">
-                    No members associated with current user
-                  </div>
-                )}
-              </div>
-            </>
-          )}
-        </div>
-        <div className="md:col-span-3 col-span-0 xs:hidden overflow-auto no-scrollbar">
-          <Suggestions members={memberList} />
+                <div className="flex flex-col items-center space-y-2 p-5 border bg-white m-5 w-[470px]">
+                  <Skeleton className="h-[500px] w-full" />
+                </div>
+                <div className="flex flex-col items-center space-y-2 p-5 border bg-white m-5 w-[470px]">
+                  <Skeleton className="h-[300px] w-full" />
+                </div>
+                <div className="flex flex-col items-center space-y-2 p-5 border bg-white m-5 w-[470px]">
+                  <Skeleton className="h-[300px] w-full" />
+                </div>
+                {/* </div> */}
+              </>
+            ) : (
+              <>
+                <PostHeader />
+                <div
+                  className="no-scrollbar lg:p-8 px-0 lg:w-full h-screen w-screen rounded-b-xl space-y-4 border border-[#E0E0E0] lg:h-min overflow-y-auto scroll-smooth"
+                  ref={containerRef}
+                >
+                  {memberList.length > 0 ? (
+                    memberList.map((post, index: number) => {
+                      return (
+                        // <h1 className="bg-red-500">{post.nickname}</h1>
+                        <PostItem
+                          key={index}
+                          nickname={post.nickname}
+                          countryName={post.countryName}
+                          age={post.age}
+                          image={post.imagePath}
+                          member_id={post.member_id}
+                          isLiked={post.isLiked}
+                          isFavorite={post.isFavorite}
+                        />
+                      );
+                    })
+                  ) : (
+                    <div className="rounded-t-md lg:w-[460px] w-[350px] h-[554px] object-cover h-screen">
+                      No members associated with current user
+                    </div>
+                  )}
+                </div>
+              </>
+            )}
+          </div>
+          <div className="md:col-span-3 col-span-0 xs:hidden overflow-auto no-scrollbar">
+            <Suggestions members={memberList} />
+          </div>
         </div>
       </div>
     </AuthenticatedLayout>
