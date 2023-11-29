@@ -14,8 +14,23 @@ const uploadProfilePicture = async (base64: string, memberId: number) => {
   });
 };
 
+const uploadGalleryPhoto = async (base64: string, memberId: number) => {
+  const image = removePrefix(base64);
+  return await axiosQuery.post("/UploadGalleryPhoto", {
+    image: image,
+    member: memberId,
+  });
+};
+
+const deleteGalleryPhoto = async (gallery: string) =>
+  await axiosQuery.post("/DeleteGallery", {
+    gallery,
+  });
+
 const uploadQueries = {
   uploadProfilePicture,
+  uploadGalleryPhoto,
+  deleteGalleryPhoto,
 };
 
 export default uploadQueries;

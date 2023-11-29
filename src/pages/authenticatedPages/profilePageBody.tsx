@@ -26,12 +26,6 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
   ;
 
   useEffect(() => {
-    return () => {
-      toggleEditMode()
-    }
-  }, [])
-
-  useEffect(() => {
     if (data && headerValues) {
       methods.reset({
         gender: data.gender,
