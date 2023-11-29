@@ -22,20 +22,26 @@ const fetchBasicInfoInitialData = async (userId: number) => {
     const maritalStatus = await axiosQuery.post("/GetMaritalStatus", {
       member: userId,
     });
-    const languages: { data: [] } = await axiosQuery.post("/GetLanguages", {
-      member: userId,
-    });
+    // const languagesResponse: { data: [] } = await axiosQuery.post(
+    //   "/GetLanguages",
+    //   { member: userId }
+    // );
 
     const { gender, nationality, date_of_birth, age } = basic.data;
     const { religion_name, ethnicity_name } = background.data;
     const { marital_status_name } = maritalStatus.data;
-    const { language_name } = languages.data[languages.data.length - 1];
+
+    // let language = null;
+    // if (languagesResponse.data.length > 0) {
+    //   language = languagesResponse.data[languagesResponse.data.length - 1];
+    // }
 
     const formattedDate = new Date(date_of_birth).toLocaleDateString("en-US", {
       year: "numeric",
       month: "long",
       day: "numeric",
     });
+
     let basicInformation: Record<string, string> = {
       gender: gender,
       nationality: nationality,
@@ -44,8 +50,9 @@ const fetchBasicInfoInitialData = async (userId: number) => {
       religion: religion_name,
       ethnicity: ethnicity_name,
       maritalStatus: marital_status_name,
-      language: language_name,
+      // language: language!.language_name,
     };
+
     basicInformation = removeNull(basicInformation);
     return basicInformation;
   } catch (err) {
@@ -94,20 +101,20 @@ const fetchDetailsInitialData = async (userId: number) => {
       member: userId,
     });
 
-    const response4 = await axiosQuery.post("/GetFavoriteFood", {
-      member: userId,
-    });
+    // const response4 = await axiosQuery.post("/GetFavoriteFood", {
+    //   member: userId,
+    // });
 
     const { height } = response1.data[0];
 
     const { weight } = response2.data[0];
     const { body_type_name } = response3.data;
-    const { favorite_food_name } = response4.data[0];
+    // const { favorite_food_name } = response4.data[0];
     let detailsData: Record<string, string> = {
       height: height,
       weight: weight,
       bodyType: body_type_name,
-      favoriteFood: favorite_food_name,
+      // favoriteFood: favorite_food_name,
     };
     detailsData = removeNull(detailsData);
     return detailsData;
