@@ -2,7 +2,7 @@ import { getImagePathGallery } from "@/lib/images";
 import axiosQuery from "@/queries/axios";
 import { useUserStore } from "@/zustand/auth/user";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { PlusCircle, Trash2Icon, X } from "lucide-react";
+import { Loader2, PlusCircle, Trash2Icon } from "lucide-react";
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import sampleGalleryImage from "../../../assets/profile/sample-gallery.png";
 import ImageViewer from "react-simple-image-viewer";
@@ -34,7 +34,7 @@ const GallerySection = ({ userId }: { userId: string }) => {
   );
   const [gallery, setGallery] = useState([]);
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
-  const [isUploading, setIsUploading] = useState(false);
+  const [isUploading] = useState(false);
   const [currentImage, setCurrentImage] = useState(0);
   const [isViewerOpen, setIsViewerOpen] = useState(false);
   const { user } = useUserStore();
@@ -55,6 +55,7 @@ const GallerySection = ({ userId }: { userId: string }) => {
       fileInputRef.current.click();
     }
   };
+
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -80,7 +81,6 @@ const GallerySection = ({ userId }: { userId: string }) => {
 
   const {
     data,
-    refetch,
   } = useQuery({
     queryFn: fetchGallery,
     queryKey: ["gallery", userId],
@@ -93,46 +93,8 @@ const GallerySection = ({ userId }: { userId: string }) => {
     [data],
   );
 
-  const handleUploadButtonClick = async () => {
-    setIsUploading(true);
-    if (selectedFile && user) {
-      const base64String = selectedFile.split(",")[1];
-      const binaryString = atob(base64String);
-      const arrayBuffer = new ArrayBuffer(binaryString.length);
-      const uint8Array = new Uint8Array(arrayBuffer);
-
-      for (let i = 0; i < binaryString.length; i++) {
-        uint8Array[i] = binaryString.charCodeAt(i);
-      }
-
-      const blob = new Blob([uint8Array], { type: "image/jpeg" }); // Create Blob from Uint8Array
-
-      const formData = new FormData();
-      formData.append("member", String(user.member_id));
-      formData.append("photo", blob, "filename.jpg"); // Append the Blob object with a filename
-
-      try {
-        const response = await axiosQuery.post(
-          "/UploadGalleryPhoto",
-          formData,
-          {
-            headers: { "Content-Type": "multipart/form-data" },
-          },
-        );
-
-        if (response.status === 200) {
-          setSelectedFile(null);
-          setIsUploading(false);
-          refetch();
-        }
-      } catch (error) {
-        console.error("Error uploading file:", error);
-      }
-    } else {
-      console.error("No file selected or user not available.");
-    }
-  };
   const queryClient = useQueryClient();
+
   const deletePhoto = useMutation({
     mutationFn: async () =>
       await uploadQueries.deleteGalleryPhoto(selectedPictureId!),
@@ -156,13 +118,39 @@ const GallerySection = ({ userId }: { userId: string }) => {
     },
   });
 
-  const handleDeletePhoto = async () => {
+  const uploadPhoto = useMutation({
+    mutationFn: async () =>
+      await uploadQueries.uploadGalleryPhoto(selectedFile!, user!.member_id),
+    onSuccess: () => {
+      toast({
+        title: "Photo successfuly uploaded",
+        variant: "success",
+      });
+      setSelectedFile(null);
+      queryClient.invalidateQueries({
+        queryKey: ["gallery"],
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Something went wrong!",
+        description: "Cannot upload photo",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const handleDeletePhoto = () => {
     if (selectedPictureId !== null) {
       deletePhoto.mutate();
     }
   };
 
-  console.log(gallery);
+  const handleUploadPhoto = () => {
+    if (selectedFile !== null) {
+      uploadPhoto.mutate();
+    }
+  };
 
   return (
     <Accordion
@@ -184,11 +172,6 @@ const GallerySection = ({ userId }: { userId: string }) => {
                     {/* Selected File: {typeof selectedFile === 'string' ? 'Base64 String' : selectedFile.name} */}
                   </p>
                 </div>
-                <X
-                  size={15}
-                  className="hover:cursor-pointer"
-                  onClick={() => setSelectedFile(null)}
-                />
               </div>
             )}
           </div>
@@ -204,6 +187,7 @@ const GallerySection = ({ userId }: { userId: string }) => {
               isDeleting={deletePhoto.isLoading}
             />
             {parseInt(userId) === user!.member_id &&
+              selectedFile == null &&
               (
                 <div
                   onClick={handleGalleryUpload}
@@ -223,13 +207,26 @@ const GallerySection = ({ userId }: { userId: string }) => {
                   <p className="text-white text-sm">Add Photo</p>
                 </div>
               )}
+            {selectedFile !== null &&
+              (
+                <Button
+                  variant={"outline"}
+                  className="border-primary"
+                  onClick={() => {
+                    setSelectedFile(null);
+                  }}
+                >
+                  Cancel
+                </Button>
+              )}
           </div>
           <div className="flex flex-col w-full">
             <div className="flex justify-between items-center p-5 space-x-5">
-              <div className="flex flex-row w-full space-x-5">
-                {selectedFile && (
+              {selectedFile && (
+                <div className="flex flex-col space-y-2 items-center justify-center w-full space-x-5">
+                  <img src={selectedFile} />
                   <div
-                    onClick={handleUploadButtonClick}
+                    onClick={handleUploadPhoto}
                     className="flex items-center rounded-full bg-[#fe599b] px-3 py-2 space-x-2 hover:cursor-pointer"
                   >
                     <div className="text-white">
@@ -242,12 +239,22 @@ const GallerySection = ({ userId }: { userId: string }) => {
                           </div>
                         )
                         : (
-                          "Upload"
+                          <Button
+                            className="h-4"
+                            disabled={uploadPhoto.isLoading}
+                          >
+                            <p>Upload</p>
+                            <span>
+                              {uploadPhoto.isLoading && (
+                                <Loader2 className="ml-2 w-min h-min animate-spin" />
+                              )}
+                            </span>
+                          </Button>
                         )}
                     </div>
                   </div>
-                )}
-              </div>
+                </div>
+              )}
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 p-5 flex w-full">
               {gallery && gallery.length !== 0 &&
