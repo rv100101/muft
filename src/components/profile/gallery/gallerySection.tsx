@@ -64,7 +64,7 @@ const GallerySection = ({ userId }: { userId: string }) => {
   const handleUploadButtonClick = async () => {
     setIsUploading(true);
     if (selectedFile && user) {
-      const base64String = selectedFile.split(",")[1]; // Extracting base64 string without data:image/jpeg;base64,
+      const base64String = selectedFile.split(",")[1];
       const binaryString = atob(base64String);
       const arrayBuffer = new ArrayBuffer(binaryString.length);
       const uint8Array = new Uint8Array(arrayBuffer);

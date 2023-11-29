@@ -39,10 +39,17 @@ const sendMessage = async (
   });
 };
 
+const newConversation = async (conversation: string, text: string, member: number) => {
+  return await axiosQuery.post('/NewConversation', {
+    conversation, text, member
+  });
+}
+
 const messagingQuery = {
   getConversations,
   getConversationHistory,
   sendMessage,
+  newConversation
 };
 
 export default messagingQuery;
