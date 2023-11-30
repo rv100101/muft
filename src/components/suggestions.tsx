@@ -1,6 +1,4 @@
-import {
-  MoreVerticalIcon,
-} from "lucide-react";
+import { MoreVerticalIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import { getImagePath } from "@/lib/images";
 import {
@@ -25,7 +23,8 @@ import {
   DialogTrigger,
 } from "./ui/dialog";
 import { Input } from "./ui/input";
-
+import { useUserStore } from "@/zustand/auth/user";
+import useConversationHistoryStore from "@/zustand/messaging/showConversation";
 type Member = {
   age: number;
   authorized: boolean;
@@ -50,10 +49,14 @@ const Suggestions = ({ members }: { members: Member[] }) => {
   const likeTriggered = useHomepageViewStore((state) => state.isLiked);
   const favoriteTriggered = useHomepageViewStore((state) => state.isFavored);
   const toggleLikeIcon = useHomepageViewStore((state) => state.toggleIsLiked);
-
+  const user = useUserStore((state) => state.user);
   const toggleFavoriteIcon = useHomepageViewStore(
     (state) => state.toggleIsFavored,
   );
+
+  const { conversation, setConversation } = useConversationHistoryStore();
+
+  console.log(conversation);
 
   const [, setLocation] = useLocation();
   const toggleLike = useMutation({
@@ -115,6 +118,8 @@ const Suggestions = ({ members }: { members: Member[] }) => {
   const suggestions = members
     ?.slice(0, 3)
     .map((suggestion: Member, index: number) => {
+      console.log(suggestion);
+
       const imagePath = getImagePath(
         suggestion.gallery_uuid,
         suggestion.gender,
@@ -147,7 +152,7 @@ const Suggestions = ({ members }: { members: Member[] }) => {
                     variant={"ghost"}
                     onClick={() =>
                       toggleLike.mutate({
-                        member: 69,
+                        member: user!.member_id,
                         liked: suggestion.member_id,
                       })}
                   >
@@ -161,7 +166,7 @@ const Suggestions = ({ members }: { members: Member[] }) => {
                     variant={"ghost"}
                     onClick={() =>
                       toggleFavorite.mutate({
-                        member: 69,
+                        member: user!.member_id,
                         favored: suggestion.member_id,
                       })}
                   >
@@ -171,7 +176,31 @@ const Suggestions = ({ members }: { members: Member[] }) => {
                       ? "UnFavorite"
                       : "Favorite"}
                   </Button>
-                  <Button variant={"ghost"}>Send Message</Button>
+                  <Button
+                    variant={"ghost"}
+                    onClick={() => {
+                      setConversation(
+                        suggestion.member_id,
+                        null,
+                        suggestion.gallery_uuid,
+                        suggestion.gender,
+                        suggestion.member_uuid,
+                        suggestion.nickname,
+                        "",
+                      );
+                      // setConversation(
+                      //   conversation.initiator_id,
+                      //   conversation.conversation_id,
+                      //   conversation.gallery_uuid,
+                      //   conversation.gender,
+                      //   conversation.recipient_uuid,
+                      //   conversation.recipient_nickname,
+                      //   conversation.conversation_uuid,
+                      // );
+                    }}
+                  >
+                    <Link href="/messages">Send Message</Link>
+                  </Button>
                   <DropdownMenuSeparator />
                   <Button variant={"ghost"}>Block</Button>
                   {/* <DialogTrigger asChild> */}

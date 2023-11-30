@@ -22,21 +22,25 @@ const ChatMessages = () => {
     console.log(conversationMessages![conversationMessages!.length - 1]);
   }
 
+  const fetchMessages = async () => {
+    return await messagingQuery.getConversationHistory(
+        latestConversation!.conversationId,
+        latestConversation!.memberId
+      )
+  }
+
   const { isLoading, isSuccess, data } = useQuery({
     queryKey: ["current-selected-conversation", latestConversation],
     enabled: latestConversation != null,
-    // refetchInterval: 500,
-    // refetchIntervalInBackground: true,
-    queryFn: () =>
-      messagingQuery.getConversationHistory(
-        latestConversation!.conversationId,
-        latestConversation!.memberId
-      ),
+    refetchInterval: 500,
+    refetchIntervalInBackground: true,
+    queryFn: fetchMessages
   });
 
   useEffect(() => {
     if (data) {
       setConversationMessages(data);
+      console.log(data);
     }
   }, [data, setConversationMessages]);
 
@@ -56,7 +60,6 @@ const ChatMessages = () => {
 
     if (date !== "isLoading" && date !== "failed") {
       date = moment(date).fromNow();
-      console.log(date);
     }
 
     if (date == "failed") {
@@ -98,7 +101,7 @@ const ChatMessages = () => {
     <div
       ref={scrollableDivRef}
       className={cn(
-        "h-full w-full space-y-4 overflow-y-scroll p-4 bg-[#F7F8FA]",
+        "h-full w-full space-y-4 overflow-y-auto p-4 bg-[#F7F8FA]",
         isLoading && "bg-white",
         !latestConversation && "bg-[#F7F8FA] overflow-y-auto"
       )}
