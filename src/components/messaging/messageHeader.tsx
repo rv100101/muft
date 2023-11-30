@@ -8,7 +8,6 @@ const MessageHeader = () => {
   const updateMessagingPageView = useMobileMessagingViewStore(
     (state) => state.toggle
   );
-
   const currentConversationData = useConversationHistoryStore(
     (state) => state.conversation
   );

@@ -49,12 +49,12 @@ const TopBar = ({ children }: { children: ReactNode }) => {
             <SheetTitle>
               <Link href="/">
                 <img
-                  className="hover:cursor-pointer h-max w-max my-8 mx-4"
+                  className="hover:cursor-pointer my-8 mx-4"
                   src={logo}
                   alt="logo"
                 />
               </Link>
-            </SheetTitle>{" "}
+            </SheetTitle>
             <ul>{navLinks}</ul>
           </SheetHeader>
         </SheetContent>

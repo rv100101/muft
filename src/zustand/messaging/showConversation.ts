@@ -3,21 +3,21 @@ import { create } from "zustand";
 interface ConversationHistory {
   conversation: {
     memberId: number;
-    conversationId: number;
+    conversationId: number | null;
     gallery_uuid: string | null;
     gender: string;
-    recipient_uuid: string;
+    recipient_uuid: string | null;
     username: string;
     conversation_uuid: string;
   } | null;
   setConversation: (
     memberId: number,
-    conversationId: number,
+    conversationId: number | null,
     gallery_uuid: string | null,
     gender: string,
-    recepient_uuid: string,
+    recipient_uuid: string | null,
     username: string,
-    conversation_uuid: string
+    conversation_uuid: string,
   ) => void;
 }
 

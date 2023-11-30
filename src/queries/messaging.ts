@@ -12,7 +12,7 @@ const getConversations = async (id: number) => {
 };
 
 const getConversationHistory = async (
-  conversationId: number,
+  conversationId: number | null,
   memberId: number
 ) => {
   try {
@@ -39,17 +39,17 @@ const sendMessage = async (
   });
 };
 
-const newConversation = async (conversation: string, text: string, member: number) => {
-  return await axiosQuery.post('/NewConversation', {
-    conversation, text, member
+const getConversation = async (member: number, chat_member: number) => {
+  return await axiosQuery.post('/GetConversation', {
+    member, chat_member
   });
 }
 
 const messagingQuery = {
   getConversations,
+  getConversation,
   getConversationHistory,
   sendMessage,
-  newConversation
 };
 
 export default messagingQuery;

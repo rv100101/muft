@@ -4,21 +4,27 @@ import profileHeaderStore from "@/zustand/profile/profileHeaderStore";
 import { ProfileHeader as ProfileHeaderType } from "@/types/profileHeader";
 import ProfileHeaderSkeleton from "./profileHeaderSkeleton";
 import { Button } from "../ui/button";
-import { CameraIcon, Loader2, Pencil } from "lucide-react";
+import { CameraIcon, Loader2, MessageCircleIcon, Pencil } from "lucide-react";
 import { useUserStore } from "@/zustand/auth/user";
 import { cn } from "@/lib/utils";
 import profileQuery from "@/queries/profile/profileHeader";
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
 import { FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
 import ActivateAccount from "@/pages/authenticatedPages/accountActivationPage";
 import uploadQueries from "@/queries/uploading";
 import { toast } from "../ui/use-toast";
+import messagingQuery from "@/queries/messaging";
+import useLatestConversationStore from "@/zustand/messaging/showConversation";
+import { Link } from "wouter";
 
 const ProfileHeader = ({ userId }: { userId: string }) => {
+  const setSelectedConversation = useLatestConversationStore(
+    (state) => state.setConversation,
+  );
   const [showCamera, setShowCamera] = useState(false);
   const headerValues = profileHeaderStore((state) => state.headerValues);
   const setHeaderValues = profileHeaderStore((state) => state.setHeaderValues);
@@ -45,6 +51,47 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
       }
     },
   });
+
+  const getConversationUuid = async () => {
+    try {
+      const res: {
+        data: {
+          recipient_id: number;
+          conversation_id: number;
+          gallery_uuid: string;
+          gender: string;
+          recipient_uuid: string;
+          recipient_nickname: string;
+          conversation_uuid: string;
+        };
+      } = await messagingQuery.getConversation(
+        user!.member_id,
+        parseInt(userId),
+      );
+
+      setSelectedConversation(
+        user!.member_id,
+        res.data.conversation_id,
+        headerValues.gallery_uuid,
+        res.data.gender,
+        headerValues.member_uuid,
+        headerValues.nickname!,
+        res.data.conversation_uuid,
+      );
+
+      return res.data.conversation_uuid;
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Cannot create new conversation",
+      });
+      return null;
+    }
+  };
+
+  useEffect(() => {
+    getConversationUuid();
+  }, [userId]);
 
   if (isLoading || isRefetching) {
     return <ProfileHeaderSkeleton />;
@@ -154,9 +201,35 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                       !user!.is_active ? "pt-5 pl-3" : ""
                     }`}
                   >
-                    <p className="font-semibold text-[#171717] text-lg ">
-                      {headerValues.nickname}
-                    </p>
+                    <div>
+                      <p className="font-semibold text-[#171717] text-lg ">
+                        {headerValues.nickname}
+                      </p>
+                      {!isEditing && (
+                        <p
+                          className={`text-[#727272] text-sm ${
+                            !user!.is_active ? "pl-3" : ""
+                          }`}
+                        >
+                          @{`${headerValues.nickname?.toLowerCase()}`}
+                        </p>
+                      )}
+                    </div>
+                    {userId !== user!.member_id.toString() && (
+                      <Button
+                        type="button"
+                        className="text-xs border-primary hover:bg-primary px-2 py-1"
+                      >
+                        <Link className="flex" href="/messages">
+                          <p className="flex">
+                            Chat
+                            <span>
+                              <MessageCircleIcon className="h-4" />
+                            </span>
+                          </p>
+                        </Link>
+                      </Button>
+                    )}
                     {!user!.is_active && (
                       <DialogTrigger>
                         <button
@@ -191,15 +264,6 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                       );
                     }}
                   />
-                )}
-                {!isEditing && (
-                  <p
-                    className={`text-[#727272] text-sm ${
-                      !user!.is_active ? "pl-3" : ""
-                    }`}
-                  >
-                    @{`${headerValues.nickname?.toLowerCase()}`}
-                  </p>
                 )}
               </div>
               {userId === user!.member_id.toString() && (

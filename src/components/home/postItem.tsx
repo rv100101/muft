@@ -9,6 +9,7 @@ import { useLocation } from "wouter";
 import { useMutation } from "@tanstack/react-query";
 import axiosQuery from "@/queries/axios";
 import useHomepageViewStore from "@/zustand/home/homepageView";
+import { useUserStore } from "@/zustand/auth/user";
 type PostItemProps = {
   nickname: string;
   countryName: string;
@@ -32,7 +33,7 @@ const PostItem = ({
   const likeTriggered = useHomepageViewStore((state) => state.isLiked);
   const favoriteTriggered = useHomepageViewStore((state) => state.isFavored);
   const toggleLikeIcon = useHomepageViewStore((state) => state.toggleIsLiked);
-
+  const user = useUserStore(state => state.user);
   const toggleFavoriteIcon = useHomepageViewStore(
     (state) => state.toggleIsFavored
   );
@@ -122,7 +123,7 @@ const PostItem = ({
                           size={50}
                           onClick={() =>
                             toggleLike.mutate({
-                              member: 69,
+                              member: user!.member_id,
                               liked: member_id,
                             })
                           }
@@ -149,7 +150,7 @@ const PostItem = ({
                           strokeWidth={1.5}
                           onClick={() =>
                             toggleFavorite.mutate({
-                              member: 69,
+                              member: user!.member_id,
                               favored: member_id,
                             })
                           }

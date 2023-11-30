@@ -15,11 +15,11 @@ import { useUserStore } from "@/zustand/auth/user";
 const ChatList = () => {
   const matches = useMediaQuery("(min-width: 640px)");
   const setConversation = useLatestConversationStore(
-    (state) => state.setConversation
+    (state) => state.setConversation,
   );
   const user = useUserStore((state) => state.user);
   const selectedConversation = useLatestConversationStore(
-    (state) => state.conversation
+    (state) => state.conversation,
   );
   const setSenderUserInfo = useSenderInfo((state) => state.setInfo);
   const { isLoading, isSuccess, data } = useQuery({
@@ -31,7 +31,7 @@ const ChatList = () => {
 
   // This is used for page view switching in mobile view
   const updateMessagingPageView = useMobileMessagingViewStore(
-    (state) => state.toggle
+    (state) => state.toggle,
   );
 
   useEffect(() => {
@@ -43,7 +43,7 @@ const ChatList = () => {
         data[0].gender,
         data[0].recipient_uuid,
         data[0].recipient_nickname,
-        data[0].conversation_uuid
+        data[0].conversation_uuid,
       );
       setSenderUserInfo({
         conversation_history_id: data[0].conversation_id,
@@ -63,18 +63,18 @@ const ChatList = () => {
       return dateA.getTime() - dateB.getTime();
     })
     .filter((conversation) =>
-      searchFilterValue.length === 0
-        ? true
-        : conversation.recipient_nickname
-            .toLowerCase()
-            .includes(searchFilterValue.toLowerCase())
-    )
+      searchFilterValue.length === 0 ? true : conversation.recipient_nickname
+        .toLowerCase()
+        .includes(searchFilterValue.toLowerCase())
+    ).filter((conversation) => {
+      return conversation.recipient_id !== conversation.initiator_id;
+    })
     .map((conversation, index) => {
       return (
         <li key={index}>
           <Button
             variant={"ghost"}
-            className="flex space-x-2 w-full h-max items-start justify-start text-left"
+            className="w-full h-full items-start text-left"
             onClick={() => {
               if (!matches) {
                 updateMessagingPageView();
@@ -86,30 +86,26 @@ const ChatList = () => {
                 conversation.gender,
                 conversation.recipient_uuid,
                 conversation.recipient_nickname,
-                conversation.conversation_uuid
+                conversation.conversation_uuid,
               );
             }}
           >
-            <div className="relative flex items-center">
-              <img
-                className="w-12 relative h-max rounded-full"
-                src={getImagePath(
-                  conversation.gallery_uuid,
-                  conversation.gender,
-                  conversation.recipient_uuid
-                )}
-                alt="user profile"
-              />
-              {/* <div className="w-2 h-2 bg-green-400 rounded-full absolute right-0 translate-y-3" /> */}
-            </div>
-
+            <img
+              className="w-12 h-12 mr-2 object-cover rounded-full "
+              src={getImagePath(
+                conversation.gallery_uuid,
+                conversation.gender,
+                conversation.recipient_uuid,
+              )}
+              alt="user profile"
+            />
             <div className="w-full flex flex-col justify-start">
               <div className="flex justify-between items-center w-full">
                 <p className="font-semibold">
                   {conversation.recipient_nickname}
                 </p>
                 <p className="text-xs">
-                  {moment(conversation.created_date).fromNow()}
+                  {moment(`${conversation.created_date}Z`).fromNow()}
                 </p>
               </div>
             </div>
@@ -119,7 +115,7 @@ const ChatList = () => {
     });
 
   return (
-    <ul className="space-y-1 overflow-y-auto">
+    <ul className="space-y-1 overflow-y-scroll h-full">
       {isSuccess && conversations}
       {isLoading && <ChatListLoadingSkeleton />}
       {!isLoading && conversations?.length == 0 && (

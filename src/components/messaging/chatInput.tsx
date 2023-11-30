@@ -7,40 +7,121 @@ import {
 } from "@radix-ui/react-popover";
 import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
 import { useMessageInputStore } from "@/zustand/messaging/messageInput";
-import useConversationHistoryStore from "@/zustand/messaging/showConversation";
 import messagingQuery from "@/queries/messaging";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSelectedConversationData } from "@/zustand/messaging/selectedConversationData";
 import { useSenderInfo } from "@/zustand/messaging/senderData";
 import { useEffect, useState } from "react";
 import useLatestConversationStore from "@/zustand/messaging/showConversation";
+import { toast } from "../ui/use-toast";
+import { useUserStore } from "@/zustand/auth/user";
 const ChatInput = () => {
   const currentSelectedConversation = useLatestConversationStore(
-    (state) => state.conversation
+    (state) => state.conversation,
   );
+  const setSelectedConversation = useLatestConversationStore(
+    (state) => state.setConversation,
+  );
+  const [uuid, setUuid] = useState(
+    currentSelectedConversation?.conversation_uuid,
+  );
+  const user = useUserStore((state) => state.user);
   const queryClient = useQueryClient();
   const setInputMessage = useMessageInputStore((state) => state.setInputValue);
   const inputMessageValue = useMessageInputStore((state) => state.value);
   const [finalInputMessage, setfinalInputMessage] = useState(inputMessageValue);
-  const currentConversation = useConversationHistoryStore(
-    (state) => state.conversation
-  );
   const updateLastSentMessageStatus = useSelectedConversationData(
-    (status) => status.updateMessageStatus
+    (status) => status.updateMessageStatus,
   );
   const senderInfo = useSenderInfo((state) => state.senderInfo);
 
   const appendNewMessage = useSelectedConversationData(
-    (state) => state.appendNewMessage
+    (state) => state.appendNewMessage,
   );
 
+  useEffect(
+    () => {
+      setUuid(currentSelectedConversation?.conversation_uuid);
+    },
+    [currentSelectedConversation],
+  );
+
+  const getConversationUuid = async () => {
+    try {
+      console.log(
+        user!.member_id,
+        currentSelectedConversation!.memberId,
+      );
+
+      const res: {
+        data: {
+          recipient_id: number;
+          conversation_id: number;
+          gallery_uuid: string;
+          gender: string;
+          recipient_uuid: string;
+          recipient_nickname: string;
+          conversation_uuid: string;
+        };
+      } = await messagingQuery.getConversation(
+        user!.member_id,
+        currentSelectedConversation!.memberId,
+      );
+      // setUuid(res.data.conversation_uuid);
+      console.log();
+
+      setSelectedConversation(
+        user!.member_id,
+        res.data.conversation_id,
+        res.data.gallery_uuid,
+        res.data.gender,
+        res.data.recipient_uuid,
+        res.data.recipient_nickname,
+        res.data.conversation_uuid,
+      );
+
+      return res.data.conversation_uuid;
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Cannot create new conversation",
+      });
+      return null;
+    }
+  };
+
+  useEffect(() => {
+    if ( user && currentSelectedConversation &&
+      user!.member_id !==
+        currentSelectedConversation!.memberId
+    ) {
+      getConversationUuid();
+    }
+  }, []);
+
   const sendMessage = async () => {
+    console.log(currentSelectedConversation);
+    let newChatUuid = null;
+    // if (currentSelectedConversation?.conversation_uuid.length === 0) {
+    //   newChatUuid = await getConversationUuid();
+    // }
+
+    console.log(newChatUuid);
+
     await messagingQuery.sendMessage(
-      currentConversation!.conversation_uuid,
+      newChatUuid ?? uuid!,
       finalInputMessage,
-      currentConversation!.memberId
+      user!.member_id,
     );
   };
+
+  // const sendNewConversationFirstMessage = async () => {
+  //   await messagingQuery.newConversation(
+  //     currentConversation!.conversation_uuid,
+  //     finalInputMessage,
+  //     currentConversation!.memberId,
+  //   );
+  // };
 
   const mutateConversation = useMutation({
     mutationFn: sendMessage,
@@ -59,13 +140,24 @@ const ChatInput = () => {
     setInputMessage("");
   }, [currentSelectedConversation, setInputMessage]);
 
-  const handleMessageSend = () => {
-    if (senderInfo && inputMessageValue.length !== 0) {
-      appendNewMessage({
-        ...senderInfo,
-        conversation_text: inputMessageValue,
-        created_date: "isLoading",
-      });
+  const handleMessageSend = async () => {
+    console.log(senderInfo, inputMessageValue);
+
+    if (inputMessageValue.length !== 0) {
+      console.log("here");
+
+      // if (senderInfo === null) {
+      //
+      // }
+
+      if (senderInfo) {
+        appendNewMessage({
+          ...senderInfo,
+          conversation_text: inputMessageValue,
+          created_date: "isLoading",
+        });
+      }
+
       setfinalInputMessage(inputMessageValue);
       setInputMessage("");
       mutateConversation.mutate();
