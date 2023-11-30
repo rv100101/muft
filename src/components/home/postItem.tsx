@@ -79,26 +79,29 @@ const PostItem = ({
     <div className="transition ease-in duration-300 transform border rounded-md">
       <div className="flex flex-col items-center justify-end h-full">
         <div className="flex flex-col h-full justify-center items-center">
-          <div className="relative w-max rounded-t-md">
+          <div
+            className="relative w-max rounded-t-md  hover:cursor-pointer"
+            onClick={() => handlePostItemClick()}
+          >
             <img
               src={image}
               alt="post-img"
               // width={520}
-              className="rounded-t-md lg:w-[460px] w-[350px] h-[554px] object-cover"
+              className="rounded-t-md lg:w-[460px] w-[350px] h-[554px] 2xl:h-[654px] 2xl:w-[570px] object-cover"
               // height={1000}
               // className="h-2/4 "
             />
             <div className="absolute bottom-0 w-full">
-              <div className="flex flex-row w-full justify-between">
-                <div className="flex flex-col p-8">
+              <div className="flex flex-row w-full justify-between ">
+                <div className="flex flex-col p-8 hover:underline hover:cursor-pointer">
                   <p
-                    className="text-white text-2xl mb-3 hover:underline hover:cursor-pointer select-none"
+                    className="text-white text-2xl 2xl:text-3xl mb-3  select-none"
                     onClick={() => handlePostItemClick()}
                   >
                     {`${nickname}, ${age}`}
                   </p>
                   {/* <p className="text-white text-sm">{countryName}</p> */}
-                  <p className="text-white text-sm">
+                  <p className="text-white text-sm 2xl:text-xl">
                     University of California, Berkeley
                   </p>
                 </div>
@@ -167,7 +170,7 @@ const PostItem = ({
           </div>
           {/* bio */}
           <div className="flex flex-col justify-center items-center">
-            <p className="text-[#727272] pt-5 px-5 text-sm">
+            <p className="text-[#727272] pt-5 px-5 text-sm 2xl:text-xl ">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt.
             </p>

@@ -1,4 +1,4 @@
-import { MoreVerticalIcon } from "lucide-react";
+import { Flag, MoreVerticalIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import { getImagePath } from "@/lib/images";
 import {
@@ -23,8 +23,12 @@ import {
   DialogTrigger,
 } from "./ui/dialog";
 import { Input } from "./ui/input";
+
 import { useUserStore } from "@/zustand/auth/user";
 import useConversationHistoryStore from "@/zustand/messaging/showConversation";
+import { useState } from "react";
+import { toast } from "./ui/use-toast";
+
 type Member = {
   age: number;
   authorized: boolean;
@@ -49,9 +53,12 @@ const Suggestions = ({ members }: { members: Member[] }) => {
   const likeTriggered = useHomepageViewStore((state) => state.isLiked);
   const favoriteTriggered = useHomepageViewStore((state) => state.isFavored);
   const toggleLikeIcon = useHomepageViewStore((state) => state.toggleIsLiked);
-  const user = useUserStore((state) => state.user);
+
+  const [reportReason, setReportReason] = useState("");
+  const [reportProcessing, setReportProcessing] = useState(false);
+  const { user } = useUserStore();
   const toggleFavoriteIcon = useHomepageViewStore(
-    (state) => state.toggleIsFavored,
+    (state) => state.toggleIsFavored
   );
 
   const { conversation, setConversation } = useConversationHistoryStore();
@@ -115,6 +122,32 @@ const Suggestions = ({ members }: { members: Member[] }) => {
     setLocation(`/users/${suggestion.member_id}`);
   };
 
+  // report ⛳
+  const handleReportSubmit = async (reported: number) => {
+    try {
+      console.log(reported);
+      setReportProcessing(true);
+      // const res = await axiosQuery.post("/ReportAbuse", {
+      //   member: user!.member_id,
+      //   reported: reported,
+      //   reason: reportReason,
+      // });
+
+      setReportProcessing(false);
+      toast({
+        title: "Reported",
+        description: "Changes might take awhile to take effect.",
+        // variant: "success",
+      });
+
+      // if (res.data) {
+      //   setReportProcessing(false);
+      // }
+    } catch (error) {
+      console.log("error: ", error);
+    }
+  };
+
   const suggestions = members
     ?.slice(0, 3)
     .map((suggestion: Member, index: number) => {
@@ -123,7 +156,7 @@ const Suggestions = ({ members }: { members: Member[] }) => {
       const imagePath = getImagePath(
         suggestion.gallery_uuid,
         suggestion.gender,
-        suggestion.member_uuid,
+        suggestion.member_uuid
       );
       return (
         <li
@@ -142,10 +175,9 @@ const Suggestions = ({ members }: { members: Member[] }) => {
           />
           <div className="absolute top-0 right-0 mt-2 mr-1">
             <Dialog>
-              <DropdownMenu>
+              <DropdownMenu modal={false}>
                 <DropdownMenuTrigger>
-                  <MoreVerticalIcon height={20} />
-                  {" "}
+                  <MoreVerticalIcon height={20} />{" "}
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="flex flex-col">
                   <Button
@@ -154,7 +186,8 @@ const Suggestions = ({ members }: { members: Member[] }) => {
                       toggleLike.mutate({
                         member: user!.member_id,
                         liked: suggestion.member_id,
-                      })}
+                      })
+                    }
                   >
                     {suggestion.isLiked && !likeTriggered
                       ? "Unlike"
@@ -168,7 +201,8 @@ const Suggestions = ({ members }: { members: Member[] }) => {
                       toggleFavorite.mutate({
                         member: user!.member_id,
                         favored: suggestion.member_id,
-                      })}
+                      })
+                    }
                   >
                     {suggestion.isFavorite && !favoriteTriggered
                       ? "UnFavorite"
@@ -210,34 +244,59 @@ const Suggestions = ({ members }: { members: Member[] }) => {
                   {/* </DialogTrigger> */}
                 </DropdownMenuContent>
               </DropdownMenu>
+              {/* <Dialog> */}
               <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
-                  <DialogTitle>Edit profile</DialogTitle>
+                  <DialogTitle>Report Abuse</DialogTitle>
                   <DialogDescription>
-                    Make changes to your profile here. Click save when you're
-                    done.
+                    Help keep our platform safe and enjoyable. Use this modal to
+                    quickly report any abusive content or behavior.
                   </DialogDescription>
                 </DialogHeader>
                 <div className="grid gap-4 py-4">
                   <div className="grid grid-cols-4 items-center gap-4">
                     <Input
-                      id="name"
-                      value="Pedro Duarte"
+                      id="member_id"
+                      value={suggestion.member_id}
+                      placeholder="member id"
                       className="col-span-3"
+                      disabled
                     />
                   </div>
                   <div className="grid grid-cols-4 items-center gap-4">
                     <Input
                       id="username"
-                      value="@peduarte"
+                      value={suggestion.nickname}
+                      placeholder="username here"
+                      className="col-span-3"
+                      disabled
+                    />
+                  </div>
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <Input
+                      id="username"
+                      value={reportReason}
+                      onChange={(state) => setReportReason(state.target.value)}
+                      placeholder="enter reason here"
                       className="col-span-3"
                     />
                   </div>
                 </div>
                 <DialogFooter>
-                  <Button type="submit">Save changes</Button>
+                  <DialogTrigger asChild>
+                    <Button
+                      type="submit"
+                      className="bg-red-500 flex flex-row space-x-1"
+                      onClick={() => handleReportSubmit(suggestion.member_id)}
+                      // disabled={reportProcessing}
+                    >
+                      <p>{reportProcessing ? "Reporting" : "Report"}</p>{" "}
+                      <Flag size={15} />
+                    </Button>
+                  </DialogTrigger>
                 </DialogFooter>
               </DialogContent>
+              {/* </Dialog> */}
             </Dialog>
           </div>
           <div className="absolute flex bottom-4 left-4 z-20 space-x-2 items-end hover:underline">
@@ -284,9 +343,11 @@ const Suggestions = ({ members }: { members: Member[] }) => {
         }
       </div>
       <ul className="no-scrollbar border-top h-full p-2 space-y-2 lg:space-y-4 overflow-y-auto rounded-lg mb-5">
-        {members.length > 0
-          ? suggestions
-          : <div className="p-3">No Suggestions</div>}
+        {members.length > 0 ? (
+          suggestions
+        ) : (
+          <div className="p-3">No Suggestions</div>
+        )}
       </ul>
       <div className="w-full border-t pt-2 hidden lg:block">
         <ul className="flex items-center justify-center list-none space-x-4 text-xs md:text-md">
