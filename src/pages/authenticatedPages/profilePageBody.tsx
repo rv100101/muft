@@ -22,7 +22,8 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
   const methods = useForm({
     defaultValues: emptyDefault,
     resolver: zodResolver(ProfileFormSchema),
-  });
+  })
+  ;
 
   useEffect(() => {
     if (data && headerValues) {

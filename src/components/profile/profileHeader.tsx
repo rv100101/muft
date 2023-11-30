@@ -4,7 +4,7 @@ import profileHeaderStore from "@/zustand/profile/profileHeaderStore";
 import { ProfileHeader as ProfileHeaderType } from "@/types/profileHeader";
 import ProfileHeaderSkeleton from "./profileHeaderSkeleton";
 import { Button } from "../ui/button";
-import { CameraIcon, Pencil } from "lucide-react";
+import { CameraIcon, Loader2, Pencil } from "lucide-react";
 import { useUserStore } from "@/zustand/auth/user";
 import { cn } from "@/lib/utils";
 import profileQuery from "@/queries/profile/profileHeader";
@@ -15,6 +15,8 @@ import { ChangeEvent, useRef, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
 import ActivateAccount from "@/pages/authenticatedPages/accountActivationPage";
+import uploadQueries from "@/queries/uploading";
+import { toast } from "../ui/use-toast";
 
 const ProfileHeader = ({ userId }: { userId: string }) => {
   const [showCamera, setShowCamera] = useState(false);
@@ -31,6 +33,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
   const isEditing = profileAboutContentStore((state) => state.editMode);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
   const { isLoading, isRefetching } = useQuery({
     queryKey: ["profileHeader", userId],
     queryFn: fetchInitialData,
@@ -65,7 +68,29 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
     }
   };
 
-  console.log("usrs", user);
+  const handleProfilePhotoUpload = async () => {
+    try {
+      setIsUploading(true);
+      const res = await uploadQueries.uploadProfilePicture(
+        selectedFile!,
+        user!.member_id,
+      );
+      console.log(res);
+      setHeaderValues({
+        ...headerValues,
+        gallery_uuid: res.data[0].gallery_uuid,
+      });
+      toast({
+        title: "Photo successfully updated",
+        variant: "success",
+      });
+      setSelectedFile(null);
+    } catch (error) {
+      console.log(error);
+    }
+    setIsUploading(false);
+  };
+
   return (
     <Dialog>
       <DialogContent className="sm:max-w-[425px]">
@@ -74,41 +99,51 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
       <div className="items-start p-5 border-b w-full">
         <div className="flex justify-start items-start space-x-2">
           {
-            <Button
-              variant={"ghost"}
-              disabled={!isEditing}
-              type="button"
-              onMouseOver={() => {
-                if (isEditing) setShowCamera(true);
-              }}
-              onMouseOut={() => {
-                if (isEditing) setShowCamera(false);
-              }}
-              className="relative disabled:opacity-100 h-full w-40 bg-transparent py-0 px-0"
-              onClick={handleGalleryUpload}
-            >
-              {showCamera && <CameraIcon className="absolute" fill="white" />}
-              <img
-                className={`select-none object-cover h-32 w-32 overflow-clip border-4 border-primary rounded-full`}
-                src={
-                  selectedFile
-                    ? selectedFile
-                    : getImagePath(
-                        headerValues.gallery_uuid,
-                        headerValues.gender,
-                        headerValues.member_uuid?.toString()
-                      )
-                }
-                alt="no image selected"
-              />
-              <input
-                type="file"
-                name="profilePhoto"
-                onChange={handleFileChange}
-                className="invisible w-0 h-0"
-                ref={fileInputRef}
-              />
-            </Button>
+            <div className="flex flex-col justify-center items-center space-y-2">
+              <Button
+                variant={"ghost"}
+                disabled={!isEditing || isUploading}
+                type="button"
+                onMouseOver={() => {
+                  if (isEditing) setShowCamera(true);
+                }}
+                onMouseOut={() => {
+                  if (isEditing) setShowCamera(false);
+                }}
+                className="relative disabled:opacity-100 h-full w-40 bg-transparent py-0 px-0"
+                onClick={handleGalleryUpload}
+              >
+                {showCamera && <CameraIcon className="absolute" fill="pink" />}
+                {isUploading &&
+                  <Loader2 className="absolute animate-spin text-primary" />}
+                <img
+                  className={`select-none object-cover h-32 w-32 overflow-clip border-4 border-primary rounded-full`}
+                  src={selectedFile ? selectedFile : getImagePath(
+                    headerValues.gallery_uuid,
+                    headerValues.gender,
+                    headerValues.member_uuid?.toString(),
+                  )}
+                  alt="no image selected"
+                />
+                <input
+                  type="file"
+                  name="profilePhoto"
+                  onChange={handleFileChange}
+                  className="invisible w-0 h-0"
+                  ref={fileInputRef}
+                />
+              </Button>
+              {isEditing && selectedFile && (
+                <Button
+                  disabled={isUploading}
+                  onClick={handleProfilePhotoUpload}
+                  type="button"
+                  className="hover:bg-[#FF8AB3]/95 w-36 text-xs"
+                >
+                  Update Photo
+                </Button>
+              )}
+            </div>
           }
           <div className="w-full">
             <div className="flex w-full justify-between">

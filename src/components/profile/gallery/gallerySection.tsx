@@ -1,16 +1,21 @@
 import { getImagePathGallery } from "@/lib/images";
 import axiosQuery from "@/queries/axios";
 import { useUserStore } from "@/zustand/auth/user";
-import { useQuery } from "@tanstack/react-query";
-import { PlusCircle, X } from "lucide-react";
-import { ChangeEvent, useRef, useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { Loader2, PlusCircle, Trash2Icon } from "lucide-react";
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import sampleGalleryImage from "../../../assets/profile/sample-gallery.png";
+import ImageViewer from "react-simple-image-viewer";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "../../ui/accordion";
+import { Button } from "@/components/ui/button";
+import DeleteDialog from "./deleteDialog";
+import uploadQueries from "@/queries/uploading";
+import { toast } from "@/components/ui/use-toast";
 
 type Gallery = {
   authorized: boolean;
@@ -21,18 +26,36 @@ type Gallery = {
 };
 
 const GallerySection = ({ userId }: { userId: string }) => {
+  const [hoveredPictureIndex, setHoveredPictureIndex] = useState<number | null>(
+    null,
+  );
+  const [selectedPictureId, setSelectedPictureId] = useState<string | null>(
+    null,
+  );
+  const [gallery, setGallery] = useState([]);
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
-  const [isUploading, setIsUploading] = useState(false);
-
+  const [isUploading] = useState(false);
+  const [currentImage, setCurrentImage] = useState(0);
+  const [isViewerOpen, setIsViewerOpen] = useState(false);
   const { user } = useUserStore();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const openImageViewer = useCallback((index: number) => {
+    setCurrentImage(index);
+    setIsViewerOpen(true);
+  }, []);
+
+  const closeImageViewer = () => {
+    setCurrentImage(0);
+    setIsViewerOpen(false);
+  };
+
   const handleGalleryUpload = () => {
-    // Trigger a click event on the hidden file input
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
   };
+
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -57,47 +80,75 @@ const GallerySection = ({ userId }: { userId: string }) => {
   };
 
   const {
-    data: gallery,
-    refetch,
-  } = useQuery(["gallery", userId], fetchGallery);
+    data,
+  } = useQuery({
+    queryFn: fetchGallery,
+    queryKey: ["gallery", userId],
+  });
 
-  const handleUploadButtonClick = async () => {
-    setIsUploading(true);
-    if (selectedFile && user) {
-      const base64String = selectedFile.split(",")[1]; // Extracting base64 string without data:image/jpeg;base64,
-      const binaryString = atob(base64String);
-      const arrayBuffer = new ArrayBuffer(binaryString.length);
-      const uint8Array = new Uint8Array(arrayBuffer);
+  useEffect(
+    () => {
+      setGallery(data);
+    },
+    [data],
+  );
 
-      for (let i = 0; i < binaryString.length; i++) {
-        uint8Array[i] = binaryString.charCodeAt(i);
-      }
+  const queryClient = useQueryClient();
 
-      const blob = new Blob([uint8Array], { type: "image/jpeg" }); // Create Blob from Uint8Array
+  const deletePhoto = useMutation({
+    mutationFn: async () =>
+      await uploadQueries.deleteGalleryPhoto(selectedPictureId!),
+    onSuccess: () => {
+      toast({
+        title: "Photo successfuly deleted",
+        variant: "success",
+      });
+      setSelectedPictureId(null);
+      queryClient.invalidateQueries({
+        queryKey: ["gallery"],
+      });
+    },
+    onError: () => {
+      console.log("Failed");
+      toast({
+        title: "Something went wrong!",
+        description: "Cannot delete photo",
+        variant: "destructive",
+      });
+    },
+  });
 
-      const formData = new FormData();
-      formData.append("member", String(user.member_id));
-      formData.append("photo", blob, "filename.jpg"); // Append the Blob object with a filename
+  const uploadPhoto = useMutation({
+    mutationFn: async () =>
+      await uploadQueries.uploadGalleryPhoto(selectedFile!, user!.member_id),
+    onSuccess: () => {
+      toast({
+        title: "Photo successfuly uploaded",
+        variant: "success",
+      });
+      setSelectedFile(null);
+      queryClient.invalidateQueries({
+        queryKey: ["gallery"],
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Something went wrong!",
+        description: "Cannot upload photo",
+        variant: "destructive",
+      });
+    },
+  });
 
-      try {
-        const response = await axiosQuery.post(
-          "/UploadGalleryPhoto",
-          formData,
-          {
-            headers: { "Content-Type": "multipart/form-data" },
-          },
-        );
+  const handleDeletePhoto = () => {
+    if (selectedPictureId !== null) {
+      deletePhoto.mutate();
+    }
+  };
 
-        if (response.status === 200) {
-          setSelectedFile(null);
-          setIsUploading(false);
-          refetch();
-        }
-      } catch (error) {
-        console.error("Error uploading file:", error);
-      }
-    } else {
-      console.error("No file selected or user not available.");
+  const handleUploadPhoto = () => {
+    if (selectedFile !== null) {
+      uploadPhoto.mutate();
     }
   };
 
@@ -121,43 +172,61 @@ const GallerySection = ({ userId }: { userId: string }) => {
                     {/* Selected File: {typeof selectedFile === 'string' ? 'Base64 String' : selectedFile.name} */}
                   </p>
                 </div>
-                <X
-                  // color="White"
-                  size={15}
-                  className="hover:cursor-pointer"
-                  onClick={() => setSelectedFile(null)}
-                />
               </div>
             )}
-            <div
-              onClick={handleGalleryUpload}
-              className="flex items-center rounded-full bg-[#fe599b] px-3 py-2 space-x-2 hover:cursor-pointer"
-            >
-              <PlusCircle
-                color="White"
-                size={20}
-                className="hover:cursor-pointer"
-              />
-              <div className="flex flex-col">
-                <input
-                  type="file"
-                  onChange={handleFileChange}
-                  className="invisible w-0 h-0"
-                  ref={fileInputRef}
-                />
-                <p className="text-white text-sm">Add Photo</p>
-              </div>
-            </div>
           </div>
         </AccordionTrigger>
-        <AccordionContent>
+        <AccordionContent className="pt-2">
+          <div className="flex w-full justify-end">
+            <DeleteDialog
+              handleDelete={handleDeletePhoto}
+              open={selectedPictureId !== null}
+              setSelectedPictureIdNull={() => {
+                setSelectedPictureId(null);
+              }}
+              isDeleting={deletePhoto.isLoading}
+            />
+            {parseInt(userId) === user!.member_id &&
+              selectedFile == null &&
+              (
+                <div
+                  onClick={handleGalleryUpload}
+                  className="flex w-max items-center rounded-full bg-[#fe599b] px-3 py-2 space-x-2 hover:cursor-pointer"
+                >
+                  <PlusCircle
+                    color="White"
+                    size={20}
+                    className="hover:cursor-pointer"
+                  />
+                  <input
+                    type="file"
+                    onChange={handleFileChange}
+                    className="invisible w-0 h-0"
+                    ref={fileInputRef}
+                  />
+                  <p className="text-white text-sm">Add Photo</p>
+                </div>
+              )}
+            {selectedFile !== null &&
+              (
+                <Button
+                  variant={"outline"}
+                  className="border-primary"
+                  onClick={() => {
+                    setSelectedFile(null);
+                  }}
+                >
+                  Cancel
+                </Button>
+              )}
+          </div>
           <div className="flex flex-col w-full">
-            <div className="flex justify-between items-center p-5 border-b space-x-5">
-              <div className="flex flex-row w-full justify-end space-x-5">
-                {/* Button to trigger the upload */}
-                {selectedFile && (
+            <div className="flex justify-between items-center p-5 space-x-5">
+              {selectedFile && (
+                <div className="flex flex-col space-y-2 items-center justify-center w-full space-x-5">
+                  <img src={selectedFile} />
                   <div
-                    onClick={handleUploadButtonClick}
+                    onClick={handleUploadPhoto}
                     className="flex items-center rounded-full bg-[#fe599b] px-3 py-2 space-x-2 hover:cursor-pointer"
                   >
                     <div className="text-white">
@@ -170,16 +239,24 @@ const GallerySection = ({ userId }: { userId: string }) => {
                           </div>
                         )
                         : (
-                          "Upload"
+                          <Button
+                            className="h-4"
+                            disabled={uploadPhoto.isLoading}
+                          >
+                            <p>Upload</p>
+                            <span>
+                              {uploadPhoto.isLoading && (
+                                <Loader2 className="ml-2 w-min h-min animate-spin" />
+                              )}
+                            </span>
+                          </Button>
                         )}
                     </div>
-                    {/* <p className="text-white">Upload</p> */}
                   </div>
-                )}
-              </div>
+                </div>
+              )}
             </div>
-            {/* photos section */}
-            <div className="grid grid-cols-3 gap-5 p-5 flex w-full">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 p-5 flex w-full">
               {gallery && gallery.length !== 0 &&
                 gallery.map((pic: Gallery, index: number) => {
                   const path = getImagePathGallery(
@@ -188,18 +265,46 @@ const GallerySection = ({ userId }: { userId: string }) => {
                     pic.member_uuid,
                   );
                   return (
-                    <img
-                      key={index} // Don't forget to add a unique key to each image
-                      src={path}
-                      alt="test"
-                      className="object-cover"
-                      onError={(
-                        e: React.SyntheticEvent<HTMLImageElement, Event>,
-                      ) => {
-                        const imgElement = e.target as HTMLImageElement;
-                        imgElement.src = sampleGalleryImage;
+                    <div
+                      key={index}
+                      onMouseOver={() => {
+                        setHoveredPictureIndex(index);
                       }}
-                    />
+                      onMouseOut={() => {
+                        setHoveredPictureIndex(null);
+                      }}
+                      className="border hover:cursor-pointer relative flex items-center justify-center"
+                    >
+                      <img
+                        onClick={() => {
+                          openImageViewer(index);
+                        }}
+                        key={index} // Don't forget to add a unique key to each image
+                        src={path}
+                        alt="test"
+                        className="object-cover"
+                        onError={(
+                          e: React.SyntheticEvent<HTMLImageElement, Event>,
+                        ) => {
+                          const imgElement = e.target as HTMLImageElement;
+                          imgElement.src = sampleGalleryImage;
+                        }}
+                      />
+                      {parseInt(userId) === user!.member_id &&
+                        hoveredPictureIndex !== null &&
+                        hoveredPictureIndex == index && (
+                        <Button
+                          variant={"ghost"}
+                          className="
+                     absolute right-2 top-1 w-12"
+                          onClick={() => {
+                            setSelectedPictureId(pic.gallery_id);
+                          }}
+                        >
+                          <Trash2Icon className="text-destructive" />
+                        </Button>
+                      )}
+                    </div>
                   );
                 })}
             </div>
@@ -209,6 +314,20 @@ const GallerySection = ({ userId }: { userId: string }) => {
               </div>
             )}
           </div>
+          {isViewerOpen && gallery && gallery.length !== 0 && (
+            <ImageViewer
+              src={gallery.map((pic: {
+                member_uuid: string;
+                gallery_uuid: string;
+              }) =>
+                `https://muffin0.blob.core.windows.net/photos/${pic.member_uuid}/${pic.gallery_uuid}.jpg`
+              )}
+              currentIndex={currentImage}
+              disableScroll={false}
+              closeOnClickOutside={true}
+              onClose={closeImageViewer}
+            />
+          )}
         </AccordionContent>
       </AccordionItem>
     </Accordion>
