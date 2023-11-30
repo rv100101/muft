@@ -11,8 +11,8 @@ export const emptyDefault = {
   employmentStatus: "",
   occupationTitle: "",
   income: "",
-  height: "",
-  weight: "",
+  height: 0,
+  weight: 0,
   bodyType: "",
   favoriteFood: "",
   country: "",
@@ -34,24 +34,24 @@ export const ProfileFormSchema = z.object({
       required_error: "This field is required",
     })
     .min(2, { message: "Please enter your birthday" }),
-  // ethnicity: z
-  //   .string({
-  //     required_error: "This field is required",
-  //   })
-  //   .min(2, { message: "Please select an ethnicity" })
-  //   .nullable(),
-  // maritalStatus: z
-  //   .string({
-  //     required_error: "This field is required",
-  //   })
-  //   .min(2, { message: "Please select a marital status" })
-  //   .nullable(),
-  // language: z
-  //   .string({
-  //     required_error: "This field is required",
-  //   })
-  //   .min(2, { message: "Please select a language" })
-  //   .nullable(),
+  ethnicity: z
+    .string({
+      required_error: "This field is required",
+    })
+    .min(2, { message: "Please select an ethnicity" })
+    .nullable(),
+  maritalStatus: z
+    .string({
+      required_error: "This field is required",
+    })
+    .min(2, { message: "Please select a marital status" })
+    .nullable(),
+  language: z
+    .string({
+      required_error: "This field is required",
+    })
+    .min(2, { message: "Please select a language" })
+    .nullable(),
   education: z
     .string({
       required_error: "Education information is required",
@@ -94,7 +94,7 @@ export const ProfileFormSchema = z.object({
   //   .string({
   //     required_error: "Please select your preferred food",
   //   })
-  // .nullable(),
+  //   .nullable(),
   country: z
     .string({
       required_error: "Country is required",

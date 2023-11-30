@@ -14,8 +14,8 @@ export type ProfileAbout = {
   employmentStatus: string;
   occupationTitle: string;
   income: string;
-  height: string;
-  weight: string;
+  height: number;
+  weight: number;
   bodyType: string;
   interest: string;
   favoriteFood: string;
@@ -37,37 +37,35 @@ interface ProfileAboutState {
   setIsSaving: (val: boolean) => void;
 }
 
-const profileAboutContentStore = create<ProfileAboutState>((set) => (
-  {
-    data: null,
-    setData: (val) =>
-      set(() => ({
-        data: val,
-      })),
-    isLoading: false,
-    setIsLoading: (val) =>
-      set(() => ({
-        isLoading: val,
-      })),
-    refetch: false,
-    setRefetch: (val) =>
-      set(() => ({
-        isLoading: val,
-      })),
-    editMode: false,
-    toggleEditMode: () =>
-      set((state) => ({
-        editMode: !state.editMode,
-      })),
-    setEditModeFalse: () =>
-      set(() => ({
-        editMode: false,
-      })),
-    isSaving: false,
-    setIsSaving: (val: boolean) =>
-      set(() => {
-        return { isSaving: val };
-      }),
-  }
-));
+const profileAboutContentStore = create<ProfileAboutState>((set) => ({
+  data: null,
+  setData: (val) =>
+    set(() => ({
+      data: val,
+    })),
+  isLoading: false,
+  setIsLoading: (val) =>
+    set(() => ({
+      isLoading: val,
+    })),
+  refetch: false,
+  setRefetch: (val) =>
+    set(() => ({
+      isLoading: val,
+    })),
+  editMode: false,
+  toggleEditMode: () =>
+    set((state) => ({
+      editMode: !state.editMode,
+    })),
+  setEditModeFalse: () =>
+    set(() => ({
+      editMode: false,
+    })),
+  isSaving: false,
+  setIsSaving: (val: boolean) =>
+    set(() => {
+      return { isSaving: val };
+    }),
+}));
 export default profileAboutContentStore;

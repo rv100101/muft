@@ -1,6 +1,19 @@
 import { ProfileAbout } from "@/zustand/profile/profileAboutStore";
 import axiosQuery from "../axios";
 
+// const removeNull = (
+//   obj: Record<string, string | number>
+// ): Record<string, string | number> => {
+//   const result: Record<string, string | number> = {};
+//   for (const key in obj) {
+//     if (obj[key] === null) {
+//       result[key] = "Unknown";
+//     } else {
+//       result[key] = obj[key];
+//     }
+//   }
+//   return result;
+// };
 const removeNull = (obj: Record<string, string>): Record<string, string> => {
   const result: Record<string, string> = {};
   for (const key in obj) {
@@ -22,19 +35,20 @@ const fetchBasicInfoInitialData = async (userId: number) => {
     const maritalStatus = await axiosQuery.post("/GetMaritalStatus", {
       member: userId,
     });
-    // const languagesResponse: { data: [] } = await axiosQuery.post(
-    //   "/GetLanguages",
-    //   { member: userId }
-    // );
+
+    const languagesResponse: { data: [] } = await axiosQuery.post(
+      "/GetLanguages",
+      { member: userId }
+    );
 
     const { gender, nationality, date_of_birth, age } = basic.data;
     const { religion_name, ethnicity_name } = background.data;
     const { marital_status_name } = maritalStatus.data;
 
-    // let language = null;
-    // if (languagesResponse.data.length > 0) {
-    //   language = languagesResponse.data[languagesResponse.data.length - 1];
-    // }
+    let language = null;
+    if (languagesResponse.data.length > 0) {
+      language = languagesResponse.data[languagesResponse.data.length - 1];
+    }
 
     const formattedDate = new Date(date_of_birth).toLocaleDateString("en-US", {
       year: "numeric",
@@ -50,7 +64,7 @@ const fetchBasicInfoInitialData = async (userId: number) => {
       religion: religion_name,
       ethnicity: ethnicity_name,
       maritalStatus: marital_status_name,
-      // language: language!.language_name,
+      language: language!.language_name ? language!.language_name : null,
     };
 
     basicInformation = removeNull(basicInformation);
@@ -101,20 +115,25 @@ const fetchDetailsInitialData = async (userId: number) => {
       member: userId,
     });
 
-    // const response4 = await axiosQuery.post("/GetFavoriteFood", {
-    //   member: userId,
-    // });
+    const response4 = await axiosQuery.post("/GetFavoriteFood", {
+      member: userId,
+    });
 
     const { height } = response1.data[0];
 
     const { weight } = response2.data[0];
     const { body_type_name } = response3.data;
+    let favoriteFood = null;
+    if (response4.data.length > 0) {
+      favoriteFood = response4.data[0];
+    }
     // const { favorite_food_name } = response4.data[0];
+
     let detailsData: Record<string, string> = {
       height: height,
       weight: weight,
       bodyType: body_type_name,
-      // favoriteFood: favorite_food_name,
+      favoriteFood: favoriteFood ? favoriteFood!.favorite_food_name : null,
     };
     detailsData = removeNull(detailsData);
     return detailsData;
@@ -369,7 +388,7 @@ const saveInformation = async (profile: ProfileContent, userId: number) => {
     // favoriteFood
     if (profile.favoriteFood) {
       await axiosQuery.post("/SaveFavoriteFood", {
-        favoriteFood: profile.favoriteFood,
+        favorite_food: profile.favoriteFood,
         member: userId,
       });
     }

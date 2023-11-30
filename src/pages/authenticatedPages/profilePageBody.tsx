@@ -131,9 +131,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
         region: region?.state_id,
       };
       await profileContentQuery.saveInformation(finalFormData, user!.member_id);
-      queryClient.invalidateQueries({
-        queryKey: ["profileHeader"],
-      });
+      queryClient.invalidateQueries(["profileHeader", "profileContent"]);
     } catch (error) {
       console.log(error);
     }
