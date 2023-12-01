@@ -92,7 +92,7 @@ function App() {
             path={pageRoutes.likesAndFavorites.path}
             component={pageRoutes.likesAndFavorites.component}
           />
-          <Route path="/users/:id">
+          <Route path="/members/:id">
             {(params) => <ViewUser id={params.id} />}
           </Route>
         </>
