@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "./ui/button";
 import { DialogClose } from "@radix-ui/react-dialog";
+import { scrollToTop } from "@/lib/utils";
 
 const SideBar = () => {
   const signOut = useUserStore((state) => state.reset);
@@ -80,8 +81,24 @@ const SideBar = () => {
         </Link>
         <ul>{navLinks}</ul>
       </div>
-
-      <Dialog>
+      
+      <div className="flex flex-col space-y-4 px-4">
+        <Link onClick={scrollToTop} href="/privacy-policy">
+          <a className="hover:text-slate-700 text-sm text-black">
+            Privacy Policy
+          </a>
+        </Link>
+        <Link onClick={scrollToTop} href="/terms">
+          <a className="hover:text-slate-700 text-sm text-black">
+            Terms of Service
+          </a>
+        </Link>
+        <Link onClick={scrollToTop} href="/release-notes">
+          <a className="hover:text-slate-700 text-sm text-black">
+            Release Notes
+          </a>
+        </Link>
+              <Dialog>
         <DialogTrigger>
           <div className="flex space-x-2 m-4">
             {<LogOutIcon size={20} />} <p className="text-sm">Sign out</p>
@@ -107,6 +124,7 @@ const SideBar = () => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+      </div>
     </div>
   );
 };

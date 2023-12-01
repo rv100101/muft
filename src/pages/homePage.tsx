@@ -27,6 +27,7 @@ type Member = {
   nickname: string;
   state_name: string;
   countryName: string;
+  nationality_code: string;
 };
 
 const HomePage = () => {
@@ -125,6 +126,7 @@ const HomePage = () => {
         }
       });
       // Update state with the modified array
+
       setMemberList(updatedMemberList);
     }
   }, [
@@ -138,6 +140,7 @@ const HomePage = () => {
   // if (likesLoading || favoritesLoading) {
   //   return <></>;
   // }
+
   return (
     <AuthenticatedLayout>
       <div className="flex justify-center w-full">
@@ -176,12 +179,16 @@ const HomePage = () => {
                         <PostItem
                           key={index}
                           nickname={post.nickname}
-                          countryName={post.countryName}
+                          country={post.country_name}
+                          nationalityCode={post.nationality_code}
+                          state={post.state_name}
                           age={post.age}
                           image={post.imagePath}
                           member_id={post.member_id}
                           isLiked={post.isLiked}
                           isFavorite={post.isFavorite}
+                          status={post.status}
+                          nationality={post.nationality}
                         />
                       );
                     })

@@ -18,6 +18,8 @@ type Member = {
   nickname: string;
   state_name: string;
   countryName: string;
+  status: string;
+  nationality_code: string;
 };
 interface ViewState {
   selectedProfileId: number | null;
