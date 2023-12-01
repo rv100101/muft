@@ -35,11 +35,6 @@ const NotificationsList = () => {
               key={index}
               className="border flex items-center justify-start space-x-4 p-8 m-4 bg-white rounded-xl"
             >
-              {/* <img
-                    className="rounded-2xl"
-                    src={notification.avatar}
-                    alt="user avatar"
-                  /> */}
               <UserCircle2Icon height={48} width={48} />
               <div>
                 <p className="font-bold text-md">
