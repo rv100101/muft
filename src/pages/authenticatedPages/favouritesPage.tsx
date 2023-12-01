@@ -8,13 +8,12 @@ import { Like } from "@/types/like";
 import { getImagePath } from "@/lib/images";
 import { useState } from "react";
 import favouritesQuery from "@/queries/favourites";
-import { cn } from "@/lib/utils";
 import { useUserCountry } from "@/zustand/auth/country";
 import SkeletonLoading from "@/components/likesAndFavourites/skeletonLoading";
 import { useUserStore } from "@/zustand/auth/user";
 const FavouritesPage = () => {
-  const [tab, setTab] = useState<"LIKES" | "FAVOURITES">("FAVOURITES");
-  const [filter, setFilter] = useState<"ALL" | "CURRENT-COUNTRY">("ALL");
+  const [tab] = useState<"LIKES" | "FAVOURITES">("FAVOURITES");
+  const [filter] = useState<"ALL" | "CURRENT-COUNTRY">("ALL");
   const [search, setSearch] = useState<string>("");
   const { user } = useUserStore();
   const getMemberLikes = likesQuery.getLikes(user!.member_id);
