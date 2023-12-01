@@ -110,7 +110,7 @@ const FavouritesPage = () => {
           >
             LIKES
           </Button>{" "} */}
-          <Button
+          {/* <Button
             onClick={() => {
               setTab("FAVOURITES");
             }}
@@ -120,11 +120,11 @@ const FavouritesPage = () => {
             )}
           >
             FAVOURITES
-          </Button>
+          </Button> */}
         </div>
-        <div className="flex justify-between h-max items-center px-8">
+        <div className="flex justify-end h-max items-center px-8">
           <div>
-            <Button
+            {/* <Button
               onClick={() => {
                 setFilter("ALL");
               }}
@@ -144,7 +144,7 @@ const FavouritesPage = () => {
               )}
             >
               Current Country
-            </Button>
+            </Button> */}
           </div>
           <div className="w-max border py-4 px-6  space-x-2 rounded-xl flex items-center">
             <input
