@@ -11,7 +11,15 @@ import favouritesQuery from "@/queries/favourites";
 import { useUserCountry } from "@/zustand/auth/country";
 import SkeletonLoading from "@/components/likesAndFavourites/skeletonLoading";
 import { useUserStore } from "@/zustand/auth/user";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useLocation } from "wouter";
 const FavouritesPage = () => {
+  const [, setLocation] = useLocation();
   const [tab] = useState<"LIKES" | "FAVOURITES">("FAVOURITES");
   const [filter] = useState<"ALL" | "CURRENT-COUNTRY">("ALL");
   const [search, setSearch] = useState<string>("");
@@ -50,7 +58,7 @@ const FavouritesPage = () => {
     return (
       <div
         key={index}
-        className="w-full p-8 flex justify-between h-48 border rounded-lg"
+        className="w-full p-8 flex justify-between items-center h-48 border rounded-lg"
       >
         <div className="flex space-x-2 items-center">
           <div className="border-4 border-primary w-24 h-24 border-pink p-1 rounded-full">
@@ -71,9 +79,23 @@ const FavouritesPage = () => {
             <p className="text-sm">{like.country_name}</p>
           </div>
         </div>
-        <button>
-          <MoreHorizontal />
-        </button>
+        <DropdownMenu>
+          <DropdownMenuTrigger className="h-min ">
+            <MoreHorizontal />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="flex flex-col">
+            <DropdownMenuItem>
+              <Button
+                onClick={() => {
+                  setLocation(`/members/${like.member_id}`);
+                }}
+                className="hover:bg-[#FF8AB3]"
+              >
+                View Profile
+              </Button>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     );
   };
