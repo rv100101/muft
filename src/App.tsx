@@ -96,7 +96,7 @@ function App() {
             path={pageRoutes.Favorites.path}
             component={pageRoutes.Favorites.component}
           />
-          <Route path="/users/:id">
+          <Route path="/members/:id">
             {(params) => <ViewUser id={params.id} />}
           </Route>
         </>

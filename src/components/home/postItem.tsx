@@ -92,7 +92,7 @@ const PostItem = ({
   });
 
   const handlePostItemClick = () => {
-    setLocation(`/users/${member_id}`);
+    setLocation(`/members/${member_id}`);
   };
 
   // console.log("🧨: ", favoriteTriggered);

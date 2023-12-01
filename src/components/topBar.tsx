@@ -8,11 +8,12 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import logo from "@/assets/logo.svg";
 import links from "@/lib/sideBar";
 
 const TopBar = ({ children }: { children: ReactNode }) => {
+  const [location] = useLocation();
   let navLinks = links.map((link, index) => {
     return (
       <li key={index} className="w-full">
@@ -59,14 +60,17 @@ const TopBar = ({ children }: { children: ReactNode }) => {
           </SheetHeader>
         </SheetContent>
       </Sheet>
-      <Link href="/">
-        <Button
-          variant={"ghost"}
-          className="hidden sm:block hover:bg-white p-0"
-        >
-          <ArrowLeft />
-        </Button>
-      </Link>
+      {location !== "/notifications" &&
+        (
+          <Link href="/">
+            <Button
+              variant={"ghost"}
+              className="hidden sm:block hover:bg-white p-0"
+            >
+              <ArrowLeft />
+            </Button>
+          </Link>
+        )}
       {children}
     </div>
   );

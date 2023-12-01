@@ -8,7 +8,6 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { Link, useLocation } from "wouter";
-// import { scrollToTop } from "@/lib/utils";
 import HomepageSearchInput from "./homeSearchUsersInput";
 import { useMutation } from "@tanstack/react-query";
 import axiosQuery from "@/queries/axios";
@@ -58,7 +57,7 @@ const Suggestions = ({ members }: { members: Member[] }) => {
   const [reportProcessing, setReportProcessing] = useState(false);
   const { user } = useUserStore();
   const toggleFavoriteIcon = useHomepageViewStore(
-    (state) => state.toggleIsFavored
+    (state) => state.toggleIsFavored,
   );
 
   const { setConversation } = useConversationHistoryStore();
@@ -117,7 +116,7 @@ const Suggestions = ({ members }: { members: Member[] }) => {
   // });
 
   const handleSuggestionSelect = (suggestion: Member) => {
-    setLocation(`/users/${suggestion.member_id}`);
+    setLocation(`/members/${suggestion.member_id}`);
   };
 
   // report ⛳
@@ -154,7 +153,7 @@ const Suggestions = ({ members }: { members: Member[] }) => {
       const imagePath = getImagePath(
         suggestion.gallery_uuid,
         suggestion.gender,
-        suggestion.member_uuid
+        suggestion.member_uuid,
       );
       return (
         <li
@@ -175,7 +174,8 @@ const Suggestions = ({ members }: { members: Member[] }) => {
             <Dialog>
               <DropdownMenu modal={false}>
                 <DropdownMenuTrigger>
-                  <MoreVerticalIcon height={20} />{" "}
+                  <MoreVerticalIcon height={20} />
+                  {" "}
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="flex flex-col">
                   <Button
@@ -184,8 +184,7 @@ const Suggestions = ({ members }: { members: Member[] }) => {
                       toggleLike.mutate({
                         member: user!.member_id,
                         liked: suggestion.member_id,
-                      })
-                    }
+                      })}
                   >
                     {suggestion.isLiked && !likeTriggered
                       ? "Unlike"
@@ -199,8 +198,7 @@ const Suggestions = ({ members }: { members: Member[] }) => {
                       toggleFavorite.mutate({
                         member: user!.member_id,
                         favored: suggestion.member_id,
-                      })
-                    }
+                      })}
                   >
                     {suggestion.isFavorite && !favoriteTriggered
                       ? "UnFavorite"
@@ -341,35 +339,35 @@ const Suggestions = ({ members }: { members: Member[] }) => {
         }
       </div>
       <ul className="no-scrollbar border-top h-full p-2 space-y-2 lg:space-y-4 overflow-y-auto rounded-lg mb-5">
-        {members.length > 0 ? (
-          suggestions
-        ) : (
-          <div className="p-3">No Suggestions</div>
-        )}
+        {members.length > 0
+          ? suggestions
+          : <div className="p-3">No Suggestions</div>}
       </ul>
-      <div className="w-full border-t pt-2 hidden lg:block">
-        {/* <ul className="flex items-center justify-center list-none space-x-4 text-xs md:text-md">
-          <li>
-            <Link onClick={scrollToTop} href="/privacy-policy">
-              <a className=" font-light hover:text-slate-700">Privacy Policy</a>
-            </Link>
-          </li>
-          <li className="w-1 h-1 rounded-full bg-slate-400" />
-          <li>
-            <Link onClick={scrollToTop} href="/terms">
-              <a className=" font-light hover:text-slate-700">
-                Terms of Service
-              </a>
-            </Link>
-          </li>
-          <li className="w-1 h-1 rounded-full bg-slate-400" />
-          <li>
-            <Link onClick={scrollToTop} href="/release-notes">
-              <a className="font-light hover:text-slate-700">Release Notes</a>
-            </Link>
-          </li>
-        </ul> */}
-      </div>
+      {
+        // <div className="w-full border-t pt-2 hidden lg:block">
+        //   <ul className="flex items-center justify-center list-none space-x-4 text-xs md:text-md">
+        //     <li>
+        //       <Link onClick={scrollToTop} href="/privacy-policy">
+        //         <a className=" font-light hover:text-slate-700">Privacy Policy</a>
+        //       </Link>
+        //     </li>
+        //     <li className="w-1 h-1 rounded-full bg-slate-400" />
+        //     <li>
+        //       <Link onClick={scrollToTop} href="/terms">
+        //         <a className=" font-light hover:text-slate-700">
+        //           Terms of Service
+        //         </a>
+        //       </Link>
+        //     </li>
+        //     <li className="w-1 h-1 rounded-full bg-slate-400" />
+        //     <li>
+        //       <Link onClick={scrollToTop} href="/release-notes">
+        //         <a className="font-light hover:text-slate-700">Release Notes</a>
+        //       </Link>
+        //     </li>
+        //   </ul>
+        // </div>
+      }
     </div>
   );
 };
