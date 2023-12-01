@@ -72,7 +72,7 @@ const PostItem = ({
   });
 
   const handlePostItemClick = () => {
-    setLocation(`/users/${member_id}`);
+    setLocation(`/members/${member_id}`);
   };
 
   return (

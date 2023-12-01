@@ -24,7 +24,7 @@ const HomepageSearchInput = () => {
   const [, setLocation] = useLocation();
 
   const searchClickHandler = (member_id: number) => {
-    setLocation(`/users/${member_id}`);
+    setLocation(`/members/${member_id}`);
   };
   const user = useUserStore((state) => state.user);
   const setSearchValue = useHomepageSearchStore(
