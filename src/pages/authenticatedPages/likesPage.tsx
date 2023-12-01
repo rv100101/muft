@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils";
 import { useUserCountry } from "@/zustand/auth/country";
 import SkeletonLoading from "@/components/likesAndFavourites/skeletonLoading";
 import { useUserStore } from "@/zustand/auth/user";
-const LikesAndFavouritesPage = () => {
+const LikesPage = () => {
   const [tab, setTab] = useState<"LIKES" | "FAVOURITES">("LIKES");
   const [filter, setFilter] = useState<"ALL" | "CURRENT-COUNTRY">("ALL");
   const [search, setSearch] = useState<string>("");
@@ -60,7 +60,7 @@ const LikesAndFavouritesPage = () => {
               src={getImagePath(
                 like.gallery_uuid,
                 like.gender,
-                like.member_uuid,
+                like.member_uuid
               )}
               alt="user"
             />
@@ -91,7 +91,7 @@ const LikesAndFavouritesPage = () => {
         <div className="pt-4">
           <TopBar>
             <div className="w-full h-full flex items-center justify-between">
-              <h1 className="font-semibold">LIKES AND FAVOURITES</h1>{" "}
+              <h1 className="font-semibold">LIKES</h1>{" "}
               <Button variant={"ghost"}>
                 <MoreVertical />
               </Button>
@@ -105,7 +105,7 @@ const LikesAndFavouritesPage = () => {
             }}
             className={cn(
               "w-full rounded-0 bg-transparent text-black border-r border-t rounded-none border-b p-8 text-[#727272] text-lg",
-              tab == "LIKES" && "border-b-4 border-b-[#404040]",
+              tab == "LIKES" && "border-b-4 border-b-[#404040]"
             )}
           >
             LIKES
@@ -116,7 +116,7 @@ const LikesAndFavouritesPage = () => {
             }}
             className={cn(
               "w-full rounded-0 bg-transparent text-black border-r border-t rounded-none border-b text-[#727272] text-lg p-8",
-              tab == "FAVOURITES" && "border-b-4 border-b-[#404040]",
+              tab == "FAVOURITES" && "border-b-4 border-b-[#404040]"
             )}
           >
             FAVOURITES
@@ -140,7 +140,7 @@ const LikesAndFavouritesPage = () => {
               variant={"ghost"}
               className={cn(
                 "rounded-none",
-                filter === "CURRENT-COUNTRY" && "border-b",
+                filter === "CURRENT-COUNTRY" && "border-b"
               )}
             >
               Current Country
@@ -162,12 +162,12 @@ const LikesAndFavouritesPage = () => {
           {likesQueryResults.isLoading && <SkeletonLoading />}
           {favouritesQueryResults.isLoading && <SkeletonLoading />}
           {tab == "LIKES" && likes}
-          {!likesQueryResults.isLoading && likes.length == 0 && tab == 'LIKES' && (
-            <p>No likes</p>
-          )}
-          {!favouritesQueryResults.isLoading && favourites.length  == 0 && tab == 'FAVOURITES' && (
-            <p>No favourites</p>
-          )}
+          {!likesQueryResults.isLoading &&
+            likes.length == 0 &&
+            tab == "LIKES" && <p>No likes</p>}
+          {!favouritesQueryResults.isLoading &&
+            favourites.length == 0 &&
+            tab == "FAVOURITES" && <p>No favourites</p>}
           {tab == "FAVOURITES" && favourites}
         </div>
       </div>
@@ -175,4 +175,4 @@ const LikesAndFavouritesPage = () => {
   );
 };
 
-export default LikesAndFavouritesPage;
+export default LikesPage;
