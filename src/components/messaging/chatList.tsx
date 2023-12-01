@@ -11,8 +11,12 @@ import { useMediaQuery } from "usehooks-ts";
 import { useSearchFilterStore } from "@/zustand/messaging/searchFilter";
 import { useSenderInfo } from "@/zustand/messaging/senderData";
 import { useUserStore } from "@/zustand/auth/user";
+import { cn } from "@/lib/utils";
 
 const ChatList = () => {
+  const selectedHistoryMemberId = useLatestConversationStore(
+    (state) => state.selectedHistoryMemberId,
+  );
   const matches = useMediaQuery("(min-width: 640px)");
   const setConversation = useLatestConversationStore(
     (state) => state.setConversation,
@@ -20,6 +24,9 @@ const ChatList = () => {
   const user = useUserStore((state) => state.user);
   const selectedConversation = useLatestConversationStore(
     (state) => state.conversation,
+  );
+  const setSelectedHistoryMemberId = useLatestConversationStore(
+    (state) => state.setSelectedHistoryMemberId,
   );
   const setSenderUserInfo = useSenderInfo((state) => state.setInfo);
   const { isLoading, isSuccess, data } = useQuery({
@@ -74,7 +81,7 @@ const ChatList = () => {
         <li key={index}>
           <Button
             variant={"ghost"}
-            className="w-full h-full items-start text-left"
+            className={cn("w-full h-max items-start text-left", selectedHistoryMemberId === conversation.recipient_id && 'bg-accent')}
             onClick={() => {
               if (!matches) {
                 updateMessagingPageView();
@@ -87,6 +94,9 @@ const ChatList = () => {
                 conversation.recipient_uuid,
                 conversation.recipient_nickname,
                 conversation.conversation_uuid,
+              );
+              setSelectedHistoryMemberId(
+                conversation.recipient_id,
               );
             }}
           >
@@ -115,7 +125,7 @@ const ChatList = () => {
     });
 
   return (
-    <ul className="space-y-1 overflow-y-scroll h-full">
+    <ul className="space-y-1 overflow-y-scroll h-full p-1">
       {isSuccess && conversations}
       {isLoading && <ChatListLoadingSkeleton />}
       {!isLoading && conversations?.length == 0 && (

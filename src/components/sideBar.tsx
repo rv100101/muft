@@ -81,49 +81,50 @@ const SideBar = () => {
         </Link>
         <ul>{navLinks}</ul>
       </div>
-      
+
       <div className="flex flex-col space-y-4 px-4">
         <Link onClick={scrollToTop} href="/privacy-policy">
-          <a className="hover:text-slate-700 text-sm text-black">
+          <a className="hover:text-slate-700 text-xs text-black">
             Privacy Policy
           </a>
         </Link>
         <Link onClick={scrollToTop} href="/terms">
-          <a className="hover:text-slate-700 text-sm text-black">
+          <a className="hover:text-slate-700 text-xs text-black">
             Terms of Service
           </a>
         </Link>
         <Link onClick={scrollToTop} href="/release-notes">
-          <a className="hover:text-slate-700 text-sm text-black">
+          <a className="hover:text-slate-700 text-xs text-black">
             Release Notes
           </a>
         </Link>
-              <Dialog>
-        <DialogTrigger>
-          <div className="flex space-x-2 m-4">
-            {<LogOutIcon size={20} />} <p className="text-sm">Sign out</p>
-          </div>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-md opacity-100">
-          <DialogHeader>
-            <DialogTitle>Are you sure you want to sign out?</DialogTitle>
-          </DialogHeader>
-          <DialogFooter className="sm:justify-start">
-            <Button className="hover:bg-primary" onClick={signOut}>
-              Yes
-            </Button>
-            <DialogClose asChild>
-              <Button
-                className="text-white hover:bg-secondary"
-                type="button"
-                variant="secondary"
-              >
-                No
+        <hr />
+        <Dialog>
+          <DialogTrigger>
+            <div className="flex space-x-2 my-4">
+              {<LogOutIcon size={20} className="text-primary" />} <p className="text-sm">Sign out</p>
+            </div>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-md opacity-100">
+            <DialogHeader>
+              <DialogTitle>Are you sure you want to sign out?</DialogTitle>
+            </DialogHeader>
+            <DialogFooter className="sm:justify-start">
+              <Button className="hover:bg-primary" onClick={signOut}>
+                Yes
               </Button>
-            </DialogClose>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+              <DialogClose asChild>
+                <Button
+                  className="text-white hover:bg-secondary"
+                  type="button"
+                  variant="secondary"
+                >
+                  No
+                </Button>
+              </DialogClose>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );
