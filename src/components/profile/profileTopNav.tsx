@@ -1,7 +1,11 @@
 import useHomepageViewStore from "@/zustand/home/homepageView";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "../ui/button";
+import useLatestConversationStore from "@/zustand/messaging/showConversation";
 const ProfileTopNav = () => {
+  const setSelectedHistoryMemberId = useLatestConversationStore(
+    (state) => state.setSelectedHistoryMemberId,
+  );
   const setSelectedProfileId = useHomepageViewStore((state) =>
     state.setSelectedProfileId
   );
@@ -14,6 +18,7 @@ const ProfileTopNav = () => {
           className="bg-transparent m-0 p-0 h-min"
           onClick={() => {
             window.history.go(-1);
+            setSelectedHistoryMemberId(null);
             setSelectedProfileId(null);
           }}
         >
