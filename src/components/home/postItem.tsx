@@ -1,4 +1,4 @@
-import { Codepen, Heart, Star } from "lucide-react";
+import { CalendarClock, Heart, Star } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -12,12 +12,16 @@ import useHomepageViewStore from "@/zustand/home/homepageView";
 import { useUserStore } from "@/zustand/auth/user";
 type PostItemProps = {
   nickname: string;
-  countryName: string;
+  country: string;
+  state: string;
   age: number;
   image: string;
   member_id: number;
   isLiked: boolean;
   isFavorite: boolean;
+  status: string;
+  nationality: string;
+  nationalityCode: string;
 };
 
 const PostItem = ({
@@ -27,13 +31,18 @@ const PostItem = ({
   member_id,
   isLiked,
   isFavorite,
+  state,
+  country,
+  nationalityCode,
+  status,
+  nationality,
 }: PostItemProps) => {
   const [, setLocation] = useLocation();
 
   const likeTriggered = useHomepageViewStore((state) => state.isLiked);
   const favoriteTriggered = useHomepageViewStore((state) => state.isFavored);
   const toggleLikeIcon = useHomepageViewStore((state) => state.toggleIsLiked);
-  const user = useUserStore(state => state.user);
+  const user = useUserStore((state) => state.user);
   const toggleFavoriteIcon = useHomepageViewStore(
     (state) => state.toggleIsFavored
   );
@@ -75,19 +84,18 @@ const PostItem = ({
     setLocation(`/users/${member_id}`);
   };
 
+  // console.log("🧨: ", favoriteTriggered);
   return (
-    <div className="transition ease-in duration-300 transform border rounded-md">
+    <div className="transition ease-in duration-300 transform border rounded-xl">
       <div className="flex flex-col items-center justify-end h-full">
         <div className="flex flex-col h-full justify-center items-center">
-          <div
-            className="relative w-max rounded-t-md  hover:cursor-pointer"
-            onClick={() => handlePostItemClick()}
-          >
+          <div className="relative w-max rounded-t-md  hover:cursor-pointer">
             <img
               src={image}
               alt="post-img"
               // width={520}
-              className="rounded-t-md lg:w-[460px] w-[350px] h-[554px] 2xl:h-[654px] 2xl:w-[570px] object-cover"
+              className="rounded-t-xl lg:w-[460px] w-[350px] h-[554px] 2xl:h-[654px] 2xl:w-[570px] object-cover"
+              onClick={() => handlePostItemClick()}
               // height={1000}
               // className="h-2/4 "
             />
@@ -98,11 +106,11 @@ const PostItem = ({
                     className="text-white text-2xl 2xl:text-3xl mb-3  select-none"
                     onClick={() => handlePostItemClick()}
                   >
-                    {`${nickname}, ${age}`}
+                    {nickname}
                   </p>
                   {/* <p className="text-white text-sm">{countryName}</p> */}
                   <p className="text-white text-sm 2xl:text-xl">
-                    University of California, Berkeley
+                    {`${country}, ${state}`}
                   </p>
                 </div>
                 <TooltipProvider>
@@ -170,38 +178,45 @@ const PostItem = ({
           </div>
           {/* bio */}
           <div className="flex flex-col justify-center items-center">
-            <p className="text-[#727272] pt-5 px-5 text-sm 2xl:text-xl ">
+            {/* <p className="text-[#727272] pt-5 px-5 text-sm 2xl:text-xl ">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt.
-            </p>
+            </p> */}
           </div>
           <div className="flex flex-row justify-start space-x-3 mt-5 pb-5">
             <div className="rounded-full bg-[#FFF2F7] flex flex-row justify-center align-center space-x-2 py-2 px-4 ">
-              <Codepen
+              <CalendarClock
                 color="#FF599B"
                 fill="white"
                 size={25}
                 className="mt-1 hover:cursor-pointer"
               />
-              <p className="text-[#FF599B] mt-1">6'2</p>
+              <p className="text-[#FF599B] mt-2 text-sm">{age} years</p>
             </div>
             <div className="rounded-full bg-[#FFF2F7] flex flex-row justify-center align-center space-x-2 py-2 px-4 ">
-              <Codepen
+              <Heart
                 color="#FF599B"
                 fill="white"
                 size={25}
                 className="mt-1 hover:cursor-pointer"
               />
-              <p className="text-[#FF599B] mt-1">Single</p>
+              <p className="text-[#FF599B] mt-1">{status}</p>
             </div>
-            <div className="rounded-full bg-[#FFF2F7] flex flex-row justify-center align-center space-x-2 py-2 px-4 ">
-              <Codepen
+            <div className="flex flex-row rounded-full bg-[#FFF2F7] flex flex-row justify-center align-center space-x-2 py-2 px-4 ">
+              {/* <Codepen
                 color="#FF599B"
                 fill="white"
                 size={25}
                 className="mt-1 hover:cursor-pointer"
+              /> */}
+              <img
+                alt={nationality}
+                height={20}
+                width={30}
+                src={`http://purecatamphetamine.github.io/country-flag-icons/3x2/${nationalityCode}.svg`}
               />
-              <p className="text-[#FF599B] mt-1">Talented</p>
+
+              <p className="text-[#FF599B] mt-1 text-sm ">{nationalityCode}</p>
             </div>
           </div>
         </div>

@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { Link, useLocation } from "wouter";
-import { scrollToTop } from "@/lib/utils";
+// import { scrollToTop } from "@/lib/utils";
 import HomepageSearchInput from "./homeSearchUsersInput";
 import { useMutation } from "@tanstack/react-query";
 import axiosQuery from "@/queries/axios";
@@ -220,7 +220,7 @@ const Suggestions = ({ members }: { members: Member[] }) => {
                         suggestion.gender,
                         suggestion.member_uuid,
                         suggestion.nickname,
-                        "",
+                        ""
                       );
                       // setConversation(
                       //   conversation.initiator_id,
@@ -350,7 +350,7 @@ const Suggestions = ({ members }: { members: Member[] }) => {
         )}
       </ul>
       <div className="w-full border-t pt-2 hidden lg:block">
-        <ul className="flex items-center justify-center list-none space-x-4 text-xs md:text-md">
+        {/* <ul className="flex items-center justify-center list-none space-x-4 text-xs md:text-md">
           <li>
             <Link onClick={scrollToTop} href="/privacy-policy">
               <a className=" font-light hover:text-slate-700">Privacy Policy</a>
@@ -370,7 +370,7 @@ const Suggestions = ({ members }: { members: Member[] }) => {
               <a className="font-light hover:text-slate-700">Release Notes</a>
             </Link>
           </li>
-        </ul>
+        </ul> */}
       </div>
     </div>
   );
