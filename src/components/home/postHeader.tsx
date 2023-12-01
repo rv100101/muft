@@ -7,7 +7,7 @@ const PostHeader = () => {
     <div className="">
       <TopBar2>
         <div className="flex flex-row w-full justify-between lg:p-5 lg:border-l lg:border-r">
-          <p className="uppercase font-semibold">Home</p>
+          <p className="uppercase font-semibold"></p>
           {/* <MoreVertical
             color="#98A2B3"
             size={20}

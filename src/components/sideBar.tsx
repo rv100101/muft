@@ -6,6 +6,7 @@ import { useUserStore } from "@/zustand/auth/user";
 import { cn } from "@/lib/utils";
 import useHomepageViewStore from "@/zustand/home/homepageView";
 import { useQueryClient } from "@tanstack/react-query";
+import { scrollToTop } from "@/lib/utils";
 
 const SideBar = () => {
   const signOut = useUserStore((state) => state.reset);
@@ -74,13 +75,31 @@ const SideBar = () => {
         </Link>
         <ul>{navLinks}</ul>
       </div>
-      <Link
-        onClick={signOut}
-        className="h-10 px-4 py-2 hover:bg-accent hover:text-accent-foreground flex justify-start items-center space-x-2"
-        href={"/"}
-      >
-        {<LogOutIcon size={20} />} <p className="text-sm">Sign out</p>
-      </Link>
+
+      <div className="flex flex-col space-y-4 px-4">
+        <Link onClick={scrollToTop} href="/privacy-policy">
+          <a className="hover:text-slate-700 text-sm text-black">
+            Privacy Policy
+          </a>
+        </Link>
+        <Link onClick={scrollToTop} href="/terms">
+          <a className="hover:text-slate-700 text-sm text-black">
+            Terms of Service
+          </a>
+        </Link>
+        <Link onClick={scrollToTop} href="/release-notes">
+          <a className="hover:text-slate-700 text-sm text-black">
+            Release Notes
+          </a>
+        </Link>
+        <Link
+          onClick={signOut}
+          className="h-10 py-2 hover:bg-accent hover:text-accent-foreground flex justify-start items-center space-x-2"
+          href={"/"}
+        >
+          {<LogOutIcon size={20} />} <p className="text-sm">Sign out</p>
+        </Link>
+      </div>
     </div>
   );
 };

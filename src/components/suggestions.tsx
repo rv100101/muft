@@ -218,7 +218,7 @@ const Suggestions = ({ members }: { members: Member[] }) => {
                         suggestion.gender,
                         suggestion.member_uuid,
                         suggestion.nickname,
-                        "",
+                        ""
                       );
                       // setConversation(
                       //   conversation.initiator_id,
