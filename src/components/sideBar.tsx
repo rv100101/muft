@@ -6,11 +6,21 @@ import { useUserStore } from "@/zustand/auth/user";
 import { cn } from "@/lib/utils";
 import useHomepageViewStore from "@/zustand/home/homepageView";
 import { useQueryClient } from "@tanstack/react-query";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Button } from "./ui/button";
+import { DialogClose } from "@radix-ui/react-dialog";
 
 const SideBar = () => {
   const signOut = useUserStore((state) => state.reset);
   const setSelectedProfileId = useHomepageViewStore(
-    (state) => state.setSelectedProfileId
+    (state) => state.setSelectedProfileId,
   );
   const [location] = useLocation();
   const queryClient = useQueryClient();
@@ -25,11 +35,11 @@ const SideBar = () => {
               ? "font-semibold bg-accent"
               : location.endsWith(link.path)
               ? "font-semibold bg-accent"
-              : "font-normal"
+              : "font-normal",
           )}
-          href={
-            link.name == "Profile" ? `/profile/${user!.member_id}` : link.path
-          }
+          href={link.name == "Profile"
+            ? `/profile/${user!.member_id}`
+            : link.path}
           onClick={() => {
             if (link.name == "Profile") {
               setSelectedProfileId(null);
@@ -39,19 +49,15 @@ const SideBar = () => {
         >
           {
             <link.icon
-              fill={
-                location.startsWith("/profile") &&
-                link.path.startsWith("/profile")
-                  ? "black"
-                  : location.endsWith(link.path)
-                  ? "black"
-                  : "white"
-              }
-              stroke={
-                link.name == "Home" && location.endsWith(link.path)
-                  ? "white"
-                  : "black"
-              }
+              fill={location.startsWith("/profile") &&
+                  link.path.startsWith("/profile")
+                ? "black"
+                : location.endsWith(link.path)
+                ? "black"
+                : "white"}
+              stroke={link.name == "Home" && location.endsWith(link.path)
+                ? "white"
+                : "black"}
               strokeWidth={location.endsWith(link.path) ? 0.8 : 2}
               size={20}
             />
@@ -74,13 +80,33 @@ const SideBar = () => {
         </Link>
         <ul>{navLinks}</ul>
       </div>
-      <Link
-        onClick={signOut}
-        className="h-10 px-4 py-2 hover:bg-accent hover:text-accent-foreground flex justify-start items-center space-x-2"
-        href={"/"}
-      >
-        {<LogOutIcon size={20} />} <p className="text-sm">Sign out</p>
-      </Link>
+
+      <Dialog>
+        <DialogTrigger>
+          <div className="flex space-x-2 m-4">
+            {<LogOutIcon size={20} />} <p className="text-sm">Sign out</p>
+          </div>
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-md opacity-100">
+          <DialogHeader>
+            <DialogTitle>Are you sure you want to sign out?</DialogTitle>
+          </DialogHeader>
+          <DialogFooter className="sm:justify-start">
+            <Button className="hover:bg-primary" onClick={signOut}>
+              Yes
+            </Button>
+            <DialogClose asChild>
+              <Button
+                className="text-white hover:bg-secondary"
+                type="button"
+                variant="secondary"
+              >
+                No
+              </Button>
+            </DialogClose>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
