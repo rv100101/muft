@@ -126,6 +126,10 @@ const HomePage = () => {
         }
       });
       // Update state with the modified array
+      console.log(
+        "🦺 ~ file: homePage.tsx:131 ~ useEffect ~ updatedMemberList:",
+        updatedMemberList
+      );
 
       setMemberList(updatedMemberList);
     }
@@ -201,7 +205,7 @@ const HomePage = () => {
               </>
             )}
           </div>
-          <div className="md:col-span-3 col-span-0 xs:hidden overflow-auto no-scrollbar">
+          <div className="md:col-span-3 col-span-0 xs:hidden overflow-auto no-scrollbar ml-10">
             <Suggestions members={memberList} />
           </div>
         </div>

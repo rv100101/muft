@@ -55,6 +55,11 @@ const PostItem = ({
       liked: number;
     }) => {
       toggleLikeIcon();
+      console.log("like toggle triggered");
+      console.log(isLiked);
+      console.log(isFavorite);
+      console.log(favoriteTriggered);
+      console.log("--- end ----");
       const res = await axiosQuery.post("/Like", {
         member: member,
         liked: liked,
@@ -72,6 +77,12 @@ const PostItem = ({
       favored: number;
     }) => {
       toggleFavoriteIcon();
+      console.log("favorite toggle triggered");
+      console.log(isLiked);
+      console.log(isFavorite);
+      console.log(favoriteTriggered);
+      console.log("--- end ----");
+
       const res = await axiosQuery.post("/Favorite", {
         member: member,
         favored: favored,
@@ -153,7 +164,7 @@ const PostItem = ({
                               ? "#FF599B"
                               : "white"
                           }
-                          stroke={!isFavorite ? "#FF599B" : "white"}
+                          // stroke={!isFavorite ? "#FF599B" : "white"}
                           size={50}
                           strokeWidth={1.5}
                           onClick={() =>
@@ -177,12 +188,7 @@ const PostItem = ({
             </div>
           </div>
           {/* bio */}
-          <div className="flex flex-col justify-center items-center">
-            {/* <p className="text-[#727272] pt-5 px-5 text-sm 2xl:text-xl ">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt.
-            </p> */}
-          </div>
+          <div className="flex flex-col justify-center items-center"></div>
           <div className="flex flex-row justify-start space-x-3 mt-5 pb-5">
             <div className="rounded-full bg-[#FFF2F7] flex flex-row justify-center align-center space-x-2 py-2 px-4 ">
               <CalendarClock
@@ -202,22 +208,27 @@ const PostItem = ({
               />
               <p className="text-[#FF599B] mt-1">{status}</p>
             </div>
-            <div className="flex flex-row rounded-full bg-[#FFF2F7] flex flex-row justify-center align-center space-x-2 py-2 px-4 ">
-              {/* <Codepen
-                color="#FF599B"
-                fill="white"
-                size={25}
-                className="mt-1 hover:cursor-pointer"
-              /> */}
-              <img
-                alt={nationality}
-                height={20}
-                width={30}
-                src={`http://purecatamphetamine.github.io/country-flag-icons/3x2/${nationalityCode}.svg`}
-              />
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div className="flex flex-row rounded-full bg-[#FFF2F7] flex flex-row justify-center align-center space-x-2 py-2 px-4 ">
+                    <img
+                      alt={nationality}
+                      height={20}
+                      width={30}
+                      src={`http://purecatamphetamine.github.io/country-flag-icons/3x2/${nationalityCode}.svg`}
+                    />
 
-              <p className="text-[#FF599B] mt-1 text-sm ">{nationalityCode}</p>
-            </div>
+                    <p className="text-[#FF599B] mt-1 text-sm ">
+                      {nationalityCode}
+                    </p>
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{nationality}</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
         </div>
         {/* <div className="h-[500px]"></div> */}

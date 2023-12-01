@@ -8,10 +8,10 @@ import { Like } from "@/types/like";
 import { getImagePath } from "@/lib/images";
 import { useState } from "react";
 import favouritesQuery from "@/queries/favourites";
-import { cn } from "@/lib/utils";
 // import { useUserCountry } from "@/zustand/auth/country";
 import SkeletonLoading from "@/components/likesAndFavourites/skeletonLoading";
 import { useUserStore } from "@/zustand/auth/user";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,8 +19,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useLocation } from "wouter";
-const LikesAndFavouritesPage = () => {
-  const [tab, setTab] = useState<"LIKES" | "FAVOURITES">("LIKES");
+const LikesPage = () => {
+  const [tab] = useState<"LIKES" | "FAVOURITES">("LIKES");
   const [, setLocation] = useLocation();
   // const [filter, setFilter] = useState<"ALL" | "CURRENT-COUNTRY">("ALL");
   // const [search, setSearch] = useState<string>("");
@@ -68,7 +68,7 @@ const LikesAndFavouritesPage = () => {
               src={getImagePath(
                 like.gallery_uuid,
                 like.gender,
-                like.member_uuid,
+                like.member_uuid
               )}
               alt="user"
             />
@@ -111,7 +111,7 @@ const LikesAndFavouritesPage = () => {
         <div className="pt-4">
           <TopBar>
             <div className="w-full h-full flex items-center justify-between">
-              <h1 className="font-semibold">LIKES AND FAVOURITES</h1>{" "}
+              <h1 className="font-semibold">LIKES</h1>{" "}
               <Button variant={"ghost"}>
                 <MoreVertical />
               </Button>
@@ -119,13 +119,13 @@ const LikesAndFavouritesPage = () => {
           </TopBar>
         </div>{" "}
         <div className="w-full flex h-max">
-          <Button
+          {/* <Button
             onClick={() => {
               setTab("LIKES");
             }}
             className={cn(
               "w-full rounded-0 bg-transparent text-black border-r border-t rounded-none border-b p-8 text-[#727272] text-lg",
-              tab == "LIKES" && "border-b-4 border-b-[#404040]",
+              tab == "LIKES" && "border-b-4 border-b-[#404040]"
             )}
           >
             LIKES
@@ -136,11 +136,11 @@ const LikesAndFavouritesPage = () => {
             }}
             className={cn(
               "w-full rounded-0 bg-transparent text-black border-r border-t rounded-none border-b text-[#727272] text-lg p-8",
-              tab == "FAVOURITES" && "border-b-4 border-b-[#404040]",
+              tab == "FAVOURITES" && "border-b-4 border-b-[#404040]"
             )}
           >
             FAVOURITES
-          </Button>
+          </Button> */}
         </div>
         {
           // <div className="flex justify-between h-max items-center px-8">
@@ -184,9 +184,11 @@ const LikesAndFavouritesPage = () => {
           {likesQueryResults.isLoading && <SkeletonLoading />}
           {favouritesQueryResults.isLoading && <SkeletonLoading />}
           {tab == "LIKES" && likes}
-          {!likesQueryResults.isLoading && likes.length == 0 &&
+          {!likesQueryResults.isLoading &&
+            likes.length == 0 &&
             tab == "LIKES" && <p>No likes</p>}
-          {!favouritesQueryResults.isLoading && favourites.length == 0 &&
+          {!favouritesQueryResults.isLoading &&
+            favourites.length == 0 &&
             tab == "FAVOURITES" && <p>No favourites</p>}
           {tab == "FAVOURITES" && favourites}
         </div>
@@ -195,4 +197,4 @@ const LikesAndFavouritesPage = () => {
   );
 };
 
-export default LikesAndFavouritesPage;
+export default LikesPage;

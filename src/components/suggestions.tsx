@@ -60,9 +60,7 @@ const Suggestions = ({ members }: { members: Member[] }) => {
     (state) => state.toggleIsFavored,
   );
 
-  const { conversation, setConversation } = useConversationHistoryStore();
-
-  console.log(conversation);
+  const { setConversation } = useConversationHistoryStore();
 
   const [, setLocation] = useLocation();
   const toggleLike = useMutation({
@@ -150,7 +148,7 @@ const Suggestions = ({ members }: { members: Member[] }) => {
   const suggestions = members
     ?.slice(0, 3)
     .map((suggestion: Member, index: number) => {
-      console.log(suggestion);
+      // console.log(suggestion);
 
       const imagePath = getImagePath(
         suggestion.gallery_uuid,

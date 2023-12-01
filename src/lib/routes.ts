@@ -7,10 +7,11 @@ import NotificationsPage from "@/pages/authenticatedPages/notificationsPage";
 import SignUpPage from "@/pages/auth/signUpPage";
 import SignInPage from "@/pages/auth/signInPage";
 import HomePage from "@/pages/homePage";
-import LikesAndFavouritesPage from "@/pages/authenticatedPages/likesAndFavouritesPage";
 // import ActivateAccount from "@/pages/authenticatedPages/accountActivationPage";
 import AboutPage from "@/pages/aboutPage";
 import SubscriptionPage from "@/pages/subscriptionPage";
+import FavouritesPage from "@/pages/authenticatedPages/favouritesPage";
+import LikesPage from "@/pages/authenticatedPages/likesPage";
 
 export const routesWithFooterAndTopNav = [
   "/",
@@ -71,10 +72,15 @@ const pageRoutes = {
     path: "/home",
     component: HomePage,
   },
-  likesAndFavorites: {
-    path: "/likes-and-favourites",
-    component: LikesAndFavouritesPage,
+  likes: {
+    path: "/likes",
+    component: LikesPage,
   },
+  Favorites: {
+    path: "/favourites",
+    component: FavouritesPage,
+  },
+
   // activateAccount: {
   //   path: "/activate",
   //   component: ActivateAccount,

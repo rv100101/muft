@@ -28,7 +28,6 @@ const getMembers = async (memberId: number) => {
       // { member: memberId }
       // { member: 403 }
     );
-    console.log("🚀 ~ file: home.ts:31 ~ getMembers ~ res3:", res3.data);
 
     // Loop through the response array and add imagePath property to each member object
     const membersWithImagePath = res.data.map(

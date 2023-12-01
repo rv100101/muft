@@ -89,8 +89,12 @@ function App() {
             {(params) => <ViewUser id={params.id} />}
           </Route>
           <Route
-            path={pageRoutes.likesAndFavorites.path}
-            component={pageRoutes.likesAndFavorites.component}
+            path={pageRoutes.likes.path}
+            component={pageRoutes.likes.component}
+          />
+          <Route
+            path={pageRoutes.Favorites.path}
+            component={pageRoutes.Favorites.component}
           />
           <Route path="/members/:id">
             {(params) => <ViewUser id={params.id} />}
