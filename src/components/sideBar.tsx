@@ -38,11 +38,11 @@ const SideBar = () => {
               ? "font-semibold bg-accent"
               : "font-normal",
           )}
-          href={link.name == "Profile"
+          href={link.name == "My Profile"
             ? `/profile/${user!.member_id}`
             : link.path}
           onClick={() => {
-            if (link.name == "Profile") {
+            if (link.name == "My Profile") {
               setSelectedProfileId(null);
               queryClient.invalidateQueries({ queryKey: ["profileHeader"] });
             }
