@@ -323,7 +323,7 @@ const Suggestions = ({ members }: { members: Member[] }) => {
     });
 
   return (
-    <div className="w-[380px] h-5/6 pt-4 px-5 lg:p-4 sm:flex flex-col hidden ">
+    <div className="w-[380px] h-max pt-4 px-5 lg:p-4 sm:flex flex-col hidden ">
       <HomepageSearchInput />
       <div className="h-max w-full flex justify-between mt-4 items-center">
         <p className=" lg:text-md px-5 py-2 font-semibold">SUGGESTIONS</p>
@@ -338,7 +338,7 @@ const Suggestions = ({ members }: { members: Member[] }) => {
           // </div>
         }
       </div>
-      <ul className="no-scrollbar border-top h-full p-2 space-y-2 lg:space-y-4 overflow-y-auto rounded-lg mb-5">
+      <ul className="no-scrollbar border border-top h-max p-2 space-y-2 lg:space-y-4 overflow-y-clip rounded-lg mb-5">
         {members.length > 0
           ? suggestions
           : <div className="p-3">No Suggestions</div>}

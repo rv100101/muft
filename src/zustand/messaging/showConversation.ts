@@ -1,5 +1,4 @@
 import { create } from "zustand";
-
 interface ConversationHistory {
   conversation: {
     memberId: number;
@@ -19,6 +18,8 @@ interface ConversationHistory {
     username: string,
     conversation_uuid: string,
   ) => void;
+  selectedHistoryMemberId: number | null;
+  setSelectedHistoryMemberId: (val: number | null) => void;
 }
 
 const useConversationHistoryStore = create<ConversationHistory>((set) => ({
@@ -30,7 +31,7 @@ const useConversationHistoryStore = create<ConversationHistory>((set) => ({
     gender,
     recipient_uuid,
     username,
-    conversation_uuid
+    conversation_uuid,
   ) =>
     set(() => ({
       conversation: {
@@ -43,6 +44,14 @@ const useConversationHistoryStore = create<ConversationHistory>((set) => ({
         conversation_uuid,
       },
     })),
+  selectedHistoryMemberId: null,
+  setSelectedHistoryMemberId: (val: number | null) => {
+    set(() => {
+      return {
+        selectedHistoryMemberId: val,
+      };
+    });
+  },
 }));
 
 export default useConversationHistoryStore;

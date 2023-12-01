@@ -62,14 +62,15 @@ const TopBar = ({ children }: { children: ReactNode }) => {
       </Sheet>
       {location !== "/notifications" &&
         (
-          <Link href="/">
-            <Button
-              variant={"ghost"}
-              className="hidden sm:block hover:bg-white p-0"
-            >
-              <ArrowLeft />
-            </Button>
-          </Link>
+          <Button
+            onClick={() => {
+              window.history.go(-1);
+            }}
+            variant={"ghost"}
+            className="hidden sm:block hover:bg-white p-0"
+          >
+            <ArrowLeft />
+          </Button>
         )}
       {children}
     </div>
