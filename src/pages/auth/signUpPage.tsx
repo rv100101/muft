@@ -88,10 +88,11 @@ const SignUpPage = () => {
 
   return (
     <>
-      <div className="flex justify-center lg:items-center min-h-[calc(100vh-70px)] md:h-max border-t lg:p-8">
-        <div className="flex h-max w-[460px] flex-col items-center md:shadow-xl rounded-lg p-4 md:border">
-          <div className="flex w-full justify-end pb-5">
-            {/* <img
+      <div className="h-[calc(100vh-70px)] md:h-[calc(100vh-88px)] justify-center items-center flex lg:gap-4 w-full lg:px-32 border-t">
+        <div className="flex h-min w-[460px] flex-col items-center md:shadow-xl rounded-lg p-4 md:border">
+          <div className="flex w-full justify-end py-2">
+            {
+              /* <img
               src={helpIcon}
               alt="help icon"
               className="w-8 md:w-8 hover:cursor-pointer"
@@ -101,24 +102,27 @@ const SignUpPage = () => {
             <img className="w-36" src={logo} alt="muffin-logo" />
             <p className="text-[#1B2950] text-md mt-4 mb-4 font-bold">
               Welcome!
-            </p> */}
+            </p> */
+            }
           </div>
           {/* form */}
           <form
             action="post"
             onSubmit={formik.handleSubmit}
-            className="space-y-5 w-full"
+            className="space-y-4 w-full"
           >
             {/* first_name */}
             <div className="flex flex-col space-y-1 px-5">
-              {/* <label
+              {
+                /* <label
                 htmlFor="first_name"
                 className="text-sm text-semibold ml-5 mb-2"
               >
                 First name
-              </label> */}
+              </label> */
+              }
               <div
-                className={`flex items-center h-max flex-row border rounded-full py-1 px-5 m-3 ${
+                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${
                   formik.touched.first_name && formik.errors.first_name
                     ? "border-rose-500"
                     : ""
@@ -144,24 +148,28 @@ const SignUpPage = () => {
                   }`}
                 />
               </div>
-              {formik.touched.first_name && formik.errors.first_name ? (
-                <div className="error text-red-500 text-sm ml-5 pt-2">
-                  {formik.errors.first_name}
-                </div>
-              ) : null}
+              {formik.touched.first_name && formik.errors.first_name
+                ? (
+                  <div className="error text-red-500 text-sm ml-5 pt-2">
+                    {formik.errors.first_name}
+                  </div>
+                )
+                : null}
             </div>
 
             {/* last_name */}
             <div className="flex flex-col space-y-1 px-5">
-              {/* <label
+              {
+                /* <label
                 htmlFor="last_name"
                 className="text-sm text-semibold  ml-5 mb-2"
               >
                 Last name
-              </label> */}
+              </label> */
+              }
 
               <div
-                className={`flex items-center border rounded-full py-1 px-5 m-3 ${
+                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${
                   formik.touched.last_name && formik.errors.last_name
                     ? "border-rose-500"
                     : ""
@@ -187,22 +195,26 @@ const SignUpPage = () => {
                   }`}
                 />
               </div>
-              {formik.touched.last_name && formik.errors.last_name ? (
-                <div className="error text-red-500 text-sm ml-5 pt-2">
-                  {formik.errors.last_name}
-                </div>
-              ) : null}
+              {formik.touched.last_name && formik.errors.last_name
+                ? (
+                  <div className="error text-red-500 text-sm ml-5 pt-2">
+                    {formik.errors.last_name}
+                  </div>
+                )
+                : null}
             </div>
             {/* email */}
             <div className="flex flex-col space-y-1 px-5">
-              {/* <label
+              {
+                /* <label
                 htmlFor="email"
                 className="text-sm text-semibold  ml-5 mb-2"
               >
                 Email
-              </label> */}
+              </label> */
+              }
               <div
-                className={`flex justify-center items-center flex-row border rounded-full py-1 px-5 m-3 ${
+                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${
                   formik.touched.email && formik.errors.email
                     ? "border-rose-500"
                     : ""
@@ -228,23 +240,27 @@ const SignUpPage = () => {
                   }`}
                 />
               </div>
-              {formik.touched.email && formik.errors.email ? (
-                <div className="error text-red-500 ml-5 text-sm pt-2">
-                  {formik.errors.email}
-                </div>
-              ) : null}
+              {formik.touched.email && formik.errors.email
+                ? (
+                  <div className="error text-red-500 ml-5 text-sm pt-2">
+                    {formik.errors.email}
+                  </div>
+                )
+                : null}
             </div>
 
             {/* password */}
             <div className="flex flex-col space-y-1 px-5">
-              {/* <label
+              {
+                /* <label
                 htmlFor="password"
                 className="text-sm text-semibold ml-5 mb-2"
               >
                 Password
-              </label> */}
+              </label> */
+              }
               <div
-                className={`flex items-center flex-row border rounded-full py-1 px-5 m-3 ${
+                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${
                   formik.touched.password && formik.errors.password
                     ? "border-rose-500"
                     : ""
@@ -270,11 +286,13 @@ const SignUpPage = () => {
                   }`}
                 />
               </div>
-              {formik.touched.password && formik.errors.password ? (
-                <div className="error text-red-500 ml-5 text-sm pt-2">
-                  {formik.errors.password}
-                </div>
-              ) : null}
+              {formik.touched.password && formik.errors.password
+                ? (
+                  <div className="error text-red-500 ml-5 text-sm pt-2">
+                    {formik.errors.password}
+                  </div>
+                )
+                : null}
             </div>
             {/* button */}
             <div className="px-8">
@@ -282,27 +300,30 @@ const SignUpPage = () => {
                 type="submit"
                 className={cn(
                   "text-white w-full rounded-full hover:bg-[#FF599B]/90",
-                  isLoading ? "bg-[#FF8AB3]" : "bg-primary"
+                  isLoading ? "bg-[#FF8AB3]" : "bg-primary",
                 )}
               >
-                {isLoading ? (
-                  <Loader2 className="ml-2 h-full w-full animate-spin" />
-                ) : (
-                  "Sign Up"
-                )}
+                {isLoading
+                  ? <Loader2 className="ml-2 h-full w-full animate-spin" />
+                  : (
+                    "Sign Up"
+                  )}
               </Button>
             </div>
           </form>
 
           {/* or */}
-          {/* <div className="flex w-full item-center">
+          {
+            /* <div className="flex w-full item-center">
             <div className="border-b border-black mt-3 h-[1px] w-full"></div>
             <div className="mx-2 text-black font-bold">or</div>
             <div className="border-b border-black mt-3 h-[1px] w-full"></div>
-          </div> */}
+          </div> */
+          }
 
           {/* social icons */}
-          {/* <div className="flex flex-row space-x-5">
+          {
+            /* <div className="flex flex-row space-x-5">
             <img
               src={fbLogo}
               alt="facebook-logo"
@@ -313,7 +334,30 @@ const SignUpPage = () => {
               alt="google-logo"
               className="hover:cursor-pointer"
             />
-          </div> */}
+          </div> */
+
+            /* <div className="flex w-full item-center">
+            <div className="border-b border-black mt-3 h-[1px] w-full"></div>
+            <div className="mx-2 text-black font-bold">or</div>
+            <div className="border-b border-black mt-3 h-[1px] w-full"></div>
+          </div> */
+          }
+
+          {/* social icons */}
+          {
+            /* <div className="flex flex-row space-x-5">
+            <img
+              src={fbLogo}
+              alt="facebook-logo"
+              className="hover:cursor-pointer"
+            />
+            <img
+              src={googleLogo}
+              alt="google-logo"
+              className="hover:cursor-pointer"
+            />
+          </div> */
+          }
           <Link
             onClick={scrollToTop}
             href="/auth/signin"

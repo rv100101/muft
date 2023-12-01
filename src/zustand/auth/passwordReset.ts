@@ -5,6 +5,8 @@ interface ResetState {
   email: string;
   setEmail: (val: string) => void;
   changeState: (val: "SEND" | "VERIFY" | "CHANGE") => void;
+  isModalOpen: boolean;
+  setIsModalOpen: (val: boolean) => void;
 }
 
 export const usePasswordResetState = create<ResetState>((set) => ({
@@ -16,4 +18,8 @@ export const usePasswordResetState = create<ResetState>((set) => ({
   changeState: (
     val: "SEND" | "VERIFY" | "CHANGE",
   ) => set(() => ({ phase: val })),
+  isModalOpen: false,
+  setIsModalOpen: (
+    val: boolean,
+  ) => set(() => ({ isModalOpen: val })),
 }));
