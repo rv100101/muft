@@ -59,6 +59,8 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
     },
   });
 
+  console.log(headerValues);
+  
   const getConversationUuid = async () => {
     if (location.startsWith("/profile")) {
       return;
