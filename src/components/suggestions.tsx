@@ -7,7 +7,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { Link, useLocation } from "wouter";
+import { useLocation } from "wouter";
 import HomepageSearchInput from "./homeSearchUsersInput";
 import { useMutation } from "@tanstack/react-query";
 import axiosQuery from "@/queries/axios";
@@ -24,9 +24,10 @@ import {
 import { Input } from "./ui/input";
 
 import { useUserStore } from "@/zustand/auth/user";
-import useConversationHistoryStore from "@/zustand/messaging/showConversation";
 import { useState } from "react";
 import { toast } from "./ui/use-toast";
+import messagingQuery from "@/queries/messaging";
+import useLatestConversationStore from "@/zustand/messaging/showConversation";
 
 type Member = {
   age: number;
@@ -49,6 +50,9 @@ type Member = {
 };
 
 const Suggestions = ({ members }: { members: Member[] }) => {
+  const setSelectedConversation = useLatestConversationStore(
+    (state) => state.setConversation,
+  );
   const likeTriggered = useHomepageViewStore((state) => state.isLiked);
   const favoriteTriggered = useHomepageViewStore((state) => state.isFavored);
   const toggleLikeIcon = useHomepageViewStore((state) => state.toggleIsLiked);
@@ -56,11 +60,12 @@ const Suggestions = ({ members }: { members: Member[] }) => {
   const [reportReason, setReportReason] = useState("");
   const [reportProcessing, setReportProcessing] = useState(false);
   const { user } = useUserStore();
+  const setSelectedHistoryMemberId = useLatestConversationStore(
+    (state) => state.setSelectedHistoryMemberId,
+  );
   const toggleFavoriteIcon = useHomepageViewStore(
     (state) => state.toggleIsFavored,
   );
-
-  const { setConversation } = useConversationHistoryStore();
 
   const [, setLocation] = useLocation();
   const toggleLike = useMutation({
@@ -145,6 +150,45 @@ const Suggestions = ({ members }: { members: Member[] }) => {
     }
   };
 
+  const getConversationUuid = async (userId: number, gallery_uuid: string) => {
+    try {
+      const res: {
+        data: {
+          recipient_id: number;
+          conversation_id: number;
+          gallery_uuid: string;
+          gender: string;
+          recipient_uuid: string;
+          recipient_nickname: string;
+          conversation_uuid: string;
+        };
+      } = await messagingQuery.getConversation(
+        user!.member_id,
+        userId,
+      );
+
+      console.log(res);
+
+      setSelectedConversation(
+        user!.member_id,
+        res.data.conversation_id,
+        gallery_uuid,
+        res.data.gender,
+        res.data.recipient_uuid,
+        res.data.recipient_nickname!,
+        res.data.conversation_uuid,
+      );
+      setSelectedHistoryMemberId(userId);
+      setLocation("/messages");
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Cannot create new conversation",
+      });
+      return null;
+    }
+  };
+
   const suggestions = members
     ?.slice(0, 3)
     .map((suggestion: Member, index: number) => {
@@ -155,6 +199,8 @@ const Suggestions = ({ members }: { members: Member[] }) => {
         suggestion.gender,
         suggestion.member_uuid,
       );
+      console.log(suggestion);
+
       return (
         <li
           key={index}
@@ -208,28 +254,14 @@ const Suggestions = ({ members }: { members: Member[] }) => {
                   </Button>
                   <Button
                     variant={"ghost"}
-                    onClick={() => {
-                      setConversation(
+                    onClick={async () => {
+                      await getConversationUuid(
                         suggestion.member_id,
-                        null,
                         suggestion.gallery_uuid,
-                        suggestion.gender,
-                        suggestion.member_uuid,
-                        suggestion.nickname,
-                        ""
                       );
-                      // setConversation(
-                      //   conversation.initiator_id,
-                      //   conversation.conversation_id,
-                      //   conversation.gallery_uuid,
-                      //   conversation.gender,
-                      //   conversation.recipient_uuid,
-                      //   conversation.recipient_nickname,
-                      //   conversation.conversation_uuid,
-                      // );
                     }}
                   >
-                    <Link href="/messages">Send Message</Link>
+                    Send Message
                   </Button>
                   <DropdownMenuSeparator />
                   <Button variant={"ghost"}>Block</Button>

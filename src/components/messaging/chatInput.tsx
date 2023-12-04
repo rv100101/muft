@@ -47,6 +47,12 @@ const ChatInput = () => {
   );
 
   const getConversationUuid = async () => {
+    console.log(currentSelectedConversation);
+    
+    if (!currentSelectedConversation) {
+      return;
+    }
+
     try {
       console.log(
         user!.member_id,
@@ -91,7 +97,8 @@ const ChatInput = () => {
   };
 
   useEffect(() => {
-    if ( user && currentSelectedConversation &&
+    if (
+      user && currentSelectedConversation &&
       user!.member_id !==
         currentSelectedConversation!.memberId
     ) {
@@ -102,10 +109,6 @@ const ChatInput = () => {
   const sendMessage = async () => {
     console.log(currentSelectedConversation);
     let newChatUuid = null;
-    // if (currentSelectedConversation?.conversation_uuid.length === 0) {
-    //   newChatUuid = await getConversationUuid();
-    // }
-
     console.log(newChatUuid);
 
     await messagingQuery.sendMessage(
@@ -115,19 +118,14 @@ const ChatInput = () => {
     );
   };
 
-  // const sendNewConversationFirstMessage = async () => {
-  //   await messagingQuery.newConversation(
-  //     currentConversation!.conversation_uuid,
-  //     finalInputMessage,
-  //     currentConversation!.memberId,
-  //   );
-  // };
-
   const mutateConversation = useMutation({
     mutationFn: sendMessage,
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ["current-selected-conversation"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["conversations"],
       });
     },
     onError: () => {
@@ -164,24 +162,30 @@ const ChatInput = () => {
     }
   };
 
+  console.log(currentSelectedConversation);
+
   return (
     <div className="flex w-full items-end rounded-lg h-max bg-[#F7F8FA]">
       <div className="h-max w-full flex items-end justify-start mb-4 mt-1">
         <div className="flex flex-col items-center justify-center mx-2 ">
-          <Popover>
-            <PopoverTrigger>
-              <SmileIcon className="text-primary" />
-            </PopoverTrigger>
-            <PopoverContent>
-              <EmojiPicker
-                onEmojiClick={(emoji: EmojiClickData) => {
-                  setInputMessage(inputMessageValue + emoji.emoji);
-                }}
-                height={300}
-                width={"100%"}
-              />
-            </PopoverContent>
-          </Popover>
+          {currentSelectedConversation
+            ? (
+              <Popover>
+                <PopoverTrigger disabled={!currentSelectedConversation}>
+                  <SmileIcon className="text-primary" />
+                </PopoverTrigger>
+                <PopoverContent>
+                  <EmojiPicker
+                    onEmojiClick={(emoji: EmojiClickData) => {
+                      setInputMessage(inputMessageValue + emoji.emoji);
+                    }}
+                    height={300}
+                    width={"100%"}
+                  />
+                </PopoverContent>
+              </Popover>
+            )
+            : <SmileIcon className="text-gray-500" />}
         </div>
         <textarea
           className="focus:outline-none p-2 w-full border-2 rounded-lg max-h-full overflow-y-auto caret-primary resize-none"
@@ -190,6 +194,7 @@ const ChatInput = () => {
               handleMessageSend();
             }
           }}
+          disabled={!currentSelectedConversation}
           data-emojiable={true}
           value={inputMessageValue}
           name="text"
@@ -201,6 +206,7 @@ const ChatInput = () => {
         />
       </div>
       <Button
+        disabled={!currentSelectedConversation}
         onClick={handleMessageSend}
         className="rounded-full h-max w-max hover:bg-transparen ml-4 px-2 mr-4 mb-4"
       >

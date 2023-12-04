@@ -19,11 +19,15 @@ import uploadQueries from "@/queries/uploading";
 import { toast } from "../ui/use-toast";
 import messagingQuery from "@/queries/messaging";
 import useLatestConversationStore from "@/zustand/messaging/showConversation";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 
 const ProfileHeader = ({ userId }: { userId: string }) => {
+  const [location] = useLocation();
   const setSelectedConversation = useLatestConversationStore(
     (state) => state.setConversation,
+  );
+  const selectedConversation = useLatestConversationStore(
+    (state) => state.conversation,
   );
   const [showCamera, setShowCamera] = useState(false);
   const headerValues = profileHeaderStore((state) => state.headerValues);
@@ -32,7 +36,10 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
     await profileQuery.getProfileHeader(parseInt(userId));
   const user = useUserStore((state) => state.user);
   const toggleEditMode = profileAboutContentStore(
-    (state) => state.toggleEditMode
+    (state) => state.toggleEditMode,
+  );
+  const setSelectedHistoryMemberId = useLatestConversationStore(
+    (state) => state.setSelectedHistoryMemberId,
   );
   const { formState } = useFormContext();
   const isSaving = profileAboutContentStore((state) => state.isSaving);
@@ -53,6 +60,9 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
   });
 
   const getConversationUuid = async () => {
+    if (location.startsWith("/profile")) {
+      return;
+    }
     try {
       const res: {
         data: {
@@ -69,13 +79,15 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
         parseInt(userId),
       );
 
+      console.log(res);
+
       setSelectedConversation(
         user!.member_id,
         res.data.conversation_id,
         headerValues.gallery_uuid,
-        res.data.gender,
-        headerValues.member_uuid,
-        headerValues.nickname!,
+        headerValues?.gender!,
+        res.data.recipient_uuid,
+        res.data.recipient_nickname!,
         res.data.conversation_uuid,
       );
 
@@ -90,8 +102,11 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
   };
 
   useEffect(() => {
-    getConversationUuid();
-  }, [userId]);
+    if (headerValues) {
+      getConversationUuid();
+    }
+    setSelectedHistoryMemberId(parseInt(userId));
+  }, [userId, headerValues]);
 
   if (isLoading || isRefetching) {
     return <ProfileHeaderSkeleton />;
@@ -137,6 +152,8 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
     }
     setIsUploading(false);
   };
+
+  console.log(selectedConversation);
 
   return (
     <Dialog>
@@ -207,9 +224,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                       </p>
                       {!isEditing && (
                         <p
-                          className={`text-[#727272] text-sm ${
-                            !user!.is_active ? "pl-3" : ""
-                          }`}
+                          className={`text-[#727272] text-sm`}
                         >
                           @{`${headerValues.nickname?.toLowerCase()}`}
                         </p>
@@ -217,6 +232,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                     </div>
                     {userId !== user!.member_id.toString() && (
                       <Button
+                        disabled={!selectedConversation}
                         type="button"
                         className="text-xs border-primary hover:bg-primary px-2 py-1"
                       >
@@ -271,26 +287,22 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                   {isEditing && (
                     <div className="flex space-x-2">
                       <Button
-                        onClick={
-                          !formState.isDirty
-                            ? () => {}
-                            : () => {
-                                // if (isEditing && !formState.isValid) {
-                                //   toast({
-                                //     variant: "destructive",
-                                //     title: "Cannot save your profile",
-                                //     description:
-                                //       "Please make sure all the required fields are satisfied.",
-                                //     duration: 4000,
-                                //   });
-                                // }
-                              }
-                        }
+                        onClick={!formState.isDirty ? () => {} : () => {
+                          // if (isEditing && !formState.isValid) {
+                          //   toast({
+                          //     variant: "destructive",
+                          //     title: "Cannot save your profile",
+                          //     description:
+                          //       "Please make sure all the required fields are satisfied.",
+                          //     duration: 4000,
+                          //   });
+                          // }
+                        }}
                         disabled={isSaving}
                         type={"submit"}
                         className={cn(
                           "text-xs rounded-2xl h-max",
-                          "hover:bg-green-400/80 bg-green-400"
+                          "hover:bg-green-400/80 bg-green-400",
                         )}
                       >
                         <p>Save</p>
@@ -300,7 +312,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                         onClick={() => toggleEditMode()}
                         className={cn(
                           "text-xs rounded-2xl h-max",
-                          "text-[#727272] bg-[#E8ECEF] hover:bg-[#E8ECEF]/80"
+                          "text-[#727272] bg-[#E8ECEF] hover:bg-[#E8ECEF]/80",
                         )}
                       >
                         <p>Cancel</p>
@@ -317,7 +329,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                       }}
                       className={cn(
                         "text-xs rounded-2xl h-max",
-                        "text-[#727272] bg-[#E8ECEF] hover:bg-[#E8ECEF]/80"
+                        "text-[#727272] bg-[#E8ECEF] hover:bg-[#E8ECEF]/80",
                       )}
                     >
                       <>
