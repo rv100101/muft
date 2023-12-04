@@ -55,11 +55,11 @@ const PostItem = ({
       liked: number;
     }) => {
       toggleLikeIcon();
-      console.log("like toggle triggered");
-      console.log(isLiked);
-      console.log(isFavorite);
-      console.log(favoriteTriggered);
-      console.log("--- end ----");
+      // console.log("like toggle triggered");
+      // console.log(isLiked);
+      // console.log(isFavorite);
+      // console.log(favoriteTriggered);
+      // console.log("--- end ----");
       const res = await axiosQuery.post("/Like", {
         member: member,
         liked: liked,
@@ -78,9 +78,8 @@ const PostItem = ({
     }) => {
       toggleFavoriteIcon();
       console.log("favorite toggle triggered");
-      console.log(isLiked);
-      console.log(isFavorite);
-      console.log(favoriteTriggered);
+      console.log("isFavorite: ", isFavorite);
+      console.log("favoriteTriggered: ", favoriteTriggered);
       console.log("--- end ----");
 
       const res = await axiosQuery.post("/Favorite", {
@@ -96,6 +95,10 @@ const PostItem = ({
   };
 
   // console.log("🧨: ", favoriteTriggered);
+  // console.log("isLiked: ", isLiked);
+  // console.log("isFavorite: ", isFavorite);
+  // console.log("nickname: ", nickname);
+  // console.log("-------------------------");
   return (
     <div className="transition ease-in duration-300 transform border rounded-xl">
       <div className="flex flex-col items-center justify-end h-full">
@@ -105,7 +108,7 @@ const PostItem = ({
               src={image}
               alt="post-img"
               // width={520}
-              className="rounded-t-xl lg:w-[460px] w-[350px] h-[554px] 2xl:h-[654px] 2xl:w-[570px] object-cover"
+              className="rounded-t-xl lg:w-[460px] w-[350px] h-[554px] xl:h-[454px] xl:w-[400px] object-cover"
               onClick={() => handlePostItemClick()}
               // height={1000}
               // className="h-2/4 "

@@ -1,13 +1,18 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import PostHeader from "@/components/home/postHeader";
 import AuthenticatedLayout from "./authenticatedPages/layout";
-import Suggestions from "@/components/suggestions";
+// import Suggestions from "@/components/suggestions";
 import PostItem from "@/components/home/postItem";
 import { useQuery } from "@tanstack/react-query";
 import membersQuery from "@/queries/home";
 import { Skeleton } from "@/components/ui/skeleton";
 import useHomepageViewStore from "@/zustand/home/homepageView";
 import { useUserStore } from "@/zustand/auth/user";
+import HomepageSearchInput from "@/components/homeSearchUsersInput";
+import { Slider } from "@/components/ui/slider";
+import { useDebounce } from "usehooks-ts";
+// import { useFormik } from "formik";
+// import * as Yup from "yup";
 
 type Member = {
   age: number;
@@ -31,6 +36,24 @@ type Member = {
 };
 
 const HomePage = () => {
+  const [ageSliderVal, setAgeSliderVal] = useState(23);
+  const debouncedAgeFilterVal = useDebounce(ageSliderVal, 300);
+  // const formik = useFormik({
+  //   initialValues: {
+  //     age: 0,
+  //   },
+  //   validationSchema: Yup.object({
+  //     age: Yup.string().min(1, "Must be more than 1 characters"),
+  //   }),
+
+  //   // onSubmit: (values: FormDataType) => handleSignIn(values),
+  //   onSubmit: () => {},
+  // });
+
+  const handleSliderChange = (val: Array<number>) => {
+    setAgeSliderVal(val[0]);
+  };
+
   const setSelectedProfileId = useHomepageViewStore(
     (state) => state.setSelectedProfileId
   );
@@ -125,13 +148,19 @@ const HomePage = () => {
           };
         }
       });
-      // Update state with the modified array
-      console.log(
-        "🦺 ~ file: homePage.tsx:131 ~ useEffect ~ updatedMemberList:",
-        updatedMemberList
-      );
 
-      setMemberList(updatedMemberList);
+      const filteredMemberList = updatedMemberList.filter(
+        (member: Member) => member.age <= debouncedAgeFilterVal
+      );
+      // Update state with the modified array
+      // console.log(
+      //   "🦺 ~ file: homePage.tsx:131 ~ useEffect ~ updatedMemberList:",
+      //   ageSliderVal != 0 ? filteredMemberList : updatedMemberList
+      // );
+
+      setMemberList(
+        debouncedAgeFilterVal > 0 ? filteredMemberList : updatedMemberList
+      );
     }
   }, [
     memberLikes,
@@ -139,6 +168,7 @@ const HomePage = () => {
     members,
     setMemberList,
     retrievingMemberData,
+    debouncedAgeFilterVal,
   ]);
 
   // if (likesLoading || favoritesLoading) {
@@ -206,7 +236,51 @@ const HomePage = () => {
             )}
           </div>
           <div className="md:col-span-3 col-span-0 xs:hidden overflow-auto no-scrollbar ml-10">
-            <Suggestions members={memberList} />
+            {/* <Suggestions members={memberList} /> */}
+            <div className="w-[380px] h-5/6 pt-4 px-5 lg:p-4 sm:flex flex-col hidden ">
+              <HomepageSearchInput />
+              {/* filter */}
+              <div className="border mt-5 py-5 mx-2  rounded-lg">
+                <div className="flex flex-row justify-between items-center">
+                  <p className="px-5 text-[#cfd8e4]">Filter By</p>
+                  <p className="px-5 text-[#7e7e7e] text-xs underline hover:cursor-pointer">
+                    Clear
+                  </p>
+                </div>
+
+                <div className="flex flex-row justify-between items-center mt-5">
+                  <p className="px-5 text-sm">Age</p>
+                  <p className="px-5 text-sm">{`${debouncedAgeFilterVal}-40`}</p>
+                </div>
+                {/* <form action="post" onSubmit={formik.handleSubmit}> */}
+                <div className="flex flex-row justify-center align-center py-5">
+                  <Slider
+                    // defaultValue={[50]}
+                    defaultValue={[ageSliderVal]}
+                    max={100}
+                    step={1}
+                    className="w-full px-5"
+                    onValueChange={handleSliderChange}
+                    // {...formik.getFieldProps("age")}
+                    // onChange={formik.handleChange}
+                    name="age"
+                  />
+                  {/* <p className="text-red">
+                        {formik.values.age ? formik.values.age : "not defined"}
+                      </p> */}
+                  {/* <p>{ageSliderVal}</p> */}
+                </div>
+                <div className="flex flex-row px-5 space-x-2 py-3">
+                  <button className="float-right bg-white border border-[#ff569a] w-full text-[#ff569a] py-3 px-5 rounded-md text-xs">
+                    Cancel
+                  </button>
+                  <button className="float-right bg-[#ff569a] w-full text-white py-3 px-5 rounded-md text-xs">
+                    Apply
+                  </button>
+                </div>
+                {/* </form> */}
+              </div>
+            </div>
           </div>
         </div>
       </div>
