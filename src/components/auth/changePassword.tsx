@@ -15,7 +15,7 @@ type FormDataType = {
 const ChangePassword = () => {
   const [isLoading, setIsLoading] = useState(false);
   const email = usePasswordResetState((state) => state.email);
-
+  const setIsModalOpen = usePasswordResetState((state) => state.setIsModalOpen);
   const formik = useFormik({
     initialValues: {
       password: "",
@@ -32,6 +32,7 @@ const ChangePassword = () => {
     }),
     onSubmit: async (values: FormDataType) => {
       setIsLoading(true);
+      setIsModalOpen(false);
       try {
         await passwordResetQuery.changePassword(email, values.password);
         toast({

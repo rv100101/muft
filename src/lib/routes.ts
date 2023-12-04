@@ -25,6 +25,12 @@ export const routesWithFooterAndTopNav = [
   "/subscription",
 ];
 
+
+export const noUserOnlyRoutes = [
+  '/auth/signin',
+  '/auth/signup'
+]
+
 const pageRoutes = {
   landingPage: {
     path: "/",

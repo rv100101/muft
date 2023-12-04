@@ -3,7 +3,7 @@ import { Redirect, Route, useLocation } from "wouter";
 import TopNav from "./components/topNav";
 import Footer from "./components/footer";
 
-import pageRoutes, { routesWithFooterAndTopNav } from "./lib/routes";
+import pageRoutes, { noUserOnlyRoutes, routesWithFooterAndTopNav } from "./lib/routes";
 import { useUserStore } from "./zustand/auth/user";
 import { cn } from "./lib/utils";
 import ViewUser from "./components/profile/viewUser";
@@ -103,10 +103,11 @@ function App() {
       )}
 
       {!user &&
-        (location === pageRoutes.messagingPage.path ||
-          location === pageRoutes.notificationsPage.path) && (
+        (!noUserOnlyRoutes.includes(location) && location !== '/') && (
           <Redirect to="/auth/signin" />
         )}
+
+      {user && noUserOnlyRoutes.includes(location) && <Redirect to="/" />}
 
       {routesWithFooterAndTopNav.includes(location) && !user && (
         <div className="bg-[#0C1223] h-max">

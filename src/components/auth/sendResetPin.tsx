@@ -8,9 +8,10 @@ import { useMutation } from "@tanstack/react-query";
 import passwordResetQuery from "@/queries/password_reset";
 import { toast } from "../ui/use-toast";
 import { usePasswordResetState } from "@/zustand/auth/passwordReset";
+import { Loader2 } from "lucide-react";
 const SendResetPin = () => {
   const changePasswordResetState = usePasswordResetState(
-    (state) => state.changeState
+    (state) => state.changeState,
   );
   const setEmail = usePasswordResetState((state) => state.setEmail);
   const emailForm = useFormik({
@@ -56,8 +57,10 @@ const SendResetPin = () => {
         <hr />
         <p>Please enter your email to proceed.</p>
         <div className="flex items-center space-x-2 justify-around border-2 px-4 rounded-full">
-          {/* <label htmlFor="email">Email</label>
-          <MailIcon /> */}
+          {
+            /* <label htmlFor="email">Email</label>
+          <MailIcon /> */
+          }
           <Input
             {...emailForm.getFieldProps("email")}
             id="email"
@@ -82,7 +85,13 @@ const SendResetPin = () => {
             className={cn("text-white w-max rounded-md hover:bg-[#FF599B]/90")}
             type="submit"
           >
-            Reset
+            Reset{" "}
+            {
+            sendResetPinMutation.isLoading &&
+            <span>
+              <Loader2 className="ml-2 h-min w-min animate-spin" />
+            </span>
+            }
           </Button>
         </div>
       </div>
