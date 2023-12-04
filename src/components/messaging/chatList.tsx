@@ -43,15 +43,15 @@ const ChatList = () => {
 
   useEffect(() => {
     if (!selectedConversation && data && data.length !== 0) {
-      setConversation(
-        data[0].initiator_id,
-        data[0].conversation_id,
-        data[0].gallery_uuid,
-        data[0].gender,
-        data[0].recipient_uuid,
-        data[0].recipient_nickname,
-        data[0].conversation_uuid,
-      );
+      // setConversation(
+      //   data[0].initiator_id,
+      //   data[0].conversation_id,
+      //   data[0].gallery_uuid,
+      //   data[0].gender,
+      //   data[0].recipient_uuid,
+      //   data[0].recipient_nickname,
+      //   data[0].conversation_uuid,
+      // );
       setSenderUserInfo({
         conversation_history_id: data[0].conversation_id,
         conversation_text: "",
@@ -81,11 +81,17 @@ const ChatList = () => {
         <li key={index}>
           <Button
             variant={"ghost"}
-            className={cn("w-full h-max items-start text-left", selectedHistoryMemberId === conversation.recipient_id && 'bg-accent')}
+            className={cn(
+              "w-full h-max items-start text-left",
+              selectedHistoryMemberId === conversation.recipient_id &&
+                "bg-accent",
+            )}
             onClick={() => {
               if (!matches) {
                 updateMessagingPageView();
               }
+              console.log(conversation);
+
               setConversation(
                 conversation.initiator_id,
                 conversation.conversation_id,
