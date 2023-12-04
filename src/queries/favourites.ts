@@ -12,7 +12,7 @@ const getFavourites = async (memberId: number) => {
 };
 
 const favouritesQuery = {
-  getFavourites
-}
+  getFavourites,
+};
 
-export default favouritesQuery
+export default favouritesQuery;
