@@ -36,7 +36,9 @@ type Member = {
 };
 
 const HomePage = () => {
+  const [randomNumbers, setRandomNumbers] = useState<number[]>([0, 0, 0]);
   const [ageSliderVal, setAgeSliderVal] = useState(23);
+  const [suggestedTriggered, setSuggestedTriggered] = useState(false);
   const debouncedAgeFilterVal = useDebounce(ageSliderVal, 300);
   // const formik = useFormik({
   //   initialValues: {
@@ -51,6 +53,7 @@ const HomePage = () => {
   // });
 
   const handleSliderChange = (val: Array<number>) => {
+    // setSliderTriggered(true);
     setAgeSliderVal(val[0]);
   };
 
@@ -71,7 +74,7 @@ const HomePage = () => {
     refetchInterval: Infinity,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
-    queryKey: ["home-members"],
+    queryKey: ["home-members", suggestedTriggered],
     queryFn: () => getMembers,
   });
 
@@ -109,6 +112,34 @@ const HomePage = () => {
       setSelectedProfileId(null);
     };
   });
+
+  const generateRandomNumbers = () => {
+    const min = 23;
+    const max = 50;
+
+    // Create an array of possible values within the range
+    const possibleValues = Array.from(
+      { length: max - min + 1 },
+      (_, index) => min + index
+    );
+
+    // Shuffle the array using the Fisher-Yates algorithm
+    const shuffledValues = [...possibleValues].sort(() => Math.random() - 0.5);
+
+    // Take the first three elements
+    const selectedNumbers = shuffledValues.slice(0, 3);
+    console.log(
+      "🚀 ~ file: homePage.tsx:126 ~ generateRandomNumbers ~ selectedNumbers:",
+      selectedNumbers
+    );
+
+    // Update the state with the selected numbers
+    setRandomNumbers(selectedNumbers);
+  };
+
+  useEffect(() => {
+    generateRandomNumbers();
+  }, []);
 
   useEffect(() => {
     if (!retrievingMemberData && memberLikes && memberFavorites && members) {
@@ -150,14 +181,14 @@ const HomePage = () => {
       });
 
       const filteredMemberList = updatedMemberList.filter(
-        (member: Member) => member.age <= debouncedAgeFilterVal
+        (member: Member) => member.age >= debouncedAgeFilterVal
       );
       // Update state with the modified array
       // console.log(
       //   "🦺 ~ file: homePage.tsx:131 ~ useEffect ~ updatedMemberList:",
       //   ageSliderVal != 0 ? filteredMemberList : updatedMemberList
       // );
-
+      filteredMemberList.sort((a: Member, b: Member) => a.age > b.age);
       setMemberList(
         debouncedAgeFilterVal > 0 ? filteredMemberList : updatedMemberList
       );
@@ -175,6 +206,7 @@ const HomePage = () => {
   //   return <></>;
   // }
 
+  console.log("deb: ", debouncedAgeFilterVal);
   return (
     <AuthenticatedLayout>
       <div className="flex justify-center w-full">
@@ -241,6 +273,36 @@ const HomePage = () => {
               <HomepageSearchInput />
               {/* filter */}
               <div className="border mt-5 py-5 mx-2  rounded-lg">
+                <p className="px-5 text-[#cfd8e4]">Suggested</p>
+                <div className="flex flex-row justify-between items-center p-5 space-x-5">
+                  <p
+                    onClick={() => {
+                      setSuggestedTriggered((prev) => !prev);
+                      setAgeSliderVal(randomNumbers[0]);
+                    }}
+                    className="hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full bg-white border border-[#ff569a] w-full text-[#ff569a] hover:cursor-pointer"
+                  >
+                    {randomNumbers[0]}
+                  </p>
+                  <p
+                    onClick={() => {
+                      setSuggestedTriggered((prev) => !prev);
+                      setAgeSliderVal(randomNumbers[1]);
+                    }}
+                    className="hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full bg-white border border-[#ff569a] w-full text-[#ff569a] hover:cursor-pointer"
+                  >
+                    {randomNumbers[1]}
+                  </p>
+                  <p
+                    onClick={() => {
+                      setSuggestedTriggered((prev) => !prev);
+                      setAgeSliderVal(randomNumbers[2]);
+                    }}
+                    className="hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full bg-white border border-[#ff569a] w-full text-[#ff569a] hover:cursor-pointer"
+                  >
+                    {randomNumbers[2]}
+                  </p>
+                </div>
                 <div className="flex flex-row justify-between items-center">
                   <p className="px-5 text-[#cfd8e4]">Filter By</p>
                   <p className="px-5 text-[#7e7e7e] text-xs underline hover:cursor-pointer">
@@ -250,7 +312,7 @@ const HomePage = () => {
 
                 <div className="flex flex-row justify-between items-center mt-5">
                   <p className="px-5 text-sm">Age</p>
-                  <p className="px-5 text-sm">{`${debouncedAgeFilterVal}-40`}</p>
+                  <p className="px-5 text-sm">{`${debouncedAgeFilterVal}-60`}</p>
                 </div>
                 {/* <form action="post" onSubmit={formik.handleSubmit}> */}
                 <div className="flex flex-row justify-center align-center py-5">
