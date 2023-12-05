@@ -12,11 +12,14 @@ import profileAboutContentStore, {
 } from "@/zustand/profile/profileAboutStore";
 import { useEffect } from "react";
 import {
+    BodyArt,
   BodyType,
   Country,
   Education,
   Ethnicity,
+  Eye,
   FavoriteFood,
+  Hair,
   Income,
   Languages,
   MaritalStatus,
@@ -26,6 +29,7 @@ import {
 } from "@/types/profile";
 import selectOptions from "@/zustand/profile/selectData/selectOptions";
 import { useLocation } from "wouter";
+import { useUserStore } from "@/zustand/auth/user";
 const AboutAccordion = ({ userId }: { userId: number }) => {
   const { data } = profileAboutContentStore();
   const setIsLoading = profileAboutContentStore((state) => state.setIsLoading);
@@ -34,6 +38,8 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
     state.setEditModeFalse
   );
   const {
+    setEyes,
+    setBodyArts,
     setNationalities,
     setEthnicities,
     setMaritalStatus,
@@ -46,6 +52,7 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
     setCountries,
     setStates,
     selectedCountryCode,
+    setHair,
   } = selectOptions();
 
   const [location] = useLocation();
@@ -174,6 +181,34 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
     },
   });
 
+  useQuery({
+    queryFn: () => profileContentQuery.editOptions.getHair(),
+    refetchInterval: Infinity,
+    queryKey: ["hair"],
+    onSuccess: (data: Hair[]) => {
+      setHair(data);
+    },
+  });
+
+  useQuery({
+    queryFn: () => profileContentQuery.editOptions.getEyes(),
+    refetchInterval: Infinity,
+    queryKey: ["eyes"],
+    onSuccess: (data: Eye[]) => {
+      setEyes(data);
+    },
+  });
+
+  useQuery({
+    queryFn: () => profileContentQuery.editOptions.getBodyArts(),
+    refetchInterval: Infinity,
+    queryKey: ["bodyArts"],
+    onSuccess: (data: BodyArt[]) => {
+      setBodyArts(data);
+    },
+  });
+  const user = useUserStore((state) => state.user);
+
   const {
     countries,
   } = selectOptions();
@@ -204,7 +239,7 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
     <div className="flex flex-row justify-between">
       <Accordion
         type="single"
-        collapsible
+        collapsible={user?.profile_completed}
         className="w-full"
         defaultValue="item-1"
       >

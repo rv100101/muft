@@ -6,6 +6,7 @@ import LocationForm from "./forms/locationForm";
 import { Briefcase, Contact, Globe, User2 } from "lucide-react";
 import ContentLoadingSkeleton from "./contentLoadingSkeleton";
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
+import AdditionalInformatinForm from "./forms/additionalInformationForm";
 
 const AboutAccordionContent = () => {
 
@@ -15,6 +16,7 @@ const AboutAccordionContent = () => {
     false,
     false,
     false,
+    false
   ]);
 
   const toggleTab = (index: number) => {
@@ -90,8 +92,23 @@ const AboutAccordionContent = () => {
             className="hover:cursor-pointer lg:hidden"
           />
         </div>
+        <div
+          className={activeTabs[5]
+            ? "rounded-md bg-[#FFDEEB] py-2 px-2 my-2 text-[#FF599B]"
+            : "text-[#727272] py-2 px-2 my-2"}
+          onClick={() => toggleTab(5)}
+        >
+          <p className="text-md hover:cursor-pointer select-none lg:block hidden">
+            Additional Information
+          </p>
+          <Globe
+            // color="#FF599B"
+            size={20}
+            className="hover:cursor-pointer lg:hidden"
+          />
+        </div>
       </div>
-      <div className="flex flex-col lg:w-full">
+      <div className="flex h-max flex-col lg:w-full">
         {/* basic info */}
         {activeTabs[1] && <BasicInformationForm />}
 
@@ -103,6 +120,9 @@ const AboutAccordionContent = () => {
 
         {/* Location */}
         {activeTabs[4] && <LocationForm />}
+
+        {/* Addition Information */}
+        {activeTabs[5] && <AdditionalInformatinForm />}
       </div>
       {/* content - Form*/}
       {/* overview */}

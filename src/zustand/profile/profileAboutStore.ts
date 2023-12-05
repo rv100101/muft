@@ -21,6 +21,18 @@ export type ProfileAbout = {
   favoriteFood: string;
   country: string;
   region: string;
+  hair: string;
+  eyes: string;
+  bodyArt: string;
+  hasChildren: string;
+  wantChildren: string;
+  workout: string;
+  disability: string;
+  pets: string;
+  drinking: string;
+  smoking: string;
+  livingStatus: string;
+  car: string;
 };
 
 interface ProfileAboutState {

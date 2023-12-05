@@ -22,8 +22,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
   const methods = useForm({
     defaultValues: emptyDefault,
     resolver: zodResolver(ProfileFormSchema),
-  })
-  ;
+  });
 
   useEffect(() => {
     if (data && headerValues) {
@@ -45,6 +44,19 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
         country: data.country,
         region: data.region,
         nickname: headerValues?.nickname ?? "",
+        religion: data.religion,
+        hair: data.hair,
+        eyes: data.eyes,
+        bodyArt: data.bodyArt,
+        hasChildren: data.hasChildren,
+        wantChildren: data.wantChildren,
+        workout: data.workout,
+        disability: data.disability,
+        pets: data.pets,
+        drinking: data.drinking,
+        smoking: data.smoking,
+        livingStatus: data.livingStatus,
+        car: data.car,
       });
     }
   }, [data, headerValues, methods]);
@@ -71,7 +83,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
 
   const getNationality = (nationalityName: string) =>
     nationalities.find(
-      (nationality) => nationality.nationality === nationalityName
+      (nationality) => nationality.nationality === nationalityName,
     );
 
   const getEducation = (name: string) =>
@@ -141,22 +153,23 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
   };
 
   return (
-    <div className="flex h-full flex-col justify-start w-full lg:w-3/4 border mx-auto">
-      <ProfileTopNav />
-      <div className="h-full overflow-y-scroll flex flex-col">
-        <FormProvider {...methods}>
-          <div className="flex flex-col">
-            <form
-              className="flex flex-col"
-              onSubmit={methods.handleSubmit(onSubmit)}
-            >
-              <ProfileHeader userId={userId} />
+    <div className="flex h-screen flex-col justify-start w-full lg:w-3/4 border mx-auto">
+      <FormProvider {...methods}>
+        <form
+          className="flex flex-col h-full"
+          onSubmit={methods.handleSubmit(onSubmit)}
+        >
+          <ProfileTopNav />
+          <div className="h-full overflow-y-scroll flex flex-col">
+            <div className="flex flex-col">
+              {user?.profile_completed && <ProfileHeader userId={userId} />}
               <AboutAccordion userId={parseInt(userId)} />
-            </form>
-            <GallerySection userId={userId} />
+              {user?.profile_completed &&
+                <GallerySection userId={userId} />}
+            </div>
           </div>
-        </FormProvider>
-      </div>
+        </form>
+      </FormProvider>
     </div>
   );
 };

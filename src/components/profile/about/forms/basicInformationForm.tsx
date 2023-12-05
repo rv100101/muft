@@ -32,13 +32,14 @@ import {
 } from "@/components/ui/form";
 import { useFormContext } from "react-hook-form";
 import moment from "moment-with-locales-es6";
+import { useUserStore } from "@/zustand/auth/user";
 
 const BasicInformationForm = () => {
   const { control } = useFormContext();
   const { nationalities, ethnicities, maritalStatus, languages } =
     selectOptions();
   const { data, editMode, isLoading } = profileAboutContentStore();
-
+  const user = useUserStore((state) => state.user);
   if (
     isLoading
   ) {
@@ -52,9 +53,34 @@ const BasicInformationForm = () => {
   }
 
   return (
-    <div className="flex overflow-y-auto flex-col space-y-4 w-full">
-      <div className="text-sm space-y-1 justify-between w-full px-5">
-        {editMode
+    <div className="flex h-full flex-col space-y-4 w-full">
+      <div className="text-sm justify-between w-full px-5">
+        {!user?.profile_completed && (
+          <div className="space-y-1 my-2 hover:cursor-pointer w-full items-center">
+            <FormField
+              name="user"
+              render={({ field }) => {
+                return (
+                  <FormItem>
+                    <FormLabel className="text-primary" htmlFor="birthInfo">
+                      Nickname
+                    </FormLabel>
+                    <Input
+                      onChange={(e) => {
+                        field.onChange(e.target.value);
+                      }}
+                      type="text"
+                      placeholder="Enter Nickname"
+                      className="outline-0 border border rounded-lg w-full py-3 px-5"
+                    />
+                    <FormMessage />
+                  </FormItem>
+                );
+              }}
+            />
+          </div>
+        )}
+        {editMode || !user?.profile_completed
           ? (
             <div className="flex flex-col space-y-1">
               <FormField
@@ -103,7 +129,7 @@ const BasicInformationForm = () => {
           )}
       </div>
       <div className="flex flex-row justify-between h-max w-full px-5">
-        {editMode
+        {editMode || !user?.profile_completed
           ? (
             <div className="flex flex-col space-y-1 w-full">
               <FormField
@@ -160,7 +186,47 @@ const BasicInformationForm = () => {
           )}
       </div>
       <div className="flex flex-row justify-between w-full px-5">
-        {editMode
+        {editMode || !user?.profile_completed
+          ? (
+            <div className="space-y-1 hover:cursor-pointer w-full items-center">
+              <FormField
+                name="religion"
+                render={({ field }) => {
+                  return (
+                    <FormItem>
+                      <FormLabel className="text-primary" htmlFor="religion">
+                        Religion
+                      </FormLabel>
+                      <Input
+                        placeholder="Enter Religion"
+                        onChange={(e) => {
+                          field.onChange(e.target.value);
+                        }}
+                        type="text"
+                        className="outline-0 border border rounded-lg w-full py-3 px-5"
+                      />
+                      <FormMessage />
+                    </FormItem>
+                  );
+                }}
+              />
+            </div>
+          )
+          : (
+            <div className="flex flex-row space-x-2 hover:cursor-pointer">
+              <Cake
+                color="#727272"
+                size={20}
+                className="hover:cursor-pointer"
+              />
+              <p className="text-[#727272]">
+                {data?.birthInfo ? data?.birthInfo : "Add Birthday"}
+              </p>
+            </div>
+          )}
+      </div>
+      <div className="flex flex-row justify-between w-full px-5">
+        {editMode || !user?.profile_completed
           ? (
             <div className="space-y-1 hover:cursor-pointer w-full items-center">
               <FormField
@@ -257,7 +323,7 @@ const BasicInformationForm = () => {
       </div> */
       }
       <div className="flex flex-row justify-between w-full px-5">
-        {editMode
+        {editMode || !user?.profile_completed
           ? (
             <div className="space-y-1 hover:cursor-pointer w-full items-center">
               <FormField
@@ -316,7 +382,7 @@ const BasicInformationForm = () => {
       </div>
 
       <div className="flex flex-row justify-between w-full px-5">
-        {editMode
+        {editMode || !user?.profile_completed
           ? (
             <div className="space-y-1 hover:cursor-pointer w-full items-center">
               <FormField
@@ -380,7 +446,7 @@ const BasicInformationForm = () => {
           )}
       </div>
       <div className="flex flex-row justify-between w-full px-5">
-        {editMode
+        {editMode || !user?.profile_completed
           ? (
             <div className="space-y-1 hover:cursor-pointer w-full items-center">
               <FormField

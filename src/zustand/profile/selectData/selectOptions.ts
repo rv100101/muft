@@ -1,9 +1,12 @@
 import {
+  BodyArt,
   BodyType,
   Country,
   Education,
   Ethnicity,
+  Eye,
   FavoriteFood,
+  Hair,
   Income,
   Languages,
   MaritalStatus,
@@ -38,6 +41,12 @@ interface SelectOptions {
   setStates: (val: State[]) => void;
   selectedCountryCode: string;
   setSelectedCountryCode: (val: string) => void;
+  hair: Hair[];
+  setHair: (val: Hair[]) => void;
+  eyes: Eye[];
+  setEyes: (val: Eye[]) => void;
+  bodyArts: BodyArt[];
+  setBodyArts: (val: BodyArt[]) => void;
 }
 
 const selectOptions = create<SelectOptions>((set) => ({
@@ -52,10 +61,25 @@ const selectOptions = create<SelectOptions>((set) => ({
   favoriteFoods: [],
   countries: [],
   states: [],
-  selectedCountryCode: '',
-  setSelectedCountryCode:  (val) =>
+  hair: [],
+  eyes: [],
+  bodyArts: [],
+  selectedCountryCode: "",
+  setSelectedCountryCode: (val) =>
     set(() => ({
       selectedCountryCode: val,
+    })),
+  setHair: (val) =>
+    set(() => ({
+      hair: val,
+    })),
+  setEyes: (val) =>
+    set(() => ({
+      eyes: val,
+    })),
+  setBodyArts: (val) =>
+    set(() => ({
+      bodyArts: val,
     })),
   setNationalities: (val) =>
     set(() => ({

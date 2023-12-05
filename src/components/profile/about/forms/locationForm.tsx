@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/select";
 import { useFormContext } from "react-hook-form";
 import { Country, State } from "@/types/profile";
+import { useUserStore } from "@/zustand/auth/user";
 
 const LocationForm = () => {
   const { control } = useFormContext();
@@ -29,6 +30,8 @@ const LocationForm = () => {
   const setSelectedCountryCode = selectOptions((state) =>
     state.setSelectedCountryCode
   );
+
+  const user = useUserStore((state) => state.user);
 
   if (isLoading) {
     return (
@@ -46,7 +49,7 @@ const LocationForm = () => {
   return (
     <div className="flex flex-col w-full space-y-4">
       <div className="flex flex-row justify-between w-full px-5">
-        {editMode
+        {editMode || !user?.profile_completed
           ? (
             <div className="space-y-1 hover:cursor-pointer w-full items-center">
               <FormField
@@ -111,7 +114,7 @@ const LocationForm = () => {
           )}
       </div>
       <div className="flex flex-row justify-between w-full px-5">
-        {editMode
+        {editMode || !user?.profile_completed
           ? (
             <div className="space-y-1 hover:cursor-pointer w-full items-center">
               <FormField

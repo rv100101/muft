@@ -14,11 +14,12 @@ import axiosQuery from "../axios";
 //   }
 //   return result;
 // };
+
 const removeNull = (obj: Record<string, string>): Record<string, string> => {
   const result: Record<string, string> = {};
   for (const key in obj) {
     if (obj[key] == null) {
-      result[key] = "Unknown";
+      result[key] = "";
     } else {
       result[key] = obj[key];
     }
@@ -200,6 +201,16 @@ const getLanguages = async () => {
   }
 };
 
+
+const getHair = async () => {
+  try {
+    const response = await axiosQuery.post("/Hair");
+    return response.data;
+  } catch (error) {
+    return [];
+  }  
+}
+
 const getEducation = async () => {
   try {
     const response = await axiosQuery.post("/Education");
@@ -261,6 +272,24 @@ const getStates = async (countryCode: string) => {
     const response = await axiosQuery.post("/States", {
       country: countryCode,
     });
+    return response.data;
+  } catch (error) {
+    return [];
+  }
+};
+
+const getEyes = async () => {
+  try {
+    const response = await axiosQuery.post("/Eyes");
+    return response.data;
+  } catch (error) {
+    return [];
+  }
+};
+
+const getBodyArts = async () => {
+  try {
+    const response = await axiosQuery.post("/BodyArts");
     return response.data;
   } catch (error) {
     return [];
@@ -437,6 +466,9 @@ const profileContentQuery = {
     getBodyTypes,
     getStates,
     getCountries,
+    getHair,
+    getEyes,
+    getBodyArts
   },
   saveInformation,
 };

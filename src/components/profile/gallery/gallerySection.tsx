@@ -210,6 +210,7 @@ const GallerySection = ({ userId }: { userId: string }) => {
             {selectedFile !== null &&
               (
                 <Button
+                  type="button"
                   variant={"outline"}
                   className="border-primary"
                   onClick={() => {
@@ -240,6 +241,7 @@ const GallerySection = ({ userId }: { userId: string }) => {
                         )
                         : (
                           <Button
+                            type="button"
                             className="h-4"
                             disabled={uploadPhoto.isLoading}
                           >

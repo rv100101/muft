@@ -3,7 +3,10 @@ import { Redirect, Route, useLocation } from "wouter";
 import TopNav from "./components/topNav";
 import Footer from "./components/footer";
 
-import pageRoutes, { noUserOnlyRoutes, routesWithFooterAndTopNav } from "./lib/routes";
+import pageRoutes, {
+  noUserOnlyRoutes,
+  routesWithFooterAndTopNav,
+} from "./lib/routes";
 import { useUserStore } from "./zustand/auth/user";
 import { cn } from "./lib/utils";
 import ViewUser from "./components/profile/viewUser";
@@ -20,7 +23,7 @@ function App() {
   return (
     <div
       className={cn(
-        location == "/auth/signin" ? "h-screen flex flex-col" : "h-full"
+        location == "/auth/signin" ? "h-screen flex flex-col" : "h-full",
       )}
     >
       <div className="h-max">
@@ -28,11 +31,9 @@ function App() {
       </div>
       <Route
         path="/"
-        component={
-          user
-            ? pageRoutes.homePage.component
-            : pageRoutes.landingPage.component
-        }
+        component={user
+          ? pageRoutes.homePage.component
+          : pageRoutes.landingPage.component}
       />
       <div className="flex-auto h-full">
         <Route
@@ -43,10 +44,6 @@ function App() {
           path={pageRoutes.signIn.path}
           component={pageRoutes.signIn.component}
         />
-        {/* <Route
-          path={pageRoutes.activateAccount.path}
-          component={pageRoutes.activateAccount.component}
-        /> */}
       </div>
 
       <div className="md:mx-12 lg:mx-36">
@@ -103,11 +100,15 @@ function App() {
       )}
 
       {!user &&
-        (!noUserOnlyRoutes.includes(location) && location !== '/') && (
-          <Redirect to="/auth/signin" />
-        )}
+        (!noUserOnlyRoutes.includes(location) && location !== "/") && (
+        <Redirect to="/auth/signin" />
+      )}
 
       {user && noUserOnlyRoutes.includes(location) && <Redirect to="/" />}
+
+      {user && !user.profile_completed && (
+        <Redirect to={`/profile/${user.member_id}`} />
+      )}
 
       {routesWithFooterAndTopNav.includes(location) && !user && (
         <div className="bg-[#0C1223] h-max">

@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/form";
 import FormSkeletonLoading from "./formSkeletonLoading";
 import selectOptions from "@/zustand/profile/selectData/selectOptions";
-import { BodyArt, BodyType, Eye, FavoriteFood, Hair } from "@/types/profile";
+import { BodyType, FavoriteFood } from "@/types/profile";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -21,11 +21,11 @@ import {
 import { useFormContext } from "react-hook-form";
 import { useUserStore } from "@/zustand/auth/user";
 
-const DetailsForm = () => {
+const AdditionalInformationForm = () => {
   const { control } = useFormContext();
   const isLoading = profileAboutContentStore((state) => state.isLoading);
   const data = profileAboutContentStore((state) => state.data);
-  const { bodyTypes, favoriteFoods, hair, bodyArts, eyes } = selectOptions();
+  const { bodyTypes, favoriteFoods } = selectOptions();
   const editMode = profileAboutContentStore((state) => state.editMode);
   const user = useUserStore((state) => state.user);
   if (isLoading) {
@@ -39,33 +39,27 @@ const DetailsForm = () => {
   }
   return (
     <div className="flex flex-col w-full space-y-4">
+      <p className="font-semibold mb-2 ml-4">Children Preferences</p>
       <div className="flex flex-row justify-between w-full px-5">
         {editMode || !user?.profile_completed
           ? (
             <div className="space-y-1 hover:cursor-pointer w-full items-center">
               <FormField
-                name="height"
+                name="hasChildren"
                 render={({ field }) => {
                   return (
                     <FormItem>
-                      <FormLabel className="text-primary" htmlFor="height">
-                        Height
+                      <FormLabel className="text-primary" htmlFor="hasChildren">
+                        Has Children?
                       </FormLabel>
                       <Input
-                        placeholder="Enter height (cm)"
-                        type="number"
-                        onChange={(e) => {
-                          if (
-                            e.target.value !== "" &&
-                            typeof parseInt(e.target.value) === "number"
-                          ) {
-                            field.onChange(parseInt(e.target.value));
-                          }
-                        }}
+                        placeholder="Enter health"
+                        type="text"
+                        onChange={field.onChange}
                         value={field.value}
                         defaultValue={field.value}
                         className="outline-0 border border rounded-lg w-full py-3 px-5"
-                        name="height"
+                        name="hasChildren"
                       />
                       <FormMessage />
                     </FormItem>
@@ -92,27 +86,65 @@ const DetailsForm = () => {
           ? (
             <div className="space-y-1 hover:cursor-pointer w-full items-center">
               <FormField
-                name="weight"
+                name="wantChildren"
+                render={({ field }) => {
+                  return (
+                    <FormItem>
+                      <FormLabel
+                        className="text-primary"
+                        htmlFor="wantChildren"
+                      >
+                        Want Children?
+                      </FormLabel>
+                      <Input
+                        placeholder="Enter health"
+                        type="text"
+                        onChange={field.onChange}
+                        value={field.value}
+                        defaultValue={field.value}
+                        className="outline-0 border border rounded-lg w-full py-3 px-5"
+                        name="wantChildren"
+                      />
+                      <FormMessage />
+                    </FormItem>
+                  );
+                }}
+              />
+            </div>
+          )
+          : (
+            <div className="flex flex-row space-x-2 hover:cursor-pointer">
+              <Ruler
+                color="#727272"
+                size={20}
+                className="hover:cursor-pointer"
+              />
+              <p className="text-[#727272]">
+                {data!.height ? `${data!.height} cm` : "Add Height"}
+              </p>
+            </div>
+          )}
+      </div>
+      <p className="font-semibold ml-4">Health</p>
+      <div className="flex flex-row justify-between w-full px-5">
+        {editMode || !user?.profile_completed
+          ? (
+            <div className="space-y-1 hover:cursor-pointer w-full items-center">
+              <FormField
+                name="workout"
                 render={({ field }) => {
                   return (
                     <FormItem>
                       <FormLabel className="text-primary" htmlFor="weight">
-                        Weight
+                        Workout
                       </FormLabel>
                       <Input
-                        placeholder="Enter weight (lbs)"
-                        type="number"
-                        onChange={(e) => {
-                          if (
-                            e.target.value !== "" &&
-                            typeof parseInt(e.target.value) === "number"
-                          ) {
-                            field.onChange(parseInt(e.target.value));
-                          }
-                        }}
+                        placeholder="Enter Workout"
+                        type="text"
+                        onChange={field.onChange}
                         defaultValue={field.value}
                         className="outline-0 border rounded-lg w-full py-3 px-5"
-                        name="weight"
+                        name="workout"
                       />
                       <FormMessage />
                     </FormItem>
@@ -129,7 +161,7 @@ const DetailsForm = () => {
                 className="hover:cursor-pointer"
               />
               <p className="text-[#727272]">
-                {data!.weight ? `${data!.weight} kg` : "Add Weight"}
+                {data!.weight ? `${data!.weight} kg` : "Add Workout"}
               </p>
             </div>
           )}
@@ -140,12 +172,12 @@ const DetailsForm = () => {
           ? (
             <div className="space-y-1 hover:cursor-pointer w-full items-center">
               <FormField
-                name="bodyType"
+                name="disability"
                 render={({ field }) => {
                   return (
                     <FormItem>
-                      <FormLabel className="text-primary" htmlFor="bodyType">
-                        Body Type
+                      <FormLabel className="text-primary" htmlFor="disability">
+                        disability
                       </FormLabel>
                       <Select
                         onValueChange={field.onChange}
@@ -159,10 +191,13 @@ const DetailsForm = () => {
                         <SelectContent>
                           {bodyTypes &&
                             bodyTypes.map((data: BodyType) => {
-                              const { body: bodyType, body_type_id } = data;
+                              const { body: disability, body_type_id } = data;
                               return (
-                                <SelectItem value={bodyType} key={body_type_id}>
-                                  {bodyType}
+                                <SelectItem
+                                  value={disability}
+                                  key={body_type_id}
+                                >
+                                  {disability}
                                 </SelectItem>
                               );
                             })}
@@ -194,15 +229,15 @@ const DetailsForm = () => {
           ? (
             <div className="space-y-1 hover:cursor-pointer w-full items-center">
               <FormField
-                name="hair"
+                name="pets"
                 render={({ field }) => {
                   return (
                     <FormItem>
                       <FormLabel
                         className="text-primary"
-                        htmlFor="hair"
+                        htmlFor="pets"
                       >
-                        Hair
+                        Pets
                       </FormLabel>
                       <Select
                         onValueChange={field.onChange}
@@ -211,22 +246,89 @@ const DetailsForm = () => {
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue
-                              placeholder={"Select hair"}
+                              placeholder={""}
                             />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {hair &&
-                            hair.map((data: Hair, index: number) => {
+                          {favoriteFoods &&
+                            favoriteFoods.map((data: FavoriteFood) => {
                               const {
-                                hair_name,
+                                favorite_food_name: favoriteFood,
+                                favorite_food_id,
                               } = data;
                               return (
                                 <SelectItem
-                                  value={hair_name}
-                                  key={index}
+                                  value={favoriteFood}
+                                  key={favorite_food_id}
                                 >
-                                  {hair_name}
+                                  {favoriteFood}
+                                </SelectItem>
+                              );
+                            })}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  );
+                }}
+                control={control}
+              />
+            </div>
+          )
+          : (
+            <div className="flex flex-row space-x-2 hover:cursor-pointer">
+              <Drumstick
+                color="#727272"
+                size={20}
+                className="hover:cursor-pointer"
+              />
+              <p className="text-[#727272]">
+                {data!.favoriteFood ? data!.favoriteFood : "Add Pets"}
+              </p>
+            </div>
+          )}
+      </div>
+      <p className="font-semibold ml-4">Lifestyle</p>
+      <div className="flex flex-row justify-between w-full px-5">
+        {editMode || !user?.profile_completed
+          ? (
+            <div className="space-y-1 hover:cursor-pointer w-full items-center">
+              <FormField
+                name="drinking"
+                render={({ field }) => {
+                  return (
+                    <FormItem>
+                      <FormLabel
+                        className="text-primary"
+                        htmlFor="drinking"
+                      >
+                        Drinking
+                      </FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue
+                              placeholder={"Do you drink?"}
+                            />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {favoriteFoods &&
+                            favoriteFoods.map((data: FavoriteFood) => {
+                              const {
+                                favorite_food_name: favoriteFood,
+                                favorite_food_id,
+                              } = data;
+                              return (
+                                <SelectItem
+                                  value={favoriteFood}
+                                  key={favorite_food_id}
+                                >
+                                  {favoriteFood}
                                 </SelectItem>
                               );
                             })}
@@ -258,15 +360,15 @@ const DetailsForm = () => {
           ? (
             <div className="space-y-1 hover:cursor-pointer w-full items-center">
               <FormField
-                name="eye"
+                name="smoking"
                 render={({ field }) => {
                   return (
                     <FormItem>
                       <FormLabel
                         className="text-primary"
-                        htmlFor="favoriteFood"
+                        htmlFor="smoking"
                       >
-                        Eyes
+                        Smoking
                       </FormLabel>
                       <Select
                         onValueChange={field.onChange}
@@ -275,22 +377,23 @@ const DetailsForm = () => {
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue
-                              placeholder={"Select eye type"}
+                              placeholder={"Do you smoke?"}
                             />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {eyes &&
-                            eyes.map((data: Eye, index: number) => {
+                          {favoriteFoods &&
+                            favoriteFoods.map((data: FavoriteFood) => {
                               const {
-                                eyes_name,
+                                favorite_food_name: favoriteFood,
+                                favorite_food_id,
                               } = data;
                               return (
                                 <SelectItem
-                                  value={eyes_name}
-                                  key={index}
+                                  value={favoriteFood}
+                                  key={favorite_food_id}
                                 >
-                                  {eyes_name}
+                                  {favoriteFood}
                                 </SelectItem>
                               );
                             })}
@@ -322,15 +425,15 @@ const DetailsForm = () => {
           ? (
             <div className="space-y-1 hover:cursor-pointer w-full items-center">
               <FormField
-                name="bodyArt"
+                name="livingStatus"
                 render={({ field }) => {
                   return (
                     <FormItem>
                       <FormLabel
                         className="text-primary"
-                        htmlFor="bodyArt"
+                        htmlFor="livingStatus"
                       >
-                        Body Art
+                        Living Status
                       </FormLabel>
                       <Select
                         onValueChange={field.onChange}
@@ -338,24 +441,22 @@ const DetailsForm = () => {
                       >
                         <FormControl>
                           <SelectTrigger>
-                            <SelectValue
-                              placeholder={"Select body art"}
-                            />
+                            <SelectValue placeholder={"Select living status"} />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {bodyArts &&
-                            bodyArts.map((data: BodyArt, index: number) => {
+                          {favoriteFoods &&
+                            favoriteFoods.map((data: FavoriteFood) => {
                               const {
-                                body,
+                                favorite_food_name: favoriteFood,
+                                favorite_food_id,
                               } = data;
-
                               return (
                                 <SelectItem
-                                  value={body}
-                                  key={index}
+                                  value={favoriteFood}
+                                  key={favorite_food_id}
                                 >
-                                  {body}
+                                  {favoriteFood}
                                 </SelectItem>
                               );
                             })}
@@ -387,15 +488,15 @@ const DetailsForm = () => {
           ? (
             <div className="space-y-1 hover:cursor-pointer w-full items-center">
               <FormField
-                name="favoriteFood"
+                name="car"
                 render={({ field }) => {
                   return (
                     <FormItem>
                       <FormLabel
                         className="text-primary"
-                        htmlFor="favoriteFood"
+                        htmlFor="car"
                       >
-                        Favorite Food
+                        Car
                       </FormLabel>
                       <Select
                         onValueChange={field.onChange}
@@ -403,7 +504,7 @@ const DetailsForm = () => {
                       >
                         <FormControl>
                           <SelectTrigger>
-                            <SelectValue placeholder={"Select favorite food"} />
+                            <SelectValue placeholder={"Select car"} />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
@@ -449,4 +550,4 @@ const DetailsForm = () => {
   );
 };
 
-export default DetailsForm;
+export default AdditionalInformationForm;

@@ -47,7 +47,6 @@ export type Income = {
   income_range: string;
 };
 
-
 export type FavoriteFood = {
   authorized: boolean;
   ip_address: string;
@@ -63,11 +62,26 @@ export type BodyType = {
 };
 
 export type Country = {
-  country_code: string,
-  country_name: string,
-}
+  country_code: string;
+  country_name: string;
+};
 
 export type State = {
-  state_id: string,
-  state_name: string
-}
+  state_id: string;
+  state_name: string;
+};
+
+export type Hair = {
+  hair_id: string;
+  hair_name: string;
+};
+
+export type BodyArt = {
+  body_art_id: number;
+  body: string;
+};
+
+export type Eye = {
+  eyes_id: number;
+  eyes_name: string;
+};
