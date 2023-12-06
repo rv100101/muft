@@ -148,7 +148,6 @@ const WorkEducationForm = () => {
               <FormField
                 name="occupationTitle"
                 render={({ field }) => {
-                  console.log(field);
                   return (
                     <FormItem>
                       <FormLabel

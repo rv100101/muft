@@ -24,7 +24,7 @@ export type ProfileAbout = {
   hair: string;
   eyes: string;
   bodyArt: string;
-  hasChildren: string;
+  haveChildren: string;
   wantChildren: string;
   workout: string;
   disability: string;

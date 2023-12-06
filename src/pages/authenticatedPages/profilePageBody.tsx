@@ -12,6 +12,7 @@ import profileContentQuery from "@/queries/profile/profileContent";
 import selectOptions from "@/zustand/profile/selectData/selectOptions";
 import { useUserStore } from "@/zustand/auth/user";
 import { useQueryClient } from "@tanstack/react-query";
+
 const ProfilePageBody = ({ userId }: { userId: string }) => {
   const { toggleEditMode } = profileAboutContentStore();
   const headerValues = profileHeaderStore((state) => state.headerValues);
@@ -26,6 +27,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
 
   useEffect(() => {
     if (data && headerValues) {
+      console.log(data);
       methods.reset({
         gender: data.gender,
         nationality: data.nationality,
@@ -43,12 +45,12 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
         favoriteFood: data.favoriteFood,
         country: data.country,
         region: data.region,
-        nickname: headerValues?.nickname ?? "",
+        nickname: data.nickname,
         religion: data.religion,
         hair: data.hair,
         eyes: data.eyes,
         bodyArt: data.bodyArt,
-        hasChildren: data.hasChildren,
+        haveChildren: data.haveChildren,
         wantChildren: data.wantChildren,
         workout: data.workout,
         disability: data.disability,
@@ -111,6 +113,8 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
     states.find((s) => s.state_name === name);
 
   const onSubmit = async (formData: any) => {
+    console.log(formData);
+    return;
     if (!methods.formState.isDirty) {
       toggleEditMode();
       return;

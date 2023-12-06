@@ -1,20 +1,6 @@
 import { ProfileAbout } from "@/zustand/profile/profileAboutStore";
 import axiosQuery from "../axios";
 
-// const removeNull = (
-//   obj: Record<string, string | number>
-// ): Record<string, string | number> => {
-//   const result: Record<string, string | number> = {};
-//   for (const key in obj) {
-//     if (obj[key] === null) {
-//       result[key] = "Unknown";
-//     } else {
-//       result[key] = obj[key];
-//     }
-//   }
-//   return result;
-// };
-
 const removeNull = (obj: Record<string, string>): Record<string, string> => {
   const result: Record<string, string> = {};
   for (const key in obj) {
@@ -25,6 +11,50 @@ const removeNull = (obj: Record<string, string>): Record<string, string> => {
     }
   }
   return result;
+};
+
+const fetchAdditionalInformation = async (userId: number) => {
+  try {
+    const maritalStatus = await axiosQuery.post("/GetMaritalStatus", {
+      member: userId,
+    });
+    
+    const health = await axiosQuery.post("/GetHealth", {
+      member: userId,
+    });
+  
+    const pets = await axiosQuery.post("/GetPets", {
+      member: userId,
+    });
+
+    const lifestyle = await axiosQuery.post("/GetLifestyle", {
+      member: userId,
+    });
+
+
+    let additionalInformation: Record<string, string> = {
+      haveChildren: maritalStatus.data.have_children_name,
+      wantChildren: maritalStatus.data.wants_children_name,
+      workout: health.data.workout_name,
+      disability: health.data.disability_name,
+      pets: pets.data.pet_name,
+      drinking: lifestyle.data.drink_name,
+      smoking: lifestyle.data.smoke_name,
+      livingStatus: lifestyle.data.living_status_name,
+      car: lifestyle.data.car_name,
+    }
+
+
+    additionalInformation = removeNull(additionalInformation);
+
+    return additionalInformation;
+
+  } catch (error) {
+    console.log(error);
+    return {
+      error: error,
+    };
+  }
 };
 
 const fetchBasicInfoInitialData = async (userId: number) => {
@@ -108,10 +138,6 @@ const fetchWorkEducationInitialData = async (userId: number) => {
 
 const fetchDetailsInitialData = async (userId: number) => {
   try {
-    const response1 = await axiosQuery.post("/GetHeight", { member: userId });
-
-    const response2 = await axiosQuery.post("/GetWeight", { member: userId });
-
     const response3 = await axiosQuery.post("/GetAppearance", {
       member: userId,
     });
@@ -120,22 +146,30 @@ const fetchDetailsInitialData = async (userId: number) => {
       member: userId,
     });
 
-    const { height } = response1.data[0];
+    const {
+      body_type_name,
+      height,
+      weight,
+      body_art_name,
+      hair_name,
+      eyes_name,
+    } = response3.data;
 
-    const { weight } = response2.data[0];
-    const { body_type_name } = response3.data;
     let favoriteFood = null;
     if (response4.data.length > 0) {
       favoriteFood = response4.data[0];
     }
-    // const { favorite_food_name } = response4.data[0];
 
     let detailsData: Record<string, string> = {
       height: height,
       weight: weight,
       bodyType: body_type_name,
+      hair: hair_name,
+      eyes: eyes_name,
+      bodyArt: body_art_name,
       favoriteFood: favoriteFood ? favoriteFood!.favorite_food_name : null,
     };
+
     detailsData = removeNull(detailsData);
     return detailsData;
   } catch (err) {
@@ -536,6 +570,7 @@ const profileContentQuery = {
   fetchWorkEducationInitialData,
   fetchDetailsInitialData,
   fetchLocationInitialData,
+  fetchAdditionalInformation,
   editOptions: {
     getNationality,
     getEthnicity,

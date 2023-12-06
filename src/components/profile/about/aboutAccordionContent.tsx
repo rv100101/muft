@@ -3,33 +3,34 @@ import BasicInformationForm from "./forms/basicInformationForm";
 import WorkEducationForm from "./forms/workEducationForm";
 import DetailsForm from "./forms/detailsForm";
 import LocationForm from "./forms/locationForm";
-import { Briefcase, Contact, Globe, User2 } from "lucide-react";
+import { AlertCircle, Briefcase, Contact, Globe, User2 } from "lucide-react";
 import ContentLoadingSkeleton from "./contentLoadingSkeleton";
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
 import AdditionalInformatinForm from "./forms/additionalInformationForm";
+import useAboutErrorsStrore from "@/zustand/profile/about/useAboutErrorsStore";
+import { cn } from "@/lib/utils";
 
 const AboutAccordionContent = () => {
-
+  const tabsWithErrors = useAboutErrorsStrore((state) => state.tabsWithErrors);
   const [activeTabs, setActiveTabs] = useState([
     false,
     true,
     false,
     false,
     false,
-    false
+    false,
   ]);
+
+  console.log(tabsWithErrors);
 
   const toggleTab = (index: number) => {
     const newActiveTabs = activeTabs.map((_, i) => i === index);
     setActiveTabs(newActiveTabs);
   };
-
   const isLoading = profileAboutContentStore((state) => state.isLoading);
-
   if (isLoading) {
     return <ContentLoadingSkeleton />;
   }
-
   return (
     <div className="flex lg:flex-row flex-col mb-5">
       <div className="flex flex-row justify-around text-sm lg:justify-start lg:w-1/3 w-full lg:block">
@@ -39,8 +40,17 @@ const AboutAccordionContent = () => {
             : "text-[#727272] py-2 px-2 my-2"}
           onClick={() => toggleTab(1)}
         >
-          <p className="text-md hover:cursor-pointer select-none lg:block hidden">
-            Basic Information
+          <p
+            className={cn(
+              "text-md hover:cursor-pointer select-none lg:block hidden",
+              tabsWithErrors.includes(1) && "text-red-500",
+            )}
+          >
+            Basic Information {tabsWithErrors.includes(1) && (
+              <span>
+                <AlertCircle className="h-4 inline-flex text-red-500" />
+              </span>
+            )}
           </p>
           <User2
             // color="#FF599B"
@@ -54,8 +64,17 @@ const AboutAccordionContent = () => {
             : "text-[#727272] py-2 px-2 my-2"}
           onClick={() => toggleTab(2)}
         >
-          <p className="text-md hover:cursor-pointer select-none lg:block hidden">
-            Work and Education
+          <p
+            className={cn(
+              "text-md hover:cursor-pointer select-none lg:block hidden",
+              tabsWithErrors.includes(2) && "text-red-500",
+            )}
+          >
+            Work and Education {tabsWithErrors.includes(2) && (
+              <span>
+                <AlertCircle className="h-4 inline-flex text-red-500" />
+              </span>
+            )}
           </p>
           <Briefcase
             // color="#FF599B"
@@ -69,8 +88,17 @@ const AboutAccordionContent = () => {
             : "text-[#727272] py-2 px-2 my-2"}
           onClick={() => toggleTab(3)}
         >
-          <p className="text-md hover:cursor-pointer select-none lg:block hidden">
-            Details about you
+          <p
+            className={cn(
+              "text-md hover:cursor-pointer select-none lg:block hidden",
+              tabsWithErrors.includes(3) && "text-red-500",
+            )}
+          >
+            Details about you {tabsWithErrors.includes(3) && (
+              <span>
+                <AlertCircle className="h-4 inline-flex text-red-500" />
+              </span>
+            )}
           </p>
           <Contact
             // color="#FF599B"
@@ -84,8 +112,17 @@ const AboutAccordionContent = () => {
             : "text-[#727272] py-2 px-2 my-2"}
           onClick={() => toggleTab(4)}
         >
-          <p className="text-md hover:cursor-pointer select-none lg:block hidden">
-            Location
+          <p
+            className={cn(
+              "text-md hover:cursor-pointer select-none lg:block hidden",
+              tabsWithErrors.includes(4) && "text-red-500",
+            )}
+          >
+            Location {tabsWithErrors.includes(4) && (
+              <span>
+                <AlertCircle className="h-4 inline-flex text-red-500" />
+              </span>
+            )}
           </p>
           <Globe
             // color="#FF599B"
@@ -99,8 +136,17 @@ const AboutAccordionContent = () => {
             : "text-[#727272] py-2 px-2 my-2"}
           onClick={() => toggleTab(5)}
         >
-          <p className="text-md hover:cursor-pointer select-none lg:block hidden">
-            Additional Information
+          <p
+            className={cn(
+              "text-md hover:cursor-pointer select-none lg:block hidden",
+              tabsWithErrors.includes(5) && "text-red-500",
+            )}
+          >
+            Additional Information {tabsWithErrors.includes(5) && (
+              <span>
+                <AlertCircle className="h-4 inline-flex text-red-500" />
+              </span>
+            )}
           </p>
           <Globe
             // color="#FF599B"
@@ -125,9 +171,6 @@ const AboutAccordionContent = () => {
         {/* Addition Information */}
         {activeTabs[5] && <AdditionalInformatinForm />}
       </div>
-      {/* content - Form*/}
-      {/* overview */}
-      {/* {activeTabs[0] && <OverviewForm />} */}
     </div>
   );
 };

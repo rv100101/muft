@@ -96,11 +96,18 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
       const details = await profileContentQuery.fetchDetailsInitialData(
         userId,
       );
+
+      const additionalInformation = await profileContentQuery
+        .fetchAdditionalInformation(
+          userId,
+        );
+
       return {
         ...basicInfo,
         ...workEducation,
         ...location,
         ...details,
+        ...additionalInformation,
       };
     },
     onSuccess: (data: ProfileAbout) => {

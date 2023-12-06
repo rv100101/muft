@@ -135,6 +135,7 @@ const BasicInformationForm = () => {
               <FormField
                 name="nationality"
                 render={({ field }) => {
+                console.log(field);
                   return (
                     <FormItem>
                       <FormLabel className="text-primary" htmlFor="nationality">

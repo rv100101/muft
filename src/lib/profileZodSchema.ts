@@ -23,7 +23,7 @@ export const emptyDefault = {
   hair: "",
   eyes: "",
   bodyArt: "",
-  hasChildren: "",
+  haveChildren: "",
   wantChildren: "",
   workout: "",
   disability: "",
@@ -76,30 +76,26 @@ export const ProfileFormSchema = z.object({
     .string({
       required_error: "Income information is required",
     }),
-  // height: z
-  //   .number({
-  //     required_error: "Height is required",
-  //     invalid_type_error: "Height must be a number",
-  //   })
-  //   .nonnegative({ message: "Invalid height" })
-  //   .nullable(),
-  // weight: z
-  //   .number({
-  //     required_error: "Weight is required",
-  //     invalid_type_error: "Weight must be a number",
-  //   })
-  //   .nonnegative({ message: "Invalid weight" })
-  //   .nullable(),
-  // bodyType: z
-  //   .string({
-  //     required_error: "Please select body type that matches you",
-  //   })
-  //   .nullable(),
-  // favoriteFood: z
-  //   .string({
-  //     required_error: "Please select your preferred food",
-  //   })
-  //   .nullable(),
+  height: z
+    .number({
+      required_error: "Height is required",
+      invalid_type_error: "Height must be a number",
+    })
+    .nonnegative({ message: "Invalid height" }),
+  weight: z
+    .number({
+      required_error: "Weight is required",
+      invalid_type_error: "Weight must be a number",
+    })
+    .nonnegative({ message: "Invalid weight" }),
+  bodyType: z
+    .string({
+      required_error: "Please select body type that matches you",
+    }),
+  favoriteFood: z
+    .string({
+      required_error: "Please select your preferred food",
+    }),
   country: z
     .string({
       required_error: "Country is required",
@@ -111,6 +107,66 @@ export const ProfileFormSchema = z.object({
     })
     .min(2, { message: "Invalid region" }),
   nickname: z
+    .string({
+      required_error: "Nickname required",
+    })
+    .min(2, { message: "Nickname is required" }),
+  hair: z
+    .string({
+      required_error: "Nickname required",
+    })
+    .min(2, { message: "Nickname is required" }),
+  eyes: z
+    .string({
+      required_error: "Nickname required",
+    })
+    .min(2, { message: "Nickname is required" }),
+  bodyArt: z
+    .string({
+      required_error: "Nickname required",
+    })
+    .min(2, { message: "Nickname is required" }),
+  haveChildren: z
+    .string({
+      required_error: "Nickname required",
+    })
+    .min(2, { message: "Nickname is required" }),
+  wantChildren: z
+    .string({
+      required_error: "Nickname required",
+    })
+    .min(2, { message: "Nickname is required" }),
+  workout: z
+    .string({
+      required_error: "Nickname required",
+    })
+    .min(2, { message: "Nickname is required" }),
+  disability: z
+    .string({
+      required_error: "Nickname required",
+    })
+    .min(2, { message: "Nickname is required" }),
+  pets: z
+    .string({
+      required_error: "Nickname required",
+    })
+    .min(2, { message: "Nickname is required" }),
+  drinking: z
+    .string({
+      required_error: "Nickname required",
+    })
+    .min(2, { message: "Nickname is required" }),
+  smoking: z
+    .string({
+      required_error: "Nickname required",
+    })
+    .min(2, { message: "Nickname is required" }),
+  livingStatus: z
+    .string({
+      required_error: "Nickname required",
+    })
+    .min(2, { message: "Nickname is required" }),
+  car: z
     .string({
       required_error: "Nickname required",
     })
