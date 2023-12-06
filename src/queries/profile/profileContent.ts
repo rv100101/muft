@@ -39,7 +39,7 @@ const fetchBasicInfoInitialData = async (userId: number) => {
 
     const languagesResponse: { data: [] } = await axiosQuery.post(
       "/GetLanguages",
-      { member: userId }
+      { member: userId },
     );
 
     const { gender, nationality, date_of_birth, age } = basic.data;
@@ -201,15 +201,97 @@ const getLanguages = async () => {
   }
 };
 
-
 const getHair = async () => {
   try {
     const response = await axiosQuery.post("/Hair");
     return response.data;
   } catch (error) {
     return [];
-  }  
-}
+  }
+};
+
+const getHaveChildren = async () => {
+  try {
+    const response = await axiosQuery.post("/HaveChildren");
+    return response.data;
+  } catch (error) {
+    return [];
+  }
+};
+
+const getWantChildren = async () => {
+  try {
+    const response = await axiosQuery.post("/WantChildren");
+    return response.data;
+  } catch (error) {
+    return [];
+  }
+};
+
+const getWorkout = async () => {
+  try {
+    const response = await axiosQuery.post("/Workout");
+    return response.data;
+  } catch (error) {
+    return [];
+  }
+};
+
+const getDisability = async () => {
+  try {
+    const response = await axiosQuery.post("/Disability");
+    return response.data;
+  } catch (error) {
+    return [];
+  }
+};
+
+const getPets = async () => {
+  try {
+    const response = await axiosQuery.post("/Pets", {
+      member: 32,
+    });
+    return response.data;
+  } catch (error) {
+    return [];
+  }
+};
+
+const getDrink = async () => {
+  try {
+    const response = await axiosQuery.post("/Drink");
+    return response.data;
+  } catch (error) {
+    return [];
+  }
+};
+
+const getSmoke = async () => {
+  try {
+    const response = await axiosQuery.post("/Smoke");
+    return response.data;
+  } catch (error) {
+    return [];
+  }
+};
+
+const getLivingStatus = async () => {
+  try {
+    const response = await axiosQuery.post("/LivingStatus");
+    return response.data;
+  } catch (error) {
+    return [];
+  }
+};
+
+const getCar = async () => {
+  try {
+    const response = await axiosQuery.post("/Car");
+    return response.data;
+  } catch (error) {
+    return [];
+  }
+};
 
 const getEducation = async () => {
   try {
@@ -468,7 +550,16 @@ const profileContentQuery = {
     getCountries,
     getHair,
     getEyes,
-    getBodyArts
+    getBodyArts,
+    getPets,
+    getDrink,
+    getSmoke,
+    getLivingStatus,
+    getCar,
+    getHaveChildren,
+    getWantChildren,
+    getWorkout,
+    getDisability,
   },
   saveInformation,
 };

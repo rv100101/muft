@@ -85,3 +85,48 @@ export type Eye = {
   eyes_id: number;
   eyes_name: string;
 };
+
+export type HaveChildren = {
+  have_children_id: number;
+  have_children_name: string;
+};
+
+export type WantChildren = {
+  want_children_id: number;
+  want_children_name: string;
+};
+
+export type Workout = {
+  workout_id: number;
+  workout_name: string;
+};
+
+export type Disability = {
+  disability_id: number;
+  disability_name: string;
+};
+
+export type Pets = {
+  pet_id: number;
+  pet_name: string;
+};
+
+export type Drink = {
+  drink_id: number;
+  drink_name: string;
+};
+
+export type Smoke = {
+  smoke_id: number;
+  smoke_name: string;
+};
+
+export type LivingStatus = {
+  living_status_id: number;
+  living_status: string;
+};
+
+export type Car = {
+  car_id: number;
+  car_name: string;
+};

@@ -9,8 +9,17 @@ import {
 } from "@/components/ui/form";
 import FormSkeletonLoading from "./formSkeletonLoading";
 import selectOptions from "@/zustand/profile/selectData/selectOptions";
-import { BodyType, FavoriteFood } from "@/types/profile";
-import { Input } from "@/components/ui/input";
+import {
+  Car,
+  Disability,
+  Drink,
+  HaveChildren,
+  LivingStatus,
+  Pets,
+  Smoke,
+  WantChildren,
+  Workout,
+} from "@/types/profile";
 import {
   Select,
   SelectContent,
@@ -25,7 +34,17 @@ const AdditionalInformationForm = () => {
   const { control } = useFormContext();
   const isLoading = profileAboutContentStore((state) => state.isLoading);
   const data = profileAboutContentStore((state) => state.data);
-  const { bodyTypes, favoriteFoods } = selectOptions();
+  const {
+    haveChildren,
+    wantChildren,
+    workout,
+    disability,
+    pets,
+    drink,
+    smoke,
+    livingStatus,
+    car,
+  } = selectOptions();
   const editMode = profileAboutContentStore((state) => state.editMode);
   const user = useUserStore((state) => state.user);
   if (isLoading) {
@@ -45,22 +64,41 @@ const AdditionalInformationForm = () => {
           ? (
             <div className="space-y-1 hover:cursor-pointer w-full items-center">
               <FormField
-                name="hasChildren"
+                name="haveChildren"
                 render={({ field }) => {
                   return (
                     <FormItem>
-                      <FormLabel className="text-primary" htmlFor="hasChildren">
-                        Has Children?
+                      <FormLabel
+                        className="text-primary"
+                        htmlFor="haveChildren"
+                      >
+                        Have Children?
                       </FormLabel>
-                      <Input
-                        placeholder="Enter health"
-                        type="text"
-                        onChange={field.onChange}
-                        value={field.value}
+                      <Select
+                        onValueChange={field.onChange}
                         defaultValue={field.value}
-                        className="outline-0 border border rounded-lg w-full py-3 px-5"
-                        name="hasChildren"
-                      />
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue
+                              placeholder={"Do you have children?"}
+                            />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {haveChildren &&
+                            haveChildren.map((data: HaveChildren) => {
+                              return (
+                                <SelectItem
+                                  value={data.have_children_name}
+                                  key={data.have_children_id}
+                                >
+                                  {data.have_children_name}
+                                </SelectItem>
+                              );
+                            })}
+                        </SelectContent>
+                      </Select>
                       <FormMessage />
                     </FormItem>
                   );
@@ -96,15 +134,33 @@ const AdditionalInformationForm = () => {
                       >
                         Want Children?
                       </FormLabel>
-                      <Input
-                        placeholder="Enter health"
-                        type="text"
-                        onChange={field.onChange}
-                        value={field.value}
+                      <Select
+                        onValueChange={field.onChange}
                         defaultValue={field.value}
-                        className="outline-0 border border rounded-lg w-full py-3 px-5"
-                        name="wantChildren"
-                      />
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue
+                              placeholder={"Do you want children?"}
+                            />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {wantChildren &&
+                            wantChildren.map((data: WantChildren) => {
+                              console.log(data);
+
+                              return (
+                                <SelectItem
+                                  value={data.want_children_name}
+                                  key={data.want_children_id}
+                                >
+                                  {data.want_children_name}
+                                </SelectItem>
+                              );
+                            })}
+                        </SelectContent>
+                      </Select>
                       <FormMessage />
                     </FormItem>
                   );
@@ -138,14 +194,31 @@ const AdditionalInformationForm = () => {
                       <FormLabel className="text-primary" htmlFor="weight">
                         Workout
                       </FormLabel>
-                      <Input
-                        placeholder="Enter Workout"
-                        type="text"
-                        onChange={field.onChange}
+                      <Select
+                        onValueChange={field.onChange}
                         defaultValue={field.value}
-                        className="outline-0 border rounded-lg w-full py-3 px-5"
-                        name="workout"
-                      />
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue
+                              placeholder={"Do you workout?"}
+                            />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {workout &&
+                            workout.map((data: Workout) => {
+                              return (
+                                <SelectItem
+                                  value={data.workout_name}
+                                  key={data.workout_id}
+                                >
+                                  {data.workout_name}
+                                </SelectItem>
+                              );
+                            })}
+                        </SelectContent>
+                      </Select>
                       <FormMessage />
                     </FormItem>
                   );
@@ -185,19 +258,20 @@ const AdditionalInformationForm = () => {
                       >
                         <FormControl>
                           <SelectTrigger>
-                            <SelectValue placeholder={"Select body type"} />
+                            <SelectValue
+                              placeholder={"Do you have a disability?"}
+                            />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {bodyTypes &&
-                            bodyTypes.map((data: BodyType) => {
-                              const { body: disability, body_type_id } = data;
+                          {disability &&
+                            disability.map((data: Disability) => {
                               return (
                                 <SelectItem
-                                  value={disability}
-                                  key={body_type_id}
+                                  value={data.disability_name}
+                                  key={data.disability_id}
                                 >
-                                  {disability}
+                                  {data.disability_name}
                                 </SelectItem>
                               );
                             })}
@@ -246,23 +320,19 @@ const AdditionalInformationForm = () => {
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue
-                              placeholder={""}
+                              placeholder={"Do you have pets?"}
                             />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {favoriteFoods &&
-                            favoriteFoods.map((data: FavoriteFood) => {
-                              const {
-                                favorite_food_name: favoriteFood,
-                                favorite_food_id,
-                              } = data;
+                          {pets &&
+                            pets.map((data: Pets) => {
                               return (
                                 <SelectItem
-                                  value={favoriteFood}
-                                  key={favorite_food_id}
+                                  value={data.pet_name}
+                                  key={data.pet_id}
                                 >
-                                  {favoriteFood}
+                                  {data.pet_name}
                                 </SelectItem>
                               );
                             })}
@@ -317,18 +387,14 @@ const AdditionalInformationForm = () => {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {favoriteFoods &&
-                            favoriteFoods.map((data: FavoriteFood) => {
-                              const {
-                                favorite_food_name: favoriteFood,
-                                favorite_food_id,
-                              } = data;
+                          {drink &&
+                            drink.map((data: Drink) => {
                               return (
                                 <SelectItem
-                                  value={favoriteFood}
-                                  key={favorite_food_id}
+                                  value={data.drink_name}
+                                  key={data.drink_id}
                                 >
-                                  {favoriteFood}
+                                  {data.drink_name}
                                 </SelectItem>
                               );
                             })}
@@ -382,18 +448,14 @@ const AdditionalInformationForm = () => {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {favoriteFoods &&
-                            favoriteFoods.map((data: FavoriteFood) => {
-                              const {
-                                favorite_food_name: favoriteFood,
-                                favorite_food_id,
-                              } = data;
+                          {smoke &&
+                            smoke.map((data: Smoke) => {
                               return (
                                 <SelectItem
-                                  value={favoriteFood}
-                                  key={favorite_food_id}
+                                  value={data.smoke_name}
+                                  key={data.smoke_id}
                                 >
-                                  {favoriteFood}
+                                  {data.smoke_name}
                                 </SelectItem>
                               );
                             })}
@@ -445,18 +507,14 @@ const AdditionalInformationForm = () => {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {favoriteFoods &&
-                            favoriteFoods.map((data: FavoriteFood) => {
-                              const {
-                                favorite_food_name: favoriteFood,
-                                favorite_food_id,
-                              } = data;
+                          {livingStatus &&
+                            livingStatus.map((data: LivingStatus) => {
                               return (
                                 <SelectItem
-                                  value={favoriteFood}
-                                  key={favorite_food_id}
+                                  value={data.living_status}
+                                  key={data.living_status_id}
                                 >
-                                  {favoriteFood}
+                                  {data.living_status}
                                 </SelectItem>
                               );
                             })}
@@ -508,18 +566,14 @@ const AdditionalInformationForm = () => {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          {favoriteFoods &&
-                            favoriteFoods.map((data: FavoriteFood) => {
-                              const {
-                                favorite_food_name: favoriteFood,
-                                favorite_food_id,
-                              } = data;
+                          {car &&
+                            car.map((data: Car) => {
                               return (
                                 <SelectItem
-                                  value={favoriteFood}
-                                  key={favorite_food_id}
+                                  value={data.car_name}
+                                  key={data.car_id}
                                 >
-                                  {favoriteFood}
+                                  {data.car_name}
                                 </SelectItem>
                               );
                             })}

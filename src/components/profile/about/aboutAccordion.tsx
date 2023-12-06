@@ -12,20 +12,29 @@ import profileAboutContentStore, {
 } from "@/zustand/profile/profileAboutStore";
 import { useEffect } from "react";
 import {
-    BodyArt,
+  BodyArt,
   BodyType,
+  Car,
   Country,
+  Disability,
+  Drink,
   Education,
   Ethnicity,
   Eye,
   FavoriteFood,
   Hair,
+  HaveChildren,
   Income,
   Languages,
+  LivingStatus,
   MaritalStatus,
   Nationality,
   Occupation,
+  Pets,
+  Smoke,
   State,
+  WantChildren,
+  Workout,
 } from "@/types/profile";
 import selectOptions from "@/zustand/profile/selectData/selectOptions";
 import { useLocation } from "wouter";
@@ -53,6 +62,15 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
     setStates,
     selectedCountryCode,
     setHair,
+    setHaveChildren,
+    setWantChildren,
+    setWorkout,
+    setDisability,
+    setPets,
+    setDrinks,
+    setSmoke,
+    setLivingStatus,
+    setCar,
   } = selectOptions();
 
   const [location] = useLocation();
@@ -196,6 +214,87 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
     queryKey: ["eyes"],
     onSuccess: (data: Eye[]) => {
       setEyes(data);
+    },
+  });
+
+  useQuery({
+    queryFn: () => profileContentQuery.editOptions.getHaveChildren(),
+    refetchInterval: Infinity,
+    queryKey: ["haveChildren"],
+    onSuccess: (data: HaveChildren[]) => {
+      setHaveChildren(data);
+    },
+  });
+
+  useQuery({
+    queryFn: () => profileContentQuery.editOptions.getWantChildren(),
+    refetchInterval: Infinity,
+    queryKey: ["wantChildren"],
+    onSuccess: (data: WantChildren[]) => {
+      setWantChildren(data);
+    },
+  });
+
+  useQuery({
+    queryFn: () => profileContentQuery.editOptions.getWorkout(),
+    refetchInterval: Infinity,
+    queryKey: ["workout"],
+    onSuccess: (data: Workout[]) => {
+      setWorkout(data);
+    },
+  });
+
+  useQuery({
+    queryFn: () => profileContentQuery.editOptions.getDisability(),
+    refetchInterval: Infinity,
+    queryKey: ["disability"],
+    onSuccess: (data: Disability[]) => {
+      setDisability(data);
+    },
+  });
+
+  useQuery({
+    queryFn: () => profileContentQuery.editOptions.getPets(),
+    refetchInterval: Infinity,
+    queryKey: ["pets"],
+    onSuccess: (data: Pets[]) => {
+      setPets(data);
+    },
+  });
+
+  useQuery({
+    queryFn: () => profileContentQuery.editOptions.getDrink(),
+    refetchInterval: Infinity,
+    queryKey: ["drinks"],
+    onSuccess: (data: Drink[]) => {
+      setDrinks(data);
+    },
+  });
+
+  useQuery({
+    queryFn: () => profileContentQuery.editOptions.getSmoke(),
+    refetchInterval: Infinity,
+    queryKey: ["smokes"],
+    onSuccess: (data: Smoke[]) => {
+      setSmoke(data);
+    },
+  });
+
+  useQuery({
+    queryFn: () => profileContentQuery.editOptions.getLivingStatus(),
+    refetchInterval: Infinity,
+    queryKey: ["livingStatus"],
+    onSuccess: (data: LivingStatus[]) => {
+      setLivingStatus(data);
+    },
+  });
+
+  useQuery({
+    queryFn: () => profileContentQuery.editOptions.getCar(),
+    refetchInterval: Infinity,
+    queryKey: ["car"],
+    onSuccess: (data: Car[]) => {
+      setCar(data);
     },
   });
 

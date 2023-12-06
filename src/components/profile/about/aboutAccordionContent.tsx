@@ -23,6 +23,7 @@ const AboutAccordionContent = () => {
     const newActiveTabs = activeTabs.map((_, i) => i === index);
     setActiveTabs(newActiveTabs);
   };
+
   const isLoading = profileAboutContentStore((state) => state.isLoading);
 
   if (isLoading) {

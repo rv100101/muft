@@ -1,18 +1,27 @@
 import {
   BodyArt,
   BodyType,
+  Car,
   Country,
+  Disability,
+  Drink,
   Education,
   Ethnicity,
   Eye,
   FavoriteFood,
   Hair,
+  HaveChildren,
   Income,
   Languages,
+  LivingStatus,
   MaritalStatus,
   Nationality,
   Occupation,
+  Pets,
+  Smoke,
   State,
+  WantChildren,
+  Workout,
 } from "@/types/profile";
 import { create } from "zustand";
 
@@ -47,6 +56,24 @@ interface SelectOptions {
   setEyes: (val: Eye[]) => void;
   bodyArts: BodyArt[];
   setBodyArts: (val: BodyArt[]) => void;
+  haveChildren: HaveChildren[];
+  setHaveChildren: (val: HaveChildren[]) => void;
+  wantChildren: WantChildren[];
+  setWantChildren: (val: WantChildren[]) => void;
+  workout: Workout[];
+  setWorkout: (val: Workout[]) => void;
+  disability: Disability[];
+  setDisability: (val: Disability[]) => void;
+  pets: Pets[];
+  setPets: (val: Pets[]) => void;
+  drink: Drink[];
+  setDrinks: (val: Drink[]) => void;
+  smoke: Smoke[];
+  setSmoke: (val: Smoke[]) => void;
+  livingStatus: LivingStatus[];
+  setLivingStatus: (val: LivingStatus[]) => void;
+  car: Car[];
+  setCar: (val: Car[]) => void;
 }
 
 const selectOptions = create<SelectOptions>((set) => ({
@@ -64,10 +91,55 @@ const selectOptions = create<SelectOptions>((set) => ({
   hair: [],
   eyes: [],
   bodyArts: [],
+  haveChildren: [],
+  wantChildren: [],
+  workout: [],
+  disability: [],
+  pets: [],
+  drink: [],
+  smoke: [],
+  livingStatus: [],
+  car: [],
   selectedCountryCode: "",
   setSelectedCountryCode: (val) =>
     set(() => ({
       selectedCountryCode: val,
+    })),
+  setHaveChildren: (val) =>
+    set(() => ({
+      haveChildren: val,
+    })),
+  setWantChildren: (val) =>
+    set(() => ({
+      wantChildren: val,
+    })),
+  setWorkout: (val) =>
+    set(() => ({
+      workout: val,
+    })),
+  setDisability: (val) =>
+    set(() => ({
+      disability: val,
+    })),
+  setPets: (val) =>
+    set(() => ({
+      pets: val,
+    })),
+  setDrinks: (val) =>
+    set(() => ({
+      drink: val,
+    })),
+  setSmoke: (val) =>
+    set(() => ({
+      smoke: val,
+    })),
+  setLivingStatus: (val) =>
+    set(() => ({
+      livingStatus: val,
+    })),
+  setCar: (val) =>
+    set(() => ({
+      car: val,
     })),
   setHair: (val) =>
     set(() => ({
