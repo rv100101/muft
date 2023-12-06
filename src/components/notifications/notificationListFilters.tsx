@@ -1,11 +1,16 @@
-import { NotificationFilterOptions, notificationFilters } from "@/lib/notificationFilters";
+import {
+  NotificationFilterOptions,
+  notificationFilters,
+} from "@/lib/notificationFilters";
 import { cn } from "@/lib/utils";
 import useNotificationFilterValueStore from "@/zustand/notification/filterValueStore";
 import { useState } from "react";
 
 const NotificationsListFiters = () => {
   const [selectedFilterId, setSelectedFilterId] = useState(0);
-  const setSelectedFilter = useNotificationFilterValueStore(state => state.setValue);
+  const setSelectedFilter = useNotificationFilterValueStore(
+    (state) => state.setValue
+  );
   const filters = notificationFilters.map((filter, index) => (
     <li
       key={index}
@@ -24,8 +29,8 @@ const NotificationsListFiters = () => {
     </li>
   ));
   return (
-    <div className="border-y sm:p-2 pt-2">
-      <ul className="justify-start px-1 sm:justify-start items-center flex flex-wrap space-x-4">
+    <div className="border-b sm:p-2 pt-2">
+      <ul className="justify-start px-1 sm:justify-start items-center flex-col flex-wrap space-y-4 w-full">
         {filters}
       </ul>
     </div>

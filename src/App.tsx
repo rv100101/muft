@@ -23,7 +23,7 @@ function App() {
   return (
     <div
       className={cn(
-        location == "/auth/signin" ? "h-screen flex flex-col" : "h-full",
+        location == "/auth/signin" ? "h-screen flex flex-col" : "h-full"
       )}
     >
       <div className="h-max">
@@ -31,9 +31,11 @@ function App() {
       </div>
       <Route
         path="/"
-        component={user
-          ? pageRoutes.homePage.component
-          : pageRoutes.landingPage.component}
+        component={
+          user
+            ? pageRoutes.homePage.component
+            : pageRoutes.landingPage.component
+        }
       />
       <div className="flex-auto h-full">
         <Route
@@ -99,8 +101,7 @@ function App() {
         </>
       )}
 
-      {!user &&
-        (!noUserOnlyRoutes.includes(location) && location !== "/") && (
+      {!user && !noUserOnlyRoutes.includes(location) && location !== "/" && (
         <Redirect to="/auth/signin" />
       )}
 

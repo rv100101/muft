@@ -3,7 +3,6 @@ import { useQuery } from "@tanstack/react-query";
 import notificationQuery, { NotificationData } from "@/queries/notification";
 import { UserCircle2Icon } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
-import NotificationsListFiters from "./notificationListFilters";
 import useNotificationFilterValueStore from "@/zustand/notification/filterValueStore";
 import { useUserStore } from "@/zustand/auth/user";
 
@@ -70,7 +69,7 @@ const NotificationsList = () => {
   return (
     <div className="w-full h-full flex flex-col">
       <NotificationsListHeader />
-      <NotificationsListFiters />
+      {/* <NotificationsListFiters /> */}
       <div className="space-y-4 w-full h-full overflow-y-scroll bg-[#F7F8FA]">
         {isLoading && renderSkeletonLoading()}
         {data && data.length == 0 ? (

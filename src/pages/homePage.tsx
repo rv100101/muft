@@ -128,10 +128,6 @@ const HomePage = () => {
 
     // Take the first three elements
     const selectedNumbers = shuffledValues.slice(0, 3);
-    console.log(
-      "🚀 ~ file: homePage.tsx:126 ~ generateRandomNumbers ~ selectedNumbers:",
-      selectedNumbers
-    );
 
     // Update the state with the selected numbers
     setRandomNumbers(selectedNumbers);
@@ -206,7 +202,6 @@ const HomePage = () => {
   //   return <></>;
   // }
 
-  console.log("deb: ", debouncedAgeFilterVal);
   return (
     <AuthenticatedLayout>
       <div className="flex justify-center w-full">
@@ -332,14 +327,14 @@ const HomePage = () => {
                       </p> */}
                   {/* <p>{ageSliderVal}</p> */}
                 </div>
-                <div className="flex flex-row px-5 space-x-2 py-3">
+                {/* <div className="flex flex-row px-5 space-x-2 py-3">
                   <button className="float-right bg-white border border-[#ff569a] w-full text-[#ff569a] py-3 px-5 rounded-md text-xs">
                     Cancel
                   </button>
                   <button className="float-right bg-[#ff569a] w-full text-white py-3 px-5 rounded-md text-xs">
                     Apply
                   </button>
-                </div>
+                </div> */}
                 {/* </form> */}
               </div>
             </div>
