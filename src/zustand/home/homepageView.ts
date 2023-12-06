@@ -26,8 +26,8 @@ interface ViewState {
   modifiedMemberList: Array<Member>;
   setSelectedProfileId: (id: number | null) => void;
   setModifiedMemberList: (member: Member[]) => void;
-  toggleIsLiked: () => void;
-  toggleIsFavored: () => void;
+  toggleIsLiked: (val?: boolean) => void;
+  toggleIsFavored: (val?: boolean) => void;
   toggleDialog: () => void;
   isLiked: boolean;
   isFavored: boolean;
@@ -51,16 +51,28 @@ const useHomepageViewStore = create<ViewState>()((set) => ({
     }));
   },
 
-  toggleIsLiked: () => {
-    set((state) => ({
-      isLiked: !state.isLiked,
-    }));
+  toggleIsLiked: (val?: boolean) => {
+    if (val) {
+      set(() => ({
+        isLiked: val,
+      }));
+    } else {
+      set((state) => ({
+        isLiked: !state.isLiked,
+      }));
+    }
   },
 
-  toggleIsFavored: () => {
-    set((state) => ({
-      isFavored: !state.isFavored,
-    }));
+  toggleIsFavored: (val?: boolean) => {
+    if (val) {
+      set(() => ({
+        isFavored: val,
+      }));
+    } else {
+      set((state) => ({
+        isFavored: !state.isFavored,
+      }));
+    }
   },
 
   toggleDialog: () => {

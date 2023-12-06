@@ -8,8 +8,8 @@ import {
 import { useLocation } from "wouter";
 import { useMutation } from "@tanstack/react-query";
 import axiosQuery from "@/queries/axios";
-import useHomepageViewStore from "@/zustand/home/homepageView";
 import { useUserStore } from "@/zustand/auth/user";
+import { useState } from "react";
 type PostItemProps = {
   nickname: string;
   country: string;
@@ -38,14 +38,15 @@ const PostItem = ({
   nationality,
 }: PostItemProps) => {
   const [, setLocation] = useLocation();
-
-  const likeTriggered = useHomepageViewStore((state) => state.isLiked);
-  const favoriteTriggered = useHomepageViewStore((state) => state.isFavored);
-  const toggleLikeIcon = useHomepageViewStore((state) => state.toggleIsLiked);
+  const [likeTriggered, toggleLikeIcon] = useState(false);
+  const [favoriteTriggered, toggleFavoriteIcon] = useState(false);
   const user = useUserStore((state) => state.user);
-  const toggleFavoriteIcon = useHomepageViewStore(
-    (state) => state.toggleIsFavored
-  );
+  // const likeTriggered = useHomepageViewStore((state) => state.isLiked);
+  // const favoriteTriggered = useHomepageViewStore((state) => state.isFavored);
+  // const toggleLikeIcon = useHomepageViewStore((state) => state.toggleIsLiked);
+  // const toggleFavoriteIcon = useHomepageViewStore(
+  //   (state) => state.toggleIsFavored
+  // );
   const toggleLike = useMutation({
     mutationFn: async ({
       member,
@@ -54,12 +55,8 @@ const PostItem = ({
       member: number;
       liked: number;
     }) => {
-      toggleLikeIcon();
-      // console.log("like toggle triggered");
-      // console.log(isLiked);
-      // console.log(isFavorite);
-      // console.log(favoriteTriggered);
-      // console.log("--- end ----");
+      toggleLikeIcon((prev) => !prev);
+
       const res = await axiosQuery.post("/Like", {
         member: member,
         liked: liked,
@@ -76,11 +73,7 @@ const PostItem = ({
       member: number;
       favored: number;
     }) => {
-      toggleFavoriteIcon();
-      console.log("favorite toggle triggered");
-      console.log("isFavorite: ", isFavorite);
-      console.log("favoriteTriggered: ", favoriteTriggered);
-      console.log("--- end ----");
+      toggleFavoriteIcon((prev) => !prev);
 
       const res = await axiosQuery.post("/Favorite", {
         member: member,
@@ -94,11 +87,6 @@ const PostItem = ({
     setLocation(`/members/${member_id}`);
   };
 
-  // console.log("🧨: ", favoriteTriggered);
-  // console.log("isLiked: ", isLiked);
-  // console.log("isFavorite: ", isFavorite);
-  // console.log("nickname: ", nickname);
-  // console.log("-------------------------");
   return (
     <div className="transition ease-in duration-300 transform border rounded-xl">
       <div className="flex flex-col items-center justify-end h-full">
