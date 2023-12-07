@@ -5,26 +5,39 @@ import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
 import { emptyDefault, ProfileFormSchema } from "@/lib/profileZodSchema";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import profileHeaderStore from "@/zustand/profile/profileHeaderStore";
 import GallerySection from "@/components/profile/gallery/gallerySection";
 import profileContentQuery from "@/queries/profile/profileContent";
 import selectOptions from "@/zustand/profile/selectData/selectOptions";
-import { useUserStore } from "@/zustand/auth/user";
+import { User, useUserStore } from "@/zustand/auth/user";
 import { useQueryClient } from "@tanstack/react-query";
+import { ToastAction } from "@/components/ui/toast";
+import { toast } from "@/components/ui/use-toast";
+import { Dialog, DialogClose } from "@radix-ui/react-dialog";
+import {
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
 const ProfilePageBody = ({ userId }: { userId: string }) => {
+  // const [isSaving, setSaving] = useState(false);
   const { toggleEditMode } = profileAboutContentStore();
   const headerValues = profileHeaderStore((state) => state.headerValues);
   const { data } = profileAboutContentStore();
   const { setIsSaving } = profileAboutContentStore();
   const { user } = useUserStore();
+  console.log("TCL: ProfilePageBody -> user", user);
+  const updateUser = useUserStore((state) => state.updateUser);
   const queryClient = useQueryClient();
   const methods = useForm({
     defaultValues: emptyDefault,
     resolver: zodResolver(ProfileFormSchema),
   });
-
+  const [open, setOpen] = useState(true);
   useEffect(() => {
     if (data && headerValues) {
       console.log(data);
@@ -99,7 +112,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
 
   const getNationality = (nationalityName: string) =>
     nationalities.find(
-      (nationality) => nationality.nationality === nationalityName,
+      (nationality) => nationality.nationality === nationalityName
     );
 
   const getEducation = (name: string) =>
@@ -130,7 +143,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
 
   const getInterestsData = (name: string) =>
     interests.find((s) => s.interest_name === name);
-  
+
   const getBodyArtsData = (name: string) =>
     bodyArts.find((s) => s.body === name);
 
@@ -226,6 +239,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
       };
       console.log(finalFormData);
       await profileContentQuery.saveInformation(finalFormData, user!.member_id);
+      updateUser({ ...user, profile_completed: true } as User);
       queryClient.invalidateQueries(["profileHeader", "profileContent"]);
     } catch (error) {
       console.log(error);
@@ -233,7 +247,16 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
     setIsSaving(false);
     toggleEditMode();
   };
-
+  useEffect(() => {
+    if (Object.getOwnPropertyNames(methods.formState.errors).length > 0) {
+      toast({
+        variant: "destructive",
+        title: "All Fields are required",
+        description: "check all tabs to ensure all fields are inputted.",
+        action: <ToastAction altText="Goto schedule to undo">Okay</ToastAction>,
+      });
+    }
+  }, [methods.formState.errors]);
   return (
     <div className="flex h-screen flex-col justify-start w-full lg:w-3/4 border mx-auto">
       <FormProvider {...methods}>
@@ -243,12 +266,25 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
         >
           <ProfileTopNav />
           <div className="h-full overflow-y-scroll flex flex-col">
-            <div className="flex flex-col">
-              {user?.profile_completed && <ProfileHeader userId={userId} />}
-              <AboutAccordion userId={parseInt(userId)} />
-              {user?.profile_completed &&
-                <GallerySection userId={userId} />}
-            </div>
+            <Dialog open={open} onOpenChange={setOpen}>
+              <DialogContent className="sm:max-w-md opacity-100">
+                <DialogHeader>
+                  <DialogTitle>Account Activation</DialogTitle>
+                  <DialogDescription>
+                    you need to activate account to unlock all app
+                    functionalities.
+                  </DialogDescription>
+                  <DialogClose asChild>
+                    <Button className="bg-green-500">Activate Now</Button>
+                  </DialogClose>
+                </DialogHeader>
+              </DialogContent>
+              <div className="flex flex-col">
+                {user?.profile_completed && <ProfileHeader userId={userId} />}
+                <AboutAccordion userId={parseInt(userId)} />
+                {user?.profile_completed && <GallerySection userId={userId} />}
+              </div>
+            </Dialog>
           </div>
         </form>
       </FormProvider>

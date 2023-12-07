@@ -12,14 +12,17 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { DialogClose } from "@radix-ui/react-dialog";
+import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
 const ProfileTopNav = () => {
+  const { isSaving } = profileAboutContentStore();
+
   const signOut = useUserStore((state) => state.reset);
   const user = useUserStore((state) => state.user);
   const setSelectedHistoryMemberId = useLatestConversationStore(
-    (state) => state.setSelectedHistoryMemberId,
+    (state) => state.setSelectedHistoryMemberId
   );
-  const setSelectedProfileId = useHomepageViewStore((state) =>
-    state.setSelectedProfileId
+  const setSelectedProfileId = useHomepageViewStore(
+    (state) => state.setSelectedProfileId
   );
 
   return (
@@ -46,42 +49,47 @@ const ProfileTopNav = () => {
             <p className="font-semibold mt-1">
               {user?.profile_completed ? "PROFILE" : "COMPLETE YOUR PROFILE"}
             </p>
-            {!user?.profile_completed &&
-              (
-                <div className="flex justify-end">
-                  <Button type="submit" className="hover:bg-[#FF8AB3]/95">
-                    Save
-                  </Button>
-                </div>
-              )}
-          </div>
-          <Dialog>
-            <DialogTrigger>
-              <div className="flex space-x-2 my-4">
-                {<LogOutIcon size={20} className="text-primary" />}{" "}
-                <p className="text-sm">Sign out</p>
-              </div>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-md opacity-100">
-              <DialogHeader>
-                <DialogTitle>Are you sure you want to sign out?</DialogTitle>
-              </DialogHeader>
-              <DialogFooter className="sm:justify-start">
-                <Button className="hover:bg-primary" onClick={signOut}>
-                  Yes
+            {!user?.profile_completed && (
+              <div className="flex justify-end">
+                <Button
+                  type="submit"
+                  className="hover:bg-[#FF8AB3]/95"
+                  disabled={isSaving}
+                >
+                  {isSaving ? "Saving..." : "Save"}
                 </Button>
-                <DialogClose asChild>
-                  <Button
-                    className="text-white hover:bg-secondary"
-                    type="button"
-                    variant="secondary"
-                  >
-                    No
+              </div>
+            )}
+          </div>
+          {!user?.profile_completed && (
+            <Dialog>
+              <DialogTrigger>
+                <div className="flex space-x-2 my-4">
+                  {<LogOutIcon size={20} className="text-primary" />}{" "}
+                  <p className="text-sm">Sign out</p>
+                </div>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-md opacity-100">
+                <DialogHeader>
+                  <DialogTitle>Are you sure you want to sign out?</DialogTitle>
+                </DialogHeader>
+                <DialogFooter className="sm:justify-start">
+                  <Button className="hover:bg-primary" onClick={signOut}>
+                    Yes
                   </Button>
-                </DialogClose>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
+                  <DialogClose asChild>
+                    <Button
+                      className="text-white hover:bg-secondary"
+                      type="button"
+                      variant="secondary"
+                    >
+                      No
+                    </Button>
+                  </DialogClose>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+          )}
         </div>
       </div>
     </div>
