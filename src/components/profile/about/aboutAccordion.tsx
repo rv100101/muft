@@ -25,6 +25,7 @@ import {
   Hair,
   HaveChildren,
   Income,
+  Interest,
   Languages,
   LivingStatus,
   MaritalStatus,
@@ -71,6 +72,7 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
     setSmoke,
     setLivingStatus,
     setCar,
+    setInterest
   } = selectOptions();
 
   const [location] = useLocation();
@@ -131,6 +133,15 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
     queryKey: ["languages"],
     onSuccess: (data: Languages[]) => {
       setLanguages(data);
+    },
+  });
+
+  useQuery({
+    queryFn: () => profileContentQuery.editOptions.getInterests(),
+    refetchInterval: Infinity,
+    queryKey: ["interests"],
+    onSuccess: (data: Interest[]) => {
+      setInterest(data);
     },
   });
 

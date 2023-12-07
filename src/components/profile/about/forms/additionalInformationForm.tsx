@@ -148,8 +148,6 @@ const AdditionalInformationForm = () => {
                         <SelectContent>
                           {wantChildren &&
                             wantChildren.map((data: WantChildren) => {
-                              console.log(data);
-
                               return (
                                 <SelectItem
                                   value={data.want_children_name}

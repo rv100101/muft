@@ -12,6 +12,7 @@ import {
   Hair,
   HaveChildren,
   Income,
+  Interest,
   Languages,
   LivingStatus,
   MaritalStatus,
@@ -74,6 +75,8 @@ interface SelectOptions {
   setLivingStatus: (val: LivingStatus[]) => void;
   car: Car[];
   setCar: (val: Car[]) => void;
+  interests: Interest[];
+  setInterest: (val: Interest[]) => void;
 }
 
 const selectOptions = create<SelectOptions>((set) => ({
@@ -100,6 +103,7 @@ const selectOptions = create<SelectOptions>((set) => ({
   smoke: [],
   livingStatus: [],
   car: [],
+  interests: [],
   selectedCountryCode: "",
   setSelectedCountryCode: (val) =>
     set(() => ({
@@ -196,6 +200,10 @@ const selectOptions = create<SelectOptions>((set) => ({
   setStates: (val) =>
     set(() => ({
       states: val,
+    })),
+  setInterest: (val) =>
+    set(() => ({
+      interests: val,
     })),
 }));
 

@@ -59,6 +59,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
         smoking: data.smoking,
         livingStatus: data.livingStatus,
         car: data.car,
+        interest: data.interest,
       });
     }
   }, [data, headerValues, methods]);
@@ -75,6 +76,19 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
     favoriteFoods,
     countries,
     states,
+    pets,
+    interests,
+    bodyArts,
+    car,
+    disability,
+    drink,
+    eyes,
+    hair,
+    haveChildren,
+    wantChildren,
+    livingStatus,
+    smoke,
+    workout,
   } = selectOptions();
 
   const getLanguage = (languageName: string) =>
@@ -112,13 +126,48 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
   const getStateData = (name: string) =>
     states.find((s) => s.state_name === name);
 
+  const getPetsData = (name: string) => pets.find((s) => s.pet_name === name);
+
+  const getInterestsData = (name: string) =>
+    interests.find((s) => s.interest_name === name);
+  
+  const getBodyArtsData = (name: string) =>
+    bodyArts.find((s) => s.body === name);
+
+  const getCarData = (name: string) => car.find((s) => s.car_name === name);
+
+  const getDrinkData = (name: string) =>
+    drink.find((s) => s.drink_name === name);
+
+  const getDisabilityData = (name: string) =>
+    disability.find((s) => s.disability_name === name);
+
+  const getEyesData = (name: string) => eyes.find((s) => s.eyes_name === name);
+
+  const getHairData = (name: string) => hair.find((s) => s.hair_name === name);
+
+  const getHaveChildrenData = (name: string) =>
+    haveChildren.find((s) => s.have_children_name === name);
+
+  const getWantChildrenData = (name: string) =>
+    wantChildren.find((s) => s.want_children_name === name);
+
+  const getLivingStatusData = (name: string) =>
+    livingStatus.find((s) => s.living_status === name);
+
+  const getSmokeData = (name: string) =>
+    smoke.find((s) => s.smoke_name === name);
+
+  const getWorkoutData = (name: string) =>
+    workout.find((s) => s.workout_name === name);
+
   const onSubmit = async (formData: any) => {
     console.log(formData);
-    return;
-    if (!methods.formState.isDirty) {
-      toggleEditMode();
-      return;
-    }
+    // return;
+    // if (!methods.formState.isDirty) {
+    //   toggleEditMode();
+    //   return;
+    // }
     setIsSaving(true);
     let finalFormData = { ...formData };
     try {
@@ -127,12 +176,25 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
       const nationality = getNationality(formData.nationality);
       const maritalStatus = getMaritalStatus(formData.maritalStatus);
       const education = getEducation(formData.education);
-      const occupation = getOccupation(formData.occupation_title);
-      const income = getIncome(formData.income_range);
+      const occupation = getOccupation(formData.occupationTitle);
+      const income = getIncome(formData.income);
       const bodyType = getBodyType(formData.bodyType);
       const favoriteFood = getFavoriteFoods(formData.favoriteFood);
       const country = getCountryData(formData.country);
       const region = getStateData(formData.region);
+      const pets = getPetsData(formData.pets);
+      const interests = getInterestsData(formData.interest);
+      const bodyArts = getBodyArtsData(formData.bodyArt);
+      const car = getCarData(formData.car);
+      const drink = getDrinkData(formData.drinking);
+      const eyes = getEyesData(formData.eyes);
+      const hair = getHairData(formData.hair);
+      const haveChildren = getHaveChildrenData(formData.haveChildren);
+      const wantChildren = getWantChildrenData(formData.wantChildren);
+      const livingStatus = getLivingStatusData(formData.livingStatus);
+      const smoke = getSmokeData(formData.smoking);
+      const workout = getWorkoutData(formData.workout);
+      const disability = getDisabilityData(formData.disability);
       finalFormData = {
         ...finalFormData,
         language: language?.language_code,
@@ -146,7 +208,23 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
         favoriteFood: favoriteFood?.favorite_food_id,
         country: country?.country_code,
         region: region?.state_id,
+        pets: pets?.pet_id,
+        interest: interests?.interest_id,
+        bodyArt: bodyArts?.body_art_id,
+        car: car?.car_id,
+        drinking: drink?.drink_id,
+        eyes: eyes?.eyes_id,
+        hair: hair?.hair_id,
+        haveChildren: haveChildren?.have_children_id,
+        wantChildren: wantChildren?.want_children_id,
+        livingStatus: livingStatus?.living_status_id,
+        smoking: smoke?.smoke_id,
+        workout: workout?.workout_id,
+        disability: disability?.disability_id,
+        religion: 1,
+        employmentStatus: 2,
       };
+      console.log(finalFormData);
       await profileContentQuery.saveInformation(finalFormData, user!.member_id);
       queryClient.invalidateQueries(["profileHeader", "profileContent"]);
     } catch (error) {

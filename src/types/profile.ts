@@ -130,3 +130,8 @@ export type Car = {
   car_id: number;
   car_name: string;
 };
+
+export type Interest = {
+  interest_id: number;
+  interest_name: string;
+};

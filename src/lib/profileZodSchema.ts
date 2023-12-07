@@ -32,6 +32,7 @@ export const emptyDefault = {
   smoking: "",
   livingStatus: "",
   car: "",
+  interest: ""
 };
 
 export const ProfileFormSchema = z.object({
@@ -66,9 +67,9 @@ export const ProfileFormSchema = z.object({
       required_error: "Education information is required",
     })
     .min(2, { message: "Please select an education" }),
-  employmentStatus: z
-    .string({ required_error: "This field is required" })
-    .min(3, { message: "Value is too short" }),
+  // employmentStatus: z
+  //   .string({ required_error: "This field is required" })
+  //   .min(3, { message: "Value is too short" }),
   occupationTitle: z
     .string({
       required_error: "Occupation information is required",
@@ -96,6 +97,11 @@ export const ProfileFormSchema = z.object({
       required_error: "Please select body type that matches you",
     })
     .min(2, { message: "Please select your body type" }),
+  interest: z
+    .string({
+      required_error: "Please select an interest",
+    })
+    .min(2, { message: "Please select an interest" }),
   favoriteFood: z
     .string({
       required_error: "Please select your preferred food",

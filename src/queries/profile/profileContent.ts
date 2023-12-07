@@ -1,5 +1,4 @@
-import { ProfileAbout } from "@/zustand/profile/profileAboutStore";
-import axiosQuery from "../axios";
+import { ProfileAbout } from "@/zustand/profile/profileAboutStore"; import axiosQuery from "../axios";
 
 const removeNull = (obj: Record<string, string>): Record<string, string> => {
   const result: Record<string, string> = {};
@@ -31,6 +30,22 @@ const fetchAdditionalInformation = async (userId: number) => {
       member: userId,
     });
 
+    const interests = await axiosQuery.post("/GetInterests", {
+      member: userId
+    })
+
+    let interest = null;
+
+    if (
+      interests.data.length !== 0 && interests.data.length > 1
+    ) {
+      interest = interests.data[interests.data.length - 1];
+    }
+
+    if (interests.data.length === 1) {
+      interest = interests.data[0];
+    }
+
     let additionalInformation: Record<string, string> = {
       haveChildren: maritalStatus.data.have_children_name,
       wantChildren: maritalStatus.data.wants_children_name,
@@ -41,6 +56,7 @@ const fetchAdditionalInformation = async (userId: number) => {
       smoking: lifestyle.data.smoke_name,
       livingStatus: lifestyle.data.living_status_name,
       car: lifestyle.data.car_name,
+      interest: interest ?? ''
     };
 
     additionalInformation = removeNull(additionalInformation);
@@ -206,6 +222,17 @@ const fetchLocationInitialData = async (userId: number) => {
 const getNationality = async () => {
   try {
     const response = await axiosQuery.post("/Nationalities");
+    return response.data;
+  } catch (error) {
+    return [];
+  }
+};
+
+const getInterests = async () => {
+  try {
+    const response = await axiosQuery.post("/Interests", {
+      member: 32
+    });
     return response.data;
   } catch (error) {
     return [];
@@ -432,6 +459,126 @@ const saveInformation = async (profile: ProfileContent, userId: number) => {
       });
     }
 
+    // pets
+    if (profile.pets) {
+      await axiosQuery.post("/SavePet", {
+        pet: profile.pets,
+        member: userId,
+      });
+    }
+
+    // language
+    if (profile.language) {
+      await axiosQuery.post("/SaveLanguage", {
+        language: profile.language,
+        member: userId,
+      });
+    }
+
+    // interest
+    if (profile.interest) {
+      await axiosQuery.post("/SaveInterest", {
+        interest: profile.interest,
+        member: userId,
+      });
+    }
+
+    // disability
+    if (profile.disability) {
+      await axiosQuery.post("/SaveDisability", {
+        disability: profile.disability,
+        member: userId,
+      });
+    }
+
+    // workout
+    if (profile.workout) {
+      await axiosQuery.post("/SaveWorkout", {
+        workout: profile.workout,
+        member: userId,
+      });
+    }
+
+    // hair
+    if (profile.hair) {
+      await axiosQuery.post("/SaveHair", {
+        hair: profile.hair,
+        member: userId,
+      });
+    }
+    
+    // eyes
+    if (profile.eyes) {
+      await axiosQuery.post("/SaveEyes", {
+        eyes: profile.eyes,
+        member: userId,
+      });
+    }
+
+    // drink
+    if (profile.drinking) {
+      await axiosQuery.post("/SaveDrink", {
+        drink: profile.drinking,
+        member: userId,
+      });
+    }
+
+    // smoke
+    if (profile.smoking) {
+      await axiosQuery.post("/SaveSmoke", {
+        smoke: profile.smoking,
+        member: userId,
+      });
+    }
+
+    // car
+    if (profile.car) {
+      await axiosQuery.post("/SaveCar", {
+        car: profile.car,
+        member: userId,
+      });
+    }
+
+    // haveChildren
+    if (profile.haveChildren) {
+      await axiosQuery.post("/SaveHaveChildren", {
+        have_children: profile.haveChildren,
+        member: userId,
+      });
+    }
+
+    // wantChildren
+    if (profile.wantChildren) {
+      await axiosQuery.post("/SaveWantChildren", {
+        want_children: profile.wantChildren,
+        member: userId,
+      });
+    }
+
+    // livingStatus
+    if (profile.livingStatus) {
+      await axiosQuery.post("/SaveLivingStatus", {
+        living_status: profile.livingStatus,
+        member: userId,
+      });
+    }
+
+    // bodyArt
+    if (profile.bodyArt) {
+      await axiosQuery.post("/SaveBodyArt", {
+        body_art: profile.bodyArt,
+        member: userId,
+      });
+    }
+
+    // religion
+    if (profile.religion) {
+      await axiosQuery.post("/SaveReligion", {
+        religion: profile.religion,
+        member: userId,
+      });
+    }
+
     // nationality
     if (profile.nationality) {
       await axiosQuery.post("/SaveNationality", {
@@ -447,14 +594,6 @@ const saveInformation = async (profile: ProfileContent, userId: number) => {
         member: userId,
       });
     }
-
-    // age
-    // if (profile.age) {
-    //   await axiosQuery.post("/SaveAge", {
-    //     age: profile.age,
-    //     member: userId,
-    //   });
-    // }
 
     // ethnicity
     if (profile.ethnicity) {
@@ -489,22 +628,22 @@ const saveInformation = async (profile: ProfileContent, userId: number) => {
     }
 
     // employmentStatus
-    // if (profile.employmentStatus) {
-    //   await axiosQuery.post("/SaveEmploymentStatus", {
-    //     employmentStatus: profile.employmentStatus,
-    //     member: userId,
-    //   });
-    // }
+    if (profile.employmentStatus) {
+      await axiosQuery.post("/SaveEmploymentStatus", {
+        employment_status: profile.employmentStatus,
+        member: userId,
+      });
+    }
 
-    // // occupation
+    // occupation
     if (profile.occupationTitle) {
       await axiosQuery.post("/SaveOccupation", {
         occupation: profile.occupationTitle,
         member: userId,
       });
     }
-    //
-    // // income_range
+
+    // income_range
     if (profile.income) {
       await axiosQuery.post("/SaveIncome", {
         income: profile.income,
@@ -552,6 +691,7 @@ const saveInformation = async (profile: ProfileContent, userId: number) => {
       });
     }
 
+    // nickname
     if (profile.nickname) {
       await axiosQuery.post("/SaveNickname", {
         nickname: profile.nickname,
@@ -559,13 +699,36 @@ const saveInformation = async (profile: ProfileContent, userId: number) => {
       });
     }
 
-    // state
+    // city
+      await axiosQuery.post("/SaveCity",{
+        city: 2,
+        member: userId,
+      });
+
+    // region
     if (profile.region) {
       await axiosQuery.post("/SaveState", {
         state: profile.region,
         member: userId,
       });
     }
+
+    // interest
+    if (profile.interest) {
+      await axiosQuery.post("/SaveInterest", {
+        interest: profile.interest,
+        member: userId,
+      });
+    }
+
+    // // city
+    // if (profile.city) {
+    //   await axiosQuery.post("/SaveCity", {
+    //     city: profile.city,
+    //     member: userId,
+    //   });
+    // }
+    return {success: "Profile saved successfully!"}
   } catch (error) {
     console.error("Error saving information:", error);
   }
@@ -601,6 +764,7 @@ const profileContentQuery = {
     getWantChildren,
     getWorkout,
     getDisability,
+    getInterests
   },
   saveInformation,
 };

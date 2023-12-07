@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/form";
 import FormSkeletonLoading from "./formSkeletonLoading";
 import selectOptions from "@/zustand/profile/selectData/selectOptions";
-import { BodyArt, BodyType, Eye, FavoriteFood, Hair } from "@/types/profile";
+import { BodyArt, BodyType, Eye, FavoriteFood, Hair, Interest } from "@/types/profile";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -25,7 +25,7 @@ const DetailsForm = () => {
   const { control } = useFormContext();
   const isLoading = profileAboutContentStore((state) => state.isLoading);
   const data = profileAboutContentStore((state) => state.data);
-  const { bodyTypes, favoriteFoods, hair, bodyArts, eyes } = selectOptions();
+  const { bodyTypes, favoriteFoods, hair, interests, bodyArts, eyes } = selectOptions();
   const editMode = profileAboutContentStore((state) => state.editMode);
   const user = useUserStore((state) => state.user);
   if (isLoading) {
@@ -419,6 +419,65 @@ const DetailsForm = () => {
                                   key={favorite_food_id}
                                 >
                                   {favoriteFood}
+                                </SelectItem>
+                              );
+                            })}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  );
+                }}
+                control={control}
+              />
+            </div>
+          )
+          : (
+            <div className="flex flex-row space-x-2 hover:cursor-pointer">
+              <Drumstick
+                color="#727272"
+                size={20}
+                className="hover:cursor-pointer"
+              />
+              <p className="text-[#727272]">
+                {data!.favoriteFood ? data!.favoriteFood : "Add Favorite Food"}
+              </p>
+            </div>
+          )}
+      </div>
+      <div className="flex flex-row justify-between w-full px-5">
+        {editMode || !user?.profile_completed
+          ? (
+            <div className="space-y-1 hover:cursor-pointer w-full items-center">
+              <FormField
+                name="interest"
+                render={({ field }) => {
+                  return (
+                    <FormItem>
+                      <FormLabel
+                        className="text-primary"
+                        htmlFor="interest"
+                      >
+                        Interest
+                      </FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder={"Select interest"} />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {interests &&
+                            interests.map((data: Interest) => {
+                              return (
+                                <SelectItem
+                                  value={data.interest_name}
+                                  key={data.interest_id}
+                                >
+                                  {data.interest_name}
                                 </SelectItem>
                               );
                             })}
