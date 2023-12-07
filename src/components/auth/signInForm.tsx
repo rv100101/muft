@@ -29,7 +29,7 @@ const SignInForm = () => {
   const updateUserAvatar = useUserAvatar((state) => state.setAvatar);
   const updateUserCountry = useUserCountry((state) => state.setCountry);
   const changePasswordResetState = usePasswordResetState(
-    (state) => state.changeState,
+    (state) => state.changeState
   );
   const isModalOpen = usePasswordResetState((state) => state.isModalOpen);
   const setIsModalOpen = usePasswordResetState((state) => state.setIsModalOpen);
@@ -64,7 +64,7 @@ const SignInForm = () => {
         return;
       }
       const profilePhotoData = await authQuery.getProfilePhoto(
-        signInData.data.member_id,
+        signInData.data.member_id
       );
       const countryData: {
         data: {
@@ -97,8 +97,7 @@ const SignInForm = () => {
 
   return (
     <div className="flex h-max sm:w-max flex-col items-center lg:shadow-xl rounded-lg p-8 lg:border space-y-2">
-      {
-        /* <div className="flex w-full justify-end">
+      {/* <div className="flex w-full justify-end">
         <img
           src={helpIcon}
           alt="help icon"
@@ -110,19 +109,16 @@ const SignInForm = () => {
         <p className="text-[#1B2950] text-xs font-bold text-center">
           Enter your E-Mail and Password
         </p>
-      </div> */
-      }
+      </div> */}
       <form
         action="post"
         onSubmit={formik.handleSubmit}
         className="space-y-3 w-full p-2"
       >
         <div className="flex flex-col space-y-1 pt-3">
-          {
-            /* <label htmlFor="email" className="text-xs text-sm text-semibold mb-2">
+          {/* <label htmlFor="email" className="text-xs text-sm text-semibold mb-2">
             Email
-          </label> */
-          }
+          </label> */}
           <div
             className={`flex items-center flex-row border rounded-full h-max py-1 px-5 ${
               formik.touched.email && formik.errors.email
@@ -150,21 +146,17 @@ const SignInForm = () => {
               }`}
             />
           </div>
-          {formik.touched.email && formik.errors.email
-            ? (
-              <div className="error text-xs text-red-500 ml-5 pt-2">
-                {formik.errors.email}
-              </div>
-            )
-            : null}
+          {formik.touched.email && formik.errors.email ? (
+            <div className="error text-xs text-red-500 ml-5 pt-2">
+              {formik.errors.email}
+            </div>
+          ) : null}
         </div>
 
         <div className="flex flex-col justify-center space-y-1 pt-3">
-          {
-            /* <label htmlFor="password" className="text-xs text-semibold mb-2">
+          {/* <label htmlFor="password" className="text-xs text-semibold mb-2">
             Password
-          </label> */
-          }
+          </label> */}
           <div
             className={`flex h-max flex-row border items-center rounded-full py-1 px-5 ${
               formik.touched.password && formik.errors.password
@@ -192,13 +184,11 @@ const SignInForm = () => {
               }`}
             />
           </div>
-          {formik.touched.password && formik.errors.password
-            ? (
-              <div className="error text-red-500 text-xs ml-5 pt-2">
-                {formik.errors.password}
-              </div>
-            )
-            : null}
+          {formik.touched.password && formik.errors.password ? (
+            <div className="error text-red-500 text-xs ml-5 pt-2">
+              {formik.errors.password}
+            </div>
+          ) : null}
         </div>
         <div>
           <Button
@@ -206,14 +196,14 @@ const SignInForm = () => {
             type="submit"
             className={cn(
               "text-white mt-4 h-10 w-full text-sm rounded-full py-2 hover:bg-[#FF599B]/90 mt-5",
-              isLoading ? "bg-[#FF8AB3]" : "bg-primary",
+              isLoading ? "bg-[#FF8AB3]" : "bg-primary"
             )}
           >
-            {isLoading
-              ? <Loader2 className="ml-2 h-full w-full animate-spin" />
-              : (
-                "Sign In"
-              )}
+            {isLoading ? (
+              <Loader2 className="ml-2 h-full w-full animate-spin" />
+            ) : (
+              "Sign In"
+            )}
           </Button>
         </div>
         <div className="w-full">
