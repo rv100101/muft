@@ -33,7 +33,6 @@ import {
 import { useFormContext } from "react-hook-form";
 import moment from "moment-with-locales-es6";
 import { useUserStore } from "@/zustand/auth/user";
-
 const BasicInformationForm = () => {
   const { control } = useFormContext();
   const { nationalities, ethnicities, maritalStatus, languages } =
@@ -58,17 +57,18 @@ const BasicInformationForm = () => {
         {!user?.profile_completed && (
           <div className="space-y-1 my-2 hover:cursor-pointer w-full items-center">
             <FormField
-              name="user"
+              name="nickname"
               render={({ field }) => {
                 return (
                   <FormItem>
-                    <FormLabel className="text-primary" htmlFor="birthInfo">
+                    <FormLabel className="text-primary" htmlFor="nickname">
                       Nickname
                     </FormLabel>
                     <Input
                       onChange={(e) => {
                         field.onChange(e.target.value);
                       }}
+                      value={field.value}
                       type="text"
                       placeholder="Enter Nickname"
                       className="outline-0 border border rounded-lg w-full py-3 px-5"
@@ -135,7 +135,6 @@ const BasicInformationForm = () => {
               <FormField
                 name="nationality"
                 render={({ field }) => {
-                console.log(field);
                   return (
                     <FormItem>
                       <FormLabel className="text-primary" htmlFor="nationality">
@@ -200,6 +199,7 @@ const BasicInformationForm = () => {
                       </FormLabel>
                       <Input
                         placeholder="Enter Religion"
+                        value={field.value}
                         onChange={(e) => {
                           field.onChange(e.target.value);
                         }}
@@ -233,15 +233,18 @@ const BasicInformationForm = () => {
               <FormField
                 name="birthInfo"
                 render={({ field }) => {
+                  console.log(field.value);
                   return (
                     <FormItem>
                       <FormLabel className="text-primary" htmlFor="birthInfo">
                         Birthday
                       </FormLabel>
                       <Input
-                        defaultValue={moment(field.value).format(
-                          "YYYY-MM-DD",
-                        )}
+                        defaultValue={field.value !== ""
+                          ? moment(field.value).format(
+                            "YYYY-MM-DD",
+                          )
+                          : ""}
                         onChange={(e) => {
                           field.onChange(e.target.value);
                         }}

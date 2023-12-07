@@ -11,7 +11,14 @@ import useAboutErrorsStrore from "@/zustand/profile/about/useAboutErrorsStore";
 import { cn } from "@/lib/utils";
 
 const AboutAccordionContent = () => {
-  const tabsWithErrors = useAboutErrorsStrore((state) => state.tabsWithErrors);
+  const {
+    basicInfoHasErrors,
+    detailsInfoHasErrors,
+    locationHasErrors,
+    workAndEducationHasErrors,
+    additionalInfoHasErrors,
+  } = useAboutErrorsStrore();
+
   const [activeTabs, setActiveTabs] = useState([
     false,
     true,
@@ -20,8 +27,6 @@ const AboutAccordionContent = () => {
     false,
     false,
   ]);
-
-  console.log(tabsWithErrors);
 
   const toggleTab = (index: number) => {
     const newActiveTabs = activeTabs.map((_, i) => i === index);
@@ -43,10 +48,10 @@ const AboutAccordionContent = () => {
           <p
             className={cn(
               "text-md hover:cursor-pointer select-none lg:block hidden",
-              tabsWithErrors.includes(1) && "text-red-500",
+              basicInfoHasErrors && "text-red-500",
             )}
           >
-            Basic Information {tabsWithErrors.includes(1) && (
+            Basic Information {basicInfoHasErrors && (
               <span>
                 <AlertCircle className="h-4 inline-flex text-red-500" />
               </span>
@@ -67,10 +72,10 @@ const AboutAccordionContent = () => {
           <p
             className={cn(
               "text-md hover:cursor-pointer select-none lg:block hidden",
-              tabsWithErrors.includes(2) && "text-red-500",
+              workAndEducationHasErrors && "text-red-500",
             )}
           >
-            Work and Education {tabsWithErrors.includes(2) && (
+            Work and Education {workAndEducationHasErrors && (
               <span>
                 <AlertCircle className="h-4 inline-flex text-red-500" />
               </span>
@@ -91,10 +96,10 @@ const AboutAccordionContent = () => {
           <p
             className={cn(
               "text-md hover:cursor-pointer select-none lg:block hidden",
-              tabsWithErrors.includes(3) && "text-red-500",
+              detailsInfoHasErrors && "text-red-500",
             )}
           >
-            Details about you {tabsWithErrors.includes(3) && (
+            Details about you {detailsInfoHasErrors && (
               <span>
                 <AlertCircle className="h-4 inline-flex text-red-500" />
               </span>
@@ -115,10 +120,10 @@ const AboutAccordionContent = () => {
           <p
             className={cn(
               "text-md hover:cursor-pointer select-none lg:block hidden",
-              tabsWithErrors.includes(4) && "text-red-500",
+              locationHasErrors && "text-red-500",
             )}
           >
-            Location {tabsWithErrors.includes(4) && (
+            Location {locationHasErrors && (
               <span>
                 <AlertCircle className="h-4 inline-flex text-red-500" />
               </span>
@@ -139,10 +144,10 @@ const AboutAccordionContent = () => {
           <p
             className={cn(
               "text-md hover:cursor-pointer select-none lg:block hidden",
-              tabsWithErrors.includes(5) && "text-red-500",
+              additionalInfoHasErrors && "text-red-500",
             )}
           >
-            Additional Information {tabsWithErrors.includes(5) && (
+            Additional Information {additionalInfoHasErrors && (
               <span>
                 <AlertCircle className="h-4 inline-flex text-red-500" />
               </span>

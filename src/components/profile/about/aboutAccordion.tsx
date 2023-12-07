@@ -39,8 +39,9 @@ import {
 import selectOptions from "@/zustand/profile/selectData/selectOptions";
 import { useLocation } from "wouter";
 import { useUserStore } from "@/zustand/auth/user";
+import useSelectedCountryStore from "@/zustand/profile/location/selectedCountry";
 const AboutAccordion = ({ userId }: { userId: number }) => {
-  const { data } = profileAboutContentStore();
+  const selectedCountry = useSelectedCountryStore(state=> state.selectedCountry);
   const setIsLoading = profileAboutContentStore((state) => state.setIsLoading);
   const setAboutData = profileAboutContentStore((state) => state.setData);
   const setEditModeFalse = profileAboutContentStore((state) =>
@@ -60,7 +61,6 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
     setBodyTypes,
     setCountries,
     setStates,
-    selectedCountryCode,
     setHair,
     setHaveChildren,
     setWantChildren,
@@ -315,24 +315,15 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
   });
   const user = useUserStore((state) => state.user);
 
-  const {
-    countries,
-  } = selectOptions();
-
-  const getCountryData = (name: string | null) => {
-    if (name) {
-      return countries.find((c) => c.country_name === name);
-    }
-    return null;
-  };
-
   useQuery({
     queryFn: () =>
       profileContentQuery.editOptions.getStates(
-        getCountryData(data ? data.country : null)?.country_code ?? "",
+        selectedCountry,
       ),
-    queryKey: ["states", selectedCountryCode],
+    queryKey: ["states", selectedCountry],
     onSuccess: (data: State[]) => {
+      console.log(data);
+      
       setStates(data);
     },
   });

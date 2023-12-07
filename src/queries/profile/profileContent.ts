@@ -18,11 +18,11 @@ const fetchAdditionalInformation = async (userId: number) => {
     const maritalStatus = await axiosQuery.post("/GetMaritalStatus", {
       member: userId,
     });
-    
+
     const health = await axiosQuery.post("/GetHealth", {
       member: userId,
     });
-  
+
     const pets = await axiosQuery.post("/GetPets", {
       member: userId,
     });
@@ -30,7 +30,6 @@ const fetchAdditionalInformation = async (userId: number) => {
     const lifestyle = await axiosQuery.post("/GetLifestyle", {
       member: userId,
     });
-
 
     let additionalInformation: Record<string, string> = {
       haveChildren: maritalStatus.data.have_children_name,
@@ -42,13 +41,11 @@ const fetchAdditionalInformation = async (userId: number) => {
       smoking: lifestyle.data.smoke_name,
       livingStatus: lifestyle.data.living_status_name,
       car: lifestyle.data.car_name,
-    }
-
+    };
 
     additionalInformation = removeNull(additionalInformation);
 
     return additionalInformation;
-
   } catch (error) {
     console.log(error);
     return {
@@ -67,21 +64,30 @@ const fetchBasicInfoInitialData = async (userId: number) => {
       member: userId,
     });
 
-    const languagesResponse: { data: [] } = await axiosQuery.post(
-      "/GetLanguages",
-      { member: userId },
-    );
+    const languagesResponse: { data: { language_name: string }[] } =
+      await axiosQuery.post(
+        "/GetLanguages",
+        { member: userId },
+      );
 
-    const { gender, nationality, date_of_birth, age } = basic.data;
+    const { gender, nationality, date_of_birth, nickname } = basic.data;
     const { religion_name, ethnicity_name } = background.data;
     const { marital_status_name } = maritalStatus.data;
 
     let language = null;
-    if (languagesResponse.data.length > 0) {
+    console.log(languagesResponse.data);
+
+    if (
+      languagesResponse.data.length !== 0 && languagesResponse.data.length > 1
+    ) {
       language = languagesResponse.data[languagesResponse.data.length - 1];
     }
 
-    const formattedDate = new Date(date_of_birth).toLocaleDateString("en-US", {
+    if (languagesResponse.data.length === 1) {
+      language = languagesResponse.data[0];
+    }
+
+    const formattedDate = date_of_birth === null ? '' : new Date(date_of_birth).toLocaleDateString("en-US", {
       year: "numeric",
       month: "long",
       day: "numeric",
@@ -91,11 +97,11 @@ const fetchBasicInfoInitialData = async (userId: number) => {
       gender: gender,
       nationality: nationality,
       birthInfo: formattedDate,
-      age: age,
+      nickname: nickname,
       religion: religion_name,
       ethnicity: ethnicity_name,
       maritalStatus: marital_status_name,
-      language: language!.language_name ? language!.language_name : null,
+      language: language?.language_name ?? "",
     };
 
     basicInformation = removeNull(basicInformation);

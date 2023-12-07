@@ -19,8 +19,10 @@ import {
 import { useFormContext } from "react-hook-form";
 import { Country, State } from "@/types/profile";
 import { useUserStore } from "@/zustand/auth/user";
+import useSelectedCountryStore from "@/zustand/profile/location/selectedCountry";
 
 const LocationForm = () => {
+  const setSelectedCountry = useSelectedCountryStore(state => state.setSelectedCountry);
   const { control } = useFormContext();
   const isLoading = profileAboutContentStore((state) => state.isLoading);
   const data = profileAboutContentStore((state) => state.data);
@@ -68,6 +70,7 @@ const LocationForm = () => {
                           field.onChange(e);
                           const country = getCountryData(e);
                           setSelectedCountryCode(country!.country_code);
+                          setSelectedCountry(country!.country_code)
                         }}
                         defaultValue={field.value}
                       >

@@ -48,7 +48,6 @@ const WorkEducationForm = () => {
                 name="education"
                 render={({ field }) => {
                   console.log(field);
-                  
                   return (
                     <FormItem>
                       <FormLabel className="text-primary" htmlFor="education">

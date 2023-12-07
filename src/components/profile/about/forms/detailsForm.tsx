@@ -258,13 +258,13 @@ const DetailsForm = () => {
           ? (
             <div className="space-y-1 hover:cursor-pointer w-full items-center">
               <FormField
-                name="eye"
+                name="eyes"
                 render={({ field }) => {
                   return (
                     <FormItem>
                       <FormLabel
                         className="text-primary"
-                        htmlFor="favoriteFood"
+                        htmlFor="eyes"
                       >
                         Eyes
                       </FormLabel>
