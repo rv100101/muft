@@ -73,10 +73,13 @@ const profileAboutContentStore = create<ProfileAboutState>((set) => ({
       isLoading: val,
     })),
   editMode: false,
-  toggleEditMode: () =>
+  toggleEditMode: () => {
+    console.log("this is triggered");
     set((state) => ({
       editMode: !state.editMode,
-    })),
+    }));
+  },
+
   setEditModeFalse: () =>
     set(() => ({
       editMode: false,

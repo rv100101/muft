@@ -15,18 +15,14 @@ import { useQueryClient } from "@tanstack/react-query";
 import { ToastAction } from "@/components/ui/toast";
 import { toast } from "@/components/ui/use-toast";
 import { Dialog } from "@radix-ui/react-dialog";
-import {
-  DialogContent,
-} from "@/components/ui/dialog";
+import { DialogContent } from "@/components/ui/dialog";
 import ActivateAccount from "./accountActivationPage";
 
 const ProfilePageBody = ({ userId }: { userId: string }) => {
-  const { toggleEditMode } = profileAboutContentStore();
   const headerValues = profileHeaderStore((state) => state.headerValues);
   const { data } = profileAboutContentStore();
   const { setIsSaving } = profileAboutContentStore();
   const { user } = useUserStore();
-  console.log("TCL: ProfilePageBody -> user", user);
   const updateUser = useUserStore((state) => state.updateUser);
   const queryClient = useQueryClient();
   const methods = useForm({
@@ -36,7 +32,6 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
   const [open] = useState(true);
   useEffect(() => {
     if (data && headerValues) {
-      console.log(data);
       methods.reset({
         gender: data.gender,
         nationality: data.nationality,
@@ -108,7 +103,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
 
   const getNationality = (nationalityName: string) =>
     nationalities.find(
-      (nationality) => nationality.nationality === nationalityName,
+      (nationality) => nationality.nationality === nationalityName
     );
 
   const getEducation = (name: string) =>
@@ -171,7 +166,6 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
     workout.find((s) => s.workout_name === name);
 
   const onSubmit = async (formData: any) => {
-    console.log(formData);
     // return;
     // if (!methods.formState.isDirty) {
     //   toggleEditMode();
@@ -233,7 +227,6 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
         religion: 1,
         employmentStatus: 2,
       };
-      console.log(finalFormData);
       await profileContentQuery.saveInformation(finalFormData, user!.member_id);
       updateUser({ ...user, profile_completed: true } as User);
       queryClient.invalidateQueries(["profileHeader", "profileContent"]);
@@ -241,7 +234,6 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
       console.log(error);
     }
     setIsSaving(false);
-    toggleEditMode();
   };
   useEffect(() => {
     if (Object.getOwnPropertyNames(methods.formState.errors).length > 0) {
@@ -255,16 +247,15 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
   }, [methods.formState.errors]);
   return (
     <div className="flex h-screen flex-col justify-start w-full lg:w-3/4 border mx-auto">
-      {!user!.is_active &&
-        (
-          <div className="h-full overflow-y-scroll flex flex-col">
-            <Dialog open={open}>
-              <DialogContent className="sm:max-w-md opacity-100">
-                <ActivateAccount />
-              </DialogContent>
-            </Dialog>
-          </div>
-        )}
+      {!user!.is_active && (
+        <div className="h-full overflow-y-scroll flex flex-col">
+          <Dialog open={open}>
+            <DialogContent className="sm:max-w-md opacity-100">
+              <ActivateAccount />
+            </DialogContent>
+          </Dialog>
+        </div>
+      )}
       <FormProvider {...methods}>
         <form
           className="flex flex-col h-full"
