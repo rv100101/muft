@@ -1,5 +1,5 @@
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
-import { Briefcase, MapPin } from "lucide-react";
+import { Map, MapPin } from "lucide-react";
 import FormSkeletonLoading from "./formSkeletonLoading";
 import {
   FormControl,
@@ -97,14 +97,17 @@ const LocationForm = () => {
           </div>
         ) : (
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
-            <MapPin
-              color="#727272"
-              size={20}
-              className="hover:cursor-pointer"
+            <Map
+              color="#ff5c9d"
+              size={30}
+              className="hover:cursor-pointer mt-2 mr-3"
             />
-            <p className="text-[#727272]">
-              {data!.country ? data!.country : "Add country info"}
-            </p>
+            <div className="flex flex-col justify-start space-y-1">
+              <p className="font-bold text-base text-primary">
+                {data!.country ? data!.country : "Add country info"}
+              </p>
+              <p className="text-[#727272] text-xs">Country</p>
+            </div>
           </div>
         )}
       </div>
@@ -148,14 +151,18 @@ const LocationForm = () => {
           </div>
         ) : (
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
-            <Briefcase
-              color="#727272"
-              size={20}
-              className="hover:cursor-pointer"
+            <MapPin
+              color="#ff5c9d"
+              size={30}
+              className="hover:cursor-pointer mt-2 mr-3"
             />
-            <p className="text-[#727272]">
-              {data!.region ? data!.region : "Add Region Info"}
-            </p>
+
+            <div className="flex flex-col justify-start space-y-1">
+              <p className="font-bold text-base text-primary">
+                {data!.region ? data!.region : "Add Region Info"}
+              </p>
+              <p className="text-[#727272] text-xs">Region</p>
+            </div>
           </div>
         )}
       </div>

@@ -265,7 +265,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
           onSubmit={methods.handleSubmit(onSubmit)}
         >
           <ProfileTopNav />
-          <div className="h-full overflow-y-scroll flex flex-col">
+          <div className="h-full overflow-y-scroll flex flex-col no-scrollbar">
             <Dialog open={open} onOpenChange={setOpen}>
               <DialogContent className="sm:max-w-md opacity-100">
                 <DialogHeader>

@@ -307,14 +307,14 @@ const HomePage = () => {
 
                 <div className="flex flex-row justify-between items-center mt-5">
                   <p className="px-5 text-sm">Age</p>
-                  <p className="px-5 text-sm">{`${debouncedAgeFilterVal}-60`}</p>
+                  <p className="px-5 text-sm">{`${ageSliderVal}-60`}</p>
                 </div>
                 {/* <form action="post" onSubmit={formik.handleSubmit}> */}
                 <div className="flex flex-row justify-center align-center py-5">
                   <Slider
                     // defaultValue={[50]}
                     defaultValue={[ageSliderVal]}
-                    max={100}
+                    max={60}
                     step={1}
                     className="w-full px-5"
                     onValueChange={handleSliderChange}
