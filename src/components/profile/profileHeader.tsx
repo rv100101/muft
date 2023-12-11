@@ -28,8 +28,12 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
     (state) => state.conversation
   );
   const [showCamera, setShowCamera] = useState(false);
-  const headerValues = profileHeaderStore((state) => state.headerValues);
-  const setHeaderValues = profileHeaderStore((state) => state.setHeaderValues);
+  const {
+    headerValues,
+    setHeaderValues,
+    profileHeaderValues,
+    setProfileHeaderValues,
+  } = profileHeaderStore();
   const fetchInitialData = async () =>
     await profileQuery.getProfileHeader(parseInt(userId));
   const user = useUserStore((state) => state.user);
@@ -45,14 +49,28 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
-  const { isLoading, isRefetching } = useQuery({
+
+  useEffect(() => {
+    if (profileHeaderValues && user!.member_id.toString() == userId) {
+      console.log("changed");
+
+      setHeaderValues(profileHeaderValues);
+    }
+  }, [profileHeaderValues, setProfileHeaderValues, user, userId]);
+
+  const { isLoading } = useQuery({
     queryKey: ["profileHeader", userId],
     queryFn: fetchInitialData,
     refetchInterval: Infinity,
     refetchOnWindowFocus: false,
     onSuccess: (data: ProfileHeaderType | null) => {
       if (data) {
-        setHeaderValues(data);
+        if (userId !== user!.member_id.toString()) {
+          setHeaderValues(data);
+        }
+        if (user!.member_id.toString() === userId) {
+          setProfileHeaderValues(data);
+        }
       }
     },
   });
@@ -106,7 +124,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
     setSelectedHistoryMemberId(parseInt(userId));
   }, [userId, headerValues]);
 
-  if (isLoading || isRefetching) {
+  if (isLoading) {
     return <ProfileHeaderSkeleton />;
   }
 
@@ -291,7 +309,13 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                         "hover:bg-green-400/80 bg-green-400"
                       )}
                     >
-                      <p>Save</p>
+                      Save
+                      {isSaving &&
+                        (
+                          <span>
+                            <Loader2 className="ml-2 h-6 w-6 animate-spin" />
+                          </span>
+                        )}
                     </Button>
                     <Button
                       type={"button"}

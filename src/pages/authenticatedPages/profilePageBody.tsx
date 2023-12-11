@@ -19,7 +19,6 @@ import { DialogContent } from "@/components/ui/dialog";
 import ActivateAccount from "./accountActivationPage";
 
 const ProfilePageBody = ({ userId }: { userId: string }) => {
-  // const [isSaving, setSaving] = useState(false);
   const headerValues = profileHeaderStore((state) => state.headerValues);
   const { data } = profileAboutContentStore();
   const { setIsSaving } = profileAboutContentStore();
@@ -235,7 +234,6 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
       console.log(error);
     }
     setIsSaving(false);
-    // toggleEditMode();
   };
   useEffect(() => {
     if (Object.getOwnPropertyNames(methods.formState.errors).length > 0) {

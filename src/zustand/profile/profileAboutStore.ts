@@ -38,6 +38,8 @@ export type ProfileAbout = {
 interface ProfileAboutState {
   data: ProfileAbout | null;
   setData: (val: ProfileAbout) => void;
+  profileData: ProfileAbout | null;
+  setProfileData: (val: ProfileAbout) => void;
   isLoading: boolean;
   setIsLoading: (val: boolean) => void;
   refetch: boolean;
@@ -54,6 +56,11 @@ const profileAboutContentStore = create<ProfileAboutState>((set) => ({
   setData: (val) =>
     set(() => ({
       data: val,
+    })),
+  profileData: null,
+  setProfileData: (val) =>
+    set(() => ({
+      profileData: val,
     })),
   isLoading: false,
   setIsLoading: (val) =>
