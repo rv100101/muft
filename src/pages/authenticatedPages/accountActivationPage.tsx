@@ -1,12 +1,21 @@
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import accountActivationQuery from "@/queries/accountActivation";
-import { useUserStore } from "@/zustand/auth/user";
-import { Loader2 } from "lucide-react";
+import { User, useUserStore } from "@/zustand/auth/user";
+import { Loader2, LogOutIcon } from "lucide-react";
 import { useState } from "react";
 import { useLocation } from "wouter";
 import * as Yup from "yup";
 import { Field, Form, Formik } from "formik";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { DialogClose } from "@radix-ui/react-dialog";
 const pinSchema = Yup.object().shape({
   pin: Yup.string().required(),
 });
@@ -14,12 +23,11 @@ const pinSchema = Yup.object().shape({
 const ActivateAccount = () => {
   const [, setLocation] = useLocation();
   const [activateIsLoading, setActivateIsLoading] = useState(false);
-
+  const { updateUser, user, reset } = useUserStore();
   type FormDataType = {
     pin: string;
   };
 
-  const user = useUserStore((state) => state.user);
   // const handleResendPin = async () => {
   //   setResendPinIsLoading(true);
   //   try {
@@ -65,6 +73,7 @@ const ActivateAccount = () => {
           description: "Please try again",
         });
       } else {
+        updateUser({ ...user, is_active: true } as User);
         toast({
           duration: 1500,
           title: "Well Done",
@@ -94,12 +103,15 @@ const ActivateAccount = () => {
       {({ errors, touched }) => (
         <Form className="py-5 px-3">
           {/* <div className="h-min w-96 border shadow-xl p-8 space-y-2"> */}
-          <p className="w-full text-sm font-semibold pb-5">
-            We sent an Activation PIN to your email
-            <br />
+          <p className="w-full text-sm font-semibold pb-2">
+            You need to activate your account to unlock all app features.
+          </p>
+          <p className="w-full text-sm font-semibold pb-2">
+            We have sent an Activation PIN to your email.
+          </p>
+          <p className="my-4 text-sm">
             Please enter the PIN below:
           </p>
-
           <div
             className={`flex items-center flex-row border rounded-full h-max py-1 px-5 ${
               touched.pin && errors.pin ? "border-rose-500 p-0" : ""
@@ -107,7 +119,7 @@ const ActivateAccount = () => {
           >
             <Field
               name="pin"
-              className="w-full decoration-none p-2 border-0 outline-0"
+              className="w-full decoration-none text-sm py-2  border-0 outline-0"
               type="number"
               placeholder="Activation PIN"
             />
@@ -115,24 +127,53 @@ const ActivateAccount = () => {
           {errors.pin
             ? <p className="text-red-500 text-xs pl-2 pt-3">{errors.pin}</p>
             : null}
-          <div className="flex w-full justify-end space-x-2 py-4">
-            <div className="flex-col items-center w-max h-full">
-              {
-                // <Button
-                //   type="button"
-                //   disabled={(timer && timer <= 90 && timer > 0) ||
-                //     resendPinIsLoading}
-                //   onClick={handleResendPin}
-                //   className="text-xs w-full"
-                //   variant={"outline"}
-                // >
-                //   Send PIN{" "}
-                //   {resendPinIsLoading && (
-                //     <Loader2 className="ml-2 h-4 w-4 animate-spin" />
-                //   )}
-                // </Button>
-              }
-            </div>
+          <div className="flex w-full justify-between items-center space-x-2 py-4">
+            {
+              // <Button
+              //   type="button"
+              //   disabled={(timer && timer <= 90 && timer > 0) ||
+              //     resendPinIsLoading}
+              //   onClick={handleResendPin}
+              //   className="text-xs w-full"
+              //   variant={"outline"}
+              // >
+              //   Send PIN{" "}
+              //   {resendPinIsLoading && (
+              //     <Loader2 className="ml-2 h-4 w-4 animate-spin" />
+              //   )}
+              // </Button>
+            }
+            {!user?.profile_completed && (
+              <Dialog>
+                <DialogTrigger>
+                  <div className="border p-3 rounded-lg flex space-x-2 my-4">
+                    {<LogOutIcon size={20} className="text-primary" />}{" "}
+                    <p className="text-sm">Sign out</p>
+                  </div>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-md opacity-100">
+                  <DialogHeader>
+                    <DialogTitle>
+                      Are you sure you want to sign out?
+                    </DialogTitle>
+                  </DialogHeader>
+                  <DialogFooter className="sm:justify-start">
+                    <Button className="hover:bg-primary" onClick={reset}>
+                      Yes
+                    </Button>
+                    <DialogClose asChild>
+                      <Button
+                        className="text-white hover:bg-secondary"
+                        type="button"
+                        variant="secondary"
+                      >
+                        No
+                      </Button>
+                    </DialogClose>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
+            )}
             <Button
               disabled={activateIsLoading}
               type="submit"
