@@ -256,7 +256,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
   }, [methods.formState.errors]);
   return (
     <div className="flex h-screen flex-col justify-start w-full lg:w-3/4 border mx-auto">
-      {!user!.is_active &&
+      {user!.is_active &&
         (
           <div className="h-full overflow-y-scroll flex flex-col">
             <Dialog open={open}>

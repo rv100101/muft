@@ -4,7 +4,6 @@ import accountActivationQuery from "@/queries/accountActivation";
 import { User, useUserStore } from "@/zustand/auth/user";
 import { Loader2, LogOutIcon } from "lucide-react";
 import { useState } from "react";
-import { useLocation } from "wouter";
 import * as Yup from "yup";
 import { Field, Form, Formik } from "formik";
 import {
@@ -21,42 +20,40 @@ const pinSchema = Yup.object().shape({
 });
 
 const ActivateAccount = () => {
-  const [, setLocation] = useLocation();
+  const [resendPinIsLoading, setResendPinIsLoading] = useState(false);
   const [activateIsLoading, setActivateIsLoading] = useState(false);
   const { updateUser, user, reset } = useUserStore();
   type FormDataType = {
     pin: string;
   };
 
-  // const handleResendPin = async () => {
-  //   setResendPinIsLoading(true);
-  //   try {
-  //     setTimer(90);
-  //     const res = await accountActivationQuery.resendPin(user!.email_address);
-  //
-  //     if (res.data == "") {
-  //       toast({
-  //         variant: "destructive",
-  //         title: "Something went wrong",
-  //         description: "Please try again",
-  //       });
-  //       setStartTimer(false);
-  //     } else {
-  //       toast({
-  //         title: "Successfuly sent a new PIN",
-  //         description: "Please check your email",
-  //       });
-  //       setStartTimer(true);
-  //     }
-  //   } catch (e) {
-  //     toast({
-  //       variant: "destructive",
-  //       title: "Something went wrong",
-  //       description: "Please try again",
-  //     });
-  //   }
-  //   setResendPinIsLoading(false);
-  // };
+  const handleResendPin = async () => {
+    setResendPinIsLoading(true);
+    try {
+      const res = await accountActivationQuery.resendPin(user!.email_address);
+
+      if (res.data == "") {
+        toast({
+          variant: "destructive",
+          title: "Something went wrong",
+          description: "Please try again",
+        });
+      } else {
+        toast({
+          variant: "success",
+          title: "Successfuly sent a new PIN",
+          description: "Please check your email",
+        });
+      }
+    } catch (e) {
+      toast({
+        variant: "destructive",
+        title: "Something went wrong",
+        description: "Please try again",
+      });
+    }
+    setResendPinIsLoading(false);
+  };
 
   const handleActivate = async ({ pin }: FormDataType) => {
     setActivateIsLoading(true);
@@ -77,9 +74,8 @@ const ActivateAccount = () => {
         toast({
           duration: 1500,
           title: "Well Done",
-          description: "User Verified!",
+          description: "Account Verified!",
         });
-        setLocation("/");
       }
     } catch (error) {
       console.log(error);
@@ -128,21 +124,6 @@ const ActivateAccount = () => {
             ? <p className="text-red-500 text-xs pl-2 pt-3">{errors.pin}</p>
             : null}
           <div className="flex w-full justify-between items-center space-x-2 py-4">
-            {
-              // <Button
-              //   type="button"
-              //   disabled={(timer && timer <= 90 && timer > 0) ||
-              //     resendPinIsLoading}
-              //   onClick={handleResendPin}
-              //   className="text-xs w-full"
-              //   variant={"outline"}
-              // >
-              //   Send PIN{" "}
-              //   {resendPinIsLoading && (
-              //     <Loader2 className="ml-2 h-4 w-4 animate-spin" />
-              //   )}
-              // </Button>
-            }
             {!user?.profile_completed && (
               <Dialog>
                 <DialogTrigger>
@@ -174,18 +155,33 @@ const ActivateAccount = () => {
                 </DialogContent>
               </Dialog>
             )}
-            <Button
-              disabled={activateIsLoading}
-              type="submit"
-              className="text-xs hover:bg-[#FF599B]/90"
-            >
-              Activate{" "}
-              {activateIsLoading && (
-                <Loader2 className="ml-2 h-4 w-4 animate-spin" />
-              )}
-            </Button>
+
+            <div className="flex justify-center items-center space-x-2">
+              <Button
+                type="button"
+                disabled={resendPinIsLoading}
+                onClick={handleResendPin}
+                className="text-xs w-full"
+                variant={"outline"}
+              >
+                Resend PIN{" "}
+                {resendPinIsLoading && (
+                  <Loader2 className="ml-2 h-4 w-4 animate-spin" />
+                )}
+              </Button>
+
+              <Button
+                disabled={activateIsLoading}
+                type="submit"
+                className="text-xs hover:bg-[#FF599B]/90"
+              >
+                Activate{" "}
+                {activateIsLoading && (
+                  <Loader2 className="ml-2 h-4 w-4 animate-spin" />
+                )}
+              </Button>
+            </div>
           </div>
-          {/* </div> */}
         </Form>
       )}
     </Formik>
