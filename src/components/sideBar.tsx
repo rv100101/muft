@@ -17,8 +17,12 @@ import {
 import { Button } from "./ui/button";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { scrollToTop } from "@/lib/utils";
+import useConversationHistoryStore from "@/zustand/messaging/showConversation";
 
 const SideBar = () => {
+  const reset = useConversationHistoryStore(
+    (state) => state.resetToNull,
+  );
   const signOut = useUserStore((state) => state.reset);
   const setSelectedProfileId = useHomepageViewStore(
     (state) => state.setSelectedProfileId,
@@ -45,6 +49,10 @@ const SideBar = () => {
             if (link.name == "My Profile") {
               setSelectedProfileId(null);
               queryClient.invalidateQueries({ queryKey: ["profileHeader"] });
+            }
+            if (link.name === 'Messages') {
+              setSelectedProfileId(null);
+              reset();
             }
           }}
         >

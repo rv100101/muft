@@ -20,10 +20,14 @@ interface ConversationHistory {
   ) => void;
   selectedHistoryMemberId: number | null;
   setSelectedHistoryMemberId: (val: number | null) => void;
+  resetToNull: ()=> void
 }
 
 const useConversationHistoryStore = create<ConversationHistory>((set) => ({
   conversation: null,
+  resetToNull: ()=> set(()=> ({
+    conversation: null
+  })),
   setConversation: (
     memberId,
     conversationId,

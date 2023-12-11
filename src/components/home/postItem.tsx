@@ -95,19 +95,16 @@ const PostItem = ({
             <img
               src={image}
               alt="post-img"
-              // width={520}
               className="rounded-t-xl lg:w-[460px] w-[350px] h-[554px] xl:h-[454px] xl:w-[400px] object-cover"
               onClick={() => handlePostItemClick()}
-              // height={1000}
-              // className="h-2/4 "
             />
             <div className="absolute bottom-0 w-full">
               <div className="flex flex-row w-full justify-between ">
-                <div className="flex flex-col p-8 hover:underline hover:cursor-pointer">
-                  <p
-                    className="text-white text-2xl 2xl:text-3xl mb-3  select-none"
-                    onClick={() => handlePostItemClick()}
-                  >
+                <div
+                  onClick={() => handlePostItemClick()}
+                  className="flex flex-col p-8 hover:underline hover:cursor-pointer"
+                >
+                  <p className="text-white text-2xl 2xl:text-3xl mb-3  select-none">
                     {nickname}
                   </p>
                   {/* <p className="text-white text-sm">{countryName}</p> */}
@@ -121,13 +118,11 @@ const PostItem = ({
                       <TooltipTrigger>
                         <Heart
                           color="#FF599B"
-                          fill={
-                            isLiked && !likeTriggered
-                              ? "#FF599B"
-                              : !isLiked && likeTriggered
-                              ? "#FF599B"
-                              : "white"
-                          }
+                          fill={isLiked && !likeTriggered
+                            ? "#FF599B"
+                            : !isLiked && likeTriggered
+                            ? "#FF599B"
+                            : "white"}
                           strokeWidth={1.5}
                           stroke={!isLiked ? "#FF599B" : "white"}
                           size={50}
@@ -135,8 +130,7 @@ const PostItem = ({
                             toggleLike.mutate({
                               member: user!.member_id,
                               liked: member_id,
-                            })
-                          }
+                            })}
                           className="mt-1 hover:cursor-pointer transition duration-300 ease-in-out"
                         />
                       </TooltipTrigger>
@@ -148,13 +142,11 @@ const PostItem = ({
                       <TooltipTrigger>
                         <Star
                           color="#FF599B"
-                          fill={
-                            isFavorite && !favoriteTriggered
-                              ? "#FF599B"
-                              : !isFavorite && favoriteTriggered
-                              ? "#FF599B"
-                              : "white"
-                          }
+                          fill={isFavorite && !favoriteTriggered
+                            ? "#FF599B"
+                            : !isFavorite && favoriteTriggered
+                            ? "#FF599B"
+                            : "white"}
                           // stroke={!isFavorite ? "#FF599B" : "white"}
                           size={50}
                           strokeWidth={1.5}
@@ -162,8 +154,7 @@ const PostItem = ({
                             toggleFavorite.mutate({
                               member: user!.member_id,
                               favored: member_id,
-                            })
-                          }
+                            })}
                           className="mt-1 hover:cursor-pointer transition duration-300 ease-in-out mr-4"
                         />
                       </TooltipTrigger>

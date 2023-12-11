@@ -1,4 +1,3 @@
-// import { buttons } from "@/lib/chatButtons";
 import { Button } from "../ui/button";
 import { ArrowLeftIcon } from "lucide-react";
 import useMobileMessagingViewStore from "@/zustand/messaging/mobileStateView";
@@ -16,8 +15,6 @@ const MessageHeader = () => {
   const currentConversationData = useConversationHistoryStore(
     (state) => state.conversation,
   );
-
-  console.log(currentConversationData);
 
   return (
     <div className="flex justify-between h-16 w-full items-center border-b p-2">
