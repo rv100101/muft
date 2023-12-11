@@ -22,10 +22,10 @@ import { Link, useLocation } from "wouter";
 const ProfileHeader = ({ userId }: { userId: string }) => {
   const [location] = useLocation();
   const setSelectedConversation = useLatestConversationStore(
-    (state) => state.setConversation,
+    (state) => state.setConversation
   );
   const selectedConversation = useLatestConversationStore(
-    (state) => state.conversation,
+    (state) => state.conversation
   );
   const [showCamera, setShowCamera] = useState(false);
   const headerValues = profileHeaderStore((state) => state.headerValues);
@@ -34,10 +34,10 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
     await profileQuery.getProfileHeader(parseInt(userId));
   const user = useUserStore((state) => state.user);
   const toggleEditMode = profileAboutContentStore(
-    (state) => state.toggleEditMode,
+    (state) => state.toggleEditMode
   );
   const setSelectedHistoryMemberId = useLatestConversationStore(
-    (state) => state.setSelectedHistoryMemberId,
+    (state) => state.setSelectedHistoryMemberId
   );
   const { formState } = useFormContext();
   const isSaving = profileAboutContentStore((state) => state.isSaving);
@@ -74,7 +74,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
         };
       } = await messagingQuery.getConversation(
         user!.member_id,
-        parseInt(userId),
+        parseInt(userId)
       );
 
       console.log(res);
@@ -86,7 +86,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
         headerValues?.gender!,
         res.data.recipient_uuid,
         res.data.recipient_nickname!,
-        res.data.conversation_uuid,
+        res.data.conversation_uuid
       );
 
       return res.data.conversation_uuid;
@@ -133,9 +133,8 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
       setIsUploading(true);
       const res = await uploadQueries.uploadProfilePicture(
         selectedFile!,
-        user!.member_id,
+        user!.member_id
       );
-      console.log(res);
       setHeaderValues({
         ...headerValues,
         gallery_uuid: res.data[0].gallery_uuid,
@@ -170,15 +169,20 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
               onClick={handleGalleryUpload}
             >
               {showCamera && <CameraIcon className="absolute" fill="pink" />}
-              {isUploading &&
-                <Loader2 className="absolute animate-spin text-primary" />}
+              {isUploading && (
+                <Loader2 className="absolute animate-spin text-primary" />
+              )}
               <img
                 className={`select-none object-cover h-32 w-32 overflow-clip border-4 border-primary rounded-full`}
-                src={selectedFile ? selectedFile : getImagePath(
-                  headerValues.gallery_uuid,
-                  headerValues.gender,
-                  headerValues.member_uuid?.toString(),
-                )}
+                src={
+                  selectedFile
+                    ? selectedFile
+                    : getImagePath(
+                        headerValues.gallery_uuid,
+                        headerValues.gender,
+                        headerValues.member_uuid?.toString()
+                      )
+                }
                 alt="no image selected"
               />
               <input
@@ -215,9 +219,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                       {headerValues.nickname}
                     </p>
                     {!isEditing && (
-                      <p
-                        className={`text-[#727272] text-sm`}
-                      >
+                      <p className={`text-[#727272] text-sm`}>
                         @{`${headerValues.nickname?.toLowerCase()}`}
                       </p>
                     )}
@@ -246,9 +248,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                   render={({ field }) => {
                     return (
                       <FormItem>
-                        <FormLabel className="text-primary">
-                          Nickname
-                        </FormLabel>
+                        <FormLabel className="text-primary">Nickname</FormLabel>
                         <Input
                           placeholder="Enter nickname"
                           type="text"
@@ -269,22 +269,26 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                 {isEditing && (
                   <div className="flex space-x-2">
                     <Button
-                      onClick={!formState.isDirty ? () => {} : () => {
-                        // if (isEditing && !formState.isValid) {
-                        //   toast({
-                        //     variant: "destructive",
-                        //     title: "Cannot save your profile",
-                        //     description:
-                        //       "Please make sure all the required fields are satisfied.",
-                        //     duration: 4000,
-                        //   });
-                        // }
-                      }}
+                      onClick={
+                        !formState.isDirty
+                          ? () => {}
+                          : () => {
+                              // if (isEditing && !formState.isValid) {
+                              //   toast({
+                              //     variant: "destructive",
+                              //     title: "Cannot save your profile",
+                              //     description:
+                              //       "Please make sure all the required fields are satisfied.",
+                              //     duration: 4000,
+                              //   });
+                              // }
+                            }
+                      }
                       disabled={isSaving}
                       type={"submit"}
                       className={cn(
                         "text-xs rounded-2xl h-max",
-                        "hover:bg-green-400/80 bg-green-400",
+                        "hover:bg-green-400/80 bg-green-400"
                       )}
                     >
                       <p>Save</p>
@@ -294,7 +298,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                       onClick={() => toggleEditMode()}
                       className={cn(
                         "text-xs rounded-2xl h-max",
-                        "text-[#727272] bg-[#E8ECEF] hover:bg-[#E8ECEF]/80",
+                        "text-[#727272] bg-[#E8ECEF] hover:bg-[#E8ECEF]/80"
                       )}
                     >
                       <p>Cancel</p>
@@ -311,7 +315,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                     }}
                     className={cn(
                       "text-xs rounded-2xl h-max",
-                      "text-[#727272] bg-[#E8ECEF] hover:bg-[#E8ECEF]/80",
+                      "text-[#727272] bg-[#E8ECEF] hover:bg-[#E8ECEF]/80"
                     )}
                   >
                     <>

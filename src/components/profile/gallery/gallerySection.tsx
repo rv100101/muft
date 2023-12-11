@@ -5,6 +5,8 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Loader2, PlusCircle, Trash2Icon } from "lucide-react";
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import sampleGalleryImage from "../../../assets/profile/sample-gallery.png";
+import NoContent from "@/assets/gallery/no-gallery.png";
+
 import ImageViewer from "react-simple-image-viewer";
 import {
   Accordion,
@@ -27,10 +29,10 @@ type Gallery = {
 
 const GallerySection = ({ userId }: { userId: string }) => {
   const [hoveredPictureIndex, setHoveredPictureIndex] = useState<number | null>(
-    null,
+    null
   );
   const [selectedPictureId, setSelectedPictureId] = useState<string | null>(
-    null,
+    null
   );
   const [gallery, setGallery] = useState([]);
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
@@ -79,19 +81,14 @@ const GallerySection = ({ userId }: { userId: string }) => {
     }
   };
 
-  const {
-    data,
-  } = useQuery({
+  const { data } = useQuery({
     queryFn: fetchGallery,
     queryKey: ["gallery", userId],
   });
 
-  useEffect(
-    () => {
-      setGallery(data);
-    },
-    [data],
-  );
+  useEffect(() => {
+    setGallery(data);
+  }, [data]);
 
   const queryClient = useQueryClient();
 
@@ -186,40 +183,37 @@ const GallerySection = ({ userId }: { userId: string }) => {
               }}
               isDeleting={deletePhoto.isLoading}
             />
-            {parseInt(userId) === user!.member_id &&
-              selectedFile == null &&
-              (
-                <div
-                  onClick={handleGalleryUpload}
-                  className="flex w-max items-center rounded-full bg-[#fe599b] px-3 py-2 space-x-2 hover:cursor-pointer"
-                >
-                  <PlusCircle
-                    color="White"
-                    size={20}
-                    className="hover:cursor-pointer"
-                  />
-                  <input
-                    type="file"
-                    onChange={handleFileChange}
-                    className="invisible w-0 h-0"
-                    ref={fileInputRef}
-                  />
-                  <p className="text-white text-sm">Add Photo</p>
-                </div>
-              )}
-            {selectedFile !== null &&
-              (
-                <Button
-                  type="button"
-                  variant={"outline"}
-                  className="border-primary"
-                  onClick={() => {
-                    setSelectedFile(null);
-                  }}
-                >
-                  Cancel
-                </Button>
-              )}
+            {parseInt(userId) === user!.member_id && selectedFile == null && (
+              <div
+                onClick={handleGalleryUpload}
+                className="flex w-max items-center rounded-full bg-[#fe599b] px-3 py-2 space-x-2 hover:cursor-pointer"
+              >
+                <PlusCircle
+                  color="White"
+                  size={20}
+                  className="hover:cursor-pointer"
+                />
+                <input
+                  type="file"
+                  onChange={handleFileChange}
+                  className="invisible w-0 h-0"
+                  ref={fileInputRef}
+                />
+                <p className="text-white text-sm">Add Photo</p>
+              </div>
+            )}
+            {selectedFile !== null && (
+              <Button
+                type="button"
+                variant={"outline"}
+                className="border-primary"
+                onClick={() => {
+                  setSelectedFile(null);
+                }}
+              >
+                Cancel
+              </Button>
+            )}
           </div>
           <div className="flex flex-col w-full">
             <div className="flex justify-between items-center p-5 space-x-5">
@@ -231,40 +225,38 @@ const GallerySection = ({ userId }: { userId: string }) => {
                     className="flex items-center rounded-full bg-[#fe599b] px-3 py-2 space-x-2 hover:cursor-pointer"
                   >
                     <div className="text-white">
-                      {isUploading
-                        ? (
-                          <div className="flex flex-row text-xs items-center space-x-5 text-green">
-                            Uploading
-                            <div className="ml-5 w-5 h-5 border-t-4 border-pink-500 border-solid rounded-full animate-spin">
-                            </div>
-                          </div>
-                        )
-                        : (
-                          <Button
-                            type="button"
-                            className="h-4"
-                            disabled={uploadPhoto.isLoading}
-                          >
-                            <p>Upload</p>
-                            <span>
-                              {uploadPhoto.isLoading && (
-                                <Loader2 className="ml-2 w-min h-min animate-spin" />
-                              )}
-                            </span>
-                          </Button>
-                        )}
+                      {isUploading ? (
+                        <div className="flex flex-row text-xs items-center space-x-5 text-green">
+                          Uploading
+                          <div className="ml-5 w-5 h-5 border-t-4 border-pink-500 border-solid rounded-full animate-spin"></div>
+                        </div>
+                      ) : (
+                        <Button
+                          type="button"
+                          className="h-4"
+                          disabled={uploadPhoto.isLoading}
+                        >
+                          <p>Upload</p>
+                          <span>
+                            {uploadPhoto.isLoading && (
+                              <Loader2 className="ml-2 w-min h-min animate-spin" />
+                            )}
+                          </span>
+                        </Button>
+                      )}
                     </div>
                   </div>
                 </div>
               )}
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 p-5 flex w-full">
-              {gallery && gallery.length !== 0 &&
+              {gallery &&
+                gallery.length !== 0 &&
                 gallery.map((pic: Gallery, index: number) => {
                   const path = getImagePathGallery(
                     pic.gallery_uuid,
                     null,
-                    pic.member_uuid,
+                    pic.member_uuid
                   );
                   return (
                     <div
@@ -286,7 +278,7 @@ const GallerySection = ({ userId }: { userId: string }) => {
                         alt="test"
                         className="object-cover"
                         onError={(
-                          e: React.SyntheticEvent<HTMLImageElement, Event>,
+                          e: React.SyntheticEvent<HTMLImageElement, Event>
                         ) => {
                           const imgElement = e.target as HTMLImageElement;
                           imgElement.src = sampleGalleryImage;
@@ -295,34 +287,33 @@ const GallerySection = ({ userId }: { userId: string }) => {
                       {parseInt(userId) === user!.member_id &&
                         hoveredPictureIndex !== null &&
                         hoveredPictureIndex == index && (
-                        <Button
-                          variant={"ghost"}
-                          className="
+                          <Button
+                            variant={"ghost"}
+                            className="
                      absolute right-2 top-1 w-12"
-                          onClick={() => {
-                            setSelectedPictureId(pic.gallery_id);
-                          }}
-                        >
-                          <Trash2Icon className="text-destructive" />
-                        </Button>
-                      )}
+                            onClick={() => {
+                              setSelectedPictureId(pic.gallery_id);
+                            }}
+                          >
+                            <Trash2Icon className="text-destructive" />
+                          </Button>
+                        )}
                     </div>
                   );
                 })}
             </div>
             {gallery && gallery.length == 0 && (
               <div className="flex w-full items-center h-full justify-center">
-                <p className="font-semibold text-lg">No photos</p>
+                <img src={NoContent} className="p-5 mb-20" width={400} />
+                {/* <p className="font-semibold text-lg">No photos</p> */}
               </div>
             )}
           </div>
           {isViewerOpen && gallery && gallery.length !== 0 && (
             <ImageViewer
-              src={gallery.map((pic: {
-                member_uuid: string;
-                gallery_uuid: string;
-              }) =>
-                `https://muffin0.blob.core.windows.net/photos/${pic.member_uuid}/${pic.gallery_uuid}.jpg`
+              src={gallery.map(
+                (pic: { member_uuid: string; gallery_uuid: string }) =>
+                  `https://muffin0.blob.core.windows.net/photos/${pic.member_uuid}/${pic.gallery_uuid}.jpg`
               )}
               currentIndex={currentImage}
               disableScroll={false}
