@@ -272,6 +272,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
           onSubmit={methods.handleSubmit(onSubmit)}
         >
           <ProfileTopNav />
+
           <div className="flex flex-col">
             {user?.profile_completed && <ProfileHeader userId={userId} />}
             <AboutAccordion userId={parseInt(userId)} />

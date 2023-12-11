@@ -91,10 +91,17 @@ const DetailsForm = () => {
           </div>
         ) : (
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
-            <Ruler color="#727272" size={20} className="hover:cursor-pointer" />
-            <p className="text-[#727272]">
-              {data!.height ? `${data!.height} cm` : "Add Height"}
-            </p>
+            <Ruler
+              color="#ff5c9d"
+              size={30}
+              className="hover:cursor-pointer mt-2 mr-3"
+            />
+            <div className="flex flex-col justify-start space-y-1">
+              <p className="font-bold text-base text-primary">
+                {data!.height ? `${data!.height} cm` : "Add Height"}
+              </p>
+              <p className="text-[#727272] text-xs">Height (CM)</p>
+            </div>
           </div>
         )}
       </div>
@@ -133,13 +140,16 @@ const DetailsForm = () => {
         ) : (
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
             <Dumbbell
-              color="#727272"
-              size={20}
-              className="hover:cursor-pointer"
+              color="#ff5c9d"
+              size={30}
+              className="hover:cursor-pointer mt-2 mr-3"
             />
-            <p className="text-[#727272]">
-              {data!.weight ? `${data!.weight} kg` : "Add Weight"}
-            </p>
+            <div className="flex flex-col justify-start space-y-1">
+              <p className="font-bold text-base text-primary">
+                {data!.weight ? `${data!.weight} kg` : "Add Weight"}
+              </p>
+              <p className="text-[#727272] text-xs">Weight (CM)</p>
+            </div>
           </div>
         )}
       </div>
@@ -185,10 +195,17 @@ const DetailsForm = () => {
           </div>
         ) : (
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
-            <User2 color="#727272" size={20} className="hover:cursor-pointer" />
-            <p className="text-[#727272]">
-              {data!.bodyType ? data!.bodyType : "Add Body Type"}
-            </p>
+            <User2
+              color="#ff5c9d"
+              size={30}
+              className="hover:cursor-pointer mt-2 mr-3"
+            />
+            <div className="flex flex-col justify-start space-y-1">
+              <p className="font-bold text-base text-primary">
+                {data!.bodyType ? data!.bodyType : "Add Body Type"}
+              </p>
+              <p className="text-[#727272] text-xs">Body Type</p>
+            </div>
           </div>
         )}
       </div>
@@ -234,13 +251,16 @@ const DetailsForm = () => {
         ) : (
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
             <Scissors
-              color="#727272"
-              size={20}
-              className="hover:cursor-pointer"
+              color="#ff5c9d"
+              size={30}
+              className="hover:cursor-pointer mt-2 mr-3"
             />
-            <p className="text-[#727272]">
-              {data!.hair ? data!.hair : "Add Haircut"}
-            </p>
+            <div className="flex flex-col justify-start space-y-1">
+              <p className="font-bold text-base text-primary">
+                {data!.hair ? data!.hair : "Add Haircut"}
+              </p>
+              <p className="text-[#727272] text-xs">Haircut</p>
+            </div>
           </div>
         )}
       </div>
@@ -286,13 +306,16 @@ const DetailsForm = () => {
         ) : (
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
             <EyeIcon
-              color="#727272"
-              size={20}
-              className="hover:cursor-pointer"
+              color="#ff5c9d"
+              size={30}
+              className="hover:cursor-pointer mt-2 mr-3"
             />
-            <p className="text-[#727272]">
-              {data!.eyes ? data!.eyes : "Add Eye Color"}
-            </p>
+            <div className="flex flex-col justify-start space-y-1">
+              <p className="font-bold text-base text-primary">
+                {data!.eyes ? data!.eyes : "Add Eye Color"}
+              </p>
+              <p className="text-[#727272] text-xs">Eye Color</p>
+            </div>
           </div>
         )}
       </div>
@@ -338,10 +361,17 @@ const DetailsForm = () => {
           </div>
         ) : (
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
-            <Brush color="#727272" size={20} className="hover:cursor-pointer" />
-            <p className="text-[#727272]">
-              {data!.bodyArt ? data!.bodyArt : "Add Body Art Type"}
-            </p>
+            <Brush
+              color="#ff5c9d"
+              size={30}
+              className="hover:cursor-pointer mt-2 mr-3"
+            />
+            <div className="flex flex-col justify-start space-y-1">
+              <p className="font-bold text-base text-primary">
+                {data!.bodyArt ? data!.bodyArt : "Add Body Art Type"}
+              </p>
+              <p className="text-[#727272] text-xs">Body Art Type</p>
+            </div>
           </div>
         )}
       </div>
@@ -393,13 +423,16 @@ const DetailsForm = () => {
         ) : (
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
             <Drumstick
-              color="#727272"
-              size={20}
-              className="hover:cursor-pointer"
+              color="#ff5c9d"
+              size={30}
+              className="hover:cursor-pointer mt-2 mr-3"
             />
-            <p className="text-[#727272]">
-              {data!.favoriteFood ? data!.favoriteFood : "Add Favorite Food"}
-            </p>
+            <div className="flex flex-col justify-start space-y-1">
+              <p className="font-bold text-base text-primary">
+                {data!.favoriteFood ? data!.favoriteFood : "Add Favorite Food"}
+              </p>
+              <p className="text-[#727272] text-xs">Favorite Food</p>
+            </div>
           </div>
         )}
       </div>
@@ -447,13 +480,16 @@ const DetailsForm = () => {
         ) : (
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
             <BookOpenCheck
-              color="#727272"
-              size={20}
-              className="hover:cursor-pointer"
+              color="#ff5c9d"
+              size={30}
+              className="hover:cursor-pointer mt-2 mr-3"
             />
-            <p className="text-[#727272]">
-              {data!.bodyArt ? data!.bodyArt : "Add Interests"}
-            </p>
+            <div className="flex flex-col justify-start space-y-1">
+              <p className="font-bold text-base text-primary">
+                {data!.bodyArt ? data!.bodyArt : "Add Interests"}
+              </p>
+              <p className="text-[#727272] text-xs">Interests</p>
+            </div>
           </div>
         )}
       </div>

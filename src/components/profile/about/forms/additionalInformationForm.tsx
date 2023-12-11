@@ -1,14 +1,14 @@
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
 import {
   Accessibility,
+  Baby,
   Beer,
   CarTaxiFront,
   Cigarette,
   Dog,
   Dumbbell,
   Home,
-  User,
-  User2,
+  Laugh,
 } from "lucide-react";
 import {
   FormControl,
@@ -111,12 +111,18 @@ const AdditionalInformationForm = () => {
           </div>
         ) : (
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
-            <User color="#727272" size={20} className="hover:cursor-pointer" />
-            <p className="text-[#727272]">
-              {data!.haveChildren
-                ? `${data!.haveChildren} children`
-                : "Add Children"}
-            </p>
+            <Baby
+              color="#ff5c9d"
+              size={30}
+              className="hover:cursor-pointer mt-2 mr-3"
+            />
+
+            <div className="flex flex-col justify-start space-y-1">
+              <p className="font-bold text-base text-primary">
+                {data!.haveChildren ? `${data!.haveChildren}` : "Add Children"}
+              </p>
+              <p className="text-[#727272] text-xs">Has Children</p>
+            </div>
           </div>
         )}
       </div>
@@ -162,12 +168,17 @@ const AdditionalInformationForm = () => {
           </div>
         ) : (
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
-            <User2 color="#727272" size={20} className="hover:cursor-pointer" />
-            <p className="text-[#727272]">
-              {data!.wantChildren
-                ? `${data!.wantChildren} children`
-                : "Want Children"}
-            </p>
+            <Laugh
+              color="#ff5c9d"
+              size={30}
+              className="hover:cursor-pointer mt-2 mr-3"
+            />
+            <div className="flex flex-col justify-start space-y-1">
+              <p className="font-bold text-base text-primary">
+                {data!.wantChildren ? `${data!.wantChildren}` : "Want Children"}
+              </p>
+              <p className="text-[#727272] text-xs">Want Children</p>
+            </div>
           </div>
         )}
       </div>
@@ -215,13 +226,16 @@ const AdditionalInformationForm = () => {
         ) : (
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
             <Dumbbell
-              color="#727272"
-              size={20}
-              className="hover:cursor-pointer"
+              color="#ff5c9d"
+              size={30}
+              className="hover:cursor-pointer mt-2 mr-3"
             />
-            <p className="text-[#727272]">
-              {data!.workout ? `${data!.workout} I workout` : "Add Workout"}
-            </p>
+            <div className="flex flex-col justify-start space-y-1">
+              <p className="font-bold text-base text-primary">
+                {data!.workout ? `${data!.workout}` : "Add Workout"}
+              </p>
+              <p className="text-[#727272] text-xs">I Workout</p>
+            </div>
           </div>
         )}
       </div>
@@ -272,13 +286,16 @@ const AdditionalInformationForm = () => {
         ) : (
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
             <Accessibility
-              color="#727272"
-              size={20}
-              className="hover:cursor-pointer"
+              color="#ff5c9d"
+              size={30}
+              className="hover:cursor-pointer mt-2 mr-3"
             />
-            <p className="text-[#727272]">
-              {data!.disability ? data!.disability : "Add Disability"}
-            </p>
+            <div className="flex flex-col justify-start space-y-1">
+              <p className="font-bold text-base text-primary">
+                {data!.disability ? data!.disability : "Add Disability"}
+              </p>
+              <p className="text-[#727272] text-xs">Disability</p>
+            </div>
           </div>
         )}
       </div>
@@ -325,10 +342,17 @@ const AdditionalInformationForm = () => {
           </div>
         ) : (
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
-            <Dog color="#727272" size={20} className="hover:cursor-pointer" />
-            <p className="text-[#727272]">
-              {data!.pets ? data!.pets : "Add Pets"}
-            </p>
+            <Dog
+              color="#ff5c9d"
+              size={30}
+              className="hover:cursor-pointer mt-2 mr-3"
+            />
+            <div className="flex flex-col justify-start space-y-1">
+              <p className="font-bold text-base text-primary">
+                {data!.pets ? data!.pets : "Add Pets"}
+              </p>
+              <p className="text-[#727272] text-xs">Has Pets</p>
+            </div>
           </div>
         )}
       </div>
@@ -376,10 +400,17 @@ const AdditionalInformationForm = () => {
           </div>
         ) : (
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
-            <Beer color="#727272" size={20} className="hover:cursor-pointer" />
-            <p className="text-[#727272]">
-              {data!.drinking ? data!.drinking : "Add Drink"}
-            </p>
+            <Beer
+              color="#ff5c9d"
+              size={30}
+              className="hover:cursor-pointer mt-2 mr-3"
+            />
+            <div className="flex flex-col justify-start space-y-1">
+              <p className="font-bold text-base text-primary">
+                {data!.drinking ? data!.drinking : "Add Drink"}
+              </p>
+              <p className="text-[#727272] text-xs">Drinks Alcohol</p>
+            </div>
           </div>
         )}
       </div>
@@ -427,13 +458,16 @@ const AdditionalInformationForm = () => {
         ) : (
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
             <Cigarette
-              color="#727272"
-              size={20}
-              className="hover:cursor-pointer"
+              color="#ff5c9d"
+              size={30}
+              className="hover:cursor-pointer mt-2 mr-3"
             />
-            <p className="text-[#727272]">
-              {data!.smoking ? data!.smoking : "Add Smoking Habit"}
-            </p>
+            <div className="flex flex-col justify-start space-y-1">
+              <p className="font-bold text-base text-primary">
+                {data!.drinking ? data!.drinking : "Add Drink"}
+              </p>
+              <p className="text-[#727272] text-xs">Smokes Cigarette</p>
+            </div>
           </div>
         )}
       </div>
@@ -480,10 +514,17 @@ const AdditionalInformationForm = () => {
           </div>
         ) : (
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
-            <Home color="#727272" size={20} className="hover:cursor-pointer" />
-            <p className="text-[#727272]">
-              {data!.livingStatus ? data!.livingStatus : "Add Living Status"}
-            </p>
+            <Home
+              color="#ff5c9d"
+              size={30}
+              className="hover:cursor-pointer mt-2 mr-3"
+            />
+            <div className="flex flex-col justify-start space-y-1">
+              <p className="font-bold text-base text-primary">
+                {data!.livingStatus ? data!.livingStatus : "Add Living Status"}
+              </p>
+              <p className="text-[#727272] text-xs">Living Status</p>
+            </div>
           </div>
         )}
       </div>
@@ -531,13 +572,16 @@ const AdditionalInformationForm = () => {
         ) : (
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
             <CarTaxiFront
-              color="#727272"
-              size={20}
-              className="hover:cursor-pointer"
+              color="#ff5c9d"
+              size={30}
+              className="hover:cursor-pointer mt-2 mr-3"
             />
-            <p className="text-[#727272]">
-              {data!.car ? data!.car : "Add Car"}
-            </p>
+            <div className="flex flex-col justify-start space-y-1">
+              <p className="font-bold text-base text-primary">
+                {data!.car ? data!.car : "Add Car"}
+              </p>
+              <p className="text-[#727272] text-xs">Has Car</p>
+            </div>
           </div>
         )}
       </div>
