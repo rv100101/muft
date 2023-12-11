@@ -3,7 +3,7 @@ import { toast } from "@/components/ui/use-toast";
 import accountActivationQuery from "@/queries/accountActivation";
 import { User, useUserStore } from "@/zustand/auth/user";
 import { Loader2, LogOutIcon } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { Field, Form, Formik } from "formik";
 import {
@@ -15,17 +15,36 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { DialogClose } from "@radix-ui/react-dialog";
+import { useCountdown } from "usehooks-ts";
 const pinSchema = Yup.object().shape({
   pin: Yup.string().required(),
 });
 
 const ActivateAccount = () => {
+  const [intervalValue, setIntervalValue] = useState<number>(1000);
+  const [count, { startCountdown, stopCountdown, resetCountdown }] =
+    useCountdown({
+      countStart: 60,
+      intervalMs: intervalValue,
+    });
   const [resendPinIsLoading, setResendPinIsLoading] = useState(false);
   const [activateIsLoading, setActivateIsLoading] = useState(false);
+  const [countDownComplete, setCountDownComplete] = useState(true);
   const { updateUser, user, reset } = useUserStore();
   type FormDataType = {
     pin: string;
   };
+
+  useEffect(() => {
+    if (count <= 0) {
+      stopCountdown();
+      resetCountdown()
+      setIntervalValue((prev) => prev * 2);
+      setCountDownComplete(true);
+    }
+  }, [count]);
+
+  console.log(count);
 
   const handleResendPin = async () => {
     setResendPinIsLoading(true);
@@ -44,6 +63,8 @@ const ActivateAccount = () => {
           title: "Successfuly sent a new PIN",
           description: "Please check your email",
         });
+        setCountDownComplete(false);
+        startCountdown();
       }
     } catch (e) {
       toast({
@@ -159,7 +180,7 @@ const ActivateAccount = () => {
             <div className="flex justify-center items-center space-x-2">
               <Button
                 type="button"
-                disabled={resendPinIsLoading}
+                disabled={resendPinIsLoading || !countDownComplete}
                 onClick={handleResendPin}
                 className="text-xs w-full"
                 variant={"outline"}
