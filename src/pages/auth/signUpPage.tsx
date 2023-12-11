@@ -73,6 +73,7 @@ const SignUpPage = () => {
         });
       } else {
         toast({
+          variant: "success",
           title: "Account successfuly created!",
         });
 
@@ -298,6 +299,7 @@ const SignUpPage = () => {
             <div className="px-8">
               <Button
                 type="submit"
+                disabled={isLoading}
                 className={cn(
                   "text-white w-full rounded-full hover:bg-[#FF599B]/90",
                   isLoading ? "bg-[#FF8AB3]" : "bg-primary",

@@ -59,8 +59,6 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
     },
   });
 
-  console.log(headerValues);
-  
   const getConversationUuid = async () => {
     if (location.startsWith("/profile")) {
       return;
@@ -155,10 +153,8 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
     setIsUploading(false);
   };
 
-  console.log(selectedConversation);
-
   return (
-    <Dialog>
+    <Dialog open={!user!.is_active}>
       <DialogContent className="sm:max-w-[425px]">
         <ActivateAccount />
       </DialogContent>

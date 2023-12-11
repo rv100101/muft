@@ -50,7 +50,6 @@ const SignInForm = () => {
   const handleSignIn = async (values: FormDataType) => {
     try {
       setIsLoading(true);
-
       const signInData = await authQuery.signIn(values.email, values.password);
       if (typeof signInData.data == "string") {
         setIsLoading(false);

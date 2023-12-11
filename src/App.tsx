@@ -107,7 +107,7 @@ function App() {
 
       {user && noUserOnlyRoutes.includes(location) && <Redirect to="/" />}
 
-      {user && !user.profile_completed && (
+      {user && (!user.profile_completed || !user.is_active) && (
         <Redirect to={`/profile/${user.member_id}`} />
       )}
 

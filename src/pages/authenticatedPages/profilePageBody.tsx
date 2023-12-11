@@ -14,14 +14,11 @@ import { User, useUserStore } from "@/zustand/auth/user";
 import { useQueryClient } from "@tanstack/react-query";
 import { ToastAction } from "@/components/ui/toast";
 import { toast } from "@/components/ui/use-toast";
-import { Dialog, DialogClose } from "@radix-ui/react-dialog";
+import { Dialog } from "@radix-ui/react-dialog";
 import {
   DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
+import ActivateAccount from "./accountActivationPage";
 
 const ProfilePageBody = ({ userId }: { userId: string }) => {
   // const [isSaving, setSaving] = useState(false);
@@ -37,7 +34,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
     defaultValues: emptyDefault,
     resolver: zodResolver(ProfileFormSchema),
   });
-  const [open, setOpen] = useState(true);
+  const [open] = useState(true);
   useEffect(() => {
     if (data && headerValues) {
       console.log(data);
@@ -112,7 +109,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
 
   const getNationality = (nationalityName: string) =>
     nationalities.find(
-      (nationality) => nationality.nationality === nationalityName
+      (nationality) => nationality.nationality === nationalityName,
     );
 
   const getEducation = (name: string) =>
@@ -259,32 +256,27 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
   }, [methods.formState.errors]);
   return (
     <div className="flex h-screen flex-col justify-start w-full lg:w-3/4 border mx-auto">
+      {user!.is_active &&
+        (
+          <div className="h-full overflow-y-scroll flex flex-col">
+            <Dialog open={open}>
+              <DialogContent className="sm:max-w-md opacity-100">
+                <ActivateAccount />
+              </DialogContent>
+            </Dialog>
+          </div>
+        )}
       <FormProvider {...methods}>
         <form
           className="flex flex-col h-full"
           onSubmit={methods.handleSubmit(onSubmit)}
         >
           <ProfileTopNav />
-          <div className="h-full overflow-y-scroll flex flex-col no-scrollbar">
-            <Dialog open={open} onOpenChange={setOpen}>
-              <DialogContent className="sm:max-w-md opacity-100">
-                <DialogHeader>
-                  <DialogTitle>Account Activation</DialogTitle>
-                  <DialogDescription>
-                    you need to activate account to unlock all app
-                    functionalities.
-                  </DialogDescription>
-                  <DialogClose asChild>
-                    <Button className="bg-green-500">Activate Now</Button>
-                  </DialogClose>
-                </DialogHeader>
-              </DialogContent>
-              <div className="flex flex-col">
-                {user?.profile_completed && <ProfileHeader userId={userId} />}
-                <AboutAccordion userId={parseInt(userId)} />
-                {user?.profile_completed && <GallerySection userId={userId} />}
-              </div>
-            </Dialog>
+
+          <div className="flex flex-col">
+            {user?.profile_completed && <ProfileHeader userId={userId} />}
+            <AboutAccordion userId={parseInt(userId)} />
+            {user?.profile_completed && <GallerySection userId={userId} />}
           </div>
         </form>
       </FormProvider>

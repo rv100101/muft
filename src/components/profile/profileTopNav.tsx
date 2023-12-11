@@ -1,5 +1,5 @@
 import useHomepageViewStore from "@/zustand/home/homepageView";
-import { ArrowLeft, LogOutIcon } from "lucide-react";
+import { ArrowLeft, Loader2, LogOutIcon } from "lucide-react";
 import { Button } from "../ui/button";
 import useLatestConversationStore from "@/zustand/messaging/showConversation";
 import { useUserStore } from "@/zustand/auth/user";
@@ -19,10 +19,10 @@ const ProfileTopNav = () => {
   const signOut = useUserStore((state) => state.reset);
   const user = useUserStore((state) => state.user);
   const setSelectedHistoryMemberId = useLatestConversationStore(
-    (state) => state.setSelectedHistoryMemberId
+    (state) => state.setSelectedHistoryMemberId,
   );
   const setSelectedProfileId = useHomepageViewStore(
-    (state) => state.setSelectedProfileId
+    (state) => state.setSelectedProfileId,
   );
 
   return (
@@ -56,7 +56,12 @@ const ProfileTopNav = () => {
                   className="hover:bg-[#FF8AB3]/95"
                   disabled={isSaving}
                 >
-                  {isSaving ? "Saving..." : "Save"}
+                  Save
+                  {isSaving &&
+                  <span>
+                    <Loader2 className="ml-2 h-6 w-6 animate-spin" />
+                  </span>
+                  }
                 </Button>
               </div>
             )}
