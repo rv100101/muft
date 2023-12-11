@@ -21,7 +21,6 @@ import {
 import ActivateAccount from "./accountActivationPage";
 
 const ProfilePageBody = ({ userId }: { userId: string }) => {
-  // const [isSaving, setSaving] = useState(false);
   const { toggleEditMode } = profileAboutContentStore();
   const headerValues = profileHeaderStore((state) => state.headerValues);
   const { data } = profileAboutContentStore();

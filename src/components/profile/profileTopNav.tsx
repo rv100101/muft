@@ -29,6 +29,7 @@ const ProfileTopNav = () => {
     <div className="flex flex-row w-full justify-between p-5 lg:border-b">
       <div className="flex justify-center w-full space-x-5 ">
         <Button
+          type="button"
           variant={"ghost"}
           className="bg-transparent m-0 p-0 h-min"
           onClick={() => {

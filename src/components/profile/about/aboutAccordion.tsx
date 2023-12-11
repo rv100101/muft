@@ -42,12 +42,18 @@ import { useLocation } from "wouter";
 import { useUserStore } from "@/zustand/auth/user";
 import useSelectedCountryStore from "@/zustand/profile/location/selectedCountry";
 const AboutAccordion = ({ userId }: { userId: number }) => {
-  const selectedCountry = useSelectedCountryStore(state=> state.selectedCountry);
-  const setIsLoading = profileAboutContentStore((state) => state.setIsLoading);
-  const setAboutData = profileAboutContentStore((state) => state.setData);
-  const setEditModeFalse = profileAboutContentStore((state) =>
-    state.setEditModeFalse
+  const selectedCountry = useSelectedCountryStore((state) =>
+    state.selectedCountry
   );
+  const user = useUserStore((state) => state.user);
+  const {
+    setIsLoading,
+    setData: setAboutData,
+    setEditModeFalse,
+    setProfileData,
+    profileData,
+  } = profileAboutContentStore();
+
   const {
     setEyes,
     setBodyArts,
@@ -72,7 +78,7 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
     setSmoke,
     setLivingStatus,
     setCar,
-    setInterest
+    setInterest,
   } = selectOptions();
 
   const [location] = useLocation();
@@ -80,11 +86,16 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
   useEffect(() => {
     if (!location.startsWith("/profile")) {
       setEditModeFalse();
+    } else {
+      if (profileData) {
+        setAboutData(profileData);
+      }
     }
-  }, []);
+  }, [location, profileData]);
 
-  const { isLoading, isRefetching } = useQuery({
-    queryKey: ["profileContent", userId],
+  const { isLoading: memberLoading } = useQuery({
+    queryKey: ["memberProfileContent", userId],
+    enabled: userId !== user!.member_id,
     refetchInterval: Infinity,
     queryFn: async () => {
       const basicInfo = await profileContentQuery.fetchBasicInfoInitialData(
@@ -118,6 +129,42 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
     refetchOnWindowFocus: false,
   });
 
+  const { isLoading: currentUserLoading } = useQuery({
+    enabled: userId === user!.member_id,
+    queryKey: ["currentUserProfileContent", userId],
+    refetchInterval: Infinity,
+    queryFn: async () => {
+      const basicInfo = await profileContentQuery.fetchBasicInfoInitialData(
+        userId,
+      );
+      const workEducation = await profileContentQuery
+        .fetchWorkEducationInitialData(userId);
+      const location = await profileContentQuery.fetchLocationInitialData(
+        userId,
+      );
+      const details = await profileContentQuery.fetchDetailsInitialData(
+        userId,
+      );
+
+      const additionalInformation = await profileContentQuery
+        .fetchAdditionalInformation(
+          userId,
+        );
+
+      return {
+        ...basicInfo,
+        ...workEducation,
+        ...location,
+        ...details,
+        ...additionalInformation,
+      };
+    },
+    onSuccess: (data: ProfileAbout) => {
+      setAboutData(data);
+      setProfileData(data);
+    },
+    refetchOnWindowFocus: false,
+  });
   useQuery({
     queryFn: () => profileContentQuery.editOptions.getNationality(),
     refetchInterval: Infinity,
@@ -324,7 +371,6 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
       setBodyArts(data);
     },
   });
-  const user = useUserStore((state) => state.user);
 
   useQuery({
     queryFn: () =>
@@ -334,14 +380,15 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
     queryKey: ["states", selectedCountry],
     onSuccess: (data: State[]) => {
       console.log(data);
-      
       setStates(data);
     },
   });
 
   useEffect(() => {
-    setIsLoading(isLoading || isRefetching);
-  }, [isLoading, setIsLoading, isRefetching]);
+    userId === user!.member_id
+      ? setIsLoading(currentUserLoading)
+      : setIsLoading(memberLoading);
+  }, [memberLoading, setIsLoading, currentUserLoading]);
 
   return (
     <div className="flex flex-row justify-between">
