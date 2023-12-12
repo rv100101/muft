@@ -118,11 +118,13 @@ const PostItem = ({
                       <TooltipTrigger>
                         <Heart
                           color="#FF599B"
-                          fill={isLiked && !likeTriggered
-                            ? "#FF599B"
-                            : !isLiked && likeTriggered
-                            ? "#FF599B"
-                            : "white"}
+                          fill={
+                            isLiked && !likeTriggered
+                              ? "#FF599B"
+                              : !isLiked && likeTriggered
+                              ? "#FF599B"
+                              : "white"
+                          }
                           strokeWidth={1.5}
                           stroke={!isLiked ? "#FF599B" : "white"}
                           size={50}
@@ -130,7 +132,8 @@ const PostItem = ({
                             toggleLike.mutate({
                               member: user!.member_id,
                               liked: member_id,
-                            })}
+                            })
+                          }
                           className="mt-1 hover:cursor-pointer transition duration-300 ease-in-out"
                         />
                       </TooltipTrigger>
@@ -142,11 +145,13 @@ const PostItem = ({
                       <TooltipTrigger>
                         <Star
                           color="#FF599B"
-                          fill={isFavorite && !favoriteTriggered
-                            ? "#FF599B"
-                            : !isFavorite && favoriteTriggered
-                            ? "#FF599B"
-                            : "white"}
+                          fill={
+                            isFavorite && !favoriteTriggered
+                              ? "#FF599B"
+                              : !isFavorite && favoriteTriggered
+                              ? "#FF599B"
+                              : "white"
+                          }
                           // stroke={!isFavorite ? "#FF599B" : "white"}
                           size={50}
                           strokeWidth={1.5}
@@ -154,7 +159,8 @@ const PostItem = ({
                             toggleFavorite.mutate({
                               member: user!.member_id,
                               favored: member_id,
-                            })}
+                            })
+                          }
                           className="mt-1 hover:cursor-pointer transition duration-300 ease-in-out mr-4"
                         />
                       </TooltipTrigger>
@@ -201,9 +207,9 @@ const PostItem = ({
                       src={`http://purecatamphetamine.github.io/country-flag-icons/3x2/${nationalityCode}.svg`}
                     />
 
-                    <p className="text-[#FF599B] mt-1 text-sm ">
+                    {/* <p className="text-[#FF599B] mt-1 text-sm ">
                       {nationalityCode}
-                    </p>
+                    </p> */}
                   </div>
                 </TooltipTrigger>
                 <TooltipContent>
