@@ -50,7 +50,7 @@ const SideBar = () => {
               setSelectedProfileId(null);
               queryClient.invalidateQueries({ queryKey: ["profileHeader"] });
             }
-            if (link.name === 'Messages') {
+            if (link.name === "Messages") {
               setSelectedProfileId(null);
               reset();
             }
@@ -91,6 +91,13 @@ const SideBar = () => {
       </div>
 
       <div className="flex flex-col space-y-4 px-4">
+        <a
+          className="hover:text-slate-700 text-xs text-black"
+          href="https://softnames.bolddesk.com/"
+          target="__blank"
+        >
+          Help Center
+        </a>
         <Link onClick={scrollToTop} href="/privacy-policy">
           <a className="hover:text-slate-700 text-xs text-black">
             Privacy Policy
@@ -101,16 +108,19 @@ const SideBar = () => {
             Terms of Service
           </a>
         </Link>
-        <Link onClick={scrollToTop} href="/release-notes">
-          <a className="hover:text-slate-700 text-xs text-black">
-            Release Notes
-          </a>
-        </Link>
+        {
+        // <Link onClick={scrollToTop} href="/release-notes">
+        //   <a className="hover:text-slate-700 text-xs text-black">
+        //     Release Notes
+        //   </a>
+        // </Link>
+        }
         <hr />
         <Dialog>
           <DialogTrigger>
             <div className="flex space-x-2 my-4">
-              {<LogOutIcon size={20} className="text-primary" />} <p className="text-sm">Sign out</p>
+              {<LogOutIcon size={20} className="text-primary" />}{" "}
+              <p className="text-sm">Sign out</p>
             </div>
           </DialogTrigger>
           <DialogContent className="sm:max-w-md opacity-100">

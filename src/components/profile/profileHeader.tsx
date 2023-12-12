@@ -120,7 +120,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
       getConversationUuid();
     }
     setSelectedHistoryMemberId(parseInt(userId));
-    }, [userId, headerValues]);
+  }, [userId, headerValues]);
 
   if (isLoading) {
     return <ProfileHeaderSkeleton />;
@@ -238,8 +238,10 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                       {headerValues.nickname}
                     </p>
                     {!isEditing && (
-                      <p className={`text-[#727272] text-sm`}>
-                        @{`${headerValues.nickname?.toLowerCase()}`}
+                      <p
+                        className={"text-[#727272] text-xs py-1 px-2 w-min rounded-md bg-[#E8ECEF] hover:bg-[#E8ECEF]/80"}
+                      >
+                        Standard
                       </p>
                     )}
                   </div>

@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import PostHeader from "@/components/home/postHeader";
 import AuthenticatedLayout from "./authenticatedPages/layout";
-// import Suggestions from "@/components/suggestions";
 import PostItem from "@/components/home/postItem";
 import { useQuery } from "@tanstack/react-query";
 import membersQuery from "@/queries/home";
@@ -11,8 +10,6 @@ import { useUserStore } from "@/zustand/auth/user";
 import HomepageSearchInput from "@/components/homeSearchUsersInput";
 import { Slider } from "@/components/ui/slider";
 import { useDebounce } from "usehooks-ts";
-// import { useFormik } from "formik";
-// import * as Yup from "yup";
 
 type Member = {
   age: number;
@@ -40,20 +37,7 @@ const HomePage = () => {
   const [ageSliderVal, setAgeSliderVal] = useState(23);
   const [suggestedTriggered, setSuggestedTriggered] = useState(false);
   const debouncedAgeFilterVal = useDebounce(ageSliderVal, 300);
-  // const formik = useFormik({
-  //   initialValues: {
-  //     age: 0,
-  //   },
-  //   validationSchema: Yup.object({
-  //     age: Yup.string().min(1, "Must be more than 1 characters"),
-  //   }),
-
-  //   // onSubmit: (values: FormDataType) => handleSignIn(values),
-  //   onSubmit: () => {},
-  // });
-
   const handleSliderChange = (val: Array<number>) => {
-    // setSliderTriggered(true);
     setAgeSliderVal(val[0]);
   };
 

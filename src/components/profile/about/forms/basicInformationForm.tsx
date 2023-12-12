@@ -17,7 +17,7 @@ import {
   Church,
   Flag,
   Ghost,
-  Heart,
+  Ribbon,
   Languages as LanguagesIcon,
   Users,
 } from "lucide-react";
@@ -424,7 +424,7 @@ const BasicInformationForm = () => {
           </div>
         ) : (
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
-            <Heart
+            <Ribbon
               color="#ff569a"
               size={30}
               className="hover:cursor-pointer mt-2 mr-3"

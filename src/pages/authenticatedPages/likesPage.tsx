@@ -40,8 +40,11 @@ const LikesPage = () => {
   const handleMap = (like: Like, index: number) => {
     return (
       <div
+        onClick={() => {
+          setLocation(`/members/${like.member_id}`);
+        }}
         key={index}
-        className="w-full p-8 flex justify-between items-center h-48 border rounded-lg"
+        className="hover:ring-2 transition-all ring-primary hover:cursor-pointer  w-full p-8 flex justify-between items-center h-48 border rounded-lg"
       >
         <div className="flex space-x-2 items-center">
           <div className="border-4 border-primary w-24 h-24 border-pink p-1 rounded-full">
