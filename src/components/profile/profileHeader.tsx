@@ -19,6 +19,7 @@ import messagingQuery from "@/queries/messaging";
 import useLatestConversationStore from "@/zustand/messaging/showConversation";
 import { Link, useLocation } from "wouter";
 import { useUserAvatar } from "@/zustand/auth/avatar";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 const ProfileHeader = ({ userId }: { userId: string }) => {
   const [location] = useLocation();
@@ -178,40 +179,77 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
       <div className="flex justify-start items-start space-x-2">
         {
           <div className="flex flex-col justify-center items-center space-y-2">
-            <Button
-              variant={"ghost"}
-              disabled={!isEditing || isUploading}
-              type="button"
-              onMouseOver={() => {
-                if (isEditing) setShowCamera(true);
-              }}
-              onMouseOut={() => {
-                if (isEditing) setShowCamera(false);
-              }}
-              className="relative disabled:opacity-100 h-full w-40 bg-transparent py-0 px-0"
-              onClick={handleGalleryUpload}
-            >
-              {showCamera && <CameraIcon className="absolute" fill="pink" />}
-              {isUploading && (
-                <Loader2 className="absolute animate-spin text-primary" />
-              )}
-              <img
-                className={`select-none object-cover h-32 w-32 overflow-clip border-4 border-primary rounded-full`}
-                src={selectedFile ? selectedFile : getImagePath(
-                  headerValues.gallery_uuid,
-                  headerValues.gender,
-                  headerValues.member_uuid?.toString(),
+            {
+              <>
+                {!isEditing && (
+                  <Dialog>
+                    <DialogTrigger>
+                      <img
+                        className={`select-none object-cover h-32 w-32 overflow-clip border-4 border-primary rounded-full`}
+                        src={selectedFile ? selectedFile : getImagePath(
+                          headerValues.gallery_uuid,
+                          headerValues.gender,
+                          headerValues.member_uuid?.toString(),
+                        )}
+                        alt="no image selected"
+                      />
+                    </DialogTrigger>
+                    <DialogContent>
+                      <img
+                        className={`h-full w-full`}
+                        src={selectedFile ? selectedFile : getImagePath(
+                          headerValues.gallery_uuid,
+                          headerValues.gender,
+                          headerValues.member_uuid?.toString(),
+                        )}
+                        alt="no image selected"
+                      />
+                    </DialogContent>
+                  </Dialog>
                 )}
-                alt="no image selected"
-              />
-              <input
-                type="file"
-                name="profilePhoto"
-                onChange={handleFileChange}
-                className="invisible w-0 h-0"
-                ref={fileInputRef}
-              />
-            </Button>
+                <Button
+                  variant={"ghost"}
+                  disabled={!isEditing || isUploading}
+                  type="button"
+                  onMouseOver={() => {
+                    if (isEditing) setShowCamera(true);
+                  }}
+                  onMouseOut={() => {
+                    if (isEditing) setShowCamera(false);
+                  }}
+                  className="relative disabled:opacity-100 h-full w-40 bg-transparent py-0 px-0"
+                  onClick={handleGalleryUpload}
+                >
+                  {
+                  isEditing &&
+                   <img
+                    className={`select-none object-cover h-32 w-32 overflow-clip border-4 border-primary rounded-full`}
+                    src={selectedFile ? selectedFile : getImagePath(
+                      headerValues.gallery_uuid,
+                      headerValues.gender,
+                      headerValues.member_uuid?.toString(),
+                    )}
+                    alt="no image selected"
+                  />}
+                  {showCamera && (
+                    <CameraIcon
+                      className="absolute"
+                      fill="pink"
+                    />
+                  )}
+                  {isUploading && (
+                    <Loader2 className="absolute animate-spin text-primary" />
+                  )}
+                  <input
+                    type="file"
+                    name="profilePhoto"
+                    onChange={handleFileChange}
+                    className="invisible w-0 h-0"
+                    ref={fileInputRef}
+                  />
+                </Button>
+              </>
+            }
             {isEditing && selectedFile && (
               <Button
                 disabled={isUploading}

@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import PostHeader from "@/components/home/postHeader";
 import AuthenticatedLayout from "./authenticatedPages/layout";
-import PostItem from "@/components/home/postItem";
 import { useQuery } from "@tanstack/react-query";
 import membersQuery from "@/queries/home";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -10,6 +9,7 @@ import { useUserStore } from "@/zustand/auth/user";
 import HomepageSearchInput from "@/components/homeSearchUsersInput";
 import { Slider } from "@/components/ui/slider";
 import { useDebounce } from "usehooks-ts";
+import Posts from "@/components/home/posts";
 
 type Member = {
   age: number;
@@ -42,10 +42,10 @@ const HomePage = () => {
   };
 
   const setSelectedProfileId = useHomepageViewStore(
-    (state) => state.setSelectedProfileId
+    (state) => state.setSelectedProfileId,
   );
   const setMemberList = useHomepageViewStore(
-    (state) => state.setModifiedMemberList
+    (state) => state.setModifiedMemberList,
   );
   const { user } = useUserStore();
   const memberList = useHomepageViewStore((state) => state.modifiedMemberList);
@@ -104,7 +104,7 @@ const HomePage = () => {
     // Create an array of possible values within the range
     const possibleValues = Array.from(
       { length: max - min + 1 },
-      (_, index) => min + index
+      (_, index) => min + index,
     );
 
     // Shuffle the array using the Fisher-Yates algorithm
@@ -125,11 +125,11 @@ const HomePage = () => {
     if (!retrievingMemberData && memberLikes && memberFavorites && members) {
       const updatedMemberList = members.map((member: Member) => {
         const memberHasLikes = memberLikes.find(
-          (likes: Member) => member.member_id === likes.member_id
+          (likes: Member) => member.member_id === likes.member_id,
         );
 
         const memberHasFavorites = memberFavorites?.find(
-          (favs: Member) => member.member_id === favs.member_id
+          (favs: Member) => member.member_id === favs.member_id,
         );
 
         // If a match is found, update the object in the first array
@@ -161,16 +161,12 @@ const HomePage = () => {
       });
 
       const filteredMemberList = updatedMemberList.filter(
-        (member: Member) => member.age >= debouncedAgeFilterVal
+        (member: Member) => member.age >= debouncedAgeFilterVal,
       );
-      // Update state with the modified array
-      // console.log(
-      //   "🦺 ~ file: homePage.tsx:131 ~ useEffect ~ updatedMemberList:",
-      //   ageSliderVal != 0 ? filteredMemberList : updatedMemberList
-      // );
+  
       filteredMemberList.sort((a: Member, b: Member) => a.age > b.age);
       setMemberList(
-        debouncedAgeFilterVal > 0 ? filteredMemberList : updatedMemberList
+        debouncedAgeFilterVal > 0 ? filteredMemberList : updatedMemberList,
       );
     }
   }, [
@@ -182,69 +178,50 @@ const HomePage = () => {
     debouncedAgeFilterVal,
   ]);
 
-  // if (likesLoading || favoritesLoading) {
-  //   return <></>;
-  // }
-
   return (
     <AuthenticatedLayout>
       <div className="flex justify-center w-full">
         <div className="flex justify-center lg:grid-cols-9 grid-cols-1 gap-4">
           <div className="hidden lg:block w-32"></div>
           <div className="col-span-4 w-min overflow-auto no-scrollbar 2xl:w-1/2">
-            {retrievingMemberData ? (
-              <>
-                {/* <div className="flex flex-col justify-center space-x-4 w-full ml-5 mt-10 border w-full"> */}
-                <div className="flex flex-col items-start space-y-2 p-5 border bg-white m-5 w-[470px]">
-                  <Skeleton className="h-[50px] w-full" />
-                </div>
+            {retrievingMemberData
+              ? (
+                <>
+                  {/* <div className="flex flex-col justify-center space-x-4 w-full ml-5 mt-10 border w-full"> */}
+                  <div className="flex flex-col items-start space-y-2 p-5 border bg-white m-5 w-[470px]">
+                    <Skeleton className="h-[50px] w-full" />
+                  </div>
 
-                <div className="flex flex-col items-center space-y-2 p-5 border bg-white m-5 w-[470px]">
-                  <Skeleton className="h-[500px] w-full" />
-                </div>
-                <div className="flex flex-col items-center space-y-2 p-5 border bg-white m-5 w-[470px]">
-                  <Skeleton className="h-[300px] w-full" />
-                </div>
-                <div className="flex flex-col items-center space-y-2 p-5 border bg-white m-5 w-[470px]">
-                  <Skeleton className="h-[300px] w-full" />
-                </div>
-                {/* </div> */}
-              </>
-            ) : (
-              <>
-                <PostHeader />
-                <div
-                  className="no-scrollbar lg:p-8 px-0 lg:w-full h-screen w-screen rounded-b-xl space-y-4 border border-[#E0E0E0] lg:h-min overflow-y-auto scroll-smooth"
-                  ref={containerRef}
-                >
-                  {memberList.length > 0 ? (
-                    memberList.map((post, index: number) => {
-                      return (
-                        // <h1 className="bg-red-500">{post.nickname}</h1>
-                        <PostItem
-                          key={index}
-                          nickname={post.nickname}
-                          country={post.country_name}
-                          nationalityCode={post.nationality_code}
-                          state={post.state_name}
-                          age={post.age}
-                          image={post.imagePath}
-                          member_id={post.member_id}
-                          isLiked={post.isLiked}
-                          isFavorite={post.isFavorite}
-                          status={post.status}
-                          nationality={post.nationality}
-                        />
-                      );
-                    })
-                  ) : (
-                    <div className="rounded-t-md lg:w-[460px] w-[350px] h-[554px] object-cover h-screen">
-                      No members associated with current user
-                    </div>
-                  )}
-                </div>
-              </>
-            )}
+                  <div className="flex flex-col items-center space-y-2 p-5 border bg-white m-5 w-[470px]">
+                    <Skeleton className="h-[500px] w-full" />
+                  </div>
+                  <div className="flex flex-col items-center space-y-2 p-5 border bg-white m-5 w-[470px]">
+                    <Skeleton className="h-[300px] w-full" />
+                  </div>
+                  <div className="flex flex-col items-center space-y-2 p-5 border bg-white m-5 w-[470px]">
+                    <Skeleton className="h-[300px] w-full" />
+                  </div>
+                  {/* </div> */}
+                </>
+              )
+              : (
+                <>
+                  <PostHeader />
+                  <div
+                    className="no-scrollbar lg:p-8 px-0 lg:w-full h-screen w-screen rounded-b-xl space-y-4 border border-[#E0E0E0] lg:h-min overflow-y-auto scroll-smooth"
+                    ref={containerRef}
+                  >
+                    {memberList.length > 0
+                      ?
+                      <Posts memberList={memberList} />
+                      : (
+                        <div className="rounded-t-md lg:w-[460px] w-[350px] h-[554px] object-cover h-screen">
+                          No members associated with current user
+                        </div>
+                      )}
+                  </div>
+                </>
+              )}
           </div>
           <div className="md:col-span-3 col-span-0 xs:hidden overflow-auto no-scrollbar ml-10">
             {/* <Suggestions members={memberList} /> */}
@@ -306,19 +283,23 @@ const HomePage = () => {
                     // onChange={formik.handleChange}
                     name="age"
                   />
-                  {/* <p className="text-red">
+                  {
+                    /* <p className="text-red">
                         {formik.values.age ? formik.values.age : "not defined"}
-                      </p> */}
+                      </p> */
+                  }
                   {/* <p>{ageSliderVal}</p> */}
                 </div>
-                {/* <div className="flex flex-row px-5 space-x-2 py-3">
+                {
+                  /* <div className="flex flex-row px-5 space-x-2 py-3">
                   <button className="float-right bg-white border border-[#ff569a] w-full text-[#ff569a] py-3 px-5 rounded-md text-xs">
                     Cancel
                   </button>
                   <button className="float-right bg-[#ff569a] w-full text-white py-3 px-5 rounded-md text-xs">
                     Apply
                   </button>
-                </div> */}
+                </div> */
+                }
                 {/* </form> */}
               </div>
             </div>

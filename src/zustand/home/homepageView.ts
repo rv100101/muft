@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-type Member = {
+export type Member = {
   age: number;
   authorized: boolean;
   country_code: string;
@@ -21,6 +21,7 @@ type Member = {
   status: string;
   nationality_code: string;
 };
+
 interface ViewState {
   selectedProfileId: number | null;
   modifiedMemberList: Array<Member>;
