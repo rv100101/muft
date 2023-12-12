@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import PostHeader from "@/components/home/postHeader";
 import AuthenticatedLayout from "./authenticatedPages/layout";
-import PostItem from "@/components/home/postItem";
 import { useQuery } from "@tanstack/react-query";
 import membersQuery from "@/queries/home";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -10,8 +9,8 @@ import { useUserStore } from "@/zustand/auth/user";
 import HomepageSearchInput from "@/components/homeSearchUsersInput";
 import { Slider } from "@/components/ui/slider";
 import { useDebounce } from "usehooks-ts";
+import Posts from "@/components/home/posts";
 import { useFilterStore } from "@/zustand/home/filter";
-
 type Member = {
   age: number;
   authorized: boolean;
@@ -64,10 +63,10 @@ const HomePage = () => {
   };
 
   const setSelectedProfileId = useHomepageViewStore(
-    (state) => state.setSelectedProfileId
+    (state) => state.setSelectedProfileId,
   );
   const setMemberList = useHomepageViewStore(
-    (state) => state.setModifiedMemberList
+    (state) => state.setModifiedMemberList,
   );
   const { user } = useUserStore();
   const memberList = useHomepageViewStore((state) => state.modifiedMemberList);
@@ -143,7 +142,7 @@ const HomePage = () => {
     // Create an array of possible values within the range
     const possibleValues = Array.from(
       { length: max - min + 1 },
-      (_, index) => min + index
+      (_, index) => min + index,
     );
 
     // Shuffle the array using the Fisher-Yates algorithm
@@ -164,11 +163,11 @@ const HomePage = () => {
     if (!retrievingMemberData && memberLikes && memberFavorites && members) {
       const updatedMemberList = members.map((member: Member) => {
         const memberHasLikes = memberLikes.find(
-          (likes: Member) => member.member_id === likes.member_id
+          (likes: Member) => member.member_id === likes.member_id,
         );
 
         const memberHasFavorites = memberFavorites?.find(
-          (favs: Member) => member.member_id === favs.member_id
+          (favs: Member) => member.member_id === favs.member_id,
         );
 
         // If a match is found, update the object in the first array
@@ -200,12 +199,12 @@ const HomePage = () => {
       });
 
       const filteredMemberList = updatedMemberList.filter(
-        (member: Member) => member.age >= debouncedAgeFilterVal
+        (member: Member) => member.age >= debouncedAgeFilterVal,
       );
-
+      
       filteredMemberList.sort((a: Member, b: Member) => a.age > b.age);
       setMemberList(
-        debouncedAgeFilterVal > 0 ? filteredMemberList : updatedMemberList
+        debouncedAgeFilterVal > 0 ? filteredMemberList : updatedMemberList,
       );
     }
   }, [
@@ -223,57 +222,44 @@ const HomePage = () => {
         <div className="flex justify-center lg:grid-cols-9 grid-cols-1 gap-4">
           <div className="hidden lg:block w-32"></div>
           <div className="col-span-4 w-min overflow-auto no-scrollbar 2xl:w-1/2">
-            {retrievingMemberData ? (
-              <>
-                <div className="flex flex-col items-start space-y-2 p-5 border bg-white m-5 w-[470px]">
-                  <Skeleton className="h-[50px] w-full" />
-                </div>
+            {retrievingMemberData
+              ? (
+                <>
+                  {/* <div className="flex flex-col justify-center space-x-4 w-full ml-5 mt-10 border w-full"> */}
+                  <div className="flex flex-col items-start space-y-2 p-5 border bg-white m-5 w-[470px]">
+                    <Skeleton className="h-[50px] w-full" />
+                  </div>
 
-                <div className="flex flex-col items-center space-y-2 p-5 border bg-white m-5 w-[470px]">
-                  <Skeleton className="h-[500px] w-full" />
-                </div>
-                <div className="flex flex-col items-center space-y-2 p-5 border bg-white m-5 w-[470px]">
-                  <Skeleton className="h-[300px] w-full" />
-                </div>
-                <div className="flex flex-col items-center space-y-2 p-5 border bg-white m-5 w-[470px]">
-                  <Skeleton className="h-[300px] w-full" />
-                </div>
-                {/* </div> */}
-              </>
-            ) : (
-              <>
-                <PostHeader />
-                <div
-                  className="no-scrollbar lg:p-8 px-0 lg:w-full h-screen w-screen rounded-b-xl space-y-4 border border-[#E0E0E0] lg:h-min overflow-y-auto scroll-smooth"
-                  ref={containerRef}
-                >
-                  {memberList.length > 0 ? (
-                    memberList.map((post, index: number) => {
-                      return (
-                        <PostItem
-                          key={index}
-                          nickname={post.nickname}
-                          country={post.country_name}
-                          nationalityCode={post.nationality_code}
-                          state={post.state_name}
-                          age={post.age}
-                          image={post.imagePath}
-                          member_id={post.member_id}
-                          isLiked={post.isLiked}
-                          isFavorite={post.isFavorite}
-                          status={post.status}
-                          nationality={post.nationality}
-                        />
-                      );
-                    })
-                  ) : (
-                    <div className="rounded-t-md lg:w-[460px] w-[350px] h-[554px] object-cover h-screen">
-                      No members associated with current user
-                    </div>
-                  )}
-                </div>
-              </>
-            )}
+                  <div className="flex flex-col items-center space-y-2 p-5 border bg-white m-5 w-[470px]">
+                    <Skeleton className="h-[500px] w-full" />
+                  </div>
+                  <div className="flex flex-col items-center space-y-2 p-5 border bg-white m-5 w-[470px]">
+                    <Skeleton className="h-[300px] w-full" />
+                  </div>
+                  <div className="flex flex-col items-center space-y-2 p-5 border bg-white m-5 w-[470px]">
+                    <Skeleton className="h-[300px] w-full" />
+                  </div>
+                  {/* </div> */}
+                </>
+              )
+              : (
+                <>
+                  <PostHeader />
+                  <div
+                    className="no-scrollbar lg:p-8 px-0 lg:w-full h-screen w-screen rounded-b-xl space-y-4 border border-[#E0E0E0] lg:h-min overflow-y-auto scroll-smooth"
+                    ref={containerRef}
+                  >
+                    {memberList.length > 0
+                      ?
+                      <Posts memberList={memberList} />
+                      : (
+                        <div className="rounded-t-md lg:w-[460px] w-[350px] h-[554px] object-cover h-screen">
+                          No members associated with current user
+                        </div>
+                      )}
+                  </div>
+                </>
+              )}
           </div>
           <div className="md:col-span-3 col-span-0 xs:hidden overflow-auto no-scrollbar ml-10">
             <div className="w-[380px] h-5/6 pt-4 px-5 lg:p-4 sm:flex flex-col hidden ">
