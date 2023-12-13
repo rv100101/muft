@@ -4,7 +4,14 @@ import profileHeaderStore from "@/zustand/profile/profileHeaderStore";
 import { ProfileHeader as ProfileHeaderType } from "@/types/profileHeader";
 import ProfileHeaderSkeleton from "./profileHeaderSkeleton";
 import { Button } from "../ui/button";
-import { CameraIcon, Loader2, MessageCircleIcon, Pencil } from "lucide-react";
+import {
+  CameraIcon,
+  Heart,
+  Loader2,
+  MessageCircleIcon,
+  Pencil,
+  Star,
+} from "lucide-react";
 import { useUserStore } from "@/zustand/auth/user";
 import { cn } from "@/lib/utils";
 import profileQuery from "@/queries/profile/profileHeader";
@@ -220,17 +227,18 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                   className="relative disabled:opacity-100 h-full w-40 bg-transparent py-0 px-0"
                   onClick={handleGalleryUpload}
                 >
-                  {
-                  isEditing &&
-                   <img
-                    className={`select-none object-cover h-32 w-32 overflow-clip border-4 border-primary rounded-full`}
-                    src={selectedFile ? selectedFile : getImagePath(
-                      headerValues.gallery_uuid,
-                      headerValues.gender,
-                      headerValues.member_uuid?.toString(),
+                  {isEditing &&
+                    (
+                      <img
+                        className={`select-none object-cover h-32 w-32 overflow-clip border-4 border-primary rounded-full`}
+                        src={selectedFile ? selectedFile : getImagePath(
+                          headerValues.gallery_uuid,
+                          headerValues.gender,
+                          headerValues.member_uuid?.toString(),
+                        )}
+                        alt="no image selected"
+                      />
                     )}
-                    alt="no image selected"
-                  />}
                   {showCamera && (
                     <CameraIcon
                       className="absolute"
@@ -264,7 +272,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
         }
         <div className="w-full">
           <div className="flex w-full justify-between">
-            <div className="w-42">
+            <div className="w-full">
               {!isEditing && (
                 <div
                   className={`flex flex-row space-x-5 ${
@@ -284,20 +292,44 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                     )}
                   </div>
                   {userId !== user!.member_id.toString() && (
-                    <Button
-                      disabled={!selectedConversation}
-                      type="button"
-                      className="text-xs border-primary hover:bg-primary px-2 py-1"
-                    >
-                      <Link className="flex" href="/messages">
-                        <p className="flex">
-                          Chat
+                    <div className="w-full flex justify-between items-center">
+                      <Button
+                        disabled={!selectedConversation}
+                        type="button"
+                        className="text-xs border-primary hover:bg-primary px-2 py-1"
+                      >
+                        <Link className="flex" href="/messages">
+                          <p className="flex">
+                            Chat
+                            <span>
+                              <MessageCircleIcon className="h-4" />
+                            </span>
+                          </p>
+                        </Link>
+                      </Button>
+                      <div className="space-x-2">
+                        <Button type="button" className="hover:ring-2 transition-all ring-primary" variant={"outline"}>
+                          Like{" "}
                           <span>
-                            <MessageCircleIcon className="h-4" />
+                            <Heart
+                              color="#FF599B"
+                              fill={"white"}
+                              className="ml-2 "
+                            />
                           </span>
-                        </p>
-                      </Link>
-                    </Button>
+                        </Button>
+                        <Button type="button" variant={"outline"} className="hover:ring-2 transition-all ring-primary">
+                          Favorite{" "}
+                          <span>
+                            <Star
+                              color="#FF599B"
+                              fill={"white"}
+                              className="ml-2"
+                            />
+                          </span>
+                        </Button>
+                      </div>
+                    </div>
                   )}
                 </div>
               )}
