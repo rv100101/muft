@@ -19,6 +19,7 @@ import {
   Disability,
   Drink,
   Education,
+  EmploymentStatus,
   Ethnicity,
   Eye,
   FavoriteFood,
@@ -32,6 +33,7 @@ import {
   Nationality,
   Occupation,
   Pets,
+  Religion,
   Smoke,
   State,
   WantChildren,
@@ -79,6 +81,8 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
     setLivingStatus,
     setCar,
     setInterest,
+    setReligion,
+    setEmploymentStatus
   } = selectOptions();
 
   const [location] = useLocation();
@@ -381,6 +385,23 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
     onSuccess: (data: State[]) => {
       console.log(data);
       setStates(data);
+    },
+  });
+
+  useQuery({
+    queryFn: () => profileContentQuery.editOptions.getEmploymentStatus(),
+    queryKey: ["employmentStatus"],
+    onSuccess: (data: EmploymentStatus[]) => {
+      setEmploymentStatus(data);
+    },
+  });
+
+  useQuery({
+    refetchInterval: Infinity,
+    queryFn: () => profileContentQuery.editOptions.getReligion(),
+    queryKey: ["religion"],
+    onSuccess: (data: Religion[]) => {
+      setReligion(data);
     },
   });
 

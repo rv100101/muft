@@ -67,9 +67,9 @@ export const ProfileFormSchema = z.object({
       required_error: "Education information is required",
     })
     .min(2, { message: "Please select an education" }),
-  // employmentStatus: z
-  //   .string({ required_error: "This field is required" })
-  //   .min(3, { message: "Value is too short" }),
+  employmentStatus: z
+    .string({ required_error: "This field is required" })
+    .min(2, { message: "Please select employment status" }),
   occupationTitle: z
     .string({
       required_error: "Occupation information is required",

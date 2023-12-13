@@ -345,7 +345,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                           type="text"
                           defaultValue={field.value}
                           onChange={field.onChange}
-                          className="outline-0 border border rounded-lg w-full py-3 px-5"
+                          className="outline-0 border border rounded-lg w-48 py-3 px-5"
                           name="nickname"
                         />
                         <FormMessage />
@@ -407,14 +407,12 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                       }
                     }}
                     className={cn(
-                      "text-xs rounded-2xl h-max",
+                      "text-xs rounded-2xl w-max h-max",
                       "text-[#727272] bg-[#E8ECEF] hover:bg-[#E8ECEF]/80",
                     )}
                   >
-                    <>
                       <Pencil className="h-4 mr-2" />
-                      <span>Edit Profile</span>
-                    </>
+                      <span className="w-max">Edit Profile</span>
                   </Button>
                 )}
               </>

@@ -10,6 +10,7 @@ import {
   Languages,
   MaritalStatus,
   Nationality,
+  Religion,
 } from "@/types/profile";
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
 import {
@@ -36,7 +37,7 @@ import moment from "moment-with-locales-es6";
 import { useUserStore } from "@/zustand/auth/user";
 const BasicInformationForm = () => {
   const { control } = useFormContext();
-  const { nationalities, ethnicities, maritalStatus, languages } =
+  const { nationalities, ethnicities, maritalStatus, languages, religion} =
     selectOptions();
   const { data, editMode, isLoading } = profileAboutContentStore();
   const user = useUserStore((state) => state.user);
@@ -193,15 +194,28 @@ const BasicInformationForm = () => {
                     <FormLabel className="text-primary" htmlFor="religion">
                       Religion
                     </FormLabel>
-                    <Input
-                      placeholder="Enter Religion"
-                      value={field.value}
-                      onChange={(e) => {
-                        field.onChange(e.target.value);
-                      }}
-                      type="text"
-                      className="outline-0 border border rounded-lg w-full py-3 px-5"
-                    />
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder={"Select religion"} />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {religion.map(
+                          (data: Religion, index: number) => {
+                            const { religion_name } = data;
+                            return (
+                              <SelectItem value={religion_name} key={index}>
+                                {religion_name}
+                              </SelectItem>
+                            );
+                          }
+                        )}
+                      </SelectContent>
+                    </Select>{" "}
                     <FormMessage />
                   </FormItem>
                 );
