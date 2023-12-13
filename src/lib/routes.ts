@@ -20,7 +20,6 @@ export const routesWithFooterAndTopNav = [
   "/release-notes",
   "/auth/signup",
   "/auth/signin",
-  // "/activate",
   "/about",
   "/subscription",
 ];
@@ -28,7 +27,9 @@ export const routesWithFooterAndTopNav = [
 
 export const noUserOnlyRoutes = [
   '/auth/signin',
-  '/auth/signup'
+  '/auth/signup',
+  '/about',
+  '/subscription'
 ]
 
 const pageRoutes = {
@@ -80,11 +81,6 @@ const pageRoutes = {
     path: "/favourites",
     component: FavouritesPage,
   },
-
-  // activateAccount: {
-  //   path: "/activate",
-  //   component: ActivateAccount,
-  // },
   about: {
     path: "/about",
     component: AboutPage,

@@ -1,7 +1,7 @@
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
-import { CircleDollarSign, GraduationCap, User } from "lucide-react";
+import { Briefcase, CircleDollarSign, GraduationCap, User } from "lucide-react";
 import FormSkeletonLoading from "./formSkeletonLoading";
-import { Education, Income, Occupation } from "@/types/profile";
+import { Education, EmploymentStatus, Income, Occupation } from "@/types/profile";
 import selectOptions from "@/zustand/profile/selectData/selectOptions";
 import {
   Select,
@@ -24,7 +24,7 @@ const WorkEducationForm = () => {
   const { control } = useFormContext();
   const { data, editMode, isLoading } = profileAboutContentStore();
 
-  const { educations, incomes, occupations } = selectOptions();
+  const { educations, incomes, occupations, employmentStatus } = selectOptions();
 
   const user = useUserStore((state) => state.user);
 
@@ -96,9 +96,8 @@ const WorkEducationForm = () => {
           </div>
         )}
       </div>
-      {/*
       <div className="flex flex-row justify-between w-full px-5">
-        {editMode ? (
+        {editMode || !user?.profile_completed ? (
           <div className="space-y-1 hover:cursor-pointer w-full items-center">
             <FormField
               name="employmentStatus"
@@ -111,12 +110,27 @@ const WorkEducationForm = () => {
                     >
                       Employment Status
                     </FormLabel>
-                    <Input
-                      placeholder="Enter employment status"
+                    <Select
+                      onValueChange={field.onChange}
                       defaultValue={field.value}
-                      onChange={field.onChange}
-                      className="outline-0 border border rounded-lg w-full py-3 px-5"
-                    />
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder={"Select employment status"} />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {employmentStatus &&
+                          employmentStatus.map((data: EmploymentStatus, index) => {
+                            const { employment_status_name } = data;
+                            return (
+                              <SelectItem value={employment_status_name} key={index}>
+                                {employment_status_name}
+                              </SelectItem>
+                            );
+                          })}
+                      </SelectContent>
+                    </Select>
                     <FormMessage />
                   </FormItem>
                 );
@@ -126,19 +140,21 @@ const WorkEducationForm = () => {
         ) : (
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
             <Briefcase
-              color="#727272"
+              color="#ff5c9d"
               size={30}
-              className="hover:cursor-pointer"
+              className="hover:cursor-pointer mt-2 mr-3"
             />
-            <p className="text-[#727272]">
-              {data!.employmentStatus
-                ? data!.employmentStatus
-                : "Add Employment Status"}
-            </p>
+            <div className="flex flex-col justify-start space-y-1">
+              <p className="font-bold text-base text-primary">
+                {data!.employmentStatus
+                  ? data!.employmentStatus
+                  : "Add Employment Status"}
+              </p>
+              <p className="text-[#727272] text-xs">Job Title</p>
+            </div>
           </div>
         )}
       </div>
-      {/* add new */}
       <div className="flex flex-row justify-between w-full px-5">
         {editMode || !user?.profile_completed ? (
           <div className="space-y-1 hover:cursor-pointer w-full items-center">

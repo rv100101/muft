@@ -135,3 +135,13 @@ export type Interest = {
   interest_id: number;
   interest_name: string;
 };
+
+export type Religion = {
+  religion_id: number;
+  religion_name: string;
+};
+
+export type EmploymentStatus = {
+  employment_status_id: number;
+  employment_status_name: string;
+};

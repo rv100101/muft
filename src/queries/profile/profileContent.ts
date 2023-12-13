@@ -1,4 +1,5 @@
-import { ProfileAbout } from "@/zustand/profile/profileAboutStore"; import axiosQuery from "../axios";
+import { ProfileAbout } from "@/zustand/profile/profileAboutStore";
+import axiosQuery from "../axios";
 
 const removeNull = (obj: Record<string, string>): Record<string, string> => {
   const result: Record<string, string> = {};
@@ -10,6 +11,18 @@ const removeNull = (obj: Record<string, string>): Record<string, string> => {
     }
   }
   return result;
+};
+
+const fetchMemberDetails = async (memberId: number, userId: number) => {
+  try {
+    const details = await axiosQuery.post("/MemberDetails", {
+      member: memberId,
+      user: userId,
+    });
+    const { data } = details;
+    return data;
+  } catch (error) {
+  }
 };
 
 const fetchAdditionalInformation = async (userId: number) => {
@@ -31,8 +44,8 @@ const fetchAdditionalInformation = async (userId: number) => {
     });
 
     const interests = await axiosQuery.post("/GetInterests", {
-      member: userId
-    })
+      member: userId,
+    });
 
     let interest = null;
 
@@ -56,7 +69,7 @@ const fetchAdditionalInformation = async (userId: number) => {
       smoking: lifestyle.data.smoke_name,
       livingStatus: lifestyle.data.living_status_name,
       car: lifestyle.data.car_name,
-      interest: interest ?? ''
+      interest: interest ?? "",
     };
 
     additionalInformation = removeNull(additionalInformation);
@@ -103,11 +116,13 @@ const fetchBasicInfoInitialData = async (userId: number) => {
       language = languagesResponse.data[0];
     }
 
-    const formattedDate = date_of_birth === null ? '' : new Date(date_of_birth).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
+    const formattedDate = date_of_birth === null
+      ? ""
+      : new Date(date_of_birth).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
 
     let basicInformation: Record<string, string> = {
       gender: gender,
@@ -231,8 +246,26 @@ const getNationality = async () => {
 const getInterests = async () => {
   try {
     const response = await axiosQuery.post("/Interests", {
-      member: 32
+      member: 32,
     });
+    return response.data;
+  } catch (error) {
+    return [];
+  }
+};
+
+const getEmploymentStatus = async () => {
+  try {
+    const response = await axiosQuery.post("/EmploymentStatus");
+    return response.data;
+  } catch (error) {
+    return [];
+  }
+};
+
+const getReligion = async () => {
+  try {
+    const response = await axiosQuery.post("/Religion");
     return response.data;
   } catch (error) {
     return [];
@@ -506,7 +539,7 @@ const saveInformation = async (profile: ProfileContent, userId: number) => {
         member: userId,
       });
     }
-    
+
     // eyes
     if (profile.eyes) {
       await axiosQuery.post("/SaveEyes", {
@@ -700,10 +733,10 @@ const saveInformation = async (profile: ProfileContent, userId: number) => {
     }
 
     // city
-      await axiosQuery.post("/SaveCity",{
-        city: 2,
-        member: userId,
-      });
+    await axiosQuery.post("/SaveCity", {
+      city: 2,
+      member: userId,
+    });
 
     // region
     if (profile.region) {
@@ -721,14 +754,7 @@ const saveInformation = async (profile: ProfileContent, userId: number) => {
       });
     }
 
-    // // city
-    // if (profile.city) {
-    //   await axiosQuery.post("/SaveCity", {
-    //     city: profile.city,
-    //     member: userId,
-    //   });
-    // }
-    return {success: "Profile saved successfully!"}
+    return { success: "Profile saved successfully!" };
   } catch (error) {
     console.error("Error saving information:", error);
   }
@@ -764,9 +790,12 @@ const profileContentQuery = {
     getWantChildren,
     getWorkout,
     getDisability,
-    getInterests
+    getInterests,
+    getReligion,
+    getEmploymentStatus
   },
   saveInformation,
+  fetchMemberDetails,
 };
 
 export default profileContentQuery;

@@ -17,6 +17,7 @@ import { toast } from "@/components/ui/use-toast";
 import { Dialog } from "@radix-ui/react-dialog";
 import { DialogContent } from "@/components/ui/dialog";
 import ActivateAccount from "./accountActivationPage";
+import { Loader2 } from "lucide-react";
 
 const ProfilePageBody = ({ userId }: { userId: string }) => {
   const headerValues = profileHeaderStore((state) => state.headerValues);
@@ -70,6 +71,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
 
   const {
     educations,
+    employmentStatus,
     incomes,
     occupations,
     nationalities,
@@ -77,6 +79,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
     maritalStatus,
     languages,
     bodyTypes,
+    religion,
     favoriteFoods,
     countries,
     states,
@@ -103,7 +106,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
 
   const getNationality = (nationalityName: string) =>
     nationalities.find(
-      (nationality) => nationality.nationality === nationalityName
+      (nationality) => nationality.nationality === nationalityName,
     );
 
   const getEducation = (name: string) =>
@@ -165,6 +168,12 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
   const getWorkoutData = (name: string) =>
     workout.find((s) => s.workout_name === name);
 
+  const getReligion = (name: string) =>
+    religion.find((s) => s.religion_name === name);
+
+  const getEmploymentStatus = (name: string) =>
+    employmentStatus.find((s) => s.employment_status_name === name);
+
   const onSubmit = async (formData: any) => {
     // return;
     // if (!methods.formState.isDirty) {
@@ -197,7 +206,9 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
       const livingStatus = getLivingStatusData(formData.livingStatus);
       const smoke = getSmokeData(formData.smoking);
       const workout = getWorkoutData(formData.workout);
+      const religion = getReligion(formData.religion);
       const disability = getDisabilityData(formData.disability);
+      const employmentStatus = getEmploymentStatus(formData.employmentStatus);
       finalFormData = {
         ...finalFormData,
         language: language?.language_code,
@@ -224,9 +235,19 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
         smoking: smoke?.smoke_id,
         workout: workout?.workout_id,
         disability: disability?.disability_id,
-        religion: 1,
-        employmentStatus: 2,
+        religion: religion?.religion_id,
+        employmentStatus: employmentStatus?.employment_status_id,
       };
+      toast({
+        duration: 5000,
+        variant: "success",
+        title: "Saving your profile",
+        action: (
+          <ToastAction disabled className="border-none" altText="okay">
+            <Loader2 className="ml-2 h-full w-full animate-spin" />
+          </ToastAction>
+        ),
+      });
       await profileContentQuery.saveInformation(finalFormData, user!.member_id);
       updateUser({ ...user, profile_completed: true } as User);
       queryClient.invalidateQueries(["profileHeader", "profileContent"]);
@@ -241,7 +262,11 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
         variant: "destructive",
         title: "All Fields are required",
         description: "check all tabs to ensure all fields are inputted.",
-        action: <ToastAction altText="Goto schedule to undo">Okay</ToastAction>,
+        action: (
+          <ToastAction altText="Goto schedule to undo">
+            Okay
+          </ToastAction>
+        ),
       });
     }
   }, [methods.formState.errors]);

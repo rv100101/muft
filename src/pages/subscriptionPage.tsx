@@ -47,7 +47,7 @@ const SubscriptionPage = () => {
               mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam
               libero vitae erat.
             </p>
-            <Button className="rounded-full text-lg py-6 px-6 w-max">
+            <Button className="hover:bg-[#FF599B]/90 rounded-full text-lg py-6 px-6 w-max">
               Avail now
             </Button>
           </div>
@@ -99,7 +99,7 @@ const SubscriptionPage = () => {
           <ul className="space-y-2 text-[#1B2950]">
             {muffinPlus}
           </ul>
-          <Button className="rounded-full text-xs px-8 mt-8 w-max">
+          <Button className=" hover:bg-[#FF599B]/90 rounded-full text-xs px-8 mt-8 w-max">
             Avail now
           </Button>
         </div>
