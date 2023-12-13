@@ -41,12 +41,6 @@ const PostItem = ({
   const [likeTriggered, toggleLikeIcon] = useState(false);
   const [favoriteTriggered, toggleFavoriteIcon] = useState(false);
   const user = useUserStore((state) => state.user);
-  // const likeTriggered = useHomepageViewStore((state) => state.isLiked);
-  // const favoriteTriggered = useHomepageViewStore((state) => state.isFavored);
-  // const toggleLikeIcon = useHomepageViewStore((state) => state.toggleIsLiked);
-  // const toggleFavoriteIcon = useHomepageViewStore(
-  //   (state) => state.toggleIsFavored
-  // );
   const toggleLike = useMutation({
     mutationFn: async ({
       member,
