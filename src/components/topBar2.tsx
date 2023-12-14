@@ -204,6 +204,7 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
   //   </li>,
   // ];
 
+  console.log("location: ", location === "/");
   return (
     <div className="flex lg:h-full h-8 lg:items-start items-center lg:space-x-0 space-x-4  lg:pl-0 pl-5 lg:border-0 border-b p-5">
       {/* search */}
@@ -361,26 +362,27 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
             {children}
           </SheetTrigger>
 
-          {location === "/" ||
-            (location === "/notifications" && (
-              <div className="flex flex-row space-x-3 justify-end">
-                {" "}
-                <SlidersHorizontal
-                  size={20}
-                  onClick={() => {
-                    setFiltersTriggered(true);
-                  }}
-                  className="block sm:hidden w-full"
-                />
-                <Search
-                  size={20}
-                  onClick={() => {
-                    setSearchTriggered(true);
-                  }}
-                  className="block sm:hidden w-full"
-                />
-              </div>
-            ))}
+          {location === "/" || location === "/notifications" ? (
+            <div className="flex flex-row space-x-3 justify-end">
+              {" "}
+              <SlidersHorizontal
+                size={20}
+                onClick={() => {
+                  setFiltersTriggered(true);
+                }}
+                className="block sm:hidden w-full"
+              />
+              <Search
+                size={20}
+                onClick={() => {
+                  setSearchTriggered(true);
+                }}
+                className="block sm:hidden w-full"
+              />
+            </div>
+          ) : (
+            <></>
+          )}
         </div>
         <SheetContent side={"left"}>
           <SheetHeader>
