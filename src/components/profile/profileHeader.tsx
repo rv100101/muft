@@ -281,18 +281,18 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
             <div className="w-full">
               {!isEditing && (
                 <div
-                  className={`flex flex-row space-x-5 ${
+                  className={`flex lg:flex-row flex-col lg:space-x-5 space-x-0${
                     !user!.is_active ? "pt-5 pl-3" : ""
                   }`}
                 >
-                  <div>
+                  <div className="flex lg:flex-col lg:justify-start flex-row space-x-4 lg:space-x-0">
                     <p className="font-semibold text-[#171717] text-lg ">
                       {headerValues.nickname}
                     </p>
                     {!isEditing && (
                       <p
                         className={
-                          "mt-1 text-[#f0f9ff] border-[#075985] text-xs py-1 px-2 w-min rounded-md bg-[#38bdf8] hover:bg-[#E8ECEF]/80"
+                          "mt-1 text-[#f0f9ff] border-[#075985] text-xs py-1 px-2 w-min rounded-md bg-[#38bdf8] hover:bg-[#38bdf8]/80"
                         }
                       >
                         Standard
@@ -300,15 +300,15 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                     )}
                   </div>
                   {userId !== user!.member_id.toString() && (
-                    <div className="w-full flex justify-between items-center">
+                    <div className="flex w-full lg:flex-row flex-col lg:justify-between lg:items-center lg:space-y-0 space-y-4 lg:pt-4  pt-5 ">
                       <Button
                         disabled={!selectedConversation}
                         type="button"
-                        className="text-xs border-primary hover:bg-primary px-2 py-1"
+                        className="text-xs border-primary hover:bg-primary px-2 py-1 lg:w-24 w-3/4"
                       >
-                        <Link className="flex" href="/messages">
+                        <Link href="/messages">
                           <p className="flex">
-                            Chat
+                            <p>Chat</p>
                             <span>
                               <MessageCircleIcon className="h-4" />
                             </span>
@@ -321,7 +321,8 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                           className="hover:ring-2 transition-all ring-primary"
                           variant={"outline"}
                         >
-                          Like{" "}
+                          <p className="lg:inline hidden">Like</p>
+
                           <span>
                             <Heart
                               color="#FF599B"
@@ -335,7 +336,8 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                           variant={"outline"}
                           className="hover:ring-2 transition-all ring-primary"
                         >
-                          Favorite{" "}
+                          <p className="lg:inline hidden">Favorite</p>
+
                           <span>
                             <Star
                               color="#FF599B"
@@ -440,7 +442,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
             )}
           </div>
           {!isEditing && user!.is_active && (
-            <div className="h-full hidden lg:block">
+            <div className="h-full hidden lg:block mt-3">
               <div className="pt-5 flex w-full justify-start items-start flex-wrap text-xs space-x-2">
                 {headerValues.height && (
                   <p className="rounded-md w-max h-max bg-[#FFF2F7] text-[#FF599B] p-2 mb-2">
@@ -448,23 +450,23 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                   </p>
                 )}
                 {headerValues.gender && (
-                  <p className="rounded-md w-max h-max bg-[#FFF2F7] text-[#FF599B] px-5 py-1 mb-2">
+                  <p className="rounded-md w-max h-max bg-[#FFF2F7] text-[#FF599B] px-5 py-2 mb-2">
                     {headerValues.gender == "F" && "Female"}
                     {headerValues.gender == "M" && "Male"}
                   </p>
                 )}
                 {headerValues.maritalStatus && (
-                  <p className="rounded-md w-max h-max bg-[#FFF2F7] text-[#FF599B] px-5 py-1 mb-2">
+                  <p className="rounded-md w-max h-max bg-[#FFF2F7] text-[#FF599B] px-5 py-2 mb-2">
                     {headerValues.maritalStatus}
                   </p>
                 )}
                 {headerValues.country_name && (
-                  <p className="rounded-full w-max h-max bg-[#FFF2F7] text-[#FF599B] px-5 py-1 mb-2">
+                  <p className="rounded-md w-max h-max bg-[#FFF2F7] text-[#FF599B] px-5 py-2 mb-2">
                     {headerValues.country_name}
                   </p>
                 )}
                 {headerValues.occupation_title && (
-                  <p className="rounded-full w-max h-max bg-[#FFF2F7] text-[#FF599B] px-5 py-1 mb-2">
+                  <p className="rounded-md w-max h-max bg-[#FFF2F7] text-[#FF599B] px-5 py-2 mb-2">
                     {headerValues.occupation_title}
                   </p>
                 )}
