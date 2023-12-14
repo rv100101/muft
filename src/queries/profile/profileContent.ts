@@ -1,10 +1,13 @@
 import { ProfileAbout } from "@/zustand/profile/profileAboutStore";
 import axiosQuery from "../axios";
 
-const removeNull = (obj: Record<string, string>): Record<string, string> => {
-  const result: Record<string, string> = {};
+const removeNull = (obj: Record<string, string | []>): Record<string, string | []> => {
+  const result: Record<string, string | []> = {};
   for (const key in obj) {
-    if (obj[key] == null) {
+    if (typeof obj[key] === 'object') {
+     result[key] = obj[key]; 
+    }
+    else if (obj[key] == null) {
       result[key] = "";
     } else {
       result[key] = obj[key];
@@ -20,21 +23,16 @@ const fetchMemberDetails = async (memberId: number, userId: number) => {
       user: userId,
     });
     const { data } = details;
-    return data;
+    const openCurlyIndex = data.indexOf('{');
+    const closeCurlyIndex = data.indexOf('}');
+    const extracted = data.substring(openCurlyIndex, closeCurlyIndex + 1);
+    return extracted
   } catch (error) {
   }
 };
 
 const fetchAdditionalInformation = async (userId: number) => {
   try {
-    const maritalStatus = await axiosQuery.post("/GetMaritalStatus", {
-      member: userId,
-    });
-
-    const health = await axiosQuery.post("/GetHealth", {
-      member: userId,
-    });
-
     const pets = await axiosQuery.post("/GetPets", {
       member: userId,
     });
@@ -47,29 +45,28 @@ const fetchAdditionalInformation = async (userId: number) => {
       member: userId,
     });
 
-    let interest = null;
+    const languages = await axiosQuery.post("/GetLanguages", {
+      member: userId
+    });
 
-    if (
-      interests.data.length !== 0 && interests.data.length > 1
-    ) {
-      interest = interests.data[interests.data.length - 1];
-    }
+    console.log(languages);
+    
+    const appearance = await axiosQuery.post("/GetAppearance", {
+      member: userId
+    });
 
-    if (interests.data.length === 1) {
-      interest = interests.data[0];
-    }
+    const favoriteFood = await axiosQuery.post("/GetFavoriteFood", {
+      member: userId,
+    });
 
-    let additionalInformation: Record<string, string> = {
-      haveChildren: maritalStatus.data.have_children_name,
-      wantChildren: maritalStatus.data.wants_children_name,
-      workout: health.data.workout_name,
-      disability: health.data.disability_name,
-      pets: pets.data.pet_name,
-      drinking: lifestyle.data.drink_name,
-      smoking: lifestyle.data.smoke_name,
-      livingStatus: lifestyle.data.living_status_name,
+    let additionalInformation: Record<string, string | []> = {
+      pets: pets.data,
       car: lifestyle.data.car_name,
-      interest: interest ?? "",
+      interest: interests.data ?? [],
+      language: languages.data ?? [],
+      height: appearance.data.height,
+      weight: appearance.data.weight,
+      favoriteFood: favoriteFood.data ?? []
     };
 
     additionalInformation = removeNull(additionalInformation);

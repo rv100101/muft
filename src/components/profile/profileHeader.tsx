@@ -43,8 +43,10 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
     profileHeaderValues,
     setProfileHeaderValues,
   } = profileHeaderStore();
+  
   const fetchInitialData = async () =>
     await profileQuery.getProfileHeader(parseInt(userId));
+
   const user = useUserStore((state) => state.user);
   const toggleEditMode = profileAboutContentStore(
     (state) => state.toggleEditMode,
@@ -280,7 +282,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                   }`}
                 >
                   <div>
-                    <p className="font-semibold text-[#171717] text-lg ">
+                    <p className="w-max font-semibold text-[#171718] text-lg ">
                       {headerValues.nickname}
                     </p>
                     {!isEditing && (

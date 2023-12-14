@@ -59,9 +59,9 @@ const ProfileTopNav = () => {
                 >
                   Save
                   {isSaving &&
-                  <span>
-                    <Loader2 className="ml-2 h-6 w-6 animate-spin" />
-                  </span>
+                    <span>
+                      <Loader2 className="ml-2 h-6 w-6 animate-spin" />
+                    </span>
                   }
                 </Button>
               </div>

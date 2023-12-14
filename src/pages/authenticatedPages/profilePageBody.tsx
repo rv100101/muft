@@ -7,7 +7,6 @@ import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
 import { emptyDefault, ProfileFormSchema } from "@/lib/profileZodSchema";
 import { useEffect, useState } from "react";
 import profileHeaderStore from "@/zustand/profile/profileHeaderStore";
-import GallerySection from "@/components/profile/gallery/gallerySection";
 import profileContentQuery from "@/queries/profile/profileContent";
 import selectOptions from "@/zustand/profile/selectData/selectOptions";
 import { User, useUserStore } from "@/zustand/auth/user";
@@ -30,6 +29,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
     defaultValues: emptyDefault,
     resolver: zodResolver(ProfileFormSchema),
   });
+
   const [open] = useState(true);
   useEffect(() => {
     if (data && headerValues) {
@@ -209,9 +209,11 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
       const religion = getReligion(formData.religion);
       const disability = getDisabilityData(formData.disability);
       const employmentStatus = getEmploymentStatus(formData.employmentStatus);
+      console.log(language);
+
       finalFormData = {
         ...finalFormData,
-        language: language?.language_code,
+        language: 'ab',
         ethnicity: ethnicity?.ethnicity_id,
         nationality: nationality?.country_code,
         maritalStatus: maritalStatus?.marital_status_id,
@@ -290,7 +292,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
           <div className="h-full overflow-y-scroll no-scrollbar flex flex-col">
             {user?.profile_completed && <ProfileHeader userId={userId} />}
             <AboutAccordion userId={parseInt(userId)} />
-            {user?.profile_completed && <GallerySection userId={userId} />}
+            {/* user?.profile_completed && <GallerySection userId={userId} /> */}
           </div>
         </form>
       </FormProvider>

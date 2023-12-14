@@ -25,7 +25,6 @@ import {
   Drink,
   HaveChildren,
   LivingStatus,
-  Pets,
   Smoke,
   WantChildren,
   Workout,
@@ -39,6 +38,7 @@ import {
 } from "@/components/ui/select";
 import { useFormContext } from "react-hook-form";
 import { useUserStore } from "@/zustand/auth/user";
+import PetsField from "./petsField";
 
 const AdditionalInformationForm = () => {
   const { control } = useFormContext();
@@ -49,7 +49,6 @@ const AdditionalInformationForm = () => {
     wantChildren,
     workout,
     disability,
-    pets,
     drink,
     smoke,
     livingStatus,
@@ -302,43 +301,7 @@ const AdditionalInformationForm = () => {
       <div className="flex flex-row justify-between w-full px-5">
         {editMode || !user?.profile_completed ? (
           <div className="space-y-1 hover:cursor-pointer w-full items-center">
-            <FormField
-              name="pets"
-              render={({ field }) => {
-                return (
-                  <FormItem>
-                    <FormLabel className="text-primary" htmlFor="pets">
-                      Pets
-                    </FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder={"Do you have pets?"} />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {pets &&
-                          pets.map((data: Pets) => {
-                            return (
-                              <SelectItem
-                                value={data.pet_name}
-                                key={data.pet_id}
-                              >
-                                {data.pet_name}
-                              </SelectItem>
-                            );
-                          })}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                );
-              }}
-              control={control}
-            />
+            <PetsField />
           </div>
         ) : (
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
@@ -349,7 +312,11 @@ const AdditionalInformationForm = () => {
             />
             <div className="flex flex-col justify-start space-y-1">
               <p className="font-bold text-base text-primary">
-                {data!.pets ? data!.pets : "Add Pets"}
+                {[
+                  ...new Set(
+                    data?.pets.map((pet) => pet.pet_name),
+                  ),
+                ].join(", ") ?? "Add pets"}
               </p>
               <p className="text-[#727272] text-xs">Has Pets</p>
             </div>
@@ -534,6 +501,8 @@ const AdditionalInformationForm = () => {
             <FormField
               name="car"
               render={({ field }) => {
+                console.log(field);
+
                 return (
                   <FormItem>
                     <FormLabel className="text-primary" htmlFor="car">

@@ -22,9 +22,7 @@ import {
   BodyArt,
   BodyType,
   Eye,
-  FavoriteFood,
   Hair,
-  Interest,
 } from "@/types/profile";
 import { Input } from "@/components/ui/input";
 import {
@@ -36,12 +34,14 @@ import {
 } from "@/components/ui/select";
 import { useFormContext } from "react-hook-form";
 import { useUserStore } from "@/zustand/auth/user";
+import InterestField from "./interestField";
+import FavoriteFoodField from "./favoriteFoodsField";
 
 const DetailsForm = () => {
   const { control } = useFormContext();
   const isLoading = profileAboutContentStore((state) => state.isLoading);
   const data = profileAboutContentStore((state) => state.data);
-  const { bodyTypes, favoriteFoods, hair, interests, bodyArts, eyes } =
+  const { bodyTypes, hair, bodyArts, eyes } =
     selectOptions();
   const editMode = profileAboutContentStore((state) => state.editMode);
   const user = useUserStore((state) => state.user);
@@ -57,442 +57,394 @@ const DetailsForm = () => {
   return (
     <div className="flex flex-col w-full space-y-4">
       <div className="flex flex-row justify-between w-full px-5">
-        {editMode || !user?.profile_completed ? (
-          <div className="space-y-1 hover:cursor-pointer w-full items-center">
-            <FormField
-              name="height"
-              render={({ field }) => {
-                return (
-                  <FormItem>
-                    <FormLabel className="text-primary" htmlFor="height">
-                      Height
-                    </FormLabel>
-                    <Input
-                      placeholder="Enter height (cm)"
-                      type="number"
-                      onChange={(e) => {
-                        if (
-                          e.target.value !== "" &&
-                          typeof parseInt(e.target.value) === "number"
-                        ) {
-                          field.onChange(parseInt(e.target.value));
-                        }
-                      }}
-                      value={field.value}
-                      defaultValue={field.value}
-                      className="outline-0 border border rounded-lg w-full py-3 px-5"
-                      name="height"
-                    />
-                    <FormMessage />
-                  </FormItem>
-                );
-              }}
-            />
-          </div>
-        ) : (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
-            <Ruler
-              color="#ff5c9d"
-              size={30}
-              className="hover:cursor-pointer mt-2 mr-3"
-            />
-            <div className="flex flex-col justify-start space-y-1">
-              <p className="font-bold text-base text-primary">
-                {data!.height ? `${data!.height} cm` : "Add Height"}
-              </p>
-              <p className="text-[#727272] text-xs">Height (CM)</p>
+        {editMode || !user?.profile_completed
+          ? (
+            <div className="space-y-1 hover:cursor-pointer w-full items-center">
+              <InterestField />
             </div>
-          </div>
-        )}
+          )
+          : (
+            <div className="flex flex-row space-x-2 hover:cursor-pointer">
+              <BookOpenCheck
+                color="#ff5c9d"
+                size={30}
+                className="hover:cursor-pointer mt-2 mr-3"
+              />
+              <div className="flex flex-col justify-start space-y-1">
+                <p className="font-bold text-base text-primary">
+                  {[
+                    ...new Set(
+                      data?.interest.map((interest) => interest.interest_name),
+                    ),
+                  ].join(", ") ?? "Add interests"}
+                </p>
+                <p className="text-[#727272] text-xs">Interests</p>
+              </div>
+            </div>
+          )}
+      </div>
+
+      <div className="flex flex-row justify-between w-full px-5">
+        {editMode || !user?.profile_completed
+          ? (
+            <div className="space-y-1 hover:cursor-pointer w-full items-center">
+              <FavoriteFoodField />
+            </div>
+          )
+          : (
+            <div className="flex flex-row space-x-2 hover:cursor-pointer">
+              <Drumstick
+                color="#ff5c9d"
+                size={30}
+                className="hover:cursor-pointer mt-2 mr-3"
+              />
+              <div className="flex flex-col justify-start space-y-1">
+                <p className="font-bold text-base text-primary">
+                  {[
+                    ...new Set(
+                      data?.favoriteFood.map((fave) => fave.favorite_food_name),
+                    ),
+                  ].join(", ") ?? "Add favorite foods"}
+                </p>
+                <p className="text-[#727272] text-xs">Favorite Food</p>
+              </div>
+            </div>
+          )}
+      </div>
+
+      <div className="flex flex-row justify-between w-full px-5">
+        {editMode || !user?.profile_completed
+          ? (
+            <div className="space-y-1 hover:cursor-pointer w-full items-center">
+              <FormField
+                name="height"
+                render={({ field }) => {
+                  return (
+                    <FormItem>
+                      <FormLabel className="text-primary" htmlFor="height">
+                        Height
+                      </FormLabel>
+                      <Input
+                        placeholder="Enter height (cm)"
+                        type="number"
+                        onChange={(e) => {
+                          if (
+                            e.target.value !== "" &&
+                            typeof parseInt(e.target.value) === "number"
+                          ) {
+                            field.onChange(parseInt(e.target.value));
+                          }
+                        }}
+                        value={field.value}
+                        defaultValue={field.value}
+                        className="outline-0 border border rounded-lg w-full py-3 px-5"
+                        name="height"
+                      />
+                      <FormMessage />
+                    </FormItem>
+                  );
+                }}
+              />
+            </div>
+          )
+          : (
+            <div className="flex flex-row space-x-2 hover:cursor-pointer">
+              <Ruler
+                color="#ff5c9d"
+                size={30}
+                className="hover:cursor-pointer mt-2 mr-3"
+              />
+              <div className="flex flex-col justify-start space-y-1">
+                <p className="font-bold text-base text-primary">
+                  {data!.height ? `${data!.height} cm` : "Add Height"}
+                </p>
+                <p className="text-[#727272] text-xs">Height (CM)</p>
+              </div>
+            </div>
+          )}
       </div>
       <div className="flex flex-row justify-between w-full px-5">
-        {editMode || !user?.profile_completed ? (
-          <div className="space-y-1 hover:cursor-pointer w-full items-center">
-            <FormField
-              name="weight"
-              render={({ field }) => {
-                return (
-                  <FormItem>
-                    <FormLabel className="text-primary" htmlFor="weight">
-                      Weight
-                    </FormLabel>
-                    <Input
-                      placeholder="Enter weight (lbs)"
-                      type="number"
-                      onChange={(e) => {
-                        if (
-                          e.target.value !== "" &&
-                          typeof parseInt(e.target.value) === "number"
-                        ) {
-                          field.onChange(parseInt(e.target.value));
-                        }
-                      }}
-                      defaultValue={field.value}
-                      className="outline-0 border rounded-lg w-full py-3 px-5"
-                      name="weight"
-                    />
-                    <FormMessage />
-                  </FormItem>
-                );
-              }}
-            />
-          </div>
-        ) : (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
-            <Dumbbell
-              color="#ff5c9d"
-              size={30}
-              className="hover:cursor-pointer mt-2 mr-3"
-            />
-            <div className="flex flex-col justify-start space-y-1">
-              <p className="font-bold text-base text-primary">
-                {data!.weight ? `${data!.weight} kg` : "Add Weight"}
-              </p>
-              <p className="text-[#727272] text-xs">Weight (CM)</p>
+        {editMode || !user?.profile_completed
+          ? (
+            <div className="space-y-1 hover:cursor-pointer w-full items-center">
+              <FormField
+                name="weight"
+                render={({ field }) => {
+                  return (
+                    <FormItem>
+                      <FormLabel className="text-primary" htmlFor="weight">
+                        Weight
+                      </FormLabel>
+                      <Input
+                        placeholder="Enter weight (lbs)"
+                        type="number"
+                        onChange={(e) => {
+                          if (
+                            e.target.value !== "" &&
+                            typeof parseInt(e.target.value) === "number"
+                          ) {
+                            field.onChange(parseInt(e.target.value));
+                          }
+                        }}
+                        defaultValue={field.value}
+                        className="outline-0 border rounded-lg w-full py-3 px-5"
+                        name="weight"
+                      />
+                      <FormMessage />
+                    </FormItem>
+                  );
+                }}
+              />
             </div>
-          </div>
-        )}
+          )
+          : (
+            <div className="flex flex-row space-x-2 hover:cursor-pointer">
+              <Dumbbell
+                color="#ff5c9d"
+                size={30}
+                className="hover:cursor-pointer mt-2 mr-3"
+              />
+              <div className="flex flex-col justify-start space-y-1">
+                <p className="font-bold text-base text-primary">
+                  {data!.weight ? `${data!.weight} kg` : "Add Weight"}
+                </p>
+                <p className="text-[#727272] text-xs">Weight (CM)</p>
+              </div>
+            </div>
+          )}
       </div>
       {/* add new */}
       <div className="flex flex-row justify-between w-full px-5">
-        {editMode || !user?.profile_completed ? (
-          <div className="space-y-1 hover:cursor-pointer w-full items-center">
-            <FormField
-              name="bodyType"
-              render={({ field }) => {
-                return (
-                  <FormItem>
-                    <FormLabel className="text-primary" htmlFor="bodyType">
-                      Body Type
-                    </FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder={"Select body type"} />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {bodyTypes &&
-                          bodyTypes.map((data: BodyType) => {
-                            const { body: bodyType, body_type_id } = data;
-                            return (
-                              <SelectItem value={bodyType} key={body_type_id}>
-                                {bodyType}
-                              </SelectItem>
-                            );
-                          })}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                );
-              }}
-              control={control}
-            />
-          </div>
-        ) : (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
-            <User2
-              color="#ff5c9d"
-              size={30}
-              className="hover:cursor-pointer mt-2 mr-3"
-            />
-            <div className="flex flex-col justify-start space-y-1">
-              <p className="font-bold text-base text-primary">
-                {data!.bodyType ? data!.bodyType : "Add Body Type"}
-              </p>
-              <p className="text-[#727272] text-xs">Body Type</p>
+        {editMode || !user?.profile_completed
+          ? (
+            <div className="space-y-1 hover:cursor-pointer w-full items-center">
+              <FormField
+                name="bodyType"
+                render={({ field }) => {
+                  return (
+                    <FormItem>
+                      <FormLabel className="text-primary" htmlFor="bodyType">
+                        Body Type
+                      </FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder={"Select body type"} />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {bodyTypes &&
+                            bodyTypes.map((data: BodyType) => {
+                              const { body: bodyType, body_type_id } = data;
+                              return (
+                                <SelectItem value={bodyType} key={body_type_id}>
+                                  {bodyType}
+                                </SelectItem>
+                              );
+                            })}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  );
+                }}
+                control={control}
+              />
             </div>
-          </div>
-        )}
+          )
+          : (
+            <div className="flex flex-row space-x-2 hover:cursor-pointer">
+              <User2
+                color="#ff5c9d"
+                size={30}
+                className="hover:cursor-pointer mt-2 mr-3"
+              />
+              <div className="flex flex-col justify-start space-y-1">
+                <p className="font-bold text-base text-primary">
+                  {data!.bodyType ? data!.bodyType : "Add Body Type"}
+                </p>
+                <p className="text-[#727272] text-xs">Body Type</p>
+              </div>
+            </div>
+          )}
       </div>
       <div className="flex flex-row justify-between w-full px-5">
-        {editMode || !user?.profile_completed ? (
-          <div className="space-y-1 hover:cursor-pointer w-full items-center">
-            <FormField
-              name="hair"
-              render={({ field }) => {
-                return (
-                  <FormItem>
-                    <FormLabel className="text-primary" htmlFor="hair">
-                      Hair
-                    </FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder={"Select hair"} />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {hair &&
-                          hair.map((data: Hair, index: number) => {
-                            const { hair_name } = data;
-                            return (
-                              <SelectItem value={hair_name} key={index}>
-                                {hair_name}
-                              </SelectItem>
-                            );
-                          })}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                );
-              }}
-              control={control}
-            />
-          </div>
-        ) : (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
-            <Scissors
-              color="#ff5c9d"
-              size={30}
-              className="hover:cursor-pointer mt-2 mr-3"
-            />
-            <div className="flex flex-col justify-start space-y-1">
-              <p className="font-bold text-base text-primary">
-                {data!.hair ? data!.hair : "Add Haircut"}
-              </p>
-              <p className="text-[#727272] text-xs">Haircut</p>
+        {editMode || !user?.profile_completed
+          ? (
+            <div className="space-y-1 hover:cursor-pointer w-full items-center">
+              <FormField
+                name="hair"
+                render={({ field }) => {
+                  return (
+                    <FormItem>
+                      <FormLabel className="text-primary" htmlFor="hair">
+                        Hair
+                      </FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder={"Select hair"} />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {hair &&
+                            hair.map((data: Hair, index: number) => {
+                              const { hair_name } = data;
+                              return (
+                                <SelectItem value={hair_name} key={index}>
+                                  {hair_name}
+                                </SelectItem>
+                              );
+                            })}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  );
+                }}
+                control={control}
+              />
             </div>
-          </div>
-        )}
+          )
+          : (
+            <div className="flex flex-row space-x-2 hover:cursor-pointer">
+              <Scissors
+                color="#ff5c9d"
+                size={30}
+                className="hover:cursor-pointer mt-2 mr-3"
+              />
+              <div className="flex flex-col justify-start space-y-1">
+                <p className="font-bold text-base text-primary">
+                  {data!.hair ? data!.hair : "Add Haircut"}
+                </p>
+                <p className="text-[#727272] text-xs">Haircut</p>
+              </div>
+            </div>
+          )}
       </div>
       <div className="flex flex-row justify-between w-full px-5">
-        {editMode || !user?.profile_completed ? (
-          <div className="space-y-1 hover:cursor-pointer w-full items-center">
-            <FormField
-              name="eyes"
-              render={({ field }) => {
-                return (
-                  <FormItem>
-                    <FormLabel className="text-primary" htmlFor="eyes">
-                      Eyes
-                    </FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder={"Select eye type"} />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {eyes &&
-                          eyes.map((data: Eye, index: number) => {
-                            const { eyes_name } = data;
-                            return (
-                              <SelectItem value={eyes_name} key={index}>
-                                {eyes_name}
-                              </SelectItem>
-                            );
-                          })}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                );
-              }}
-              control={control}
-            />
-          </div>
-        ) : (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
-            <EyeIcon
-              color="#ff5c9d"
-              size={30}
-              className="hover:cursor-pointer mt-2 mr-3"
-            />
-            <div className="flex flex-col justify-start space-y-1">
-              <p className="font-bold text-base text-primary">
-                {data!.eyes ? data!.eyes : "Add Eye Color"}
-              </p>
-              <p className="text-[#727272] text-xs">Eye Color</p>
+        {editMode || !user?.profile_completed
+          ? (
+            <div className="space-y-1 hover:cursor-pointer w-full items-center">
+              <FormField
+                name="eyes"
+                render={({ field }) => {
+                  return (
+                    <FormItem>
+                      <FormLabel className="text-primary" htmlFor="eyes">
+                        Eyes
+                      </FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder={"Select eye type"} />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {eyes &&
+                            eyes.map((data: Eye, index: number) => {
+                              const { eyes_name } = data;
+                              return (
+                                <SelectItem value={eyes_name} key={index}>
+                                  {eyes_name}
+                                </SelectItem>
+                              );
+                            })}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  );
+                }}
+                control={control}
+              />
             </div>
-          </div>
-        )}
+          )
+          : (
+            <div className="flex flex-row space-x-2 hover:cursor-pointer">
+              <EyeIcon
+                color="#ff5c9d"
+                size={30}
+                className="hover:cursor-pointer mt-2 mr-3"
+              />
+              <div className="flex flex-col justify-start space-y-1">
+                <p className="font-bold text-base text-primary">
+                  {data!.eyes ? data!.eyes : "Add Eye Color"}
+                </p>
+                <p className="text-[#727272] text-xs">Eye Color</p>
+              </div>
+            </div>
+          )}
       </div>
       <div className="flex flex-row justify-between w-full px-5">
-        {editMode || !user?.profile_completed ? (
-          <div className="space-y-1 hover:cursor-pointer w-full items-center">
-            <FormField
-              name="bodyArt"
-              render={({ field }) => {
-                return (
-                  <FormItem>
-                    <FormLabel className="text-primary" htmlFor="bodyArt">
-                      Body Art
-                    </FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder={"Select body art"} />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {bodyArts &&
-                          bodyArts.map((data: BodyArt, index: number) => {
-                            const { body } = data;
+        {editMode || !user?.profile_completed
+          ? (
+            <div className="space-y-1 hover:cursor-pointer w-full items-center">
+              <FormField
+                name="bodyArt"
+                render={({ field }) => {
+                  return (
+                    <FormItem>
+                      <FormLabel className="text-primary" htmlFor="bodyArt">
+                        Body Art
+                      </FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder={"Select body art"} />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {bodyArts &&
+                            bodyArts.map((data: BodyArt, index: number) => {
+                              const { body } = data;
 
-                            return (
-                              <SelectItem value={body} key={index}>
-                                {body}
-                              </SelectItem>
-                            );
-                          })}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                );
-              }}
-              control={control}
-            />
-          </div>
-        ) : (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
-            <Brush
-              color="#ff5c9d"
-              size={30}
-              className="hover:cursor-pointer mt-2 mr-3"
-            />
-            <div className="flex flex-col justify-start space-y-1">
-              <p className="font-bold text-base text-primary">
-                {data!.bodyArt ? data!.bodyArt : "Add Body Art Type"}
-              </p>
-              <p className="text-[#727272] text-xs">Body Art Type</p>
+                              return (
+                                <SelectItem value={body} key={index}>
+                                  {body}
+                                </SelectItem>
+                              );
+                            })}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  );
+                }}
+                control={control}
+              />
             </div>
-          </div>
-        )}
-      </div>
-      <div className="flex flex-row justify-between w-full px-5">
-        {editMode || !user?.profile_completed ? (
-          <div className="space-y-1 hover:cursor-pointer w-full items-center">
-            <FormField
-              name="favoriteFood"
-              render={({ field }) => {
-                return (
-                  <FormItem>
-                    <FormLabel className="text-primary" htmlFor="favoriteFood">
-                      Favorite Food
-                    </FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder={"Select favorite food"} />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {favoriteFoods &&
-                          favoriteFoods.map((data: FavoriteFood) => {
-                            const {
-                              favorite_food_name: favoriteFood,
-                              favorite_food_id,
-                            } = data;
-                            return (
-                              <SelectItem
-                                value={favoriteFood}
-                                key={favorite_food_id}
-                              >
-                                {favoriteFood}
-                              </SelectItem>
-                            );
-                          })}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                );
-              }}
-              control={control}
-            />
-          </div>
-        ) : (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
-            <Drumstick
-              color="#ff5c9d"
-              size={30}
-              className="hover:cursor-pointer mt-2 mr-3"
-            />
-            <div className="flex flex-col justify-start space-y-1">
-              <p className="font-bold text-base text-primary">
-                {data!.favoriteFood ? data!.favoriteFood : "Add Favorite Food"}
-              </p>
-              <p className="text-[#727272] text-xs">Favorite Food</p>
+          )
+          : (
+            <div className="flex flex-row space-x-2 hover:cursor-pointer">
+              <Brush
+                color="#ff5c9d"
+                size={30}
+                className="hover:cursor-pointer mt-2 mr-3"
+              />
+              <div className="flex flex-col justify-start space-y-1">
+                <p className="font-bold text-base text-primary">
+                  {data!.bodyArt ? data!.bodyArt : "Add Body Art Type"}
+                </p>
+                <p className="text-[#727272] text-xs">Body Art Type</p>
+              </div>
             </div>
-          </div>
-        )}
+          )}
       </div>
-      <div className="flex flex-row justify-between w-full px-5">
-        {editMode || !user?.profile_completed ? (
-          <div className="space-y-1 hover:cursor-pointer w-full items-center">
-            <FormField
-              name="interest"
-              render={({ field }) => {
-                return (
-                  <FormItem>
-                    <FormLabel className="text-primary" htmlFor="interest">
-                      Interest
-                    </FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder={"Select interest"} />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {interests &&
-                          interests.map((data: Interest) => {
-                            return (
-                              <SelectItem
-                                value={data.interest_name}
-                                key={data.interest_id}
-                              >
-                                {data.interest_name}
-                              </SelectItem>
-                            );
-                          })}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                );
-              }}
-              control={control}
-            />
-          </div>
-        ) : (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
-            <BookOpenCheck
-              color="#ff5c9d"
-              size={30}
-              className="hover:cursor-pointer mt-2 mr-3"
-            />
-            <div className="flex flex-col justify-start space-y-1">
-              <p className="font-bold text-base text-primary">
-                {data!.bodyArt ? data!.bodyArt : "Add Interests"}
-              </p>
-              <p className="text-[#727272] text-xs">Interests</p>
-            </div>
-          </div>
-        )}
-      </div>
+
+
     </div>
   );
 };

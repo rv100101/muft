@@ -41,19 +41,18 @@ import {
 } from "@/types/profile";
 import selectOptions from "@/zustand/profile/selectData/selectOptions";
 import { useLocation } from "wouter";
-import { useUserStore } from "@/zustand/auth/user";
+// import { useUserStore } from "@/zustand/auth/user";
 import useSelectedCountryStore from "@/zustand/profile/location/selectedCountry";
+import { convertJsonToConvertedObject } from "@/lib/utils";
 const AboutAccordion = ({ userId }: { userId: number }) => {
   const selectedCountry = useSelectedCountryStore((state) =>
     state.selectedCountry
   );
-  const user = useUserStore((state) => state.user);
+  // const user = useUserStore((state) => state.user);
   const {
     setIsLoading,
     setData: setAboutData,
     setEditModeFalse,
-    setProfileData,
-    profileData,
   } = profileAboutContentStore();
 
   const {
@@ -82,7 +81,7 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
     setCar,
     setInterest,
     setReligion,
-    setEmploymentStatus
+    setEmploymentStatus,
   } = selectOptions();
 
   const [location] = useLocation();
@@ -90,82 +89,41 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
   useEffect(() => {
     if (!location.startsWith("/profile")) {
       setEditModeFalse();
-    } else {
-      if (profileData) {
-        setAboutData(profileData);
-      }
     }
-  }, [location, profileData]);
+  }, [location]);
 
-  const { isLoading: memberLoading } = useQuery({
-    queryKey: ["memberProfileContent", userId],
-    enabled: userId !== user!.member_id,
-    refetchInterval: Infinity,
-    queryFn: async () => {
-      const basicInfo = await profileContentQuery.fetchBasicInfoInitialData(
-        userId,
-      );
-      const workEducation = await profileContentQuery
-        .fetchWorkEducationInitialData(userId);
-      const location = await profileContentQuery.fetchLocationInitialData(
-        userId,
-      );
-      const details = await profileContentQuery.fetchDetailsInitialData(
-        userId,
-      );
-
-      const additionalInformation = await profileContentQuery
-        .fetchAdditionalInformation(
-          userId,
-        );
-
-      return {
-        ...basicInfo,
-        ...workEducation,
-        ...location,
-        ...details,
-        ...additionalInformation,
-      };
-    },
-    onSuccess: (data: ProfileAbout) => {
-      setAboutData(data);
-    },
-    refetchOnWindowFocus: false,
-  });
+  // const {
+  //   setHeaderValues,
+  //   setProfileHeaderValues,
+  // } = profileHeaderStore();
 
   const { isLoading: currentUserLoading } = useQuery({
-    enabled: userId === user!.member_id,
     queryKey: ["currentUserProfileContent", userId],
-    refetchInterval: Infinity,
     queryFn: async () => {
-      const basicInfo = await profileContentQuery.fetchBasicInfoInitialData(
-        userId,
-      );
-      const workEducation = await profileContentQuery
-        .fetchWorkEducationInitialData(userId);
-      const location = await profileContentQuery.fetchLocationInitialData(
-        userId,
-      );
-      const details = await profileContentQuery.fetchDetailsInitialData(
-        userId,
-      );
-
       const additionalInformation = await profileContentQuery
         .fetchAdditionalInformation(
           userId,
         );
+      const memberDetails = await profileContentQuery.fetchMemberDetails(
+        userId,
+        userId,
+      );
+      let convertedDetails = {};
+      console.log(memberDetails);
 
-      return {
-        ...basicInfo,
-        ...workEducation,
-        ...location,
-        ...details,
+      if (memberDetails.length !== 0) {
+        const parsed = JSON.parse(memberDetails);
+        convertedDetails = convertJsonToConvertedObject(parsed);
+      }
+      const details = {
+        ...convertedDetails,
         ...additionalInformation,
       };
+      console.log(details);
+      return details;
     },
     onSuccess: (data: ProfileAbout) => {
       setAboutData(data);
-      setProfileData(data);
     },
     refetchOnWindowFocus: false,
   });
@@ -406,16 +364,14 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
   });
 
   useEffect(() => {
-    userId === user!.member_id
-      ? setIsLoading(currentUserLoading)
-      : setIsLoading(memberLoading);
-  }, [memberLoading, setIsLoading, currentUserLoading]);
+    setIsLoading(currentUserLoading);
+  }, [setIsLoading, currentUserLoading]);
 
   return (
     <div className="flex flex-row justify-between">
       <Accordion
         type="single"
-        collapsible={user?.profile_completed}
+        collapsible={false}
         className="w-full"
         defaultValue="item-1"
       >
