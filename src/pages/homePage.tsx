@@ -106,7 +106,6 @@ const HomePage = () => {
   };
 
   const toggleSuggestionTags = (index: number, suggestionValue: number) => {
-    console.log("this here is triggered");
     const newActiveTags = clickedTags.map((_, i) => i === index);
     if (suggestionValue === 100) {
       setEndAgeSliderVal(100);
@@ -216,9 +215,6 @@ const HomePage = () => {
     retrievingMemberData,
     debouncedAgeFilterVal,
   ]);
-
-  console.log("filter: ", filters);
-  console.log("filter: ", randomNumbers);
 
   return (
     <AuthenticatedLayout>
@@ -378,7 +374,7 @@ const HomePage = () => {
                       // value={[startAgeSliderVal]}
                       max={60}
                       step={1}
-                      className="w-full px-5"
+                      className="w-full mx-5"
                       onValueChange={handleStartSliderChange}
                       name="age"
                     />
@@ -392,7 +388,7 @@ const HomePage = () => {
                       // value={[endAgeSliderVal]}
                       max={100}
                       step={1}
-                      className="w-full pl-10 pr-5"
+                      className="w-full ml-10 pr-5"
                       onValueChange={handleEndSliderChange}
                       name="age"
                     />

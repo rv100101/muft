@@ -204,7 +204,6 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
   //   </li>,
   // ];
 
-  console.log("location: ", location === "/");
   return (
     <div className="flex lg:h-full h-8 lg:items-start items-center lg:space-x-0 space-x-4  lg:pl-0 pl-5 lg:border-0 border-b p-5">
       {/* search */}
@@ -224,89 +223,91 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
         onOpenChange={(val) => setFiltersTriggered(val)}
       >
         {location === "/" && (
-          <DialogContent className="sm:max-w-md opacity-100 w-4/5">
+          <DialogContent className="flex flex-col sm:max-w-md opacity-100 w-4/5">
             <p className="px-5 text-[#cfd8e4]">Suggested</p>
-            <div className="flex flex-row justify-between items-center p-5 space-x-5">
-              <p
-                onClick={() => {
-                  setStartAgeSliderVal(randomNumbers[0]);
-                  toggleSuggestionTags(0, randomNumbers[1]);
-                }}
-                className={`${
-                  !clickedTags[0]
-                    ? "bg-white text-[#ff569a]"
-                    : "bg-[#ff569a] text-white"
-                } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
-              >
-                {randomNumbers[0]}
-              </p>
-              <p
-                onClick={() => {
-                  setStartAgeSliderVal(randomNumbers[1]);
-                  toggleSuggestionTags(1, randomNumbers[1]);
-                }}
-                className={`${
-                  !clickedTags[1]
-                    ? "bg-white text-[#ff569a]"
-                    : "bg-[#ff569a] text-white"
-                } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
-              >
-                {randomNumbers[1]}
-              </p>
-              <p
-                onClick={() => {
-                  setStartAgeSliderVal(randomNumbers[2]);
-                  toggleSuggestionTags(2, randomNumbers[2]);
-                }}
-                className={`${
-                  !clickedTags[2]
-                    ? "bg-white text-[#ff569a]"
-                    : "bg-[#ff569a] text-white"
-                } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
-              >
-                {randomNumbers[2]}
-              </p>
-            </div>
-            <div className="flex flex-row justify-between items-center p-5 space-x-5">
-              <p
-                onClick={() => {
-                  setStartAgeSliderVal(randomNumbers[3]);
-                  toggleSuggestionTags(3, randomNumbers[3]);
-                }}
-                className={`${
-                  !clickedTags[3]
-                    ? "bg-white text-[#ff569a]"
-                    : "bg-[#ff569a] text-white"
-                } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
-              >
-                {randomNumbers[3]}
-              </p>
-              <p
-                onClick={() => {
-                  setStartAgeSliderVal(randomNumbers[4]);
-                  toggleSuggestionTags(4, randomNumbers[4]);
-                }}
-                className={`${
-                  !clickedTags[4]
-                    ? "bg-white text-[#ff569a]"
-                    : "bg-[#ff569a] text-white"
-                } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
-              >
-                {randomNumbers[4]}
-              </p>
-              <p
-                onClick={() => {
-                  setStartAgeSliderVal(randomNumbers[5]);
-                  toggleSuggestionTags(5, randomNumbers[5]);
-                }}
-                className={`${
-                  !clickedTags[5]
-                    ? "bg-white text-[#ff569a]"
-                    : "bg-[#ff569a] text-white"
-                } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
-              >
-                {randomNumbers[5]}
-              </p>
+            <div className="max-[320px]:flex-row max-[320px]:flex">
+              <div className="flex flex-row max-[320px]:flex-col max-[320px]:space-y-3 max-[320px]:w-24 max-[320px]:justify-start max-[320px]:space-x-0  justify-between items-center p-5 space-x-5">
+                <p
+                  onClick={() => {
+                    setStartAgeSliderVal(randomNumbers[0]);
+                    toggleSuggestionTags(0, randomNumbers[1]);
+                  }}
+                  className={`${
+                    !clickedTags[0]
+                      ? "bg-white text-[#ff569a]"
+                      : "bg-[#ff569a] text-white"
+                  } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
+                >
+                  {randomNumbers[0]}
+                </p>
+                <p
+                  onClick={() => {
+                    setStartAgeSliderVal(randomNumbers[1]);
+                    toggleSuggestionTags(1, randomNumbers[1]);
+                  }}
+                  className={`${
+                    !clickedTags[1]
+                      ? "bg-white text-[#ff569a]"
+                      : "bg-[#ff569a] text-white"
+                  } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
+                >
+                  {randomNumbers[1]}
+                </p>
+                <p
+                  onClick={() => {
+                    setStartAgeSliderVal(randomNumbers[2]);
+                    toggleSuggestionTags(2, randomNumbers[2]);
+                  }}
+                  className={`${
+                    !clickedTags[2]
+                      ? "bg-white text-[#ff569a]"
+                      : "bg-[#ff569a] text-white"
+                  } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
+                >
+                  {randomNumbers[2]}
+                </p>
+              </div>
+              <div className="flex flex-row justify-between  max-[320px]:flex-col max-[320px]:space-y-3 max-[320px]:w-24 max-[320px]:justify-start max-[320px]:space-x-0  items-center p-5 space-x-5">
+                <p
+                  onClick={() => {
+                    setStartAgeSliderVal(randomNumbers[3]);
+                    toggleSuggestionTags(3, randomNumbers[3]);
+                  }}
+                  className={`${
+                    !clickedTags[3]
+                      ? "bg-white text-[#ff569a]"
+                      : "bg-[#ff569a] text-white"
+                  } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
+                >
+                  {randomNumbers[3]}
+                </p>
+                <p
+                  onClick={() => {
+                    setStartAgeSliderVal(randomNumbers[4]);
+                    toggleSuggestionTags(4, randomNumbers[4]);
+                  }}
+                  className={`${
+                    !clickedTags[4]
+                      ? "bg-white text-[#ff569a]"
+                      : "bg-[#ff569a] text-white"
+                  } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
+                >
+                  {randomNumbers[4]}
+                </p>
+                <p
+                  onClick={() => {
+                    setStartAgeSliderVal(randomNumbers[5]);
+                    toggleSuggestionTags(5, randomNumbers[5]);
+                  }}
+                  className={`${
+                    !clickedTags[5]
+                      ? "bg-white text-[#ff569a]"
+                      : "bg-[#ff569a] text-white"
+                  } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
+                >
+                  {randomNumbers[5]}
+                </p>
+              </div>
             </div>
             <div className="flex flex-row justify-between items-center">
               <p className="px-5 text-[#cfd8e4]">Filter By</p>
@@ -320,14 +321,14 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
               <p className="px-5 text-sm">{`${startAgeSliderVal}-${endAgeSliderVal}`}</p>
             </div>
             {/* <form action="post" onSubmit={formik.handleSubmit}> */}
-            <div className="flex flex-row justify-center align-center py-5 px-5 mt-5">
+            <div className="flex flex-row justify-center align-center py-5 mx-5 mt-5">
               <p className="text-slate-500 text-sm">From</p>
               <Slider
                 // defaultValue={[50]}
                 value={[filters ? filters!.min_age : 23]}
                 max={60}
                 step={1}
-                className="w-full px-5"
+                className="w-full mx-5"
                 onValueChange={handleStartSliderChange}
                 name="age"
               />
@@ -340,7 +341,7 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
                 value={[filters ? filters!.max_age : 60]}
                 max={100}
                 step={1}
-                className="w-full pl-10 pr-5"
+                className="w-full ml-10 pr-5"
                 onValueChange={handleEndSliderChange}
                 name="age"
               />
