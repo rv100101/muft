@@ -1,4 +1,3 @@
-import TopBar from "@/components/topBar";
 import AuthenticatedLayout from "./layout";
 import { MoreHorizontal, MoreVertical, SearchIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -17,6 +16,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useLocation } from "wouter";
+import TopBar2 from "@/components/topBar2";
 const LikesPage = () => {
   const [tab] = useState<"LIKES" | "FAVOURITES">("LIKES");
   const [, setLocation] = useLocation();
@@ -53,7 +53,7 @@ const LikesPage = () => {
               src={getImagePath(
                 like.gallery_uuid,
                 like.gender,
-                like.member_uuid,
+                like.member_uuid
               )}
               alt="user"
             />
@@ -91,19 +91,18 @@ const LikesPage = () => {
   return (
     <AuthenticatedLayout>
       <div className="flex flex-col w-full h-full space-y-4">
-        <div className="pt-4">
-          <TopBar>
+        <div className="lg:pt-4 py-3">
+          <TopBar2>
             <div className="w-full h-full flex items-center justify-between">
               <h1 className="font-semibold">LIKES</h1>{" "}
-              <Button variant={"ghost"}>
-                <MoreVertical />
-              </Button>
+              {/* <Button variant={"ghost"}> */}
+              <MoreVertical />
+              {/* </Button> */}
             </div>
-          </TopBar>
+          </TopBar2>
         </div>{" "}
         <div className="w-full flex h-max">
-          {
-            /* <Button
+          {/* <Button
             onClick={() => {
               setTab("LIKES");
             }}
@@ -124,8 +123,7 @@ const LikesPage = () => {
             )}
           >
             FAVOURITES
-          </Button> */
-          }
+          </Button> */}
         </div>
         {
           <div className="flex justify-end h-max items-center px-8">

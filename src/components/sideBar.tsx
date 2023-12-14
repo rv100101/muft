@@ -20,12 +20,10 @@ import { scrollToTop } from "@/lib/utils";
 import useConversationHistoryStore from "@/zustand/messaging/showConversation";
 
 const SideBar = () => {
-  const reset = useConversationHistoryStore(
-    (state) => state.resetToNull,
-  );
+  const reset = useConversationHistoryStore((state) => state.resetToNull);
   const signOut = useUserStore((state) => state.reset);
   const setSelectedProfileId = useHomepageViewStore(
-    (state) => state.setSelectedProfileId,
+    (state) => state.setSelectedProfileId
   );
   const [location] = useLocation();
   const queryClient = useQueryClient();
@@ -40,12 +38,15 @@ const SideBar = () => {
               ? "font-semibold bg-accent"
               : location.endsWith(link.path)
               ? "font-semibold bg-accent"
-              : "font-normal",
+              : "font-normal"
           )}
-          href={link.name == "My Profile"
-            ? `/profile/${user!.member_id}`
-            : link.path}
+          href={
+            link.name == "My Profile"
+              ? `/profile/${user!.member_id}`
+              : link.path
+          }
           onClick={() => {
+            console.log("this here is triggered");
             if (link.name == "My Profile") {
               setSelectedProfileId(null);
               queryClient.invalidateQueries({ queryKey: ["profileHeader"] });
@@ -58,15 +59,19 @@ const SideBar = () => {
         >
           {
             <link.icon
-              fill={location.startsWith("/profile") &&
-                  link.path.startsWith("/profile")
-                ? "black"
-                : location.endsWith(link.path)
-                ? "black"
-                : "white"}
-              stroke={link.name == "Home" && location.endsWith(link.path)
-                ? "white"
-                : "black"}
+              fill={
+                location.startsWith("/profile") &&
+                link.path.startsWith("/profile")
+                  ? "black"
+                  : location.endsWith(link.path)
+                  ? "black"
+                  : "white"
+              }
+              stroke={
+                link.name == "Home" && location.endsWith(link.path)
+                  ? "white"
+                  : "black"
+              }
               strokeWidth={location.endsWith(link.path) ? 0.8 : 2}
               size={20}
             />
@@ -109,11 +114,11 @@ const SideBar = () => {
           </a>
         </Link>
         {
-        // <Link onClick={scrollToTop} href="/release-notes">
-        //   <a className="hover:text-slate-700 text-xs text-black">
-        //     Release Notes
-        //   </a>
-        // </Link>
+          // <Link onClick={scrollToTop} href="/release-notes">
+          //   <a className="hover:text-slate-700 text-xs text-black">
+          //     Release Notes
+          //   </a>
+          // </Link>
         }
         <hr />
         <Dialog>

@@ -12,6 +12,7 @@ import AboutPage from "@/pages/aboutPage";
 import SubscriptionPage from "@/pages/subscriptionPage";
 import FavouritesPage from "@/pages/authenticatedPages/favouritesPage";
 import LikesPage from "@/pages/authenticatedPages/likesPage";
+import SettingsPage from "@/pages/authenticatedPages/settingsPage";
 
 export const routesWithFooterAndTopNav = [
   "/",
@@ -24,13 +25,12 @@ export const routesWithFooterAndTopNav = [
   "/subscription",
 ];
 
-
 export const noUserOnlyRoutes = [
-  '/auth/signin',
-  '/auth/signup',
-  '/about',
-  '/subscription'
-]
+  "/auth/signin",
+  "/auth/signup",
+  "/about",
+  "/subscription",
+];
 
 const pageRoutes = {
   landingPage: {
@@ -88,6 +88,10 @@ const pageRoutes = {
   subscription: {
     path: "/subscription",
     component: SubscriptionPage,
+  },
+  settings: {
+    path: "/settings",
+    component: SettingsPage,
   },
 };
 
