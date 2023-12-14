@@ -18,8 +18,10 @@ import { Button } from "./ui/button";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { scrollToTop } from "@/lib/utils";
 import useConversationHistoryStore from "@/zustand/messaging/showConversation";
+import { useOrientation } from "@uidotdev/usehooks";
 
 const SideBar = () => {
+  const orientation = useOrientation();
   const reset = useConversationHistoryStore((state) => state.resetToNull);
   const signOut = useUserStore((state) => state.reset);
   const setSelectedProfileId = useHomepageViewStore(
@@ -46,7 +48,6 @@ const SideBar = () => {
               : link.path
           }
           onClick={() => {
-            console.log("this here is triggered");
             if (link.name == "My Profile") {
               setSelectedProfileId(null);
               queryClient.invalidateQueries({ queryKey: ["profileHeader"] });
@@ -84,70 +85,76 @@ const SideBar = () => {
 
   return (
     <div className="h-full border-r sm:flex sm:flex-col justify-between hidden">
-      <div className="flex flex-col w-[220px]">
-        <Link href="/">
-          <img
-            className="hover:cursor-pointer w-1/2 my-8 mx-4"
-            src={logo}
-            alt="logo"
-          />
-        </Link>
-        <ul>{navLinks}</ul>
-      </div>
+      <div
+        className={`h-full flex flex-col justify-between ${
+          orientation.angle === 90 ? "overflow-scroll" : ""
+        }`}
+      >
+        <div className="flex flex-col w-[220px]">
+          <Link href="/">
+            <img
+              className="hover:cursor-pointer w-1/2 my-8 mx-4"
+              src={logo}
+              alt="logo"
+            />
+          </Link>
+          <ul>{navLinks}</ul>
+        </div>
 
-      <div className="flex flex-col space-y-4 px-4">
-        <a
-          className="hover:text-slate-700 text-xs text-black"
-          href="https://softnames.bolddesk.com/"
-          target="__blank"
-        >
-          Help Center
-        </a>
-        <Link onClick={scrollToTop} href="/privacy-policy">
-          <a className="hover:text-slate-700 text-xs text-black">
-            Privacy Policy
+        <div className="flex flex-col space-y-4 px-4 ">
+          <a
+            className="hover:text-slate-700 text-xs text-black"
+            href="https://softnames.bolddesk.com/"
+            target="__blank"
+          >
+            Help Center
           </a>
-        </Link>
-        <Link onClick={scrollToTop} href="/terms">
-          <a className="hover:text-slate-700 text-xs text-black">
-            Terms of Service
-          </a>
-        </Link>
-        {
-          // <Link onClick={scrollToTop} href="/release-notes">
-          //   <a className="hover:text-slate-700 text-xs text-black">
-          //     Release Notes
-          //   </a>
-          // </Link>
-        }
-        <hr />
-        <Dialog>
-          <DialogTrigger>
-            <div className="flex space-x-2 my-4">
-              {<LogOutIcon size={20} className="text-primary" />}{" "}
-              <p className="text-sm">Sign out</p>
-            </div>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-md opacity-100">
-            <DialogHeader>
-              <DialogTitle>Are you sure you want to sign out?</DialogTitle>
-            </DialogHeader>
-            <DialogFooter className="sm:justify-start">
-              <Button className="hover:bg-primary" onClick={signOut}>
-                Yes
-              </Button>
-              <DialogClose asChild>
-                <Button
-                  className="text-white hover:bg-secondary"
-                  type="button"
-                  variant="secondary"
-                >
-                  No
+          <Link onClick={scrollToTop} href="/privacy-policy">
+            <a className="hover:text-slate-700 text-xs text-black">
+              Privacy Policy
+            </a>
+          </Link>
+          <Link onClick={scrollToTop} href="/terms">
+            <a className="hover:text-slate-700 text-xs text-black">
+              Terms of Service
+            </a>
+          </Link>
+          {
+            // <Link onClick={scrollToTop} href="/release-notes">
+            //   <a className="hover:text-slate-700 text-xs text-black">
+            //     Release Notes
+            //   </a>
+            // </Link>
+          }
+          <hr />
+          <Dialog>
+            <DialogTrigger>
+              <div className="flex space-x-2 my-4">
+                {<LogOutIcon size={20} className="text-primary" />}{" "}
+                <p className="text-sm">Sign out</p>
+              </div>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-md opacity-100">
+              <DialogHeader>
+                <DialogTitle>Are you sure you want to sign out?</DialogTitle>
+              </DialogHeader>
+              <DialogFooter className="sm:justify-start">
+                <Button className="hover:bg-primary" onClick={signOut}>
+                  Yes
                 </Button>
-              </DialogClose>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+                <DialogClose asChild>
+                  <Button
+                    className="text-white hover:bg-secondary"
+                    type="button"
+                    variant="secondary"
+                  >
+                    No
+                  </Button>
+                </DialogClose>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        </div>
       </div>
     </div>
   );
