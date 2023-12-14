@@ -1,9 +1,9 @@
 import ChatList from "./chatList";
 import SearchInput from "../searchInput";
-import TopBar from "../topBar";
 import { useUserStore } from "@/zustand/auth/user";
 import { getImagePath } from "@/lib/images";
 import { useUserAvatar } from "@/zustand/auth/avatar";
+import TopBar2 from "../topBar2";
 
 const ChatHistory = () => {
   const user = useUserStore((state) => state.user);
@@ -11,7 +11,7 @@ const ChatHistory = () => {
   return (
     <div className="space-y-2 w-full h-full">
       <div className="p-4 space-y-4">
-        <TopBar>
+        <TopBar2>
           <div className="flex items-center space-x-2">
             <img
               className="h-8 w-8 object-cover rounded-full"
@@ -20,7 +20,7 @@ const ChatHistory = () => {
             />
             <p className="font-semibold">{user?.first_name}</p>
           </div>
-        </TopBar>
+        </TopBar2>
         <SearchInput />
       </div>
       <ChatList />

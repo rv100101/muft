@@ -6,10 +6,10 @@ import ProfileHeaderSkeleton from "./profileHeaderSkeleton";
 import { Button } from "../ui/button";
 import {
   CameraIcon,
+  FolderEdit,
   Heart,
   Loader2,
   MessageCircleIcon,
-  Pencil,
   Star,
 } from "lucide-react";
 import { useUserStore } from "@/zustand/auth/user";
@@ -295,7 +295,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
           </div>
         }
         <div className="w-full">
-          <div className="flex w-full justify-between">
+          <div className="flex lg:flex-row flex-col space-y-5 w-full justify-between">
             <div className="w-full">
               {!isEditing && (
                 <div
@@ -310,7 +310,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                     {!isEditing && (
                       <p
                         className={
-                          "text-[#727272] text-xs py-1 px-2 w-min rounded-md bg-[#E8ECEF] hover:bg-[#E8ECEF]/80"
+                          "mt-1 text-[#f0f9ff] border-[#075985] text-xs py-1 px-2 w-min rounded-md bg-[#38bdf8] hover:bg-[#E8ECEF]/80"
                         }
                       >
                         Standard
@@ -379,7 +379,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                           type="text"
                           defaultValue={field.value}
                           onChange={field.onChange}
-                          className="outline-0 border rounded-lg w-48 py-3 px-5"
+                          className="outline-0 border border rounded-lg lg:w-1/2 w-full py-3 px-5"
                           name="nickname"
                         />
                         <FormMessage />
@@ -447,12 +447,14 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                       }
                     }}
                     className={cn(
-                      "text-xs rounded-2xl w-max h-max",
+                      "text-xs rounded-2xl h-max lg:w-1/4 w-1/2",
                       "text-[#727272] bg-[#E8ECEF] hover:bg-[#E8ECEF]/80"
                     )}
                   >
-                    <Pencil className="h-4 mr-2" />
-                    <span className="w-max">Edit Profile</span>
+                    <>
+                      <FolderEdit className="h-4 mr-2" />
+                      <span>Edit</span>
+                    </>
                   </Button>
                 )}
               </>

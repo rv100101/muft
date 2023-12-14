@@ -1,4 +1,3 @@
-import TopBar from "@/components/topBar";
 import AuthenticatedLayout from "./layout";
 import { MoreHorizontal, MoreVertical, SearchIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -18,6 +17,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useLocation } from "wouter";
+import TopBar2 from "@/components/topBar2";
 const FavouritesPage = () => {
   const [, setLocation] = useLocation();
   const [tab] = useState<"LIKES" | "FAVOURITES">("FAVOURITES");
@@ -112,15 +112,16 @@ const FavouritesPage = () => {
   return (
     <AuthenticatedLayout>
       <div className="flex flex-col w-full h-full space-y-4">
-        <div className="pt-4">
-          <TopBar>
-            <div className="w-full h-full flex items-center justify-between">
+        <div className="lg:pt-4 py-3">
+          <TopBar2>
+            <div className="w-full h-full flex lg:items-center justify-between">
               <h1 className="font-semibold">FAVORITES</h1>{" "}
-              <Button variant={"ghost"}>
-                <MoreVertical />
-              </Button>
+              {/* <Button variant={"ghost"}> */}
+              <MoreVertical />
+              {/* </Button> */}
             </div>
-          </TopBar>
+          </TopBar2>
+          <div></div>
         </div>{" "}
         <div className="w-full flex h-max">
           {/* <Button

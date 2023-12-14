@@ -13,20 +13,21 @@ import {
 } from "@/components/ui/dialog";
 import { DialogClose } from "@radix-ui/react-dialog";
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
+import TopBar2 from "../topBar2";
 const ProfileTopNav = () => {
   const { isSaving } = profileAboutContentStore();
 
   const signOut = useUserStore((state) => state.reset);
   const user = useUserStore((state) => state.user);
   const setSelectedHistoryMemberId = useLatestConversationStore(
-    (state) => state.setSelectedHistoryMemberId,
+    (state) => state.setSelectedHistoryMemberId
   );
   const setSelectedProfileId = useHomepageViewStore(
-    (state) => state.setSelectedProfileId,
+    (state) => state.setSelectedProfileId
   );
 
   return (
-    <div className="flex flex-row w-full justify-between p-5 lg:border-b">
+    <div className="flex flex-row w-full justify-between lg:p-5 py-2 lg:border-b">
       <div className="flex justify-center w-full space-x-5 ">
         <Button
           type="button"
@@ -47,9 +48,11 @@ const ProfileTopNav = () => {
         </Button>
         <div className="flex justify-between items-center h-min w-full">
           <div className="flex space-x-4 items-center">
-            <p className="font-semibold mt-1">
-              {user?.profile_completed ? "PROFILE" : "COMPLETE YOUR PROFILE"}
-            </p>
+            <TopBar2>
+              <p className="font-semibold mt-1">
+                {user?.profile_completed ? "PROFILE" : "COMPLETE YOUR PROFILE"}
+              </p>
+            </TopBar2>
             {!user?.profile_completed && (
               <div className="flex justify-end">
                 <Button
@@ -58,11 +61,11 @@ const ProfileTopNav = () => {
                   disabled={isSaving}
                 >
                   Save
-                  {isSaving &&
+                  {isSaving && (
                     <span>
                       <Loader2 className="ml-2 h-6 w-6 animate-spin" />
                     </span>
-                  }
+                  )}
                 </Button>
               </div>
             )}
