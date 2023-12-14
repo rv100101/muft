@@ -1,4 +1,4 @@
-import { CalendarClock, Heart, Star } from "lucide-react";
+import { CalendarClock, Heart, Ribbon, Star } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -182,7 +182,7 @@ const PostItem = ({
               <p className="text-[#FF599B] mt-2 text-sm">{age} years</p>
             </div>
             <div className="rounded-full bg-[#FFF2F7] flex flex-row justify-center align-center space-x-2 py-2 px-4 ">
-              <Heart
+              <Ribbon
                 color="#FF599B"
                 fill="white"
                 size={25}

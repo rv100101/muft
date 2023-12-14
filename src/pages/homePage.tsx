@@ -106,10 +106,11 @@ const HomePage = () => {
   };
 
   const toggleSuggestionTags = (index: number, suggestionValue: number) => {
+    console.log("this here is triggered");
     const newActiveTags = clickedTags.map((_, i) => i === index);
     if (suggestionValue === 100) {
       setEndAgeSliderVal(100);
-      updateFilters({ max_age: 100, min_age: startAgeSliderVal });
+      updateFilters({ max_age: 100, min_age: suggestionValue });
     } else {
       setEndAgeSliderVal(suggestionValue + 5);
       updateFilters({
@@ -118,7 +119,7 @@ const HomePage = () => {
       });
     }
 
-    setStartAgeSliderVal(suggestionValue);
+    // setStartAgeSliderVal(suggestionValue);
     setClickedTags(newActiveTags);
   };
 
@@ -216,6 +217,9 @@ const HomePage = () => {
     debouncedAgeFilterVal,
   ]);
 
+  console.log("filter: ", filters);
+  console.log("filter: ", randomNumbers);
+
   return (
     <AuthenticatedLayout>
       <div className="flex 2xl:justify-center w-full">
@@ -269,7 +273,7 @@ const HomePage = () => {
                     onClick={() => {
                       setSuggestedTriggered((prev) => !prev);
                       setStartAgeSliderVal(randomNumbers[0]);
-                      toggleSuggestionTags(0, randomNumbers[1]);
+                      toggleSuggestionTags(0, randomNumbers[0]);
                     }}
                     className={`${
                       !clickedTags[0]
@@ -359,35 +363,40 @@ const HomePage = () => {
                   </p>
                 </div>
 
-                <div className="flex flex-row justify-between items-center mt-5">
-                  <p className="px-5 text-sm">Age</p>
-                  <p className="px-5 text-sm">{`${startAgeSliderVal}-${endAgeSliderVal}`}</p>
-                </div>
-                {/* <form action="post" onSubmit={formik.handleSubmit}> */}
-                <div className="flex flex-row justify-center align-center py-5 px-5 mt-5">
-                  <p className="text-slate-500 text-sm">From</p>
-                  <Slider
-                    // defaultValue={[50]}
-                    value={[filters ? filters!.min_age : 23]}
-                    max={60}
-                    step={1}
-                    className="w-full px-5"
-                    onValueChange={handleStartSliderChange}
-                    name="age"
-                  />
-                </div>
-                <div className="flex flex-row justify-center align-center py-5 px-5">
-                  <p className="text-slate-500 text-sm">To</p>
-                  <Slider
-                    // defaultValue={[50]}
-                    // dir="right-to-left"
-                    value={[filters ? filters!.max_age : 60]}
-                    max={100}
-                    step={1}
-                    className="w-full pl-10 pr-5"
-                    onValueChange={handleEndSliderChange}
-                    name="age"
-                  />
+                <div className="border border m-5 rounded-lg px-5">
+                  <div className="flex flex-row justify-between items-center mt-5">
+                    <p className="px-5 text-sm">Age</p>
+                    {/* <p className="px-5 text-sm">{`${startAgeSliderVal}-${endAgeSliderVal}`}</p> */}
+                    <p className="px-5 text-sm">{`${filters?.min_age}-${filters?.max_age}`}</p>
+                  </div>
+                  {/* <form action="post" onSubmit={formik.handleSubmit}> */}
+                  <div className="flex flex-row justify-center align-center py-5 px-5 mt-5">
+                    <p className="text-slate-500 text-sm">From</p>
+                    <Slider
+                      // defaultValue={[50]}
+                      value={[filters!.min_age]}
+                      // value={[startAgeSliderVal]}
+                      max={60}
+                      step={1}
+                      className="w-full px-5"
+                      onValueChange={handleStartSliderChange}
+                      name="age"
+                    />
+                  </div>
+                  <div className="flex flex-row justify-center align-center py-5 px-5">
+                    <p className="text-slate-500 text-sm">To</p>
+                    <Slider
+                      // defaultValue={[50]}
+                      // dir="right-to-left"
+                      value={[filters!.max_age]}
+                      // value={[endAgeSliderVal]}
+                      max={100}
+                      step={1}
+                      className="w-full pl-10 pr-5"
+                      onValueChange={handleEndSliderChange}
+                      name="age"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
