@@ -92,13 +92,8 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
     }
   }, [location]);
 
-  // const {
-  //   setHeaderValues,
-  //   setProfileHeaderValues,
-  // } = profileHeaderStore();
-
   const { isLoading: currentUserLoading } = useQuery({
-    queryKey: ["currentUserProfileContent", userId],
+    queryKey: ["profileContent", userId],
     queryFn: async () => {
       const additionalInformation = await profileContentQuery
         .fetchAdditionalInformation(
@@ -108,13 +103,8 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
         userId,
         userId,
       );
-      let convertedDetails = {};
       console.log(memberDetails);
-
-      if (memberDetails.length !== 0) {
-        const parsed = JSON.parse(memberDetails);
-        convertedDetails = convertJsonToConvertedObject(parsed);
-      }
+      const convertedDetails = convertJsonToConvertedObject(memberDetails);
       const details = {
         ...convertedDetails,
         ...additionalInformation,
