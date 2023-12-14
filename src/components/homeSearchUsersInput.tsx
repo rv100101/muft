@@ -51,7 +51,7 @@ const HomepageSearchInput = () => {
   });
 
   return (
-    <div className="w-[330px] flex flex-col justify-center items-center">
+    <div className="lg:w-[330px] flex flex-col justify-center items-center">
       <div className="hover:cursor-pointer w-full border border-2 p-2 space-x-2 rounded-xl flex items-center px-5 mx-2">
         <input
           value={searchValue}
@@ -71,7 +71,7 @@ const HomepageSearchInput = () => {
       </div>
       {debouncedSearchValue.length > 0 ? (
         searchResults.length !== 0 ? (
-          <div className="mt-1 sticky z-40 h-min max-h-[200px] border rounded-b-md w-[330px] bg-white overflow-y-auto">
+          <div className="mt-1 sticky z-40 h-min max-h-[200px] border rounded-b-md lg:w-[330px] bg-white overflow-y-auto">
             {searchResults.map((result: SearchResultItem) => {
               return (
                 <Button

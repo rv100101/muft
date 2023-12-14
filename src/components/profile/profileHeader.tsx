@@ -6,10 +6,10 @@ import ProfileHeaderSkeleton from "./profileHeaderSkeleton";
 import { Button } from "../ui/button";
 import {
   CameraIcon,
+  FolderEdit,
   Heart,
   Loader2,
   MessageCircleIcon,
-  Pencil,
   Star,
 } from "lucide-react";
 import { useUserStore } from "@/zustand/auth/user";
@@ -31,10 +31,10 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 const ProfileHeader = ({ userId }: { userId: string }) => {
   const [location] = useLocation();
   const setSelectedConversation = useLatestConversationStore(
-    (state) => state.setConversation,
+    (state) => state.setConversation
   );
   const selectedConversation = useLatestConversationStore(
-    (state) => state.conversation,
+    (state) => state.conversation
   );
   const [showCamera, setShowCamera] = useState(false);
   const {
@@ -47,10 +47,10 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
     await profileQuery.getProfileHeader(parseInt(userId));
   const user = useUserStore((state) => state.user);
   const toggleEditMode = profileAboutContentStore(
-    (state) => state.toggleEditMode,
+    (state) => state.toggleEditMode
   );
   const setSelectedHistoryMemberId = useLatestConversationStore(
-    (state) => state.setSelectedHistoryMemberId,
+    (state) => state.setSelectedHistoryMemberId
   );
   const { formState } = useFormContext();
   const isSaving = profileAboutContentStore((state) => state.isSaving);
@@ -102,7 +102,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
         };
       } = await messagingQuery.getConversation(
         user!.member_id,
-        parseInt(userId),
+        parseInt(userId)
       );
       setSelectedConversation(
         user!.member_id,
@@ -111,7 +111,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
         headerValues?.gender!,
         res.data.recipient_uuid,
         res.data.recipient_nickname!,
-        res.data.conversation_uuid,
+        res.data.conversation_uuid
       );
       return res.data.conversation_uuid;
     } catch (error) {
@@ -157,7 +157,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
       setIsUploading(true);
       const res = await uploadQueries.uploadProfilePicture(
         selectedFile!,
-        user!.member_id,
+        user!.member_id
       );
       setHeaderValues({
         ...headerValues,
@@ -167,9 +167,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
         ...profileHeaderValues,
         gallery_uuid: res.data[0].gallery_uuid,
       });
-      setAvatar(
-        res.data[0].gallery_uuid,
-      );
+      setAvatar(res.data[0].gallery_uuid);
       toast({
         title: "Photo successfully updated",
         variant: "success",
@@ -193,22 +191,30 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                     <DialogTrigger>
                       <img
                         className={`select-none object-cover h-32 w-32 overflow-clip border-4 border-primary rounded-full`}
-                        src={selectedFile ? selectedFile : getImagePath(
-                          headerValues.gallery_uuid,
-                          headerValues.gender,
-                          headerValues.member_uuid?.toString(),
-                        )}
+                        src={
+                          selectedFile
+                            ? selectedFile
+                            : getImagePath(
+                                headerValues.gallery_uuid,
+                                headerValues.gender,
+                                headerValues.member_uuid?.toString()
+                              )
+                        }
                         alt="no image selected"
                       />
                     </DialogTrigger>
                     <DialogContent>
                       <img
                         className={`h-full w-full`}
-                        src={selectedFile ? selectedFile : getImagePath(
-                          headerValues.gallery_uuid,
-                          headerValues.gender,
-                          headerValues.member_uuid?.toString(),
-                        )}
+                        src={
+                          selectedFile
+                            ? selectedFile
+                            : getImagePath(
+                                headerValues.gallery_uuid,
+                                headerValues.gender,
+                                headerValues.member_uuid?.toString()
+                              )
+                        }
                         alt="no image selected"
                       />
                     </DialogContent>
@@ -227,23 +233,23 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                   className="relative disabled:opacity-100 h-full w-40 bg-transparent py-0 px-0"
                   onClick={handleGalleryUpload}
                 >
-                  {isEditing &&
-                    (
-                      <img
-                        className={`select-none object-cover h-32 w-32 overflow-clip border-4 border-primary rounded-full`}
-                        src={selectedFile ? selectedFile : getImagePath(
-                          headerValues.gallery_uuid,
-                          headerValues.gender,
-                          headerValues.member_uuid?.toString(),
-                        )}
-                        alt="no image selected"
-                      />
-                    )}
-                  {showCamera && (
-                    <CameraIcon
-                      className="absolute"
-                      fill="pink"
+                  {isEditing && (
+                    <img
+                      className={`select-none object-cover h-32 w-32 overflow-clip border-4 border-primary rounded-full`}
+                      src={
+                        selectedFile
+                          ? selectedFile
+                          : getImagePath(
+                              headerValues.gallery_uuid,
+                              headerValues.gender,
+                              headerValues.member_uuid?.toString()
+                            )
+                      }
+                      alt="no image selected"
                     />
+                  )}
+                  {showCamera && (
+                    <CameraIcon className="absolute" fill="pink" />
                   )}
                   {isUploading && (
                     <Loader2 className="absolute animate-spin text-primary" />
@@ -271,7 +277,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
           </div>
         }
         <div className="w-full">
-          <div className="flex w-full justify-between">
+          <div className="flex lg:flex-row flex-col space-y-5 w-full justify-between">
             <div className="w-full">
               {!isEditing && (
                 <div
@@ -285,7 +291,9 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                     </p>
                     {!isEditing && (
                       <p
-                        className={"text-[#727272] text-xs py-1 px-2 w-min rounded-md bg-[#E8ECEF] hover:bg-[#E8ECEF]/80"}
+                        className={
+                          "mt-1 text-[#f0f9ff] border-[#075985] text-xs py-1 px-2 w-min rounded-md bg-[#38bdf8] hover:bg-[#E8ECEF]/80"
+                        }
                       >
                         Standard
                       </p>
@@ -308,7 +316,11 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                         </Link>
                       </Button>
                       <div className="space-x-2">
-                        <Button type="button" className="hover:ring-2 transition-all ring-primary" variant={"outline"}>
+                        <Button
+                          type="button"
+                          className="hover:ring-2 transition-all ring-primary"
+                          variant={"outline"}
+                        >
                           Like{" "}
                           <span>
                             <Heart
@@ -318,7 +330,11 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                             />
                           </span>
                         </Button>
-                        <Button type="button" variant={"outline"} className="hover:ring-2 transition-all ring-primary">
+                        <Button
+                          type="button"
+                          variant={"outline"}
+                          className="hover:ring-2 transition-all ring-primary"
+                        >
                           Favorite{" "}
                           <span>
                             <Star
@@ -345,7 +361,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                           type="text"
                           defaultValue={field.value}
                           onChange={field.onChange}
-                          className="outline-0 border border rounded-lg w-48 py-3 px-5"
+                          className="outline-0 border border rounded-lg lg:w-1/2 w-full py-3 px-5"
                           name="nickname"
                         />
                         <FormMessage />
@@ -360,38 +376,41 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                 {isEditing && (
                   <div className="flex space-x-2">
                     <Button
-                      onClick={!formState.isDirty ? () => {} : () => {
-                        // if (isEditing && !formState.isValid) {
-                        //   toast({
-                        //     variant: "destructive",
-                        //     title: "Cannot save your profile",
-                        //     description:
-                        //       "Please make sure all the required fields are satisfied.",
-                        //     duration: 4000,
-                        //   });
-                        // }
-                      }}
+                      onClick={
+                        !formState.isDirty
+                          ? () => {}
+                          : () => {
+                              // if (isEditing && !formState.isValid) {
+                              //   toast({
+                              //     variant: "destructive",
+                              //     title: "Cannot save your profile",
+                              //     description:
+                              //       "Please make sure all the required fields are satisfied.",
+                              //     duration: 4000,
+                              //   });
+                              // }
+                            }
+                      }
                       disabled={isSaving}
                       type={"submit"}
                       className={cn(
                         "text-xs rounded-2xl h-max",
-                        "hover:bg-green-400/80 bg-green-400",
+                        "hover:bg-green-400/80 bg-green-400"
                       )}
                     >
                       Save
-                      {isSaving &&
-                        (
-                          <span>
-                            <Loader2 className="ml-2 h-6 w-6 animate-spin" />
-                          </span>
-                        )}
+                      {isSaving && (
+                        <span>
+                          <Loader2 className="ml-2 h-6 w-6 animate-spin" />
+                        </span>
+                      )}
                     </Button>
                     <Button
                       type={"button"}
                       onClick={() => toggleEditMode()}
                       className={cn(
                         "text-xs rounded-2xl h-max",
-                        "text-[#727272] bg-[#E8ECEF] hover:bg-[#E8ECEF]/80",
+                        "text-[#727272] bg-[#E8ECEF] hover:bg-[#E8ECEF]/80"
                       )}
                     >
                       <p>Cancel</p>
@@ -407,12 +426,14 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                       }
                     }}
                     className={cn(
-                      "text-xs rounded-2xl w-max h-max",
-                      "text-[#727272] bg-[#E8ECEF] hover:bg-[#E8ECEF]/80",
+                      "text-xs rounded-2xl h-max lg:w-1/4 w-1/2",
+                      "text-[#727272] bg-[#E8ECEF] hover:bg-[#E8ECEF]/80"
                     )}
                   >
-                      <Pencil className="h-4 mr-2" />
-                      <span className="w-max">Edit Profile</span>
+                    <>
+                      <FolderEdit className="h-4 mr-2" />
+                      <span>Edit</span>
+                    </>
                   </Button>
                 )}
               </>

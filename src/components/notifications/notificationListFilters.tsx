@@ -29,8 +29,8 @@ const NotificationsListFiters = () => {
     </li>
   ));
   return (
-    <div className="border-b sm:p-2 pt-2">
-      <ul className="justify-start px-1 sm:justify-start items-center flex-col flex-wrap space-y-4 w-full">
+    <div className="lg:border-b pt-5 lg:pt-2">
+      <ul className="flex lg:justify-start justify-center px-1 sm:justify-start items-center lg:flex-col space-x-4 flex-row flex-wrap lg:space-y-4 w-full">
         {filters}
       </ul>
     </div>

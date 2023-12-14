@@ -1,13 +1,13 @@
-import TopBar from "../topBar";
+import TopBar2 from "../topBar2";
 
 const NotificationsListHeader = () => {
   return (
     <div className="p-4">
-      <TopBar>
+      <TopBar2>
         <div className="flex items-center justify-between w-full space-x-2">
           <p className="font-semibold">NOTIFICATION</p>
         </div>
-      </TopBar>
+      </TopBar2>
     </div>
   );
 };

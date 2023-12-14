@@ -4,6 +4,7 @@ import {
   HeartIcon,
   HomeIcon,
   MessageSquareIcon,
+  Settings,
   Star,
   UserIcon,
 } from "lucide-react";
@@ -38,6 +39,11 @@ const links: SideBarLinks = [
     path: "/favourites",
     icon: Star,
     name: "Favorites",
+  },
+  {
+    path: "/Settings",
+    icon: Settings,
+    name: "Settings",
   },
 ];
 
