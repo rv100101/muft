@@ -115,16 +115,16 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
     }
   });
 
-  const { isLoading } = useQuery({
+  const { isLoading, isRefetching } = useQuery({
     queryKey: ["profileHeader", userId],
     queryFn: fetchInitialData,
     refetchOnWindowFocus: false,
     onSuccess: (data: ProfileHeaderType | null) => {
       if (data) {
-        if (userId !== user!.member_id.toString()) {
+        if (location.startsWith("/members")) {
           setHeaderValues(data);
         }
-        if (user!.member_id.toString() === userId) {
+        if (location.startsWith("/profile")) {
           setProfileHeaderValues(data);
           setHeaderValues(data);
         }
@@ -183,10 +183,6 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
     setSelectedHistoryMemberId(parseInt(userId));
   }, [userId, headerValues, setSelectedHistoryMemberId, getConversationUuid]);
 
-  if (isLoading) {
-    return <ProfileHeaderSkeleton />;
-  }
-
   const handleGalleryUpload = () => {
     // Trigger a click event on the hidden file input
     if (fileInputRef.current) {
@@ -217,7 +213,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
         gallery_uuid: res.data[0].gallery_uuid,
       });
       setProfileHeaderValues({
-        ...profileHeaderValues,
+        ...profileHeaderValues!,
         gallery_uuid: res.data[0].gallery_uuid,
       });
       setAvatar(res.data[0].gallery_uuid);
@@ -232,8 +228,18 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
     setIsUploading(false);
   };
 
-  console.log("headerValues: ", userId);
-  console.log("toggle fav icon: ", favoriteTriggered);
+  if (
+    location.startsWith("/profile") &&
+    profileHeaderValues == null &&
+    (isLoading || isRefetching)
+  ) {
+    return <ProfileHeaderSkeleton />;
+  }
+
+  if (location.startsWith("/members") && (isLoading || isRefetching)) {
+    return <ProfileHeaderSkeleton />;
+  }
+
   return (
     <div className="items-start p-5 border-b w-full">
       <div className="flex justify-start items-start space-x-2">
@@ -401,7 +407,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                         <Button
                           type="button"
                           variant={"outline"}
-                          className="hover:ring-2 transition-all ring-primary "
+                          className="hover:ring-2 transition-all ring-primary"
                           onClick={() =>
                             toggleFavorite.mutate({
                               member: user!.member_id,
@@ -415,7 +421,13 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                             <Star
                               color="#FF599B"
                               className="ml-2"
-                              fill={favoriteTriggered ? "#FF599B" : "white"}
+                              fill={
+                                !favoriteTriggered
+                                  ? "#FF599B"
+                                  : favoriteTriggered
+                                  ? "#FF599B"
+                                  : "white"
+                              }
                             />
                           </span>
                         </Button>

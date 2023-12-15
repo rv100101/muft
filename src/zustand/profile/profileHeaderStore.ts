@@ -2,23 +2,14 @@ import { ProfileHeader } from "@/types/profileHeader";
 import { create } from "zustand";
 
 interface ProfileHeaderState {
-  profileHeaderValues: ProfileHeader;
+  profileHeaderValues: ProfileHeader | null;
   setProfileHeaderValues: (val: ProfileHeader) => void;
   headerValues: ProfileHeader;
   setHeaderValues: (val: ProfileHeader) => void;
 }
 
 const profileHeaderStore = create<ProfileHeaderState>((set) => ({
-  profileHeaderValues: {
-    member_uuid: null,
-    gallery_uuid: null,
-    gender: null,
-    nickname: null,
-    height: null,
-    maritalStatus: null,
-    occupation_title: null,
-    country_name: null,
-  },
+  profileHeaderValues: null,
   setProfileHeaderValues: (val) =>
     set(() => ({
       profileHeaderValues: val,
