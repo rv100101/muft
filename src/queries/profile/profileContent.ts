@@ -1,5 +1,6 @@
 import { ProfileAbout } from "@/zustand/profile/profileAboutStore";
 import axiosQuery from "../axios";
+import { Languages } from "@/types/profile";
 
 const removeNull = (
   obj: Record<string, string | []>
@@ -117,7 +118,7 @@ const fetchBasicInfoInitialData = async (userId: number) => {
             day: "numeric",
           });
 
-    let basicInformation: Record<string, string> = {
+    const basicInformation: Record<string, string> = {
       gender: gender,
       nationality: nationality,
       birthInfo: formattedDate,
@@ -152,7 +153,7 @@ const fetchWorkEducationInitialData = async (userId: number) => {
     const { employment_status_name, occupation_title, income_range } =
       response2.data;
 
-    let workEducationData: Record<string, string> = {
+    const workEducationData: Record<string, string> = {
       education: education_name,
       employmentStatus: employment_status_name,
       occupationTitle: occupation_title,
@@ -190,7 +191,7 @@ const fetchDetailsInitialData = async (userId: number) => {
       favoriteFood = response4.data[0];
     }
 
-    let detailsData: Record<string, string> = {
+    const detailsData: Record<string, string> = {
       height: height,
       weight: weight,
       bodyType: body_type_name,
@@ -211,7 +212,7 @@ const fetchLocationInitialData = async (userId: number) => {
   try {
     const response = await axiosQuery.post("/GetCountry", { member: userId });
     const { country_name, region_name } = response.data[0];
-    let locationData: Record<string, string> = {
+    const locationData: Record<string, string> = {
       region: region_name,
       country: country_name,
     };
@@ -473,6 +474,7 @@ const getBodyArts = async () => {
 
 type ProfileContent = ProfileAbout & {
   nickname: string;
+  deletedLanguages: Languages[];
 };
 
 const saveInformation = async (profile: ProfileContent, userId: number) => {
@@ -500,6 +502,16 @@ const saveInformation = async (profile: ProfileContent, userId: number) => {
       for (const lang of profile.language) {
         await axiosQuery.post("/SaveLanguage", {
           language: lang.language_code,
+          member: userId,
+        });
+      }
+    }
+
+    // delete language
+    if (profile.deletedLanguages) {
+      for (const lang of profile.deletedLanguages) {
+        await axiosQuery.post("/DeleteLanguage", {
+          lang: lang.language_code,
           member: userId,
         });
       }

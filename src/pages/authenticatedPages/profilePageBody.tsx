@@ -16,8 +16,15 @@ import { toast } from "@/components/ui/use-toast";
 import { Dialog } from "@radix-ui/react-dialog";
 import { DialogContent } from "@/components/ui/dialog";
 import ActivateAccount from "./accountActivationPage";
+import deleteMultiselectValuesStore from "@/zustand/profile/about/deleteMultiselectValues";
 
 const ProfilePageBody = ({ userId }: { userId: string }) => {
+  const {
+    languages: deletedLanguages,
+    // pets: deletedPets,
+    // favoriteFood: deletedFavoriteFood,
+    // interests: deletedInterests,
+  } = deleteMultiselectValuesStore();
   const headerValues = profileHeaderStore((state) => state.headerValues);
   const { data } = profileAboutContentStore();
   const { setIsSaving } = profileAboutContentStore();
@@ -98,7 +105,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
 
   const getNationality = (nationalityName: string) =>
     nationalities.find(
-      (nationality) => nationality.nationality === nationalityName,
+      (nationality) => nationality.nationality === nationalityName
     );
 
   const getEducation = (name: string) =>
@@ -158,6 +165,8 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
   const getEmploymentStatus = (name: string) =>
     employmentStatus.find((s) => s.employment_status_name === name);
 
+  console.log(deletedLanguages);
+
   const onSubmit = async (formData: any) => {
     // return;
     // if (!methods.formState.isDirty) {
@@ -214,6 +223,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
         disability: disability?.disability_id,
         religion: religion?.religion_id,
         employmentStatus: employmentStatus?.employment_status_id,
+        deletedLanguages,
       };
       console.log(finalFormData);
       await profileContentQuery.saveInformation(finalFormData, user!.member_id);
@@ -230,11 +240,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
         variant: "destructive",
         title: "All Fields are required",
         description: "check all tabs to ensure all fields are inputted.",
-        action: (
-          <ToastAction altText="Goto schedule to undo">
-            Okay
-          </ToastAction>
-        ),
+        action: <ToastAction altText="Goto schedule to undo">Okay</ToastAction>,
       });
     }
   }, [methods.formState.errors]);

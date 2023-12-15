@@ -63,6 +63,7 @@ export const ProfileFormSchema = z.object({
       z.object({
         language_name: z.string(),
         language_code: z.string(),
+        member_language_id: z.number(),
       })
     )
     .refine((data) => data.length > 0, {
