@@ -38,7 +38,7 @@ import { cn } from "@/lib/utils";
 import LanguageField from "./languageField";
 const BasicInformationForm = () => {
   const { control } = useFormContext();
-  const { nationalities, ethnicities, maritalStatus, languages, religion } =
+  const { nationalities, ethnicities, maritalStatus, religion } =
     selectOptions();
   const { data, editMode, isLoading } = profileAboutContentStore();
   const user = useUserStore((state) => state.user);
