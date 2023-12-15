@@ -17,7 +17,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useLocation } from "wouter";
-import TopBar2 from "@/components/topBar2";
 import FavoritesMobileNav from "@/components/likesAndFavourites/favoritesMobileNav";
 const FavouritesPage = () => {
   const [, setLocation] = useLocation();

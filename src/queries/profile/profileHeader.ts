@@ -21,7 +21,6 @@ const getCountry = async (member: number) =>
 
 const getProfileHeader = async (member: number) => {
   let profileHeader: ProfileHeader = {
-    member_id: null,
     member_uuid: null,
     gallery_uuid: null,
     gender: null,
