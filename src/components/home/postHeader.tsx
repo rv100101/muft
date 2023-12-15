@@ -4,15 +4,10 @@ import TopBar2 from "../topBar2";
 
 const PostHeader = () => {
   return (
-    <div className="">
+    <div className="pl-1 lg:hidden">
       <TopBar2>
         <div className="flex flex-row w-full justify-between lg:p-5 lg:border-l lg:border-r">
           <p className="uppercase font-semibold"></p>
-          {/* <MoreVertical
-            color="#98A2B3"
-            size={20}
-            className="mt-1 hover:cursor-pointer"
-          /> */}
         </div>
       </TopBar2>
     </div>

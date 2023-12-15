@@ -69,6 +69,9 @@ const NotificationsList = () => {
   return (
     <div className="w-full h-full flex flex-col">
       <NotificationsListHeader />
+      <div className="flex items-center justify-between w-full space-x-2 p-5 lg:block hidden">
+        <p className="font-semibold">NOTIFICATION</p>
+      </div>
       {/* <NotificationsListFiters /> */}
       <div className="space-y-4 w-full h-full overflow-y-scroll bg-[#F7F8FA]">
         {isLoading && renderSkeletonLoading()}

@@ -16,7 +16,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useLocation } from "wouter";
-import TopBar2 from "@/components/topBar2";
+import LikesMobileNav from "@/components/likesAndFavourites/likesMobileNav";
 const LikesPage = () => {
   const [tab] = useState<"LIKES" | "FAVOURITES">("LIKES");
   const [, setLocation] = useLocation();
@@ -91,15 +91,14 @@ const LikesPage = () => {
   return (
     <AuthenticatedLayout>
       <div className="flex flex-col w-full h-full space-y-4">
-        <div className="lg:pt-4 py-3">
-          <TopBar2>
-            <div className="w-full h-full flex items-center justify-between">
-              <h1 className="font-semibold">LIKES</h1>{" "}
-              {/* <Button variant={"ghost"}> */}
-              <MoreVertical />
-              {/* </Button> */}
-            </div>
-          </TopBar2>
+        <LikesMobileNav />
+        <div className="lg:pt-4">
+          <div className="w-full h-full flex items-center justify-between px-10 hidden lg:flex">
+            <h1 className="font-semibold  text-lg">LIKES</h1>
+            {/* <Button variant={"ghost"}> */}
+            <MoreVertical />
+            {/* </Button> */}
+          </div>
         </div>{" "}
         <div className="w-full flex h-max">
           {/* <Button
@@ -126,7 +125,7 @@ const LikesPage = () => {
           </Button> */}
         </div>
         {
-          <div className="flex justify-end h-max items-center px-8">
+          <div className="flex lg:justify-end justify-center h-max items-center px-8">
             <div className="w-max border py-4 px-6  space-x-2 rounded-xl flex items-center">
               <input
                 value={search}
