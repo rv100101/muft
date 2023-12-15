@@ -205,7 +205,7 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
   // ];
 
   return (
-    <div className="flex lg:h-full h-8 lg:items-start items-center lg:space-x-0 space-x-4  lg:pl-0 pl-5 lg:border-0 border-b p-5">
+    <div className="flex lg:h-full h-8 lg:items-start items-center lg:space-x-0 space-x-4  lg:pl-0 pl-5 lg:border-0 border-b px-10 py-8">
       {/* search */}
       <Dialog
         open={searchTriggered}

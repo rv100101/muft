@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { getImagePath } from "@/lib/images";
 import profileHeaderStore from "@/zustand/profile/profileHeaderStore";
 import { ProfileHeader as ProfileHeaderType } from "@/types/profileHeader";
@@ -29,8 +29,46 @@ import { useUserAvatar } from "@/zustand/auth/avatar";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import deleteMultiselectValuesStore from "@/zustand/profile/about/deleteMultiselectValues";
 import { useEffectOnce } from "usehooks-ts";
+import axiosQuery from "@/queries/axios";
 
 const ProfileHeader = ({ userId }: { userId: string }) => {
+  const [likeTriggered, toggleLikeIcon] = useState(false);
+  const [favoriteTriggered, toggleFavoriteIcon] = useState(false);
+  const toggleLike = useMutation({
+    mutationFn: async ({
+      member,
+      liked,
+    }: {
+      member: number;
+      liked: number;
+    }) => {
+      toggleLikeIcon((prev) => !prev);
+
+      const res = await axiosQuery.post("/Like", {
+        member: member,
+        liked: liked,
+      });
+      return res.data;
+    },
+  });
+
+  const toggleFavorite = useMutation({
+    mutationFn: async ({
+      member,
+      favored,
+    }: {
+      member: number;
+      favored: number;
+    }) => {
+      toggleFavoriteIcon((prev) => !prev);
+
+      const res = await axiosQuery.post("/Favorite", {
+        member: member,
+        favored: favored,
+      });
+      return res.data;
+    },
+  });
   const [location] = useLocation();
   const resetMultiselectDeletedItems = deleteMultiselectValuesStore(
     (state) => state.reset
@@ -194,6 +232,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
     setIsUploading(false);
   };
 
+  console.log("headerValues: ", userId);
   return (
     <div className="items-start p-5 border-b w-full">
       <div className="flex justify-start items-start space-x-2">
@@ -335,13 +374,25 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                           type="button"
                           className="hover:ring-2 transition-all ring-primary"
                           variant={"outline"}
+                          onClick={() =>
+                            toggleLike.mutate({
+                              member: user!.member_id,
+                              liked: parseInt(userId),
+                            })
+                          }
                         >
                           <p className="lg:inline hidden">Like</p>
 
                           <span>
                             <Heart
                               color="#FF599B"
-                              fill={"white"}
+                              fill={
+                                !likeTriggered
+                                  ? "#FF599B"
+                                  : likeTriggered
+                                  ? "#FF599B"
+                                  : "white"
+                              }
                               className="ml-2 "
                             />
                           </span>
@@ -350,14 +401,26 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                           type="button"
                           variant={"outline"}
                           className="hover:ring-2 transition-all ring-primary"
+                          onClick={() =>
+                            toggleFavorite.mutate({
+                              member: user!.member_id,
+                              favored: parseInt(userId),
+                            })
+                          }
                         >
                           <p className="lg:inline hidden">Favorite</p>
 
                           <span>
                             <Star
                               color="#FF599B"
-                              fill={"white"}
                               className="ml-2"
+                              fill={
+                                !favoriteTriggered
+                                  ? "#FF599B"
+                                  : favoriteTriggered
+                                  ? "#FF599B"
+                                  : "white"
+                              }
                             />
                           </span>
                         </Button>

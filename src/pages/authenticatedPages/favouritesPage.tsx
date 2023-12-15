@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useLocation } from "wouter";
 import TopBar2 from "@/components/topBar2";
+import FavoritesMobileNav from "@/components/likesAndFavourites/favoritesMobileNav";
 const FavouritesPage = () => {
   const [, setLocation] = useLocation();
   const [tab] = useState<"LIKES" | "FAVOURITES">("FAVOURITES");
@@ -112,15 +113,14 @@ const FavouritesPage = () => {
   return (
     <AuthenticatedLayout>
       <div className="flex flex-col w-full h-full space-y-4">
-        <div className="lg:pt-4 py-3">
-          <TopBar2>
-            <div className="w-full h-full flex lg:items-center justify-between">
-              <h1 className="font-semibold">FAVORITES</h1>{" "}
-              {/* <Button variant={"ghost"}> */}
-              <MoreVertical />
-              {/* </Button> */}
-            </div>
-          </TopBar2>
+        <FavoritesMobileNav />
+        <div className="lg:pt-4">
+          <div className="w-full h-full flex lg:items-center px-10 justify-between hidden lg:flex">
+            <h1 className="font-semibold text-lg">FAVORITES</h1>{" "}
+            {/* <Button variant={"ghost"}> */}
+            <MoreVertical />
+            {/* </Button> */}
+          </div>
           <div></div>
         </div>{" "}
         <div className="w-full flex h-max">
@@ -147,7 +147,7 @@ const FavouritesPage = () => {
             FAVOURITES
           </Button> */}
         </div>
-        <div className="flex justify-end h-max items-center px-8">
+        <div className="flex lg:justify-end justify-center h-max items-center px-8 ">
           <div>
             {/* <Button
               onClick={() => {

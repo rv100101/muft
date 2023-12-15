@@ -243,6 +243,11 @@ const HomePage = () => {
             ) : (
               <>
                 <PostHeader />
+                <div className=" lg:block hidden">
+                  <div className="flex flex-row w-full justify-between lg:p-5 lg:border-l lg:border-r">
+                    <p className="uppercase font-semibold"></p>
+                  </div>
+                </div>
                 <div
                   className="no-scrollbar lg:p-8 px-0 lg:w-full h-screen w-screen rounded-b-xl space-y-4 border border-[#E0E0E0] lg:h-min overflow-y-auto scroll-smooth"
                   ref={containerRef}
