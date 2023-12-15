@@ -38,7 +38,7 @@ import { cn } from "@/lib/utils";
 import LanguageField from "./languageField";
 const BasicInformationForm = () => {
   const { control } = useFormContext();
-  const { nationalities, ethnicities, maritalStatus, religion } =
+  const { nationalities, ethnicities, maritalStatus, languages, religion } =
     selectOptions();
   const { data, editMode, isLoading } = profileAboutContentStore();
   const user = useUserStore((state) => state.user);
@@ -133,7 +133,7 @@ const BasicInformationForm = () => {
             />
             <div className="flex flex-col justify-start space-y-1">
               <p className="font-bold text-base text-primary">
-                {data?.gender == "M" ? "Male" : "Female"}
+                {data && data?.gender[0] == "M" ? "Male" : "Female"}
               </p>
               <p className="text-[#727272] text-xs">Gender</p>
             </div>
