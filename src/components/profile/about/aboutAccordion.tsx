@@ -45,8 +45,8 @@ import { useLocation } from "wouter";
 import useSelectedCountryStore from "@/zustand/profile/location/selectedCountry";
 import { convertJsonToConvertedObject } from "@/lib/utils";
 const AboutAccordion = ({ userId }: { userId: number }) => {
-  const selectedCountry = useSelectedCountryStore((state) =>
-    state.selectedCountry
+  const selectedCountry = useSelectedCountryStore(
+    (state) => state.selectedCountry
   );
   // const user = useUserStore((state) => state.user);
   const {
@@ -92,16 +92,14 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
     }
   }, [location]);
 
-  const { isLoading: currentUserLoading } = useQuery({
+  const { isLoading: currentUserLoading, isRefetching } = useQuery({
     queryKey: ["profileContent", userId],
     queryFn: async () => {
-      const additionalInformation = await profileContentQuery
-        .fetchAdditionalInformation(
-          userId,
-        );
+      const additionalInformation =
+        await profileContentQuery.fetchAdditionalInformation(userId);
       const memberDetails = await profileContentQuery.fetchMemberDetails(
         userId,
-        userId,
+        userId
       );
       console.log(memberDetails);
       const convertedDetails = convertJsonToConvertedObject(memberDetails);
@@ -325,10 +323,7 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
   });
 
   useQuery({
-    queryFn: () =>
-      profileContentQuery.editOptions.getStates(
-        selectedCountry,
-      ),
+    queryFn: () => profileContentQuery.editOptions.getStates(selectedCountry),
     queryKey: ["states", selectedCountry],
     onSuccess: (data: State[]) => {
       console.log(data);
@@ -354,8 +349,8 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
   });
 
   useEffect(() => {
-    setIsLoading(currentUserLoading);
-  }, [setIsLoading, currentUserLoading]);
+    setIsLoading(currentUserLoading || isRefetching);
+  }, [setIsLoading, currentUserLoading, isRefetching]);
 
   return (
     <div className="flex flex-row justify-between">
