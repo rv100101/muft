@@ -1,3 +1,4 @@
+import { FavoriteFood, Interest, Languages, Pets } from "@/types/profile";
 import { create } from "zustand";
 
 export type ProfileAbout = {
@@ -9,7 +10,7 @@ export type ProfileAbout = {
   religion: string;
   ethnicity: string;
   maritalStatus: string;
-  language: string;
+  language: Languages[];
   education: string;
   employmentStatus: string;
   occupationTitle: string;
@@ -17,8 +18,8 @@ export type ProfileAbout = {
   height: number;
   weight: number;
   bodyType: string;
-  interest: string;
-  favoriteFood: string;
+  interest: Interest[];
+  favoriteFood: FavoriteFood[];
   country: string;
   region: string;
   hair: string;
@@ -28,7 +29,7 @@ export type ProfileAbout = {
   wantChildren: string;
   workout: string;
   disability: string;
-  pets: string;
+  pets: Pets[];
   drinking: string;
   smoking: string;
   livingStatus: string;

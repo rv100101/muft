@@ -18,7 +18,7 @@ import profileQuery from "@/queries/profile/profileHeader";
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
 import { FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import uploadQueries from "@/queries/uploading";
 import { toast } from "../ui/use-toast";
@@ -27,9 +27,13 @@ import useLatestConversationStore from "@/zustand/messaging/showConversation";
 import { Link, useLocation } from "wouter";
 import { useUserAvatar } from "@/zustand/auth/avatar";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import deleteMultiselectValuesStore from "@/zustand/profile/about/deleteMultiselectValues";
 
 const ProfileHeader = ({ userId }: { userId: string }) => {
   const [location] = useLocation();
+  const resetMultiselectDeletedItems = deleteMultiselectValuesStore(
+    (state) => state.reset
+  );
   const setSelectedConversation = useLatestConversationStore(
     (state) => state.setConversation
   );
@@ -43,8 +47,10 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
     profileHeaderValues,
     setProfileHeaderValues,
   } = profileHeaderStore();
+
   const fetchInitialData = async () =>
     await profileQuery.getProfileHeader(parseInt(userId));
+
   const user = useUserStore((state) => state.user);
   const toggleEditMode = profileAboutContentStore(
     (state) => state.toggleEditMode
@@ -66,7 +72,13 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
 
       setHeaderValues(profileHeaderValues);
     }
-  }, [profileHeaderValues, setProfileHeaderValues, user, userId]);
+  }, [
+    profileHeaderValues,
+    setHeaderValues,
+    setProfileHeaderValues,
+    user,
+    userId,
+  ]);
 
   const { isLoading } = useQuery({
     queryKey: ["profileHeader", userId],
@@ -85,7 +97,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
     },
   });
 
-  const getConversationUuid = async () => {
+  const getConversationUuid = useCallback(async () => {
     if (location.startsWith("/profile")) {
       return;
     }
@@ -108,7 +120,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
         user!.member_id,
         res.data.conversation_id,
         headerValues.gallery_uuid,
-        headerValues?.gender!,
+        headerValues.gender!,
         res.data.recipient_uuid,
         res.data.recipient_nickname!,
         res.data.conversation_uuid
@@ -121,14 +133,20 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
       });
       return null;
     }
-  };
-
+  }, [
+    headerValues.gallery_uuid,
+    headerValues.gender,
+    location,
+    setSelectedConversation,
+    user,
+    userId,
+  ]);
   useEffect(() => {
     if (headerValues) {
       getConversationUuid();
     }
     setSelectedHistoryMemberId(parseInt(userId));
-  }, [userId, headerValues]);
+  }, [userId, headerValues, setSelectedHistoryMemberId, getConversationUuid]);
 
   if (isLoading) {
     return <ProfileHeaderSkeleton />;
@@ -409,7 +427,10 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                     </Button>
                     <Button
                       type={"button"}
-                      onClick={() => toggleEditMode()}
+                      onClick={() => {
+                        toggleEditMode();
+                        resetMultiselectDeletedItems();
+                      }}
                       className={cn(
                         "text-xs rounded-2xl h-max",
                         "text-[#727272] bg-[#E8ECEF] hover:bg-[#E8ECEF]/80"

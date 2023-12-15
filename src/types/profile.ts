@@ -20,10 +20,9 @@ export type MaritalStatus = {
 };
 
 export type Languages = {
-  authorized: boolean;
-  ip_address: string;
   language_code: string;
   language_name: string;
+  member_language_id: number;
 };
 
 export type Education = {

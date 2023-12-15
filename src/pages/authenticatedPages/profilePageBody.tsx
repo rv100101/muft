@@ -7,7 +7,6 @@ import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
 import { emptyDefault, ProfileFormSchema } from "@/lib/profileZodSchema";
 import { useEffect, useState } from "react";
 import profileHeaderStore from "@/zustand/profile/profileHeaderStore";
-import GallerySection from "@/components/profile/gallery/gallerySection";
 import profileContentQuery from "@/queries/profile/profileContent";
 import selectOptions from "@/zustand/profile/selectData/selectOptions";
 import { User, useUserStore } from "@/zustand/auth/user";
@@ -17,9 +16,15 @@ import { toast } from "@/components/ui/use-toast";
 import { Dialog } from "@radix-ui/react-dialog";
 import { DialogContent } from "@/components/ui/dialog";
 import ActivateAccount from "./accountActivationPage";
-import { Loader2 } from "lucide-react";
+import deleteMultiselectValuesStore from "@/zustand/profile/about/deleteMultiselectValues";
 
 const ProfilePageBody = ({ userId }: { userId: string }) => {
+  const {
+    languages: deletedLanguages,
+    // pets: deletedPets,
+    // favoriteFood: deletedFavoriteFood,
+    // interests: deletedInterests,
+  } = deleteMultiselectValuesStore();
   const headerValues = profileHeaderStore((state) => state.headerValues);
   const { data } = profileAboutContentStore();
   const { setIsSaving } = profileAboutContentStore();
@@ -30,6 +35,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
     defaultValues: emptyDefault,
     resolver: zodResolver(ProfileFormSchema),
   });
+
   const [open] = useState(true);
   useEffect(() => {
     if (data && headerValues) {
@@ -77,14 +83,10 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
     nationalities,
     ethnicities,
     maritalStatus,
-    languages,
     bodyTypes,
     religion,
-    favoriteFoods,
     countries,
     states,
-    pets,
-    interests,
     bodyArts,
     car,
     disability,
@@ -98,15 +100,12 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
     workout,
   } = selectOptions();
 
-  const getLanguage = (languageName: string) =>
-    languages.find((language) => language.language_name === languageName);
-
   const getEthnicity = (ethnicityName: string) =>
     ethnicities.find((ethnicity) => ethnicity.ethnicity_name === ethnicityName);
 
   const getNationality = (nationalityName: string) =>
     nationalities.find(
-      (nationality) => nationality.nationality === nationalityName,
+      (nationality) => nationality.nationality === nationalityName
     );
 
   const getEducation = (name: string) =>
@@ -124,19 +123,11 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
   const getBodyType = (name: string) =>
     bodyTypes.find((bt) => bt.body === name);
 
-  const getFavoriteFoods = (name: string) =>
-    favoriteFoods.find((ff) => ff.favorite_food_name === name);
-
   const getCountryData = (name: string) =>
     countries.find((c) => c.country_name === name);
 
   const getStateData = (name: string) =>
     states.find((s) => s.state_name === name);
-
-  const getPetsData = (name: string) => pets.find((s) => s.pet_name === name);
-
-  const getInterestsData = (name: string) =>
-    interests.find((s) => s.interest_name === name);
 
   const getBodyArtsData = (name: string) =>
     bodyArts.find((s) => s.body === name);
@@ -174,6 +165,8 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
   const getEmploymentStatus = (name: string) =>
     employmentStatus.find((s) => s.employment_status_name === name);
 
+  console.log(deletedLanguages);
+
   const onSubmit = async (formData: any) => {
     // return;
     // if (!methods.formState.isDirty) {
@@ -183,7 +176,6 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
     setIsSaving(true);
     let finalFormData = { ...formData };
     try {
-      const language = getLanguage(formData.language);
       const ethnicity = getEthnicity(formData.ethnicity);
       const nationality = getNationality(formData.nationality);
       const maritalStatus = getMaritalStatus(formData.maritalStatus);
@@ -191,11 +183,8 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
       const occupation = getOccupation(formData.occupationTitle);
       const income = getIncome(formData.income);
       const bodyType = getBodyType(formData.bodyType);
-      const favoriteFood = getFavoriteFoods(formData.favoriteFood);
       const country = getCountryData(formData.country);
       const region = getStateData(formData.region);
-      const pets = getPetsData(formData.pets);
-      const interests = getInterestsData(formData.interest);
       const bodyArts = getBodyArtsData(formData.bodyArt);
       const car = getCarData(formData.car);
       const drink = getDrinkData(formData.drinking);
@@ -211,7 +200,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
       const employmentStatus = getEmploymentStatus(formData.employmentStatus);
       finalFormData = {
         ...finalFormData,
-        language: language?.language_code,
+        // language: data?.language.filter(),
         ethnicity: ethnicity?.ethnicity_id,
         nationality: nationality?.country_code,
         maritalStatus: maritalStatus?.marital_status_id,
@@ -219,11 +208,8 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
         occupationTitle: occupation?.occupation_id,
         income: income?.income_id,
         bodyType: bodyType?.body_type_id,
-        favoriteFood: favoriteFood?.favorite_food_id,
         country: country?.country_code,
         region: region?.state_id,
-        pets: pets?.pet_id,
-        interest: interests?.interest_id,
         bodyArt: bodyArts?.body_art_id,
         car: car?.car_id,
         drinking: drink?.drink_id,
@@ -237,17 +223,9 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
         disability: disability?.disability_id,
         religion: religion?.religion_id,
         employmentStatus: employmentStatus?.employment_status_id,
+        deletedLanguages,
       };
-      toast({
-        duration: 5000,
-        variant: "success",
-        title: "Saving your profile",
-        action: (
-          <ToastAction disabled className="border-none" altText="okay">
-            <Loader2 className="ml-2 h-full w-full animate-spin" />
-          </ToastAction>
-        ),
-      });
+      console.log(finalFormData);
       await profileContentQuery.saveInformation(finalFormData, user!.member_id);
       updateUser({ ...user, profile_completed: true } as User);
       queryClient.invalidateQueries(["profileHeader", "profileContent"]);
@@ -262,11 +240,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
         variant: "destructive",
         title: "All Fields are required",
         description: "check all tabs to ensure all fields are inputted.",
-        action: (
-          <ToastAction altText="Goto schedule to undo">
-            Okay
-          </ToastAction>
-        ),
+        action: <ToastAction altText="Goto schedule to undo">Okay</ToastAction>,
       });
     }
   }, [methods.formState.errors]);
@@ -290,7 +264,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
           <div className="h-full overflow-y-scroll no-scrollbar flex flex-col">
             {user?.profile_completed && <ProfileHeader userId={userId} />}
             <AboutAccordion userId={parseInt(userId)} />
-            {user?.profile_completed && <GallerySection userId={userId} />}
+            {/* user?.profile_completed && <GallerySection userId={userId} /> */}
           </div>
         </form>
       </FormProvider>

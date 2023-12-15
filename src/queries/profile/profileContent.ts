@@ -1,10 +1,15 @@
 import { ProfileAbout } from "@/zustand/profile/profileAboutStore";
 import axiosQuery from "../axios";
+import { Languages } from "@/types/profile";
 
-const removeNull = (obj: Record<string, string>): Record<string, string> => {
-  const result: Record<string, string> = {};
+const removeNull = (
+  obj: Record<string, string | []>
+): Record<string, string | []> => {
+  const result: Record<string, string | []> = {};
   for (const key in obj) {
-    if (obj[key] == null) {
+    if (typeof obj[key] === "object") {
+      result[key] = obj[key];
+    } else if (obj[key] == null) {
       result[key] = "";
     } else {
       result[key] = obj[key];
@@ -22,19 +27,12 @@ const fetchMemberDetails = async (memberId: number, userId: number) => {
     const { data } = details;
     return data;
   } catch (error) {
+    console.log(error);
   }
 };
 
 const fetchAdditionalInformation = async (userId: number) => {
   try {
-    const maritalStatus = await axiosQuery.post("/GetMaritalStatus", {
-      member: userId,
-    });
-
-    const health = await axiosQuery.post("/GetHealth", {
-      member: userId,
-    });
-
     const pets = await axiosQuery.post("/GetPets", {
       member: userId,
     });
@@ -47,29 +45,26 @@ const fetchAdditionalInformation = async (userId: number) => {
       member: userId,
     });
 
-    let interest = null;
+    const languages = await axiosQuery.post("/GetLanguages", {
+      member: userId,
+    });
 
-    if (
-      interests.data.length !== 0 && interests.data.length > 1
-    ) {
-      interest = interests.data[interests.data.length - 1];
-    }
+    const appearance = await axiosQuery.post("/GetAppearance", {
+      member: userId,
+    });
 
-    if (interests.data.length === 1) {
-      interest = interests.data[0];
-    }
+    const favoriteFood = await axiosQuery.post("/GetFavoriteFood", {
+      member: userId,
+    });
 
-    let additionalInformation: Record<string, string> = {
-      haveChildren: maritalStatus.data.have_children_name,
-      wantChildren: maritalStatus.data.wants_children_name,
-      workout: health.data.workout_name,
-      disability: health.data.disability_name,
-      pets: pets.data.pet_name,
-      drinking: lifestyle.data.drink_name,
-      smoking: lifestyle.data.smoke_name,
-      livingStatus: lifestyle.data.living_status_name,
+    let additionalInformation: Record<string, string | []> = {
+      pets: pets.data,
       car: lifestyle.data.car_name,
-      interest: interest ?? "",
+      interest: interests.data ?? [],
+      language: languages.data ?? [],
+      height: appearance.data.height,
+      weight: appearance.data.weight,
+      favoriteFood: favoriteFood.data ?? [],
     };
 
     additionalInformation = removeNull(additionalInformation);
@@ -94,10 +89,7 @@ const fetchBasicInfoInitialData = async (userId: number) => {
     });
 
     const languagesResponse: { data: { language_name: string }[] } =
-      await axiosQuery.post(
-        "/GetLanguages",
-        { member: userId },
-      );
+      await axiosQuery.post("/GetLanguages", { member: userId });
 
     const { gender, nationality, date_of_birth, nickname } = basic.data;
     const { religion_name, ethnicity_name } = background.data;
@@ -107,7 +99,8 @@ const fetchBasicInfoInitialData = async (userId: number) => {
     console.log(languagesResponse.data);
 
     if (
-      languagesResponse.data.length !== 0 && languagesResponse.data.length > 1
+      languagesResponse.data.length !== 0 &&
+      languagesResponse.data.length > 1
     ) {
       language = languagesResponse.data[languagesResponse.data.length - 1];
     }
@@ -116,15 +109,16 @@ const fetchBasicInfoInitialData = async (userId: number) => {
       language = languagesResponse.data[0];
     }
 
-    const formattedDate = date_of_birth === null
-      ? ""
-      : new Date(date_of_birth).toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      });
+    const formattedDate =
+      date_of_birth === null
+        ? ""
+        : new Date(date_of_birth).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          });
 
-    let basicInformation: Record<string, string> = {
+    const basicInformation: Record<string, string> = {
       gender: gender,
       nationality: nationality,
       birthInfo: formattedDate,
@@ -135,7 +129,7 @@ const fetchBasicInfoInitialData = async (userId: number) => {
       language: language?.language_name ?? "",
     };
 
-    basicInformation = removeNull(basicInformation);
+    // basicInformation = removeNull(basicInformation);
     return basicInformation;
   } catch (err) {
     console.log(err);
@@ -159,13 +153,13 @@ const fetchWorkEducationInitialData = async (userId: number) => {
     const { employment_status_name, occupation_title, income_range } =
       response2.data;
 
-    let workEducationData: Record<string, string> = {
+    const workEducationData: Record<string, string> = {
       education: education_name,
       employmentStatus: employment_status_name,
       occupationTitle: occupation_title,
       income: income_range,
     };
-    workEducationData = removeNull(workEducationData);
+    // workEducationData = removeNull(workEducationData);
 
     return workEducationData;
   } catch (err) {
@@ -197,7 +191,7 @@ const fetchDetailsInitialData = async (userId: number) => {
       favoriteFood = response4.data[0];
     }
 
-    let detailsData: Record<string, string> = {
+    const detailsData: Record<string, string> = {
       height: height,
       weight: weight,
       bodyType: body_type_name,
@@ -207,7 +201,7 @@ const fetchDetailsInitialData = async (userId: number) => {
       favoriteFood: favoriteFood ? favoriteFood!.favorite_food_name : null,
     };
 
-    detailsData = removeNull(detailsData);
+    // detailsData = removeNull(detailsData);
     return detailsData;
   } catch (err) {
     console.log(err);
@@ -218,11 +212,11 @@ const fetchLocationInitialData = async (userId: number) => {
   try {
     const response = await axiosQuery.post("/GetCountry", { member: userId });
     const { country_name, region_name } = response.data[0];
-    let locationData: Record<string, string> = {
+    const locationData: Record<string, string> = {
       region: region_name,
       country: country_name,
     };
-    locationData = removeNull(locationData);
+    // locationData = removeNull(locationData);
     return locationData;
   } catch (err) {
     console.log(err);
@@ -480,6 +474,7 @@ const getBodyArts = async () => {
 
 type ProfileContent = ProfileAbout & {
   nickname: string;
+  deletedLanguages: Languages[];
 };
 
 const saveInformation = async (profile: ProfileContent, userId: number) => {
@@ -494,26 +489,42 @@ const saveInformation = async (profile: ProfileContent, userId: number) => {
 
     // pets
     if (profile.pets) {
-      await axiosQuery.post("/SavePet", {
-        pet: profile.pets,
-        member: userId,
-      });
+      for (const pet of profile.pets) {
+        await axiosQuery.post("/SavePet", {
+          pet: pet.pet_id,
+          member: userId,
+        });
+      }
     }
 
     // language
     if (profile.language) {
-      await axiosQuery.post("/SaveLanguage", {
-        language: profile.language,
-        member: userId,
-      });
+      for (const lang of profile.language) {
+        await axiosQuery.post("/SaveLanguage", {
+          language: lang.language_code,
+          member: userId,
+        });
+      }
+    }
+
+    // delete language
+    if (profile.deletedLanguages) {
+      for (const lang of profile.deletedLanguages) {
+        await axiosQuery.post("/DeleteLanguage", {
+          lang: lang.language_code,
+          member: userId,
+        });
+      }
     }
 
     // interest
     if (profile.interest) {
-      await axiosQuery.post("/SaveInterest", {
-        interest: profile.interest,
-        member: userId,
-      });
+      for (const interest of profile.interest) {
+        await axiosQuery.post("/SaveInterest", {
+          interest: interest.interest_id,
+          member: userId,
+        });
+      }
     }
 
     // disability
@@ -644,14 +655,6 @@ const saveInformation = async (profile: ProfileContent, userId: number) => {
       });
     }
 
-    // language
-    if (profile.language) {
-      await axiosQuery.post("/SaveLanguage", {
-        language: profile.language,
-        member: userId,
-      });
-    }
-
     // education
     if (profile.education) {
       await axiosQuery.post("/SaveEducation", {
@@ -710,10 +713,12 @@ const saveInformation = async (profile: ProfileContent, userId: number) => {
 
     // favoriteFood
     if (profile.favoriteFood) {
-      await axiosQuery.post("/SaveFavoriteFood", {
-        favorite_food: profile.favoriteFood,
-        member: userId,
-      });
+      for (const food of profile.favoriteFood) {
+        await axiosQuery.post("/SaveFavoriteFood", {
+          favorite_food: food.favorite_food_id,
+          member: userId,
+        });
+      }
     }
 
     // country
@@ -747,12 +752,12 @@ const saveInformation = async (profile: ProfileContent, userId: number) => {
     }
 
     // interest
-    if (profile.interest) {
-      await axiosQuery.post("/SaveInterest", {
-        interest: profile.interest,
-        member: userId,
-      });
-    }
+    // if (profile.interest) {
+    //   await axiosQuery.post("/SaveInterest", {
+    //     interest: profile.interest,
+    //     member: userId,
+    //   });
+    // }
 
     return { success: "Profile saved successfully!" };
   } catch (error) {
@@ -792,7 +797,7 @@ const profileContentQuery = {
     getDisability,
     getInterests,
     getReligion,
-    getEmploymentStatus
+    getEmploymentStatus,
   },
   saveInformation,
   fetchMemberDetails,

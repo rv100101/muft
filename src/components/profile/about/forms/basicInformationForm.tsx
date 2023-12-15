@@ -7,7 +7,6 @@ import {
 } from "@/components/ui/select";
 import {
   Ethnicity,
-  Languages,
   MaritalStatus,
   Nationality,
   Religion,
@@ -18,8 +17,8 @@ import {
   Church,
   Flag,
   Ghost,
-  Ribbon,
   Languages as LanguagesIcon,
+  Ribbon,
   Users,
 } from "lucide-react";
 import FormSkeletonLoading from "./formSkeletonLoading";
@@ -35,12 +34,15 @@ import {
 import { useFormContext } from "react-hook-form";
 import moment from "moment-with-locales-es6";
 import { useUserStore } from "@/zustand/auth/user";
+import { cn } from "@/lib/utils";
+import LanguageField from "./languageField";
 const BasicInformationForm = () => {
   const { control } = useFormContext();
-  const { nationalities, ethnicities, maritalStatus, languages, religion} =
+  const { nationalities, ethnicities, maritalStatus, religion } =
     selectOptions();
   const { data, editMode, isLoading } = profileAboutContentStore();
   const user = useUserStore((state) => state.user);
+
   if (isLoading) {
     return (
       <div className="flex justify-start items-start space-x-4 w-full ml-5">
@@ -52,9 +54,14 @@ const BasicInformationForm = () => {
   }
 
   return (
-    <div className="flex h-full flex-col space-y-4 w-full">
-      <div className="text-sm justify-between w-full px-5">
-        {!user?.profile_completed && (
+    <div
+      className={cn(
+        "flex flex-col h-96 overflow-y-scroll no-scrollbar w-full space-y-4",
+        !user?.profile_completed && "h-full"
+      )}
+    >
+      {!user?.profile_completed && (
+        <div className="flex flex-row justify-between w-full px-5">
           <div className="space-y-1 my-2 hover:cursor-pointer w-full items-center">
             <FormField
               name="nickname"
@@ -71,7 +78,7 @@ const BasicInformationForm = () => {
                       value={field.value}
                       type="text"
                       placeholder="Enter Nickname"
-                      className="outline-0 border border rounded-lg w-full py-3 px-5"
+                      className="outline-0 border rounded-lg w-full py-3 px-5"
                     />
                     <FormMessage />
                   </FormItem>
@@ -79,9 +86,11 @@ const BasicInformationForm = () => {
               }}
             />
           </div>
-        )}
+        </div>
+      )}
+      <div className="flex flex-row justify-between w-full px-5">
         {editMode || !user?.profile_completed ? (
-          <div className="flex flex-col space-y-1">
+          <div className="flex flex-col w-full">
             <FormField
               name="gender"
               render={({ field }) => {
@@ -92,7 +101,11 @@ const BasicInformationForm = () => {
                     </FormLabel>
                     <Select
                       onValueChange={field.onChange}
-                      defaultValue={field.value}
+                      defaultValue={
+                        field.value && field.value.length > 1
+                          ? field.value[0]
+                          : field.value
+                      }
                     >
                       <FormControl>
                         <SelectTrigger>
@@ -204,16 +217,14 @@ const BasicInformationForm = () => {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        {religion.map(
-                          (data: Religion, index: number) => {
-                            const { religion_name } = data;
-                            return (
-                              <SelectItem value={religion_name} key={index}>
-                                {religion_name}
-                              </SelectItem>
-                            );
-                          }
-                        )}
+                        {religion.map((data: Religion, index: number) => {
+                          const { religion_name } = data;
+                          return (
+                            <SelectItem value={religion_name} key={index}>
+                              {religion_name}
+                            </SelectItem>
+                          );
+                        })}
                       </SelectContent>
                     </Select>{" "}
                     <FormMessage />
@@ -259,7 +270,7 @@ const BasicInformationForm = () => {
                         field.onChange(e.target.value);
                       }}
                       type="date"
-                      className="outline-0 border border rounded-lg w-full py-3 px-5"
+                      className="outline-0 border rounded-lg w-full py-3 px-5"
                     />
                     <FormMessage />
                   </FormItem>
@@ -276,66 +287,38 @@ const BasicInformationForm = () => {
             />
             <div className="flex flex-col justify-start space-y-1">
               <p className="font-bold text-base text-primary">
-                {data?.birthInfo ? data?.birthInfo : "Add Birthday"}
+                {data?.birthInfo
+                  ? moment(data?.birthInfo).format("LL")
+                  : "Add Birthday"}
               </p>
               <p className="text-[#727272] text-xs">Birthday</p>
             </div>
           </div>
         )}
       </div>
-
-      {/* add new */}
-      {/* <div className="flex flex-row justify-between w-full px-5">
-        {editMode
-          ? (
-            <div className="space-y-1 hover:cursor-pointer w-full items-center">
-              <FormField
-                name="age"
-                render={({ field }) => {
-                  return (
-                    <FormItem>
-                      <FormLabel className="text-primary" htmlFor="age">
-                        Age
-                      </FormLabel>
-                      <Input
-                        onChange={(e) => {
-                          if (
-                            e.target.value !== "" &&
-                            typeof parseInt(e.target.value) === "number"
-                          ) {
-                            field.onChange(parseInt(e.target.value));
-                          }
-                        }}
-                        type="number"
-                        placeholder="Enter age"
-                        defaultValue={field.value}
-                        className="outline-0 border border rounded-lg w-full py-3 px-5"
-                      />
-                      <FormMessage />
-                    </FormItem>
-                  );
-                }}
-              />
-            </div>
-          )
-          : (
-            <div className="flex flex-row space-x-2 hover:cursor-pointer">
-              <CalendarClock
-                color="#727272"
-                size={30}
-                className="hover:cursor-pointer mt-2 mr-3"
-              />
-              <p className="text-[#727272]">
-                {parseInt(
-                    data?.age ??
-                      "0",
-                  ) > 1
-                  ? `${data?.age} years old`
-                  : `${data?.age} year old`}
+      <div className="flex h-full flex-row justify-between w-full px-5">
+        {editMode || !user?.profile_completed ? (
+          <div className="space-y-1 hover:cursor-pointer w-full items-center">
+            <LanguageField />
+          </div>
+        ) : (
+          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+            <LanguagesIcon
+              color="#ff569a"
+              size={30}
+              className="hover:cursor-pointer mt-2 mr-3"
+            />
+            <div className="flex flex-col justify-start space-y-1">
+              <p className="font-bold text-base text-primary">
+                {[
+                  ...new Set(data?.language.map((lang) => lang.language_name)),
+                ].join(", ") ?? "Add languages"}
               </p>
+              <p className="text-[#727272] text-xs">Language</p>
             </div>
-          )}
-      </div> */}
+          </div>
+        )}
+      </div>
       <div className="flex flex-row justify-between w-full px-5">
         {editMode || !user?.profile_completed ? (
           <div className="space-y-1 hover:cursor-pointer w-full items-center">
@@ -393,7 +376,6 @@ const BasicInformationForm = () => {
           </div>
         )}
       </div>
-
       <div className="flex flex-row justify-between w-full px-5">
         {editMode || !user?.profile_completed ? (
           <div className="space-y-1 hover:cursor-pointer w-full items-center">
@@ -450,60 +432,6 @@ const BasicInformationForm = () => {
                   : "Add Marital Status"}
               </p>
               <p className="text-[#727272] text-xs">Status</p>
-            </div>
-          </div>
-        )}
-      </div>
-      <div className="flex flex-row justify-between w-full px-5">
-        {editMode || !user?.profile_completed ? (
-          <div className="space-y-1 hover:cursor-pointer w-full items-center">
-            <FormField
-              name="language"
-              render={({ field }) => {
-                return (
-                  <FormItem>
-                    <FormLabel className="text-primary" htmlFor="language">
-                      Language
-                    </FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder={"Select language"} />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent className="w-min">
-                        {languages.map((data: Languages, index: number) => {
-                          const { language_name } = data;
-                          return (
-                            <SelectItem value={language_name} key={index}>
-                              {language_name}
-                            </SelectItem>
-                          );
-                        })}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                );
-              }}
-              control={control}
-            />
-          </div>
-        ) : (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
-            <LanguagesIcon
-              color="#ff569a"
-              size={30}
-              className="hover:cursor-pointer mt-2 mr-3"
-            />
-            <div className="flex flex-col justify-start space-y-1">
-              <p className="font-bold text-base text-primary">
-                {data?.language ? data?.language : "Add Language"}
-              </p>
-              <p className="text-[#727272] text-xs">Language</p>
             </div>
           </div>
         )}

@@ -1,7 +1,7 @@
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
 import { Briefcase, CircleDollarSign, GraduationCap, User } from "lucide-react";
 import FormSkeletonLoading from "./formSkeletonLoading";
-import { Education, EmploymentStatus, Income, Occupation } from "@/types/profile";
+import { Education, EmploymentStatus, Income } from "@/types/profile";
 import selectOptions from "@/zustand/profile/selectData/selectOptions";
 import {
   Select,
@@ -180,14 +180,19 @@ const WorkEducationForm = () => {
                       </FormControl>
                       <SelectContent>
                         {occupations &&
-                          occupations.map((data: Occupation, index) => {
-                            const { occupation_title: occupation } = data;
-                            return (
-                              <SelectItem value={occupation} key={index}>
-                                {occupation}
-                              </SelectItem>
-                            );
-                          })}
+
+                          [
+                            ...new Set(
+                              occupations.map((o) => o.occupation_title)
+                            ),
+                          ]
+                            .map((title, index) => {
+                              return (
+                                <SelectItem value={title} key={index}>
+                                  {title}
+                                </SelectItem>
+                              );
+                            })}
                       </SelectContent>
                     </Select>
                     <FormMessage />

@@ -1,3 +1,4 @@
+import { FavoriteFood, Interest, Languages, Pets } from "@/types/profile";
 import * as z from "zod";
 
 export const emptyDefault = {
@@ -7,7 +8,7 @@ export const emptyDefault = {
   birthInfo: "",
   ethnicity: "",
   maritalStatus: "",
-  language: "",
+  language: [] as Languages[],
   education: "",
   employmentStatus: "",
   occupationTitle: "",
@@ -15,7 +16,7 @@ export const emptyDefault = {
   height: 0,
   weight: 0,
   bodyType: "",
-  favoriteFood: "",
+  favoriteFood: [] as FavoriteFood[],
   country: "",
   region: "",
   nickname: "",
@@ -27,12 +28,12 @@ export const emptyDefault = {
   wantChildren: "",
   workout: "",
   disability: "",
-  pets: "",
+  pets: [] as Pets[],
   drinking: "",
   smoking: "",
   livingStatus: "",
   car: "",
-  interest: ""
+  interest: [] as Interest[],
 };
 
 export const ProfileFormSchema = z.object({
@@ -58,10 +59,16 @@ export const ProfileFormSchema = z.object({
     })
     .min(2, { message: "Please select a marital status" }),
   language: z
-    .string({
-      required_error: "This field is required",
-    })
-    .min(2, { message: "Please select a language" }),
+    .array(
+      z.object({
+        language_name: z.string(),
+        language_code: z.string(),
+        member_language_id: z.number(),
+      })
+    )
+    .refine((data) => data.length > 0, {
+      message: "Pick at least one language",
+    }),
   education: z
     .string({
       required_error: "Education information is required",
@@ -98,15 +105,27 @@ export const ProfileFormSchema = z.object({
     })
     .min(2, { message: "Please select your body type" }),
   interest: z
-    .string({
-      required_error: "Please select an interest",
-    })
-    .min(2, { message: "Please select an interest" }),
+    .array(
+      z.object({
+        interest_name: z.string(),
+        interest_id: z.number(),
+      })
+    )
+    .refine((data) => data.length > 0, {
+      message: "Pick at least one interest",
+    }),
   favoriteFood: z
-    .string({
-      required_error: "Please select your preferred food",
-    })
-    .min(2, { message: "Please select your favorite food" }),
+    .array(
+      z.object({
+        favorite_food_name: z.string(),
+        favorite_food_id: z.number(),
+        authorized: z.boolean(),
+        ip_address: z.string(),
+      })
+    )
+    .refine((data) => data.length > 0, {
+      message: "Pick at least one favorite food",
+    }),
   country: z
     .string({
       required_error: "Country is required",
@@ -163,10 +182,15 @@ export const ProfileFormSchema = z.object({
     })
     .min(2, { message: "Disability is required" }),
   pets: z
-    .string({
-      required_error: "Pets is required",
-    })
-    .min(2, { message: "Pets is required" }),
+    .array(
+      z.object({
+        pet_name: z.string(),
+        pet_id: z.number(),
+      })
+    )
+    .refine((data) => data.length > 0, {
+      message: "Pick at least one pet",
+    }),
   drinking: z
     .string({
       required_error: "Drinking is required",

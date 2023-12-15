@@ -2,46 +2,46 @@ import { create } from "zustand";
 
 interface AboutErrors {
   basicInfoHasErrors: boolean;
-  setBasicInfoHasErrors: (val:boolean) => void;
+  setBasicInfoHasErrors: (val: boolean) => void;
   workAndEducationHasErrors: boolean;
-  setWorkAndEducationHasErrors: (val:boolean) => void;
+  setWorkAndEducationHasErrors: (val: boolean) => void;
   detailsInfoHasErrors: boolean;
-  setDetailsInfoHasErrors: (val:boolean) => void;
+  setDetailsInfoHasErrors: (val: boolean) => void;
   locationHasErrors: boolean;
-  setLocationHasErrors: (val:boolean) => void;
+  setLocationHasErrors: (val: boolean) => void;
   additionalInfoHasErrors: boolean;
-  setAdditionalInfoHasErrors: (val:boolean) => void;
+  setAdditionalInfoHasErrors: (val: boolean) => void;
 }
 
-const useAboutErrorsStrore = create<AboutErrors>()((set)=> ({
+const useAboutErrorsStrore = create<AboutErrors>()((set) => ({
   basicInfoHasErrors: false,
   setBasicInfoHasErrors: (val: boolean) => {
     set(() => ({
-      basicInfoHasErrors: val
+      basicInfoHasErrors: val,
     }));
   },
   workAndEducationHasErrors: false,
   setWorkAndEducationHasErrors: (val: boolean) => {
     set(() => ({
-      workAndEducationHasErrors: val
+      workAndEducationHasErrors: val,
     }));
   },
   detailsInfoHasErrors: false,
   setDetailsInfoHasErrors: (val: boolean) => {
     set(() => ({
-      detailsInfoHasErrors: val
+      detailsInfoHasErrors: val,
     }));
   },
   locationHasErrors: false,
   setLocationHasErrors: (val: boolean) => {
     set(() => ({
-      locationHasErrors: val
+      locationHasErrors: val,
     }));
   },
   additionalInfoHasErrors: false,
   setAdditionalInfoHasErrors: (val: boolean) => {
     set(() => ({
-      additionalInfoHasErrors: val
+      additionalInfoHasErrors: val,
     }));
   },
 }));
