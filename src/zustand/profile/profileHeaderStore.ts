@@ -23,6 +23,7 @@ const profileHeaderStore = create<ProfileHeaderState>((set) => ({
     maritalStatus: null,
     occupation_title: null,
     country_name: null,
+    member_id: null,
   },
   setHeaderValues: (val) =>
     set(() => ({
