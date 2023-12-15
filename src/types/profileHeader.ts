@@ -1,5 +1,4 @@
 export type ProfileHeader = {
-  member_id: string | null;
   member_uuid: string | null;
   gallery_uuid: string | null;
   gender: string | null;

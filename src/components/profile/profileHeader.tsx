@@ -233,6 +233,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
   };
 
   console.log("headerValues: ", userId);
+  console.log("toggle fav icon: ", favoriteTriggered);
   return (
     <div className="items-start p-5 border-b w-full">
       <div className="flex justify-start items-start space-x-2">
@@ -400,7 +401,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                         <Button
                           type="button"
                           variant={"outline"}
-                          className="hover:ring-2 transition-all ring-primary"
+                          className="hover:ring-2 transition-all ring-primary "
                           onClick={() =>
                             toggleFavorite.mutate({
                               member: user!.member_id,
@@ -414,13 +415,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                             <Star
                               color="#FF599B"
                               className="ml-2"
-                              fill={
-                                !favoriteTriggered
-                                  ? "#FF599B"
-                                  : favoriteTriggered
-                                  ? "#FF599B"
-                                  : "white"
-                              }
+                              fill={favoriteTriggered ? "#FF599B" : "white"}
                             />
                           </span>
                         </Button>
