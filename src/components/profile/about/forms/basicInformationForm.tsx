@@ -40,10 +40,10 @@ const BasicInformationForm = () => {
   const { control } = useFormContext();
   const { nationalities, ethnicities, maritalStatus, religion } =
     selectOptions();
-  const { data, editMode, isLoading } = profileAboutContentStore();
+  const { data, editMode, isLoading, profileData } = profileAboutContentStore();
   const user = useUserStore((state) => state.user);
 
-  if (isLoading) {
+  if (isLoading && profileData == null) {
     return (
       <div className="flex justify-start items-start space-x-4 w-full ml-5">
         <div className="space-y-2">

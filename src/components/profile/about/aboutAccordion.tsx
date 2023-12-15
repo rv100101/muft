@@ -44,7 +44,9 @@ import { useLocation } from "wouter";
 // import { useUserStore } from "@/zustand/auth/user";
 import useSelectedCountryStore from "@/zustand/profile/location/selectedCountry";
 import { convertJsonToConvertedObject } from "@/lib/utils";
+import { useEffectOnce } from "usehooks-ts";
 const AboutAccordion = ({ userId }: { userId: number }) => {
+  const [location] = useLocation();
   const selectedCountry = useSelectedCountryStore(
     (state) => state.selectedCountry
   );
@@ -53,6 +55,8 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
     setIsLoading,
     setData: setAboutData,
     setEditModeFalse,
+    setProfileData,
+    profileData,
   } = profileAboutContentStore();
 
   const {
@@ -84,15 +88,18 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
     setEmploymentStatus,
   } = selectOptions();
 
-  const [location] = useLocation();
+  useEffectOnce(() => {
+    setEditModeFalse();
+  });
 
-  useEffect(() => {
-    if (!location.startsWith("/profile")) {
-      setEditModeFalse();
+  useEffectOnce(() => {
+    if (location.startsWith("/profile") && profileData) {
+      setAboutData(profileData);
     }
-  }, [location]);
+  });
 
   const { isLoading: currentUserLoading, isRefetching } = useQuery({
+    // enabled: !(location.startsWith("/profile") && profileData),
     queryKey: ["profileContent", userId],
     queryFn: async () => {
       const additionalInformation =
@@ -112,6 +119,9 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
     },
     onSuccess: (data: ProfileAbout) => {
       setAboutData(data);
+      if (location.startsWith("/profile")) {
+        setProfileData(data);
+      }
     },
     refetchOnWindowFocus: false,
   });

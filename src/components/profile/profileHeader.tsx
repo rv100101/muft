@@ -28,6 +28,7 @@ import { Link, useLocation } from "wouter";
 import { useUserAvatar } from "@/zustand/auth/avatar";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import deleteMultiselectValuesStore from "@/zustand/profile/about/deleteMultiselectValues";
+import { useEffectOnce } from "usehooks-ts";
 
 const ProfileHeader = ({ userId }: { userId: string }) => {
   const [location] = useLocation();
@@ -66,24 +67,19 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
   const [isUploading, setIsUploading] = useState(false);
   const setAvatar = useUserAvatar((state) => state.setAvatar);
 
-  useEffect(() => {
-    if (profileHeaderValues && user!.member_id.toString() == userId) {
-      console.log("changed");
-
+  useEffectOnce(() => {
+    if (
+      location.startsWith("/profile") &&
+      user!.member_id.toString() == userId &&
+      profileHeaderValues
+    ) {
       setHeaderValues(profileHeaderValues);
     }
-  }, [
-    profileHeaderValues,
-    setHeaderValues,
-    setProfileHeaderValues,
-    user,
-    userId,
-  ]);
+  });
 
   const { isLoading } = useQuery({
     queryKey: ["profileHeader", userId],
     queryFn: fetchInitialData,
-    refetchInterval: Infinity,
     refetchOnWindowFocus: false,
     onSuccess: (data: ProfileHeaderType | null) => {
       if (data) {
@@ -92,6 +88,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
         }
         if (user!.member_id.toString() === userId) {
           setProfileHeaderValues(data);
+          setHeaderValues(data);
         }
       }
     },
@@ -381,7 +378,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                           type="text"
                           defaultValue={field.value}
                           onChange={field.onChange}
-                          className="outline-0 border border rounded-lg lg:w-1/2 w-full py-3 px-5"
+                          className="outline-0 border rounded-lg lg:w-1/2 w-full py-3 px-5"
                           name="nickname"
                         />
                         <FormMessage />

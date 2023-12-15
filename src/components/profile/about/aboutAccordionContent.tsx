@@ -16,8 +16,10 @@ import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
 import AdditionalInformatinForm from "./forms/additionalInformationForm";
 import useAboutErrorsStrore from "@/zustand/profile/about/useAboutErrorsStore";
 import { cn } from "@/lib/utils";
+import { useLocation } from "wouter";
 
 const AboutAccordionContent = () => {
+  const [location] = useLocation();
   const {
     basicInfoHasErrors,
     detailsInfoHasErrors,
@@ -25,7 +27,7 @@ const AboutAccordionContent = () => {
     workAndEducationHasErrors,
     additionalInfoHasErrors,
   } = useAboutErrorsStrore();
-
+  const { profileData } = profileAboutContentStore();
   const [activeTabs, setActiveTabs] = useState([
     false,
     true,
@@ -40,9 +42,14 @@ const AboutAccordionContent = () => {
     setActiveTabs(newActiveTabs);
   };
   const isLoading = profileAboutContentStore((state) => state.isLoading);
-  if (isLoading) {
+  if (location.startsWith("/profile") && !profileData && isLoading) {
     return <ContentLoadingSkeleton />;
   }
+
+  if (location.startsWith("/members") && isLoading) {
+    return <ContentLoadingSkeleton />;
+  }
+
   return (
     <div className="flex lg:flex-row flex-col mb-5">
       <div className="flex flex-row justify-around text-sm lg:justify-start lg:w-1/3 w-full lg:block">
