@@ -109,7 +109,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
     if (
       location.startsWith("/profile") &&
       user!.member_id.toString() == userId &&
-      profileHeaderValues
+      profileHeaderValues !== null
     ) {
       setHeaderValues(profileHeaderValues);
     }
