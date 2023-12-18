@@ -3,8 +3,8 @@ import { create } from "zustand";
 
 interface ProfileHeaderState {
   profileHeaderValues: ProfileHeader | null;
-  setProfileHeaderValues: (val: ProfileHeader) => void;
-  headerValues: ProfileHeader;
+  setProfileHeaderValues: (val: ProfileHeader | null) => void;
+  headerValues: ProfileHeader | null;
   setHeaderValues: (val: ProfileHeader) => void;
 }
 

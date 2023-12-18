@@ -33,7 +33,6 @@ const ChatList = () => {
     queryKey: ["conversations"],
     queryFn: () => messagingQuery.getConversations(user!.member_id),
   });
-
   const searchFilterValue = useSearchFilterStore((state) => state.value);
 
   // This is used for page view switching in mobile view
@@ -42,16 +41,13 @@ const ChatList = () => {
   );
 
   useEffect(() => {
+    return () => {
+      setSelectedHistoryMemberId(null);
+    }
+  }, [])
+
+  useEffect(() => {
     if (!selectedConversation && data && data.length !== 0) {
-      // setConversation(
-      //   data[0].initiator_id,
-      //   data[0].conversation_id,
-      //   data[0].gallery_uuid,
-      //   data[0].gender,
-      //   data[0].recipient_uuid,
-      //   data[0].recipient_nickname,
-      //   data[0].conversation_uuid,
-      // );
       setSenderUserInfo({
         conversation_history_id: data[0].conversation_id,
         conversation_text: "",
@@ -73,8 +69,9 @@ const ChatList = () => {
       searchFilterValue.length === 0 ? true : conversation.recipient_nickname
         .toLowerCase()
         .includes(searchFilterValue.toLowerCase())
-    ).filter((conversation) => {
-      return conversation.recipient_id !== conversation.initiator_id;
+    )
+    .filter((conversation) => {
+      return conversation.recipient_id !== user?.member_id;
     })
     .map((conversation, index) => {
       return (
@@ -84,7 +81,7 @@ const ChatList = () => {
             className={cn(
               "w-full h-max items-start text-left",
               selectedHistoryMemberId === conversation.recipient_id &&
-                "bg-accent",
+              "bg-accent",
             )}
             onClick={() => {
               if (!matches) {

@@ -40,7 +40,7 @@ interface ProfileAboutState {
   data: ProfileAbout | null;
   setData: (val: ProfileAbout) => void;
   profileData: ProfileAbout | null;
-  setProfileData: (val: ProfileAbout) => void;
+  setProfileData: (val: ProfileAbout | null) => void;
   isLoading: boolean;
   setIsLoading: (val: boolean) => void;
   refetch: boolean;

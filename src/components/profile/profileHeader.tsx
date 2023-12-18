@@ -105,6 +105,12 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
   const [isUploading, setIsUploading] = useState(false);
   const setAvatar = useUserAvatar((state) => state.setAvatar);
 
+  useEffect(() => {
+    return () => {
+      setSelectedHistoryMemberId(null);
+    }
+  }, [])
+
   useEffectOnce(() => {
     if (
       location.startsWith("/profile") &&
@@ -154,8 +160,8 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
       setSelectedConversation(
         user!.member_id,
         res.data.conversation_id,
-        headerValues.gallery_uuid,
-        headerValues.gender!,
+        headerValues!.gallery_uuid,
+        headerValues!.gender!,
         res.data.recipient_uuid,
         res.data.recipient_nickname!,
         res.data.conversation_uuid
@@ -169,8 +175,8 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
       return null;
     }
   }, [
-    headerValues.gallery_uuid,
-    headerValues.gender,
+    headerValues!.gallery_uuid,
+    headerValues!.gender,
     location,
     setSelectedConversation,
     user,
@@ -209,7 +215,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
         user!.member_id
       );
       setHeaderValues({
-        ...headerValues,
+        ...headerValues!,
         gallery_uuid: res.data[0].gallery_uuid,
       });
       setProfileHeaderValues({
@@ -256,10 +262,10 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                           selectedFile
                             ? selectedFile
                             : getImagePath(
-                                headerValues.gallery_uuid,
-                                headerValues.gender,
-                                headerValues.member_uuid?.toString()
-                              )
+                              headerValues!.gallery_uuid,
+                              headerValues!.gender,
+                              headerValues!.member_uuid?.toString()
+                            )
                         }
                         alt="no image selected"
                       />
@@ -271,10 +277,10 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                           selectedFile
                             ? selectedFile
                             : getImagePath(
-                                headerValues.gallery_uuid,
-                                headerValues.gender,
-                                headerValues.member_uuid?.toString()
-                              )
+                              headerValues!.gallery_uuid,
+                              headerValues!.gender,
+                              headerValues!.member_uuid?.toString()
+                            )
                         }
                         alt="no image selected"
                       />
@@ -301,10 +307,10 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                         selectedFile
                           ? selectedFile
                           : getImagePath(
-                              headerValues.gallery_uuid,
-                              headerValues.gender,
-                              headerValues.member_uuid?.toString()
-                            )
+                            headerValues!.gallery_uuid,
+                            headerValues!.gender,
+                            headerValues!.member_uuid?.toString()
+                          )
                       }
                       alt="no image selected"
                     />
@@ -342,13 +348,12 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
             <div className="w-full">
               {!isEditing && (
                 <div
-                  className={`flex lg:flex-row flex-col lg:space-x-5 space-x-0${
-                    !user!.is_active ? "pt-5 pl-3" : ""
-                  }`}
+                  className={`flex lg:flex-row flex-col lg:space-x-5 space-x-0${!user!.is_active ? "pt-5 pl-3" : ""
+                    }`}
                 >
                   <div className="flex lg:flex-col lg:justify-start flex-row space-x-4 lg:space-x-0">
                     <p className="font-semibold text-[#171717] text-lg ">
-                      {headerValues.nickname}
+                      {headerValues!.nickname}
                     </p>
                     {!isEditing && (
                       <p
@@ -397,8 +402,8 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                                 !likeTriggered
                                   ? "#FF599B"
                                   : likeTriggered
-                                  ? "#FF599B"
-                                  : "white"
+                                    ? "#FF599B"
+                                    : "white"
                               }
                               className="ml-2 "
                             />
@@ -425,8 +430,8 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                                 !favoriteTriggered
                                   ? "#FF599B"
                                   : favoriteTriggered
-                                  ? "#FF599B"
-                                  : "white"
+                                    ? "#FF599B"
+                                    : "white"
                               }
                             />
                           </span>
@@ -465,18 +470,18 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                     <Button
                       onClick={
                         !formState.isDirty
-                          ? () => {}
+                          ? () => { }
                           : () => {
-                              // if (isEditing && !formState.isValid) {
-                              //   toast({
-                              //     variant: "destructive",
-                              //     title: "Cannot save your profile",
-                              //     description:
-                              //       "Please make sure all the required fields are satisfied.",
-                              //     duration: 4000,
-                              //   });
-                              // }
-                            }
+                            // if (isEditing && !formState.isValid) {
+                            //   toast({
+                            //     variant: "destructive",
+                            //     title: "Cannot save your profile",
+                            //     description:
+                            //       "Please make sure all the required fields are satisfied.",
+                            //     duration: 4000,
+                            //   });
+                            // }
+                          }
                       }
                       disabled={isSaving}
                       type={"submit"}
@@ -532,30 +537,30 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
           {!isEditing && user!.is_active && (
             <div className="h-full hidden lg:block mt-3">
               <div className="pt-5 flex w-full justify-start items-start flex-wrap text-xs space-x-2">
-                {headerValues.height && (
+                {headerValues!.height && (
                   <p className="rounded-md w-max h-max bg-[#FFF2F7] text-[#FF599B] p-2 mb-2">
-                    {`${headerValues.height} cm`}
+                    {`${headerValues!.height} cm`}
                   </p>
                 )}
-                {headerValues.gender && (
+                {headerValues!.gender && (
                   <p className="rounded-md w-max h-max bg-[#FFF2F7] text-[#FF599B] px-5 py-2 mb-2">
-                    {headerValues.gender == "F" && "Female"}
-                    {headerValues.gender == "M" && "Male"}
+                    {headerValues!.gender == "F" && "Female"}
+                    {headerValues!.gender == "M" && "Male"}
                   </p>
                 )}
-                {headerValues.maritalStatus && (
+                {headerValues!.maritalStatus && (
                   <p className="rounded-md w-max h-max bg-[#FFF2F7] text-[#FF599B] px-5 py-2 mb-2">
-                    {headerValues.maritalStatus}
+                    {headerValues!.maritalStatus}
                   </p>
                 )}
-                {headerValues.country_name && (
+                {headerValues!.country_name && (
                   <p className="rounded-md w-max h-max bg-[#FFF2F7] text-[#FF599B] px-5 py-2 mb-2">
-                    {headerValues.country_name}
+                    {headerValues!.country_name}
                   </p>
                 )}
-                {headerValues.occupation_title && (
+                {headerValues!.occupation_title && (
                   <p className="rounded-md w-max h-max bg-[#FFF2F7] text-[#FF599B] px-5 py-2 mb-2">
-                    {headerValues.occupation_title}
+                    {headerValues!.occupation_title}
                   </p>
                 )}
               </div>

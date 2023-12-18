@@ -19,11 +19,17 @@ import { DialogClose } from "@radix-ui/react-dialog";
 import { scrollToTop } from "@/lib/utils";
 import useConversationHistoryStore from "@/zustand/messaging/showConversation";
 import { useOrientation } from "@uidotdev/usehooks";
+import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
+import profileHeaderStore from "@/zustand/profile/profileHeaderStore";
 
 const SideBar = () => {
   const orientation = useOrientation();
   const reset = useConversationHistoryStore((state) => state.resetToNull);
   const signOut = useUserStore((state) => state.reset);
+  const { setProfileData } = profileAboutContentStore();
+  const {
+    setProfileHeaderValues,
+  } = profileHeaderStore();
   const setSelectedProfileId = useHomepageViewStore(
     (state) => state.setSelectedProfileId
   );
@@ -39,8 +45,8 @@ const SideBar = () => {
             location.startsWith("/profile") && link.path.startsWith("/profile")
               ? "font-semibold bg-accent"
               : location.endsWith(link.path)
-              ? "font-semibold bg-accent"
-              : "font-normal"
+                ? "font-semibold bg-accent"
+                : "font-normal"
           )}
           href={
             link.name == "My Profile"
@@ -62,11 +68,11 @@ const SideBar = () => {
             <link.icon
               fill={
                 location.startsWith("/profile") &&
-                link.path.startsWith("/profile")
+                  link.path.startsWith("/profile")
                   ? "black"
                   : location.endsWith(link.path)
-                  ? "black"
-                  : "white"
+                    ? "black"
+                    : "white"
               }
               stroke={
                 link.name == "Home" && location.endsWith(link.path)
@@ -86,9 +92,8 @@ const SideBar = () => {
   return (
     <div className="h-full border-r sm:flex sm:flex-col justify-between hidden">
       <div
-        className={`h-full flex flex-col justify-between ${
-          orientation.angle === 90 ? "overflow-scroll" : ""
-        }`}
+        className={`h-full flex flex-col justify-between ${orientation.angle === 90 ? "overflow-scroll" : ""
+          }`}
       >
         <div className="flex flex-col w-[220px]">
           <Link href="/">
@@ -139,7 +144,11 @@ const SideBar = () => {
                 <DialogTitle>Are you sure you want to sign out?</DialogTitle>
               </DialogHeader>
               <DialogFooter className="sm:justify-start">
-                <Button className="hover:bg-primary" onClick={signOut}>
+                <Button className="hover:bg-primary" onClick={() => {
+                  signOut()
+                  setProfileData(null)
+                  setProfileHeaderValues(null)
+                }}>
                   Yes
                 </Button>
                 <DialogClose asChild>
