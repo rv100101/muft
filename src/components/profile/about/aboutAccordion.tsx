@@ -108,13 +108,11 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
         userId,
         userId
       );
-      console.log(memberDetails);
       const convertedDetails = convertJsonToConvertedObject(memberDetails);
       const details = {
         ...convertedDetails,
         ...additionalInformation,
       };
-      console.log(details);
       return details;
     },
     onSuccess: (data: ProfileAbout) => {
@@ -336,7 +334,6 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
     queryFn: () => profileContentQuery.editOptions.getStates(selectedCountry),
     queryKey: ["states", selectedCountry],
     onSuccess: (data: State[]) => {
-      console.log(data);
       setStates(data);
     },
   });

@@ -6,10 +6,12 @@ import ProfileHeaderSkeleton from "./profileHeaderSkeleton";
 import { Button } from "../ui/button";
 import {
   CameraIcon,
+  Flag,
   FolderEdit,
   Heart,
   Loader2,
   MessageCircleIcon,
+  MoreHorizontal,
   Star,
 } from "lucide-react";
 import { useUserStore } from "@/zustand/auth/user";
@@ -26,12 +28,38 @@ import messagingQuery from "@/queries/messaging";
 import useLatestConversationStore from "@/zustand/messaging/showConversation";
 import { Link, useLocation } from "wouter";
 import { useUserAvatar } from "@/zustand/auth/avatar";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import deleteMultiselectValuesStore from "@/zustand/profile/about/deleteMultiselectValues";
 import { useEffectOnce } from "usehooks-ts";
 import axiosQuery from "@/queries/axios";
+import useHomepageViewStore from "@/zustand/home/homepageView";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
 
 const ProfileHeader = ({ userId }: { userId: string }) => {
+  const [reportReason, setReportReason] = useState("");
+  const [reportProcessing, setReportProcessing] = useState(false);
+
+  const isLiked = useHomepageViewStore((state) => state.isLiked);
+  const isFavored = useHomepageViewStore((state) => state.isFavored);
+  const toggleIsFavored = useHomepageViewStore(
+    (state) => state.toggleIsFavored
+  );
+  const toggleIsLiked = useHomepageViewStore((state) => state.toggleIsLiked);
+
   const [likeTriggered, toggleLikeIcon] = useState(false);
   const [favoriteTriggered, toggleFavoriteIcon] = useState(false);
   const toggleLike = useMutation({
@@ -43,6 +71,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
       liked: number;
     }) => {
       toggleLikeIcon((prev) => !prev);
+      toggleIsLiked();
 
       const res = await axiosQuery.post("/Like", {
         member: member,
@@ -61,6 +90,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
       favored: number;
     }) => {
       toggleFavoriteIcon((prev) => !prev);
+      toggleIsFavored();
 
       const res = await axiosQuery.post("/Favorite", {
         member: member,
@@ -108,8 +138,8 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
   useEffect(() => {
     return () => {
       setSelectedHistoryMemberId(null);
-    }
-  }, [])
+    };
+  }, []);
 
   useEffectOnce(() => {
     if (
@@ -234,6 +264,31 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
     setIsUploading(false);
   };
 
+  const handleReportSubmit = async (reported: number) => {
+    try {
+      console.log(reported);
+      setReportProcessing(true);
+      const res = await axiosQuery.post("/ReportAbuse", {
+        member: user!.member_id,
+        reported: reported,
+        reason: reportReason,
+      });
+
+      // setReportProcessing(false);
+      toast({
+        title: "Reported",
+        description: "Changes might take awhile to take effect.",
+        // variant: "success",
+      });
+
+      if (res.data) {
+        setReportProcessing(false);
+      }
+    } catch (error) {
+      console.log("error: ", error);
+    }
+  };
+
   if (
     location.startsWith("/profile") &&
     profileHeaderValues == null &&
@@ -242,10 +297,16 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
     return <ProfileHeaderSkeleton />;
   }
 
-  if (location.startsWith("/members") && (isLoading || isRefetching)) {
-    return <ProfileHeaderSkeleton />;
-  }
+  // if (location.startsWith("/members") && (isLoading || isRefetching)) {
+  //   return <ProfileHeaderSkeleton />;
+  // }
 
+  // console.log("🎈: ", isFavored);
+  // console.log("🎃: ", isLiked);
+  // console.log("---------------");
+  // console.log("🧨: ", favoriteTriggered);
+  // console.log("🎑: ", likeTriggered);
+  console.log("profile header vals: ", headerValues);
   return (
     <div className="items-start p-5 border-b w-full">
       <div className="flex justify-start items-start space-x-2">
@@ -262,10 +323,10 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                           selectedFile
                             ? selectedFile
                             : getImagePath(
-                              headerValues!.gallery_uuid,
-                              headerValues!.gender,
-                              headerValues!.member_uuid?.toString()
-                            )
+                                headerValues!.gallery_uuid,
+                                headerValues!.gender,
+                                headerValues!.member_uuid?.toString()
+                              )
                         }
                         alt="no image selected"
                       />
@@ -277,10 +338,10 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                           selectedFile
                             ? selectedFile
                             : getImagePath(
-                              headerValues!.gallery_uuid,
-                              headerValues!.gender,
-                              headerValues!.member_uuid?.toString()
-                            )
+                                headerValues!.gallery_uuid,
+                                headerValues!.gender,
+                                headerValues!.member_uuid?.toString()
+                              )
                         }
                         alt="no image selected"
                       />
@@ -307,10 +368,10 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                         selectedFile
                           ? selectedFile
                           : getImagePath(
-                            headerValues!.gallery_uuid,
-                            headerValues!.gender,
-                            headerValues!.member_uuid?.toString()
-                          )
+                              headerValues!.gallery_uuid,
+                              headerValues!.gender,
+                              headerValues!.member_uuid?.toString()
+                            )
                       }
                       alt="no image selected"
                     />
@@ -348,13 +409,19 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
             <div className="w-full">
               {!isEditing && (
                 <div
-                  className={`flex lg:flex-row flex-col lg:space-x-5 space-x-0${!user!.is_active ? "pt-5 pl-3" : ""
-                    }`}
+                  className={`flex lg:flex-row flex-col lg:space-x-5 space-x-0 ${
+                    !user!.is_active ? "pt-5 pl-3" : ""
+                  }`}
                 >
                   <div className="flex lg:flex-col lg:justify-start flex-row space-x-4 lg:space-x-0">
-                    <p className="font-semibold text-[#171717] text-lg ">
-                      {headerValues!.nickname}
-                    </p>
+                    <div className="flex flex-row space-x-1">
+                      <p className="font-semibold text-[#171717] text-lg ">
+                        {`${headerValues!.nickname},`}
+                      </p>
+                      <p className="font-semibold text-primary text-lg">
+                        {headerValues!.age}
+                      </p>
+                    </div>
                     {!isEditing && (
                       <p
                         className={
@@ -366,7 +433,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                     )}
                   </div>
                   {userId !== user!.member_id.toString() && (
-                    <div className="flex w-full lg:flex-row flex-col lg:justify-between lg:items-center lg:space-y-0 space-y-4 lg:pt-4  pt-5 ">
+                    <div className="flex w-full lg:flex-row flex-col lg:justify-between lg:items-start lg:space-y-0 space-y-4 lg:pt-0 pt-5 lg:px-2">
                       <Button
                         disabled={!selectedConversation}
                         type="button"
@@ -381,7 +448,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                           </p>
                         </Link>
                       </Button>
-                      <div className="space-x-2">
+                      <div className="flex space-x-2">
                         <Button
                           type="button"
                           className="hover:ring-2 transition-all ring-primary"
@@ -393,17 +460,17 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                             })
                           }
                         >
-                          <p className="lg:inline hidden">Like</p>
+                          {/* <p className="lg:inline hidden">Like</p> */}
 
                           <span>
                             <Heart
                               color="#FF599B"
                               fill={
-                                !likeTriggered
+                                isLiked && !likeTriggered
                                   ? "#FF599B"
-                                  : likeTriggered
-                                    ? "#FF599B"
-                                    : "white"
+                                  : !isLiked && likeTriggered
+                                  ? "#FF599B"
+                                  : "white"
                               }
                               className="ml-2 "
                             />
@@ -420,22 +487,119 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                             })
                           }
                         >
-                          <p className="lg:inline hidden">Favorite</p>
+                          {/* <p className="lg:inline hidden">Favorite</p> */}
 
                           <span>
                             <Star
                               color="#FF599B"
                               className="ml-2"
                               fill={
-                                !favoriteTriggered
+                                isFavored && !favoriteTriggered
                                   ? "#FF599B"
-                                  : favoriteTriggered
-                                    ? "#FF599B"
-                                    : "white"
+                                  : !isFavored && favoriteTriggered
+                                  ? "#FF599B"
+                                  : "white"
                               }
                             />
                           </span>
                         </Button>
+                        {/* more  */}
+                        <Dialog>
+                          <DropdownMenu modal={false}>
+                            <DropdownMenuTrigger>
+                              <Button
+                                type="button"
+                                variant={"outline"}
+                                className="hover:ring-2 transition-all ring-primary"
+                              >
+                                <span>
+                                  <MoreHorizontal
+                                    color="#FF599B"
+                                    fill={
+                                      isFavored && !favoriteTriggered
+                                        ? "#FF599B"
+                                        : !isFavored && favoriteTriggered
+                                        ? "#FF599B"
+                                        : "white"
+                                    }
+                                  />
+                                </span>
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent className="w-24">
+                              <DropdownMenuGroup>
+                                <DropdownMenuItem>Block</DropdownMenuItem>
+                                <DialogTrigger asChild>
+                                  <DropdownMenuItem>
+                                    Report Abuse
+                                  </DropdownMenuItem>
+                                </DialogTrigger>
+                              </DropdownMenuGroup>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                          <DialogContent className="sm:max-w-[425px]">
+                            <DialogHeader>
+                              <DialogTitle>Report Abuse</DialogTitle>
+                              <DialogDescription>
+                                Help keep our platform safe and enjoyable. Use
+                                this modal to quickly report any abusive content
+                                or behavior.
+                              </DialogDescription>
+                            </DialogHeader>
+                            <div className="grid gap-4 py-4">
+                              <div className="grid grid-cols-4 items-center gap-4">
+                                <Input
+                                  id="member_id"
+                                  value={userId}
+                                  placeholder="member id"
+                                  className="col-span-3"
+                                  disabled
+                                />
+                              </div>
+                              <div className="grid grid-cols-4 items-center gap-4">
+                                <Input
+                                  id="username"
+                                  value={
+                                    headerValues!.nickname
+                                      ? headerValues!.nickname
+                                      : ""
+                                  }
+                                  placeholder="username here"
+                                  className="col-span-3"
+                                  disabled
+                                />
+                              </div>
+                              <div className="grid grid-cols-4 items-center gap-4">
+                                <Input
+                                  id="username"
+                                  value={reportReason}
+                                  onChange={(state) =>
+                                    setReportReason(state.target.value)
+                                  }
+                                  placeholder="enter reason here"
+                                  className="col-span-3"
+                                />
+                              </div>
+                            </div>
+                            <DialogFooter>
+                              <DialogTrigger asChild>
+                                <Button
+                                  type="submit"
+                                  className="flex flex-row space-x-1"
+                                  onClick={() =>
+                                    handleReportSubmit(parseInt(userId))
+                                  }
+                                  disabled={reportProcessing}
+                                >
+                                  <p>
+                                    {reportProcessing ? "Reporting" : "Report"}
+                                  </p>{" "}
+                                  <Flag size={15} />
+                                </Button>
+                              </DialogTrigger>
+                            </DialogFooter>
+                          </DialogContent>
+                        </Dialog>
                       </div>
                     </div>
                   )}
@@ -470,18 +634,18 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                     <Button
                       onClick={
                         !formState.isDirty
-                          ? () => { }
+                          ? () => {}
                           : () => {
-                            // if (isEditing && !formState.isValid) {
-                            //   toast({
-                            //     variant: "destructive",
-                            //     title: "Cannot save your profile",
-                            //     description:
-                            //       "Please make sure all the required fields are satisfied.",
-                            //     duration: 4000,
-                            //   });
-                            // }
-                          }
+                              // if (isEditing && !formState.isValid) {
+                              //   toast({
+                              //     variant: "destructive",
+                              //     title: "Cannot save your profile",
+                              //     description:
+                              //       "Please make sure all the required fields are satisfied.",
+                              //     duration: 4000,
+                              //   });
+                              // }
+                            }
                       }
                       disabled={isSaving}
                       type={"submit"}
@@ -537,17 +701,17 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
           {!isEditing && user!.is_active && (
             <div className="h-full hidden lg:block mt-3">
               <div className="pt-5 flex w-full justify-start items-start flex-wrap text-xs space-x-2">
-                {headerValues!.height && (
+                {/* {headerValues.height && (
                   <p className="rounded-md w-max h-max bg-[#FFF2F7] text-[#FF599B] p-2 mb-2">
                     {`${headerValues!.height} cm`}
                   </p>
-                )}
-                {headerValues!.gender && (
+                )} */}
+                {/* {headerValues.gender && (
                   <p className="rounded-md w-max h-max bg-[#FFF2F7] text-[#FF599B] px-5 py-2 mb-2">
                     {headerValues!.gender == "F" && "Female"}
                     {headerValues!.gender == "M" && "Male"}
                   </p>
-                )}
+                )} */}
                 {headerValues!.maritalStatus && (
                   <p className="rounded-md w-max h-max bg-[#FFF2F7] text-[#FF599B] px-5 py-2 mb-2">
                     {headerValues!.maritalStatus}
@@ -558,11 +722,11 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                     {headerValues!.country_name}
                   </p>
                 )}
-                {headerValues!.occupation_title && (
+                {/* {headerValues.occupation_title && (
                   <p className="rounded-md w-max h-max bg-[#FFF2F7] text-[#FF599B] px-5 py-2 mb-2">
                     {headerValues!.occupation_title}
                   </p>
-                )}
+                )} */}
               </div>
             </div>
           )}

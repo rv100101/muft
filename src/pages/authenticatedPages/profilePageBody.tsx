@@ -165,8 +165,6 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
   const getEmploymentStatus = (name: string) =>
     employmentStatus.find((s) => s.employment_status_name === name);
 
-  console.log(deletedLanguages);
-
   const onSubmit = async (formData: any) => {
     // return;
     // if (!methods.formState.isDirty) {
@@ -225,7 +223,6 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
         employmentStatus: employmentStatus?.employment_status_id,
         deletedLanguages,
       };
-      console.log(finalFormData);
       await profileContentQuery.saveInformation(finalFormData, user!.member_id);
       updateUser({ ...user, profile_completed: true } as User);
       queryClient.invalidateQueries(["profileHeader", "profileContent"]);

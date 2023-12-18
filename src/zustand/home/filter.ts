@@ -15,7 +15,7 @@ interface FilterState {
 export const useFilterStore = create(
   persist<FilterState>(
     (set) => ({
-      filters: { max_age: 60, min_age: 23 },
+      filters: { max_age: 80, min_age: 18 },
       updateFilters: (filters: Filter) => set({ filters: filters }),
       reset: () => {
         set({ filters: null });

@@ -9,7 +9,8 @@ import { useLocation } from "wouter";
 import { useMutation } from "@tanstack/react-query";
 import axiosQuery from "@/queries/axios";
 import { useUserStore } from "@/zustand/auth/user";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import useHomepageViewStore from "@/zustand/home/homepageView";
 type PostItemProps = {
   nickname: string;
   country: string;
@@ -38,6 +39,19 @@ const PostItem = ({
   nationality,
 }: PostItemProps) => {
   const [, setLocation] = useLocation();
+  const toggleIsLiked = useHomepageViewStore((state) => state.toggleIsLiked);
+
+  const toggleIsFavored = useHomepageViewStore(
+    (state) => state.toggleIsFavored
+  );
+
+  useEffect(() => {
+    console.log("isFAv: ", isFavorite);
+    console.log("isLiked: ", isLiked);
+    toggleIsFavored(isFavorite);
+    toggleIsLiked(isLiked);
+  }, [toggleIsFavored, toggleIsLiked, isFavorite, isLiked]);
+
   const [likeTriggered, toggleLikeIcon] = useState(false);
   const [favoriteTriggered, toggleFavoriteIcon] = useState(false);
   const user = useUserStore((state) => state.user);

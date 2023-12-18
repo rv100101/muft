@@ -15,6 +15,7 @@ const profileHeaderStore = create<ProfileHeaderState>((set) => ({
       profileHeaderValues: val,
     })),
   headerValues: {
+    age: null,
     member_uuid: null,
     gallery_uuid: null,
     gender: null,

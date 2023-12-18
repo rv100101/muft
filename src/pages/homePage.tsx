@@ -45,8 +45,8 @@ const HomePage = () => {
     false,
     false,
   ]);
-  const [startAgeSliderVal, setStartAgeSliderVal] = useState(23);
-  const [endAgeSliderVal, setEndAgeSliderVal] = useState(60);
+  const [startAgeSliderVal, setStartAgeSliderVal] = useState(18);
+  const [endAgeSliderVal, setEndAgeSliderVal] = useState(80);
   const [suggestedTriggered, setSuggestedTriggered] = useState(false);
   const debouncedAgeFilterVal = useDebounce(startAgeSliderVal, 300);
 
@@ -71,7 +71,7 @@ const HomePage = () => {
   const getMembers = membersQuery.getMembers(user!.member_id);
   const getMemberLikes = membersQuery.getMemberLikes(user!.member_id);
   const getMemberFavorites = membersQuery.getMemberFavorites(user!.member_id);
-  const { data: members, isLoading: retrievingMemberData, } = useQuery({
+  const { data: members, isLoading: retrievingMemberData } = useQuery({
     refetchIntervalInBackground: false,
     refetchInterval: false,
     refetchOnMount: false,
@@ -101,8 +101,6 @@ const HomePage = () => {
     queryFn: () => getMemberFavorites,
   });
 
-
-
   const toggleSuggestionTags = (index: number, suggestionValue: number) => {
     const newActiveTags = clickedTags.map((_, i) => i === index);
     if (suggestionValue === 100) {
@@ -127,8 +125,8 @@ const HomePage = () => {
   });
 
   const generateRandomNumbers = () => {
-    const min = 23;
-    const max = 50;
+    const min = 18;
+    const max = 80;
 
     // Create an array of possible values within the range
     const possibleValues = Array.from(
@@ -218,97 +216,103 @@ const HomePage = () => {
               <HomepageSearchInput />
               {/* filter */}
               <div className="border mt-5 py-5 mx-2  rounded-lg">
-                <p className="px-5 text-[#cfd8e4]">Suggested</p>
-                <div className="flex flex-row justify-between items-center p-5 space-x-5">
-                  <p
-                    onClick={() => {
-                      setSuggestedTriggered((prev) => !prev);
-                      setStartAgeSliderVal(randomNumbers[0]);
-                      toggleSuggestionTags(0, randomNumbers[0]);
-                    }}
-                    className={`${!clickedTags[0]
-                      ? "bg-white text-[#ff569a]"
-                      : "bg-[#ff569a] text-white"
-                      } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
-                  >
-                    {randomNumbers[0]}
-                  </p>
-                  <p
-                    onClick={() => {
-                      setSuggestedTriggered((prev) => !prev);
-                      setStartAgeSliderVal(randomNumbers[1]);
-                      toggleSuggestionTags(1, randomNumbers[1]);
-                    }}
-                    className={`${!clickedTags[1]
-                      ? "bg-white text-[#ff569a]"
-                      : "bg-[#ff569a] text-white"
-                      } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
-                  >
-                    {randomNumbers[1]}
-                  </p>
-                  <p
-                    onClick={() => {
-                      setSuggestedTriggered((prev) => !prev);
-                      setStartAgeSliderVal(randomNumbers[2]);
-                      toggleSuggestionTags(2, randomNumbers[2]);
-                    }}
-                    className={`${!clickedTags[2]
-                      ? "bg-white text-[#ff569a]"
-                      : "bg-[#ff569a] text-white"
-                      } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
-                  >
-                    {randomNumbers[2]}
-                  </p>
-                </div>
-                <div className="flex flex-row justify-between items-center p-5 space-x-5">
-                  <p
-                    onClick={() => {
-                      setSuggestedTriggered((prev) => !prev);
-                      setStartAgeSliderVal(randomNumbers[3]);
-                      toggleSuggestionTags(3, randomNumbers[3]);
-                    }}
-                    className={`${!clickedTags[3]
-                      ? "bg-white text-[#ff569a]"
-                      : "bg-[#ff569a] text-white"
-                      } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
-                  >
-                    {randomNumbers[3]}
-                  </p>
-                  <p
-                    onClick={() => {
-                      setSuggestedTriggered((prev) => !prev);
-                      setStartAgeSliderVal(randomNumbers[4]);
-                      toggleSuggestionTags(4, randomNumbers[4]);
-                    }}
-                    className={`${!clickedTags[4]
-                      ? "bg-white text-[#ff569a]"
-                      : "bg-[#ff569a] text-white"
-                      } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
-                  >
-                    {randomNumbers[4]}
-                  </p>
-                  <p
-                    onClick={() => {
-                      setSuggestedTriggered((prev) => !prev);
-                      setStartAgeSliderVal(randomNumbers[5]);
-                      toggleSuggestionTags(5, randomNumbers[5]);
-                    }}
-                    className={`${!clickedTags[5]
-                      ? "bg-white text-[#ff569a]"
-                      : "bg-[#ff569a] text-white"
-                      } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
-                  >
-                    {randomNumbers[5]}
-                  </p>
-                </div>
                 <div className="flex flex-row justify-between items-center">
                   <p className="px-5 text-[#cfd8e4]">Filter By</p>
-                  <p className="px-5 text-[#7e7e7e] text-xs underline hover:cursor-pointer">
+                  {/* <p className="px-5 text-[#7e7e7e] text-xs underline hover:cursor-pointer">
                     Clear
-                  </p>
+                  </p> */}
                 </div>
 
-                <div className="border border m-5 rounded-lg px-5">
+                <div className="flex flex-col border border m-5 rounded-lg px-5">
+                  <p className="px-5 text-[#cfd8e4] pt-5">Suggested</p>
+                  <div className="flex flex-row justify-between items-center p-4 space-x-5">
+                    <p
+                      onClick={() => {
+                        setSuggestedTriggered((prev) => !prev);
+                        setStartAgeSliderVal(randomNumbers[0]);
+                        toggleSuggestionTags(0, randomNumbers[0]);
+                      }}
+                      className={`${
+                        !clickedTags[0]
+                          ? "bg-white text-[#ff569a]"
+                          : "bg-[#ff569a] text-white"
+                      } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
+                    >
+                      {randomNumbers[0]}
+                    </p>
+                    <p
+                      onClick={() => {
+                        setSuggestedTriggered((prev) => !prev);
+                        setStartAgeSliderVal(randomNumbers[1]);
+                        toggleSuggestionTags(1, randomNumbers[1]);
+                      }}
+                      className={`${
+                        !clickedTags[1]
+                          ? "bg-white text-[#ff569a]"
+                          : "bg-[#ff569a] text-white"
+                      } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
+                    >
+                      {randomNumbers[1]}
+                    </p>
+                    <p
+                      onClick={() => {
+                        setSuggestedTriggered((prev) => !prev);
+                        setStartAgeSliderVal(randomNumbers[2]);
+                        toggleSuggestionTags(2, randomNumbers[2]);
+                      }}
+                      className={`${
+                        !clickedTags[2]
+                          ? "bg-white text-[#ff569a]"
+                          : "bg-[#ff569a] text-white"
+                      } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
+                    >
+                      {randomNumbers[2]}
+                    </p>
+                  </div>
+                  <div className="flex flex-row justify-between items-center p-4 space-x-5">
+                    <p
+                      onClick={() => {
+                        setSuggestedTriggered((prev) => !prev);
+                        setStartAgeSliderVal(randomNumbers[3]);
+                        toggleSuggestionTags(3, randomNumbers[3]);
+                      }}
+                      className={`${
+                        !clickedTags[3]
+                          ? "bg-white text-[#ff569a]"
+                          : "bg-[#ff569a] text-white"
+                      } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
+                    >
+                      {randomNumbers[3]}
+                    </p>
+                    <p
+                      onClick={() => {
+                        setSuggestedTriggered((prev) => !prev);
+                        setStartAgeSliderVal(randomNumbers[4]);
+                        toggleSuggestionTags(4, randomNumbers[4]);
+                      }}
+                      className={`${
+                        !clickedTags[4]
+                          ? "bg-white text-[#ff569a]"
+                          : "bg-[#ff569a] text-white"
+                      } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
+                    >
+                      {randomNumbers[4]}
+                    </p>
+                    <p
+                      onClick={() => {
+                        setSuggestedTriggered((prev) => !prev);
+                        setStartAgeSliderVal(randomNumbers[5]);
+                        toggleSuggestionTags(5, randomNumbers[5]);
+                      }}
+                      className={`${
+                        !clickedTags[5]
+                          ? "bg-white text-[#ff569a]"
+                          : "bg-[#ff569a] text-white"
+                      } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
+                    >
+                      {randomNumbers[5]}
+                    </p>
+                  </div>
                   <div className="flex flex-row justify-between items-center mt-5">
                     <p className="px-5 text-sm">Age</p>
                     {/* <p className="px-5 text-sm">{`${startAgeSliderVal}-${endAgeSliderVal}`}</p> */}
@@ -321,7 +325,7 @@ const HomePage = () => {
                       // defaultValue={[50]}
                       value={[filters!.min_age]}
                       // value={[startAgeSliderVal]}
-                      max={60}
+                      min={18}
                       step={1}
                       className="w-full mx-5"
                       onValueChange={handleStartSliderChange}
@@ -335,7 +339,7 @@ const HomePage = () => {
                       // dir="right-to-left"
                       value={[filters!.max_age]}
                       // value={[endAgeSliderVal]}
-                      max={100}
+                      max={80}
                       step={1}
                       className="w-full ml-10 pr-5"
                       onValueChange={handleEndSliderChange}
