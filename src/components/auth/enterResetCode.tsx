@@ -19,6 +19,7 @@ const EnterResetCode = () => {
     validationSchema: Yup.object({
       pin: Yup.string()
         .matches(/^[0-9]+$/, "Pin must only contain numbers")
+        .max(6, "Pin should not exceed 6 digits")
         .required("Pin is required"),
     }),
     onSubmit(values: { pin: string }) {
@@ -61,11 +62,10 @@ const EnterResetCode = () => {
               We have sent a pin to your email.
             </label>
             <div
-              className={`flex flex-row border items-center justify-center rounded-full py-1 px-5 ${
-                pinForm.touched.pin && pinForm.errors.pin
+              className={`flex flex-row border items-center justify-center rounded-full py-1 px-5 ${pinForm.touched.pin && pinForm.errors.pin
                   ? "border-rose-500 p-0"
                   : ""
-              }`}
+                }`}
             >
               <ShieldCheck color="#98A2B3" size={20} className="mt-1" />
               <input
@@ -74,17 +74,16 @@ const EnterResetCode = () => {
                 placeholder="Enter pin"
                 {...pinForm.getFieldProps("pin")}
                 name="pin"
-                // onChange={pinForm.handleChange}
-                // onBlur={pinForm.handleBlur}
+              // onChange={pinForm.handleChange}
+              // onBlur={pinForm.handleBlur}
               />
               <InfoIcon
                 color="#D92D20"
                 size={20}
-                className={`mt-1 ${
-                  pinForm.touched.pin && pinForm.errors.pin
+                className={`mt-1 ${pinForm.touched.pin && pinForm.errors.pin
                     ? "visible"
                     : "hidden"
-                }`}
+                  }`}
               />
             </div>
             {pinForm.errors.pin && (

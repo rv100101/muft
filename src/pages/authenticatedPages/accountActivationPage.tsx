@@ -6,6 +6,7 @@ import { Loader2, LogOutIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { Field, Form, Formik } from "formik";
+import '@/index.css'
 import {
   Dialog,
   DialogContent,
@@ -17,7 +18,7 @@ import {
 import { DialogClose } from "@radix-ui/react-dialog";
 import { useCountdown } from "usehooks-ts";
 const pinSchema = Yup.object().shape({
-  pin: Yup.string().required(),
+  pin: Yup.string().required().min(6, 'PIN should be 6 digits'),
 });
 
 const ActivateAccount = () => {
@@ -130,14 +131,13 @@ const ActivateAccount = () => {
             Please enter the PIN below:
           </p>
           <div
-            className={`flex items-center flex-row border rounded-full h-max py-1 px-5 ${
-              touched.pin && errors.pin ? "border-rose-500 p-0" : ""
-            }`}
+            className={`flex items-center flex-row border rounded-full h-max py-1 px-5 ${touched.pin && errors.pin ? "border-rose-500 p-0" : ""
+              }`}
           >
             <Field
               name="pin"
-              className="w-full decoration-none text-sm py-2  border-0 outline-0"
               type="number"
+              className="appearance-none w-full decoration-none text-sm py-2  border-0 outline-0"
               placeholder="Activation PIN"
             />
           </div>

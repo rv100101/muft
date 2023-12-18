@@ -46,7 +46,8 @@ const SignInForm = () => {
         .required("Email is required"),
       password: Yup.string()
         .required("Password is required")
-        .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z0-9\W_]{10,25}$/, "Password must be 10 digits, contains alphanumeric and special characters"),
+        .min(10, "Password must be at least 10 characters")
+        .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z0-9\W_]{10,25}$/, "Password must contain alphanumeric and special characters"),
     }),
     onSubmit: (values: FormDataType) => handleSignIn(values),
   });
