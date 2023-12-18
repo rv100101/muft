@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Loader2, UserIcon } from "lucide-react";
+import { Eye, EyeOff, Loader2, UserIcon } from "lucide-react";
 import { MailIcon } from "lucide-react";
 import { LockIcon } from "lucide-react";
 import { InfoIcon } from "lucide-react";
@@ -22,6 +22,7 @@ type FormDataType = {
 
 const SignUpPage = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [, navigate] = useLocation();
   const updateUser = useUserStore((state) => state.updateUser);
   const formik = useFormik({
@@ -33,17 +34,20 @@ const SignUpPage = () => {
     },
     validationSchema: Yup.object({
       first_name: Yup.string()
-        .matches(/^[^\s]+$/, "Field cannot start with whitespace")
+        .matches(/^[^\s\d][^\d]*$/, "Invalid name")
+        .max(12, "Name is too long")
         .required("First name is required"),
       last_name: Yup.string()
-        .matches(/^[^\s]+$/, "Field cannot start with whitespace")
+        .matches(/^[^\s\d][^\d]*$/, "Invalid name")
+        .max(12, "Name is too long")
         .required("Last name is required"),
       email: Yup.string()
+        .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Invalid email address")
         .email("Invalid email address")
         .required("Email is required"),
       password: Yup.string()
         .required("Password is required")
-        .matches(/^\S*$/, "Password cannot contain spaces"),
+        .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z0-9\W_]{10,25}$/, "Password must be 10 digits, contains alphanumeric and special characters"),
     }),
     onSubmit: (values: FormDataType) => signUp.mutate(values),
   });
@@ -123,11 +127,10 @@ const SignUpPage = () => {
               </label> */
               }
               <div
-                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${
-                  formik.touched.first_name && formik.errors.first_name
-                    ? "border-rose-500"
-                    : ""
-                }`}
+                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${formik.touched.first_name && formik.errors.first_name
+                  ? "border-rose-500"
+                  : ""
+                  }`}
               >
                 <UserIcon color="#98A2B3" size={20} className="mt-1" />
                 <input
@@ -142,11 +145,10 @@ const SignUpPage = () => {
                 <InfoIcon
                   color="#D92D20"
                   size={20}
-                  className={`mt-1 ${
-                    formik.touched.first_name && formik.errors.first_name
-                      ? "visible"
-                      : "hidden"
-                  }`}
+                  className={`mt-1 ${formik.touched.first_name && formik.errors.first_name
+                    ? "visible"
+                    : "hidden"
+                    }`}
                 />
               </div>
               {formik.touched.first_name && formik.errors.first_name
@@ -170,11 +172,10 @@ const SignUpPage = () => {
               }
 
               <div
-                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${
-                  formik.touched.last_name && formik.errors.last_name
-                    ? "border-rose-500"
-                    : ""
-                }`}
+                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${formik.touched.last_name && formik.errors.last_name
+                  ? "border-rose-500"
+                  : ""
+                  }`}
               >
                 <UserIcon color="#98A2B3" size={20} className="mt-1" />
                 <input
@@ -189,11 +190,10 @@ const SignUpPage = () => {
                 <InfoIcon
                   color="#D92D20"
                   size={20}
-                  className={`mt-1 ${
-                    formik.touched.last_name && formik.errors.last_name
-                      ? "visible"
-                      : "hidden"
-                  }`}
+                  className={`mt-1 ${formik.touched.last_name && formik.errors.last_name
+                    ? "visible"
+                    : "hidden"
+                    }`}
                 />
               </div>
               {formik.touched.last_name && formik.errors.last_name
@@ -215,11 +215,10 @@ const SignUpPage = () => {
               </label> */
               }
               <div
-                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${
-                  formik.touched.email && formik.errors.email
-                    ? "border-rose-500"
-                    : ""
-                }`}
+                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${formik.touched.email && formik.errors.email
+                  ? "border-rose-500"
+                  : ""
+                  }`}
               >
                 <MailIcon color="#98A2B3" size={20} className="mt-1" />
                 <input
@@ -234,11 +233,10 @@ const SignUpPage = () => {
                 <InfoIcon
                   color="#D92D20"
                   size={20}
-                  className={`mt-1 ${
-                    formik.touched.email && formik.errors.email
-                      ? "visible"
-                      : "hidden"
-                  }`}
+                  className={`mt-1 ${formik.touched.email && formik.errors.email
+                    ? "visible"
+                    : "hidden"
+                    }`}
                 />
               </div>
               {formik.touched.email && formik.errors.email
@@ -261,31 +259,27 @@ const SignUpPage = () => {
               </label> */
               }
               <div
-                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${
-                  formik.touched.password && formik.errors.password
-                    ? "border-rose-500"
-                    : ""
-                }`}
+                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${formik.touched.password && formik.errors.password
+                  ? "border-rose-500"
+                  : ""
+                  }`}
               >
                 <LockIcon color="#98A2B3" size={20} className="mt-1" />
                 <input
-                  type="password"
-                  className="border-0 rounded-full py-2 px-5 text-normal focus:outline-0 w-full"
+                  className="appearance-none border-0 rounded-full py-2 px-5 text-normal focus:outline-0 w-full"
                   placeholder="Password"
+                  type={showPassword ? 'text' : 'password'}
                   {...formik.getFieldProps("password")}
-                  name="password"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 />
-                <InfoIcon
-                  color="#D92D20"
-                  size={20}
-                  className={`mt-1 ${
-                    formik.touched.password && formik.errors.password
-                      ? "visible"
-                      : "hidden"
-                  }`}
-                />
+                <button
+                  className={`mt-1 ${formik.touched.password && formik.errors.password
+                    && "ml-2 text-[#D92D20]"
+                    }`}
+                  onClick={() => setShowPassword(prev => !prev)} type="button">
+                  {showPassword ? <EyeOff /> : <Eye />}
+                </button>
               </div>
               {formik.touched.password && formik.errors.password
                 ? (
@@ -313,53 +307,6 @@ const SignUpPage = () => {
               </Button>
             </div>
           </form>
-
-          {/* or */}
-          {
-            /* <div className="flex w-full item-center">
-            <div className="border-b border-black mt-3 h-[1px] w-full"></div>
-            <div className="mx-2 text-black font-bold">or</div>
-            <div className="border-b border-black mt-3 h-[1px] w-full"></div>
-          </div> */
-          }
-
-          {/* social icons */}
-          {
-            /* <div className="flex flex-row space-x-5">
-            <img
-              src={fbLogo}
-              alt="facebook-logo"
-              className="hover:cursor-pointer"
-            />
-            <img
-              src={googleLogo}
-              alt="google-logo"
-              className="hover:cursor-pointer"
-            />
-          </div> */
-
-            /* <div className="flex w-full item-center">
-            <div className="border-b border-black mt-3 h-[1px] w-full"></div>
-            <div className="mx-2 text-black font-bold">or</div>
-            <div className="border-b border-black mt-3 h-[1px] w-full"></div>
-          </div> */
-          }
-
-          {/* social icons */}
-          {
-            /* <div className="flex flex-row space-x-5">
-            <img
-              src={fbLogo}
-              alt="facebook-logo"
-              className="hover:cursor-pointer"
-            />
-            <img
-              src={googleLogo}
-              alt="google-logo"
-              className="hover:cursor-pointer"
-            />
-          </div> */
-          }
           <Link
             onClick={scrollToTop}
             href="/auth/signin"

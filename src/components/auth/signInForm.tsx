@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import ForgotPassword from "@/components/auth/forgotPassword";
 import { Link, useLocation } from "wouter";
 import { cn, scrollToTop } from "@/lib/utils";
-import { Loader2, MailIcon } from "lucide-react";
+import { Eye, EyeOff, Loader2, MailIcon } from "lucide-react";
 import { LockIcon } from "lucide-react";
 import { InfoIcon } from "lucide-react";
 import authQuery from "@/queries/auth";
@@ -22,6 +22,7 @@ type FormDataType = {
   password: string;
 };
 const SignInForm = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const { toast } = useToast();
   const [, navigate] = useLocation();
   const [isLoading, setIsLoading] = useState(false);
@@ -40,9 +41,12 @@ const SignInForm = () => {
     },
     validationSchema: Yup.object({
       email: Yup.string()
+        .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Invalid email address")
         .email("Invalid email address")
-        .required("Invalid credentials"),
-      password: Yup.string().required("Invalid credentials"),
+        .required("Email is required"),
+      password: Yup.string()
+        .required("Password is required")
+        .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z0-9\W_]{10,25}$/, "Password must be 10 digits, contains alphanumeric and special characters"),
     }),
     onSubmit: (values: FormDataType) => handleSignIn(values),
   });
@@ -95,7 +99,7 @@ const SignInForm = () => {
   };
 
   return (
-    <div className="flex h-max sm:w-max flex-col items-center lg:shadow-xl rounded-lg p-8 lg:border space-y-2">
+    <div className="flex h-max sm:w-96 flex-col items-center lg:shadow-xl rounded-lg p-8 lg:border space-y-2">
       {/* <div className="flex w-full justify-end">
         <img
           src={helpIcon}
@@ -119,16 +123,15 @@ const SignInForm = () => {
             Email
           </label> */}
           <div
-            className={`flex items-center flex-row border rounded-full h-max py-1 px-5 ${
-              formik.touched.email && formik.errors.email
-                ? "border-rose-500 p-0"
-                : ""
-            }`}
+            className={`flex items-center flex-row border rounded-full h-max py-1 px-5 ${formik.touched.email && formik.errors.email
+              ? "border-rose-500 p-0"
+              : ""
+              }`}
           >
             <MailIcon color="#98A2B3" size={20} className="mt-1" />
             <Input
               type="text"
-              className="autofill:bg-yellow-200 mx-2 text-xs h-8 focus-visible:ring-offset-0 focus-visible:ring-0 border-0 rounded-full py-1 px-5 text-normal w-full"
+              className="autofill:bg-yellow-200 mx-2 text-sm h-8 focus-visible:ring-offset-0 focus-visible:ring-0 border-0 rounded-full py-1 px-5 text-normal w-full"
               placeholder="Email Address"
               {...formik.getFieldProps("email")}
               onChange={formik.handleChange}
@@ -138,11 +141,10 @@ const SignInForm = () => {
             <InfoIcon
               color="#D92D20"
               size={20}
-              className={`mt-1 ${
-                formik.touched.email && formik.errors.email
-                  ? "visible"
-                  : "hidden"
-              }`}
+              className={`mt-1 ${formik.touched.email && formik.errors.email
+                ? "visible"
+                : "hidden"
+                }`}
             />
           </div>
           {formik.touched.email && formik.errors.email ? (
@@ -157,37 +159,37 @@ const SignInForm = () => {
             Password
           </label> */}
           <div
-            className={`flex h-max flex-row border items-center rounded-full py-1 px-5 ${
-              formik.touched.password && formik.errors.password
-                ? "border-rose-500"
-                : ""
-            }`}
+            className={`flex h-max flex-row border items-center rounded-full py-1 px-5 ${formik.touched.password && formik.errors.password
+              ? "border-rose-500"
+              : ""
+              }`}
           >
             <LockIcon color="#98A2B3" size={20} className="mt-1" />
-            <Input
-              type="password"
-              className="mx-2 text-xs h-8 focus-visible:ring-offset-0 focus-visible:ring-0  border-0 rounded-full py-1 px-5 text-normal focus-visble:outline-0 focus:ring-0 focus-visble:ring-none active:bg-transparent w-full"
+
+            <input
+              className="appearance-none border-0 rounded-full py-2 px-5 text-normal focus:outline-0 w-full"
               placeholder="Password"
+              type={showPassword ? 'text' : 'password'}
               {...formik.getFieldProps("password")}
-              name="password"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
             />
-            <InfoIcon
-              color="#D92D20"
-              size={20}
-              className={`mt-1 ${
-                formik.touched.password && formik.errors.password
-                  ? "visible"
-                  : "hidden"
-              }`}
-            />
+            <button
+              className={`mt-1 ${formik.touched.password && formik.errors.password
+                && "ml-2 text-[#D92D20]"
+                }`}
+              onClick={() => setShowPassword(prev => !prev)} type="button">
+              {showPassword ? <EyeOff /> : <Eye />}
+            </button>
           </div>
-          {formik.touched.password && formik.errors.password ? (
-            <div className="error text-red-500 text-xs ml-5 pt-2">
-              {formik.errors.password}
-            </div>
-          ) : null}
+          {formik.touched.password && formik.errors.password
+            ? (
+              <div className="error text-red-500 text-xs ml-5 text-sm pt-2">
+                {formik.errors.password}
+              </div>
+            )
+            : null}
+
         </div>
         <div>
           <Button
