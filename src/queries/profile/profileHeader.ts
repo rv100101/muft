@@ -4,6 +4,9 @@ import axiosQuery from "../axios";
 const getProfilePhoto = async (member: number) =>
   await axiosQuery.post("/GetProfilePhoto", { member });
 
+const getBirthday = async (member: number) =>
+  await axiosQuery.post("/GetBirthday", { member });
+
 const getNickname = async (member: number) =>
   await axiosQuery.post("/GetNickname", { member });
 
@@ -26,6 +29,7 @@ const getProfileHeader = async (member: number) => {
     gender: null,
     nickname: null,
     height: null,
+    age: null,
     maritalStatus: null,
     occupation_title: null,
     country_name: null,
@@ -40,6 +44,15 @@ const getProfileHeader = async (member: number) => {
         gender: profilePhoto.data.gender,
       };
     }
+
+    const birthday = await getBirthday(member);
+    if (profilePhoto.data !== "") {
+      profileHeader = {
+        ...profileHeader,
+        age: birthday.data[0].age,
+      };
+    }
+
     const nickName = await getNickname(member);
     if (nickName.data !== "") {
       profileHeader = {
