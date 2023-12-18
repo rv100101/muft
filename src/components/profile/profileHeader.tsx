@@ -139,7 +139,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
     return () => {
       setSelectedHistoryMemberId(null);
     };
-  }, []);
+  }, [setSelectedHistoryMemberId]);
 
   useEffectOnce(() => {
     if (
@@ -204,14 +204,8 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
       });
       return null;
     }
-  }, [
-    headerValues!.gallery_uuid,
-    headerValues!.gender,
-    location,
-    setSelectedConversation,
-    user,
-    userId,
-  ]);
+  }, [headerValues, location, setSelectedConversation, user, userId]);
+
   useEffect(() => {
     if (headerValues) {
       getConversationUuid();
@@ -297,9 +291,9 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
     return <ProfileHeaderSkeleton />;
   }
 
-  // if (location.startsWith("/members") && (isLoading || isRefetching)) {
-  //   return <ProfileHeaderSkeleton />;
-  // }
+  if (location.startsWith("/members") && (isLoading || isRefetching)) {
+    return <ProfileHeaderSkeleton />;
+  }
 
   // console.log("🎈: ", isFavored);
   // console.log("🎃: ", isLiked);

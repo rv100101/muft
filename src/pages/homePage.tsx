@@ -223,7 +223,7 @@ const HomePage = () => {
                   </p> */}
                 </div>
 
-                <div className="flex flex-col border border m-5 rounded-lg px-5">
+                <div className="flex flex-col border m-5 rounded-lg px-5">
                   <p className="px-5 text-[#cfd8e4] pt-5">Suggested</p>
                   <div className="flex flex-row justify-between items-center p-4 space-x-5">
                     <p
