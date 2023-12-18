@@ -19,7 +19,6 @@ const NotificationsList = () => {
   const renderList = () => {
     if (isSuccess) {
       let notifications = data;
-
       if (selectedFilter !== "All") {
         notifications = data.filter(
           (item: { category_description: string }) =>
@@ -70,10 +69,10 @@ const NotificationsList = () => {
     <div className="w-full h-full flex flex-col">
       <NotificationsListHeader />
       <div className="flex items-center justify-between w-full space-x-2 p-5 lg:block hidden">
-        <p className="font-semibold">NOTIFICATION</p>
+        {/* <p className="font-semibold">NOTIFICATION</p> */}
       </div>
       {/* <NotificationsListFiters /> */}
-      <div className="space-y-4 w-full h-full overflow-y-scroll bg-[#F7F8FA]">
+      <div className="space-y-4 w-full h-full overflow-y-auto bg-[#F7F8FA]">
         {isLoading && renderSkeletonLoading()}
         {data && data.length == 0 ? (
           <p className="p-8">No notifications</p>

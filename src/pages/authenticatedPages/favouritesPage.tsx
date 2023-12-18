@@ -1,5 +1,5 @@
 import AuthenticatedLayout from "./layout";
-import { MoreHorizontal, MoreVertical, SearchIcon } from "lucide-react";
+import { MoreHorizontal, SearchIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import likesQuery from "@/queries/likes";
 import { useQuery } from "@tanstack/react-query";
@@ -115,10 +115,7 @@ const FavouritesPage = () => {
         <FavoritesMobileNav />
         <div className="lg:pt-4">
           <div className="w-full h-full flex lg:items-center px-10 justify-between hidden lg:flex">
-            <h1 className="font-semibold text-lg">FAVORITES</h1>{" "}
-            {/* <Button variant={"ghost"}> */}
-            <MoreVertical />
-            {/* </Button> */}
+            <h1 className="font-semibold text-lg">FAVORITES</h1>
           </div>
           <div></div>
         </div>{" "}

@@ -288,7 +288,7 @@ const BasicInformationForm = () => {
             <div className="flex flex-col justify-start space-y-1">
               <p className="font-bold text-base text-primary">
                 {data?.birthInfo
-                  ? moment(data?.birthInfo).format("LL")
+                  ? moment(data?.birthInfo).format("DD MMM yyyy")
                   : "Add Birthday"}
               </p>
               <p className="text-[#727272] text-xs">Birthday</p>

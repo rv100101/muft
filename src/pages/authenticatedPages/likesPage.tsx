@@ -1,5 +1,5 @@
 import AuthenticatedLayout from "./layout";
-import { MoreHorizontal, MoreVertical, SearchIcon } from "lucide-react";
+import { MoreHorizontal, SearchIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import likesQuery from "@/queries/likes";
 import { useQuery } from "@tanstack/react-query";
@@ -95,9 +95,6 @@ const LikesPage = () => {
         <div className="lg:pt-4">
           <div className="w-full h-full flex items-center justify-between px-10 hidden lg:flex">
             <h1 className="font-semibold  text-lg">LIKES</h1>
-            {/* <Button variant={"ghost"}> */}
-            <MoreVertical />
-            {/* </Button> */}
           </div>
         </div>{" "}
         <div className="w-full flex h-max">
