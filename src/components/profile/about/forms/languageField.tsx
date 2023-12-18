@@ -78,6 +78,8 @@ export default function LanguageField() {
     setValue("language", selected);
   }, [selected, setValue]);
 
+  console.log(selected);
+
   useEffectOnce(() => {
     setSelected(watch("language"));
   });
