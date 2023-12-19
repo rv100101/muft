@@ -34,10 +34,7 @@ const HomepageSearchInput = () => {
   const debouncedSearchValue = useDebounce(searchValue, 300);
 
   const searchUsers = async () =>
-    await searchQuery.search(
-      debouncedSearchValue,
-      user?.gender == "F" ? 403 : 69
-    );
+    await searchQuery.search(debouncedSearchValue, user!.member_id);
 
   const { isLoading } = useQuery({
     queryFn: searchUsers,
@@ -52,7 +49,7 @@ const HomepageSearchInput = () => {
 
   return (
     <div className="lg:w-[330px] flex flex-col justify-center items-center">
-      <div className="hover:cursor-pointer w-full border border-2 p-2 space-x-2 rounded-xl flex items-center px-5 mx-2">
+      <div className="hover:cursor-pointer w-full border-2 p-2 space-x-2 rounded-xl flex items-center px-5 mx-2">
         <input
           value={searchValue}
           onChange={(e) => {
@@ -105,7 +102,7 @@ const HomepageSearchInput = () => {
             disabled
             className="bg-white border-b h-max w-full hover:bg-slate-100"
           >
-            <div className="flex text-black flex space-x-2 w-full items-center justify-center">
+            <div className="flex text-black space-x-2 w-full items-center justify-center">
               <Loader2 className="ml-2 animate-spin" />
             </div>
           </Button>
