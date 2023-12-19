@@ -14,6 +14,7 @@ export type Conversation = {
   created_date: string;
   gallery_uuid: null | string;
   gender: string;
+  is_read: boolean;
 };
 
 export type ConversationMessage = {

@@ -3,7 +3,7 @@ import Logo from "@/assets/settings/subscription/logo.svg";
 
 const SubscriptionContent = () => {
   return (
-    <div className="flex flex-col  w-full h-full justify-center text-[#727272] space-y-5 p-5 overflow-y-scroll ">
+    <div className="flex flex-col w-full h-screen justify-center text-[#727272] space-y-5 p-5">
       <p className="font-medium text-[#727272] text-center text-lg">
         My Subscription
       </p>

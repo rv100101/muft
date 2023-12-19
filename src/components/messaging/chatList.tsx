@@ -80,7 +80,7 @@ const ChatList = () => {
             variant={"ghost"}
             className={cn(
               "w-full h-max items-start text-left",
-              selectedHistoryMemberId === conversation.recipient_id &&
+              (selectedHistoryMemberId === conversation.recipient_id || !conversation.is_read) &&
               "bg-accent",
             )}
             onClick={() => {
