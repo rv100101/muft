@@ -135,7 +135,7 @@ const SignInForm = () => {
             <MailIcon color="#98A2B3" size={20} className="mt-1" />
             <Input
               type="text"
-              className="autofill:bg-yellow-200 mx-2 text-sm h-8 focus-visible:ring-offset-0 focus-visible:ring-0 border-0 rounded-full py-1 px-5 text-normal w-full"
+              className="autofill:bg-yellow-200 mx-2 text-sm h-8 focus-visible:ring-offset-0 focus-visible:ring-0 border-0 rounded-full py-1 px-3 text-normal w-full"
               placeholder="Email Address"
               {...formik.getFieldProps("email")}
               onChange={formik.handleChange}
@@ -144,7 +144,7 @@ const SignInForm = () => {
             />
             <InfoIcon
               color="#D92D20"
-              size={20}
+              size={30}
               className={`mt-1 ${
                 formik.touched.email && formik.errors.email
                   ? "visible"
@@ -172,8 +172,8 @@ const SignInForm = () => {
           >
             <LockIcon color="#98A2B3" size={20} className="mt-1" />
 
-            <input
-              className="appearance-none border-0 rounded-full py-2 px-5 text-normal focus:outline-0 w-full"
+            <Input
+              className="appearance-none focus-visible:ring-offset-0 focus-visible:ring-0 border-0 rounded-full py-2 px-5 text-normal focus:outline-0 w-full"
               placeholder="Password"
               type={showPassword ? "text" : "password"}
               {...formik.getFieldProps("password")}
