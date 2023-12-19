@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 // import { toast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
-import axiosQuery from "@/queries/axios";
 import profileQuery from "@/queries/profile/profileHeader";
 import { useUserStore } from "@/zustand/auth/user";
 import { useQuery } from "@tanstack/react-query";
@@ -41,6 +40,7 @@ const MyAccountContent = () => {
   });
 
   const handleSignIn = async (values: FormDataType) => {
+    console.log(values);
     console.log("this is triggered");
     try {
       setIsLoading(true);

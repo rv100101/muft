@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import AuthenticatedLayout from "./layout";
 import { useState } from "react";
 import DisplayContent from "@/components/settings/display/displayContent";
