@@ -225,7 +225,8 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
       };
       await profileContentQuery.saveInformation(finalFormData, user!.member_id);
       updateUser({ ...user, profile_completed: true } as User);
-      queryClient.invalidateQueries(["profileHeader", "profileContent"]);
+      queryClient.invalidateQueries(["profileHeader"]);
+      queryClient.invalidateQueries(["profileContent"]);
     } catch (error) {
       console.log(error);
     }
