@@ -14,7 +14,7 @@ const getMembers = async (memberId: number) => {
     const res = await axiosQuery.post(
       "https://muffinfunction.azurewebsites.net/api/HomePage",
       // { member: memberId }
-      { member: 500 }
+      { member: memberId }
     );
 
     const res2 = await axiosQuery.post(
