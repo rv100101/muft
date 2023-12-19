@@ -47,9 +47,9 @@ import { convertJsonToConvertedObject } from "@/lib/utils";
 import { useEffectOnce } from "usehooks-ts";
 const AboutAccordion = ({ userId }: { userId: number }) => {
   const [location] = useLocation();
-  const selectedCountry = useSelectedCountryStore(
-    (state) => state.selectedCountry
+  const { selectedCountry, setSelectedCountry } = useSelectedCountryStore(
   );
+  const { data: profileAboutContent } = profileAboutContentStore();
   // const user = useUserStore((state) => state.user);
   const {
     setIsLoading,
@@ -219,6 +219,7 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
     queryKey: ["countries"],
     onSuccess: (data: Country[]) => {
       setCountries(data);
+      setSelectedCountry(data.filter((c) => c.country_name == profileAboutContent!.country)[0].country_code)
     },
   });
 
@@ -332,6 +333,7 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
 
   useQuery({
     queryFn: () => profileContentQuery.editOptions.getStates(selectedCountry),
+    enabled: selectedCountry.length !== 0,
     queryKey: ["states", selectedCountry],
     onSuccess: (data: State[]) => {
       setStates(data);

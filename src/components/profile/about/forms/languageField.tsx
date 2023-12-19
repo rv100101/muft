@@ -14,8 +14,9 @@ import {
 } from "@/components/ui/form";
 import { useFormContext } from "react-hook-form";
 import { Languages } from "@/types/profile";
-import { useEffectOnce } from "usehooks-ts";
+import { useEffectOnce, useUpdateEffect } from "usehooks-ts";
 import deleteMultiselectValuesStore from "@/zustand/profile/about/deleteMultiselectValues";
+import removeExistingData from "@/lib/removeExistingData";
 
 export default function LanguageField() {
   const setLanguagesToDelete = deleteMultiselectValuesStore(
@@ -27,8 +28,14 @@ export default function LanguageField() {
   const [selected, setSelected] = React.useState<Languages[]>(
     watch("language")
   );
+  const [selectables, setSelectables] = React.useState<Languages[]>([])
   const [inputValue, setInputValue] = React.useState("");
   const { languages } = selectOptions();
+
+  useUpdateEffect(() => {
+    const selectables = removeExistingData(languages, selected, 'language_name');
+    setSelectables(selectables);
+  }, [selected]);
 
   const handleUnselect = React.useCallback(
     (
@@ -72,7 +79,6 @@ export default function LanguageField() {
     []
   );
 
-  const selectables = languages.filter((lang) => !selected.includes(lang));
 
   React.useEffect(() => {
     setValue("language", selected);

@@ -18,7 +18,8 @@ import {
 } from "@/components/ui/form";
 import { useFormContext } from "react-hook-form";
 import { Interest } from "@/types/profile";
-import { useEffectOnce } from "usehooks-ts";
+import { useEffectOnce, useUpdateEffect } from "usehooks-ts";
+import removeExistingData from "@/lib/removeExistingData";
 
 export default function InterestField() {
   const { control, watch, setValue } = useFormContext();
@@ -27,6 +28,13 @@ export default function InterestField() {
   const [selected, setSelected] = React.useState<Interest[]>(watch('interest'));
   const [inputValue, setInputValue] = React.useState("");
   const { interests } = selectOptions();
+
+  const [selectables, setSelectables] = React.useState<Interest[]>([])
+
+  useUpdateEffect(() => {
+    const selectables = removeExistingData(interests, selected, 'interest_name');
+    setSelectables(selectables);
+  }, [selected]);
 
   const handleUnselect = React.useCallback((framework: Interest) => {
     setSelected(prev => prev.filter(s => s.interest_name !== framework.interest_name));
@@ -50,8 +58,6 @@ export default function InterestField() {
       }
     }
   }, []);
-
-  const selectables = interests.filter(interest => !selected.includes(interest));
 
   React.useEffect(() => {
     setValue('interest', selected);
