@@ -18,7 +18,8 @@ import {
 } from "@/components/ui/form";
 import { useFormContext } from "react-hook-form";
 import { FavoriteFood } from "@/types/profile";
-import { useEffectOnce } from "usehooks-ts";
+import { useEffectOnce, useUpdateEffect } from "usehooks-ts";
+import removeExistingData from "@/lib/removeExistingData";
 
 export default function FavoriteFoodField() {
   const { control, watch, setValue } = useFormContext();
@@ -27,6 +28,13 @@ export default function FavoriteFoodField() {
   const [selected, setSelected] = React.useState<FavoriteFood[]>(watch('favoriteFood'));
   const [inputValue, setInputValue] = React.useState("");
   const { favoriteFoods } = selectOptions();
+
+  const [selectables, setSelectables] = React.useState<FavoriteFood[]>([])
+
+  useUpdateEffect(() => {
+    const selectables = removeExistingData(favoriteFoods, selected, 'favorite_food_name');
+    setSelectables(selectables);
+  }, [selected]);
 
   const handleUnselect = React.useCallback((framework: FavoriteFood) => {
     setSelected(prev => prev.filter(s => s.favorite_food_name !== framework.favorite_food_name));
@@ -50,8 +58,6 @@ export default function FavoriteFoodField() {
       }
     }
   }, []);
-
-  const selectables = favoriteFoods.filter(favoriteFood => !selected.includes(favoriteFood));
 
   React.useEffect(() => {
     setValue('favoriteFood', selected);

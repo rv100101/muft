@@ -18,7 +18,8 @@ import {
 } from "@/components/ui/form";
 import { useFormContext } from "react-hook-form";
 import { Pets } from "@/types/profile";
-import { useEffectOnce } from "usehooks-ts";
+import { useEffectOnce, useUpdateEffect } from "usehooks-ts";
+import removeExistingData from "@/lib/removeExistingData";
 
 export default function PetsField() {
   const { control, watch, setValue } = useFormContext();
@@ -27,6 +28,13 @@ export default function PetsField() {
   const [selected, setSelected] = React.useState<Pets[]>(watch('pets'));
   const [inputValue, setInputValue] = React.useState("");
   const { pets } = selectOptions();
+
+  const [selectables, setSelectables] = React.useState<Pets[]>([])
+
+  useUpdateEffect(() => {
+    const selectables = removeExistingData(pets, selected, 'pet_name');
+    setSelectables(selectables);
+  }, [selected]);
 
   const handleUnselect = React.useCallback((framework: Pets) => {
     setSelected(prev => prev.filter(s => s.pet_name !== framework.pet_name));
@@ -50,8 +58,6 @@ export default function PetsField() {
       }
     }
   }, []);
-
-  const selectables = pets.filter(pet => !selected.includes(pet));
 
   React.useEffect(() => {
     setValue('pets', selected);

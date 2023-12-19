@@ -17,6 +17,8 @@ import { Dialog } from "@radix-ui/react-dialog";
 import { DialogContent } from "@/components/ui/dialog";
 import ActivateAccount from "./accountActivationPage";
 import deleteMultiselectValuesStore from "@/zustand/profile/about/deleteMultiselectValues";
+import removeDuplicates from "@/lib/removeDulpicates";
+import removeExistingData from "@/lib/removeExistingData";
 
 const ProfilePageBody = ({ userId }: { userId: string }) => {
   const {
@@ -45,7 +47,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
         birthInfo: data.birthInfo,
         ethnicity: data.ethnicity,
         maritalStatus: data.maritalStatus,
-        language: data.language,
+        language: removeDuplicates(data.language, 'language_name'),
         education: data.education,
         employmentStatus: data.employmentStatus,
         occupationTitle: data.occupationTitle,
@@ -53,7 +55,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
         height: data.height,
         weight: data.weight,
         bodyType: data.bodyType,
-        favoriteFood: data.favoriteFood,
+        favoriteFood: removeDuplicates(data.favoriteFood, 'favorite_food_name'),
         country: data.country,
         region: data.region,
         nickname: data.nickname,
@@ -65,12 +67,12 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
         wantChildren: data.wantChildren,
         workout: data.workout,
         disability: data.disability,
-        pets: data.pets,
+        pets: removeDuplicates(data.pets, 'pet_name'),
         drinking: data.drinking,
         smoking: data.smoking,
         livingStatus: data.livingStatus,
         car: data.car,
-        interest: data.interest,
+        interest: removeDuplicates(data.interest, 'interest_name'),
       });
     }
   }, [data, headerValues, methods]);
@@ -198,7 +200,10 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
       const employmentStatus = getEmploymentStatus(formData.employmentStatus);
       finalFormData = {
         ...finalFormData,
-        // language: data?.language.filter(),
+        language: removeExistingData(formData.language, data!.language, 'language_name'),
+        favoriteFood: removeExistingData(formData.favoriteFood, data!.favoriteFood, 'favorite_food_name'),
+        pets: removeExistingData(formData.pets, data!.pets, 'pet_name'),
+        interest: removeExistingData(formData.interest, data!.interest, 'interest_name'),
         ethnicity: ethnicity?.ethnicity_id,
         nationality: nationality?.country_code,
         maritalStatus: maritalStatus?.marital_status_id,
@@ -227,6 +232,11 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
       updateUser({ ...user, profile_completed: true } as User);
       queryClient.invalidateQueries(["profileHeader"]);
       queryClient.invalidateQueries(["profileContent"]);
+      queryClient.invalidateQueries(["home-members"]);
+      toast({
+        variant: "success",
+        title: "Profile saved!",
+      });
     } catch (error) {
       console.log(error);
     }

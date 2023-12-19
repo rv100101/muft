@@ -317,10 +317,10 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                           selectedFile
                             ? selectedFile
                             : getImagePath(
-                                headerValues!.gallery_uuid,
-                                headerValues!.gender,
-                                headerValues!.member_uuid?.toString()
-                              )
+                              headerValues!.gallery_uuid,
+                              headerValues!.gender,
+                              headerValues!.member_uuid?.toString()
+                            )
                         }
                         alt="no image selected"
                       />
@@ -332,10 +332,10 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                           selectedFile
                             ? selectedFile
                             : getImagePath(
-                                headerValues!.gallery_uuid,
-                                headerValues!.gender,
-                                headerValues!.member_uuid?.toString()
-                              )
+                              headerValues!.gallery_uuid,
+                              headerValues!.gender,
+                              headerValues!.member_uuid?.toString()
+                            )
                         }
                         alt="no image selected"
                       />
@@ -362,10 +362,10 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                         selectedFile
                           ? selectedFile
                           : getImagePath(
-                              headerValues!.gallery_uuid,
-                              headerValues!.gender,
-                              headerValues!.member_uuid?.toString()
-                            )
+                            headerValues!.gallery_uuid,
+                            headerValues!.gender,
+                            headerValues!.member_uuid?.toString()
+                          )
                       }
                       alt="no image selected"
                     />
@@ -403,9 +403,8 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
             <div className="w-full">
               {!isEditing && (
                 <div
-                  className={`flex lg:flex-row flex-col lg:space-x-5 space-x-0 ${
-                    !user!.is_active ? "pt-5 pl-3" : ""
-                  }`}
+                  className={`flex lg:flex-row flex-col lg:space-x-5 space-x-0 ${!user!.is_active ? "pt-5 pl-3" : ""
+                    }`}
                 >
                   <div className="flex lg:flex-col lg:justify-start flex-row space-x-4 lg:space-x-0">
                     <div className="flex flex-row space-x-1">
@@ -463,8 +462,8 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                                 isLiked && !likeTriggered
                                   ? "#FF599B"
                                   : !isLiked && likeTriggered
-                                  ? "#FF599B"
-                                  : "white"
+                                    ? "#FF599B"
+                                    : "white"
                               }
                               className="ml-2 "
                             />
@@ -491,8 +490,8 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                                 isFavored && !favoriteTriggered
                                   ? "#FF599B"
                                   : !isFavored && favoriteTriggered
-                                  ? "#FF599B"
-                                  : "white"
+                                    ? "#FF599B"
+                                    : "white"
                               }
                             />
                           </span>
@@ -513,8 +512,8 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                                       isFavored && !favoriteTriggered
                                         ? "#FF599B"
                                         : !isFavored && favoriteTriggered
-                                        ? "#FF599B"
-                                        : "white"
+                                          ? "#FF599B"
+                                          : "white"
                                     }
                                   />
                                 </span>
@@ -628,18 +627,18 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                     <Button
                       onClick={
                         !formState.isDirty
-                          ? () => {}
+                          ? () => { }
                           : () => {
-                              // if (isEditing && !formState.isValid) {
-                              //   toast({
-                              //     variant: "destructive",
-                              //     title: "Cannot save your profile",
-                              //     description:
-                              //       "Please make sure all the required fields are satisfied.",
-                              //     duration: 4000,
-                              //   });
-                              // }
-                            }
+                            // if (isEditing && !formState.isValid) {
+                            //   toast({
+                            //     variant: "destructive",
+                            //     title: "Cannot save your profile",
+                            //     description:
+                            //       "Please make sure all the required fields are satisfied.",
+                            //     duration: 4000,
+                            //   });
+                            // }
+                          }
                       }
                       disabled={isSaving}
                       type={"submit"}
@@ -651,7 +650,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                       Save
                       {isSaving && (
                         <span>
-                          <Loader2 className="ml-2 h-6 w-6 animate-spin" />
+                          <Loader2 className="ml-2 h-4 w-4 animate-spin" />
                         </span>
                       )}
                     </Button>
