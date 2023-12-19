@@ -4,9 +4,9 @@ import { Switch } from "@/components/ui/switch";
 
 const PushNotifcationContent = () => {
   return (
-    <div className="flex flex-col border w-2/5 justify-center text-[#727272] space-y-2 p-5">
+    <div className="flex flex-col  w-full justify-center text-[#727272] space-y-2 p-5">
       <p className="font-semibold">Push Notifications</p>
-      <p className="font-medium text-md">Push Notifications</p>
+      {/* <p className="font-medium text-md">Push Notifications</p> */}
       <div className="flex flex-row w-full justify-between">
         <p className="font-normal text-sm">Pause all</p>
         <Switch id="airplane-mode" />

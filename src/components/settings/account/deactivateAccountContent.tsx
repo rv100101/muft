@@ -4,7 +4,6 @@ import { useUserStore } from "@/zustand/auth/user";
 
 const DeactivateAccountContent = () => {
   const { user } = useUserStore();
-  console.log("TCL: DeactivateAccountContent -> user", user);
 
   const deactivateAccount = async () => {
     const res = await axiosQuery.post("/DeactivateAccount", {
@@ -13,11 +12,11 @@ const DeactivateAccountContent = () => {
     console.log("TCL: deactivateAccount -> res", res);
   };
   return (
-    <div className="flex flex-col border w-2/5 justify-center text-[#727272] space-y-2 p-5">
+    <div className="flex flex-col  w-full justify-center text-[#727272] space-y-2 p-5">
       <p className="font-semibold pb-1">Deactivate Account</p>
-      <p className="font-medium">Deactivate</p>
+      {/* <p className="font-medium">Deactivate</p> */}
       <div className="flex flex-row w-full justify-between">
-        <p>Deactivate my Account</p>
+        <p>Deactivate</p>
         <Switch id="airplane-mode" onClick={() => deactivateAccount()} />
         {/* <Label htmlFor="airplane-mode">Airplane Mode</Label> */}
       </div>

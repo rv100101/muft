@@ -2,7 +2,7 @@ import { Switch } from "@/components/ui/switch";
 
 const DisplayContent = () => {
   return (
-    <div className="flex flex-col border w-2/5 justify-center text-[#727272] space-y-2 p-5">
+    <div className="flex flex-col  w-full h-full justify-center text-[#727272] space-y-2 p-5">
       <p className="font-semibold">Display Settings</p>
       <p className="font-medium">Theme</p>
       <div className="flex flex-row w-full justify-between">
