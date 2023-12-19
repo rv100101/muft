@@ -167,16 +167,16 @@ const ChatInput = () => {
     }
   };
 
+  const { selectedMemberName } = useLatestConversationStore()
   return (
     <div className="flex w-full items-end rounded-lg h-max bg-[#F7F8FA]">
       {
-        user?.temporarily_deactivated ?
-          <p className="w-full text-red-700 m-2">
+        selectedMemberName.length > 1 && user?.temporarily_deactivated ?
+          <p className="w-full flex justify-center text-red-700 m-8">
             You must Reactivate your account
             To continue chatting with
-            {" "}
-            <span className="text-primary">
-              Janeth
+            <span className="ml-1 text-primary">
+              {selectedMemberName}.
             </span>
           </p>
           :

@@ -16,18 +16,26 @@ interface ConversationHistory {
     gender: string,
     recipient_uuid: string | null,
     username: string,
-    conversation_uuid: string,
+    conversation_uuid: string
   ) => void;
   selectedHistoryMemberId: number | null;
   setSelectedHistoryMemberId: (val: number | null) => void;
-  resetToNull: ()=> void
+  resetToNull: () => void;
+  selectedMemberName: string;
+  setSelectedHistoryMemberName: (val: string) => void;
 }
 
 const useConversationHistoryStore = create<ConversationHistory>((set) => ({
   conversation: null,
-  resetToNull: ()=> set(()=> ({
-    conversation: null
-  })),
+  resetToNull: () =>
+    set(() => ({
+      conversation: null,
+    })),
+  setSelectedHistoryMemberName: (val) =>
+    set(() => ({
+      selectedMemberName: val,
+    })),
+  selectedMemberName: "",
   setConversation: (
     memberId,
     conversationId,
@@ -35,7 +43,7 @@ const useConversationHistoryStore = create<ConversationHistory>((set) => ({
     gender,
     recipient_uuid,
     username,
-    conversation_uuid,
+    conversation_uuid
   ) =>
     set(() => ({
       conversation: {

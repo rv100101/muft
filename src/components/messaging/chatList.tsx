@@ -14,9 +14,7 @@ import { useUserStore } from "@/zustand/auth/user";
 import { cn } from "@/lib/utils";
 
 const ChatList = () => {
-  const selectedHistoryMemberId = useLatestConversationStore(
-    (state) => state.selectedHistoryMemberId,
-  );
+  const { setSelectedHistoryMemberName, setSelectedHistoryMemberId, selectedHistoryMemberId } = useLatestConversationStore()
   const matches = useMediaQuery("(min-width: 640px)");
   const setConversation = useLatestConversationStore(
     (state) => state.setConversation,
@@ -24,9 +22,6 @@ const ChatList = () => {
   const user = useUserStore((state) => state.user);
   const selectedConversation = useLatestConversationStore(
     (state) => state.conversation,
-  );
-  const setSelectedHistoryMemberId = useLatestConversationStore(
-    (state) => state.setSelectedHistoryMemberId,
   );
   const setSenderUserInfo = useSenderInfo((state) => state.setInfo);
   const { isLoading, isSuccess, data } = useQuery({
@@ -43,6 +38,7 @@ const ChatList = () => {
   useEffect(() => {
     return () => {
       setSelectedHistoryMemberId(null);
+      setSelectedHistoryMemberName('');
     }
   }, [])
 
@@ -101,6 +97,7 @@ const ChatList = () => {
               setSelectedHistoryMemberId(
                 conversation.recipient_id,
               );
+              setSelectedHistoryMemberName(conversation.recipient_nickname);
             }}
           >
             <img
