@@ -53,8 +53,8 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
   const [reportReason, setReportReason] = useState("");
   const [reportProcessing, setReportProcessing] = useState(false);
 
-  const isLiked = useHomepageViewStore((state) => state.isLiked);
-  const isFavored = useHomepageViewStore((state) => state.isFavored);
+  // const isLiked = useHomepageViewStore((state) => state.isLiked);
+  // const isFavored = useHomepageViewStore((state) => state.isFavored);
   const toggleIsFavored = useHomepageViewStore(
     (state) => state.toggleIsFavored
   );
@@ -283,6 +283,27 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
     }
   };
 
+  const handleBlockMember = async (blocked: number) => {
+    try {
+      const res = await axiosQuery.post("/Block", {
+        member: user!.member_id,
+        blocked: blocked,
+      });
+
+      // setReportProcessing(false);
+
+      if (res.data) {
+        toast({
+          title: "User has been Blocked",
+          description: "Changes might take awhile to take effect.",
+          variant: "success",
+        });
+      }
+    } catch (error) {
+      console.log("error: ", error);
+    }
+  };
+
   if (
     location.startsWith("/profile") &&
     profileHeaderValues == null &&
@@ -295,12 +316,6 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
     return <ProfileHeaderSkeleton />;
   }
 
-  // console.log("🎈: ", isFavored);
-  // console.log("🎃: ", isLiked);
-  // console.log("---------------");
-  // console.log("🧨: ", favoriteTriggered);
-  // console.log("🎑: ", likeTriggered);
-  console.log("profile header vals: ", headerValues);
   return (
     <div className="items-start p-5 border-b w-full">
       <div className="flex justify-start items-start space-x-2">
@@ -317,10 +332,10 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                           selectedFile
                             ? selectedFile
                             : getImagePath(
-                              headerValues!.gallery_uuid,
-                              headerValues!.gender,
-                              headerValues!.member_uuid?.toString()
-                            )
+                                headerValues!.gallery_uuid,
+                                headerValues!.gender,
+                                headerValues!.member_uuid?.toString()
+                              )
                         }
                         alt="no image selected"
                       />
@@ -332,10 +347,10 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                           selectedFile
                             ? selectedFile
                             : getImagePath(
-                              headerValues!.gallery_uuid,
-                              headerValues!.gender,
-                              headerValues!.member_uuid?.toString()
-                            )
+                                headerValues!.gallery_uuid,
+                                headerValues!.gender,
+                                headerValues!.member_uuid?.toString()
+                              )
                         }
                         alt="no image selected"
                       />
@@ -362,10 +377,10 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                         selectedFile
                           ? selectedFile
                           : getImagePath(
-                            headerValues!.gallery_uuid,
-                            headerValues!.gender,
-                            headerValues!.member_uuid?.toString()
-                          )
+                              headerValues!.gallery_uuid,
+                              headerValues!.gender,
+                              headerValues!.member_uuid?.toString()
+                            )
                       }
                       alt="no image selected"
                     />
@@ -403,8 +418,9 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
             <div className="w-full">
               {!isEditing && (
                 <div
-                  className={`flex lg:flex-row flex-col lg:space-x-5 space-x-0 ${!user!.is_active ? "pt-5 pl-3" : ""
-                    }`}
+                  className={`flex lg:flex-row flex-col lg:space-x-5 space-x-0 ${
+                    !user!.is_active ? "pt-5 pl-3" : ""
+                  }`}
                 >
                   <div className="flex lg:flex-col lg:justify-start flex-row space-x-4 lg:space-x-0">
                     <div className="flex flex-row space-x-1">
@@ -458,13 +474,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                           <span>
                             <Heart
                               color="#FF599B"
-                              fill={
-                                isLiked && !likeTriggered
-                                  ? "#FF599B"
-                                  : !isLiked && likeTriggered
-                                    ? "#FF599B"
-                                    : "white"
-                              }
+                              fill={likeTriggered ? "#FF599B" : "white"}
                               className="ml-2 "
                             />
                           </span>
@@ -486,13 +496,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                             <Star
                               color="#FF599B"
                               className="ml-2"
-                              fill={
-                                isFavored && !favoriteTriggered
-                                  ? "#FF599B"
-                                  : !isFavored && favoriteTriggered
-                                    ? "#FF599B"
-                                    : "white"
-                              }
+                              fill={favoriteTriggered ? "#FF599B" : "white"}
                             />
                           </span>
                         </Button>
@@ -509,11 +513,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                                   <MoreHorizontal
                                     color="#FF599B"
                                     fill={
-                                      isFavored && !favoriteTriggered
-                                        ? "#FF599B"
-                                        : !isFavored && favoriteTriggered
-                                          ? "#FF599B"
-                                          : "white"
+                                      favoriteTriggered ? "#FF599B" : "white"
                                     }
                                   />
                                 </span>
@@ -521,7 +521,13 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                             </DropdownMenuTrigger>
                             <DropdownMenuContent className="w-24">
                               <DropdownMenuGroup>
-                                <DropdownMenuItem>Block</DropdownMenuItem>
+                                <DropdownMenuItem
+                                  onClick={() =>
+                                    handleBlockMember(parseInt(userId))
+                                  }
+                                >
+                                  Block
+                                </DropdownMenuItem>
                                 <DialogTrigger asChild>
                                   <DropdownMenuItem>
                                     Report Abuse
@@ -627,18 +633,18 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                     <Button
                       onClick={
                         !formState.isDirty
-                          ? () => { }
+                          ? () => {}
                           : () => {
-                            // if (isEditing && !formState.isValid) {
-                            //   toast({
-                            //     variant: "destructive",
-                            //     title: "Cannot save your profile",
-                            //     description:
-                            //       "Please make sure all the required fields are satisfied.",
-                            //     duration: 4000,
-                            //   });
-                            // }
-                          }
+                              // if (isEditing && !formState.isValid) {
+                              //   toast({
+                              //     variant: "destructive",
+                              //     title: "Cannot save your profile",
+                              //     description:
+                              //       "Please make sure all the required fields are satisfied.",
+                              //     duration: 4000,
+                              //   });
+                              // }
+                            }
                       }
                       disabled={isSaving}
                       type={"submit"}

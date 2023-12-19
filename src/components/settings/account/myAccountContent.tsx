@@ -1,10 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-// import { toast } from "@/components/ui/use-toast";
+import { toast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
-import profileQuery from "@/queries/profile/profileHeader";
+import axiosQuery from "@/queries/axios";
+// import profileQuery from "@/queries/profile/profileHeader";
 import { useUserStore } from "@/zustand/auth/user";
-import { useQuery } from "@tanstack/react-query";
+// import { useQuery } from "@tanstack/react-query";
 import { useFormik } from "formik";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
@@ -17,13 +18,17 @@ type FormDataType = {
 
 const MyAccountContent = () => {
   const { user } = useUserStore();
+  console.log(
+    "🚀 ~ file: myAccountContent.tsx:21 ~ MyAccountContent ~ user:",
+    user
+  );
   const [isLoading, setIsLoading] = useState(false);
-  const getMembers = profileQuery.getProfileHeader(user!.member_id);
+  // const getMembers = profileQuery.getProfileHeader(user!.member_id);
 
-  const { data: memberInfo, isLoading: retrievingMemberData } = useQuery({
-    queryKey: ["my-account"],
-    queryFn: () => getMembers,
-  });
+  // const { data: memberInfo, isLoading: retrievingMemberData } = useQuery({
+  //   queryKey: ["my-account"],
+  //   queryFn: () => getMembers,
+  // });
 
   const formik = useFormik({
     initialValues: {
@@ -40,21 +45,32 @@ const MyAccountContent = () => {
   });
 
   const handleSignIn = async (values: FormDataType) => {
-    console.log(values);
-    console.log("this is triggered");
     try {
       setIsLoading(true);
-      // const signInData = await authQuery.signIn(values.email, values.password);
+      const res = await axiosQuery.post("/SaveNickname", {
+        nickname: values.username,
+        member: user!.member_id,
+      });
+      const res2 = await axiosQuery.post("/ChangePassword", {
+        password: values.password,
+        email: user!.email_address,
+      });
+      if (res.data && res2) {
+        toast({
+          title: "User info has been updated",
+          description: "Changes might take awhile to take effect.",
+          variant: "success",
+        });
+        setIsLoading(false);
+      }
     } catch (err: unknown) {
-      // throw new Error(err);
       console.log("err", err);
     }
   };
 
-  if (retrievingMemberData) {
-    return <>Loading...</>;
-  }
-  console.log("memberInfo: ", memberInfo);
+  // if (retrievingMemberData) {
+  //   return <>Loading...</>;
+  // }
   return (
     <div className="flex flex-col  w-full h-full justify-center text-[#727272] space-y-2 p-5">
       <p className="font-semibold">Edit Profile</p>
@@ -65,7 +81,7 @@ const MyAccountContent = () => {
       >
         <div className="flex flex-col w-full justify-between space-y-2 pt-5">
           <label htmlFor="" className="font-medium text-sm">
-            Username
+            Change Username
           </label>
           <Input
             type="text"
