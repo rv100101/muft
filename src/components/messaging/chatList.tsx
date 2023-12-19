@@ -115,7 +115,7 @@ const ChatList = () => {
             <div className="w-full flex flex-col justify-start">
               <div className="flex justify-between items-center w-full">
                 <p className="font-semibold">
-                  {conversation.recipient_nickname}
+                  {conversation.listed_nickname}
                 </p>
                 <p className="text-xs">
                   {moment(`${conversation.created_date}Z`).fromNow()}

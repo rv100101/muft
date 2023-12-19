@@ -332,10 +332,10 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                           selectedFile
                             ? selectedFile
                             : getImagePath(
-                                headerValues!.gallery_uuid,
-                                headerValues!.gender,
-                                headerValues!.member_uuid?.toString()
-                              )
+                              headerValues!.gallery_uuid,
+                              headerValues!.gender,
+                              headerValues!.member_uuid?.toString()
+                            )
                         }
                         alt="no image selected"
                       />
@@ -347,10 +347,10 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                           selectedFile
                             ? selectedFile
                             : getImagePath(
-                                headerValues!.gallery_uuid,
-                                headerValues!.gender,
-                                headerValues!.member_uuid?.toString()
-                              )
+                              headerValues!.gallery_uuid,
+                              headerValues!.gender,
+                              headerValues!.member_uuid?.toString()
+                            )
                         }
                         alt="no image selected"
                       />
@@ -377,10 +377,10 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                         selectedFile
                           ? selectedFile
                           : getImagePath(
-                              headerValues!.gallery_uuid,
-                              headerValues!.gender,
-                              headerValues!.member_uuid?.toString()
-                            )
+                            headerValues!.gallery_uuid,
+                            headerValues!.gender,
+                            headerValues!.member_uuid?.toString()
+                          )
                       }
                       alt="no image selected"
                     />
@@ -418,9 +418,8 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
             <div className="w-full">
               {!isEditing && (
                 <div
-                  className={`flex lg:flex-row flex-col lg:space-x-5 space-x-0 ${
-                    !user!.is_active ? "pt-5 pl-3" : ""
-                  }`}
+                  className={`flex lg:flex-row flex-col lg:space-x-5 space-x-0 ${!user!.is_active ? "pt-5 pl-3" : ""
+                    }`}
                 >
                   <div className="flex lg:flex-col lg:justify-start flex-row space-x-4 lg:space-x-0">
                     <div className="flex flex-row space-x-1">
@@ -445,10 +444,22 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                     <div className="flex w-full lg:flex-row flex-col lg:justify-between lg:items-start lg:space-y-0 space-y-4 lg:pt-0 pt-5 lg:px-2">
                       <Button
                         disabled={!selectedConversation}
+                        onClick={
+                          () => {
+                            if (user?.temporarily_deactivated) {
+                              toast({
+                                title: "You must Reactivate your account",
+                                description: `To continue chatting with ${headerValues?.nickname}`,
+                                variant: "destructive"
+                              })
+
+                            }
+                          }
+                        }
                         type="button"
                         className="text-xs border-primary hover:bg-primary px-2 py-1 lg:w-24 w-3/4"
                       >
-                        <Link href="/messages">
+                        <Link href={!user?.temporarily_deactivated ? "/messages" : ""}>
                           <p className="flex">
                             <p>Chat</p>
                             <span>
@@ -633,18 +644,18 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                     <Button
                       onClick={
                         !formState.isDirty
-                          ? () => {}
+                          ? () => { }
                           : () => {
-                              // if (isEditing && !formState.isValid) {
-                              //   toast({
-                              //     variant: "destructive",
-                              //     title: "Cannot save your profile",
-                              //     description:
-                              //       "Please make sure all the required fields are satisfied.",
-                              //     duration: 4000,
-                              //   });
-                              // }
-                            }
+                            // if (isEditing && !formState.isValid) {
+                            //   toast({
+                            //     variant: "destructive",
+                            //     title: "Cannot save your profile",
+                            //     description:
+                            //       "Please make sure all the required fields are satisfied.",
+                            //     duration: 4000,
+                            //   });
+                            // }
+                          }
                       }
                       disabled={isSaving}
                       type={"submit"}
