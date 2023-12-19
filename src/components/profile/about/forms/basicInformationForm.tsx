@@ -36,12 +36,41 @@ import moment from "moment-with-locales-es6";
 import { useUserStore } from "@/zustand/auth/user";
 import { cn } from "@/lib/utils";
 import LanguageField from "./languageField";
+import { useEffectOnce } from "usehooks-ts";
+import { useState } from "react";
 const BasicInformationForm = () => {
+  const [minDate, setMinDate] = useState('');
+  const [maxDate, setMaxDate] = useState('');
+
+  useEffectOnce(() => {
+    const currentDate = new Date();
+    const minYear = currentDate.getFullYear() - 80;
+    const maxYear = currentDate.getFullYear() - 18;
+
+    // Format the minimum and maximum dates as "YYYY-MM-DD"
+    const formattedMinDate = `${minYear}-${('0' + (currentDate.getMonth() + 1)).slice(-2)}-${('0' + currentDate.getDate()).slice(-2)}`;
+    const formattedMaxDate = `${maxYear}-${('0' + (currentDate.getMonth() + 1)).slice(-2)}-${('0' + currentDate.getDate()).slice(-2)}`;
+
+    setMinDate(formattedMinDate);
+    setMaxDate(formattedMaxDate);
+  });
+
+  // const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   const selectedDate = event.target.value;
+
+  //   // Validate the selected date against the min and max dates
+  //   if (selectedDate < minDate || selectedDate > maxDate) {
+  //     // Reset the input value if the date is outside the allowed range
+  //     event.target.value = '';
+  //   }
+  // };
+
   const { control } = useFormContext();
   const { nationalities, ethnicities, maritalStatus, religion } =
     selectOptions();
   const { data, editMode, isLoading, profileData } = profileAboutContentStore();
   const user = useUserStore((state) => state.user);
+
 
   if (isLoading && profileData == null) {
     return (
@@ -261,6 +290,8 @@ const BasicInformationForm = () => {
                       Birthday
                     </FormLabel>
                     <Input
+                      min={minDate}
+                      max={maxDate}
                       defaultValue={
                         field.value !== ""
                           ? moment(field.value).format("YYYY-MM-DD")
