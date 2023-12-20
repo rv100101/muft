@@ -4,7 +4,6 @@ import DisplayContent from "@/components/settings/display/displayContent";
 import PushNotifcationContent from "@/components/settings/notification/pushNotifcationContent";
 import DeactivateAccountContent from "@/components/settings/account/deactivateAccountContent";
 import MyAccountContent from "@/components/settings/account/myAccountContent";
-import SubscriptionContent from "@/components/settings/subscription/subscriptionContent";
 
 const SettingsPage = () => {
   // const [activeTabs, setActiveTabs] = useState([
