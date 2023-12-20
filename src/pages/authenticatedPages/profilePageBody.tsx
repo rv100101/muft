@@ -28,7 +28,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
     // interests: deletedInterests,
   } = deleteMultiselectValuesStore();
   const headerValues = profileHeaderStore((state) => state.headerValues);
-  const { data } = profileAboutContentStore();
+  const { data, toggleEditMode } = profileAboutContentStore();
   const { setIsSaving } = profileAboutContentStore();
   const { user } = useUserStore();
   const updateUser = useUserStore((state) => state.updateUser);
@@ -237,6 +237,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
         variant: "success",
         title: "Profile saved!",
       });
+      toggleEditMode();
     } catch (error) {
       console.log(error);
     }

@@ -55,10 +55,8 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
   const [reportReason, setReportReason] = useState("");
   const [reportProcessing, setReportProcessing] = useState(false);
 
-  // const isLiked = useHomepageViewStore((state) => state.isLiked);
-  // const isFavored = useHomepageViewStore((state) => state.isFavored);
   const toggleIsFavored = useHomepageViewStore(
-    (state) => state.toggleIsFavored
+    (state) => state.toggleIsFavored,
   );
   const toggleIsLiked = useHomepageViewStore((state) => state.toggleIsLiked);
 
@@ -103,13 +101,13 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
   });
   const [location] = useLocation();
   const resetMultiselectDeletedItems = deleteMultiselectValuesStore(
-    (state) => state.reset
+    (state) => state.reset,
   );
   const setSelectedConversation = useLatestConversationStore(
-    (state) => state.setConversation
+    (state) => state.setConversation,
   );
   const selectedConversation = useLatestConversationStore(
-    (state) => state.conversation
+    (state) => state.conversation,
   );
   const [showCamera, setShowCamera] = useState(false);
   const {
@@ -124,10 +122,10 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
 
   const user = useUserStore((state) => state.user);
   const toggleEditMode = profileAboutContentStore(
-    (state) => state.toggleEditMode
+    (state) => state.toggleEditMode,
   );
   const setSelectedHistoryMemberId = useLatestConversationStore(
-    (state) => state.setSelectedHistoryMemberId
+    (state) => state.setSelectedHistoryMemberId,
   );
   const { formState } = useFormContext();
   const isSaving = profileAboutContentStore((state) => state.isSaving);
@@ -187,7 +185,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
         };
       } = await messagingQuery.getConversation(
         user!.member_id,
-        parseInt(userId)
+        parseInt(userId),
       );
       setSelectedConversation(
         user!.member_id,
@@ -196,7 +194,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
         headerValues!.gender!,
         res.data.recipient_uuid,
         res.data.recipient_nickname!,
-        res.data.conversation_uuid
+        res.data.conversation_uuid,
       );
       return res.data.conversation_uuid;
     } catch (error) {
@@ -238,7 +236,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
       setIsUploading(true);
       const res = await uploadQueries.uploadProfilePicture(
         selectedFile!,
-        user!.member_id
+        user!.member_id,
       );
       setHeaderValues({
         ...headerValues!,
@@ -330,15 +328,11 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                     <DialogTrigger>
                       <img
                         className={`select-none object-cover h-32 w-32 overflow-clip border-4 border-primary rounded-full`}
-                        src={
-                          selectedFile
-                            ? selectedFile
-                            : getImagePath(
-                                headerValues!.gallery_uuid,
-                                headerValues!.gender,
-                                headerValues!.member_uuid?.toString()
-                              )
-                        }
+                        src={selectedFile ? selectedFile : getImagePath(
+                          headerValues!.gallery_uuid,
+                          headerValues!.gender,
+                          headerValues!.member_uuid?.toString(),
+                        )}
                         alt="no image selected"
                       />
                     </DialogTrigger>
@@ -350,15 +344,11 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                       </DialogHeader>
                       <img
                         className={`h-full w-full`}
-                        src={
-                          selectedFile
-                            ? selectedFile
-                            : getImagePath(
-                                headerValues!.gallery_uuid,
-                                headerValues!.gender,
-                                headerValues!.member_uuid?.toString()
-                              )
-                        }
+                        src={selectedFile ? selectedFile : getImagePath(
+                          headerValues!.gallery_uuid,
+                          headerValues!.gender,
+                          headerValues!.member_uuid?.toString(),
+                        )}
                         alt="no image selected"
                       />
                     </DialogContent>
@@ -380,21 +370,18 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                   {isEditing && (
                     <img
                       className={`select-none object-cover h-32 w-32 overflow-clip border-4 border-primary rounded-full`}
-                      src={
-                        selectedFile
-                          ? selectedFile
-                          : getImagePath(
-                              headerValues!.gallery_uuid,
-                              headerValues!.gender,
-                              headerValues!.member_uuid?.toString()
-                            )
-                      }
+                      src={selectedFile ? selectedFile : getImagePath(
+                        headerValues!.gallery_uuid,
+                        headerValues!.gender,
+                        headerValues!.member_uuid?.toString(),
+                      )}
                       alt="no image selected"
                     />
                   )}
-                  {showCamera && (
-                    <CameraIcon className="absolute" fill="pink" />
-                  )}
+                  {showCamera && <CameraIcon
+                    className="absolute"
+                    fill="pink"
+                  />}
                   {isUploading && (
                     <Loader2 className="absolute animate-spin text-primary" />
                   )}
@@ -439,9 +426,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                       </p>
                       {!isEditing && (
                         <p
-                          className={
-                            "sm:hidden mt-1 text-[#f0f9ff] border-[#075985] text-xs py-1 px-2 w-min rounded-md bg-[#38bdf8] hover:bg-[#38bdf8]/80"
-                          }
+                          className={"sm:hidden mt-1 text-[#f0f9ff] border-[#075985] text-xs py-1 px-2 w-min rounded-md bg-[#38bdf8] hover:bg-[#38bdf8]/80"}
                         >
                           Standard
                         </p>
@@ -449,9 +434,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                     </div>
                     {!isEditing && (
                       <p
-                        className={
-                          "hidden sm:block mt-1 text-[#f0f9ff] border-[#075985] text-xs py-1 px-2 w-min rounded-md bg-[#38bdf8] hover:bg-[#38bdf8]/80"
-                        }
+                        className={"hidden sm:block mt-1 text-[#f0f9ff] border-[#075985] text-xs py-1 px-2 w-min rounded-md bg-[#38bdf8] hover:bg-[#38bdf8]/80"}
                       >
                         Standard
                       </p>
@@ -465,7 +448,8 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                           if (user?.temporarily_deactivated) {
                             toast({
                               title: "You must Reactivate your account",
-                              description: `To continue chatting with ${headerValues?.nickname}`,
+                              description:
+                                `To continue chatting with ${headerValues?.nickname}`,
                               variant: "destructive",
                             });
                           }
@@ -474,9 +458,9 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                         className="text-xs border-primary hover:bg-primary px-2 py-1 lg:w-24 w-3/4"
                       >
                         <Link
-                          href={
-                            !user?.temporarily_deactivated ? "/messages" : ""
-                          }
+                          href={!user?.temporarily_deactivated
+                            ? "/messages"
+                            : ""}
                         >
                           <p className="flex">
                             <p>Chat</p>
@@ -495,8 +479,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                             toggleLike.mutate({
                               member: user!.member_id,
                               liked: parseInt(userId),
-                            })
-                          }
+                            })}
                         >
                           <Heart
                             color="#FF599B"
@@ -511,8 +494,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                             toggleFavorite.mutate({
                               member: user!.member_id,
                               favored: parseInt(userId),
-                            })
-                          }
+                            })}
                         >
                           <Star
                             color="#FF599B"
@@ -531,9 +513,9 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                                 <span>
                                   <MoreHorizontal
                                     color="#FF599B"
-                                    fill={
-                                      favoriteTriggered ? "#FF599B" : "white"
-                                    }
+                                    fill={favoriteTriggered
+                                      ? "#FF599B"
+                                      : "white"}
                                   />
                                 </span>
                               </Button>
@@ -542,8 +524,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                               <DropdownMenuGroup>
                                 <DropdownMenuItem
                                   onClick={() =>
-                                    handleBlockMember(parseInt(userId))
-                                  }
+                                    handleBlockMember(parseInt(userId))}
                                 >
                                   Block
                                 </DropdownMenuItem>
@@ -586,11 +567,9 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                               <div className="grid grid-cols-4 items-center gap-4">
                                 <Input
                                   id="username"
-                                  value={
-                                    headerValues!.nickname
-                                      ? headerValues!.nickname
-                                      : ""
-                                  }
+                                  value={headerValues!.nickname
+                                    ? headerValues!.nickname
+                                    : ""}
                                   placeholder="username here"
                                   className="col-span-3"
                                   disabled
@@ -601,8 +580,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                                   id="username"
                                   value={reportReason}
                                   onChange={(state) =>
-                                    setReportReason(state.target.value)
-                                  }
+                                    setReportReason(state.target.value)}
                                   placeholder="enter reason here"
                                   className="col-span-3"
                                 />
@@ -614,8 +592,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                                   type="submit"
                                   className="flex flex-row space-x-1"
                                   onClick={() =>
-                                    handleReportSubmit(parseInt(userId))
-                                  }
+                                    handleReportSubmit(parseInt(userId))}
                                   disabled={reportProcessing}
                                 >
                                   <p>
@@ -659,26 +636,22 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                 {isEditing && (
                   <div className="flex space-x-2">
                     <Button
-                      onClick={
-                        !formState.isDirty
-                          ? () => {}
-                          : () => {
-                              // if (isEditing && !formState.isValid) {
-                              //   toast({
-                              //     variant: "destructive",
-                              //     title: "Cannot save your profile",
-                              //     description:
-                              //       "Please make sure all the required fields are satisfied.",
-                              //     duration: 4000,
-                              //   });
-                              // }
-                            }
-                      }
+                      onClick={!formState.isDirty ? () => {} : () => {
+                        // if (isEditing && !formState.isValid) {
+                        //   toast({
+                        //     variant: "destructive",
+                        //     title: "Cannot save your profile",
+                        //     description:
+                        //       "Please make sure all the required fields are satisfied.",
+                        //     duration: 4000,
+                        //   });
+                        // }
+                      }}
                       disabled={isSaving}
                       type={"submit"}
                       className={cn(
                         "text-xs rounded-2xl h-max",
-                        "hover:bg-green-400/80 bg-green-400"
+                        "hover:bg-green-400/80 bg-green-400",
                       )}
                     >
                       Save
@@ -688,19 +661,22 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                         </span>
                       )}
                     </Button>
-                    <Button
-                      type={"button"}
-                      onClick={() => {
-                        toggleEditMode();
-                        resetMultiselectDeletedItems();
-                      }}
-                      className={cn(
-                        "text-xs rounded-2xl h-max",
-                        "text-[#727272] bg-[#E8ECEF] hover:bg-[#E8ECEF]/80"
+                    {!isSaving &&
+                      (
+                        <Button
+                          type={"button"}
+                          onClick={() => {
+                            toggleEditMode();
+                            resetMultiselectDeletedItems();
+                          }}
+                          className={cn(
+                            "text-xs rounded-2xl h-max",
+                            "text-[#727272] bg-[#E8ECEF] hover:bg-[#E8ECEF]/80",
+                          )}
+                        >
+                          <p>Cancel</p>
+                        </Button>
                       )}
-                    >
-                      <p>Cancel</p>
-                    </Button>
                   </div>
                 )}
                 {!isEditing && (
@@ -713,7 +689,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                     }}
                     className={cn(
                       "text-xs rounded-2xl h-max lg:w-1/4 w-1/2",
-                      "text-[#727272] bg-[#E8ECEF] hover:bg-[#E8ECEF]/80"
+                      "text-[#727272] bg-[#E8ECEF] hover:bg-[#E8ECEF]/80",
                     )}
                   >
                     <>
@@ -728,17 +704,21 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
           {!isEditing && user!.is_active && (
             <div className="h-full hidden lg:block mt-3">
               <div className="pt-5 flex w-full justify-start items-start flex-wrap text-xs space-x-2">
-                {/* {headerValues.height && (
+                {
+                  /* {headerValues.height && (
                   <p className="rounded-md w-max h-max bg-[#FFF2F7] text-[#FF599B] p-2 mb-2">
                     {`${headerValues!.height} cm`}
                   </p>
-                )} */}
-                {/* {headerValues.gender && (
+                )} */
+                }
+                {
+                  /* {headerValues.gender && (
                   <p className="rounded-md w-max h-max bg-[#FFF2F7] text-[#FF599B] px-5 py-2 mb-2">
                     {headerValues!.gender == "F" && "Female"}
                     {headerValues!.gender == "M" && "Male"}
                   </p>
-                )} */}
+                )} */
+                }
                 {headerValues!.maritalStatus && (
                   <p className="rounded-md w-max h-max bg-[#FFF2F7] text-[#FF599B] px-5 py-2 mb-2">
                     {headerValues!.maritalStatus}
@@ -749,11 +729,13 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                     {headerValues!.country_name}
                   </p>
                 )}
-                {/* {headerValues.occupation_title && (
+                {
+                  /* {headerValues.occupation_title && (
                   <p className="rounded-md w-max h-max bg-[#FFF2F7] text-[#FF599B] px-5 py-2 mb-2">
                     {headerValues!.occupation_title}
                   </p>
-                )} */}
+                )} */
+                }
               </div>
             </div>
           )}
