@@ -9,7 +9,7 @@ const LandingPage = () => {
 
   return (
     <>
-      <GetApp />
+      {/*<GetApp /> */}
       <div className="mx-8 md:mx-12 lg:mx-36">
         <Hero />
         <Benefits />

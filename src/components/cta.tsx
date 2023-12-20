@@ -47,6 +47,8 @@ const Cta = () => {
             {callToAction.header}
           </p>
           <p className="text-white font-light">{callToAction.description}</p>
+          {
+            /*
           <motion.div variants={child} className="flex space-x-2">
             <a
               href="https://apps.apple.com/us/app/muffin/id1658172035"
@@ -59,8 +61,11 @@ const Cta = () => {
               target="_blank"
             >
               <img src={GooglePlay} alt="google play" />
+
             </a>
           </motion.div>
+            */
+          }
         </motion.div>
       </motion.div>
     </motion.div>

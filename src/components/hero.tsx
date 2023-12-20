@@ -64,6 +64,8 @@ const Hero = () => {
           >
             {banner.body}
           </motion.p>
+          {
+            /*
           <motion.div
             initial={{
               scale: 0,
@@ -90,6 +92,8 @@ const Hero = () => {
               <img className="w-full" src={GooglePlay} alt="google play" />
             </a>
           </motion.div>
+            */
+          }
         </div>
         <Conversation />
       </div>
