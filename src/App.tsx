@@ -10,15 +10,16 @@ import pageRoutes, {
 import { useUserStore } from "./zustand/auth/user";
 import { cn } from "./lib/utils";
 import ViewUser from "./components/profile/viewUser";
-import { useEffect } from "react";
-import runOneSignal from "./lib/oneSignal";
+// import { useEffect } from "react";
+// import runOneSignal from "./lib/oneSignal";
 
 function App() {
   const [location] = useLocation();
   const user = useUserStore((state) => state.user);
-  useEffect(() => {
-    runOneSignal();
-  }, []);
+
+  // useEffect(() => {
+  //   runOneSignal();
+  // });
 
   return (
     <div

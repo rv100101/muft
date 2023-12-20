@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { banner } from "@/lib/homepage";
-import GooglePlay from "@/assets/google-play.png";
-import AppStore from "@/assets/app-store.png";
+// import GooglePlay from "@/assets/google-play.png";
+// import AppStore from "@/assets/app-store.png";
 import Conversation from "./conversation";
 
 const Hero = () => {
@@ -64,8 +64,7 @@ const Hero = () => {
           >
             {banner.body}
           </motion.p>
-          {
-            /*
+          {/*
           <motion.div
             initial={{
               scale: 0,
@@ -92,8 +91,7 @@ const Hero = () => {
               <img className="w-full" src={GooglePlay} alt="google play" />
             </a>
           </motion.div>
-            */
-          }
+            */}
         </div>
         <Conversation />
       </div>

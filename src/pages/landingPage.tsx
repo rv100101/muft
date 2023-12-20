@@ -2,11 +2,10 @@ import Hero from "@/components/hero";
 import Benefits from "@/components/benefits";
 import Features from "@/components/features";
 import Cta from "@/components/cta";
-import GetApp from "@/components/getApp";
+// import GetApp from "@/components/getApp";
 import { motion } from "framer-motion";
 
 const LandingPage = () => {
-
   return (
     <>
       {/*<GetApp /> */}

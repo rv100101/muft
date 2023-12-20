@@ -1,5 +1,5 @@
-import GooglePlay from "@/assets/google-play.png";
-import AppStore from "@/assets/app-store.png";
+// import GooglePlay from "@/assets/google-play.png";
+// import AppStore from "@/assets/app-store.png";
 import CtaPhone from "@/assets/cta-phone.png";
 import { motion } from "framer-motion";
 import { callToAction } from "@/lib/homepage";
@@ -47,8 +47,7 @@ const Cta = () => {
             {callToAction.header}
           </p>
           <p className="text-white font-light">{callToAction.description}</p>
-          {
-            /*
+          {/*
           <motion.div variants={child} className="flex space-x-2">
             <a
               href="https://apps.apple.com/us/app/muffin/id1658172035"
@@ -64,8 +63,7 @@ const Cta = () => {
 
             </a>
           </motion.div>
-            */
-          }
+            */}
         </motion.div>
       </motion.div>
     </motion.div>

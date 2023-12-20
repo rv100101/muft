@@ -49,7 +49,7 @@ const ProfileTopNav = () => {
           )}
         </Button> */}
           <div className="flex justify-between items-center h-min w-full">
-            <div className="flex space-x-4 items-center lg:flex hidden">
+            <div className="space-x-4 items-center lg:flex hidden">
               <p className="font-semibold mt-1">
                 {user?.profile_completed ? "PROFILE" : "COMPLETE YOUR PROFILE"}
               </p>
