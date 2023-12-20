@@ -5,6 +5,7 @@ import DetailsForm from "./forms/detailsForm";
 import LocationForm from "./forms/locationForm";
 import {
   AlertCircle,
+  Backpack,
   Briefcase,
   Contact,
   Globe,
@@ -31,6 +32,13 @@ const AboutAccordionContent = () => {
   const [activeTabs, setActiveTabs] = useState([
     false,
     true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
     false,
     false,
     false,
@@ -91,17 +99,17 @@ const AboutAccordionContent = () => {
           <p
             className={cn(
               "text-md hover:cursor-pointer select-none lg:block hidden",
-              workAndEducationHasErrors && "text-red-500"
+              locationHasErrors && "text-red-500"
             )}
           >
-            Work and Education{" "}
-            {workAndEducationHasErrors && (
+            Location{" "}
+            {locationHasErrors && (
               <span>
                 <AlertCircle className="h-4 inline-flex text-red-500" />
               </span>
             )}
           </p>
-          <Briefcase
+          <Globe
             // color="#FF599B"
             size={20}
             className="hover:cursor-pointer lg:hidden"
@@ -118,17 +126,17 @@ const AboutAccordionContent = () => {
           <p
             className={cn(
               "text-md hover:cursor-pointer select-none lg:block hidden",
-              detailsInfoHasErrors && "text-red-500"
+              locationHasErrors && "text-red-500"
             )}
           >
-            Details about you{" "}
-            {detailsInfoHasErrors && (
+            Background{" "}
+            {locationHasErrors && (
               <span>
                 <AlertCircle className="h-4 inline-flex text-red-500" />
               </span>
             )}
           </p>
-          <Contact
+          <Backpack
             // color="#FF599B"
             size={20}
             className="hover:cursor-pointer lg:hidden"
@@ -148,14 +156,14 @@ const AboutAccordionContent = () => {
               locationHasErrors && "text-red-500"
             )}
           >
-            Location{" "}
+            Languages{" "}
             {locationHasErrors && (
               <span>
                 <AlertCircle className="h-4 inline-flex text-red-500" />
               </span>
             )}
           </p>
-          <Globe
+          <Backpack
             // color="#FF599B"
             size={20}
             className="hover:cursor-pointer lg:hidden"
@@ -172,10 +180,199 @@ const AboutAccordionContent = () => {
           <p
             className={cn(
               "text-md hover:cursor-pointer select-none lg:block hidden",
+              locationHasErrors && "text-red-500"
+            )}
+          >
+            Appearance{" "}
+            {locationHasErrors && (
+              <span>
+                <AlertCircle className="h-4 inline-flex text-red-500" />
+              </span>
+            )}
+          </p>
+          <Backpack
+            // color="#FF599B"
+            size={20}
+            className="hover:cursor-pointer lg:hidden"
+          />
+        </div>
+        <div
+          className={
+            activeTabs[6]
+              ? "rounded-md bg-[#FFDEEB] py-2 px-2 my-2 text-[#FF599B]"
+              : "text-[#727272] py-2 px-2 my-2"
+          }
+          onClick={() => toggleTab(6)}
+        >
+          <p
+            className={cn(
+              "text-md hover:cursor-pointer select-none lg:block hidden",
+              locationHasErrors && "text-red-500"
+            )}
+          >
+            Lifestyle{" "}
+            {locationHasErrors && (
+              <span>
+                <AlertCircle className="h-4 inline-flex text-red-500" />
+              </span>
+            )}
+          </p>
+          <Backpack
+            // color="#FF599B"
+            size={20}
+            className="hover:cursor-pointer lg:hidden"
+          />
+        </div>
+        <div
+          className={
+            activeTabs[7]
+              ? "rounded-md bg-[#FFDEEB] py-2 px-2 my-2 text-[#FF599B]"
+              : "text-[#727272] py-2 px-2 my-2"
+          }
+          onClick={() => toggleTab(7)}
+        >
+          <p
+            className={cn(
+              "text-md hover:cursor-pointer select-none lg:block hidden",
+              locationHasErrors && "text-red-500"
+            )}
+          >
+            Pets{" "}
+            {locationHasErrors && (
+              <span>
+                <AlertCircle className="h-4 inline-flex text-red-500" />
+              </span>
+            )}
+          </p>
+          <Backpack
+            // color="#FF599B"
+            size={20}
+            className="hover:cursor-pointer lg:hidden"
+          />
+        </div>
+        <div
+          className={
+            activeTabs[8]
+              ? "rounded-md bg-[#FFDEEB] py-2 px-2 my-2 text-[#FF599B]"
+              : "text-[#727272] py-2 px-2 my-2"
+          }
+          onClick={() => toggleTab(8)}
+        >
+          <p
+            className={cn(
+              "text-md hover:cursor-pointer select-none lg:block hidden",
+              locationHasErrors && "text-red-500"
+            )}
+          >
+            Favorite Food{" "}
+            {locationHasErrors && (
+              <span>
+                <AlertCircle className="h-4 inline-flex text-red-500" />
+              </span>
+            )}
+          </p>
+          <Backpack
+            // color="#FF599B"
+            size={20}
+            className="hover:cursor-pointer lg:hidden"
+          />
+        </div>
+        <div
+          className={
+            activeTabs[9]
+              ? "rounded-md bg-[#FFDEEB] py-2 px-2 my-2 text-[#FF599B]"
+              : "text-[#727272] py-2 px-2 my-2"
+          }
+          onClick={() => toggleTab(9)}
+        >
+          <p
+            className={cn(
+              "text-md hover:cursor-pointer select-none lg:block hidden",
+              locationHasErrors && "text-red-500"
+            )}
+          >
+            Health{" "}
+            {locationHasErrors && (
+              <span>
+                <AlertCircle className="h-4 inline-flex text-red-500" />
+              </span>
+            )}
+          </p>
+          <Backpack
+            // color="#FF599B"
+            size={20}
+            className="hover:cursor-pointer lg:hidden"
+          />
+        </div>
+        <div
+          className={
+            activeTabs[10]
+              ? "rounded-md bg-[#FFDEEB] py-2 px-2 my-2 text-[#FF599B]"
+              : "text-[#727272] py-2 px-2 my-2"
+          }
+          onClick={() => toggleTab(10)}
+        >
+          <p
+            className={cn(
+              "text-md hover:cursor-pointer select-none lg:block hidden",
+              workAndEducationHasErrors && "text-red-500"
+            )}
+          >
+            Marital Status{" "}
+            {workAndEducationHasErrors && (
+              <span>
+                <AlertCircle className="h-4 inline-flex text-red-500" />
+              </span>
+            )}
+          </p>
+          <Briefcase
+            // color="#FF599B"
+            size={20}
+            className="hover:cursor-pointer lg:hidden"
+          />
+        </div>
+        <div
+          className={
+            activeTabs[11]
+              ? "rounded-md bg-[#FFDEEB] py-2 px-2 my-2 text-[#FF599B]"
+              : "text-[#727272] py-2 px-2 my-2"
+          }
+          onClick={() => toggleTab(11)}
+        >
+          <p
+            className={cn(
+              "text-md hover:cursor-pointer select-none lg:block hidden",
+              detailsInfoHasErrors && "text-red-500"
+            )}
+          >
+            Employment{" "}
+            {detailsInfoHasErrors && (
+              <span>
+                <AlertCircle className="h-4 inline-flex text-red-500" />
+              </span>
+            )}
+          </p>
+          <Contact
+            // color="#FF599B"
+            size={20}
+            className="hover:cursor-pointer lg:hidden"
+          />
+        </div>
+        <div
+          className={
+            activeTabs[12]
+              ? "rounded-md bg-[#FFDEEB] py-2 px-2 my-2 text-[#FF599B]"
+              : "text-[#727272] py-2 px-2 my-2"
+          }
+          onClick={() => toggleTab(12)}
+        >
+          <p
+            className={cn(
+              "text-md hover:cursor-pointer select-none lg:block hidden",
               additionalInfoHasErrors && "text-red-500"
             )}
           >
-            Additional Information{" "}
+            Interests{" "}
             {additionalInfoHasErrors && (
               <span>
                 <AlertCircle className="h-4 inline-flex text-red-500" />
@@ -193,14 +390,14 @@ const AboutAccordionContent = () => {
         {/* basic info */}
         {activeTabs[1] && <BasicInformationForm />}
 
+        {/* Location */}
+        {activeTabs[2] && <LocationForm />}
+
         {/* Work and Education */}
         {activeTabs[2] && <WorkEducationForm />}
 
         {/* Details */}
         {activeTabs[3] && <DetailsForm />}
-
-        {/* Location */}
-        {activeTabs[4] && <LocationForm />}
 
         {/* Addition Information */}
         {activeTabs[5] && <AdditionalInformatinForm />}

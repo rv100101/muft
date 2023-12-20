@@ -422,18 +422,27 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                     }`}
                 >
                   <div className="flex lg:flex-col lg:justify-start flex-row space-x-4 lg:space-x-0">
-                    <div className="flex flex-row space-x-1">
-                      <p className="font-semibold text-[#171717] text-lg ">
+                    <div className="flex flex-col sm:flex-row space-x-1">
+                      <p className="font-semibold text-[#171717] text-sm sm:text-lg ">
                         {`${headerValues!.nickname},`}
                       </p>
                       <p className="font-semibold text-primary text-lg">
                         {headerValues!.age}
                       </p>
+                      {!isEditing && (
+                        <p
+                          className={
+                            "sm:hidden mt-1 text-[#f0f9ff] border-[#075985] text-xs py-1 px-2 w-min rounded-md bg-[#38bdf8] hover:bg-[#38bdf8]/80"
+                          }
+                        >
+                          Standard
+                        </p>
+                      )}
                     </div>
                     {!isEditing && (
                       <p
                         className={
-                          "mt-1 text-[#f0f9ff] border-[#075985] text-xs py-1 px-2 w-min rounded-md bg-[#38bdf8] hover:bg-[#38bdf8]/80"
+                          "hidden sm:block mt-1 text-[#f0f9ff] border-[#075985] text-xs py-1 px-2 w-min rounded-md bg-[#38bdf8] hover:bg-[#38bdf8]/80"
                         }
                       >
                         Standard
@@ -480,15 +489,10 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                             })
                           }
                         >
-                          {/* <p className="lg:inline hidden">Like</p> */}
-
-                          <span>
-                            <Heart
-                              color="#FF599B"
-                              fill={likeTriggered ? "#FF599B" : "white"}
-                              className="ml-2 "
-                            />
-                          </span>
+                          <Heart
+                            color="#FF599B"
+                            fill={likeTriggered ? "#FF599B" : "white"}
+                          />
                         </Button>
                         <Button
                           type="button"
@@ -501,15 +505,10 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                             })
                           }
                         >
-                          {/* <p className="lg:inline hidden">Favorite</p> */}
-
-                          <span>
-                            <Star
-                              color="#FF599B"
-                              className="ml-2"
-                              fill={favoriteTriggered ? "#FF599B" : "white"}
-                            />
-                          </span>
+                          <Star
+                            color="#FF599B"
+                            fill={favoriteTriggered ? "#FF599B" : "white"}
+                          />
                         </Button>
                         {/* more  */}
                         <Dialog>

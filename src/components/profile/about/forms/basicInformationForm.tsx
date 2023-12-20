@@ -85,7 +85,7 @@ const BasicInformationForm = () => {
   return (
     <div
       className={cn(
-        "flex flex-col h-96 overflow-y-scroll no-scrollbar w-full space-y-4",
+        "flex flex-col h-96  w-full space-y-4",
         !user?.profile_completed && "h-full"
       )}
     >
