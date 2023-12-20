@@ -14,8 +14,8 @@ const LanguagesForm = () => {
   const { data, editMode, isLoading, profileData } = profileAboutContentStore();
   const user = useUserStore((state) => state.user);
 
-
-  if (isLoading && profileData == null) {
+  const isSaving = profileAboutContentStore((state) => state.isSaving);
+  if ((isLoading && profileData == null) || isSaving) {
     return (
       <div className="flex justify-start items-start space-x-4 w-full ml-5">
         <div className="space-y-2">

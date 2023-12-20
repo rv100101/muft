@@ -36,7 +36,7 @@ import { useState } from "react";
 const BasicInformationForm = () => {
   const [minDate, setMinDate] = useState('');
   const [maxDate, setMaxDate] = useState('');
-
+  const isSaving = profileAboutContentStore((state) => state.isSaving);
   useEffectOnce(() => {
     const currentDate = new Date();
     const minYear = currentDate.getFullYear() - 80;
@@ -67,7 +67,7 @@ const BasicInformationForm = () => {
   const user = useUserStore((state) => state.user);
 
 
-  if (isLoading && profileData == null) {
+  if ((isLoading && profileData == null) || isSaving) {
     return (
       <div className="flex justify-start items-start space-x-4 w-full ml-5">
         <div className="space-y-2">
@@ -265,7 +265,7 @@ const BasicInformationForm = () => {
             />
             <div className="flex flex-col justify-start space-y-1">
               <p className="font-bold text-base text-primary">
-                {data?.age}
+                {data?.age}y
               </p>
               <p className="text-[#727272] text-xs">Age</p>
             </div>

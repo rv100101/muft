@@ -49,7 +49,7 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
   const [location] = useLocation();
   const { selectedCountry, setSelectedCountry } = useSelectedCountryStore(
   );
-  const { data: profileAboutContent } = profileAboutContentStore();
+  const { data: profileAboutContent, isSaving } = profileAboutContentStore();
   // const user = useUserStore((state) => state.user);
   const {
     setIsLoading,
@@ -358,8 +358,8 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
   });
 
   useEffect(() => {
-    setIsLoading(currentUserLoading || isRefetching);
-  }, [setIsLoading, currentUserLoading, isRefetching]);
+    setIsLoading(currentUserLoading || isRefetching || isSaving);
+  }, [setIsLoading, currentUserLoading, isRefetching, isSaving]);
 
   return (
     <div className="flex flex-row justify-between">
