@@ -61,7 +61,7 @@ const HomepageSearchInput = () => {
               setSearchValue("");
             }, 200);
           }}
-          className="h-4 border-0 focus:outline-0 w-full placeholder-[#E0E0E0] text-sm"
+          className="h-4 border-0 focus:outline-0 w-full placeholder-[#E0E0E0] text-sm dark:text-white dark:bg-[#020817]"
           placeholder="Search"
         />
         <SearchIcon />

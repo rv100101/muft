@@ -5,7 +5,7 @@ import ChatInput from "./chatInput";
 
 const ChatConversation = () => {
   return (
-    <div className="border-l w-full h-full flex flex-col">
+    <div className="border-l w-full h-full flex flex-col dark:text-white dark:bg-[#020817]">
       <MessageHeader />
       <ChatMessages />
       <ChatInput />

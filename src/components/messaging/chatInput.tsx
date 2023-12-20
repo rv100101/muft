@@ -22,13 +22,13 @@ const ChatInput = () => {
   console.log(conversationMessages);
 
   const currentSelectedConversation = useLatestConversationStore(
-    (state) => state.conversation,
+    (state) => state.conversation
   );
   const setSelectedConversation = useLatestConversationStore(
-    (state) => state.setConversation,
+    (state) => state.setConversation
   );
   const [uuid, setUuid] = useState(
-    currentSelectedConversation?.conversation_uuid,
+    currentSelectedConversation?.conversation_uuid
   );
   const user = useUserStore((state) => state.user);
   const queryClient = useQueryClient();
@@ -36,20 +36,17 @@ const ChatInput = () => {
   const inputMessageValue = useMessageInputStore((state) => state.value);
   const [finalInputMessage, setfinalInputMessage] = useState(inputMessageValue);
   const updateLastSentMessageStatus = useSelectedConversationData(
-    (status) => status.updateMessageStatus,
+    (status) => status.updateMessageStatus
   );
   const senderInfo = useSenderInfo((state) => state.senderInfo);
 
   const appendNewMessage = useSelectedConversationData(
-    (state) => state.appendNewMessage,
+    (state) => state.appendNewMessage
   );
 
-  useEffect(
-    () => {
-      setUuid(currentSelectedConversation?.conversation_uuid);
-    },
-    [currentSelectedConversation],
-  );
+  useEffect(() => {
+    setUuid(currentSelectedConversation?.conversation_uuid);
+  }, [currentSelectedConversation]);
 
   const getConversationUuid = async () => {
     console.log(currentSelectedConversation);
@@ -59,10 +56,7 @@ const ChatInput = () => {
     }
 
     try {
-      console.log(
-        user!.member_id,
-        currentSelectedConversation!.memberId,
-      );
+      console.log(user!.member_id, currentSelectedConversation!.memberId);
 
       const res: {
         data: {
@@ -76,7 +70,7 @@ const ChatInput = () => {
         };
       } = await messagingQuery.getConversation(
         user!.member_id,
-        currentSelectedConversation!.memberId,
+        currentSelectedConversation!.memberId
       );
       // setUuid(res.data.conversation_uuid);
       console.log();
@@ -88,7 +82,7 @@ const ChatInput = () => {
         res.data.gender,
         res.data.recipient_uuid,
         res.data.recipient_nickname,
-        res.data.conversation_uuid,
+        res.data.conversation_uuid
       );
 
       return res.data.conversation_uuid;
@@ -103,9 +97,9 @@ const ChatInput = () => {
 
   useEffect(() => {
     if (
-      user && currentSelectedConversation &&
-      user!.member_id !==
-      currentSelectedConversation!.memberId
+      user &&
+      currentSelectedConversation &&
+      user!.member_id !== currentSelectedConversation!.memberId
     ) {
       getConversationUuid();
     }
@@ -119,7 +113,7 @@ const ChatInput = () => {
     await messagingQuery.sendMessage(
       newChatUuid ?? uuid!,
       finalInputMessage,
-      user!.member_id,
+      user!.member_id
     );
   };
 
@@ -167,70 +161,65 @@ const ChatInput = () => {
     }
   };
 
-  const { selectedMemberName } = useLatestConversationStore()
+  const { selectedMemberName } = useLatestConversationStore();
   return (
-    <div className="flex w-full items-end rounded-lg h-max bg-[#F7F8FA]">
-      {
-        selectedMemberName.length > 1 && user?.temporarily_deactivated ?
-          <p className="w-full flex justify-center text-red-700 m-8">
-            You must Reactivate your account
-            To continue chatting with
-            <span className="ml-1 text-primary">
-              {selectedMemberName}.
-            </span>
-          </p>
-          :
-          <>
-            <div className="h-max w-full flex items-end justify-start mb-4 mt-1">
-
-              <div className="flex flex-col items-center justify-center mx-2 ">
-                {currentSelectedConversation
-                  ? (
-                    <Popover>
-                      <PopoverTrigger disabled={!currentSelectedConversation}>
-                        <SmileIcon className="text-primary" />
-                      </PopoverTrigger>
-                      <PopoverContent>
-                        <EmojiPicker
-                          onEmojiClick={(emoji: EmojiClickData) => {
-                            setInputMessage(inputMessageValue + emoji.emoji);
-                          }}
-                          height={300}
-                          width={"100%"}
-                        />
-                      </PopoverContent>
-                    </Popover>
-                  )
-                  : <SmileIcon className="text-gray-500" />}
-              </div>
-
-              <textarea
-                className="focus:outline-none p-2 w-full border-2 rounded-lg max-h-full overflow-y-auto caret-primary resize-none"
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    handleMessageSend();
-                  }
-                }}
-                disabled={!currentSelectedConversation}
-                data-emojiable={true}
-                value={inputMessageValue}
-                name="text"
-                rows={3}
-                onChange={(e) => {
-                  setInputMessage(e.target.value);
-                }}
-                placeholder="Type a message"
-              />
+    <div className="flex w-full items-end rounded-lg h-max bg-[#F7F8FA] dark:text-white dark:bg-[#020817]">
+      {selectedMemberName.length > 1 && user?.temporarily_deactivated ? (
+        <p className="w-full flex justify-center text-red-700 m-8">
+          You must Reactivate your account To continue chatting with
+          <span className="ml-1 text-primary">{selectedMemberName}.</span>
+        </p>
+      ) : (
+        <>
+          <div className="h-max w-full flex items-end justify-start mb-4 mt-1">
+            <div className="flex flex-col items-center justify-center mx-2 ">
+              {currentSelectedConversation ? (
+                <Popover>
+                  <PopoverTrigger disabled={!currentSelectedConversation}>
+                    <SmileIcon className="text-primary" />
+                  </PopoverTrigger>
+                  <PopoverContent>
+                    <EmojiPicker
+                      onEmojiClick={(emoji: EmojiClickData) => {
+                        setInputMessage(inputMessageValue + emoji.emoji);
+                      }}
+                      height={300}
+                      width={"100%"}
+                    />
+                  </PopoverContent>
+                </Popover>
+              ) : (
+                <SmileIcon className="text-gray-500" />
+              )}
             </div>
-            <Button
+
+            <textarea
+              className="focus:outline-none p-2 w-full border-2 rounded-lg max-h-full overflow-y-auto caret-primary resize-none dark:text-white dark:bg-[#020817]"
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleMessageSend();
+                }
+              }}
               disabled={!currentSelectedConversation}
-              onClick={handleMessageSend}
-              className="rounded-full h-max w-max hover:bg-transparen ml-4 px-2 mr-4 mb-4"
-            >
-              <SendHorizonalIcon height={16} />
-            </Button>
-          </>
-      }
+              data-emojiable={true}
+              value={inputMessageValue}
+              name="text"
+              rows={3}
+              onChange={(e) => {
+                setInputMessage(e.target.value);
+              }}
+              placeholder="Type a message"
+            />
+          </div>
+          <Button
+            disabled={!currentSelectedConversation}
+            onClick={handleMessageSend}
+            className="rounded-full h-max w-max hover:bg-transparen ml-4 px-2 mr-4 mb-4"
+          >
+            <SendHorizonalIcon height={16} />
+          </Button>
+        </>
+      )}
     </div>
   );
 };
