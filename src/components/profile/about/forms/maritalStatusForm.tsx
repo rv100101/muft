@@ -21,7 +21,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import selectOptions from "@/zustand/profile/selectData/selectOptions";
-import { HaveChildren, MaritalStatus, WantChildren, Workout } from "@/types/profile";
+import { HaveChildren, MaritalStatus, WantChildren, } from "@/types/profile";
 import { Baby, Laugh, Ribbon } from "lucide-react";
 import { useFormContext } from "react-hook-form";
 const MaritalStatusForm = () => {
