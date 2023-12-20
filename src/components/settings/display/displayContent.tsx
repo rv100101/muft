@@ -1,6 +1,25 @@
 import { Switch } from "@/components/ui/switch";
+import { useEffect, useState } from "react";
 
 const DisplayContent = () => {
+  const [darkMode, setDarkMode] = useState(false);
+
+  // const handleSwitchClick = () => {
+  //   // Toggle darkMode state
+  //   setDarkMode((prevDarkMode) => !prevDarkMode);
+  // };
+  useEffect(() => {
+    const mode = darkMode ? "dark" : "light";
+    console.log("🚀 ~ file: displayContent.tsx:9 ~ useEffect ~ mode:", mode);
+    if (darkMode) {
+      document.documentElement.classList.toggle("dark");
+    } else {
+      document.documentElement.classList.toggle("light");
+    }
+  }, [darkMode]);
+  // const darkModeActive = () => {
+  //   return document.documentElement.classList.contains("dark");
+  // };
   return (
     <div className="flex flex-col  w-full border-b justify-center text-[#727272] space-y-2 px-5 py-10">
       <p className="font-semibold">Display Settings</p>
@@ -13,7 +32,10 @@ const DisplayContent = () => {
         </div>
         <div className="flex flex-row w-full justify-center space-x-3">
           <p>Dark</p>
-          <Switch id="airplane-mode" />
+          <Switch
+            id="airplane-mode"
+            onCheckedChange={(state) => setDarkMode(state)}
+          />
           {/* <Label htmlFor="airplane-mode">Airplane Mode</Label> */}
         </div>
         <div className="flex flex-row w-full justify-center space-x-3">

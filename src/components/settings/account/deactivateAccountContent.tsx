@@ -11,13 +11,19 @@ import { toast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
 import axiosQuery from "@/queries/axios";
 import { useUserStore } from "@/zustand/auth/user";
+import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
+import profileHeaderStore from "@/zustand/profile/profileHeaderStore";
 import { CheckedState } from "@radix-ui/react-checkbox";
 import { DialogClose, DialogTitle } from "@radix-ui/react-dialog";
 import { Loader2, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const DeactivateAccountContent = () => {
+  const signOut = useUserStore((state) => state.reset);
+  const { setProfileData } = profileAboutContentStore();
+  const { setProfileHeaderValues } = profileHeaderStore();
   const { user } = useUserStore();
+  const [deleteModal, setDeleteModal] = useState(false);
   const [checked, setChecked] = useState<CheckedState>(false);
   const [deactivateLoading, setDeactivateLoading] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
@@ -43,6 +49,7 @@ const DeactivateAccountContent = () => {
 
   const deleteAccount = async () => {
     try {
+      console.log("this is triggered");
       setDeleteLoading(true);
       // const res = await axiosQuery.post("/DeleteAccount", {
       //   member: user!.member_id,
@@ -54,6 +61,9 @@ const DeactivateAccountContent = () => {
         // variant: "success",
       });
       setDeleteLoading(false);
+      signOut();
+      setProfileData(null);
+      setProfileHeaderValues(null);
       // }
     } catch (error) {
       console.log(error);
@@ -111,7 +121,7 @@ const DeactivateAccountContent = () => {
                 I am sure I want to proceed
               </label>
             </div>
-            <div className="flex flex-row justify-between">
+            <div className="flex flex-row justify-center">
               <div className="flex flex-row space-x-4">
                 <Button
                   disabled={(!checked as boolean) || deleteLoading}
@@ -131,30 +141,61 @@ const DeactivateAccountContent = () => {
                   className={cn(
                     "text-white mt-4 bg-red-500 h-10 w-full text-sm rounded-lf py-2 hover:bg-red-500/90 mt-5 w-24"
                   )}
-                  onClick={() => deleteAccount}
+                  // onClick={() => deleteAccount}
+                  onClick={() => setDeleteModal(true)}
                 >
-                  {deleteLoading ? (
-                    <Loader2 className="ml-2 h-full w-full animate-spin" />
-                  ) : (
-                    "Delete"
-                  )}
+                  Delete
                 </Button>
               </div>
-              {/* <DialogClose>
-                <Button
-                  className={cn(
-                    "text-white mt-4 bg-primary h-10 w-full text-sm rounded-lf py-2 hover:bg-slate-500/90 mt-5 w-24"
-                  )}
-                >
-                  Cancel
-                </Button>
-              </DialogClose> */}
             </div>
           </DialogContent>
-
-          {/* <Switch id="airplane-mode" onClick={() => deactivateAccount()} /> */}
-          {/* <Label htmlFor="airplane-mode">Airplane Mode</Label> */}
         </div>
+      </Dialog>
+      {/* delete modal */}
+      <Dialog
+        open={deleteModal}
+        onOpenChange={(state) => {
+          setDeleteModal(state);
+        }}
+      >
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle> Important Notice</DialogTitle>
+            <DialogDescription>
+              Deleting your account will permanently remove your profile, photos
+              and messages.
+            </DialogDescription>
+            <DialogDescription className="pt-5">
+              This action cannot be undone later!
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex flex-row space-x-4">
+            <Button
+              // disabled={(!checked as boolean) || deleteLoading}
+              className={cn(
+                "text-white mt-4 bg-red-500 h-10 w-3/4 text-sm rounded-lf py-3 hover:bg-red-500/90 mt-5 "
+              )}
+              onClick={() => deleteAccount()}
+            >
+              {deleteLoading ? (
+                <Loader2 className="ml-2 h-full w-full animate-spin" />
+              ) : (
+                "Permanenently Delete"
+              )}
+            </Button>
+            <DialogClose>
+              <Button
+                // disabled={(!checked as boolean) || deactivateLoading}
+                className={cn(
+                  "text-white mt-4 bg-slate-500 h-10 w-full text-sm rounded-lf py-3 hover:bg-slate-500/90 mt-5 "
+                )}
+                // onClick={() => deleteAccount}
+              >
+                No
+              </Button>
+            </DialogClose>
+          </div>
+        </DialogContent>
       </Dialog>
     </div>
   );
