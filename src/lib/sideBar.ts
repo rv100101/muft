@@ -1,6 +1,6 @@
 import { SideBarLinks } from "@/types/sideBar";
 import {
-  BellIcon,
+  // BellIcon,
   HeartIcon,
   HomeIcon,
   MessageSquareIcon,
@@ -20,11 +20,11 @@ const links: SideBarLinks = [
     icon: MessageSquareIcon,
     name: "Messages",
   },
-  {
-    path: "/notifications",
-    icon: BellIcon,
-    name: "Notifications",
-  },
+  // {
+  //   path: "/notifications",
+  //   icon: BellIcon,
+  //   name: "Notifications",
+  // },
   {
     path: "/profile",
     icon: UserIcon,
