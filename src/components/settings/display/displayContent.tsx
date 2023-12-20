@@ -2,21 +2,25 @@ import { Switch } from "@/components/ui/switch";
 import { useEffect, useState } from "react";
 
 const DisplayContent = () => {
-  const [darkMode, setDarkMode] = useState(false);
+  const [isDarkMode, setDarkMode] = useState(false);
+  const [isLightMode, setLightMode] = useState(true);
 
   // const handleSwitchClick = () => {
   //   // Toggle darkMode state
   //   setDarkMode((prevDarkMode) => !prevDarkMode);
   // };
   useEffect(() => {
-    const mode = darkMode ? "dark" : "light";
-    console.log("🚀 ~ file: displayContent.tsx:9 ~ useEffect ~ mode:", mode);
-    if (darkMode) {
-      document.documentElement.classList.toggle("dark");
+    if (isDarkMode) {
+      console.log("darkMode 😀: ", isDarkMode);
+      document.documentElement.classList.add("dark");
+      document.documentElement.classList.remove("light");
     } else {
-      document.documentElement.classList.toggle("light");
+      console.log("darkMode 😁: ", isDarkMode);
+      document.documentElement.classList.add("light");
+      document.documentElement.classList.remove("dark");
     }
-  }, [darkMode]);
+  }, [isDarkMode, isLightMode]);
+
   // const darkModeActive = () => {
   //   return document.documentElement.classList.contains("dark");
   // };
@@ -27,14 +31,25 @@ const DisplayContent = () => {
       <div className="flex flex-row justify-center border rounded-lg p-5">
         <div className="flex flex-row w-full justify-center space-x-3">
           <p>Light</p>
-          <Switch id="airplane-mode" />
+          <Switch
+            id="airplane-mode2"
+            checked={isLightMode}
+            onCheckedChange={(state) => {
+              setDarkMode(!state);
+              setLightMode(state);
+            }}
+          />
           {/* <Label htmlFor="airplane-mode">Airplane Mode</Label> */}
         </div>
         <div className="flex flex-row w-full justify-center space-x-3">
           <p>Dark</p>
           <Switch
-            id="airplane-mode"
-            onCheckedChange={(state) => setDarkMode(state)}
+            id="dark-switch"
+            checked={isDarkMode}
+            onCheckedChange={(state) => {
+              setDarkMode(state);
+              setLightMode(!state);
+            }}
           />
           {/* <Label htmlFor="airplane-mode">Airplane Mode</Label> */}
         </div>

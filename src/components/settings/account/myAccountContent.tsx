@@ -87,7 +87,7 @@ const MyAccountContent = () => {
           <DialogTrigger asChild>
             <Button
               className={cn(
-                "text-white mt-4 h-10 w-full text-sm rounded-lf py-2 hover:bg-[#FF599B]/90 mt-5 w-24"
+                "text-white mt-4 h-10 w-full text-sm rounded-lf py-2 hover:bg-[#FF599B]/90 mt-5 w-24 dark:bg-red-700 dark:hover:bg-red-700/90"
               )}
             >
               Update

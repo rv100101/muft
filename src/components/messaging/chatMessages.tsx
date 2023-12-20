@@ -24,17 +24,17 @@ const ChatMessages = () => {
 
   const fetchMessages = async () => {
     return await messagingQuery.getConversationHistory(
-        latestConversation!.conversationId,
-        latestConversation!.memberId
-      )
-  }
+      latestConversation!.conversationId,
+      latestConversation!.memberId
+    );
+  };
 
   const { isLoading, isSuccess, data } = useQuery({
     queryKey: ["current-selected-conversation", latestConversation],
     enabled: latestConversation != null,
     refetchInterval: 500,
     refetchIntervalInBackground: true,
-    queryFn: fetchMessages
+    queryFn: fetchMessages,
   });
 
   useEffect(() => {
@@ -69,7 +69,7 @@ const ChatMessages = () => {
     return (
       <div
         className={cn(
-          "flex flex-col w-full space-y-1",
+          "flex flex-col w-full space-y-1 ",
           gray ? "items-end" : "items-start"
         )}
         key={index}
@@ -101,7 +101,7 @@ const ChatMessages = () => {
     <div
       ref={scrollableDivRef}
       className={cn(
-        "h-full w-full space-y-4 overflow-y-auto p-4 bg-[#F7F8FA]",
+        "h-full w-full space-y-4 overflow-y-auto p-4 bg-[#F7F8FA] dark:text-white dark:bg-[#020817]",
         isLoading && "bg-white",
         !latestConversation && "bg-[#F7F8FA] overflow-y-auto"
       )}

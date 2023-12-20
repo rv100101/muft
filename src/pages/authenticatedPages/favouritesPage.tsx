@@ -173,7 +173,7 @@ const FavouritesPage = () => {
               onChange={(e) => {
                 setSearch(e.target.value);
               }}
-              className="h-4 border-0 focus:outline-0 w-full"
+              className="h-4 border-0 focus:outline-0 w-full dark:text-white dark:bg-[#020817]"
               placeholder="Search"
             />
             <SearchIcon color="gray" />
