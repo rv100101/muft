@@ -91,12 +91,16 @@ export const ProfileFormSchema = z.object({
       required_error: "Height is required",
       invalid_type_error: "Height must be a number",
     })
+    .min(55, { message: "Minimum height is 55 cm" })
+    .max(260, { message: "Max height is 260 cm" })
     .nonnegative({ message: "Invalid height" }),
   weight: z
     .number({
       required_error: "Weight is required",
       invalid_type_error: "Weight must be a number",
     })
+    .min(25, { message: "Minimum weight is 25 kg" })
+    .max(600, { message: "Max weight is 600 kg" })
     .nonnegative({ message: "Invalid weight" }),
   bodyType: z
     .string({
