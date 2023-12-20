@@ -4,10 +4,12 @@ import { useUserStore } from "@/zustand/auth/user";
 import { getImagePath } from "@/lib/images";
 import { useUserAvatar } from "@/zustand/auth/avatar";
 import ChatMobileNav from "./chatMobileNav";
+import { useSenderInfo } from "@/zustand/messaging/senderData";
 
 const ChatHistory = () => {
   const user = useUserStore((state) => state.user);
   const userPhoto = useUserAvatar((state) => state.gallery_uuid);
+  const senderInfo = useSenderInfo((state) => state.senderInfo);
   return (
     <>
       <ChatMobileNav />
@@ -19,7 +21,7 @@ const ChatHistory = () => {
               src={getImagePath(userPhoto, user?.gender, user?.member_uuid)}
               alt="avatar"
             />
-            <p className="font-semibold">{user?.first_name}</p>
+            <p className="font-semibold">{senderInfo?.nickname}</p>
           </div>
           <SearchInput />
         </div>

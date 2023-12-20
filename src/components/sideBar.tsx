@@ -124,13 +124,11 @@ const SideBar = () => {
               Terms of Service
             </a>
           </Link>
-          {
-            // <Link onClick={scrollToTop} href="/release-notes">
-            //   <a className="hover:text-slate-700 text-xs text-black">
-            //     Release Notes
-            //   </a>
-            // </Link>
-          }
+          <Link onClick={scrollToTop} href="/release-notes">
+            <a className="hover:text-slate-700 text-xs text-black">
+              Release Notes
+            </a>
+          </Link>
           <hr />
           <Dialog>
             <DialogTrigger>

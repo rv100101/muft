@@ -55,13 +55,14 @@ const ChatList = () => {
     }
   }, [data, selectedConversation, setConversation, setSenderUserInfo, user]);
 
+  // .sort((a, b) => {
+  //       const dateA: Date = new Date(a.created_date);
+  //       const dateB: Date = new Date(b.created_date);
+  //       return dateA.getTime() - dateB.getTime();
+  //     })
+
   const conversations = data
-    ?.sort((a, b) => {
-      const dateA: Date = new Date(a.created_date);
-      const dateB: Date = new Date(b.created_date);
-      return dateA.getTime() - dateB.getTime();
-    })
-    .filter((conversation) =>
+    ?.filter((conversation) =>
       searchFilterValue.length === 0 ? true : conversation.recipient_nickname
         .toLowerCase()
         .includes(searchFilterValue.toLowerCase())
