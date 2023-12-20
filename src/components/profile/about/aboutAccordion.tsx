@@ -47,8 +47,7 @@ import { convertJsonToConvertedObject } from "@/lib/utils";
 import { useEffectOnce } from "usehooks-ts";
 const AboutAccordion = ({ userId }: { userId: number }) => {
   const [location] = useLocation();
-  const { selectedCountry, setSelectedCountry } = useSelectedCountryStore(
-  );
+  const { selectedCountry, setSelectedCountry } = useSelectedCountryStore();
   const { data: profileAboutContent, isSaving } = profileAboutContentStore();
   // const user = useUserStore((state) => state.user);
   const {
@@ -102,11 +101,11 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
     // enabled: !(location.startsWith("/profile") && profileData),
     queryKey: ["profileContent", userId],
     queryFn: async () => {
-      const additionalInformation =
-        await profileContentQuery.fetchAdditionalInformation(userId);
+      const additionalInformation = await profileContentQuery
+        .fetchAdditionalInformation(userId);
       const memberDetails = await profileContentQuery.fetchMemberDetails(
         userId,
-        userId
+        userId,
       );
       const convertedDetails = convertJsonToConvertedObject(memberDetails);
       const details = {
@@ -219,7 +218,10 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
     queryKey: ["countries"],
     onSuccess: (data: Country[]) => {
       setCountries(data);
-      setSelectedCountry(data.filter((c) => c.country_name == profileAboutContent!.country)[0].country_code)
+      setSelectedCountry(
+        data.filter((c) => c.country_name == profileAboutContent!.country)[0]
+          .country_code,
+      );
     },
   });
 
