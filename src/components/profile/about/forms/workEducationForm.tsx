@@ -1,7 +1,7 @@
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
-import { Briefcase, CircleDollarSign, GraduationCap, User } from "lucide-react";
+import { Briefcase, CircleDollarSign, User } from "lucide-react";
 import FormSkeletonLoading from "./formSkeletonLoading";
-import { Education, EmploymentStatus, Income } from "@/types/profile";
+import { EmploymentStatus, Income } from "@/types/profile";
 import selectOptions from "@/zustand/profile/selectData/selectOptions";
 import {
   Select,
@@ -24,7 +24,7 @@ const WorkEducationForm = () => {
   const { control } = useFormContext();
   const { data, editMode, isLoading } = profileAboutContentStore();
 
-  const { educations, incomes, occupations, employmentStatus } = selectOptions();
+  const { incomes, occupations, employmentStatus } = selectOptions();
 
   const user = useUserStore((state) => state.user);
 
@@ -40,62 +40,6 @@ const WorkEducationForm = () => {
 
   return (
     <div className="flex flex-col w-full space-y-4">
-      <div className="flex flex-row justify-between w-full px-5">
-        {editMode || !user?.profile_completed ? (
-          <div className="space-y-1 hover:cursor-pointer w-full items-center">
-            <FormField
-              name="education"
-              render={({ field }) => {
-                console.log(field);
-                return (
-                  <FormItem>
-                    <FormLabel className="text-primary" htmlFor="education">
-                      Education
-                    </FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder={"Select education"} />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {educations &&
-                          educations.map((data: Education, index) => {
-                            const { education_name: education } = data;
-                            return (
-                              <SelectItem value={education} key={index}>
-                                {education}
-                              </SelectItem>
-                            );
-                          })}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                );
-              }}
-              control={control}
-            />
-          </div>
-        ) : (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
-            <GraduationCap
-              color="#ff5c9d"
-              size={30}
-              className="hover:cursor-pointer mt-2 mr-3"
-            />
-            <div className="flex flex-col justify-start space-y-1">
-              <p className="font-bold text-base text-primary">
-                {data!.education ? data!.education : "Add education info"}
-              </p>
-              <p className="text-[#727272] text-xs">Educational Attainment</p>
-            </div>
-          </div>
-        )}
-      </div>
       <div className="flex flex-row justify-between w-full px-5">
         {editMode || !user?.profile_completed ? (
           <div className="space-y-1 hover:cursor-pointer w-full items-center">
@@ -150,7 +94,7 @@ const WorkEducationForm = () => {
                   ? data!.employmentStatus
                   : "Add Employment Status"}
               </p>
-              <p className="text-[#727272] text-xs">Job Title</p>
+              <p className="text-[#727272] text-xs">Status</p>
             </div>
           </div>
         )}
@@ -215,7 +159,7 @@ const WorkEducationForm = () => {
                   ? data!.occupationTitle
                   : "Add Job Title"}
               </p>
-              <p className="text-[#727272] text-xs">Job Title</p>
+              <p className="text-[#727272] text-xs">Occupation</p>
             </div>
           </div>
         )}
@@ -271,7 +215,7 @@ const WorkEducationForm = () => {
               <p className="font-bold text-base text-primary">
                 {data!.income ? data!.income : "Add income range"}
               </p>
-              <p className="text-[#727272] text-xs">Income</p>
+              <p className="text-[#727272] text-xs">Monthly Income</p>
             </div>
           </div>
         )}

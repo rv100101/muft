@@ -1,7 +1,6 @@
 import { useState } from "react";
 import BasicInformationForm from "./forms/basicInformationForm";
 import WorkEducationForm from "./forms/workEducationForm";
-import DetailsForm from "./forms/detailsForm";
 import LocationForm from "./forms/locationForm";
 import {
   AlertCircle,
@@ -21,10 +20,18 @@ import {
 } from "lucide-react";
 import ContentLoadingSkeleton from "./contentLoadingSkeleton";
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
-import AdditionalInformatinForm from "./forms/additionalInformationForm";
 import useAboutErrorsStrore from "@/zustand/profile/about/useAboutErrorsStore";
 import { cn } from "@/lib/utils";
 import { useLocation } from "wouter";
+import LanguagesForm from "./forms/languagesForm";
+import BackgroundForm from "./forms/backgroundForm";
+import AppearanceForm from "./forms/appearanceForm";
+import LifestyleForm from "./forms/lifestyleForm";
+import PetsForm from "./forms/petsForm";
+import FavoriteFoodForm from "./forms/favoriteFoodForm";
+import HealthForm from "./forms/healthForm";
+import MaritalStatusForm from "./forms/maritalStatusForm";
+import InterestsForm from "./forms/interestsForm";
 
 const AboutAccordionContent = () => {
   const [location] = useLocation();
@@ -423,14 +430,35 @@ const AboutAccordionContent = () => {
         {/* Location */}
         {activeTabs[2] && <LocationForm />}
 
-        {/* Work and Education */}
-        {activeTabs[2] && <WorkEducationForm />}
+        {/* Background */}
+        {activeTabs[3] && <BackgroundForm />}
 
         {/* Details */}
-        {activeTabs[3] && <DetailsForm />}
+        {activeTabs[4] && <LanguagesForm />}
 
-        {/* Addition Information */}
-        {activeTabs[5] && <AdditionalInformatinForm />}
+        {/* Appearance */}
+        {activeTabs[5] && <AppearanceForm />}
+
+        {/* Lifestyle */}
+        {activeTabs[6] && <LifestyleForm />}
+
+        {/* Pets */}
+        {activeTabs[7] && <PetsForm />}
+
+        {/* Favorite Foods */}
+        {activeTabs[8] && <FavoriteFoodForm />}
+
+        {/* Health */}
+        {activeTabs[9] && <HealthForm />}
+
+        {/* Marital status */}
+        {activeTabs[10] && <MaritalStatusForm />}
+
+        {/* Marital status */}
+        {activeTabs[11] && <WorkEducationForm />}
+
+        {/* Marital status */}
+        {activeTabs[12] && <InterestsForm />}
       </div>
     </div>
   );

@@ -162,7 +162,7 @@ const LocationForm = () => {
               <p className="font-bold text-base text-primary">
                 {data!.region ? data!.region : "Add Region Info"}
               </p>
-              <p className="text-[#727272] text-xs">Region</p>
+              <p className="text-[#727272] text-xs">State</p>
             </div>
           </div>
         )}

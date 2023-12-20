@@ -1,6 +1,7 @@
+
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
 import {
-  Drumstick,
+  BookOpenCheck,
 } from "lucide-react";
 import {
 } from "@/components/ui/form";
@@ -8,9 +9,9 @@ import FormSkeletonLoading from "./formSkeletonLoading";
 import {
 } from "@/components/ui/select";
 import { useUserStore } from "@/zustand/auth/user";
-import FavoriteFoodField from "./favoriteFoodsField";
+import InterestField from "./interestField";
 
-const FavoriteFoodForm = () => {
+const InterestsForm = () => {
   const isLoading = profileAboutContentStore((state) => state.isLoading);
   const data = profileAboutContentStore((state) => state.data);
   const editMode = profileAboutContentStore((state) => state.editMode);
@@ -30,12 +31,12 @@ const FavoriteFoodForm = () => {
         {editMode || !user?.profile_completed
           ? (
             <div className="space-y-1 hover:cursor-pointer w-full items-center">
-              <FavoriteFoodField />
+              <InterestField />
             </div>
           )
           : (
             <div className="flex flex-row space-x-2 hover:cursor-pointer">
-              <Drumstick
+              <BookOpenCheck
                 color="#ff5c9d"
                 size={30}
                 className="hover:cursor-pointer mt-2 mr-3"
@@ -44,18 +45,19 @@ const FavoriteFoodForm = () => {
                 <p className="font-bold text-base text-primary">
                   {[
                     ...new Set(
-                      data?.favoriteFood.map((fave) => fave.favorite_food_name),
+                      data?.interest.map((interest) => interest.interest_name),
                     ),
-                  ].join(", ") ?? "Add favorite foods"}
+                  ].join(", ") ?? "Add interests"}
                 </p>
-                <p className="text-[#727272] text-xs">Favorite Food</p>
+                <p className="text-[#727272] text-xs">Interests</p>
               </div>
             </div>
           )}
       </div>
 
+
     </div>
   );
 };
 
-export default FavoriteFoodForm;
+export default InterestsForm;
