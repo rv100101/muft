@@ -34,21 +34,29 @@ const SignUpPage = () => {
     },
     validationSchema: Yup.object({
       first_name: Yup.string()
+        .matches(/^[a-zA-Z]+$/, "Password must only contain letters A-Z")
         .matches(/^[^\s\d][^\d]*$/, "Invalid name")
         .max(12, "Name is too long")
         .required("First name is required"),
       last_name: Yup.string()
+        .matches(/^[a-zA-Z]+$/, "Password must only contain letters A-Z")
         .matches(/^[^\s\d][^\d]*$/, "Invalid name")
         .max(12, "Name is too long")
         .required("Last name is required"),
       email: Yup.string()
-        .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Invalid email address")
+        .matches(
+          /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+          "Invalid email address"
+        )
         .email("Invalid email address")
         .required("Email is required"),
       password: Yup.string()
         .required("Password is required")
         .min(10, "Password must be at least 10 characters")
-        .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z0-9\W_]{10,25}$/, "Password must contain alphanumeric and special characters"),
+        .matches(
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z0-9\W_]{10,25}$/,
+          "Password must contain alphanumeric and special characters"
+        ),
     }),
     onSubmit: (values: FormDataType) => signUp.mutate(values),
   });
@@ -97,8 +105,7 @@ const SignUpPage = () => {
       <div className="h-[calc(100vh-70px)] md:h-[calc(100vh-88px)] justify-center items-center flex lg:gap-4 w-full lg:px-32 border-t">
         <div className="flex h-min w-[460px] flex-col items-center md:shadow-xl rounded-lg p-4 md:border">
           <div className="flex w-full justify-end py-2">
-            {
-              /* <img
+            {/* <img
               src={helpIcon}
               alt="help icon"
               className="w-8 md:w-8 hover:cursor-pointer"
@@ -108,8 +115,7 @@ const SignUpPage = () => {
             <img className="w-36" src={logo} alt="muffin-logo" />
             <p className="text-[#1B2950] text-md mt-4 mb-4 font-bold">
               Welcome!
-            </p> */
-            }
+            </p> */}
           </div>
           {/* form */}
           <form
@@ -119,19 +125,18 @@ const SignUpPage = () => {
           >
             {/* first_name */}
             <div className="flex flex-col space-y-1 px-5">
-              {
-                /* <label
+              {/* <label
                 htmlFor="first_name"
                 className="text-sm text-semibold ml-5 mb-2"
               >
                 First name
-              </label> */
-              }
+              </label> */}
               <div
-                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${formik.touched.first_name && formik.errors.first_name
-                  ? "border-rose-500"
-                  : ""
-                  }`}
+                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${
+                  formik.touched.first_name && formik.errors.first_name
+                    ? "border-rose-500"
+                    : ""
+                }`}
               >
                 <UserIcon color="#98A2B3" size={20} className="mt-1" />
                 <input
@@ -146,37 +151,35 @@ const SignUpPage = () => {
                 <InfoIcon
                   color="#D92D20"
                   size={20}
-                  className={`mt-1 ${formik.touched.first_name && formik.errors.first_name
-                    ? "visible"
-                    : "hidden"
-                    }`}
+                  className={`mt-1 ${
+                    formik.touched.first_name && formik.errors.first_name
+                      ? "visible"
+                      : "hidden"
+                  }`}
                 />
               </div>
-              {formik.touched.first_name && formik.errors.first_name
-                ? (
-                  <div className="error text-red-500 text-sm ml-5 pt-2">
-                    {formik.errors.first_name}
-                  </div>
-                )
-                : null}
+              {formik.touched.first_name && formik.errors.first_name ? (
+                <div className="error text-red-500 text-sm ml-5 pt-2">
+                  {formik.errors.first_name}
+                </div>
+              ) : null}
             </div>
 
             {/* last_name */}
             <div className="flex flex-col space-y-1 px-5">
-              {
-                /* <label
+              {/* <label
                 htmlFor="last_name"
                 className="text-sm text-semibold  ml-5 mb-2"
               >
                 Last name
-              </label> */
-              }
+              </label> */}
 
               <div
-                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${formik.touched.last_name && formik.errors.last_name
-                  ? "border-rose-500"
-                  : ""
-                  }`}
+                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${
+                  formik.touched.last_name && formik.errors.last_name
+                    ? "border-rose-500"
+                    : ""
+                }`}
               >
                 <UserIcon color="#98A2B3" size={20} className="mt-1" />
                 <input
@@ -191,35 +194,33 @@ const SignUpPage = () => {
                 <InfoIcon
                   color="#D92D20"
                   size={20}
-                  className={`mt-1 ${formik.touched.last_name && formik.errors.last_name
-                    ? "visible"
-                    : "hidden"
-                    }`}
+                  className={`mt-1 ${
+                    formik.touched.last_name && formik.errors.last_name
+                      ? "visible"
+                      : "hidden"
+                  }`}
                 />
               </div>
-              {formik.touched.last_name && formik.errors.last_name
-                ? (
-                  <div className="error text-red-500 text-sm ml-5 pt-2">
-                    {formik.errors.last_name}
-                  </div>
-                )
-                : null}
+              {formik.touched.last_name && formik.errors.last_name ? (
+                <div className="error text-red-500 text-sm ml-5 pt-2">
+                  {formik.errors.last_name}
+                </div>
+              ) : null}
             </div>
             {/* email */}
             <div className="flex flex-col space-y-1 px-5">
-              {
-                /* <label
+              {/* <label
                 htmlFor="email"
                 className="text-sm text-semibold  ml-5 mb-2"
               >
                 Email
-              </label> */
-              }
+              </label> */}
               <div
-                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${formik.touched.email && formik.errors.email
-                  ? "border-rose-500"
-                  : ""
-                  }`}
+                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${
+                  formik.touched.email && formik.errors.email
+                    ? "border-rose-500"
+                    : ""
+                }`}
               >
                 <MailIcon color="#98A2B3" size={20} className="mt-1" />
                 <input
@@ -234,61 +235,61 @@ const SignUpPage = () => {
                 <InfoIcon
                   color="#D92D20"
                   size={20}
-                  className={`mt-1 ${formik.touched.email && formik.errors.email
-                    ? "visible"
-                    : "hidden"
-                    }`}
+                  className={`mt-1 ${
+                    formik.touched.email && formik.errors.email
+                      ? "visible"
+                      : "hidden"
+                  }`}
                 />
               </div>
-              {formik.touched.email && formik.errors.email
-                ? (
-                  <div className="error text-red-500 ml-5 text-sm pt-2">
-                    {formik.errors.email}
-                  </div>
-                )
-                : null}
+              {formik.touched.email && formik.errors.email ? (
+                <div className="error text-red-500 ml-5 text-sm pt-2">
+                  {formik.errors.email}
+                </div>
+              ) : null}
             </div>
 
             {/* password */}
             <div className="flex flex-col space-y-1 px-5">
-              {
-                /* <label
+              {/* <label
                 htmlFor="password"
                 className="text-sm text-semibold ml-5 mb-2"
               >
                 Password
-              </label> */
-              }
+              </label> */}
               <div
-                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${formik.touched.password && formik.errors.password
-                  ? "border-rose-500"
-                  : ""
-                  }`}
+                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${
+                  formik.touched.password && formik.errors.password
+                    ? "border-rose-500"
+                    : ""
+                }`}
               >
                 <LockIcon color="#98A2B3" size={20} className="mt-1" />
                 <input
                   className="appearance-none border-0 rounded-full py-2 px-5 text-normal focus:outline-0 w-full"
                   placeholder="Password"
-                  type={showPassword ? 'text' : 'password'}
+                  type={showPassword ? "text" : "password"}
                   {...formik.getFieldProps("password")}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 />
                 <button
-                  className={`mt-1 ${formik.touched.password && formik.errors.password
-                    && "ml-2 text-[#D92D20]"
-                    }`}
-                  onClick={() => setShowPassword(prev => !prev)} type="button">
+                  className={`mt-1 ${
+                    formik.touched.password &&
+                    formik.errors.password &&
+                    "ml-2 text-[#D92D20]"
+                  }`}
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  type="button"
+                >
                   {showPassword ? <EyeOff /> : <Eye />}
                 </button>
               </div>
-              {formik.touched.password && formik.errors.password
-                ? (
-                  <div className="error text-red-500 ml-5 text-sm pt-2">
-                    {formik.errors.password}
-                  </div>
-                )
-                : null}
+              {formik.touched.password && formik.errors.password ? (
+                <div className="error text-red-500 ml-5 text-sm pt-2">
+                  {formik.errors.password}
+                </div>
+              ) : null}
             </div>
             {/* button */}
             <div className="px-8">
@@ -297,14 +298,14 @@ const SignUpPage = () => {
                 disabled={isLoading}
                 className={cn(
                   "text-white w-full rounded-full hover:bg-[#FF599B]/90",
-                  isLoading ? "bg-[#FF8AB3]" : "bg-primary",
+                  isLoading ? "bg-[#FF8AB3]" : "bg-primary"
                 )}
               >
-                {isLoading
-                  ? <Loader2 className="ml-2 h-full w-full animate-spin" />
-                  : (
-                    "Sign Up"
-                  )}
+                {isLoading ? (
+                  <Loader2 className="ml-2 h-full w-full animate-spin" />
+                ) : (
+                  "Sign Up"
+                )}
               </Button>
             </div>
           </form>

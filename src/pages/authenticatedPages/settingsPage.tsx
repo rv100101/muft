@@ -1,5 +1,5 @@
 import AuthenticatedLayout from "./layout";
-import { useState } from "react";
+// import { useState } from "react";
 import DisplayContent from "@/components/settings/display/displayContent";
 import PushNotifcationContent from "@/components/settings/notification/pushNotifcationContent";
 import DeactivateAccountContent from "@/components/settings/account/deactivateAccountContent";
@@ -7,26 +7,26 @@ import MyAccountContent from "@/components/settings/account/myAccountContent";
 import SubscriptionContent from "@/components/settings/subscription/subscriptionContent";
 
 const SettingsPage = () => {
-  const [activeTabs, setActiveTabs] = useState([
-    false,
-    false,
-    true,
-    false,
-    false,
-    false,
-  ]);
-  const toggleTab = (index: number) => {
-    const newActiveTabs = activeTabs.map((_, i) => i === index);
-    setActiveTabs(newActiveTabs);
-  };
+  // const [activeTabs, setActiveTabs] = useState([
+  //   false,
+  //   false,
+  //   true,
+  //   false,
+  //   false,
+  //   false,
+  // ]);
+  // const toggleTab = (index: number) => {
+  //   const newActiveTabs = activeTabs.map((_, i) => i === index);
+  //   setActiveTabs(newActiveTabs);
+  // };
   return (
     <AuthenticatedLayout>
       <div className="w-full flex flex-col h-full items-center justify-start">
         <div className="flex flex-row w-3/4 border justify-between lg:p-5 py-2 items-center lg:border-b">
           <p className="select-none font-semibold w-full">SETTINGS</p>
         </div>
-        <div className="flex overflow-y-scroll items-start w-3/4 h-full border-r">
-          <div className="flex flex-col border-x h-full px-3 py-5 justify-start">
+        <div className="flex overflow-y-scroll items-start w-3/4 h-full border">
+          {/* <div className="flex flex-col border-x h-full px-3 py-5 justify-start">
             <p
               className={`select-none w-full text-[#727272] px-3 py-2 text-sm  hover:cursor-pointer ${activeTabs[1] ? "bg-[#FFDEEB] text-[#FF599B]  rounded-md" : ""
                 }`}
@@ -62,22 +62,28 @@ const SettingsPage = () => {
             >
               Deactivate your Account
             </p>
-          </div>
-          <div className="lg:w-full lg:mt-0 mt-5">
+          </div> */}
+          <div className="lg:w-full lg:mt-0 mt-5  h-full">
             {/* basic info */}
-            {activeTabs[1] && <SubscriptionContent />}
+            {/* {activeTabs[1] && <SubscriptionContent />} */}
 
             {/* Work and Education */}
-            {activeTabs[2] && <MyAccountContent />}
+            {/* {activeTabs[2] && <MyAccountContent />} */}
 
             {/* Details */}
-            {activeTabs[3] && <DisplayContent />}
+            {/* {activeTabs[3] && <DisplayContent />} */}
 
             {/* Location */}
-            {activeTabs[4] && <PushNotifcationContent />}
+            {/* {activeTabs[4] && <PushNotifcationContent />} */}
 
             {/* Addition Information */}
-            {activeTabs[5] && <DeactivateAccountContent />}
+            {/* {activeTabs[5] && <DeactivateAccountContent />} */}
+
+            {/* <SubscriptionContent /> */}
+            <MyAccountContent />
+            <DisplayContent />
+            <PushNotifcationContent />
+            <DeactivateAccountContent />
           </div>
         </div>
       </div>

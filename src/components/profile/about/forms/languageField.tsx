@@ -28,12 +28,16 @@ export default function LanguageField() {
   const [selected, setSelected] = React.useState<Languages[]>(
     watch("language")
   );
-  const [selectables, setSelectables] = React.useState<Languages[]>([])
+  const [selectables, setSelectables] = React.useState<Languages[]>([]);
   const [inputValue, setInputValue] = React.useState("");
   const { languages } = selectOptions();
 
   useUpdateEffect(() => {
-    const selectables = removeExistingData(languages, selected, 'language_name');
+    const selectables = removeExistingData(
+      languages,
+      selected,
+      "language_name"
+    );
     setSelectables(selectables);
   }, [selected]);
 
@@ -79,12 +83,9 @@ export default function LanguageField() {
     []
   );
 
-
   React.useEffect(() => {
     setValue("language", selected);
   }, [selected, setValue]);
-
-  console.log(selected);
 
   useEffectOnce(() => {
     setSelected(watch("language"));

@@ -46,8 +46,6 @@ const PostItem = ({
   );
 
   useEffect(() => {
-    console.log("isFAv: ", isFavorite);
-    console.log("isLiked: ", isLiked);
     toggleIsFavored(isFavorite);
     toggleIsLiked(isLiked);
   }, [toggleIsFavored, toggleIsLiked, isFavorite, isLiked]);
