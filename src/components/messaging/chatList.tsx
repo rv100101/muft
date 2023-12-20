@@ -112,7 +112,7 @@ const ChatList = () => {
             />
             <div className="w-full flex flex-col justify-start">
               <div className="flex justify-between items-center w-full">
-                <p className="font-semibold">
+                <p className={cn(!conversation.is_read && "font-semibold")}>
                   {conversation.listed_nickname}
                 </p>
                 <p className="text-xs">
