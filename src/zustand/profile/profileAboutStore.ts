@@ -6,7 +6,6 @@ export type ProfileAbout = {
   gender: string;
   nationality: string;
   birthInfo: string;
-  age: string;
   religion: string;
   ethnicity: string;
   maritalStatus: string;
@@ -34,6 +33,7 @@ export type ProfileAbout = {
   smoking: string;
   livingStatus: string;
   car: string;
+  age: number;
 };
 
 interface ProfileAboutState {

@@ -5,12 +5,19 @@ import DetailsForm from "./forms/detailsForm";
 import LocationForm from "./forms/locationForm";
 import {
   AlertCircle,
-  Backpack,
+  BookHeart,
+  BookOpen,
   Briefcase,
   Contact,
   Globe,
-  Package,
+  HeartPulse,
+  Languages,
+  PawPrint,
+  Ribbon,
+  Smile,
+  Sprout,
   User2,
+  Utensils,
 } from "lucide-react";
 import ContentLoadingSkeleton from "./contentLoadingSkeleton";
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
@@ -60,12 +67,14 @@ const AboutAccordionContent = () => {
 
   return (
     <div className="flex lg:flex-row flex-col mb-5">
-      <div className="flex flex-row justify-around text-sm lg:justify-start lg:w-1/3 w-full lg:block">
+      <div className="grid grid-cols-6 grid-rows-2 sm:flex sm:flex-row justify-around text-sm lg:justify-start lg:w-1/3 w-full lg:block">
         <div
           className={
-            activeTabs[1]
-              ? "rounded-md bg-[#FFDEEB] py-2 px-2 my-2 text-[#FF599B]"
-              : "text-[#727272] py-2 px-2 my-2"
+            cn('flex justify-center items-center sm:block',
+              activeTabs[1]
+                ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B]"
+                : "text-[#727272] py-2 px-2 my-2"
+            )
           }
           onClick={() => toggleTab(1)}
         >
@@ -83,16 +92,17 @@ const AboutAccordionContent = () => {
             )}
           </p>
           <User2
-            // color="#FF599B"
             size={20}
             className="hover:cursor-pointer lg:hidden"
           />
         </div>
         <div
           className={
-            activeTabs[2]
-              ? "rounded-md bg-[#FFDEEB] py-2 px-2 my-2 text-[#FF599B]"
-              : "text-[#727272] py-2 px-2 my-2"
+            cn('flex justify-center items-center sm:block',
+              activeTabs[2]
+                ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B]"
+                : "text-[#727272] py-2 px-2 my-2"
+            )
           }
           onClick={() => toggleTab(2)}
         >
@@ -117,9 +127,11 @@ const AboutAccordionContent = () => {
         </div>
         <div
           className={
-            activeTabs[3]
-              ? "rounded-md bg-[#FFDEEB] py-2 px-2 my-2 text-[#FF599B]"
-              : "text-[#727272] py-2 px-2 my-2"
+            cn('flex justify-center items-center sm:block',
+              activeTabs[3]
+                ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B]"
+                : "text-[#727272] py-2 px-2 my-2"
+            )
           }
           onClick={() => toggleTab(3)}
         >
@@ -136,7 +148,7 @@ const AboutAccordionContent = () => {
               </span>
             )}
           </p>
-          <Backpack
+          <BookOpen
             // color="#FF599B"
             size={20}
             className="hover:cursor-pointer lg:hidden"
@@ -144,9 +156,11 @@ const AboutAccordionContent = () => {
         </div>
         <div
           className={
-            activeTabs[4]
-              ? "rounded-md bg-[#FFDEEB] py-2 px-2 my-2 text-[#FF599B]"
-              : "text-[#727272] py-2 px-2 my-2"
+            cn('flex justify-center items-center sm:block',
+              activeTabs[4]
+                ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B]"
+                : "text-[#727272] py-2 px-2 my-2"
+            )
           }
           onClick={() => toggleTab(4)}
         >
@@ -163,7 +177,7 @@ const AboutAccordionContent = () => {
               </span>
             )}
           </p>
-          <Backpack
+          <Languages
             // color="#FF599B"
             size={20}
             className="hover:cursor-pointer lg:hidden"
@@ -171,9 +185,11 @@ const AboutAccordionContent = () => {
         </div>
         <div
           className={
-            activeTabs[5]
-              ? "rounded-md bg-[#FFDEEB] py-2 px-2 my-2 text-[#FF599B]"
-              : "text-[#727272] py-2 px-2 my-2"
+            cn('flex justify-center items-center sm:block',
+              activeTabs[5]
+                ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B]"
+                : "text-[#727272] py-2 px-2 my-2"
+            )
           }
           onClick={() => toggleTab(5)}
         >
@@ -190,7 +206,7 @@ const AboutAccordionContent = () => {
               </span>
             )}
           </p>
-          <Backpack
+          <Smile
             // color="#FF599B"
             size={20}
             className="hover:cursor-pointer lg:hidden"
@@ -198,9 +214,11 @@ const AboutAccordionContent = () => {
         </div>
         <div
           className={
-            activeTabs[6]
-              ? "rounded-md bg-[#FFDEEB] py-2 px-2 my-2 text-[#FF599B]"
-              : "text-[#727272] py-2 px-2 my-2"
+            cn('flex justify-center items-center sm:block',
+              activeTabs[6]
+                ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B]"
+                : "text-[#727272] py-2 px-2 my-2"
+            )
           }
           onClick={() => toggleTab(6)}
         >
@@ -217,7 +235,7 @@ const AboutAccordionContent = () => {
               </span>
             )}
           </p>
-          <Backpack
+          <Sprout
             // color="#FF599B"
             size={20}
             className="hover:cursor-pointer lg:hidden"
@@ -225,9 +243,11 @@ const AboutAccordionContent = () => {
         </div>
         <div
           className={
-            activeTabs[7]
-              ? "rounded-md bg-[#FFDEEB] py-2 px-2 my-2 text-[#FF599B]"
-              : "text-[#727272] py-2 px-2 my-2"
+            cn('flex justify-center items-center sm:block',
+              activeTabs[7]
+                ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B]"
+                : "text-[#727272] py-2 px-2 my-2"
+            )
           }
           onClick={() => toggleTab(7)}
         >
@@ -244,7 +264,7 @@ const AboutAccordionContent = () => {
               </span>
             )}
           </p>
-          <Backpack
+          <PawPrint
             // color="#FF599B"
             size={20}
             className="hover:cursor-pointer lg:hidden"
@@ -252,9 +272,11 @@ const AboutAccordionContent = () => {
         </div>
         <div
           className={
-            activeTabs[8]
-              ? "rounded-md bg-[#FFDEEB] py-2 px-2 my-2 text-[#FF599B]"
-              : "text-[#727272] py-2 px-2 my-2"
+            cn('flex justify-center items-center sm:block',
+              activeTabs[8]
+                ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B]"
+                : "text-[#727272] py-2 px-2 my-2"
+            )
           }
           onClick={() => toggleTab(8)}
         >
@@ -271,7 +293,7 @@ const AboutAccordionContent = () => {
               </span>
             )}
           </p>
-          <Backpack
+          <Utensils
             // color="#FF599B"
             size={20}
             className="hover:cursor-pointer lg:hidden"
@@ -279,9 +301,11 @@ const AboutAccordionContent = () => {
         </div>
         <div
           className={
-            activeTabs[9]
-              ? "rounded-md bg-[#FFDEEB] py-2 px-2 my-2 text-[#FF599B]"
-              : "text-[#727272] py-2 px-2 my-2"
+            cn('flex justify-center items-center sm:block',
+              activeTabs[9]
+                ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B]"
+                : "text-[#727272] py-2 px-2 my-2"
+            )
           }
           onClick={() => toggleTab(9)}
         >
@@ -298,7 +322,7 @@ const AboutAccordionContent = () => {
               </span>
             )}
           </p>
-          <Backpack
+          <HeartPulse
             // color="#FF599B"
             size={20}
             className="hover:cursor-pointer lg:hidden"
@@ -306,9 +330,11 @@ const AboutAccordionContent = () => {
         </div>
         <div
           className={
-            activeTabs[10]
-              ? "rounded-md bg-[#FFDEEB] py-2 px-2 my-2 text-[#FF599B]"
-              : "text-[#727272] py-2 px-2 my-2"
+            cn('flex justify-center items-center sm:block',
+              activeTabs[10]
+                ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B]"
+                : "text-[#727272] py-2 px-2 my-2"
+            )
           }
           onClick={() => toggleTab(10)}
         >
@@ -325,7 +351,7 @@ const AboutAccordionContent = () => {
               </span>
             )}
           </p>
-          <Briefcase
+          <Ribbon
             // color="#FF599B"
             size={20}
             className="hover:cursor-pointer lg:hidden"
@@ -333,9 +359,11 @@ const AboutAccordionContent = () => {
         </div>
         <div
           className={
-            activeTabs[11]
-              ? "rounded-md bg-[#FFDEEB] py-2 px-2 my-2 text-[#FF599B]"
-              : "text-[#727272] py-2 px-2 my-2"
+            cn('flex justify-center items-center sm:block',
+              activeTabs[11]
+                ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B]"
+                : "text-[#727272] py-2 px-2 my-2"
+            )
           }
           onClick={() => toggleTab(11)}
         >
@@ -348,7 +376,7 @@ const AboutAccordionContent = () => {
             Employment{" "}
             {detailsInfoHasErrors && (
               <span>
-                <AlertCircle className="h-4 inline-flex text-red-500" />
+                <Briefcase className="h-4 inline-flex text-red-500" />
               </span>
             )}
           </p>
@@ -360,9 +388,11 @@ const AboutAccordionContent = () => {
         </div>
         <div
           className={
-            activeTabs[12]
-              ? "rounded-md bg-[#FFDEEB] py-2 px-2 my-2 text-[#FF599B]"
-              : "text-[#727272] py-2 px-2 my-2"
+            cn('flex justify-center items-center sm:block',
+              activeTabs[12]
+                ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B]"
+                : "text-[#727272] py-2 px-2 my-2"
+            )
           }
           onClick={() => toggleTab(12)}
         >
@@ -379,7 +409,7 @@ const AboutAccordionContent = () => {
               </span>
             )}
           </p>
-          <Package
+          <BookHeart
             // color="#FF599B"
             size={20}
             className="hover:cursor-pointer lg:hidden"

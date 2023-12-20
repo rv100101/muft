@@ -12,7 +12,7 @@ export const scrollToTop = () => {
   });
 };
 interface ProfileDetails {
-  religion: string ;
+  religion: string;
   gender: string;
   nationality: string;
   birthInfo: string;
@@ -40,6 +40,7 @@ interface ProfileDetails {
   car: string;
   member_uuid: string;
   gallery_uuid: string | null;
+  age: string;
 }
 
 export function convertJsonToConvertedObject(
@@ -73,7 +74,8 @@ export function convertJsonToConvertedObject(
     smoking: jsonResponse.smoking || "",
     livingStatus: jsonResponse.living_status || "",
     car: jsonResponse.car || "",
-    gallery_uuid: jsonResponse.gallery_uuid?? null,
+    gallery_uuid: jsonResponse.gallery_uuid ?? null,
+    age: jsonResponse.age ?? "",
   };
 
   return converted;

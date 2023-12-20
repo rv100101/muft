@@ -6,20 +6,16 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import {
-  Ethnicity,
-  MaritalStatus,
   Nationality,
-  Religion,
 } from "@/types/profile";
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
 import {
   Cake,
-  Church,
   Flag,
   Ghost,
-  Languages as LanguagesIcon,
-  Ribbon,
-  Users,
+  Hash,
+  Hourglass,
+  User2,
 } from "lucide-react";
 import FormSkeletonLoading from "./formSkeletonLoading";
 import { Input } from "@/components/ui/input";
@@ -35,7 +31,6 @@ import { useFormContext } from "react-hook-form";
 import moment from "moment-with-locales-es6";
 import { useUserStore } from "@/zustand/auth/user";
 import { cn } from "@/lib/utils";
-import LanguageField from "./languageField";
 import { useEffectOnce } from "usehooks-ts";
 import { useState } from "react";
 const BasicInformationForm = () => {
@@ -66,7 +61,7 @@ const BasicInformationForm = () => {
   // };
 
   const { control } = useFormContext();
-  const { nationalities, ethnicities, maritalStatus, religion } =
+  const { nationalities } =
     selectOptions();
   const { data, editMode, isLoading, profileData } = profileAboutContentStore();
   const user = useUserStore((state) => state.user);
@@ -82,13 +77,48 @@ const BasicInformationForm = () => {
     );
   }
 
+  console.log(data);
+
   return (
     <div
       className={cn(
         "flex flex-col h-96  w-full space-y-4",
         !user?.profile_completed && "h-full"
       )}
-    >
+    > {!editMode &&
+      <>
+        <div className="flex flex-row justify-between w-full px-5">
+          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+            <Hash
+              color="#ff569a"
+              size={30}
+              className="hover:cursor-pointer mt-2 mr-3"
+            />
+            <div className="flex flex-col justify-start space-y-1">
+              <p className="font-bold text-base text-primary">
+                {user!.member_id}
+              </p>
+              <p className="text-[#727272] text-xs">User ID</p>
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-row justify-between w-full px-5">
+          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+            <User2
+              color="#ff569a"
+              size={30}
+              className="hover:cursor-pointer mt-2 mr-3"
+            />
+            <div className="flex flex-col justify-start space-y-1">
+              <p className="font-bold text-base text-primary">
+                {data?.nickname}
+              </p>
+              <p className="text-[#727272] text-xs">Nickname</p>
+            </div>
+          </div>
+        </div>
+      </>
+      }
       {!user?.profile_completed && (
         <div className="flex flex-row justify-between w-full px-5">
           <div className="space-y-1 my-2 hover:cursor-pointer w-full items-center">
@@ -225,7 +255,7 @@ const BasicInformationForm = () => {
           </div>
         )}
       </div>
-      <div className="flex flex-row justify-between w-full px-5">
+      {/* <div className="flex flex-row justify-between w-full px-5">
         {editMode || !user?.profile_completed ? (
           <div className="space-y-1 hover:cursor-pointer w-full items-center">
             <FormField
@@ -277,7 +307,24 @@ const BasicInformationForm = () => {
             </div>
           </div>
         )}
-      </div>
+      </div> */}
+      {!editMode &&
+        <div className="flex flex-row justify-between w-full px-5">
+          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+            <Hourglass
+              color="#ff569a"
+              size={30}
+              className="hover:cursor-pointer mt-2 mr-3"
+            />
+            <div className="flex flex-col justify-start space-y-1">
+              <p className="font-bold text-base text-primary">
+                {data?.age}
+              </p>
+              <p className="text-[#727272] text-xs">Age</p>
+            </div>
+          </div>
+        </div>
+      }
       <div className="flex flex-row justify-between w-full px-5">
         {editMode || !user?.profile_completed ? (
           <div className="space-y-1 hover:cursor-pointer w-full items-center">
@@ -309,25 +356,27 @@ const BasicInformationForm = () => {
               }}
             />
           </div>
-        ) : (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
-            <Cake
-              color="#ff569a"
-              size={30}
-              className="hover:cursor-pointer mt-2 mr-3"
-            />
-            <div className="flex flex-col justify-start space-y-1">
-              <p className="font-bold text-base text-primary">
-                {data?.birthInfo
-                  ? moment(data?.birthInfo).format("DD MMM yyyy")
-                  : "Add Birthday"}
-              </p>
-              <p className="text-[#727272] text-xs">Birthday</p>
+        ) :
+          editMode &&
+          (
+            <div className="flex flex-row space-x-2 hover:cursor-pointer">
+              <Cake
+                color="#ff569a"
+                size={30}
+                className="hover:cursor-pointer mt-2 mr-3"
+              />
+              <div className="flex flex-col justify-start space-y-1">
+                <p className="font-bold text-base text-primary">
+                  {data?.birthInfo
+                    ? moment(data?.birthInfo).format("DD MMM yyyy")
+                    : "Add Birthday"}
+                </p>
+                <p className="text-[#727272] text-xs">Birthday</p>
+              </div>
             </div>
-          </div>
-        )}
+          )}
       </div>
-      <div className="flex h-full flex-row justify-between w-full px-5">
+      {/* <div className="flex h-full flex-row justify-between w-full px-5">
         {editMode || !user?.profile_completed ? (
           <div className="space-y-1 hover:cursor-pointer w-full items-center">
             <LanguageField />
@@ -349,8 +398,8 @@ const BasicInformationForm = () => {
             </div>
           </div>
         )}
-      </div>
-      <div className="flex flex-row justify-between w-full px-5">
+      </div> */}
+      {/* <div className="flex flex-row justify-between w-full px-5">
         {editMode || !user?.profile_completed ? (
           <div className="space-y-1 hover:cursor-pointer w-full items-center">
             <FormField
@@ -406,67 +455,67 @@ const BasicInformationForm = () => {
             </div>
           </div>
         )}
-      </div>
-      <div className="flex flex-row justify-between w-full px-5">
-        {editMode || !user?.profile_completed ? (
-          <div className="space-y-1 hover:cursor-pointer w-full items-center">
-            <FormField
-              name="maritalStatus"
+      </div> */}
+      {/* <div classname="flex flex-row justify-between w-full px-5">
+        {editmode || !user?.profile_completed ? (
+          <div classname="space-y-1 hover:cursor-pointer w-full items-center">
+            <formfield
+              name="maritalstatus"
               render={({ field }) => {
                 return (
-                  <FormItem>
-                    <FormLabel className="text-primary" htmlFor="maritalStatus">
-                      Marital Status
-                    </FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
+                  <formitem>
+                    <formlabel classname="text-primary" htmlfor="maritalstatus">
+                      marital status
+                    </formlabel>
+                    <select
+                      onvaluechange={field.onchange}
+                      defaultvalue={field.value}
                     >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder={"Select marital status"} />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {maritalStatus.map((data: MaritalStatus) => {
+                      <formcontrol>
+                        <selecttrigger>
+                          <selectvalue placeholder={"select marital status"} />
+                        </selecttrigger>
+                      </formcontrol>
+                      <selectcontent>
+                        {maritalstatus.map((data: maritalstatus) => {
                           const { marital_status_name, marital_status_id } =
                             data;
                           return (
-                            <SelectItem
+                            <selectitem
                               value={marital_status_name}
                               key={marital_status_id}
                             >
                               {marital_status_name}
-                            </SelectItem>
+                            </selectitem>
                           );
                         })}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
+                      </selectcontent>
+                    </select>
+                    <formmessage />
+                  </formitem>
                 );
               }}
               control={control}
             />
           </div>
         ) : (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
-            <Ribbon
+          <div classname="flex flex-row space-x-2 hover:cursor-pointer">
+            <ribbon
               color="#ff569a"
               size={30}
-              className="hover:cursor-pointer mt-2 mr-3"
+              classname="hover:cursor-pointer mt-2 mr-3"
             />
-            <div className="flex flex-col justify-start space-y-1">
-              <p className="font-bold text-base text-primary">
-                {data?.maritalStatus
-                  ? data?.maritalStatus
-                  : "Add Marital Status"}
+            <div classname="flex flex-col justify-start space-y-1">
+              <p classname="font-bold text-base text-primary">
+                {data?.maritalstatus
+                  ? data?.maritalstatus
+                  : "add marital status"}
               </p>
-              <p className="text-[#727272] text-xs">Status</p>
+              <p classname="text-[#727272] text-xs">status</p>
             </div>
           </div>
         )}
-      </div>
+      </div>*/}
     </div>
   );
 };
