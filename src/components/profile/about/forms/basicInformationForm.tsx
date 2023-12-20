@@ -5,18 +5,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Nationality,
-} from "@/types/profile";
+import { Nationality } from "@/types/profile";
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
-import {
-  Cake,
-  Flag,
-  Ghost,
-  Hash,
-  Hourglass,
-  User2,
-} from "lucide-react";
+import { Cake, Flag, Ghost, Hash, Hourglass, User2 } from "lucide-react";
 import FormSkeletonLoading from "./formSkeletonLoading";
 import { Input } from "@/components/ui/input";
 import selectOptions from "@/zustand/profile/selectData/selectOptions";
@@ -34,8 +25,8 @@ import { cn } from "@/lib/utils";
 import { useEffectOnce } from "usehooks-ts";
 import { useState } from "react";
 const BasicInformationForm = () => {
-  const [minDate, setMinDate] = useState('');
-  const [maxDate, setMaxDate] = useState('');
+  const [minDate, setMinDate] = useState("");
+  const [maxDate, setMaxDate] = useState("");
   const isSaving = profileAboutContentStore((state) => state.isSaving);
   useEffectOnce(() => {
     const currentDate = new Date();
@@ -43,8 +34,14 @@ const BasicInformationForm = () => {
     const maxYear = currentDate.getFullYear() - 18;
 
     // Format the minimum and maximum dates as "YYYY-MM-DD"
-    const formattedMinDate = `${minYear}-${('0' + (currentDate.getMonth() + 1)).slice(-2)}-${('0' + currentDate.getDate()).slice(-2)}`;
-    const formattedMaxDate = `${maxYear}-${('0' + (currentDate.getMonth() + 1)).slice(-2)}-${('0' + currentDate.getDate()).slice(-2)}`;
+    const formattedMinDate = `${minYear}-${(
+      "0" +
+      (currentDate.getMonth() + 1)
+    ).slice(-2)}-${("0" + currentDate.getDate()).slice(-2)}`;
+    const formattedMaxDate = `${maxYear}-${(
+      "0" +
+      (currentDate.getMonth() + 1)
+    ).slice(-2)}-${("0" + currentDate.getDate()).slice(-2)}`;
 
     setMinDate(formattedMinDate);
     setMaxDate(formattedMaxDate);
@@ -61,11 +58,9 @@ const BasicInformationForm = () => {
   // };
 
   const { control } = useFormContext();
-  const { nationalities } =
-    selectOptions();
+  const { nationalities } = selectOptions();
   const { data, editMode, isLoading, profileData } = profileAboutContentStore();
   const user = useUserStore((state) => state.user);
-
 
   if ((isLoading && profileData == null) || isSaving) {
     return (
@@ -77,48 +72,48 @@ const BasicInformationForm = () => {
     );
   }
 
-  console.log(data);
-
   return (
     <div
       className={cn(
         "flex flex-col h-96  w-full space-y-4",
         !user?.profile_completed && "h-full"
       )}
-    > {!editMode &&
-      <>
-        <div className="flex flex-row justify-between w-full px-5">
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
-            <Hash
-              color="#ff569a"
-              size={30}
-              className="hover:cursor-pointer mt-2 mr-3"
-            />
-            <div className="flex flex-col justify-start space-y-1">
-              <p className="font-bold text-base text-primary">
-                {user!.member_id}
-              </p>
-              <p className="text-[#727272] text-xs">User ID</p>
+    >
+      {" "}
+      {!editMode && (
+        <>
+          <div className="flex flex-row justify-between w-full px-5">
+            <div className="flex flex-row space-x-2 hover:cursor-pointer">
+              <Hash
+                color="#ff569a"
+                size={30}
+                className="hover:cursor-pointer mt-2 mr-3"
+              />
+              <div className="flex flex-col justify-start space-y-1">
+                <p className="font-bold text-base text-primary">
+                  {user!.member_id}
+                </p>
+                <p className="text-[#727272] text-xs">User ID</p>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="flex flex-row justify-between w-full px-5">
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
-            <User2
-              color="#ff569a"
-              size={30}
-              className="hover:cursor-pointer mt-2 mr-3"
-            />
-            <div className="flex flex-col justify-start space-y-1">
-              <p className="font-bold text-base text-primary">
-                {data?.nickname}
-              </p>
-              <p className="text-[#727272] text-xs">Nickname</p>
+          <div className="flex flex-row justify-between w-full px-5">
+            <div className="flex flex-row space-x-2 hover:cursor-pointer">
+              <User2
+                color="#ff569a"
+                size={30}
+                className="hover:cursor-pointer mt-2 mr-3"
+              />
+              <div className="flex flex-col justify-start space-y-1">
+                <p className="font-bold text-base text-primary">
+                  {data?.nickname}
+                </p>
+                <p className="text-[#727272] text-xs">Nickname</p>
+              </div>
             </div>
           </div>
-        </div>
-      </>
-      }
+        </>
+      )}
       {!user?.profile_completed && (
         <div className="flex flex-row justify-between w-full px-5">
           <div className="space-y-1 my-2 hover:cursor-pointer w-full items-center">
@@ -255,7 +250,7 @@ const BasicInformationForm = () => {
           </div>
         )}
       </div>
-      {!editMode &&
+      {!editMode && (
         <div className="flex flex-row justify-between w-full px-5">
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
             <Hourglass
@@ -264,14 +259,12 @@ const BasicInformationForm = () => {
               className="hover:cursor-pointer mt-2 mr-3"
             />
             <div className="flex flex-col justify-start space-y-1">
-              <p className="font-bold text-base text-primary">
-                {data?.age}y
-              </p>
+              <p className="font-bold text-base text-primary">{data?.age}y</p>
               <p className="text-[#727272] text-xs">Age</p>
             </div>
           </div>
         </div>
-      }
+      )}
       <div className="flex flex-row justify-between w-full px-5">
         {editMode || !user?.profile_completed ? (
           <div className="space-y-1 hover:cursor-pointer w-full items-center">
@@ -303,9 +296,8 @@ const BasicInformationForm = () => {
               }}
             />
           </div>
-        ) :
-          editMode &&
-          (
+        ) : (
+          editMode && (
             <div className="flex flex-row space-x-2 hover:cursor-pointer">
               <Cake
                 color="#ff569a"
@@ -321,7 +313,8 @@ const BasicInformationForm = () => {
                 <p className="text-[#727272] text-xs">Birthday</p>
               </div>
             </div>
-          )}
+          )
+        )}
       </div>
     </div>
   );
