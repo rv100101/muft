@@ -11,6 +11,7 @@ import profileAboutContentStore, {
   ProfileAbout,
 } from "@/zustand/profile/profileAboutStore";
 import { useEffect } from "react";
+import * as Sentry from '@sentry/react';
 import {
   BodyArt,
   BodyType,
@@ -120,6 +121,9 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
         setProfileData(data);
       }
     },
+    onError: (err) => {
+      Sentry.captureException(err);
+    },
     refetchOnWindowFocus: false,
   });
   useQuery({
@@ -156,6 +160,9 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
     onSuccess: (data: Ethnicity[]) => {
       setEthnicities(data);
     },
+    onError: (err) => {
+      Sentry.captureException(err);
+    }
   });
 
   useQuery({
@@ -340,6 +347,10 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
     onSuccess: (data: State[]) => {
       setStates(data);
     },
+    refetchOnReconnect: 'always',
+    onError: (err) => {
+      Sentry.captureException(err);
+    }
   });
 
   useQuery({
