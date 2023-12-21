@@ -83,7 +83,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
   );
   const toggleIsLiked = useHomepageViewStore((state) => state.toggleIsLiked);
 
-  const [likeTriggered, toggleLikeIcon] = useState(false);
+  // const [likeTriggered, toggleLikeIcon] = useState(false);
   const [favoriteTriggered, toggleFavoriteIcon] = useState(false);
   const toggleLike = useMutation({
     mutationFn: async ({
@@ -93,7 +93,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
       member: number;
       liked: number;
     }) => {
-      toggleLikeIcon((prev) => !prev);
+      // toggleLikeIcon((prev) => !prev);
       toggleIsLiked();
 
       const res = await axiosQuery.post("/Like", {
@@ -140,7 +140,6 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
     // profile,
     setProfileHeaderValues,
   } = profileHeaderStore();
-  const { data } = profileAboutContentStore();
 
   const fetchInitialData = async () =>
     await profileQuery.getProfileHeader(parseInt(userId));
