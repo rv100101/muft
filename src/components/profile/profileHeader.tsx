@@ -495,7 +495,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                           }
                         }}
                         type="button"
-                        className="text-xs border-primary hover:bg-primary px-2 py-1 lg:w-24 w-3/4"
+                        className="text-xs border-primary hover:bg-primary px-2 py-1 lg:w-24 w-3/4 dark:bg-[#ae2e51] dark:text-white"
                       >
                         <Link
                           href={

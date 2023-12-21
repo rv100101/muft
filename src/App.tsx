@@ -11,16 +11,48 @@ import { useUserStore } from "./zustand/auth/user";
 import { cn } from "./lib/utils";
 import ViewUser from "./components/profile/viewUser";
 import { ErrorBoundary } from "@sentry/react";
+import { useSettingsStore } from "./zustand/settings/displaySettingsStore";
+import { useEffect } from "react";
 // import { useEffect } from "react";
 // import runOneSignal from "./lib/oneSignal";
 
 function App() {
   const [location] = useLocation();
   const user = useUserStore((state) => state.user);
+  const toggleSystemDark = useSettingsStore((state) => state.toggleSystemDark);
+
+  const displaySettings = useSettingsStore((state) => state.settings);
 
   // useEffect(() => {
   //   runOneSignal();
   // });
+
+  useEffect(() => {
+    if (displaySettings?.darkModeSwitch) {
+      document.documentElement.classList.add("dark");
+      document.documentElement.classList.remove("light");
+    } else if (displaySettings?.lightModeSwitch) {
+      document.documentElement.classList.add("light");
+      document.documentElement.classList.remove("dark");
+    } else {
+      if (
+        window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches
+      ) {
+        // setSystemDark(true);
+        toggleSystemDark(true);
+        // User prefers dark mode
+        document.documentElement.classList.add("dark");
+        document.documentElement.classList.remove("light");
+      } else {
+        // setSystemDark(false);
+        toggleSystemDark(false);
+        // User prefers light mode
+        document.documentElement.classList.add("light");
+        document.documentElement.classList.remove("dark");
+      }
+    }
+  }, [displaySettings, toggleSystemDark]);
 
   return (
     <ErrorBoundary>

@@ -4,6 +4,7 @@ import DisplayContent from "@/components/settings/display/displayContent";
 import PushNotifcationContent from "@/components/settings/notification/pushNotifcationContent";
 import DeactivateAccountContent from "@/components/settings/account/deactivateAccountContent";
 import MyAccountContent from "@/components/settings/account/myAccountContent";
+import MobileTopbar from "@/components/settings/mobileTopbar";
 
 const SettingsPage = () => {
   // const [activeTabs, setActiveTabs] = useState([
@@ -20,11 +21,12 @@ const SettingsPage = () => {
   // };
   return (
     <AuthenticatedLayout>
-      <div className="w-full flex flex-col h-full items-center justify-start">
-        <div className="flex flex-row w-3/4 border justify-between lg:p-5 py-2 items-center lg:border-b">
-          <p className="select-none font-semibold w-full">SETTINGS</p>
+      <div className="w-full flex flex-col h-full lg:items-center justify-start border">
+        <MobileTopbar />
+        <div className="lg:flex hidden flex flex-row lg:w-3/4 w-full border justify-between lg:p-5 py-2 items-center lg:border-b">
+          <p className="select-none font-semibold w-full ">SETTINGS</p>
         </div>
-        <div className="flex overflow-y-scroll items-start w-3/4 h-full border">
+        <div className="flex overflow-y-scroll items-start lg:w-3/4 w-full h-full border">
           {/* <div className="flex flex-col border-x h-full px-3 py-5 justify-start">
             <p
               className={`select-none w-full text-[#727272] px-3 py-2 text-sm  hover:cursor-pointer ${activeTabs[1] ? "bg-[#FFDEEB] text-[#FF599B]  rounded-md" : ""
@@ -62,7 +64,7 @@ const SettingsPage = () => {
               Deactivate your Account
             </p>
           </div> */}
-          <div className="lg:w-full lg:mt-0 mt-5  h-full">
+          <div className="w-full lg:mt-0 mt-5 h-full">
             {/* basic info */}
             {/* {activeTabs[1] && <SubscriptionContent />} */}
 

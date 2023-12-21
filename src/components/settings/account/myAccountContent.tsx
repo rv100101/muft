@@ -151,7 +151,7 @@ const MyAccountContent = () => {
                     disabled={isLoading}
                     type="submit"
                     className={cn(
-                      "text-white mt-4 h-10 w-full text-sm rounded-full py-2 hover:bg-[#FF599B]/90 mt-5 w-24",
+                      "text-white mt-4 h-10 w-full text-sm rounded-full py-2 hover:bg-[#FF599B]/90 mt-5 w-24 dark:bg-[#ae2e51]",
                       isLoading ? "bg-[#FF8AB3]" : "bg-primary"
                     )}
                   >
