@@ -400,19 +400,19 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
             <hr />
             <div className="flex items-start justify-end flex-col space-y-4 px-4 h-full mt-10 pt-5 ">
               <a
-                className="hover:text-slate-700 text-sm text-black"
+                className="hover:text-slate-700 text-sm text-black dark:text-white"
                 href="https://softnames.bolddesk.com/"
                 target="__blank"
               >
                 Help Center
               </a>
               <Link onClick={scrollToTop} href="/privacy-policy">
-                <a className="hover:text-slate-700 text-sm text-black">
+                <a className="hover:text-slate-700 text-sm text-black dark:text-white">
                   Privacy Policy
                 </a>
               </Link>
               <Link onClick={scrollToTop} href="/terms">
-                <a className="hover:text-slate-700 text-sm text-black">
+                <a className="hover:text-slate-700 text-sm text-black dark:text-white">
                   Terms of Service
                 </a>
               </Link>

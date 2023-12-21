@@ -27,9 +27,7 @@ const SideBar = () => {
   const reset = useConversationHistoryStore((state) => state.resetToNull);
   const signOut = useUserStore((state) => state.reset);
   const { setProfileData } = profileAboutContentStore();
-  const {
-    setProfileHeaderValues,
-  } = profileHeaderStore();
+  const { setProfileHeaderValues } = profileHeaderStore();
   const setSelectedProfileId = useHomepageViewStore(
     (state) => state.setSelectedProfileId
   );
@@ -45,8 +43,8 @@ const SideBar = () => {
             location.startsWith("/profile") && link.path.startsWith("/profile")
               ? "font-semibold bg-accent"
               : location.endsWith(link.path)
-                ? "font-semibold bg-accent"
-                : "font-normal"
+              ? "font-semibold bg-accent"
+              : "font-normal"
           )}
           href={
             link.name == "My Profile"
@@ -68,11 +66,11 @@ const SideBar = () => {
             <link.icon
               fill={
                 location.startsWith("/profile") &&
-                  link.path.startsWith("/profile")
+                link.path.startsWith("/profile")
                   ? "black"
                   : location.endsWith(link.path)
-                    ? "black"
-                    : "white"
+                  ? "black"
+                  : "white"
               }
               stroke={
                 link.name == "Home" && location.endsWith(link.path)
@@ -92,8 +90,9 @@ const SideBar = () => {
   return (
     <div className="h-full border-r sm:flex sm:flex-col justify-between hidden">
       <div
-        className={`h-full flex flex-col justify-between ${orientation.angle === 90 ? "overflow-scroll" : ""
-          }`}
+        className={`h-full flex flex-col justify-between ${
+          orientation.angle === 90 ? "overflow-scroll" : ""
+        }`}
       >
         <div className="flex flex-col w-[220px]">
           <Link href="/">
@@ -108,24 +107,24 @@ const SideBar = () => {
 
         <div className="flex flex-col space-y-4 px-4 ">
           <a
-            className="hover:text-slate-700 text-xs text-black"
+            className="hover:text-slate-700 text-xs text-black dark:text-white"
             href="https://softnames.bolddesk.com/"
             target="__blank"
           >
             Help Center
           </a>
           <Link onClick={scrollToTop} href="/privacy-policy">
-            <a className="hover:text-slate-700 text-xs text-black">
+            <a className="hover:text-slate-700 text-xs text-black dark:text-white">
               Privacy Policy
             </a>
           </Link>
           <Link onClick={scrollToTop} href="/terms">
-            <a className="hover:text-slate-700 text-xs text-black">
+            <a className="hover:text-slate-700 text-xs text-black dark:text-white">
               Terms of Service
             </a>
           </Link>
           <Link onClick={scrollToTop} href="/release-notes">
-            <a className="hover:text-slate-700 text-xs text-black">
+            <a className="hover:text-slate-700 text-xs text-black dark:text-white">
               Release Notes
             </a>
           </Link>
@@ -142,11 +141,14 @@ const SideBar = () => {
                 <DialogTitle>Are you sure you want to sign out?</DialogTitle>
               </DialogHeader>
               <DialogFooter className="sm:justify-start">
-                <Button className="hover:bg-primary" onClick={() => {
-                  signOut()
-                  setProfileData(null)
-                  setProfileHeaderValues(null)
-                }}>
+                <Button
+                  className="hover:bg-primary"
+                  onClick={() => {
+                    signOut();
+                    setProfileData(null);
+                    setProfileHeaderValues(null);
+                  }}
+                >
                   Yes
                 </Button>
                 <DialogClose asChild>
