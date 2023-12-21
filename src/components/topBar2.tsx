@@ -120,8 +120,8 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
             location.startsWith("/profile") && link.path.startsWith("/profile")
               ? "font-semibold bg-accent"
               : location.endsWith(link.path)
-                ? "font-semibold bg-accent"
-                : "font-normal"
+              ? "font-semibold bg-accent"
+              : "font-normal"
           )}
           href={
             link.name == "My Profile"
@@ -144,11 +144,11 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
             <link.icon
               fill={
                 location.startsWith("/profile") &&
-                  link.path.startsWith("/profile")
+                link.path.startsWith("/profile")
                   ? "black"
                   : location.endsWith(link.path)
-                    ? "black"
-                    : "white"
+                  ? "black"
+                  : "white"
               }
               stroke={
                 link.name == "Home" && location.endsWith(link.path)
@@ -232,10 +232,11 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
                     setStartAgeSliderVal(randomNumbers[0]);
                     toggleSuggestionTags(0, randomNumbers[1]);
                   }}
-                  className={`${!clickedTags[0]
-                    ? "bg-white text-[#ff569a]"
-                    : "bg-[#ff569a] text-white"
-                    } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
+                  className={`${
+                    !clickedTags[0]
+                      ? "bg-white text-[#ff569a]"
+                      : "bg-[#ff569a] text-white"
+                  } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
                 >
                   {randomNumbers[0]}
                 </p>
@@ -244,10 +245,11 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
                     setStartAgeSliderVal(randomNumbers[1]);
                     toggleSuggestionTags(1, randomNumbers[1]);
                   }}
-                  className={`${!clickedTags[1]
-                    ? "bg-white text-[#ff569a]"
-                    : "bg-[#ff569a] text-white"
-                    } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
+                  className={`${
+                    !clickedTags[1]
+                      ? "bg-white text-[#ff569a]"
+                      : "bg-[#ff569a] text-white"
+                  } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
                 >
                   {randomNumbers[1]}
                 </p>
@@ -256,10 +258,11 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
                     setStartAgeSliderVal(randomNumbers[2]);
                     toggleSuggestionTags(2, randomNumbers[2]);
                   }}
-                  className={`${!clickedTags[2]
-                    ? "bg-white text-[#ff569a]"
-                    : "bg-[#ff569a] text-white"
-                    } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
+                  className={`${
+                    !clickedTags[2]
+                      ? "bg-white text-[#ff569a]"
+                      : "bg-[#ff569a] text-white"
+                  } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
                 >
                   {randomNumbers[2]}
                 </p>
@@ -270,10 +273,11 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
                     setStartAgeSliderVal(randomNumbers[3]);
                     toggleSuggestionTags(3, randomNumbers[3]);
                   }}
-                  className={`${!clickedTags[3]
-                    ? "bg-white text-[#ff569a]"
-                    : "bg-[#ff569a] text-white"
-                    } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
+                  className={`${
+                    !clickedTags[3]
+                      ? "bg-white text-[#ff569a]"
+                      : "bg-[#ff569a] text-white"
+                  } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
                 >
                   {randomNumbers[3]}
                 </p>
@@ -282,10 +286,11 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
                     setStartAgeSliderVal(randomNumbers[4]);
                     toggleSuggestionTags(4, randomNumbers[4]);
                   }}
-                  className={`${!clickedTags[4]
-                    ? "bg-white text-[#ff569a]"
-                    : "bg-[#ff569a] text-white"
-                    } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
+                  className={`${
+                    !clickedTags[4]
+                      ? "bg-white text-[#ff569a]"
+                      : "bg-[#ff569a] text-white"
+                  } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
                 >
                   {randomNumbers[4]}
                 </p>
@@ -294,10 +299,11 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
                     setStartAgeSliderVal(randomNumbers[5]);
                     toggleSuggestionTags(5, randomNumbers[5]);
                   }}
-                  className={`${!clickedTags[5]
-                    ? "bg-white text-[#ff569a]"
-                    : "bg-[#ff569a] text-white"
-                    } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
+                  className={`${
+                    !clickedTags[5]
+                      ? "bg-white text-[#ff569a]"
+                      : "bg-[#ff569a] text-white"
+                  } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
                 >
                   {randomNumbers[5]}
                 </p>
@@ -351,8 +357,8 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
         )}
       </Dialog>
       <Sheet>
-        <div className="flex sm:justify-between md:justify-end w-full">
-          <SheetTrigger className="flex flex-row sm:hidden w-full space-x-5">
+        <div className="flex justify-between w-full">
+          <SheetTrigger className="flex flex-row lg:hidden w-full space-x-5">
             <MenuIcon />
             {children}
           </SheetTrigger>
@@ -418,11 +424,11 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
                   <p className="text-sm">Sign out</p>
                 </div>
               </DialogTrigger>
-              <DialogContent className="sm:max-w-md opacity-100 flex flex-col space-y-5">
+              <DialogContent className="sm:max-w-md opacity-100">
                 <DialogHeader>
                   <DialogTitle>Are you sure you want to sign out?</DialogTitle>
                 </DialogHeader>
-                <DialogFooter className="sm:justify-start flex flex-col space-y-5">
+                <DialogFooter className="sm:justify-start">
                   <Button className="hover:bg-primary" onClick={signOut}>
                     Yes
                   </Button>

@@ -10,8 +10,8 @@ const MessagingPage = () => {
   return (
     <AuthenticatedLayout>
       {/* Desktop view */}
-      <div className="w-full h-full grid-cols-10 grid-rows-1 hidden lg:grid">
-        <div className={cn("sm:col-span-3")}>
+      <div className="w-full h-full grid-cols-10 grid-rows-1 hidden lg:grid md:grid-cols-11">
+        <div className={cn("sm:col-span-3 md:col-span-4")}>
           <ChatHistory />
         </div>
         <div className="col-span-10 sm:col-span-7 md:col-span-6 ">
