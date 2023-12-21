@@ -45,7 +45,7 @@ import { useLocation } from "wouter";
 // import { useUserStore } from "@/zustand/auth/user";
 import useSelectedCountryStore from "@/zustand/profile/location/selectedCountry";
 import { convertJsonToConvertedObject } from "@/lib/utils";
-import { useEffectOnce } from "usehooks-ts";
+import { useEffectOnce, useUpdateEffect } from "usehooks-ts";
 const AboutAccordion = ({ userId }: { userId: number }) => {
   const [location] = useLocation();
   const { selectedCountry, setSelectedCountry } = useSelectedCountryStore();
@@ -72,6 +72,7 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
     setFavoriteFoods,
     setBodyTypes,
     setCountries,
+    countries,
     setStates,
     setHair,
     setHaveChildren,
@@ -225,12 +226,18 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
     queryKey: ["countries"],
     onSuccess: (data: Country[]) => {
       setCountries(data);
-      setSelectedCountry(
-        data.filter((c) => c.country_name == profileAboutContent!.country)[0]
-          .country_code
-      );
     },
   });
+
+  useUpdateEffect(() => {
+    if (countries.length !== 0 && profileAboutContent) {
+      setSelectedCountry(
+        countries.filter(
+          (c) => c.country_name == profileAboutContent!.country
+        )[0].country_code
+      );
+    }
+  }, [countries, profileAboutContent]);
 
   useQuery({
     queryFn: () => profileContentQuery.editOptions.getHair(),
