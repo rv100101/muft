@@ -311,9 +311,9 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
             </div>
             <div className="flex flex-row justify-between items-center">
               <p className="px-5 text-[#cfd8e4]">Filter By</p>
-              <p className="px-5 text-[#7e7e7e] text-xs underline hover:cursor-pointer">
+              {/* <p className="px-5 text-[#7e7e7e] text-xs underline hover:cursor-pointer">
                 Clear
-              </p>
+              </p> */}
             </div>
 
             <div className="flex flex-row justify-between items-center mt-5">
@@ -326,7 +326,7 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
               <Slider
                 // defaultValue={[50]}
                 value={[filters ? filters!.min_age : 23]}
-                max={60}
+                min={18}
                 step={1}
                 className="w-full mx-5"
                 onValueChange={handleStartSliderChange}
@@ -339,7 +339,7 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
                 // defaultValue={[50]}
                 // dir="right-to-left"
                 value={[filters ? filters!.max_age : 60]}
-                max={100}
+                max={80}
                 step={1}
                 className="w-full ml-10 pr-5"
                 onValueChange={handleEndSliderChange}
