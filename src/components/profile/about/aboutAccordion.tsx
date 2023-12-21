@@ -231,11 +231,14 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
 
   useUpdateEffect(() => {
     if (countries.length !== 0 && profileAboutContent) {
-      setSelectedCountry(
-        countries.filter(
-          (c) => c.country_name == profileAboutContent!.country
-        )[0].country_code
-      );
+      console.log(countries, profileAboutContent);
+      if (profileAboutContent.country.length !== 0) {
+        setSelectedCountry(
+          countries.filter(
+            (c) => c.country_name == profileAboutContent!.country
+          )[0].country_code
+        );
+      }
     }
   }, [countries, profileAboutContent]);
 
