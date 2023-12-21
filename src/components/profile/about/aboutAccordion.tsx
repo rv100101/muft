@@ -11,7 +11,7 @@ import profileAboutContentStore, {
   ProfileAbout,
 } from "@/zustand/profile/profileAboutStore";
 import { useEffect } from "react";
-import * as Sentry from '@sentry/react';
+import * as Sentry from "@sentry/react";
 import {
   BodyArt,
   BodyType,
@@ -102,11 +102,11 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
     // enabled: !(location.startsWith("/profile") && profileData),
     queryKey: ["profileContent", userId],
     queryFn: async () => {
-      const additionalInformation = await profileContentQuery
-        .fetchAdditionalInformation(userId);
+      const additionalInformation =
+        await profileContentQuery.fetchAdditionalInformation(userId);
       const memberDetails = await profileContentQuery.fetchMemberDetails(
         userId,
-        userId,
+        userId
       );
       const convertedDetails = convertJsonToConvertedObject(memberDetails);
       const details = {
@@ -162,7 +162,7 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
     },
     onError: (err) => {
       Sentry.captureException(err);
-    }
+    },
   });
 
   useQuery({
@@ -227,7 +227,7 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
       setCountries(data);
       setSelectedCountry(
         data.filter((c) => c.country_name == profileAboutContent!.country)[0]
-          .country_code,
+          .country_code
       );
     },
   });
@@ -347,10 +347,10 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
     onSuccess: (data: State[]) => {
       setStates(data);
     },
-    refetchOnReconnect: 'always',
+    refetchOnReconnect: "always",
     onError: (err) => {
       Sentry.captureException(err);
-    }
+    },
   });
 
   useQuery({
@@ -382,7 +382,7 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
         className="w-full"
         defaultValue="item-1"
       >
-        <AccordionItem value="item-1" className="px-5 py-1">
+        <AccordionItem value="item-1" className="px-5 py-1 border-0">
           <AccordionTrigger className="hover:no-underline">
             <p className="uppercase font-[500] text-[#727272] no-underline">
               About

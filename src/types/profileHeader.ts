@@ -9,4 +9,6 @@ export type ProfileHeader = {
   maritalStatus: string | null;
   occupation_title: string | null;
   country_name: string | null;
+  is_liked: boolean | null;
+  is_favored: boolean | null;
 };

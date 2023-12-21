@@ -25,6 +25,8 @@ const profileHeaderStore = create<ProfileHeaderState>((set) => ({
     occupation_title: null,
     country_name: null,
     member_id: null,
+    is_favored: null,
+    is_liked: null,
   },
   setHeaderValues: (val) =>
     set(() => ({
