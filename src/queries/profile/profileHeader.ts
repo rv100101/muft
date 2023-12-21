@@ -1,6 +1,9 @@
 import { ProfileHeader } from "@/types/profileHeader";
 import axiosQuery from "../axios";
 
+const getMemberDetails = async (member: number) =>
+  await axiosQuery.post("/MemberDetails", { member });
+
 const getProfilePhoto = async (member: number) =>
   await axiosQuery.post("/GetProfilePhoto", { member });
 
@@ -34,8 +37,19 @@ const getProfileHeader = async (member: number) => {
     maritalStatus: null,
     occupation_title: null,
     country_name: null,
+    is_liked: null,
+    is_favored: null,
   };
   try {
+    const memberDetails = await getMemberDetails(member);
+    if (memberDetails.data !== "") {
+      profileHeader = {
+        ...profileHeader,
+        is_liked: memberDetails.data.is_liked,
+        is_favored: memberDetails.data.is_favored,
+      };
+    }
+
     const profilePhoto = await getProfilePhoto(member);
     if (profilePhoto.data !== "") {
       profileHeader = {

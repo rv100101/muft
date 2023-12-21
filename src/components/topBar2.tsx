@@ -418,11 +418,11 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
                   <p className="text-sm">Sign out</p>
                 </div>
               </DialogTrigger>
-              <DialogContent className="sm:max-w-md opacity-100">
+              <DialogContent className="sm:max-w-md opacity-100 flex flex-col space-y-5">
                 <DialogHeader>
                   <DialogTitle>Are you sure you want to sign out?</DialogTitle>
                 </DialogHeader>
-                <DialogFooter className="sm:justify-start">
+                <DialogFooter className="sm:justify-start flex flex-col space-y-5">
                   <Button className="hover:bg-primary" onClick={signOut}>
                     Yes
                   </Button>

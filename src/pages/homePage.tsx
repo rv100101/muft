@@ -80,6 +80,7 @@ const HomePage = () => {
     queryFn: () => getMembers,
   });
 
+  console.log("🚀 ~ file: homePage.tsx:72 ~ HomePage ~ getMembers:", members);
   // likes
   const { data: memberLikes } = useQuery({
     enabled: memberList.length === 0,

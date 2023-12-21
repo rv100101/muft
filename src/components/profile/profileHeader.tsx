@@ -83,7 +83,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
   );
   const toggleIsLiked = useHomepageViewStore((state) => state.toggleIsLiked);
 
-  const [likeTriggered, toggleLikeIcon] = useState(false);
+  // const [likeTriggered, toggleLikeIcon] = useState(false);
   const [favoriteTriggered, toggleFavoriteIcon] = useState(false);
   const toggleLike = useMutation({
     mutationFn: async ({
@@ -93,7 +93,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
       member: number;
       liked: number;
     }) => {
-      toggleLikeIcon((prev) => !prev);
+      // toggleLikeIcon((prev) => !prev);
       toggleIsLiked();
 
       const res = await axiosQuery.post("/Like", {
@@ -137,6 +137,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
     headerValues,
     setHeaderValues,
     profileHeaderValues,
+    // profile,
     setProfileHeaderValues,
   } = profileHeaderStore();
 
@@ -342,6 +343,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
     return <ProfileHeaderSkeleton />;
   }
 
+  console.log("profile header val: ", headerValues);
   return (
     <div className="items-start p-5 border-b w-full">
       <div className="flex justify-start items-start space-x-2">
@@ -524,7 +526,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                         >
                           <Heart
                             color="#FF599B"
-                            fill={likeTriggered ? "#FF599B" : "white"}
+                            fill={headerValues?.is_liked ? "#FF599B" : "white"}
                           />
                         </Button>
                         <Button
@@ -540,7 +542,9 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                         >
                           <Star
                             color="#FF599B"
-                            fill={favoriteTriggered ? "#FF599B" : "white"}
+                            fill={
+                              headerValues?.is_favored ? "#FF599B" : "white"
+                            }
                           />
                         </Button>
                         {/* more  */}
