@@ -20,7 +20,7 @@ const ChatList = () => {
     selectedHistoryMemberId,
   } = useLatestConversationStore();
   const [openedConversations, setOpenedConversations] = useState<number[]>([]);
-  const matches = useMediaQuery("(min-width: 640px)");
+  const matches = useMediaQuery("(min-width: 920px)");
   const setConversation = useLatestConversationStore(
     (state) => state.setConversation
   );
@@ -39,7 +39,20 @@ const ChatList = () => {
   const updateMessagingPageView = useMobileMessagingViewStore(
     (state) => state.toggle
   );
+  const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
 
+  // Function to update the viewport width in the state
+  const updateViewportWidth = () => {
+    setViewportWidth(window.innerWidth);
+  };
+  useEffect(() => {
+    window.addEventListener("resize", updateViewportWidth);
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("resize", updateViewportWidth);
+    };
+  }, []);
   useEffect(() => {
     return () => {
       setSelectedHistoryMemberId(null);
@@ -67,7 +80,7 @@ const ChatList = () => {
   //     })
 
   console.log(openedConversations);
-
+  console.log("matches: ", viewportWidth);
   const conversations = data
     ?.filter((conversation) =>
       searchFilterValue.length === 0
@@ -95,7 +108,7 @@ const ChatList = () => {
           <Button
             variant={"ghost"}
             className={cn(
-              "hover:bg-slate-50 w-full h-max items-start text-left dark:bg-slate-700",
+              "hover:bg-slate-50 w-full h-max items-start text-left dark:bg-slate-700 md:rounded-lg my-2",
               !openedConversations.includes(conversation.listed_id) &&
                 !conversation.is_read &&
                 "bg-accent",
@@ -104,6 +117,7 @@ const ChatList = () => {
             )}
             onClick={() => {
               if (!matches) {
+                console.log("heloo");
                 updateMessagingPageView();
                 console.log(conversation);
               }

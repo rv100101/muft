@@ -137,8 +137,10 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
     headerValues,
     setHeaderValues,
     profileHeaderValues,
+    // profile,
     setProfileHeaderValues,
   } = profileHeaderStore();
+  const { data } = profileAboutContentStore();
 
   const fetchInitialData = async () =>
     await profileQuery.getProfileHeader(parseInt(userId));
@@ -342,6 +344,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
     return <ProfileHeaderSkeleton />;
   }
 
+  console.log("profile header val: ", headerValues);
   return (
     <div className="items-start p-5 border-b w-full">
       <div className="flex justify-start items-start space-x-2">
@@ -524,7 +527,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                         >
                           <Heart
                             color="#FF599B"
-                            fill={likeTriggered ? "#FF599B" : "white"}
+                            fill={headerValues?.is_liked ? "#FF599B" : "white"}
                           />
                         </Button>
                         <Button
@@ -540,7 +543,9 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                         >
                           <Star
                             color="#FF599B"
-                            fill={favoriteTriggered ? "#FF599B" : "white"}
+                            fill={
+                              headerValues?.is_favored ? "#FF599B" : "white"
+                            }
                           />
                         </Button>
                         {/* more  */}

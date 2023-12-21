@@ -48,7 +48,7 @@ const DisplayContent = () => {
       <p className="font-semibold">Display Settings</p>
       <p className="font-medium pt-5">Theme</p>
       <div className="flex flex-row justify-center border rounded-lg p-5 space-x-2 lg:space-x-0">
-        <div className="flex flex-row w-full justify-center lg:space-x-3 space-x-2">
+        <div className="flex flex-row w-full justify-center lg:space-x-3 space-x-3">
           <p>Light</p>
           <Switch
             id="airplane-mode2"
@@ -63,7 +63,7 @@ const DisplayContent = () => {
           />
           {/* <Label htmlFor="airplane-mode">Airplane Mode</Label> */}
         </div>
-        <div className="flex flex-row w-full justify-center lg:space-x-3 space-x-2 ">
+        <div className="flex flex-row w-full justify-center lg:space-x-3 space-x-3">
           <p>Dark</p>
           <Switch
             id="dark-switch"
@@ -78,7 +78,7 @@ const DisplayContent = () => {
           />
           {/* <Label htmlFor="airplane-mode">Airplane Mode</Label> */}
         </div>
-        <div className="flex flex-row w-full justify-center lg:space-x-3 space-x-2">
+        <div className="flex flex-row w-full justify-center lg:space-x-3 space-x-3">
           <p>Auto</p>
           <Switch
             id="auto-switch"
