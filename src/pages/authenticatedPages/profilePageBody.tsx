@@ -28,7 +28,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
     // interests: deletedInterests,
   } = deleteMultiselectValuesStore();
   const headerValues = profileHeaderStore((state) => state.headerValues);
-  const { data, toggleEditMode } = profileAboutContentStore();
+  const { data, setEditModeFalse } = profileAboutContentStore();
   const { setIsSaving } = profileAboutContentStore();
   const { user } = useUserStore();
   const updateUser = useUserStore((state) => state.updateUser);
@@ -42,12 +42,13 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
   useEffect(() => {
     if (data && headerValues) {
       methods.reset({
+        car: data.car ?? "",
         gender: data.gender,
         nationality: data.nationality,
         birthInfo: data.birthInfo,
         ethnicity: data.ethnicity,
         maritalStatus: data.maritalStatus,
-        language: removeDuplicates(data.language, 'language_name'),
+        language: removeDuplicates(data.language, "language_name"),
         education: data.education,
         employmentStatus: data.employmentStatus,
         occupationTitle: data.occupationTitle,
@@ -55,7 +56,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
         height: data.height,
         weight: data.weight,
         bodyType: data.bodyType,
-        favoriteFood: removeDuplicates(data.favoriteFood, 'favorite_food_name'),
+        favoriteFood: removeDuplicates(data.favoriteFood, "favorite_food_name"),
         country: data.country,
         region: data.region,
         nickname: data.nickname,
@@ -67,12 +68,11 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
         wantChildren: data.wantChildren,
         workout: data.workout,
         disability: data.disability,
-        pets: removeDuplicates(data.pets, 'pet_name'),
+        pets: removeDuplicates(data.pets, "pet_name"),
         drinking: data.drinking,
         smoking: data.smoking,
         livingStatus: data.livingStatus,
-        car: data.car,
-        interest: removeDuplicates(data.interest, 'interest_name'),
+        interest: removeDuplicates(data.interest, "interest_name"),
       });
     }
   }, [data, headerValues, methods]);
@@ -200,10 +200,22 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
       const employmentStatus = getEmploymentStatus(formData.employmentStatus);
       finalFormData = {
         ...finalFormData,
-        language: removeExistingData(formData.language, data!.language, 'language_name'),
-        favoriteFood: removeExistingData(formData.favoriteFood, data!.favoriteFood, 'favorite_food_name'),
-        pets: removeExistingData(formData.pets, data!.pets, 'pet_name'),
-        interest: removeExistingData(formData.interest, data!.interest, 'interest_name'),
+        language: removeExistingData(
+          formData.language,
+          data!.language,
+          "language_name"
+        ),
+        favoriteFood: removeExistingData(
+          formData.favoriteFood,
+          data!.favoriteFood,
+          "favorite_food_name"
+        ),
+        pets: removeExistingData(formData.pets, data!.pets, "pet_name"),
+        interest: removeExistingData(
+          formData.interest,
+          data!.interest,
+          "interest_name"
+        ),
         ethnicity: ethnicity?.ethnicity_id,
         nationality: nationality?.country_code,
         maritalStatus: maritalStatus?.marital_status_id,
@@ -237,7 +249,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
         variant: "success",
         title: "Profile saved!",
       });
-      toggleEditMode();
+      setEditModeFalse();
     } catch (error) {
       console.log(error);
     }

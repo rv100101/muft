@@ -80,7 +80,7 @@ const BasicInformationForm = () => {
       )}
     >
       {" "}
-      {!editMode && (
+      {!editMode && user?.profile_completed && (
         <>
           <div className="flex flex-row justify-between w-full px-5">
             <div className="flex flex-row space-x-2 hover:cursor-pointer">
@@ -250,7 +250,7 @@ const BasicInformationForm = () => {
           </div>
         )}
       </div>
-      {!editMode && (
+      {!editMode && user?.profile_completed && (
         <div className="flex flex-row justify-between w-full px-5">
           <div className="flex flex-row space-x-2 hover:cursor-pointer">
             <Hourglass

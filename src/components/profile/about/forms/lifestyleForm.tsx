@@ -1,10 +1,5 @@
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
-import {
-  Beer,
-  CarTaxiFront,
-  Cigarette,
-  Home,
-} from "lucide-react";
+import { Beer, CarTaxiFront, Cigarette, Home } from "lucide-react";
 import {
   FormControl,
   FormField,
@@ -14,13 +9,7 @@ import {
 } from "@/components/ui/form";
 import FormSkeletonLoading from "./formSkeletonLoading";
 import selectOptions from "@/zustand/profile/selectData/selectOptions";
-import {
-  Car,
-  Drink,
-  LivingStatus,
-  Smoke,
-
-} from "@/types/profile";
+import { Car, Drink, LivingStatus, Smoke } from "@/types/profile";
 import {
   Select,
   SelectContent,
@@ -35,18 +24,12 @@ const LifestyleForm = () => {
   const { control } = useFormContext();
   const isLoading = profileAboutContentStore((state) => state.isLoading);
   const data = profileAboutContentStore((state) => state.data);
-  const {
-
-    drink,
-    smoke,
-    livingStatus,
-    car,
-  } = selectOptions();
+  const { drink, smoke, livingStatus, car } = selectOptions();
   const editMode = profileAboutContentStore((state) => state.editMode);
   const user = useUserStore((state) => state.user);
 
   const isSaving = profileAboutContentStore((state) => state.isSaving);
-  const profileData = profileAboutContentStore(state => state.profileData);
+  const profileData = profileAboutContentStore((state) => state.profileData);
   if ((isLoading && profileData == null) || isSaving) {
     return (
       <div className="flex justify-start items-start space-x-4 w-full ml-5">
@@ -235,8 +218,6 @@ const LifestyleForm = () => {
             <FormField
               name="car"
               render={({ field }) => {
-                console.log(field);
-
                 return (
                   <FormItem>
                     <FormLabel className="text-primary" htmlFor="car">
