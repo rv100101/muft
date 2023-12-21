@@ -3,6 +3,7 @@
 import CtaPhone from "@/assets/cta-phone.png";
 import { motion } from "framer-motion";
 import { callToAction } from "@/lib/homepage";
+import { Button } from "./ui/button";
 const staggerMotion = {
   hidden: { opacity: 0 },
   whileInView: {
@@ -47,23 +48,15 @@ const Cta = () => {
             {callToAction.header}
           </p>
           <p className="text-white font-light">{callToAction.description}</p>
-          {/*
-          <motion.div variants={child} className="flex space-x-2">
-            <a
-              href="https://apps.apple.com/us/app/muffin/id1658172035"
-              target="_blank"
-            >
-              <img src={AppStore} alt="app store" />
-            </a>
-            <a
-              href="https://play.google.com/store/apps/details?id=com.muffin.app"
-              target="_blank"
-            >
-              <img src={GooglePlay} alt="google play" />
 
-            </a>
+          <motion.div variants={child} className="flex space-x-2">
+            <Button className="hover:bg-[#FF599B]/90">
+              <a href="/auth/signin">
+                Sign In
+              </a>
+            </Button>
           </motion.div>
-            */}
+
         </motion.div>
       </motion.div>
     </motion.div>

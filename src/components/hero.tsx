@@ -3,6 +3,7 @@ import { banner } from "@/lib/homepage";
 // import GooglePlay from "@/assets/google-play.png";
 // import AppStore from "@/assets/app-store.png";
 import Conversation from "./conversation";
+import { Button } from "./ui/button";
 
 const Hero = () => {
   return (
@@ -64,6 +65,27 @@ const Hero = () => {
           >
             {banner.body}
           </motion.p>
+
+          <motion.div
+            initial={{
+              scale: 0,
+            }}
+            whileInView={{
+              scale: 1,
+            }}
+            transition={{
+              delay: 2.5,
+            }}
+            viewport={{ once: true }}
+            className="z-20 flex space-x-2 w-64 md:w-80"
+          >
+            <Button className="hover:bg-[#FF599B]/90">
+              <a href="/auth/signin">
+                Sign In
+              </a>
+            </Button>
+          </motion.div>
+
           {/*
           <motion.div
             initial={{
