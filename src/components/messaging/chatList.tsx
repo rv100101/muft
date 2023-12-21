@@ -14,15 +14,19 @@ import { useUserStore } from "@/zustand/auth/user";
 import { cn } from "@/lib/utils";
 
 const ChatList = () => {
-  const { setSelectedHistoryMemberName, setSelectedHistoryMemberId, selectedHistoryMemberId } = useLatestConversationStore()
+  const {
+    setSelectedHistoryMemberName,
+    setSelectedHistoryMemberId,
+    selectedHistoryMemberId,
+  } = useLatestConversationStore();
   const [openedConversations, setOpenedConversations] = useState<number[]>([]);
   const matches = useMediaQuery("(min-width: 640px)");
   const setConversation = useLatestConversationStore(
-    (state) => state.setConversation,
+    (state) => state.setConversation
   );
   const user = useUserStore((state) => state.user);
   const selectedConversation = useLatestConversationStore(
-    (state) => state.conversation,
+    (state) => state.conversation
   );
   const setSenderUserInfo = useSenderInfo((state) => state.setInfo);
   const { isLoading, isSuccess, data } = useQuery({
@@ -33,15 +37,15 @@ const ChatList = () => {
 
   // This is used for page view switching in mobile view
   const updateMessagingPageView = useMobileMessagingViewStore(
-    (state) => state.toggle,
+    (state) => state.toggle
   );
 
   useEffect(() => {
     return () => {
       setSelectedHistoryMemberId(null);
-      setSelectedHistoryMemberName('');
-    }
-  }, [])
+      setSelectedHistoryMemberName("");
+    };
+  }, []);
 
   useEffect(() => {
     if (!selectedConversation && data && data.length !== 0) {
@@ -66,28 +70,37 @@ const ChatList = () => {
 
   const conversations = data
     ?.filter((conversation) =>
-      searchFilterValue.length === 0 ? true : conversation.recipient_nickname
-        .toLowerCase()
-        .includes(searchFilterValue.toLowerCase())
+      searchFilterValue.length === 0
+        ? true
+        : conversation.recipient_nickname
+            .toLowerCase()
+            .includes(searchFilterValue.toLowerCase())
     )
     .filter((conversation) => {
       return conversation.recipient_id !== user?.member_id;
     })
     .map((conversation, index) => {
       return (
-        <li onClick={() => {
-          if (!openedConversations.includes(conversation.listed_id)) {
-            setOpenedConversations((prev) => [...prev, conversation.listed_id])
-          }
-        }} key={index}>
+        <li
+          onClick={() => {
+            if (!openedConversations.includes(conversation.listed_id)) {
+              setOpenedConversations((prev) => [
+                ...prev,
+                conversation.listed_id,
+              ]);
+            }
+          }}
+          key={index}
+        >
           <Button
             variant={"ghost"}
             className={cn(
-              "hover:bg-slate-50 w-full h-max items-start text-left",
-              (!openedConversations.includes(conversation.listed_id) && !conversation.is_read) &&
-              "bg-accent",
-              (selectedHistoryMemberId === conversation.recipient_id) &&
-              "bg-slate-50",
+              "hover:bg-slate-50 w-full h-max items-start text-left dark:bg-slate-700",
+              !openedConversations.includes(conversation.listed_id) &&
+                !conversation.is_read &&
+                "bg-accent",
+              selectedHistoryMemberId === conversation.recipient_id &&
+                "bg-slate-50"
             )}
             onClick={() => {
               if (!matches) {
@@ -101,11 +114,9 @@ const ChatList = () => {
                 conversation.gender,
                 conversation.recipient_uuid,
                 conversation.recipient_nickname,
-                conversation.conversation_uuid,
+                conversation.conversation_uuid
               );
-              setSelectedHistoryMemberId(
-                conversation.recipient_id,
-              );
+              setSelectedHistoryMemberId(conversation.recipient_id);
               setSelectedHistoryMemberName(conversation.recipient_nickname);
             }}
           >
@@ -114,13 +125,19 @@ const ChatList = () => {
               src={getImagePath(
                 conversation.gallery_uuid,
                 conversation.gender,
-                conversation.recipient_uuid,
+                conversation.recipient_uuid
               )}
               alt="user profile"
             />
             <div className="w-full flex flex-col justify-start">
               <div className="flex justify-between items-center w-full">
-                <p className={cn((!openedConversations.includes(conversation.listed_id) && !conversation.is_read) && "font-semibold")}>
+                <p
+                  className={cn(
+                    !openedConversations.includes(conversation.listed_id) &&
+                      !conversation.is_read &&
+                      "font-semibold"
+                  )}
+                >
                   {conversation.listed_nickname}
                 </p>
                 <p className="text-xs">

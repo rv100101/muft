@@ -14,7 +14,7 @@ const MessagingPage = () => {
         <div className={cn("sm:col-span-3")}>
           <ChatHistory />
         </div>
-        <div className="col-span-10 sm:col-span-7">
+        <div className="col-span-10 sm:col-span-7 ">
           <ChatConversation />
         </div>
       </div>
