@@ -76,18 +76,17 @@ const AboutAccordionContent = () => {
     <div className="flex lg:flex-row flex-col mb-5">
       <div className="grid grid-cols-6 grid-rows-2 sm:flex sm:flex-row justify-around text-sm lg:justify-start lg:w-1/3 w-full lg:block">
         <div
-          className={
-            cn('flex justify-center items-center sm:block',
-              activeTabs[1]
-                ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B]"
-                : "text-[#727272] py-2 px-2 my-2"
-            )
-          }
+          className={cn(
+            "flex justify-center items-center sm:block",
+            activeTabs[1]
+              ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B] dark:bg-[#3b0117]"
+              : "text-[#727272] py-2 px-2 my-2"
+          )}
           onClick={() => toggleTab(1)}
         >
           <p
             className={cn(
-              "text-md hover:cursor-pointer select-none lg:block hidden",
+              "text-md hover:cursor-pointer select-none lg:block hidden ",
               basicInfoHasErrors && "text-red-500"
             )}
           >
@@ -98,19 +97,15 @@ const AboutAccordionContent = () => {
               </span>
             )}
           </p>
-          <User2
-            size={20}
-            className="hover:cursor-pointer lg:hidden"
-          />
+          <User2 size={20} className="hover:cursor-pointer lg:hidden" />
         </div>
         <div
-          className={
-            cn('flex justify-center items-center sm:block',
-              activeTabs[2]
-                ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B]"
-                : "text-[#727272] py-2 px-2 my-2"
-            )
-          }
+          className={cn(
+            "flex justify-center items-center sm:block",
+            activeTabs[2]
+              ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B] dark:bg-[#3b0117]"
+              : "text-[#727272] py-2 px-2 my-2"
+          )}
           onClick={() => toggleTab(2)}
         >
           <p
@@ -133,13 +128,12 @@ const AboutAccordionContent = () => {
           />
         </div>
         <div
-          className={
-            cn('flex justify-center items-center sm:block',
-              activeTabs[3]
-                ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B]"
-                : "text-[#727272] py-2 px-2 my-2"
-            )
-          }
+          className={cn(
+            "flex justify-center items-center sm:block",
+            activeTabs[3]
+              ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B] dark:bg-[#3b0117]"
+              : "text-[#727272] py-2 px-2 my-2"
+          )}
           onClick={() => toggleTab(3)}
         >
           <p
@@ -162,13 +156,12 @@ const AboutAccordionContent = () => {
           />
         </div>
         <div
-          className={
-            cn('flex justify-center items-center sm:block',
-              activeTabs[4]
-                ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B]"
-                : "text-[#727272] py-2 px-2 my-2"
-            )
-          }
+          className={cn(
+            "flex justify-center items-center sm:block",
+            activeTabs[4]
+              ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B] dark:bg-[#3b0117]"
+              : "text-[#727272] py-2 px-2 my-2"
+          )}
           onClick={() => toggleTab(4)}
         >
           <p
@@ -191,13 +184,12 @@ const AboutAccordionContent = () => {
           />
         </div>
         <div
-          className={
-            cn('flex justify-center items-center sm:block',
-              activeTabs[5]
-                ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B]"
-                : "text-[#727272] py-2 px-2 my-2"
-            )
-          }
+          className={cn(
+            "flex justify-center items-center sm:block",
+            activeTabs[5]
+              ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B] dark:bg-[#3b0117]"
+              : "text-[#727272] py-2 px-2 my-2"
+          )}
           onClick={() => toggleTab(5)}
         >
           <p
@@ -220,13 +212,12 @@ const AboutAccordionContent = () => {
           />
         </div>
         <div
-          className={
-            cn('flex justify-center items-center sm:block',
-              activeTabs[6]
-                ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B]"
-                : "text-[#727272] py-2 px-2 my-2"
-            )
-          }
+          className={cn(
+            "flex justify-center items-center sm:block",
+            activeTabs[6]
+              ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B] dark:bg-[#3b0117]"
+              : "text-[#727272] py-2 px-2 my-2"
+          )}
           onClick={() => toggleTab(6)}
         >
           <p
@@ -249,13 +240,12 @@ const AboutAccordionContent = () => {
           />
         </div>
         <div
-          className={
-            cn('flex justify-center items-center sm:block',
-              activeTabs[7]
-                ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B]"
-                : "text-[#727272] py-2 px-2 my-2"
-            )
-          }
+          className={cn(
+            "flex justify-center items-center sm:block",
+            activeTabs[7]
+              ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B] dark:bg-[#3b0117]"
+              : "text-[#727272] py-2 px-2 my-2"
+          )}
           onClick={() => toggleTab(7)}
         >
           <p
@@ -278,13 +268,12 @@ const AboutAccordionContent = () => {
           />
         </div>
         <div
-          className={
-            cn('flex justify-center items-center sm:block',
-              activeTabs[8]
-                ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B]"
-                : "text-[#727272] py-2 px-2 my-2"
-            )
-          }
+          className={cn(
+            "flex justify-center items-center sm:block",
+            activeTabs[8]
+              ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B] dark:bg-[#3b0117]"
+              : "text-[#727272] py-2 px-2 my-2"
+          )}
           onClick={() => toggleTab(8)}
         >
           <p
@@ -307,13 +296,12 @@ const AboutAccordionContent = () => {
           />
         </div>
         <div
-          className={
-            cn('flex justify-center items-center sm:block',
-              activeTabs[9]
-                ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B]"
-                : "text-[#727272] py-2 px-2 my-2"
-            )
-          }
+          className={cn(
+            "flex justify-center items-center sm:block",
+            activeTabs[9]
+              ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B] dark:bg-[#3b0117]"
+              : "text-[#727272] py-2 px-2 my-2"
+          )}
           onClick={() => toggleTab(9)}
         >
           <p
@@ -336,13 +324,12 @@ const AboutAccordionContent = () => {
           />
         </div>
         <div
-          className={
-            cn('flex justify-center items-center sm:block',
-              activeTabs[10]
-                ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B]"
-                : "text-[#727272] py-2 px-2 my-2"
-            )
-          }
+          className={cn(
+            "flex justify-center items-center sm:block",
+            activeTabs[10]
+              ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B] dark:bg-[#3b0117]"
+              : "text-[#727272] py-2 px-2 my-2"
+          )}
           onClick={() => toggleTab(10)}
         >
           <p
@@ -365,13 +352,12 @@ const AboutAccordionContent = () => {
           />
         </div>
         <div
-          className={
-            cn('flex justify-center items-center sm:block',
-              activeTabs[11]
-                ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B]"
-                : "text-[#727272] py-2 px-2 my-2"
-            )
-          }
+          className={cn(
+            "flex justify-center items-center sm:block",
+            activeTabs[11]
+              ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B] dark:bg-[#3b0117]"
+              : "text-[#727272] py-2 px-2 my-2"
+          )}
           onClick={() => toggleTab(11)}
         >
           <p
@@ -394,13 +380,12 @@ const AboutAccordionContent = () => {
           />
         </div>
         <div
-          className={
-            cn('flex justify-center items-center sm:block',
-              activeTabs[12]
-                ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B]"
-                : "text-[#727272] py-2 px-2 my-2"
-            )
-          }
+          className={cn(
+            "flex justify-center items-center sm:block",
+            activeTabs[12]
+              ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B] dark:bg-[#3b0117]"
+              : "text-[#727272] py-2 px-2 my-2"
+          )}
           onClick={() => toggleTab(12)}
         >
           <p

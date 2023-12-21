@@ -184,7 +184,7 @@ const PostItem = ({
           {/* bio */}
           <div className="flex flex-col justify-center items-center"></div>
           <div className="flex flex-row justify-start space-x-3 mt-5 pb-5">
-            <div className="rounded-full bg-[#FFF2F7] flex flex-row justify-center align-center space-x-2 py-2 px-4 ">
+            <div className="rounded-full bg-[#FFF2F7] flex flex-row justify-center align-center space-x-2 py-2 px-4 dark:bg-[#3b0117] text=[#ff588e]">
               <CalendarClock
                 color="#FF599B"
                 fill="white"
@@ -193,7 +193,7 @@ const PostItem = ({
               />
               <p className="text-[#FF599B] mt-2 text-sm">{age} years</p>
             </div>
-            <div className="rounded-full bg-[#FFF2F7] flex flex-row justify-center align-center space-x-2 py-2 px-4 ">
+            <div className="rounded-full bg-[#FFF2F7] flex flex-row justify-center align-center space-x-2 py-2 px-4 dark:bg-[#3b0117] text=[#ff588e]">
               <Ribbon
                 color="#FF599B"
                 fill="white"
@@ -205,7 +205,7 @@ const PostItem = ({
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <div className="flex flex-row rounded-full bg-[#FFF2F7] flex flex-row justify-center align-center space-x-2 py-2 px-4 ">
+                  <div className="flex flex-row rounded-full bg-[#FFF2F7] flex flex-row justify-center align-center space-x-2 py-2 px-4 dark:bg-[#3b0117] text=[#ff588e]">
                     <img
                       alt={nationality}
                       height={20}

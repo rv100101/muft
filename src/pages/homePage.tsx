@@ -236,7 +236,7 @@ const HomePage = () => {
                         !clickedTags[0]
                           ? "bg-white text-[#ff569a]"
                           : "bg-[#ff569a] text-white"
-                      } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
+                      } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer dark:bg-[#3b0117]`}
                     >
                       {randomNumbers[0]}
                     </p>
@@ -250,7 +250,7 @@ const HomePage = () => {
                         !clickedTags[1]
                           ? "bg-white text-[#ff569a]"
                           : "bg-[#ff569a] text-white"
-                      } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
+                      } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer dark:bg-[#3b0117]`}
                     >
                       {randomNumbers[1]}
                     </p>
@@ -264,7 +264,7 @@ const HomePage = () => {
                         !clickedTags[2]
                           ? "bg-white text-[#ff569a]"
                           : "bg-[#ff569a] text-white"
-                      } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
+                      } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer dark:bg-[#3b0117]`}
                     >
                       {randomNumbers[2]}
                     </p>
@@ -280,7 +280,7 @@ const HomePage = () => {
                         !clickedTags[3]
                           ? "bg-white text-[#ff569a]"
                           : "bg-[#ff569a] text-white"
-                      } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
+                      } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer dark:bg-[#3b0117]`}
                     >
                       {randomNumbers[3]}
                     </p>
@@ -294,7 +294,7 @@ const HomePage = () => {
                         !clickedTags[4]
                           ? "bg-white text-[#ff569a]"
                           : "bg-[#ff569a] text-white"
-                      } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
+                      } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer dark:bg-[#3b0117]`}
                     >
                       {randomNumbers[4]}
                     </p>
@@ -308,7 +308,7 @@ const HomePage = () => {
                         !clickedTags[5]
                           ? "bg-white text-[#ff569a]"
                           : "bg-[#ff569a] text-white"
-                      } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
+                      } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer dark:bg-[#3b0117]`}
                     >
                       {randomNumbers[5]}
                     </p>

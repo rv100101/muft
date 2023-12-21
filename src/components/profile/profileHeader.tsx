@@ -455,7 +455,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                 >
                   <div className="flex lg:flex-col lg:justify-start flex-row space-x-4 lg:space-x-0">
                     <div className="flex flex-col sm:flex-row space-x-1">
-                      <p className="font-semibold text-[#171717] text-sm sm:text-lg ">
+                      <p className="font-semibold text-[#171717] text-sm sm:text-lg dark:text-white">
                         {`${headerValues!.nickname},`}
                       </p>
                       <p className="font-semibold text-primary text-lg">
@@ -781,12 +781,12 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                   </p>
                 )} */}
                 {headerValues!.maritalStatus && (
-                  <p className="rounded-md w-max h-max bg-[#FFF2F7] text-[#FF599B] px-5 py-2 mb-2">
+                  <p className="rounded-md w-max h-max bg-[#FFF2F7] text-[#FF599B] px-5 py-2 mb-2 dark:bg-[#3b0117]">
                     {headerValues!.maritalStatus}
                   </p>
                 )}
                 {headerValues!.country_name && (
-                  <p className="rounded-md w-max h-max bg-[#FFF2F7] text-[#FF599B] px-5 py-2 mb-2">
+                  <p className="rounded-md w-max h-max bg-[#FFF2F7] text-[#FF599B] px-5 py-2 mb-2 dark:bg-[#3b0117]">
                     {headerValues!.country_name}
                   </p>
                 )}
