@@ -20,7 +20,7 @@ const ChatList = () => {
     selectedHistoryMemberId,
   } = useLatestConversationStore();
   const [openedConversations, setOpenedConversations] = useState<number[]>([]);
-  const matches = useMediaQuery("(min-width: 920px)");
+  const matches = useMediaQuery("(min-width: 1066px)");
   const setConversation = useLatestConversationStore(
     (state) => state.setConversation
   );
@@ -39,20 +39,7 @@ const ChatList = () => {
   const updateMessagingPageView = useMobileMessagingViewStore(
     (state) => state.toggle
   );
-  const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
 
-  // Function to update the viewport width in the state
-  const updateViewportWidth = () => {
-    setViewportWidth(window.innerWidth);
-  };
-  useEffect(() => {
-    window.addEventListener("resize", updateViewportWidth);
-
-    // Clean up the event listener when the component unmounts
-    return () => {
-      window.removeEventListener("resize", updateViewportWidth);
-    };
-  }, []);
   useEffect(() => {
     return () => {
       setSelectedHistoryMemberId(null);
@@ -79,8 +66,6 @@ const ChatList = () => {
   //       return dateA.getTime() - dateB.getTime();
   //     })
 
-  console.log(openedConversations);
-  console.log("matches: ", viewportWidth);
   const conversations = data
     ?.filter((conversation) =>
       searchFilterValue.length === 0
@@ -154,7 +139,7 @@ const ChatList = () => {
                 >
                   {conversation.listed_nickname}
                 </p>
-                <p className="text-xs">
+                <p className="text-xs xs:hidden">
                   {moment(`${conversation.created_date}Z`).fromNow()}
                 </p>
               </div>
