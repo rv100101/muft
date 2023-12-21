@@ -16,17 +16,11 @@ import { toast } from "@/components/ui/use-toast";
 import { Dialog } from "@radix-ui/react-dialog";
 import { DialogContent } from "@/components/ui/dialog";
 import ActivateAccount from "./accountActivationPage";
-import deleteMultiselectValuesStore from "@/zustand/profile/about/deleteMultiselectValues";
 import removeDuplicates from "@/lib/removeDulpicates";
 import removeExistingData from "@/lib/removeExistingData";
+import getDeletedItems from "@/lib/getDeleted";
 
 const ProfilePageBody = ({ userId }: { userId: string }) => {
-  const {
-    languages: deletedLanguages,
-    // pets: deletedPets,
-    // favoriteFood: deletedFavoriteFood,
-    // interests: deletedInterests,
-  } = deleteMultiselectValuesStore();
   const headerValues = profileHeaderStore((state) => state.headerValues);
   const { data, setEditModeFalse } = profileAboutContentStore();
   const { setIsSaving } = profileAboutContentStore();
@@ -173,7 +167,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
     //   toggleEditMode();
     //   return;
     // }
-    setIsSaving(true);
+    // setIsSaving(true);
     let finalFormData = { ...formData };
     try {
       const ethnicity = getEthnicity(formData.ethnicity);
@@ -198,24 +192,48 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
       const religion = getReligion(formData.religion);
       const disability = getDisabilityData(formData.disability);
       const employmentStatus = getEmploymentStatus(formData.employmentStatus);
+      const finalLanguages = removeExistingData(
+        formData.language,
+        data!.language,
+        "language_name"
+      );
+      const finalFavoriteFood = removeExistingData(
+        formData.favoriteFood,
+        data!.favoriteFood,
+        "favorite_food_name"
+      );
+      const finalPets = removeExistingData(
+        formData.pets,
+        data!.pets,
+        "pet_name"
+      );
+      const finalInterests = removeExistingData(
+        formData.interest,
+        data!.interest,
+        "interest_name"
+      );
       finalFormData = {
         ...finalFormData,
-        language: removeExistingData(
-          formData.language,
-          data!.language,
-          "language_name"
+        language: finalLanguages,
+        favoriteFood: finalFavoriteFood,
+        pets: finalPets,
+        interest: finalInterests,
+        deletedLanguages: getDeletedItems(
+          data?.language ?? [],
+          finalLanguages,
+          "language_code"
         ),
-        favoriteFood: removeExistingData(
-          formData.favoriteFood,
-          data!.favoriteFood,
-          "favorite_food_name"
+        deletedFaveFoods: getDeletedItems(
+          data?.favoriteFood ?? [],
+          finalFavoriteFood,
+          "favorite_food_id"
         ),
-        pets: removeExistingData(formData.pets, data!.pets, "pet_name"),
-        interest: removeExistingData(
-          formData.interest,
-          data!.interest,
-          "interest_name"
+        deletedInterests: getDeletedItems(
+          data?.interest ?? [],
+          finalInterests,
+          "interest_id"
         ),
+        deletedPets: getDeletedItems(data?.pets ?? [], finalPets, "pet_id"),
         ethnicity: ethnicity?.ethnicity_id,
         nationality: nationality?.country_code,
         maritalStatus: maritalStatus?.marital_status_id,
@@ -238,8 +256,11 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
         disability: disability?.disability_id,
         religion: religion?.religion_id,
         employmentStatus: employmentStatus?.employment_status_id,
-        deletedLanguages,
       };
+      console.log(data, formData.language);
+
+      console.log(finalFormData);
+      return;
       await profileContentQuery.saveInformation(finalFormData, user!.member_id);
       updateUser({ ...user, profile_completed: true } as User);
       queryClient.invalidateQueries(["profileHeader"]);
