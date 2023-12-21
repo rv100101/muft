@@ -35,10 +35,10 @@ const Posts = ({
         setValue(e.currentTarget.scrollTop);
       }}
       ref={containerRef}
-      className="col-span-4 w-min overflow-y-auto no-scrollbar 2xl:w-1/2"
+      className="col-span-4 overflow-y-auto w-full lg:w-min no-scrollbar 2xl:w-1/2"
     >
       {isLoading ? (
-        <>
+        <div className="no-scrollbar flex flex-col items-center lg:p-8 px-0 md:w-full w-screen h-screen sm:w-full rounded-b-xl space-y-4 border border-[#E0E0E0] dark:border-[#131d2d] lg:h-min overflow-y-auto scroll-smooth">
           {/* <div className="flex flex-col justify-center space-x-4 w-full ml-5 mt-10 border w-full"> */}
           <div className="flex flex-col items-start space-y-2 p-5 border bg-white m-5 lg:w-[470px]  w-[350px] dark:bg-[#334155]">
             <Skeleton className="h-[50px] w-full" />
@@ -54,16 +54,16 @@ const Posts = ({
             <Skeleton className="h-[300px] w-full" />
           </div>
           {/* </div> */}
-        </>
+        </div>
       ) : (
-        <>
+        <div className="w-full">
           <PostHeader />
-          <div className=" lg:block hidden">
+          <div className="w-full lg:block hidden">
             <div className="flex flex-row w-full justify-between lg:p-5 lg:border-l lg:border-r">
               <p className="uppercase font-semibold"></p>
             </div>
           </div>
-          <div className="no-scrollbar lg:p-8 px-0 lg:w-full h-screen w-screen rounded-b-xl space-y-4 border border-[#E0E0E0] dark:border-[#131d2d] lg:h-min overflow-y-auto scroll-smooth">
+          <div className="no-scrollbar flex flex-col items-center lg:p-8 px-0 md:w-full w-screen h-screen sm:w-full rounded-b-xl space-y-4 border border-[#E0E0E0] dark:border-[#131d2d] lg:h-min overflow-y-auto scroll-smooth">
             {memberList.length > 0 ? (
               memberList.map((post, index: number) => (
                 <PostItem
@@ -87,7 +87,7 @@ const Posts = ({
               </div>
             )}
           </div>
-        </>
+        </div>
       )}
     </div>
   );
