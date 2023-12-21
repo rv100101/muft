@@ -13,7 +13,7 @@ const ChatHistory = () => {
   return (
     <>
       <ChatMobileNav />
-      <div className="space-y-2 w-full h-full md:p-5">
+      <div className=" w-full h-full ">
         <div className="p-4 space-y-4">
           <div className="flex items-center space-x-2 lg:flex hidden pl-2">
             <img
