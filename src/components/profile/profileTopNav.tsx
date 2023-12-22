@@ -14,6 +14,7 @@ import {
 import { DialogClose } from "@radix-ui/react-dialog";
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
 import ProfileMobileNav from "./ProfileMobileNav";
+import { useQueryClient } from "@tanstack/react-query";
 const ProfileTopNav = () => {
   const { isSaving } = profileAboutContentStore();
 
@@ -25,7 +26,7 @@ const ProfileTopNav = () => {
   // const setSelectedProfileId = useHomepageViewStore(
   //   (state) => state.setSelectedProfileId
   // );
-
+  const queryClient = useQueryClient();
   return (
     <>
       <ProfileMobileNav />
@@ -85,7 +86,10 @@ const ProfileTopNav = () => {
                     </DialogTitle>
                   </DialogHeader>
                   <DialogFooter className="sm:justify-start">
-                    <Button className="hover:bg-primary" onClick={signOut}>
+                    <Button className="hover:bg-primary" onClick={() => {
+                      signOut()
+                      queryClient.invalidateQueries();
+                    }}>
                       Yes
                     </Button>
                     <DialogClose asChild>
