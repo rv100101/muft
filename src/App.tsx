@@ -13,9 +13,9 @@ import ViewUser from "./components/profile/viewUser";
 import { ErrorBoundary } from "@sentry/react";
 import { useSettingsStore } from "./zustand/settings/displaySettingsStore";
 import { useEffect } from "react";
-// import { useEffect } from "react";
 // import runOneSignal from "./lib/oneSignal";
-
+import * as Sentry from "@sentry/react";
+import { useUpdateEffect } from "usehooks-ts";
 function App() {
   const [location] = useLocation();
   const user = useUserStore((state) => state.user);
@@ -26,6 +26,21 @@ function App() {
   // useEffect(() => {
   //   runOneSignal();
   // });
+
+  useUpdateEffect(() => {
+
+    if (user) {
+      Sentry.configureScope(function (scope) {
+        scope.setTag("user", "muffin_user");
+        scope.setUser({
+          id: user.member_id,
+          email: user.email_address,
+        });
+      });
+    } else {
+      Sentry.setUser(null);
+    }
+  }, [user]);
 
   useEffect(() => {
     if (displaySettings?.darkModeSwitch) {

@@ -29,10 +29,6 @@ const BasicInformationForm = () => {
   const [location] = useLocation();
   const parts = location.split("/");
   const userId = parts[parts.length - 1];
-  console.log(
-    "🚀 ~ file: basicInformationForm.tsx:30 ~ BasicInformationForm ~ location:",
-    userId
-  );
   const [minDate, setMinDate] = useState("");
   const [maxDate, setMaxDate] = useState("");
   const isSaving = profileAboutContentStore((state) => state.isSaving);
