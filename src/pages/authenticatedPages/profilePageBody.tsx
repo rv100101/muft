@@ -18,11 +18,12 @@ import { DialogContent } from "@/components/ui/dialog";
 import ActivateAccount from "./accountActivationPage";
 import removeDuplicates from "@/lib/removeDulpicates";
 import removeExistingData from "@/lib/removeExistingData";
-import getDeletedItems from "@/lib/getDeleted";
+// import getDeletedItems from "@/lib/getDeleted";
 
 const ProfilePageBody = ({ userId }: { userId: string }) => {
   const headerValues = profileHeaderStore((state) => state.headerValues);
-  const { data, setEditModeFalse } = profileAboutContentStore();
+  const setHeaderValues = profileHeaderStore(state => state.setHeaderValues);
+  const { data, setEditModeFalse, setData } = profileAboutContentStore();
   const { setIsSaving } = profileAboutContentStore();
   const { user } = useUserStore();
   const updateUser = useUserStore((state) => state.updateUser);
@@ -167,7 +168,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
     //   toggleEditMode();
     //   return;
     // }
-    // setIsSaving(true);
+    setIsSaving(true);
     let finalFormData = { ...formData };
     try {
       const ethnicity = getEthnicity(formData.ethnicity);
@@ -218,22 +219,22 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
         favoriteFood: finalFavoriteFood,
         pets: finalPets,
         interest: finalInterests,
-        deletedLanguages: getDeletedItems(
-          data?.language ?? [],
-          finalLanguages,
-          "language_code"
-        ),
-        deletedFaveFoods: getDeletedItems(
-          data?.favoriteFood ?? [],
-          finalFavoriteFood,
-          "favorite_food_id"
-        ),
-        deletedInterests: getDeletedItems(
-          data?.interest ?? [],
-          finalInterests,
-          "interest_id"
-        ),
-        deletedPets: getDeletedItems(data?.pets ?? [], finalPets, "pet_id"),
+        // deletedLanguages: getDeletedItems(
+        //   data?.language ?? [],
+        //   finalLanguages,
+        //   "language_code"
+        // ),
+        // deletedFaveFoods: getDeletedItems(
+        //   data?.favoriteFood ?? [],
+        //   finalFavoriteFood,
+        //   "favorite_food_id"
+        // ),
+        // deletedInterests: getDeletedItems(
+        //   data?.interest ?? [],
+        //   finalInterests,
+        //   "interest_id"
+        // ),
+        // deletedPets: getDeletedItems(data?.pets ?? [], finalPets, "pet_id"),
         ethnicity: ethnicity?.ethnicity_id,
         nationality: nationality?.country_code,
         maritalStatus: maritalStatus?.marital_status_id,
@@ -257,11 +258,9 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
         religion: religion?.religion_id,
         employmentStatus: employmentStatus?.employment_status_id,
       };
-      console.log(data, formData.language);
-
-      console.log(finalFormData);
-      return;
       await profileContentQuery.saveInformation(finalFormData, user!.member_id);
+      setHeaderValues({ ...headerValues!, nickname: formData.nickname });
+      setData({ ...data!, ...formData });
       updateUser({ ...user, profile_completed: true } as User);
       queryClient.invalidateQueries(["profileHeader"]);
       queryClient.invalidateQueries(["profileContent"]);
