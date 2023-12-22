@@ -100,7 +100,6 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
   });
 
   const { isLoading: currentUserLoading, isRefetching } = useQuery({
-    // enabled: !(location.startsWith("/profile") && profileData),
     queryKey: ["profileContent", userId],
     queryFn: async () => {
       const additionalInformation =
@@ -109,11 +108,23 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
         userId,
         userId
       );
-      const convertedDetails = convertJsonToConvertedObject(memberDetails);
+
+      console.log(memberDetails);
+
+      let jsonArray: string | null = null;
+      console.log(typeof memberDetails);
+
+      if (typeof memberDetails == 'string') {
+        const jsonArrayString = `[${memberDetails.replace(/}\s*{/g, '},{')}]`;
+        jsonArray = JSON.parse(jsonArrayString);
+      }
+
+      const convertedDetails = convertJsonToConvertedObject(jsonArray == null ? memberDetails : jsonArray![0]);
       const details = {
         ...convertedDetails,
         ...additionalInformation,
       };
+
       return details;
     },
     onSuccess: (data: ProfileAbout) => {
