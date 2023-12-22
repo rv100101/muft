@@ -23,7 +23,7 @@ import removeExistingData from "@/lib/removeExistingData";
 const ProfilePageBody = ({ userId }: { userId: string }) => {
   const headerValues = profileHeaderStore((state) => state.headerValues);
   const setHeaderValues = profileHeaderStore(state => state.setHeaderValues);
-  const { data, setEditModeFalse } = profileAboutContentStore();
+  const { data, setEditModeFalse, setData } = profileAboutContentStore();
   const { setIsSaving } = profileAboutContentStore();
   const { user } = useUserStore();
   const updateUser = useUserStore((state) => state.updateUser);
@@ -260,6 +260,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
       };
       await profileContentQuery.saveInformation(finalFormData, user!.member_id);
       setHeaderValues({ ...headerValues!, nickname: formData.nickname });
+      setData({ ...data!, ...formData });
       updateUser({ ...user, profile_completed: true } as User);
       queryClient.invalidateQueries(["profileHeader"]);
       queryClient.invalidateQueries(["profileContent"]);
