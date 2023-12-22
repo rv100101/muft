@@ -133,7 +133,10 @@ const SignInForm = () => {
               onClick={() => showBlockedModal(false)}
             />
           </DialogHeader>
-          <div>
+          <div className="block">
+            <Ban size={100} color="#ff77ae" />
+          </div>
+          <div className="dark:block hidden">
             <Ban size={100} color="#ae2e51" />
           </div>
           <div className="flex flex-col space-y-5 items-center text-center mt-3">

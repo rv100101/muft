@@ -146,10 +146,10 @@ export default function LanguageField() {
                   />
                 </div>
               </div>
-              <div className="relative mt-2">
+              <div className="relative mt-2 lg:h-full h-screen">
                 {open && selectables.length > 0 ? (
                   <div className="absolute w-full z-10 top-0 rounded-md border bg-popover text-popover-foreground shadow-md outline-none animate-in">
-                    <CommandGroup className="h-40 sm:h-96 overflow-auto">
+                    <CommandGroup className="h-40 sm:h-96 overflow-auto ">
                       {selectables.map((framework) => {
                         return (
                           <CommandItem

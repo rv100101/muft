@@ -23,7 +23,7 @@ import calculateAge from "@/lib/calculateAge";
 
 const ProfilePageBody = ({ userId }: { userId: string }) => {
   const headerValues = profileHeaderStore((state) => state.headerValues);
-  const setHeaderValues = profileHeaderStore(state => state.setHeaderValues);
+  const setHeaderValues = profileHeaderStore((state) => state.setHeaderValues);
   const { data, setEditModeFalse, setData } = profileAboutContentStore();
   const { setIsSaving } = profileAboutContentStore();
   const { user } = useUserStore();
@@ -305,7 +305,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
           onSubmit={methods.handleSubmit(onSubmit)}
         >
           <ProfileTopNav />
-          <div className="h-full overflow-y-scroll no-scrollbar flex flex-col">
+          <div className="lg:h-full h-screen overflow-y-scroll no-scrollbar flex flex-col">
             {user?.profile_completed && <ProfileHeader userId={userId} />}
             <AboutAccordion userId={parseInt(userId)} />
             {/* user?.profile_completed && <GallerySection userId={userId} /> */}
