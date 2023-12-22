@@ -112,7 +112,7 @@ export default function LanguageField() {
                     return (
                       <Badge
                         key={framework.member_language_id}
-                        className="bg-white dark:bg-[#3b0117] border-primary border"
+                        className="bg-white dark:bg-[#3b0117] dark:text-white dark:border-[#df4798] border-primary border"
                         variant="secondary"
                       >
                         {framework.language_name}
@@ -129,7 +129,7 @@ export default function LanguageField() {
                           }}
                           onClick={() => handleUnselect(framework)}
                         >
-                          <X className="h-3 w-3 text-muted-foreground hover:text-foreground" />
+                          <X className="h-3 w-3 text-muted-foreground hover:text-foreground dark:bg-[#df4798] dark:rounded-full dark:text-[#3b0117]" />
                         </button>
                       </Badge>
                     );
