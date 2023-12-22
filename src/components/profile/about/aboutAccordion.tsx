@@ -114,7 +114,7 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
       let jsonArray: string | null = null;
       console.log(typeof memberDetails);
 
-      if (typeof memberDetails == 'string') {
+      if (typeof memberDetails == 'string' && memberDetails.length !== 0) {
         const jsonArrayString = `[${memberDetails.replace(/}\s*{/g, '},{')}]`;
         jsonArray = JSON.parse(jsonArrayString);
       }
