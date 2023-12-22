@@ -25,13 +25,13 @@ const LanguagesForm = () => {
   return (
     <div
       className={cn(
-        "flex flex-col h-96  w-full space-y-4",
+        "flex flex-col w-full h-full space-y-4",
         !user?.profile_completed && "h-full"
       )}
     >
       <div className="flex h-full flex-row justify-between w-full px-5">
         {editMode || !user?.profile_completed ? (
-          <div className="space-y-1 hover:cursor-pointer w-full items-center">
+          <div className="space-y-1 h-full hover:cursor-pointer w-full items-center">
             <LanguageField />
           </div>
         ) : (
