@@ -62,8 +62,8 @@ const DeactivateAccountContent = () => {
         // variant: "success",
       });
       setDeleteLoading(false);
+      queryClient.clear();
       signOut();
-      queryClient.invalidateQueries();
       setProfileData(null);
       setProfileHeaderValues(null);
       // }

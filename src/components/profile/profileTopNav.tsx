@@ -105,8 +105,8 @@ const ProfileTopNav = () => {
                   </DialogHeader>
                   <DialogFooter className="sm:justify-start">
                     <Button className="hover:bg-primary" onClick={() => {
+                      queryClient.clear();
                       signOut()
-                      queryClient.invalidateQueries();
                     }}>
                       Yes
                     </Button>

@@ -143,7 +143,7 @@ const SideBar = () => {
                 <Button
                   className="hover:bg-primary"
                   onClick={() => {
-                    queryClient.invalidateQueries();
+                    queryClient.clear();
                     signOut();
                     setProfileData(null);
                     setProfileHeaderValues(null);
