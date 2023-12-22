@@ -75,7 +75,7 @@ const ChatList = () => {
           .includes(searchFilterValue.toLowerCase())
     )
     .filter((conversation) => {
-      return conversation.recipient_id !== user?.member_id;
+      return conversation.recipient_id !== conversation.initiator_id;
     })
     .map((conversation, index) => {
       return (
@@ -97,7 +97,7 @@ const ChatList = () => {
               !openedConversations.includes(conversation.listed_id) &&
               !conversation.is_read &&
               "bg-accent",
-              selectedHistoryMemberId === conversation.recipient_id &&
+              selectedHistoryMemberId === conversation.listed_id &&
               "bg-slate-50"
             )}
             onClick={() => {
@@ -111,11 +111,11 @@ const ChatList = () => {
                 conversation.conversation_id,
                 conversation.gallery_uuid,
                 conversation.gender,
-                conversation.recipient_uuid,
-                conversation.recipient_nickname,
+                conversation.listed_uuid,
+                conversation.listed_nickname,
                 conversation.conversation_uuid
               );
-              setSelectedHistoryMemberId(conversation.recipient_id);
+              setSelectedHistoryMemberId(conversation.listed_id);
               setSelectedHistoryMemberName(conversation.recipient_nickname);
             }}
           >

@@ -6,9 +6,10 @@ import moment from "moment-with-locales-es6";
 import { useEffect, useRef } from "react";
 import ChatMessagesLoadingSkeleton from "./chatMessagesLoadingSkeleton";
 import { useSelectedConversationData } from "@/zustand/messaging/selectedConversationData";
+import { useUserStore } from "@/zustand/auth/user";
 const ChatMessages = () => {
   const scrollableDivRef = useRef<HTMLDivElement | null>(null);
-
+  const user = useUserStore(state => state.user);
   const latestConversation = useLatestConversationStore(
     (state) => state.conversation
   );
@@ -52,8 +53,10 @@ const ChatMessages = () => {
     }
   }, [data, conversationMessages]);
 
+  console.log(conversationMessages);
+
   const messages = conversationMessages?.map((message, index) => {
-    const gray = message.created_user == latestConversation?.memberId;
+    const gray = message.created_user == user!.member_id;
     let date = moment(message.created_date, moment.ISO_8601, true).isValid()
       ? `${message.created_date}Z`
       : "isLoading";
