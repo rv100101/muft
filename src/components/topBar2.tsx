@@ -315,14 +315,16 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
               <p className="px-5 text-sm">{`${startAgeSliderVal}-${endAgeSliderVal}`}</p>
             </div>
             {/* <form action="post" onSubmit={formik.handleSubmit}> */}
-            <div className="flex flex-row justify-center align-center py-5 mx-5 mt-5">
+            <div className="flex flex-row justify-center align-center py-5 px-5 mt-5 space-x-5">
               <p className="text-slate-500 text-sm">From</p>
               <Slider
                 // defaultValue={[50]}
-                value={[filters ? filters!.min_age : 23]}
+                value={[filters!.min_age]}
+                // value={[startAgeSliderVal]}
                 min={18}
+                max={80}
                 step={1}
-                className="w-full mx-5"
+                className=" ml-10 pr-5"
                 onValueChange={handleStartSliderChange}
                 name="age"
               />
@@ -332,7 +334,8 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
               <Slider
                 // defaultValue={[50]}
                 // dir="right-to-left"
-                value={[filters ? filters!.max_age : 60]}
+                value={[filters!.max_age]}
+                // value={[endAgeSliderVal]}
                 max={80}
                 step={1}
                 className="w-full ml-10 pr-5"

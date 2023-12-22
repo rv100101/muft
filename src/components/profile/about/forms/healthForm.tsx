@@ -1,9 +1,7 @@
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
-import {
-} from "@/components/ui/form";
+import {} from "@/components/ui/form";
 import FormSkeletonLoading from "./formSkeletonLoading";
-import {
-} from "@/components/ui/select";
+import {} from "@/components/ui/select";
 import { useUserStore } from "@/zustand/auth/user";
 import {
   FormControl,
@@ -25,17 +23,14 @@ import { Accessibility, Dumbbell } from "lucide-react";
 import { useFormContext } from "react-hook-form";
 const HealthForm = () => {
   const { control } = useFormContext();
-  const {
-    workout,
-    disability,
-  } = selectOptions();
+  const { workout, disability } = selectOptions();
   const isLoading = profileAboutContentStore((state) => state.isLoading);
   const data = profileAboutContentStore((state) => state.data);
   const editMode = profileAboutContentStore((state) => state.editMode);
   const user = useUserStore((state) => state.user);
 
   const isSaving = profileAboutContentStore((state) => state.isSaving);
-  const profileData = profileAboutContentStore(state => state.profileData);
+  const profileData = profileAboutContentStore((state) => state.profileData);
   if ((isLoading && profileData == null) || isSaving) {
     return (
       <div className="flex justify-start items-start space-x-4 w-full ml-5">
@@ -47,7 +42,6 @@ const HealthForm = () => {
   }
   return (
     <div className="flex flex-col w-full space-y-4">
-
       <div className="flex flex-row justify-between w-full px-5">
         {editMode || !user?.profile_completed ? (
           <div className="space-y-1 hover:cursor-pointer w-full items-center">
@@ -99,7 +93,7 @@ const HealthForm = () => {
               <p className="font-bold text-base text-primary">
                 {data!.workout ? `${data!.workout}` : "Add Workout"}
               </p>
-              <p className="text-[#727272] text-xs">I Workout</p>
+              <p className="text-[#727272] text-xs">Workout</p>
             </div>
           </div>
         )}
@@ -164,8 +158,6 @@ const HealthForm = () => {
           </div>
         )}
       </div>
-
-
     </div>
   );
 };
