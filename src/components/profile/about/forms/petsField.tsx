@@ -88,7 +88,7 @@ export default function PetsField() {
                     return (
                       <Badge
                         key={framework.pet_id}
-                        className="bg-white dark:bg-[#3b0117] dark:text-[#df4798] dark:border-[#df4798] border-primary border"
+                        className="bg-white dark:bg-[#3b0117] dark:text-white dark:border-[#df4798] border-primary border"
                         variant="secondary"
                       >
                         {framework.pet_name}
