@@ -97,51 +97,53 @@ const BasicInformationForm = () => {
               </div>
             </div>
           </div>
-          <div className="flex flex-row justify-between w-full px-5">
-            <div className="flex flex-row space-x-2 hover:cursor-pointer">
-              <User2
-                color="#ff569a"
-                size={30}
-                className="hover:cursor-pointer mt-2 mr-3"
-              />
-              <div className="flex flex-col justify-start space-y-1">
-                <p className="font-bold text-base text-primary">
-                  {data?.nickname}
-                </p>
-                <p className="text-[#727272] text-xs">Nickname</p>
-              </div>
-            </div>
-          </div>
+
         </>
       )}
-      {!user?.profile_completed && (
-        <div className="flex flex-row justify-between w-full px-5">
-          <div className="space-y-1 my-2 hover:cursor-pointer w-full items-center">
-            <FormField
-              name="nickname"
-              render={({ field }) => {
-                return (
-                  <FormItem>
-                    <FormLabel className="text-primary" htmlFor="nickname">
-                      Nickname
-                    </FormLabel>
-                    <Input
-                      onChange={(e) => {
-                        field.onChange(e.target.value);
-                      }}
-                      value={field.value}
-                      type="text"
-                      placeholder="Enter Nickname"
-                      className="outline-0 border rounded-lg w-full py-3 px-5"
-                    />
-                    <FormMessage />
-                  </FormItem>
-                );
-              }}
-            />
+      <div className="flex flex-row justify-between w-full px-5">
+        {editMode || !user?.profile_completed ? (
+          <div className="flex flex-row justify-between w-full">
+            <div className="space-y-1  hover:cursor-pointer w-full items-center">
+              <FormField
+                name="nickname"
+                render={({ field }) => {
+                  return (
+                    <FormItem>
+                      <FormLabel className="text-primary" htmlFor="nickname">
+                        Nickname
+                      </FormLabel>
+                      <Input
+                        onChange={(e) => {
+                          field.onChange(e.target.value);
+                        }}
+                        value={field.value}
+                        type="text"
+                        placeholder="Enter Nickname"
+                      />
+                      <FormMessage />
+                    </FormItem>
+                  );
+                }}
+              />
+            </div>
           </div>
-        </div>
-      )}
+        )
+          : <div className="flex flex-row space-x-2 hover:cursor-pointer">
+            <User2
+              color="#ff569a"
+              size={30}
+              className="hover:cursor-pointer mt-2 mr-3"
+            />
+            <div className="flex flex-col justify-start space-y-1">
+              <p className="font-bold text-base text-primary">
+                {data?.nickname}
+              </p>
+              <p className="text-[#727272] text-xs">Nickname</p>
+            </div>
+          </div>
+
+        }
+      </div>
       <div className="flex flex-row justify-between w-full px-5">
         {editMode || !user?.profile_completed ? (
           <div className="flex flex-col w-full">

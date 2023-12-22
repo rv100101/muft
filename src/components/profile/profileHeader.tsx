@@ -19,7 +19,6 @@ import { useUserStore } from "@/zustand/auth/user";
 import { cn } from "@/lib/utils";
 import profileQuery from "@/queries/profile/profileHeader";
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
-import { FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import { useFormContext } from "react-hook-form";
@@ -450,7 +449,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
         <div className="w-full">
           <div className="flex lg:flex-row flex-col space-y-5 w-full justify-between">
             <div className="w-full">
-              {!isEditing && (
+              {(
                 <div
                   className={`flex lg:flex-row flex-col lg:space-x-5 space-x-0 ${!user!.is_active ? "pt-5 pl-3" : ""
                     }`}
@@ -463,7 +462,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                       <p className="font-semibold text-primary text-lg">
                         {headerValues!.age}
                       </p>
-                      {!isEditing && (
+                      {(
                         <p
                           className={
                             "sm:hidden mt-1 text-[#f0f9ff] border-[#075985] text-xs py-1 px-2 w-min rounded-md bg-[#38bdf8] hover:bg-[#38bdf8]/80"
@@ -473,7 +472,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                         </p>
                       )}
                     </div>
-                    {!isEditing && (
+                    {(
                       <p
                         className={
                           "hidden sm:block mt-1 text-[#f0f9ff] border-[#075985] text-xs py-1 px-2 w-min rounded-md bg-[#38bdf8] hover:bg-[#38bdf8]/80"
@@ -674,7 +673,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                   )}
                 </div>
               )}
-              {isEditing && (
+              {/* {isEditing && (
                 <FormField
                   name="nickname"
                   render={({ field }) => {
@@ -694,7 +693,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                     );
                   }}
                 />
-              )}
+              )} */}
             </div>
             {userId === user!.member_id.toString() && (
               <>
