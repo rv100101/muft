@@ -24,7 +24,15 @@ import { useUserStore } from "@/zustand/auth/user";
 import { cn } from "@/lib/utils";
 import { useEffectOnce } from "usehooks-ts";
 import { useState } from "react";
+import { useLocation } from "wouter";
 const BasicInformationForm = () => {
+  const [location] = useLocation();
+  const parts = location.split("/");
+  const userId = parts[parts.length - 1];
+  console.log(
+    "🚀 ~ file: basicInformationForm.tsx:30 ~ BasicInformationForm ~ location:",
+    userId
+  );
   const [minDate, setMinDate] = useState("");
   const [maxDate, setMaxDate] = useState("");
   const isSaving = profileAboutContentStore((state) => state.isSaving);
@@ -90,9 +98,7 @@ const BasicInformationForm = () => {
                 className="hover:cursor-pointer mt-2 mr-3"
               />
               <div className="flex flex-col justify-start space-y-1">
-                <p className="font-bold text-base text-primary">
-                  {user!.member_id}
-                </p>
+                <p className="font-bold text-base text-primary">{userId}</p>
                 <p className="text-[#727272] text-xs">User ID</p>
               </div>
             </div>

@@ -93,7 +93,7 @@ const LifestyleForm = () => {
               <p className="font-bold text-base text-primary">
                 {data!.drinking ? data!.drinking : "Add Drink"}
               </p>
-              <p className="text-[#727272] text-xs">Drinks Alcohol</p>
+              <p className="text-[#727272] text-xs">Drinking Alcohol</p>
             </div>
           </div>
         )}
@@ -150,7 +150,7 @@ const LifestyleForm = () => {
               <p className="font-bold text-base text-primary">
                 {data!.drinking ? data!.drinking : "Add Drink"}
               </p>
-              <p className="text-[#727272] text-xs">Smokes Cigarette</p>
+              <p className="text-[#727272] text-xs">Smoking Cigarette</p>
             </div>
           </div>
         )}

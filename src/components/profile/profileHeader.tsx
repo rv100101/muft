@@ -606,7 +606,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                                 onSubmit={formik.handleSubmit}
                                 className="flex flex-col space-y-5 justify-center items-start"
                               >
-                                <Input
+                                {/* <Input
                                   id="member_id"
                                   value={userId}
                                   name="reportedId"
@@ -614,7 +614,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                                   className="col-span-3 w-80"
                                   disabled
                                   max={50}
-                                />
+                                /> */}
                                 <Input
                                   id="username"
                                   value={
