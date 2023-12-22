@@ -43,8 +43,8 @@ const SideBar = () => {
             location.startsWith("/profile") && link.path.startsWith("/profile")
               ? "font-semibold bg-accent"
               : location.endsWith(link.path)
-              ? "font-semibold bg-accent"
-              : "font-normal"
+                ? "font-semibold bg-accent"
+                : "font-normal"
           )}
           href={
             link.name == "My Profile"
@@ -66,11 +66,11 @@ const SideBar = () => {
             <link.icon
               fill={
                 location.startsWith("/profile") &&
-                link.path.startsWith("/profile")
+                  link.path.startsWith("/profile")
                   ? "black"
                   : location.endsWith(link.path)
-                  ? "black"
-                  : "white"
+                    ? "black"
+                    : "white"
               }
               stroke={
                 link.name == "Home" && location.endsWith(link.path)
@@ -90,9 +90,8 @@ const SideBar = () => {
   return (
     <div className="h-full border-r lg:flex sm:flex-col justify-between hidden">
       <div
-        className={`h-full flex flex-col justify-between ${
-          orientation.angle === 90 ? "overflow-scroll" : ""
-        }`}
+        className={`h-full flex flex-col justify-between ${orientation.angle === 90 ? "overflow-scroll" : ""
+          }`}
       >
         <div className="flex flex-col w-[220px]">
           <Link href="/">
@@ -144,6 +143,7 @@ const SideBar = () => {
                 <Button
                   className="hover:bg-primary"
                   onClick={() => {
+                    queryClient.invalidateQueries();
                     signOut();
                     setProfileData(null);
                     setProfileHeaderValues(null);

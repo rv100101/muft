@@ -15,6 +15,7 @@ import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
 import profileHeaderStore from "@/zustand/profile/profileHeaderStore";
 import { CheckedState } from "@radix-ui/react-checkbox";
 import { DialogClose, DialogTitle } from "@radix-ui/react-dialog";
+import { useQueryClient } from "@tanstack/react-query";
 import { Loader2, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
@@ -27,7 +28,7 @@ const DeactivateAccountContent = () => {
   const [checked, setChecked] = useState<CheckedState>(false);
   const [deactivateLoading, setDeactivateLoading] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
-
+  const queryClient = useQueryClient();
   const deactivateAccount = async () => {
     try {
       setDeactivateLoading(true);
@@ -62,6 +63,7 @@ const DeactivateAccountContent = () => {
       });
       setDeleteLoading(false);
       signOut();
+      queryClient.invalidateQueries();
       setProfileData(null);
       setProfileHeaderValues(null);
       // }
@@ -189,7 +191,7 @@ const DeactivateAccountContent = () => {
                 className={cn(
                   "text-white mt-4 bg-slate-500 h-10 w-full text-sm rounded-lf py-3 hover:bg-slate-500/90 mt-5 "
                 )}
-                // onClick={() => deleteAccount}
+              // onClick={() => deleteAccount}
               >
                 No
               </Button>

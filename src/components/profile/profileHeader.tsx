@@ -62,6 +62,7 @@ type FormDataType = {
 const ProfileHeader = ({ userId }: { userId: string }) => {
   const [reportProcessing, setReportProcessing] = useState(false);
 
+  const setEditModeFalse = profileAboutContentStore(state => state.setEditModeFalse);
   const formik = useFormik({
     initialValues: {
       reason: "",
@@ -262,6 +263,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
         selectedFile!,
         user!.member_id
       );
+      setEditModeFalse();
       setHeaderValues({
         ...headerValues!,
         gallery_uuid: res.data[0].gallery_uuid,
@@ -360,10 +362,10 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                           selectedFile
                             ? selectedFile
                             : getImagePath(
-                                headerValues!.gallery_uuid,
-                                headerValues!.gender,
-                                headerValues!.member_uuid?.toString()
-                              )
+                              headerValues!.gallery_uuid,
+                              headerValues!.gender,
+                              headerValues!.member_uuid?.toString()
+                            )
                         }
                         alt="no image selected"
                       />
@@ -380,10 +382,10 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                           selectedFile
                             ? selectedFile
                             : getImagePath(
-                                headerValues!.gallery_uuid,
-                                headerValues!.gender,
-                                headerValues!.member_uuid?.toString()
-                              )
+                              headerValues!.gallery_uuid,
+                              headerValues!.gender,
+                              headerValues!.member_uuid?.toString()
+                            )
                         }
                         alt="no image selected"
                       />
@@ -410,10 +412,10 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                         selectedFile
                           ? selectedFile
                           : getImagePath(
-                              headerValues!.gallery_uuid,
-                              headerValues!.gender,
-                              headerValues!.member_uuid?.toString()
-                            )
+                            headerValues!.gallery_uuid,
+                            headerValues!.gender,
+                            headerValues!.member_uuid?.toString()
+                          )
                       }
                       alt="no image selected"
                     />
@@ -451,9 +453,8 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
             <div className="w-full">
               {!isEditing && (
                 <div
-                  className={`flex lg:flex-row flex-col lg:space-x-5 space-x-0 ${
-                    !user!.is_active ? "pt-5 pl-3" : ""
-                  }`}
+                  className={`flex lg:flex-row flex-col lg:space-x-5 space-x-0 ${!user!.is_active ? "pt-5 pl-3" : ""
+                    }`}
                 >
                   <div className="flex lg:flex-col lg:justify-start flex-row space-x-4 lg:space-x-0">
                     <div className="flex flex-col sm:flex-row space-x-1">
@@ -635,15 +636,14 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                                   onChange={formik.handleChange}
                                   name="reason"
                                   placeholder="enter reason here"
-                                  className={`col-span-3 w-80 h-32 ring-0  ${
-                                    formik.touched.reason &&
+                                  className={`col-span-3 w-80 h-32 ring-0  ${formik.touched.reason &&
                                     formik.errors.reason
-                                      ? "border-rose-500"
-                                      : ""
-                                  }`}
+                                    ? "border-rose-500"
+                                    : ""
+                                    }`}
                                 />
                                 {formik.touched.reason &&
-                                formik.errors.reason ? (
+                                  formik.errors.reason ? (
                                   <div className="error text-sm text-red-500 ml-5">
                                     {formik.errors.reason}
                                   </div>
@@ -704,18 +704,18 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                     <Button
                       onClick={
                         !formState.isDirty
-                          ? () => {}
+                          ? () => { }
                           : () => {
-                              // if (isEditing && !formState.isValid) {
-                              //   toast({
-                              //     variant: "destructive",
-                              //     title: "Cannot save your profile",
-                              //     description:
-                              //       "Please make sure all the required fields are satisfied.",
-                              //     duration: 4000,
-                              //   });
-                              // }
-                            }
+                            // if (isEditing && !formState.isValid) {
+                            //   toast({
+                            //     variant: "destructive",
+                            //     title: "Cannot save your profile",
+                            //     description:
+                            //       "Please make sure all the required fields are satisfied.",
+                            //     duration: 4000,
+                            //   });
+                            // }
+                          }
                       }
                       disabled={isSaving}
                       type={"submit"}
