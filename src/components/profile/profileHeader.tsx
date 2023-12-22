@@ -38,7 +38,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import deleteMultiselectValuesStore from "@/zustand/profile/about/deleteMultiselectValues";
-import { useEffectOnce } from "usehooks-ts";
+import { useEffectOnce, useUpdateEffect } from "usehooks-ts";
 import axiosQuery from "@/queries/axios";
 import useHomepageViewStore from "@/zustand/home/homepageView";
 import {
@@ -255,6 +255,12 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
     }
   };
 
+  useUpdateEffect(() => {
+    if (selectedFile) {
+      handleProfilePhotoUpload();
+    }
+  }, [selectedFile]);
+
   const handleProfilePhotoUpload = async () => {
     try {
       setIsUploading(true);
@@ -262,7 +268,6 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
         selectedFile!,
         user!.member_id
       );
-      setEditModeFalse();
       setHeaderValues({
         ...headerValues!,
         gallery_uuid: res.data[0].gallery_uuid,
@@ -276,6 +281,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
         title: "Photo successfully updated",
         variant: "success",
       });
+      setEditModeFalse();
       setSelectedFile(null);
     } catch (error) {
       console.log(error);
@@ -434,7 +440,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                 </Button>
               </>
             }
-            {isEditing && selectedFile && (
+            {/* {isEditing && selectedFile && (
               <Button
                 disabled={isUploading}
                 onClick={handleProfilePhotoUpload}
@@ -443,7 +449,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
               >
                 Update Photo
               </Button>
-            )}
+            )} */}
           </div>
         }
         <div className="w-full">
@@ -715,7 +721,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                             // }
                           }
                       }
-                      disabled={isSaving}
+                      disabled={isSaving || isUploading}
                       type={"submit"}
                       className={cn(
                         "text-xs rounded-2xl h-max",

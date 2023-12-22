@@ -95,11 +95,10 @@ const BasicInformationForm = () => {
               />
               <div className="flex flex-col justify-start space-y-1">
                 <p className="font-bold text-base text-primary">{userId}</p>
-                <p className="text-[#727272] text-xs">User ID</p>
+                <p className="text-[#727272] text-xs">Member ID</p>
               </div>
             </div>
           </div>
-
         </>
       )}
       <div className="flex flex-row justify-between w-full px-5">
