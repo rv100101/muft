@@ -73,8 +73,8 @@ const AboutAccordionContent = () => {
   }
 
   return (
-    <div className="flex lg:flex-row flex-col mb-5">
-      <div className="grid grid-cols-6 grid-rows-2 sm:flex sm:flex-row justify-around text-sm lg:justify-start lg:w-1/3 w-full lg:block">
+    <div className="flex lg:flex-row h-full flex-col mb-5">
+      <div className="grid grid-cols-6 h-full grid-rows-2 sm:flex sm:flex-row justify-around text-sm lg:justify-start lg:w-1/3 w-full lg:block">
         <div
           className={cn(
             "flex justify-center items-center sm:block",
@@ -408,7 +408,7 @@ const AboutAccordionContent = () => {
           />
         </div>
       </div>
-      <div className="flex h-max flex-col lg:w-full lg:mt-0 mt-5">
+      <div className="flex h-full sm:h-max flex-col lg:w-full lg:mt-0 mt-5">
         {/* basic info */}
         {activeTabs[1] && <BasicInformationForm />}
 
