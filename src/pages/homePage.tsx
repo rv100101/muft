@@ -48,7 +48,8 @@ const HomePage = () => {
   const [startAgeSliderVal, setStartAgeSliderVal] = useState(18);
   const [endAgeSliderVal, setEndAgeSliderVal] = useState(80);
   const [suggestedTriggered, setSuggestedTriggered] = useState(false);
-  const debouncedAgeFilterVal = useDebounce(startAgeSliderVal, 300);
+  const debouncedStartFilterVal = useDebounce(filters!.min_age, 300);
+  const debouncedEndFilterVal = useDebounce(filters!.max_age, 300);
 
   const handleStartSliderChange = (val: Array<number>) => {
     setStartAgeSliderVal(val[0]);
@@ -187,12 +188,14 @@ const HomePage = () => {
       });
 
       const filteredMemberList = updatedMemberList.filter(
-        (member: Member) => member.age >= debouncedAgeFilterVal
+        (member: Member) =>
+          member.age >= debouncedStartFilterVal &&
+          member.age <= debouncedEndFilterVal
       );
 
       filteredMemberList.sort((a: Member, b: Member) => a.age > b.age);
       setMemberList(
-        debouncedAgeFilterVal > 0 ? filteredMemberList : updatedMemberList
+        debouncedStartFilterVal > 0 ? filteredMemberList : updatedMemberList
       );
     }
   }, [
@@ -201,7 +204,9 @@ const HomePage = () => {
     members,
     setMemberList,
     retrievingMemberData,
-    debouncedAgeFilterVal,
+    debouncedStartFilterVal,
+    debouncedEndFilterVal,
+    filters,
   ]);
 
   return (
@@ -231,10 +236,11 @@ const HomePage = () => {
                         setStartAgeSliderVal(randomNumbers[0]);
                         toggleSuggestionTags(0, randomNumbers[0]);
                       }}
-                      className={`${!clickedTags[0]
-                        ? "bg-white text-[#ff569a]"
-                        : "bg-[#ff569a] text-white"
-                        } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer dark:bg-[#3b0117]`}
+                      className={`${
+                        !clickedTags[0]
+                          ? "bg-white text-[#ff569a]"
+                          : "bg-[#ff569a] text-white"
+                      } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer dark:bg-[#3b0117]`}
                     >
                       {randomNumbers[0]}
                     </p>
@@ -244,10 +250,11 @@ const HomePage = () => {
                         setStartAgeSliderVal(randomNumbers[1]);
                         toggleSuggestionTags(1, randomNumbers[1]);
                       }}
-                      className={`${!clickedTags[1]
-                        ? "bg-white text-[#ff569a]"
-                        : "bg-[#ff569a] text-white"
-                        } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer dark:bg-[#3b0117]`}
+                      className={`${
+                        !clickedTags[1]
+                          ? "bg-white text-[#ff569a]"
+                          : "bg-[#ff569a] text-white"
+                      } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer dark:bg-[#3b0117]`}
                     >
                       {randomNumbers[1]}
                     </p>
@@ -257,10 +264,11 @@ const HomePage = () => {
                         setStartAgeSliderVal(randomNumbers[2]);
                         toggleSuggestionTags(2, randomNumbers[2]);
                       }}
-                      className={`${!clickedTags[2]
-                        ? "bg-white text-[#ff569a]"
-                        : "bg-[#ff569a] text-white"
-                        } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer dark:bg-[#3b0117]`}
+                      className={`${
+                        !clickedTags[2]
+                          ? "bg-white text-[#ff569a]"
+                          : "bg-[#ff569a] text-white"
+                      } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer dark:bg-[#3b0117]`}
                     >
                       {randomNumbers[2]}
                     </p>
@@ -272,10 +280,11 @@ const HomePage = () => {
                         setStartAgeSliderVal(randomNumbers[3]);
                         toggleSuggestionTags(3, randomNumbers[3]);
                       }}
-                      className={`${!clickedTags[3]
-                        ? "bg-white text-[#ff569a]"
-                        : "bg-[#ff569a] text-white"
-                        } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer dark:bg-[#3b0117]`}
+                      className={`${
+                        !clickedTags[3]
+                          ? "bg-white text-[#ff569a]"
+                          : "bg-[#ff569a] text-white"
+                      } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer dark:bg-[#3b0117]`}
                     >
                       {randomNumbers[3]}
                     </p>
@@ -285,10 +294,11 @@ const HomePage = () => {
                         setStartAgeSliderVal(randomNumbers[4]);
                         toggleSuggestionTags(4, randomNumbers[4]);
                       }}
-                      className={`${!clickedTags[4]
-                        ? "bg-white text-[#ff569a]"
-                        : "bg-[#ff569a] text-white"
-                        } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer dark:bg-[#3b0117]`}
+                      className={`${
+                        !clickedTags[4]
+                          ? "bg-white text-[#ff569a]"
+                          : "bg-[#ff569a] text-white"
+                      } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer dark:bg-[#3b0117]`}
                     >
                       {randomNumbers[4]}
                     </p>
@@ -298,10 +308,11 @@ const HomePage = () => {
                         setStartAgeSliderVal(randomNumbers[5]);
                         toggleSuggestionTags(5, randomNumbers[5]);
                       }}
-                      className={`${!clickedTags[5]
-                        ? "bg-white text-[#ff569a]"
-                        : "bg-[#ff569a] text-white"
-                        } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer dark:bg-[#3b0117]`}
+                      className={`${
+                        !clickedTags[5]
+                          ? "bg-white text-[#ff569a]"
+                          : "bg-[#ff569a] text-white"
+                      } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer dark:bg-[#3b0117]`}
                     >
                       {randomNumbers[5]}
                     </p>

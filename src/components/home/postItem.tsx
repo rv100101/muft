@@ -183,7 +183,7 @@ const PostItem = ({
           </div>
           {/* bio */}
           <div className="flex flex-col justify-center items-center"></div>
-          <div className="flex flex-row justify-start space-x-3 mt-5 pb-5">
+          <div className="flex flex-row justify-start space-x-3 mt-5 pb-5 lg:px-0 px-2">
             <div className="rounded-full bg-[#FFF2F7] flex flex-row justify-center align-center space-x-2 py-2 px-4 dark:bg-[#3b0117] text=[#ff588e]">
               <CalendarClock
                 color="#FF599B"
@@ -191,7 +191,10 @@ const PostItem = ({
                 size={25}
                 className="mt-1 hover:cursor-pointer"
               />
-              <p className="text-[#FF599B] mt-1 text-sm">{age} years</p>
+              <p className="text-[#FF599B] mt-1 text-sm lg:inline hidden">
+                {age} years
+              </p>
+              <p className="text-[#FF599B] mt-2 text-xs lg:hidden">{age} yrs</p>
             </div>
             <div className="rounded-full bg-[#FFF2F7] flex flex-row justify-center align-center space-x-2 py-2 px-4 dark:bg-[#3b0117] text=[#ff588e]">
               <Ribbon
