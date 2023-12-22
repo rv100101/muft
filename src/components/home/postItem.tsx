@@ -191,7 +191,7 @@ const PostItem = ({
                 size={25}
                 className="mt-1 hover:cursor-pointer"
               />
-              <p className="text-[#FF599B] mt-2 text-sm">{age} years</p>
+              <p className="text-[#FF599B] mt-1 text-sm">{age} years</p>
             </div>
             <div className="rounded-full bg-[#FFF2F7] flex flex-row justify-center align-center space-x-2 py-2 px-4 dark:bg-[#3b0117] text=[#ff588e]">
               <Ribbon
@@ -200,7 +200,13 @@ const PostItem = ({
                 size={25}
                 className="mt-1 hover:cursor-pointer"
               />
-              <p className="text-[#FF599B] mt-1">{status}</p>
+              <p
+                className={`text-[#FF599B] mt-1 ${
+                  status === "Prefer not to say" ? "text-sm" : ""
+                }`}
+              >
+                {status}
+              </p>
             </div>
             <TooltipProvider>
               <Tooltip>

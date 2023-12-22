@@ -233,10 +233,11 @@ const HomePage = () => {
                         setStartAgeSliderVal(randomNumbers[0]);
                         toggleSuggestionTags(0, randomNumbers[0]);
                       }}
-                      className={`${!clickedTags[0]
-                        ? "bg-white text-[#ff569a]"
-                        : "bg-[#ff569a] text-white"
-                        } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer dark:bg-[#3b0117]`}
+                      className={`${
+                        !clickedTags[0]
+                          ? "bg-white text-[#ff569a]"
+                          : "bg-[#ff569a] text-white"
+                      } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer dark:bg-[#3b0117]`}
                     >
                       {randomNumbers[0]}
                     </p>
@@ -246,10 +247,11 @@ const HomePage = () => {
                         setStartAgeSliderVal(randomNumbers[1]);
                         toggleSuggestionTags(1, randomNumbers[1]);
                       }}
-                      className={`${!clickedTags[1]
-                        ? "bg-white text-[#ff569a]"
-                        : "bg-[#ff569a] text-white"
-                        } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer dark:bg-[#3b0117]`}
+                      className={`${
+                        !clickedTags[1]
+                          ? "bg-white text-[#ff569a]"
+                          : "bg-[#ff569a] text-white"
+                      } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer dark:bg-[#3b0117]`}
                     >
                       {randomNumbers[1]}
                     </p>
@@ -259,10 +261,11 @@ const HomePage = () => {
                         setStartAgeSliderVal(randomNumbers[2]);
                         toggleSuggestionTags(2, randomNumbers[2]);
                       }}
-                      className={`${!clickedTags[2]
-                        ? "bg-white text-[#ff569a]"
-                        : "bg-[#ff569a] text-white"
-                        } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer dark:bg-[#3b0117]`}
+                      className={`${
+                        !clickedTags[2]
+                          ? "bg-white text-[#ff569a]"
+                          : "bg-[#ff569a] text-white"
+                      } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer dark:bg-[#3b0117]`}
                     >
                       {randomNumbers[2]}
                     </p>
@@ -274,10 +277,11 @@ const HomePage = () => {
                         setStartAgeSliderVal(randomNumbers[3]);
                         toggleSuggestionTags(3, randomNumbers[3]);
                       }}
-                      className={`${!clickedTags[3]
-                        ? "bg-white text-[#ff569a]"
-                        : "bg-[#ff569a] text-white"
-                        } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer dark:bg-[#3b0117]`}
+                      className={`${
+                        !clickedTags[3]
+                          ? "bg-white text-[#ff569a]"
+                          : "bg-[#ff569a] text-white"
+                      } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer dark:bg-[#3b0117]`}
                     >
                       {randomNumbers[3]}
                     </p>
@@ -287,10 +291,11 @@ const HomePage = () => {
                         setStartAgeSliderVal(randomNumbers[4]);
                         toggleSuggestionTags(4, randomNumbers[4]);
                       }}
-                      className={`${!clickedTags[4]
-                        ? "bg-white text-[#ff569a]"
-                        : "bg-[#ff569a] text-white"
-                        } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer dark:bg-[#3b0117]`}
+                      className={`${
+                        !clickedTags[4]
+                          ? "bg-white text-[#ff569a]"
+                          : "bg-[#ff569a] text-white"
+                      } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer dark:bg-[#3b0117]`}
                     >
                       {randomNumbers[4]}
                     </p>
@@ -300,10 +305,11 @@ const HomePage = () => {
                         setStartAgeSliderVal(randomNumbers[5]);
                         toggleSuggestionTags(5, randomNumbers[5]);
                       }}
-                      className={`${!clickedTags[5]
-                        ? "bg-white text-[#ff569a]"
-                        : "bg-[#ff569a] text-white"
-                        } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer dark:bg-[#3b0117]`}
+                      className={`${
+                        !clickedTags[5]
+                          ? "bg-white text-[#ff569a]"
+                          : "bg-[#ff569a] text-white"
+                      } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer dark:bg-[#3b0117]`}
                     >
                       {randomNumbers[5]}
                     </p>
@@ -314,15 +320,16 @@ const HomePage = () => {
                     <p className="px-5 text-sm">{`${filters?.min_age}-${filters?.max_age}`}</p>
                   </div>
                   {/* <form action="post" onSubmit={formik.handleSubmit}> */}
-                  <div className="flex flex-row justify-center align-center py-5 px-5 mt-5">
+                  <div className="flex flex-row justify-center align-center py-5 px-5 mt-5 space-x-5">
                     <p className="text-slate-500 text-sm">From</p>
                     <Slider
                       // defaultValue={[50]}
                       value={[filters!.min_age]}
                       // value={[startAgeSliderVal]}
                       min={18}
+                      max={80}
                       step={1}
-                      className="w-full mx-5"
+                      className=" ml-10 pr-5"
                       onValueChange={handleStartSliderChange}
                       name="age"
                     />
