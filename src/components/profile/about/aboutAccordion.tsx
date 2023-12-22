@@ -108,17 +108,11 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
         userId,
         userId
       );
-
-      console.log(memberDetails);
-
       let jsonArray: string | null = null;
-      console.log(typeof memberDetails);
-
       if (typeof memberDetails == 'string' && memberDetails.length !== 0) {
         const jsonArrayString = `[${memberDetails.replace(/}\s*{/g, '},{')}]`;
         jsonArray = JSON.parse(jsonArrayString);
       }
-
       const convertedDetails = convertJsonToConvertedObject(jsonArray == null ? memberDetails : jsonArray![0]);
       const details = {
         ...convertedDetails,
