@@ -94,7 +94,7 @@ export default function FavoriteFoodField() {
                     return (
                       <Badge
                         key={framework.favorite_food_id}
-                        className="bg-white border-primary border"
+                        className="bg-white dark:bg-[#3b0117] dark:text-[#df4798] dark:border-[#df4798] border-primary border"
                         variant="secondary"
                       >
                         {framework.favorite_food_name}
@@ -111,7 +111,7 @@ export default function FavoriteFoodField() {
                           }}
                           onClick={() => handleUnselect(framework)}
                         >
-                          <X className="h-3 w-3 text-muted-foreground hover:text-foreground" />
+                          <X className="h-3 w-3 text-muted-foreground hover:text-foreground dark:bg-[#df4798] dark:rounded-full dark:text-[#3b0117]" />
                         </button>
                       </Badge>
                     );
