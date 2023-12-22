@@ -430,7 +430,7 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
                 </DialogHeader>
                 <DialogFooter className="sm:justify-start">
                   <Button className="hover:bg-primary" onClick={() => {
-                    queryClient.invalidateQueries();
+                    queryClient.clear();
                     signOut()
                   }}>
                     Yes
