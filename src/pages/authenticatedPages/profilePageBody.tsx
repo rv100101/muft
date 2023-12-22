@@ -18,6 +18,7 @@ import { DialogContent } from "@/components/ui/dialog";
 import ActivateAccount from "./accountActivationPage";
 import removeDuplicates from "@/lib/removeDulpicates";
 import removeExistingData from "@/lib/removeExistingData";
+import calculateAge from "@/lib/calculateAge";
 // import getDeletedItems from "@/lib/getDeleted";
 
 const ProfilePageBody = ({ userId }: { userId: string }) => {
@@ -259,8 +260,10 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
         employmentStatus: employmentStatus?.employment_status_id,
       };
       await profileContentQuery.saveInformation(finalFormData, user!.member_id);
-      setHeaderValues({ ...headerValues!, nickname: formData.nickname });
-      setData({ ...data!, ...formData });
+      console.log(formData);
+      const age = calculateAge(formData.birthInfo);
+      setHeaderValues({ ...headerValues!, nickname: formData.nickname, age });
+      setData({ ...data!, ...formData, age });
       updateUser({ ...user, profile_completed: true } as User);
       queryClient.invalidateQueries(["profileHeader"]);
       queryClient.invalidateQueries(["profileContent"]);
