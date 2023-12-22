@@ -1,11 +1,17 @@
 import { useFormik } from "formik";
 import { useState } from "react";
 import * as Yup from "yup";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import ForgotPassword from "@/components/auth/forgotPassword";
 import { Link, useLocation } from "wouter";
 import { cn, scrollToTop } from "@/lib/utils";
-import { Eye, EyeOff, Loader2, MailIcon } from "lucide-react";
+import { Ban, Eye, EyeOff, Loader2, MailIcon, X } from "lucide-react";
 import { LockIcon } from "lucide-react";
 import { InfoIcon } from "lucide-react";
 import authQuery from "@/queries/auth";
@@ -23,6 +29,7 @@ type FormDataType = {
 };
 const SignInForm = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [blockedModal, showBlockedModal] = useState(false);
   const { toast } = useToast();
   const [, navigate] = useLocation();
   const [isLoading, setIsLoading] = useState(false);
@@ -84,11 +91,15 @@ const SignInForm = () => {
       updateUserAvatar(profilePhotoData.data.gallery_uuid);
       setIsLoading(false);
       const data: User | string = signInData.data;
+      if (typeof data != "string" && data!.is_blocked) {
+        showBlockedModal(true);
+        return;
+      }
       if (typeof data != "string" && data!.authorized) {
         updateUser(data);
         navigate("/", { replace: true });
       } else {
-        toast({
+        return toast({
           variant: "destructive",
           title: "Invalid credentials",
           description: "Make sure your email and password is correct.",
@@ -103,6 +114,35 @@ const SignInForm = () => {
 
   return (
     <div className="flex h-max sm:w-96 flex-col items-center lg:shadow-xl rounded-lg p-8 lg:border space-y-2">
+      <Dialog open={blockedModal}>
+        <DialogContent className="sm:max-w-[425px] flex flex-col items-center">
+          <DialogHeader className="flex flex-row justify-end space-x-3 w-full">
+            <DialogTitle className="mt-3 dark:text-white flex flex-row space-x-1 text-center w-full justify-center pl-10">
+              <p>You were</p>
+              <p className="text-primary dark:text-[#ae2e51] font-bold">
+                Blocked
+              </p>
+            </DialogTitle>
+            <X
+              className="hover:cursor-pointer"
+              onClick={() => showBlockedModal(false)}
+            />
+          </DialogHeader>
+          <div>
+            <Ban size={100} color="#ae2e51" />
+          </div>
+          <div className="flex flex-col space-y-5 items-center text-center mt-3">
+            <p>
+              Your account has been blocked due to violation of our terms and
+              conditions.
+            </p>
+            <p>
+              We're sorry but this decision cannot be changed and your account
+              will not be reinstated.
+            </p>
+          </div>
+        </DialogContent>
+      </Dialog>
       {/* <div className="flex w-full justify-end">
         <img
           src={helpIcon}
@@ -203,7 +243,7 @@ const SignInForm = () => {
             disabled={isLoading}
             type="submit"
             className={cn(
-              "text-white mt-4 h-10 w-full text-sm rounded-full py-2 hover:bg-[#FF599B]/90 mt-5",
+              "text-white mt-4 h-10 w-full text-sm rounded-full py-2 hover:bg-[#FF599B]/90 mt-5 dark:bg-[#ae2e51]",
               isLoading ? "bg-[#FF8AB3]" : "bg-primary"
             )}
           >
