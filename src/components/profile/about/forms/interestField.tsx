@@ -92,7 +92,7 @@ export default function InterestField() {
                     return (
                       <Badge
                         key={framework.interest_name}
-                        className="bg-white border-primary border"
+                        className="bg-white dark:bg-[#3b0117] dark:text-[#df4798] dark:border-[#df4798] border-primary border"
                         variant="secondary"
                       >
                         {framework.interest_name}
@@ -109,7 +109,7 @@ export default function InterestField() {
                           }}
                           onClick={() => handleUnselect(framework)}
                         >
-                          <X className="h-3 w-3 text-muted-foreground hover:text-foreground" />
+                          <X className="h-3 w-3 text-muted-foreground hover:text-foreground dark:bg-[#df4798] dark:rounded-full dark:text-[#3b0117]" />
                         </button>
                       </Badge>
                     );

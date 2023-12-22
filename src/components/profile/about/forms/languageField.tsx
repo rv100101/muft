@@ -112,7 +112,7 @@ export default function LanguageField() {
                     return (
                       <Badge
                         key={framework.member_language_id}
-                        className="bg-white border-primary border"
+                        className="bg-white dark:bg-[#3b0117] border-primary border"
                         variant="secondary"
                       >
                         {framework.language_name}
@@ -153,6 +153,7 @@ export default function LanguageField() {
                       {selectables.map((framework) => {
                         return (
                           <CommandItem
+                            className={"cursor-pointer"}
                             key={framework.member_language_id}
                             onMouseDown={(e) => {
                               e.preventDefault();
@@ -162,7 +163,6 @@ export default function LanguageField() {
                               setInputValue("");
                               setSelected((prev) => [...prev, framework]);
                             }}
-                            className={"cursor-pointer"}
                           >
                             {framework.language_name}
                           </CommandItem>
