@@ -97,12 +97,14 @@ const PostItem = ({
       <div className="flex flex-col items-center justify-end h-full">
         <div className="flex flex-col h-full justify-center items-center">
           <div className="relative w-max rounded-t-md hover:cursor-pointer">
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 from-1% via-transparent via49% to-transparent to-50%" />
+            <div
+              onClick={() => handlePostItemClick()}
+              className="absolute inset-0 bg-gradient-to-t from-black/60 from-1% via-transparent via49% to-transparent to-50%"
+            />
             <img
               src={image}
               alt="post-img"
               className="rounded-t-xl lg:w-[460px] w-[350px] h-[554px] xl:h-[454px] xl:w-[400px] object-cover"
-              onClick={() => handlePostItemClick()}
             />
             <div className="absolute bottom-0 w-full">
               <div className="flex flex-row w-full justify-between ">
