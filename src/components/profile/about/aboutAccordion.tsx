@@ -109,11 +109,13 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
         userId
       );
       let jsonArray: string | null = null;
-      if (typeof memberDetails == 'string' && memberDetails.length !== 0) {
-        const jsonArrayString = `[${memberDetails.replace(/}\s*{/g, '},{')}]`;
+      if (typeof memberDetails == "string" && memberDetails.length !== 0) {
+        const jsonArrayString = `[${memberDetails.replace(/}\s*{/g, "},{")}]`;
         jsonArray = JSON.parse(jsonArrayString);
       }
-      const convertedDetails = convertJsonToConvertedObject(jsonArray == null ? memberDetails : jsonArray![0]);
+      const convertedDetails = convertJsonToConvertedObject(
+        jsonArray == null ? memberDetails : jsonArray![0]
+      );
       const details = {
         ...convertedDetails,
         ...additionalInformation,

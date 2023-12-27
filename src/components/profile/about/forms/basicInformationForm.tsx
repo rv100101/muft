@@ -128,8 +128,8 @@ const BasicInformationForm = () => {
               />
             </div>
           </div>
-        )
-          : <div className="flex flex-row space-x-2 hover:cursor-pointer">
+        ) : (
+          <div className="flex flex-row space-x-2 hover:cursor-pointer">
             <User2
               color="#ff569a"
               size={30}
@@ -142,8 +142,7 @@ const BasicInformationForm = () => {
               <p className="text-[#727272] text-xs">Nickname</p>
             </div>
           </div>
-
-        }
+        )}
       </div>
       <div className="flex flex-row justify-between w-full px-5">
         {editMode || !user?.profile_completed ? (

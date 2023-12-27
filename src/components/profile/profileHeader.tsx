@@ -1,7 +1,5 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { getImagePath } from "@/lib/images";
-import profileHeaderStore from "@/zustand/profile/profileHeaderStore";
-import { ProfileHeader as ProfileHeaderType } from "@/types/profileHeader";
 import ProfileHeaderSkeleton from "./profileHeaderSkeleton";
 import { Button } from "../ui/button";
 import {
@@ -17,7 +15,6 @@ import {
 } from "lucide-react";
 import { useUserStore } from "@/zustand/auth/user";
 import { cn } from "@/lib/utils";
-import profileQuery from "@/queries/profile/profileHeader";
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
 import { Input } from "../ui/input";
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
@@ -38,7 +35,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import deleteMultiselectValuesStore from "@/zustand/profile/about/deleteMultiselectValues";
-import { useEffectOnce, useUpdateEffect } from "usehooks-ts";
+import { useUpdateEffect } from "usehooks-ts";
 import axiosQuery from "@/queries/axios";
 import useHomepageViewStore from "@/zustand/home/homepageView";
 import {
@@ -80,8 +77,6 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
     onSubmit: (values: FormDataType) => handleReportSubmit(values),
   });
 
-  // const isLiked = useHomepageViewStore((state) => state.isLiked);
-  // const isFavored = useHomepageViewStore((state) => state.isFavored);
   const toggleIsFavored = useHomepageViewStore(
     (state) => state.toggleIsFavored
   );
@@ -137,16 +132,19 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
     (state) => state.conversation
   );
   const [showCamera, setShowCamera] = useState(false);
-  const {
-    headerValues,
-    setHeaderValues,
-    profileHeaderValues,
-    // profile,
-    setProfileHeaderValues,
-  } = profileHeaderStore();
 
-  const fetchInitialData = async () =>
-    await profileQuery.getProfileHeader(parseInt(userId));
+  const {
+    data,
+    isLoading,
+    setData,
+    setProfileData,
+    profileData,
+    editMode: isEditing,
+    isSaving,
+  } = profileAboutContentStore();
+  // const fetchInitialData = async () =>
+
+  //   await profileQuery.getProfileHeader(parseInt(userId));
 
   const user = useUserStore((state) => state.user);
   const toggleEditMode = profileAboutContentStore(
@@ -155,46 +153,12 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
   const setSelectedHistoryMemberId = useLatestConversationStore(
     (state) => state.setSelectedHistoryMemberId
   );
+
   const { formState } = useFormContext();
-  const isSaving = profileAboutContentStore((state) => state.isSaving);
-  const isEditing = profileAboutContentStore((state) => state.editMode);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const setAvatar = useUserAvatar((state) => state.setAvatar);
-
-  // useEffect(() => {
-  //   return () => {
-  //     setSelectedHistoryMemberId(null);
-  //   };
-  // }, [setSelectedHistoryMemberId]);
-
-  useEffectOnce(() => {
-    if (
-      location.startsWith("/profile") &&
-      user!.member_id.toString() == userId &&
-      profileHeaderValues !== null
-    ) {
-      setHeaderValues(profileHeaderValues);
-    }
-  });
-
-  const { isLoading, isRefetching } = useQuery({
-    queryKey: ["profileHeader", userId],
-    queryFn: fetchInitialData,
-    refetchOnWindowFocus: false,
-    onSuccess: (data: ProfileHeaderType | null) => {
-      if (data) {
-        if (location.startsWith("/members")) {
-          setHeaderValues(data);
-        }
-        if (location.startsWith("/profile")) {
-          setProfileHeaderValues(data);
-          setHeaderValues(data);
-        }
-      }
-    },
-  });
 
   const getConversationUuid = useCallback(async () => {
     if (location.startsWith("/profile")) {
@@ -218,28 +182,24 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
       setSelectedConversation(
         user!.member_id,
         res.data.conversation_id,
-        headerValues!.gallery_uuid,
-        headerValues!.gender!,
+        data?.gallery_uuid ?? null,
+        data!.gender,
         res.data.recipient_uuid,
         res.data.recipient_nickname!,
         res.data.conversation_uuid
       );
       return res.data.conversation_uuid;
     } catch (error) {
-      toast({
-        variant: "destructive",
-        title: "Cannot create new conversation",
-      });
-      return null;
+      console.log(error);
     }
-  }, [headerValues, location, setSelectedConversation, user, userId]);
+  }, [data, location, setSelectedConversation, user, userId]);
 
   useEffect(() => {
-    if (headerValues) {
+    if (data) {
       getConversationUuid();
     }
     // setSelectedHistoryMemberId(parseInt(userId));
-  }, [userId, headerValues, setSelectedHistoryMemberId, getConversationUuid]);
+  }, [userId, data, setSelectedHistoryMemberId, getConversationUuid]);
 
   const handleGalleryUpload = () => {
     // Trigger a click event on the hidden file input
@@ -272,12 +232,12 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
         selectedFile!,
         user!.member_id
       );
-      setHeaderValues({
-        ...headerValues!,
+      setData({
+        ...data!,
         gallery_uuid: res.data[0].gallery_uuid,
       });
-      setProfileHeaderValues({
-        ...profileHeaderValues!,
+      setProfileData({
+        ...profileData!,
         gallery_uuid: res.data[0].gallery_uuid,
       });
       setAvatar(res.data[0].gallery_uuid);
@@ -342,21 +302,26 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
     }
   };
 
-  if (
-    location.startsWith("/profile") &&
-    profileHeaderValues == null &&
-    (isLoading || isRefetching)
-  ) {
-    return <ProfileHeaderSkeleton />;
+  if (isLoading && location.startsWith("/members")) {
+    return (
+      <div className="flex justify-start items-start space-x-4 w-full ml-5">
+        <div className="space-y-2">
+          <ProfileHeaderSkeleton />
+        </div>
+      </div>
+    );
   }
 
-  if (location.startsWith("/members") && (isLoading || isRefetching)) {
-    return <ProfileHeaderSkeleton />;
+  if (isLoading && location.startsWith("/profile") && profileData == null) {
+    return (
+      <div className="flex justify-start items-start space-x-4 w-full ml-5">
+        <div className="space-y-2">
+          <ProfileHeaderSkeleton />
+        </div>
+      </div>
+    );
   }
 
-  {
-    console.log(headerValues!.nickname);
-  }
   return (
     <div className="items-start p-5 border-b w-full">
       <div className="flex justify-start items-start space-x-2">
@@ -373,9 +338,9 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                           selectedFile
                             ? selectedFile
                             : getImagePath(
-                                headerValues!.gallery_uuid,
-                                headerValues!.gender,
-                                headerValues!.member_uuid?.toString()
+                                data?.gallery_uuid ?? null,
+                                data?.gender ?? null,
+                                data?.member_uuid?.toString()
                               )
                         }
                         alt="no image selected"
@@ -393,16 +358,16 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                           selectedFile
                             ? selectedFile
                             : getImagePath(
-                                headerValues!.gallery_uuid,
-                                headerValues!.gender,
-                                headerValues!.member_uuid?.toString()
+                                data!.gallery_uuid,
+                                data!.gender,
+                                data!.member_uuid?.toString()
                               )
                         }
                         alt="no image selected"
                       />
                       <div className="flex space-x-1 justify-center font-semibold text-2xl">
-                        <p>{headerValues?.nickname}, </p>
-                        <p> {`${headerValues?.age}`}</p>
+                        <p>{data?.nickname}, </p>
+                        <p> {`${data?.age}`}</p>
                       </div>
                     </DialogContent>
                   </Dialog>
@@ -427,9 +392,9 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                         selectedFile
                           ? selectedFile
                           : getImagePath(
-                              headerValues!.gallery_uuid,
-                              headerValues!.gender,
-                              headerValues!.member_uuid?.toString()
+                              data!.gallery_uuid,
+                              data!.gender,
+                              data!.member_uuid?.toString()
                             )
                       }
                       alt="no image selected"
@@ -475,10 +440,10 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                   <div className="flex lg:flex-col lg:justify-start flex-row space-x-4 lg:space-x-0">
                     <div className="flex flex-col sm:flex-row space-x-1">
                       <p className="font-semibold text-[#171717] text-sm sm:text-lg dark:text-white">
-                        {`${headerValues!.nickname},`}
+                        {`${data!.nickname},`}
                       </p>
                       <p className="font-semibold text-primary text-lg">
-                        {headerValues!.age}
+                        {data!.age}
                       </p>
                       {
                         <p
@@ -508,7 +473,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                           if (user?.temporarily_deactivated) {
                             toast({
                               title: "You must Reactivate your account",
-                              description: `To continue chatting with ${headerValues?.nickname}`,
+                              description: `To continue chatting with ${data?.nickname}`,
                               variant: "destructive",
                             });
                           }
@@ -547,7 +512,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                         >
                           <Heart
                             color="#FF599B"
-                            fill={headerValues?.is_liked ? "#FF599B" : "white"}
+                            fill={data?.is_liked ? "#FF599B" : "white"}
                           />
                         </Button>
                         <Button
@@ -563,9 +528,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                         >
                           <Star
                             color="#FF599B"
-                            fill={
-                              headerValues?.is_favored ? "#FF599B" : "white"
-                            }
+                            fill={data?.is_favored ? "#FF599B" : "white"}
                           />
                         </Button>
                         {/* more  */}
@@ -639,11 +602,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                                 /> */}
                                 <Input
                                   id="username"
-                                  value={
-                                    headerValues!.nickname
-                                      ? headerValues!.nickname
-                                      : ""
-                                  }
+                                  value={data!.nickname ? data!.nickname : ""}
                                   onChange={formik.handleChange}
                                   name="username"
                                   placeholder="username"
@@ -794,30 +753,30 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
           {!isEditing && user!.is_active && (
             <div className="h-full hidden lg:block mt-3">
               <div className="pt-5 flex w-full justify-start items-start flex-wrap text-xs space-x-2">
-                {/* {headerValues.height && (
+                {/* {data.height && (
                   <p className="rounded-md w-max h-max bg-[#FFF2F7] text-[#FF599B] p-2 mb-2">
-                    {`${headerValues!.height} cm`}
+                    {`${data!.height} cm`}
                   </p>
                 )} */}
-                {/* {headerValues.gender && (
+                {/* {data.gender && (
                   <p className="rounded-md w-max h-max bg-[#FFF2F7] text-[#FF599B] px-5 py-2 mb-2">
-                    {headerValues!.gender == "F" && "Female"}
-                    {headerValues!.gender == "M" && "Male"}
+                    {data!.gender == "F" && "Female"}
+                    {data!.gender == "M" && "Male"}
                   </p>
                 )} */}
-                {headerValues!.maritalStatus && (
+                {data!.maritalStatus && (
                   <p className="rounded-md w-max h-max bg-[#FFF2F7] text-[#FF599B] px-5 py-2 mb-2 dark:bg-[#3b0117]">
-                    {headerValues!.maritalStatus}
+                    {data!.maritalStatus}
                   </p>
                 )}
-                {headerValues!.country_name && (
+                {data!.country && (
                   <p className="rounded-md w-max h-max bg-[#FFF2F7] text-[#FF599B] px-5 py-2 mb-2 dark:bg-[#3b0117]">
-                    {headerValues!.country_name}
+                    {data!.country}
                   </p>
                 )}
-                {/* {headerValues.occupation_title && (
+                {/* {data.occupation_title && (
                   <p className="rounded-md w-max h-max bg-[#FFF2F7] text-[#FF599B] px-5 py-2 mb-2">
-                    {headerValues!.occupation_title}
+                    {data!.occupation_title}
                   </p>
                 )} */}
               </div>

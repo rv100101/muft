@@ -43,28 +43,8 @@ const AboutAccordionContent = () => {
     additionalInfoHasErrors,
   } = useAboutErrorsStrore();
   const { profileData } = profileAboutContentStore();
-  // const [tabs, setActiveTabs] = useState([
-  //   false,
-  //   true,
-  //   false,
-  //   false,
-  //   false,
-  //   false,
-  //   false,
-  //   false,
-  //   false,
-  //   false,
-  //   false,
-  //   false,
-  //   false,
-  // ]);
-
   const { tabs, changeTab } = aboutAccordionTabView();
 
-  // const changeTab = (index: number) => {
-  //   const newActiveTabs = tabs.map((_, i) => i === index);
-  //   setActiveTabs(newActiveTabs);
-  // };
   const isLoading = profileAboutContentStore((state) => state.isLoading);
   if (location.startsWith("/profile") && !profileData && isLoading) {
     return <ContentLoadingSkeleton />;

@@ -34,6 +34,11 @@ export type ProfileAbout = {
   livingStatus: string;
   car: string;
   age: number;
+  member_uuid: string | null;
+  member_id: string | null;
+  gallery_uuid: string | null;
+  is_liked: boolean | null;
+  is_favored: boolean | null;
 };
 
 interface ProfileAboutState {
@@ -63,7 +68,7 @@ const profileAboutContentStore = create<ProfileAboutState>((set) => ({
     set(() => ({
       profileData: val,
     })),
-  isLoading: false,
+  isLoading: true,
   setIsLoading: (val) =>
     set(() => ({
       isLoading: val,

@@ -26,7 +26,8 @@ import authQuery from "@/queries/auth";
 const ProfilePageBody = ({ userId }: { userId: string }) => {
   const headerValues = profileHeaderStore((state) => state.headerValues);
   const setHeaderValues = profileHeaderStore((state) => state.setHeaderValues);
-  const { data, setEditModeFalse, setData } = profileAboutContentStore();
+  const { data, setEditModeFalse, toggleEditMode, setData } =
+    profileAboutContentStore();
   const { setIsSaving } = profileAboutContentStore();
   const { user } = useUserStore();
   const updateUser = useUserStore((state) => state.updateUser);
@@ -167,6 +168,10 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
     employmentStatus.find((s) => s.employment_status_name === name);
 
   const onSubmit = async (formData: any) => {
+    if (!methods.formState.isDirty) {
+      toggleEditMode();
+      return;
+    }
     const region = getStateData(formData.region);
     if (typeof region != "object") {
       methods.setError("region", {
@@ -175,11 +180,6 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
       });
       return;
     }
-    // return;
-    // if (!methods.formState.isDirty) {
-    //   toggleEditMode();
-    //   return;
-    // }
     setIsSaving(true);
     let finalFormData = { ...formData };
     try {
