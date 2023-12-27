@@ -225,6 +225,7 @@ const SignUpPage = () => {
                 <MailIcon color="#98A2B3" size={20} className="mt-1" />
                 <input
                   type="text"
+                  autoComplete="off"
                   className="ml-2 border-0 rounded-full py-2 px-5 text-normal focus:outline-0 w-full"
                   placeholder="example@email.com"
                   {...formik.getFieldProps("email")}

@@ -170,17 +170,19 @@ const SignInForm = () => {
         className="space-y-3 w-full p-2"
       >
         <div className="flex flex-col space-y-1 pt-3">
-          {/* <label htmlFor="email" className="text-xs text-sm text-semibold mb-2">
+          {/* <label htmlFor="email" className="text-sm text-semibold mb-2">
             Email
           </label> */}
           <div
-            className={`flex items-center flex-row border rounded-full h-max py-1 px-5 ${formik.touched.email && formik.errors.email
-              ? "border-rose-500 p-0"
-              : ""
-              }`}
+            className={`flex items-center flex-row border rounded-full h-max py-1 px-5 ${
+              formik.touched.email && formik.errors.email
+                ? "border-rose-500 p-0"
+                : ""
+            }`}
           >
             <MailIcon color="#98A2B3" size={20} className="mt-1" />
             <Input
+              autoComplete="off"
               type="text"
               className="autofill:bg-yellow-200 mx-2 text-sm h-8 focus-visible:ring-offset-0 focus-visible:ring-0 border-0 rounded-full py-1 px-3 text-normal w-full"
               placeholder="Email Address"
@@ -192,10 +194,11 @@ const SignInForm = () => {
             <InfoIcon
               color="#D92D20"
               size={30}
-              className={`mt-1 ${formik.touched.email && formik.errors.email
-                ? "visible"
-                : "hidden"
-                }`}
+              className={`mt-1 ${
+                formik.touched.email && formik.errors.email
+                  ? "visible"
+                  : "hidden"
+              }`}
             />
           </div>
           {formik.touched.email && formik.errors.email ? (
@@ -210,10 +213,11 @@ const SignInForm = () => {
             Password
           </label> */}
           <div
-            className={`flex h-max flex-row border items-center rounded-full py-1 px-5 ${formik.touched.password && formik.errors.password
-              ? "border-rose-500"
-              : ""
-              }`}
+            className={`flex h-max flex-row border items-center rounded-full py-1 px-5 ${
+              formik.touched.password && formik.errors.password
+                ? "border-rose-500"
+                : ""
+            }`}
           >
             <LockIcon color="#98A2B3" size={20} className="mt-1" />
 
@@ -226,10 +230,11 @@ const SignInForm = () => {
               onBlur={formik.handleBlur}
             />
             <button
-              className={`mt-1 ${formik.touched.password &&
+              className={`mt-1 ${
+                formik.touched.password &&
                 formik.errors.password &&
                 "ml-2 text-[#D92D20]"
-                }`}
+              }`}
               onClick={() => setShowPassword((prev) => !prev)}
               type="button"
             >
@@ -237,7 +242,7 @@ const SignInForm = () => {
             </button>
           </div>
           {formik.touched.password && formik.errors.password ? (
-            <div className="error text-red-500 text-xs ml-5 text-sm pt-2">
+            <div className="error text-red-500 ml-5 text-sm pt-2">
               {formik.errors.password}
             </div>
           ) : null}
@@ -247,7 +252,7 @@ const SignInForm = () => {
             disabled={isLoading}
             type="submit"
             className={cn(
-              "text-white mt-4 h-10 w-full text-sm rounded-full py-2 hover:bg-[#FF599B]/90 mt-5 dark:bg-[#ae2e51]",
+              "text-white h-10 w-full text-sm rounded-full py-2 hover:bg-[#FF599B]/90 mt-5 dark:bg-[#ae2e51]",
               isLoading ? "bg-[#FF8AB3]" : "bg-primary"
             )}
           >
