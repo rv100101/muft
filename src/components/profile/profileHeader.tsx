@@ -339,7 +339,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                           selectedFile
                             ? selectedFile
                             : getImagePath(
-                                userPhoto,
+                                data?.gallery_uuid,
                                 data?.gender[0] ?? null,
                                 data!.member_uuid?.toString()
                               )
