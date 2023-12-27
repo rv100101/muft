@@ -26,7 +26,7 @@ const LocationForm = () => {
   const setSelectedCountry = useSelectedCountryStore(
     (state) => state.setSelectedCountry
   );
-  const { control, setValue, watch, setError, clearErrors } = useFormContext();
+  const { control, setValue, watch } = useFormContext();
   const isLoading = profileAboutContentStore((state) => state.isLoading);
   const data = profileAboutContentStore((state) => state.data);
   const editMode = profileAboutContentStore((state) => state.editMode);
