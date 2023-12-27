@@ -1,5 +1,6 @@
 import { FavoriteFood, Interest, Languages, Pets } from "@/types/profile";
 import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
 
 export type ProfileAbout = {
   nickname: string;
@@ -57,43 +58,51 @@ interface ProfileAboutState {
   setIsSaving: (val: boolean) => void;
 }
 
-const profileAboutContentStore = create<ProfileAboutState>((set) => ({
-  data: null,
-  setData: (val) =>
-    set(() => ({
-      data: val,
-    })),
-  profileData: null,
-  setProfileData: (val) =>
-    set(() => ({
-      profileData: val,
-    })),
-  isLoading: true,
-  setIsLoading: (val) =>
-    set(() => ({
-      isLoading: val,
-    })),
-  refetch: false,
-  setRefetch: (val) =>
-    set(() => ({
-      isLoading: val,
-    })),
-  editMode: false,
-  toggleEditMode: () => {
-    console.log("this is triggered");
-    set((state) => ({
-      editMode: !state.editMode,
-    }));
-  },
-
-  setEditModeFalse: () =>
-    set(() => ({
+const profileAboutContentStore = create(
+  persist<ProfileAboutState>(
+    (set) => ({
+      data: null,
+      setData: (val) =>
+        set(() => ({
+          data: val,
+        })),
+      profileData: null,
+      setProfileData: (val) =>
+        set(() => ({
+          profileData: val,
+        })),
+      isLoading: true,
+      setIsLoading: (val) =>
+        set(() => ({
+          isLoading: val,
+        })),
+      refetch: false,
+      setRefetch: (val) =>
+        set(() => ({
+          isLoading: val,
+        })),
       editMode: false,
-    })),
-  isSaving: false,
-  setIsSaving: (val: boolean) =>
-    set(() => {
-      return { isSaving: val };
+      toggleEditMode: () => {
+        console.log("this is triggered");
+        set((state) => ({
+          editMode: !state.editMode,
+        }));
+      },
+
+      setEditModeFalse: () =>
+        set(() => ({
+          editMode: false,
+        })),
+      isSaving: false,
+      setIsSaving: (val: boolean) =>
+        set(() => {
+          return { isSaving: val };
+        }),
     }),
-}));
+    {
+      name: "profile-storage", // name of the item in the storage (must be unique)
+      storage: createJSONStorage(() => localStorage), // (optional) by default, 'localStorage' is used
+    }
+  )
+);
 export default profileAboutContentStore;

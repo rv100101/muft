@@ -57,6 +57,7 @@ type FormDataType = {
 };
 
 const ProfileHeader = ({ userId }: { userId: string }) => {
+  const userPhoto = useUserAvatar((state) => state.gallery_uuid);
   const setView = useMobileMessagingViewStore((state) => state.setView);
   const [reportProcessing, setReportProcessing] = useState(false);
 
@@ -338,9 +339,9 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                           selectedFile
                             ? selectedFile
                             : getImagePath(
-                                data?.gallery_uuid ?? null,
-                                data?.gender ?? null,
-                                data?.member_uuid?.toString()
+                                userPhoto,
+                                data?.gender[0] ?? null,
+                                data!.member_uuid?.toString()
                               )
                         }
                         alt="no image selected"
