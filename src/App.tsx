@@ -161,7 +161,8 @@ function App() {
 
         {user &&
           !userOnlyRoutes.includes(location) &&
-          !location.startsWith("/profile") && <Redirect to="/" />}
+          !location.startsWith("/profile") &&
+          !location.startsWith("/members") && <Redirect to="/" />}
 
         {user && (!user.profile_completed || !user.is_active) && (
           <Redirect to={`/profile/${user.member_id}`} />

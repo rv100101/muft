@@ -42,10 +42,10 @@ const ChatList = () => {
 
   useEffect(() => {
     return () => {
-      setSelectedHistoryMemberId(null);
-      setSelectedHistoryMemberName("");
+      // setSelectedHistoryMemberId(null);
+      // setSelectedHistoryMemberName("");
     };
-  }, []);
+  }, [setSelectedHistoryMemberId, setSelectedHistoryMemberName]);
 
   useEffect(() => {
     if (!selectedConversation && data && data.length !== 0) {
@@ -71,8 +71,8 @@ const ChatList = () => {
       searchFilterValue.length === 0
         ? true
         : conversation.recipient_nickname
-          .toLowerCase()
-          .includes(searchFilterValue.toLowerCase())
+            .toLowerCase()
+            .includes(searchFilterValue.toLowerCase())
     )
     .filter((conversation) => {
       return conversation.recipient_id !== conversation.initiator_id;
@@ -95,10 +95,10 @@ const ChatList = () => {
             className={cn(
               "hover:bg-slate-50 w-full h-max items-start text-left dark:bg-slate-700 md:rounded-lg",
               !openedConversations.includes(conversation.listed_id) &&
-              !conversation.is_read &&
-              "bg-accent",
+                !conversation.is_read &&
+                "bg-accent",
               selectedHistoryMemberId === conversation.listed_id &&
-              "bg-slate-50"
+                "bg-slate-50"
             )}
             onClick={() => {
               if (!matches) {
@@ -115,6 +115,8 @@ const ChatList = () => {
                 conversation.listed_nickname,
                 conversation.conversation_uuid
               );
+              console.log(conversation.listed_id);
+
               setSelectedHistoryMemberId(conversation.listed_id);
               setSelectedHistoryMemberName(conversation.recipient_nickname);
             }}
@@ -133,8 +135,8 @@ const ChatList = () => {
                 <p
                   className={cn(
                     !openedConversations.includes(conversation.listed_id) &&
-                    !conversation.is_read &&
-                    "font-semibold"
+                      !conversation.is_read &&
+                      "font-semibold"
                   )}
                 >
                   {conversation.listed_nickname}

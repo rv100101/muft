@@ -5,6 +5,7 @@ type MobileMessagingView = "CHAT-MESSAGES" | "CHAT-LIST";
 interface ViewState {
   view: MobileMessagingView;
   toggle: () => void;
+  setView: (view: MobileMessagingView) => void;
 }
 const useMobileMessagingViewStore = create<ViewState>()((set) => ({
   view: "CHAT-LIST",
@@ -15,6 +16,12 @@ const useMobileMessagingViewStore = create<ViewState>()((set) => ({
       } else {
         return { view: "CHAT-LIST" };
       }
+    }),
+  setView: (view) =>
+    set(() => {
+      return {
+        view: view,
+      };
     }),
 }));
 

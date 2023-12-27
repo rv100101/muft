@@ -60,9 +60,7 @@ type FormDataType = {
 };
 
 const ProfileHeader = ({ userId }: { userId: string }) => {
-  const toggleMessagingView = useMobileMessagingViewStore(
-    (state) => state.toggle
-  );
+  const setView = useMobileMessagingViewStore((state) => state.setView);
   const [reportProcessing, setReportProcessing] = useState(false);
 
   const setEditModeFalse = profileAboutContentStore(
@@ -165,11 +163,11 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
   const [isUploading, setIsUploading] = useState(false);
   const setAvatar = useUserAvatar((state) => state.setAvatar);
 
-  useEffect(() => {
-    return () => {
-      setSelectedHistoryMemberId(null);
-    };
-  }, [setSelectedHistoryMemberId]);
+  // useEffect(() => {
+  //   return () => {
+  //     setSelectedHistoryMemberId(null);
+  //   };
+  // }, [setSelectedHistoryMemberId]);
 
   useEffectOnce(() => {
     if (
@@ -240,7 +238,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
     if (headerValues) {
       getConversationUuid();
     }
-    setSelectedHistoryMemberId(parseInt(userId));
+    // setSelectedHistoryMemberId(parseInt(userId));
   }, [userId, headerValues, setSelectedHistoryMemberId, getConversationUuid]);
 
   const handleGalleryUpload = () => {
@@ -519,7 +517,10 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                         className="text-xs border-primary hover:bg-primary px-2 py-1 lg:w-24 w-3/4 dark:bg-[#ae2e51] dark:text-white"
                       >
                         <Link
-                          onClick={toggleMessagingView}
+                          onClick={() => {
+                            setView("CHAT-MESSAGES");
+                            setSelectedHistoryMemberId(parseInt(userId));
+                          }}
                           href={
                             !user?.temporarily_deactivated ? "/messages" : ""
                           }

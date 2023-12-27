@@ -16,6 +16,8 @@ const MessageHeader = () => {
     (state) => state.conversation
   );
 
+  console.log(selectedHistoryMemberId);
+
   return (
     <div className="flex justify-between h-16 w-full items-center border-b p-2">
       {currentConversationData && (
