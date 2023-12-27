@@ -5,6 +5,7 @@ import FormSkeletonLoading from "./formSkeletonLoading";
 import {} from "@/components/ui/select";
 import { useUserStore } from "@/zustand/auth/user";
 import PetsField from "./petsField";
+import removeDuplicates from "@/lib/removeDulpicates";
 
 const PetsForm = () => {
   const isLoading = profileAboutContentStore((state) => state.isLoading);
@@ -39,17 +40,12 @@ const PetsForm = () => {
             />
             <div className="flex  flex-col justify-start space-y-1">
               <p className="font-bold flex-wrap text-base text-primary flex flex-row space-x-3">
-                {[
-                  ...new Set(
-                    data?.pets.map((pet) => (
-                      <p className="border font-normal rounded-lg px-5 py-1 bg-[#ffdeeb] text-[#fe68a0] border-[#fe68a0] hover:bg-[#ffdeeb]/60 mb-5 flex flex-row space-x-2">
-                        <p> {pet.pet_name}</p>
-                      </p>
-                    ))
-                  ),
-                ] ?? "Add pets"}
+                {removeDuplicates(data!.pets, "pet_name").map((pet) => (
+                  <p className="border font-normal rounded-lg px-5 py-1 bg-[#ffdeeb] text-[#fe68a0] border-[#fe68a0] hover:bg-[#ffdeeb]/60 mb-5 flex flex-row space-x-2">
+                    <p> {pet.pet_name}</p>
+                  </p>
+                )) ?? "Add  Pets"}
               </p>
-              {/* <p className="text-[#727272] text-xs">Language</p> */}
             </div>
           </div>
         )}

@@ -20,12 +20,13 @@ import { useFormContext } from "react-hook-form";
 import { Country, State } from "@/types/profile";
 import { useUserStore } from "@/zustand/auth/user";
 import useSelectedCountryStore from "@/zustand/profile/location/selectedCountry";
+import { useUpdateEffect } from "usehooks-ts";
 
 const LocationForm = () => {
   const setSelectedCountry = useSelectedCountryStore(
     (state) => state.setSelectedCountry
   );
-  const { control } = useFormContext();
+  const { control, setValue, watch, setError, clearErrors } = useFormContext();
   const isLoading = profileAboutContentStore((state) => state.isLoading);
   const data = profileAboutContentStore((state) => state.data);
   const editMode = profileAboutContentStore((state) => state.editMode);
@@ -35,10 +36,30 @@ const LocationForm = () => {
     (state) => state.setSelectedCountryCode
   );
 
+  const countryCode = watch("country");
+  console.log(countryCode);
+
+  // useUpdateEffect(() => {
+  //   const region = getStateData(selectedState);
+  //   console.log(region);
+  //   if (region == undefined) {
+  //     setError("region", {
+  //       type: "custom",
+  //       message: "Invalid State",
+  //     });
+  //   } else {
+  //     clearErrors("region");
+  //   }
+  // }, [selectedState, states]);
+
+  useUpdateEffect(() => {
+    setValue("region", "");
+  }, [countryCode]);
+
   const user = useUserStore((state) => state.user);
 
   const isSaving = profileAboutContentStore((state) => state.isSaving);
-  const profileData = profileAboutContentStore(state => state.profileData);
+  const profileData = profileAboutContentStore((state) => state.profileData);
   if ((isLoading && profileData == null) || isSaving) {
     return (
       <div className="flex justify-start items-start space-x-4 w-full ml-5">
@@ -71,6 +92,7 @@ const LocationForm = () => {
                         const country = getCountryData(e);
                         setSelectedCountryCode(country!.country_code);
                         setSelectedCountry(country!.country_code);
+                        setValue("region", "");
                       }}
                       defaultValue={field.value}
                     >

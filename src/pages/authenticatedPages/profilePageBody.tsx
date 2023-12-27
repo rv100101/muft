@@ -164,6 +164,14 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
     employmentStatus.find((s) => s.employment_status_name === name);
 
   const onSubmit = async (formData: any) => {
+    const region = getStateData(formData.region);
+    if (typeof region != "object") {
+      methods.setError("region", {
+        type: "custom",
+        message: "Invalid region",
+      });
+      return;
+    }
     // return;
     // if (!methods.formState.isDirty) {
     //   toggleEditMode();
@@ -180,7 +188,6 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
       const income = getIncome(formData.income);
       const bodyType = getBodyType(formData.bodyType);
       const country = getCountryData(formData.country);
-      const region = getStateData(formData.region);
       const bodyArts = getBodyArtsData(formData.bodyArt);
       const car = getCarData(formData.car);
       const drink = getDrinkData(formData.drinking);
