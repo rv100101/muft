@@ -23,11 +23,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "./ui/dialog";
-import {
-  DialogClose,
-  DialogOverlay,
-  DialogTrigger,
-} from "@radix-ui/react-dialog";
+import { DialogClose, DialogTrigger } from "@radix-ui/react-dialog";
 import { Button } from "./ui/button";
 import { useFilterStore } from "@/zustand/home/filter";
 import { Slider } from "./ui/slider";
