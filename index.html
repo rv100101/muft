@@ -1,6 +1,27 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
+    <!-- HTML Meta Tags -->
+    <title>Muffin</title>
+    <meta name="description" content="undefined" />
+
+    <!-- Facebook Meta Tags -->
+    <meta property="og:url" content="https://muffin.ph/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Muffin" />
+    <meta property="og:description" content="undefined" />
+    <meta property="og:image" content="/public/logo.svg" />
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="twitter:domain" content="muffin.ph" />
+    <meta property="twitter:url" content="https://muffin.ph/" />
+    <meta name="twitter:title" content="Muffin" />
+    <meta name="twitter:description" content="undefined" />
+    <meta name="twitter:image" content="/public/logo.svg" />
+
+    <!-- Meta Tags Generated via https://www.opengraph.xyz -->
+
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -27,19 +48,23 @@ id=G-0SMEZ7NPVX"
   </head>
   <body>
     <div id="root"></div>
-<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
-<script>
- window.OneSignalDeferred = window.OneSignalDeferred || [];
- OneSignalDeferred.push(function(OneSignal) {
-   OneSignal.init({
-     appId: "c5ca18a9-5d6b-479c-8f1b-71ddc4ab5694",
-     safari_web_id: "web.onesignal.auto.27d2eba6-7621-43e8-b8d4-d2a9de3b8fea",
-     notifyButton: {
-       enable: true,
-     },
-   });
- });
-</script>
+    <script
+      src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js"
+      defer
+    ></script>
+    <script>
+      window.OneSignalDeferred = window.OneSignalDeferred || [];
+      OneSignalDeferred.push(function (OneSignal) {
+        OneSignal.init({
+          appId: "c5ca18a9-5d6b-479c-8f1b-71ddc4ab5694",
+          safari_web_id:
+            "web.onesignal.auto.27d2eba6-7621-43e8-b8d4-d2a9de3b8fea",
+          notifyButton: {
+            enable: true,
+          },
+        });
+      });
+    </script>
     <script type="module" src="/src/main.tsx"></script>
     <footer>
       <script>
