@@ -57,7 +57,6 @@ type FormDataType = {
 };
 
 const ProfileHeader = ({ userId }: { userId: string }) => {
-  const userPhoto = useUserAvatar((state) => state.gallery_uuid);
   const setView = useMobileMessagingViewStore((state) => state.setView);
   const [reportProcessing, setReportProcessing] = useState(false);
 
