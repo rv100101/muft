@@ -19,10 +19,17 @@ const getCountry = async (memberId: number) => {
   });
 };
 
+const isProfileCompleted = async (memberId: number) => {
+  return await axiosQuery.post("/IsProfileCompleted", {
+    member: memberId,
+  });
+};
+
 const authQuery = {
   signIn,
   getProfilePhoto,
   getCountry,
+  isProfileCompleted,
 };
 
 export default authQuery;

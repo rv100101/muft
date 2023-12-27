@@ -32,6 +32,7 @@ import FavoriteFoodForm from "./forms/favoriteFoodForm";
 import HealthForm from "./forms/healthForm";
 import MaritalStatusForm from "./forms/maritalStatusForm";
 import InterestsForm from "./forms/interestsForm";
+import { aboutAccordionTabView } from "@/zustand/profile/about/aboutAccordionTabView";
 
 const AboutAccordionContent = () => {
   const [location] = useLocation();
@@ -43,26 +44,28 @@ const AboutAccordionContent = () => {
     additionalInfoHasErrors,
   } = useAboutErrorsStrore();
   const { profileData } = profileAboutContentStore();
-  const [activeTabs, setActiveTabs] = useState([
-    false,
-    true,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-  ]);
+  // const [tabs, setActiveTabs] = useState([
+  //   false,
+  //   true,
+  //   false,
+  //   false,
+  //   false,
+  //   false,
+  //   false,
+  //   false,
+  //   false,
+  //   false,
+  //   false,
+  //   false,
+  //   false,
+  // ]);
 
-  const toggleTab = (index: number) => {
-    const newActiveTabs = activeTabs.map((_, i) => i === index);
-    setActiveTabs(newActiveTabs);
-  };
+  const { tabs, changeTab } = aboutAccordionTabView();
+
+  // const changeTab = (index: number) => {
+  //   const newActiveTabs = tabs.map((_, i) => i === index);
+  //   setActiveTabs(newActiveTabs);
+  // };
   const isLoading = profileAboutContentStore((state) => state.isLoading);
   if (location.startsWith("/profile") && !profileData && isLoading) {
     return <ContentLoadingSkeleton />;
@@ -78,11 +81,11 @@ const AboutAccordionContent = () => {
         <div
           className={cn(
             "flex justify-center items-center sm:block",
-            activeTabs[1]
+            tabs[1]
               ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B] dark:bg-[#3b0117]"
               : "text-[#727272] py-2 px-2 my-2"
           )}
-          onClick={() => toggleTab(1)}
+          onClick={() => changeTab(1)}
         >
           <p
             className={cn(
@@ -102,11 +105,11 @@ const AboutAccordionContent = () => {
         <div
           className={cn(
             "flex justify-center items-center sm:block",
-            activeTabs[2]
+            tabs[2]
               ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B] dark:bg-[#3b0117]"
               : "text-[#727272] py-2 px-2 my-2"
           )}
-          onClick={() => toggleTab(2)}
+          onClick={() => changeTab(2)}
         >
           <p
             className={cn(
@@ -130,11 +133,11 @@ const AboutAccordionContent = () => {
         <div
           className={cn(
             "flex justify-center items-center sm:block",
-            activeTabs[3]
+            tabs[3]
               ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B] dark:bg-[#3b0117]"
               : "text-[#727272] py-2 px-2 my-2"
           )}
-          onClick={() => toggleTab(3)}
+          onClick={() => changeTab(3)}
         >
           <p
             className={cn(
@@ -158,11 +161,11 @@ const AboutAccordionContent = () => {
         <div
           className={cn(
             "flex justify-center items-center sm:block",
-            activeTabs[4]
+            tabs[4]
               ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B] dark:bg-[#3b0117]"
               : "text-[#727272] py-2 px-2 my-2"
           )}
-          onClick={() => toggleTab(4)}
+          onClick={() => changeTab(4)}
         >
           <p
             className={cn(
@@ -186,11 +189,11 @@ const AboutAccordionContent = () => {
         <div
           className={cn(
             "flex justify-center items-center sm:block",
-            activeTabs[5]
+            tabs[5]
               ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B] dark:bg-[#3b0117]"
               : "text-[#727272] py-2 px-2 my-2"
           )}
-          onClick={() => toggleTab(5)}
+          onClick={() => changeTab(5)}
         >
           <p
             className={cn(
@@ -214,11 +217,11 @@ const AboutAccordionContent = () => {
         <div
           className={cn(
             "flex justify-center items-center sm:block",
-            activeTabs[6]
+            tabs[6]
               ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B] dark:bg-[#3b0117]"
               : "text-[#727272] py-2 px-2 my-2"
           )}
-          onClick={() => toggleTab(6)}
+          onClick={() => changeTab(6)}
         >
           <p
             className={cn(
@@ -242,11 +245,11 @@ const AboutAccordionContent = () => {
         <div
           className={cn(
             "flex justify-center items-center sm:block",
-            activeTabs[7]
+            tabs[7]
               ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B] dark:bg-[#3b0117]"
               : "text-[#727272] py-2 px-2 my-2"
           )}
-          onClick={() => toggleTab(7)}
+          onClick={() => changeTab(7)}
         >
           <p
             className={cn(
@@ -270,11 +273,11 @@ const AboutAccordionContent = () => {
         <div
           className={cn(
             "flex justify-center items-center sm:block",
-            activeTabs[8]
+            tabs[8]
               ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B] dark:bg-[#3b0117]"
               : "text-[#727272] py-2 px-2 my-2"
           )}
-          onClick={() => toggleTab(8)}
+          onClick={() => changeTab(8)}
         >
           <p
             className={cn(
@@ -298,11 +301,11 @@ const AboutAccordionContent = () => {
         <div
           className={cn(
             "flex justify-center items-center sm:block",
-            activeTabs[9]
+            tabs[9]
               ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B] dark:bg-[#3b0117]"
               : "text-[#727272] py-2 px-2 my-2"
           )}
-          onClick={() => toggleTab(9)}
+          onClick={() => changeTab(9)}
         >
           <p
             className={cn(
@@ -326,11 +329,11 @@ const AboutAccordionContent = () => {
         <div
           className={cn(
             "flex justify-center items-center sm:block",
-            activeTabs[10]
+            tabs[10]
               ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B] dark:bg-[#3b0117]"
               : "text-[#727272] py-2 px-2 my-2"
           )}
-          onClick={() => toggleTab(10)}
+          onClick={() => changeTab(10)}
         >
           <p
             className={cn(
@@ -354,11 +357,11 @@ const AboutAccordionContent = () => {
         <div
           className={cn(
             "flex justify-center items-center sm:block",
-            activeTabs[11]
+            tabs[11]
               ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B] dark:bg-[#3b0117]"
               : "text-[#727272] py-2 px-2 my-2"
           )}
-          onClick={() => toggleTab(11)}
+          onClick={() => changeTab(11)}
         >
           <p
             className={cn(
@@ -382,11 +385,11 @@ const AboutAccordionContent = () => {
         <div
           className={cn(
             "flex justify-center items-center sm:block",
-            activeTabs[12]
+            tabs[12]
               ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B] dark:bg-[#3b0117]"
               : "text-[#727272] py-2 px-2 my-2"
           )}
-          onClick={() => toggleTab(12)}
+          onClick={() => changeTab(12)}
         >
           <p
             className={cn(
@@ -410,40 +413,40 @@ const AboutAccordionContent = () => {
       </div>
       <div className="flex h-full sm:h-max flex-col lg:w-full lg:mt-0 mt-5">
         {/* basic info */}
-        {activeTabs[1] && <BasicInformationForm />}
+        {tabs[1] && <BasicInformationForm />}
 
         {/* Location */}
-        {activeTabs[2] && <LocationForm />}
+        {tabs[2] && <LocationForm />}
 
         {/* Background */}
-        {activeTabs[3] && <BackgroundForm />}
+        {tabs[3] && <BackgroundForm />}
 
         {/* Details */}
-        {activeTabs[4] && <LanguagesForm />}
+        {tabs[4] && <LanguagesForm />}
 
         {/* Appearance */}
-        {activeTabs[5] && <AppearanceForm />}
+        {tabs[5] && <AppearanceForm />}
 
         {/* Lifestyle */}
-        {activeTabs[6] && <LifestyleForm />}
+        {tabs[6] && <LifestyleForm />}
 
         {/* Pets */}
-        {activeTabs[7] && <PetsForm />}
+        {tabs[7] && <PetsForm />}
 
         {/* Favorite Foods */}
-        {activeTabs[8] && <FavoriteFoodForm />}
+        {tabs[8] && <FavoriteFoodForm />}
 
         {/* Health */}
-        {activeTabs[9] && <HealthForm />}
+        {tabs[9] && <HealthForm />}
 
         {/* Marital status */}
-        {activeTabs[10] && <MaritalStatusForm />}
+        {tabs[10] && <MaritalStatusForm />}
 
         {/* Marital status */}
-        {activeTabs[11] && <WorkEducationForm />}
+        {tabs[11] && <WorkEducationForm />}
 
         {/* Marital status */}
-        {activeTabs[12] && <InterestsForm />}
+        {tabs[12] && <InterestsForm />}
       </div>
     </div>
   );
