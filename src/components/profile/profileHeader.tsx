@@ -359,7 +359,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                             ? selectedFile
                             : getImagePath(
                                 data!.gallery_uuid,
-                                data!.gender,
+                                data?.gender[0] ?? null,
                                 data!.member_uuid?.toString()
                               )
                         }
@@ -416,16 +416,6 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                 </Button>
               </>
             }
-            {/* {isEditing && selectedFile && (
-              <Button
-                disabled={isUploading}
-                onClick={handleProfilePhotoUpload}
-                type="button"
-                className="hover:bg-[#FF8AB3]/95 w-36 text-xs"
-              >
-                Update Photo
-              </Button>
-            )} */}
           </div>
         }
         <div className="w-full">
