@@ -42,6 +42,7 @@
     "moment-with-locales-es6": "^1.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-helmet": "^6.1.0",
     "react-hook-form": "^7.48.2",
     "react-onesignal": "^3.0.1",
     "react-simple-image-viewer": "^1.2.2",
