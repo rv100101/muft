@@ -5,8 +5,10 @@ const FooterLinks = () => {
   return (
     <ul className="flex justify-center list-none space-x-4 text-xs md:text-md">
       <li>
-        <Link onClick={scrollToTop} href="/privacy-policy">
-          <a className="text-white underline font-light hover:text-slate-400">Privacy Policy</a>
+        <Link onClick={scrollToTop} href="/privacy">
+          <a className="text-white underline font-light hover:text-slate-400">
+            Privacy Policy
+          </a>
         </Link>
       </li>
       <li>
@@ -16,11 +18,13 @@ const FooterLinks = () => {
           </a>
         </Link>
       </li>
-      <li>
+      {/* <li>
         <Link onClick={scrollToTop} href="/release-notes">
-          <a className="text-white underline font-light hover:text-slate-400">Release Notes</a>
+          <a className="text-white underline font-light hover:text-slate-400">
+            Release Notes
+          </a>
         </Link>
-      </li>
+      </li> */}
     </ul>
   );
 };

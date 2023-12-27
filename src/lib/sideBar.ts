@@ -1,15 +1,17 @@
-import { SideBarLinks } from "@/types/sideBar";
 import {
   // BellIcon,
   HeartIcon,
   HomeIcon,
+  LucideIcon,
   MessageSquareIcon,
   Settings,
   Star,
   UserIcon,
 } from "lucide-react";
 
-const links: SideBarLinks = [
+const links: (
+  userId: number | null
+) => { path: string; icon: LucideIcon; name: string }[] = (userId) => [
   {
     path: "/",
     icon: HomeIcon,
@@ -26,7 +28,7 @@ const links: SideBarLinks = [
   //   name: "Notifications",
   // },
   {
-    path: "/profile",
+    path: userId ? `/profile/${userId}` : "",
     icon: UserIcon,
     name: "My Profile",
   },

@@ -34,23 +34,17 @@ const SideBar = () => {
   const [location] = useLocation();
   const queryClient = useQueryClient();
   const user = useUserStore((state) => state.user);
-  const navLinks = links.map((link, index) => {
+  const navLinks = links(user!.member_id).map((link, index) => {
     return (
       <li key={index} className="w-full">
         <Link
           className={cn(
             "h-10 px-4 py-2 hover:bg-accent hover:text-accent-foreground flex justify-start items-center space-x-2",
-            location.startsWith("/profile") && link.path.startsWith("/profile")
+            location.endsWith(link.path)
               ? "font-semibold bg-accent"
-              : location.endsWith(link.path)
-                ? "font-semibold bg-accent"
-                : "font-normal"
+              : "font-normal"
           )}
-          href={
-            link.name == "My Profile"
-              ? `/profile/${user!.member_id}`
-              : link.path
-          }
+          href={link.path}
           onClick={() => {
             if (link.name == "My Profile") {
               setSelectedProfileId(null);
@@ -64,14 +58,7 @@ const SideBar = () => {
         >
           {
             <link.icon
-              fill={
-                location.startsWith("/profile") &&
-                  link.path.startsWith("/profile")
-                  ? "black"
-                  : location.endsWith(link.path)
-                    ? "black"
-                    : "white"
-              }
+              fill={location.endsWith(link.path) ? "black" : "white"}
               stroke={
                 link.name == "Home" && location.endsWith(link.path)
                   ? "white"
@@ -90,8 +77,9 @@ const SideBar = () => {
   return (
     <div className="h-full border-r lg:flex sm:flex-col justify-between hidden">
       <div
-        className={`h-full flex flex-col justify-between ${orientation.angle === 90 ? "overflow-scroll" : ""
-          }`}
+        className={`h-full flex flex-col justify-between ${
+          orientation.angle === 90 ? "overflow-scroll" : ""
+        }`}
       >
         <div className="flex flex-col w-[220px]">
           <Link href="/">
@@ -112,21 +100,21 @@ const SideBar = () => {
           >
             Help Center
           </a>
-          <Link onClick={scrollToTop} href="/privacy-policy">
+          <Link onClick={scrollToTop} href={"/privacy"}>
             <a className="hover:text-slate-700 text-xs text-black dark:text-white">
               Privacy Policy
             </a>
           </Link>
           <Link onClick={scrollToTop} href="/terms">
             <a className="hover:text-slate-700 text-xs text-black dark:text-white">
-              Terms of Service
+              Terms & Conditions
             </a>
           </Link>
-          <Link onClick={scrollToTop} href="/release-notes">
+          {/* <Link onClick={scrollToTop} href="/release-notes">
             <a className="hover:text-slate-700 text-xs text-black dark:text-white">
               Release Notes
             </a>
-          </Link>
+          </Link> */}
           <hr />
           <Dialog>
             <DialogTrigger>

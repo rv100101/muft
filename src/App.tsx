@@ -6,6 +6,7 @@ import Footer from "./components/footer";
 import pageRoutes, {
   noUserOnlyRoutes,
   routesWithFooterAndTopNav,
+  userOnlyRoutes,
 } from "./lib/routes";
 import { useUserStore } from "./zustand/auth/user";
 import { cn } from "./lib/utils";
@@ -28,7 +29,6 @@ function App() {
   // });
 
   useUpdateEffect(() => {
-
     if (user) {
       Sentry.configureScope(function (scope) {
         scope.setTag("user", "muffin_user");
@@ -159,7 +159,9 @@ function App() {
           <Redirect to="/auth/signin" />
         )}
 
-        {user && noUserOnlyRoutes.includes(location) && <Redirect to="/" />}
+        {user &&
+          !userOnlyRoutes.includes(location) &&
+          !location.startsWith("/profile") && <Redirect to="/" />}
 
         {user && (!user.profile_completed || !user.is_active) && (
           <Redirect to={`/profile/${user.member_id}`} />

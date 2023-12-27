@@ -16,7 +16,6 @@ import SettingsPage from "@/pages/authenticatedPages/settingsPage";
 
 export const routesWithFooterAndTopNav = [
   "/",
-  "/privacy-policy",
   "/terms",
   "/release-notes",
   "/auth/signup",
@@ -30,6 +29,21 @@ export const noUserOnlyRoutes = [
   "/auth/signup",
   "/about",
   "/subscription",
+  "/privacy",
+  "/terms",
+  "/release-notes",
+];
+
+export const userOnlyRoutes = [
+  "/messages",
+  "/profile",
+  "/members",
+  "/likes",
+  "/favourites",
+  "/Settings",
+  "/privacy",
+  "/terms",
+  "/release-notes",
 ];
 
 const pageRoutes = {
@@ -38,7 +52,7 @@ const pageRoutes = {
     component: LandingPage,
   },
   privacyPolicyPage: {
-    path: "/privacy-policy",
+    path: "/privacy",
     component: PrivacyPolicyPage,
   },
   termsPage: {

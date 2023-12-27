@@ -111,7 +111,7 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
   // const [location] = useLocation();
   const queryClient = useQueryClient();
   const user = useUserStore((state) => state.user);
-  const navLinks = links.map((link, index) => {
+  const navLinks = links(user!.member_id).map((link, index) => {
     return (
       <li key={index} className="w-full">
         <Link
@@ -412,14 +412,14 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
               >
                 Help Center
               </a>
-              <Link onClick={scrollToTop} href="/privacy-policy">
+              <Link onClick={scrollToTop} href="/privacy">
                 <a className="hover:text-slate-700 text-sm text-black dark:text-white">
                   Privacy Policy
                 </a>
               </Link>
               <Link onClick={scrollToTop} href="/terms">
                 <a className="hover:text-slate-700 text-sm text-black dark:text-white">
-                  Terms of Service
+                  Terms & Conditions
                 </a>
               </Link>
             </div>

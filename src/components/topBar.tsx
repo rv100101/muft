@@ -14,7 +14,7 @@ import links from "@/lib/sideBar";
 
 const TopBar = ({ children }: { children: ReactNode }) => {
   const [location] = useLocation();
-  let navLinks = links.map((link, index) => {
+  let navLinks = links(null).map((link, index) => {
     return (
       <li key={index} className="w-full">
         <Link
