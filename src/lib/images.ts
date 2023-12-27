@@ -5,9 +5,9 @@ export const getImagePath = (
 ) => {
   if (gallery_uuid != null) {
     return `https://muffin0.blob.core.windows.net/profile/${member_uuid}/${gallery_uuid}.jpg`;
-  } else if (gallery_uuid == null && gender == "M") {
+  } else if (gallery_uuid == null && gender && gender[0] == "M") {
     return "https://muffin0.blob.core.windows.net/profile/male.png";
-  } else if (gallery_uuid == null && gender == "F") {
+  } else if (gallery_uuid == null && gender && gender[0] == "F") {
     return "https://muffin0.blob.core.windows.net/profile/female.png";
   } else {
     return "https://muffin0.blob.core.windows.net/profile/profile.png";
