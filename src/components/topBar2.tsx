@@ -23,7 +23,11 @@ import {
   DialogHeader,
   DialogTitle,
 } from "./ui/dialog";
-import { DialogClose, DialogTrigger } from "@radix-ui/react-dialog";
+import {
+  DialogClose,
+  DialogOverlay,
+  DialogTrigger,
+} from "@radix-ui/react-dialog";
 import { Button } from "./ui/button";
 import { useFilterStore } from "@/zustand/home/filter";
 import { Slider } from "./ui/slider";
@@ -214,7 +218,7 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
         open={searchTriggered}
         onOpenChange={(val) => setSearchTriggered(val)}
       >
-        <DialogContent className="sm:max-w-md opacity-100 w-4/5">
+        <DialogContent className="sm:max-w-md opacity-100 w-4/5 left-[50%] top-[18%]">
           <p>Search user</p>
           <HomepageSearchInput />
         </DialogContent>

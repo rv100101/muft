@@ -242,7 +242,7 @@ const SignInForm = () => {
             </button>
           </div>
           {formik.touched.password && formik.errors.password ? (
-            <div className="error text-red-500 ml-5 text-sm pt-2">
+            <div className="error text-red-500 ml-5 text-xs pt-2">
               {formik.errors.password}
             </div>
           ) : null}
