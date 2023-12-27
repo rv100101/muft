@@ -92,12 +92,12 @@ const PostItem = ({
   const handlePostItemClick = () => {
     setLocation(`/members/${member_id}`);
   };
-
   return (
     <div className="transition ease-in duration-300 transform border rounded-xl">
       <div className="flex flex-col items-center justify-end h-full">
         <div className="flex flex-col h-full justify-center items-center">
-          <div className="relative w-max rounded-t-md  hover:cursor-pointer">
+          <div className="relative w-max rounded-t-md hover:cursor-pointer">
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 from-1% via-transparent via49% to-transparent to-50%" />
             <img
               src={image}
               alt="post-img"
@@ -108,14 +108,14 @@ const PostItem = ({
               <div className="flex flex-row w-full justify-between ">
                 <div
                   onClick={() => handlePostItemClick()}
-                  className="flex flex-col p-8 hover:underline hover:cursor-pointer"
+                  className="flex flex-col p-8 hover:cursor-pointer"
                 >
-                  <p className="text-white text-2xl 2xl:text-3xl mb-3  select-none">
+                  <p className="text-white border bg-[#FF599B]/90 max-w-max px-5 py-2 rounded-lg border-white text-xl mb-3 select-none">
                     {nickname}
                   </p>
                   {/* <p className="text-white text-sm">{countryName}</p> */}
-                  <p className="text-white text-sm 2xl:text-xl">
-                    {`${country}, ${state}`}
+                  <p className="drop-shadow-xl text-white text-sm 2xl:text-lg">
+                    {`${state}, ${country}`}
                   </p>
                 </div>
                 <TooltipProvider>

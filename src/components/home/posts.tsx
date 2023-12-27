@@ -23,11 +23,11 @@ const Posts = ({
     if (scrollPosition && containerRef.current) {
       containerRef.current.scrollTop = +scrollPosition;
     }
-  }, [isLoading]);
+  }, [isLoading, scrollPosition]);
 
   useEffect(() => {
     setScrollPosition(debouncedScrollPositionValue);
-  }, [debouncedScrollPositionValue]);
+  }, [debouncedScrollPositionValue, setScrollPosition]);
 
   return (
     <div

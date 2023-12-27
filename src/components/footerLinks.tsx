@@ -14,7 +14,7 @@ const FooterLinks = () => {
       <li>
         <Link onClick={scrollToTop} href="/terms">
           <a className="text-white underline font-light hover:text-slate-400">
-            Terms of Service
+            Terms & Conditions
           </a>
         </Link>
       </li>
