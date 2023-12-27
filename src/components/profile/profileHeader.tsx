@@ -61,7 +61,9 @@ type FormDataType = {
 const ProfileHeader = ({ userId }: { userId: string }) => {
   const [reportProcessing, setReportProcessing] = useState(false);
 
-  const setEditModeFalse = profileAboutContentStore(state => state.setEditModeFalse);
+  const setEditModeFalse = profileAboutContentStore(
+    (state) => state.setEditModeFalse
+  );
   const formik = useFormik({
     initialValues: {
       reason: "",
@@ -350,6 +352,9 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
     return <ProfileHeaderSkeleton />;
   }
 
+  {
+    console.log(headerValues!.nickname);
+  }
   return (
     <div className="items-start p-5 border-b w-full">
       <div className="flex justify-start items-start space-x-2">
@@ -366,10 +371,10 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                           selectedFile
                             ? selectedFile
                             : getImagePath(
-                              headerValues!.gallery_uuid,
-                              headerValues!.gender,
-                              headerValues!.member_uuid?.toString()
-                            )
+                                headerValues!.gallery_uuid,
+                                headerValues!.gender,
+                                headerValues!.member_uuid?.toString()
+                              )
                         }
                         alt="no image selected"
                       />
@@ -386,13 +391,17 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                           selectedFile
                             ? selectedFile
                             : getImagePath(
-                              headerValues!.gallery_uuid,
-                              headerValues!.gender,
-                              headerValues!.member_uuid?.toString()
-                            )
+                                headerValues!.gallery_uuid,
+                                headerValues!.gender,
+                                headerValues!.member_uuid?.toString()
+                              )
                         }
                         alt="no image selected"
                       />
+                      <div className="flex space-x-1 justify-center font-semibold text-2xl">
+                        <p>{headerValues?.nickname}, </p>
+                        <p> {`${headerValues?.age}`}</p>
+                      </div>
                     </DialogContent>
                   </Dialog>
                 )}
@@ -416,10 +425,10 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                         selectedFile
                           ? selectedFile
                           : getImagePath(
-                            headerValues!.gallery_uuid,
-                            headerValues!.gender,
-                            headerValues!.member_uuid?.toString()
-                          )
+                              headerValues!.gallery_uuid,
+                              headerValues!.gender,
+                              headerValues!.member_uuid?.toString()
+                            )
                       }
                       alt="no image selected"
                     />
@@ -455,10 +464,11 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
         <div className="w-full">
           <div className="flex lg:flex-row flex-col space-y-5 w-full justify-between">
             <div className="w-full">
-              {(
+              {
                 <div
-                  className={`flex lg:flex-row flex-col lg:space-x-5 space-x-0 ${!user!.is_active ? "pt-5 pl-3" : ""
-                    }`}
+                  className={`flex lg:flex-row flex-col lg:space-x-5 space-x-0 ${
+                    !user!.is_active ? "pt-5 pl-3" : ""
+                  }`}
                 >
                   <div className="flex lg:flex-col lg:justify-start flex-row space-x-4 lg:space-x-0">
                     <div className="flex flex-col sm:flex-row space-x-1">
@@ -468,7 +478,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                       <p className="font-semibold text-primary text-lg">
                         {headerValues!.age}
                       </p>
-                      {(
+                      {
                         <p
                           className={
                             "sm:hidden mt-1 text-[#f0f9ff] border-[#075985] text-xs py-1 px-2 w-min rounded-md bg-[#38bdf8] hover:bg-[#38bdf8]/80"
@@ -476,9 +486,9 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                         >
                           Standard
                         </p>
-                      )}
+                      }
                     </div>
-                    {(
+                    {
                       <p
                         className={
                           "hidden sm:block mt-1 text-[#f0f9ff] border-[#075985] text-xs py-1 px-2 w-min rounded-md bg-[#38bdf8] hover:bg-[#38bdf8]/80"
@@ -486,7 +496,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                       >
                         Standard
                       </p>
-                    )}
+                    }
                   </div>
                   {userId !== user!.member_id.toString() && (
                     <div className="flex w-full lg:flex-row flex-col lg:justify-between lg:items-start lg:space-y-0 space-y-4 lg:pt-0 pt-5 lg:px-2">
@@ -640,14 +650,15 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                                   onChange={formik.handleChange}
                                   name="reason"
                                   placeholder="enter reason here"
-                                  className={`col-span-3 w-80 h-32 ring-0  ${formik.touched.reason &&
+                                  className={`col-span-3 w-80 h-32 ring-0  ${
+                                    formik.touched.reason &&
                                     formik.errors.reason
-                                    ? "border-rose-500"
-                                    : ""
-                                    }`}
+                                      ? "border-rose-500"
+                                      : ""
+                                  }`}
                                 />
                                 {formik.touched.reason &&
-                                  formik.errors.reason ? (
+                                formik.errors.reason ? (
                                   <div className="error text-sm text-red-500 ml-5">
                                     {formik.errors.reason}
                                   </div>
@@ -678,7 +689,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                     </div>
                   )}
                 </div>
-              )}
+              }
               {/* {isEditing && (
                 <FormField
                   name="nickname"
@@ -708,18 +719,18 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                     <Button
                       onClick={
                         !formState.isDirty
-                          ? () => { }
+                          ? () => {}
                           : () => {
-                            // if (isEditing && !formState.isValid) {
-                            //   toast({
-                            //     variant: "destructive",
-                            //     title: "Cannot save your profile",
-                            //     description:
-                            //       "Please make sure all the required fields are satisfied.",
-                            //     duration: 4000,
-                            //   });
-                            // }
-                          }
+                              // if (isEditing && !formState.isValid) {
+                              //   toast({
+                              //     variant: "destructive",
+                              //     title: "Cannot save your profile",
+                              //     description:
+                              //       "Please make sure all the required fields are satisfied.",
+                              //     duration: 4000,
+                              //   });
+                              // }
+                            }
                       }
                       disabled={isSaving || isUploading}
                       type={"submit"}
