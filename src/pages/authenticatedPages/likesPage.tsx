@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useLocation } from "wouter";
 import LikesMobileNav from "@/components/likesAndFavourites/likesMobileNav";
+import { Helmet } from "react-helmet";
 const LikesPage = () => {
   const [tab] = useState<"LIKES" | "FAVOURITES">("LIKES");
   const [, setLocation] = useLocation();
@@ -46,6 +47,9 @@ const LikesPage = () => {
         key={index}
         className="hover:ring-2 transition-all ring-primary hover:cursor-pointer  w-full p-8 flex justify-between items-center h-48 border rounded-lg"
       >
+        <Helmet>
+          <title>Likes</title>
+        </Helmet>
         <div className="flex space-x-2 items-center">
           <div className="border-4 border-primary w-24 h-24 border-pink p-1 rounded-full">
             <img

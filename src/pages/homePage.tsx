@@ -11,6 +11,7 @@ import Posts from "@/components/home/posts";
 import { useFilterStore } from "@/zustand/home/filter";
 import { Member, MemberData } from "@/types/home";
 import createMap from "@/lib/likesAndFavoritesHomeMap";
+import { Helmet } from "react-helmet";
 
 const HomePage = () => {
   const updateFilters = useFilterStore((state) => state.updateFilters);
@@ -214,6 +215,9 @@ const HomePage = () => {
 
   return (
     <AuthenticatedLayout>
+      <Helmet>
+        <title>Muffin | Page</title>
+      </Helmet>
       <div className="flex 2xl:justify-center w-full">
         <div className="flex 2xl:justify-center w-full lg:w-min justify-start lg:grid-cols-9 grid-cols-1 gap-4">
           <div className="hidden lg:block w-32"></div>

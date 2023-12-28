@@ -4,10 +4,14 @@ import Features from "@/components/features";
 import Cta from "@/components/cta";
 // import GetApp from "@/components/getApp";
 import { motion } from "framer-motion";
+import { Helmet } from "react-helmet";
 
 const LandingPage = () => {
   return (
     <>
+      <Helmet>
+        <title>Muffin | Find your Love</title>
+      </Helmet>
       {/*<GetApp /> */}
       <div className="mx-8 md:mx-12 lg:mx-36">
         <Hero />
