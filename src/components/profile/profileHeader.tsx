@@ -50,6 +50,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Textarea } from "../ui/textarea";
 import useMobileMessagingViewStore from "@/zustand/messaging/mobileStateView";
+import { Helmet } from "react-helmet";
 
 type FormDataType = {
   reason: string;
@@ -324,6 +325,13 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
 
   return (
     <div className="items-start p-5 border-b w-full">
+      <Helmet>
+        {location.startsWith("/members") ? (
+          <title>{data?.nickname ?? "muffin"} | Muffin</title>
+        ) : (
+          <title>My Profile</title>
+        )}
+      </Helmet>
       <div className="flex justify-start items-start space-x-2">
         {
           <div className="flex flex-col justify-center items-center space-y-2">

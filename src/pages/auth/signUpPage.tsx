@@ -12,6 +12,7 @@ import { useMutation } from "@tanstack/react-query";
 import axiosQuery from "@/queries/axios";
 import { toast } from "@/components/ui/use-toast";
 import { useUserStore } from "@/zustand/auth/user";
+import { Helmet } from "react-helmet";
 
 type FormDataType = {
   first_name: string;
@@ -103,6 +104,9 @@ const SignUpPage = () => {
   return (
     <>
       <div className="h-[calc(100vh-70px)] md:h-[calc(100vh-88px)] justify-center items-center flex lg:gap-4 w-full lg:px-32 border-t">
+        <Helmet>
+          <title>Sign up</title>
+        </Helmet>
         <div className="flex h-min w-[460px] flex-col items-center md:shadow-xl rounded-lg p-4 md:border">
           <div className="flex w-full justify-end py-2">
             {/* <img
