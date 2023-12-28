@@ -216,6 +216,13 @@ const HomePage = () => {
   return (
     <AuthenticatedLayout>
       <Helmet>
+        <meta
+          name={"description"}
+          content={
+            "Explore Love Worldwide with Muffin, your gateway to finding love across continents"
+          }
+          data-react-helmet="true"
+        />
         <title>Muffin | Page</title>
       </Helmet>
       <div className="flex 2xl:justify-center w-full">
