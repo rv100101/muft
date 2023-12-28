@@ -109,7 +109,7 @@ const DeactivateAccountContent = () => {
       </p>
       {/* <p className="font-medium">Deactivate</p> */}
       <Dialog open={showDialog} onOpenChange={(val) => setShowDialog(val)}>
-        <div className="flex flex-row w-full justify-between">
+        <div className="flex flex-row w-full justify-between items-center">
           <p>{user?.temporarily_deactivated ? "Reactivate" : "Deactivate"}</p>
           <DialogTrigger asChild>
             <Button

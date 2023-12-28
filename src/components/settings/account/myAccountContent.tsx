@@ -81,7 +81,7 @@ const MyAccountContent = () => {
     <div className="flex flex-col  w-full  border-b justify-center text-[#727272] space-y-2 p-5">
       <p className="font-semibold">My Account</p>
       <Dialog>
-        <div className="flex flex-row w-full justify-between">
+        <div className="flex flex-row w-full justify-between items-center">
           <p className="font-medium pt-5">Change Password</p>
 
           <DialogTrigger asChild>
