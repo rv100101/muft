@@ -9,46 +9,22 @@ import { useLocation } from "wouter";
 import { useMutation } from "@tanstack/react-query";
 import axiosQuery from "@/queries/axios";
 import { useUserStore } from "@/zustand/auth/user";
-import { useEffect, useState } from "react";
-import useHomepageViewStore from "@/zustand/home/homepageView";
-type PostItemProps = {
-  nickname: string;
-  country: string;
-  state: string;
-  age: number;
-  image: string;
-  member_id: number;
-  isLiked: boolean;
-  isFavorite: boolean;
-  status: string;
-  nationality: string;
-  nationalityCode: string;
-};
+import { useState } from "react";
+import { getImagePath } from "@/lib/images";
+import { MemberData } from "@/types/home";
 
-const PostItem = ({
-  nickname,
-  age,
-  image,
-  member_id,
-  isLiked,
-  isFavorite,
-  state,
-  country,
-  nationalityCode,
-  status,
-  nationality,
-}: PostItemProps) => {
+const PostItem = ({ memberData }: { memberData: MemberData }) => {
   const [, setLocation] = useLocation();
-  const toggleIsLiked = useHomepageViewStore((state) => state.toggleIsLiked);
+  // const toggleIsLiked = useHomepageViewStore((state) => state.toggleIsLiked);
 
-  const toggleIsFavored = useHomepageViewStore(
-    (state) => state.toggleIsFavored
-  );
+  // const toggleIsFavored = useHomepageViewStore(
+  //   (state) => state.toggleIsFavored
+  // );
 
-  useEffect(() => {
-    toggleIsFavored(isFavorite);
-    toggleIsLiked(isLiked);
-  }, [toggleIsFavored, toggleIsLiked, isFavorite, isLiked]);
+  // useEffect(() => {
+  //   toggleIsFavored(isFavorite);
+  //   toggleIsLiked(isLiked);
+  // }, [toggleIsFavored, toggleIsLiked, isFavorite, isLiked]);
 
   const [likeTriggered, toggleLikeIcon] = useState(false);
   const [favoriteTriggered, toggleFavoriteIcon] = useState(false);
@@ -90,7 +66,7 @@ const PostItem = ({
   });
 
   const handlePostItemClick = () => {
-    setLocation(`/members/${member_id}`);
+    setLocation(`/members/${memberData.member_id}`);
   };
   return (
     <div className="transition ease-in duration-300 transform border rounded-xl">
@@ -102,7 +78,11 @@ const PostItem = ({
               className="absolute inset-0 bg-gradient-to-t from-black/60 from-1% via-transparent via49% to-transparent to-50%"
             />
             <img
-              src={image}
+              src={getImagePath(
+                memberData.gallery_uuid,
+                memberData.gender,
+                memberData.member_uuid
+              )}
               alt="post-img"
               className="rounded-t-xl lg:w-[460px] w-[350px] h-[554px] xl:h-[454px] xl:w-[400px] object-cover"
             />
@@ -113,11 +93,11 @@ const PostItem = ({
                   className="flex flex-col p-8 hover:cursor-pointer"
                 >
                   <p className="text-white border bg-[#FF599B]/90 max-w-max px-5 py-2 rounded-lg border-white text-xl mb-3 select-none">
-                    {nickname}
+                    {memberData.nickname}
                   </p>
                   {/* <p className="text-white text-sm">{countryName}</p> */}
                   <p className="drop-shadow-xl text-white text-sm 2xl:text-lg">
-                    {`${state}, ${country}`}
+                    {`${memberData.state_name}, ${memberData.country_name}`}
                   </p>
                 </div>
                 <TooltipProvider>
@@ -126,22 +106,22 @@ const PostItem = ({
                       <TooltipTrigger>
                         <Heart
                           color="#FF599B"
-                          fill={
-                            isLiked && !likeTriggered
-                              ? "#FF599B"
-                              : !isLiked && likeTriggered
-                              ? "#FF599B"
-                              : "white"
-                          }
+                          // fill={
+                          //   isLiked && !likeTriggered
+                          //     ? "#FF599B"
+                          //     : !isLiked && likeTriggered
+                          //     ? "#FF599B"
+                          //     : "white"
+                          // }
                           strokeWidth={1.5}
-                          stroke={!isLiked ? "#FF599B" : "white"}
+                          // stroke={!isLiked ? "#FF599B" : "white"}
                           size={50}
-                          onClick={() =>
-                            toggleLike.mutate({
-                              member: user!.member_id,
-                              liked: member_id,
-                            })
-                          }
+                          // onClick={() =>
+                          //   toggleLike.mutate({
+                          //     member: user!.member_id,
+                          //     liked: member_id,
+                          //   })
+                          // }
                           className="mt-1 hover:cursor-pointer transition duration-300 ease-in-out"
                         />
                       </TooltipTrigger>
@@ -153,22 +133,21 @@ const PostItem = ({
                       <TooltipTrigger>
                         <Star
                           color="#FF599B"
-                          fill={
-                            isFavorite && !favoriteTriggered
-                              ? "#FF599B"
-                              : !isFavorite && favoriteTriggered
-                              ? "#FF599B"
-                              : "white"
-                          }
+                          // fill={
+                          //   isFavorite && !favoriteTriggered
+                          //     ? "#FF599B"
+                          //     : !isFavorite && favoriteTriggered
+                          //     ? "#FF599B"
+                          //     : "white"
+                          // }
                           // stroke={!isFavorite ? "#FF599B" : "white"}
                           size={50}
                           strokeWidth={1.5}
-                          onClick={() =>
-                            toggleFavorite.mutate({
-                              member: user!.member_id,
-                              favored: member_id,
-                            })
-                          }
+                          // onClick={() =>
+                          //   toggleFavorite.mutate({
+                          //     member: user!.member_id,
+                          //     favored: member_id,
+                          // })
                           className="mt-1 hover:cursor-pointer transition duration-300 ease-in-out mr-4"
                         />
                       </TooltipTrigger>
@@ -194,9 +173,11 @@ const PostItem = ({
                 className="mt-1 hover:cursor-pointer"
               />
               <p className="text-[#FF599B] mt-1 text-sm lg:inline hidden">
-                {age} years
+                {memberData.age} years
               </p>
-              <p className="text-[#FF599B] mt-2 text-xs lg:hidden">{age} yrs</p>
+              <p className="text-[#FF599B] mt-2 text-xs lg:hidden">
+                {memberData.age} yrs
+              </p>
             </div>
             <div className="rounded-full bg-[#FFF2F7] flex flex-row justify-center align-center space-x-2 py-2 px-4 dark:bg-[#3b0117] text=[#ff588e]">
               <Ribbon
@@ -218,10 +199,10 @@ const PostItem = ({
                 <TooltipTrigger asChild>
                   <div className="flex flex-row rounded-full bg-[#FFF2F7] flex flex-row justify-center align-center space-x-2 py-2 px-4 dark:bg-[#3b0117] text=[#ff588e]">
                     <img
-                      alt={nationality}
+                      alt={memberData.nationality}
                       height={20}
                       width={30}
-                      src={`http://purecatamphetamine.github.io/country-flag-icons/3x2/${nationalityCode}.svg`}
+                      src={`http://purecatamphetamine.github.io/country-flag-icons/3x2/${memberData.country_code}.svg`}
                     />
 
                     {/* <p className="text-[#FF599B] mt-1 text-sm ">
@@ -230,7 +211,7 @@ const PostItem = ({
                   </div>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>{nationality}</p>
+                  <p>{memberData.nationality}</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>

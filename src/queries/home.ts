@@ -1,62 +1,18 @@
-import { getImagePath } from "@/lib/images";
+import { MemberData } from "@/types/home";
 import axiosQuery from "./axios";
 
-type Nationality = {
-  authorized: boolean;
-  ip_address: string;
-  country_code: string;
-  nationality: string;
-};
-
-const getMembers = async (memberId: number) => {
+const getMembers: (memberId: number) => Promise<MemberData[] | null> = async (
+  memberId: number
+) => {
   try {
     // console.log("member: ", memberId);
     const res = await axiosQuery.post(
       "https://muffinfunction.azurewebsites.net/api/HomePage",
-      // { member: memberId }
       { member: memberId }
     );
 
-    const res2 = await axiosQuery.post(
-      "https://muffinfunction.azurewebsites.net/api/GetMaritalStatus",
-      { member: memberId }
-      // { member: 403 }
-    );
-
-    const res3 = await axiosQuery.post(
-      "https://muffinfunction.azurewebsites.net/api/Nationalities"
-      // { member: memberId }
-      // { member: 403 }
-    );
-
-    // Loop through the response array and add imagePath property to each member object
-    const membersWithImagePath = res.data.map(
-      (member: {
-        gallery_uuid: string;
-        gender: string;
-        member_uuid: string;
-        nationality: string;
-      }) => {
-        const { country_code } = res3.data.filter(
-          (nationality: Nationality) =>
-            nationality.nationality === member.nationality
-        )[0];
-
-        const imagePath = getImagePath(
-          member.gallery_uuid,
-          member.gender,
-          member.member_uuid
-        );
-        return {
-          ...member,
-          imagePath: imagePath, // Add imagePath property to the member object
-          status: res2.data.marital_status_name,
-          nationality_code: country_code,
-        };
-      }
-    );
-
-    return membersWithImagePath;
+    const memberData: MemberData[] = res.data;
+    return memberData;
   } catch (error) {
     return null;
   }

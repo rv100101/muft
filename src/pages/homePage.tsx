@@ -9,26 +9,7 @@ import { Slider } from "@/components/ui/slider";
 import { useDebounce } from "usehooks-ts";
 import Posts from "@/components/home/posts";
 import { useFilterStore } from "@/zustand/home/filter";
-type Member = {
-  age: number;
-  authorized: boolean;
-  country_code: string;
-  country_name: string;
-  gallery_uuid: string;
-  gender: string;
-  imagePath: string;
-  ip_address: string;
-  isLiked: boolean;
-  isFavorite: boolean;
-  last_active: string;
-  member_id: number;
-  member_uuid: string;
-  nationality: string;
-  nickname: string;
-  state_name: string;
-  countryName: string;
-  nationality_code: string;
-};
+import { Member, MemberData } from "@/types/home";
 
 const HomePage = () => {
   const updateFilters = useFilterStore((state) => state.updateFilters);
@@ -144,7 +125,7 @@ const HomePage = () => {
 
   useEffect(() => {
     if (!retrievingMemberData && memberLikes && memberFavorites && members) {
-      const updatedMemberList = members.map((member: Member) => {
+      const updatedMemberList = members.map((member: MemberData) => {
         const memberHasLikes = memberLikes.find(
           (likes: Member) => member.member_id === likes.member_id
         );
@@ -182,12 +163,12 @@ const HomePage = () => {
       });
 
       const filteredMemberList = updatedMemberList.filter(
-        (member: Member) =>
+        (member: MemberData) =>
           member.age >= debouncedStartFilterVal &&
           member.age <= debouncedEndFilterVal
       );
 
-      filteredMemberList.sort((a: Member, b: Member) => a.age > b.age);
+      filteredMemberList.sort((a, b) => a.age - b.age);
       setMemberList(
         debouncedStartFilterVal > 0 ? filteredMemberList : updatedMemberList
       );

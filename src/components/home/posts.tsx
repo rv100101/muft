@@ -62,20 +62,7 @@ const Posts = ({
           <div className="no-scrollbar flex flex-col items-center lg:p-8 px-0 md:w-full w-screen h-screen sm:w-full rounded-b-xl space-y-4 border border-[#E0E0E0] dark:border-[#131d2d] lg:h-min overflow-y-auto scroll-smooth">
             {memberList.length > 0 ? (
               memberList.map((post, index: number) => (
-                <PostItem
-                  key={index}
-                  nickname={post.nickname}
-                  country={post.country_name}
-                  nationalityCode={post.nationality_code}
-                  state={post.state_name}
-                  age={post.age}
-                  image={post.imagePath}
-                  member_id={post.member_id}
-                  isLiked={post.isLiked}
-                  isFavorite={post.isFavorite}
-                  status={post.status}
-                  nationality={post.nationality}
-                />
+                <PostItem key={index} memberData={post} />
               ))
             ) : (
               <div className="rounded-t-md lg:w-[460px] w-[350px] h-[554px] object-cover h-screen">
