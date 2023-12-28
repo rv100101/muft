@@ -168,7 +168,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
     employmentStatus.find((s) => s.employment_status_name === name);
 
   const onSubmit = async (formData: any) => {
-    if (!methods.formState.isDirty) {
+    if (data && !methods.formState.isDirty) {
       toggleEditMode();
       return;
     }

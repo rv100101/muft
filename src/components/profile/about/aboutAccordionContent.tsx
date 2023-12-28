@@ -32,6 +32,10 @@ import HealthForm from "./forms/healthForm";
 import MaritalStatusForm from "./forms/maritalStatusForm";
 import InterestsForm from "./forms/interestsForm";
 import { aboutAccordionTabView } from "@/zustand/profile/about/aboutAccordionTabView";
+import { useUpdateEffect } from "usehooks-ts";
+import mapErrorsToSections from "@/lib/getFormErrorsIndex";
+import { useFormContext } from "react-hook-form";
+import { useState } from "react";
 
 const AboutAccordionContent = () => {
   const [location] = useLocation();
@@ -44,6 +48,21 @@ const AboutAccordionContent = () => {
   } = useAboutErrorsStrore();
   const { profileData } = profileAboutContentStore();
   const { tabs, changeTab } = aboutAccordionTabView();
+  const [errorTabs, setErrorTabs] = useState<number[]>([]);
+  const {
+    formState: { errors },
+  } = useFormContext();
+
+  useUpdateEffect(() => {
+    const mappedErrors = mapErrorsToSections(errors);
+    if (mappedErrors.length !== 0) {
+      setErrorTabs(mappedErrors);
+    }
+  }, [mapErrorsToSections, errors]);
+
+  useUpdateEffect(() => {
+    changeTab(errorTabs[0] + 1);
+  }, [errorTabs]);
 
   const isLoading = profileAboutContentStore((state) => state.isLoading);
   if (location.startsWith("/profile") && !profileData && isLoading) {
