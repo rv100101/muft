@@ -4,6 +4,10 @@ import { create } from "zustand";
 interface ViewState {
   selectedProfileId: number | null;
   modifiedMemberList: Array<MemberData>;
+  likes: Record<string, boolean>;
+  favorites: Record<string, boolean>;
+  setLikes: (likes: Record<string, boolean>) => void;
+  setFavorites: (favorites: Record<string, boolean>) => void;
   setSelectedProfileId: (id: number | null) => void;
   setModifiedMemberList: (member: MemberData[]) => void;
   toggleIsLiked: (val?: boolean) => void;
@@ -19,7 +23,18 @@ const useHomepageViewStore = create<ViewState>()((set) => ({
   isFavored: false,
   modifiedMemberList: [],
   dialogOpen: false,
-
+  likes: {},
+  favorites: {},
+  setLikes: (likes: Record<string, boolean>) => {
+    set(() => ({
+      likes,
+    }));
+  },
+  setFavorites: (favorites: Record<string, boolean>) => {
+    set(() => ({
+      favorites,
+    }));
+  },
   setSelectedProfileId: (id) =>
     set(() => ({
       selectedProfileId: id,

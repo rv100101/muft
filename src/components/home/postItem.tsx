@@ -6,29 +6,17 @@ import {
   TooltipTrigger,
 } from "../ui/tooltip";
 import { useLocation } from "wouter";
-import { useMutation } from "@tanstack/react-query";
-import axiosQuery from "@/queries/axios";
-import { useUserStore } from "@/zustand/auth/user";
-import { useState } from "react";
 import { getImagePath } from "@/lib/images";
 import { MemberData } from "@/types/home";
-
+import useHomepageViewStore from "@/zustand/home/homepageView";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import axiosQuery from "@/queries/axios";
+import { useUserStore } from "@/zustand/auth/user";
 const PostItem = ({ memberData }: { memberData: MemberData }) => {
   const [, setLocation] = useLocation();
-  // const toggleIsLiked = useHomepageViewStore((state) => state.toggleIsLiked);
-
-  // const toggleIsFavored = useHomepageViewStore(
-  //   (state) => state.toggleIsFavored
-  // );
-
-  // useEffect(() => {
-  //   toggleIsFavored(isFavorite);
-  //   toggleIsLiked(isLiked);
-  // }, [toggleIsFavored, toggleIsLiked, isFavorite, isLiked]);
-
-  const [likeTriggered, toggleLikeIcon] = useState(false);
-  const [favoriteTriggered, toggleFavoriteIcon] = useState(false);
+  const { likes, favorites, setFavorites, setLikes } = useHomepageViewStore();
   const user = useUserStore((state) => state.user);
+  const queryClient = useQueryClient();
   const toggleLike = useMutation({
     mutationFn: async ({
       member,
@@ -37,13 +25,14 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
       member: number;
       liked: number;
     }) => {
-      toggleLikeIcon((prev) => !prev);
-
       const res = await axiosQuery.post("/Like", {
         member: member,
         liked: liked,
       });
       return res.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["home-members-likes"]);
     },
   });
 
@@ -55,27 +44,30 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
       member: number;
       favored: number;
     }) => {
-      toggleFavoriteIcon((prev) => !prev);
-
       const res = await axiosQuery.post("/Favorite", {
         member: member,
         favored: favored,
       });
       return res.data;
     },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["home-members-favs"]);
+    },
   });
 
   const handlePostItemClick = () => {
     setLocation(`/members/${memberData.member_id}`);
   };
+
   return (
     <div className="transition ease-in duration-300 transform border rounded-xl">
       <div className="flex flex-col items-center justify-end h-full">
         <div className="flex flex-col h-full justify-center items-center">
           <div className="relative w-max rounded-t-md hover:cursor-pointer">
+            {/* vignette */}
             <div
               onClick={() => handlePostItemClick()}
-              className="absolute inset-0 bg-gradient-to-t from-black/60 from-1% via-transparent via49% to-transparent to-50%"
+              className="absolute z-70 inset-0 bg-gradient-to-t from-black/60 from-1% via-transparent via49% to-transparent to-50%"
             />
             <img
               src={getImagePath(
@@ -106,22 +98,28 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
                       <TooltipTrigger>
                         <Heart
                           color="#FF599B"
-                          // fill={
-                          //   isLiked && !likeTriggered
-                          //     ? "#FF599B"
-                          //     : !isLiked && likeTriggered
-                          //     ? "#FF599B"
-                          //     : "white"
-                          // }
+                          fill={
+                            likes[memberData.member_id.toString()]
+                              ? "#FF599B"
+                              : "white"
+                          }
                           strokeWidth={1.5}
-                          // stroke={!isLiked ? "#FF599B" : "white"}
+                          stroke={
+                            !likes[memberData.member_id.toString()]
+                              ? "#FF599B"
+                              : "white"
+                          }
                           size={50}
-                          // onClick={() =>
-                          //   toggleLike.mutate({
-                          //     member: user!.member_id,
-                          //     liked: member_id,
-                          //   })
-                          // }
+                          onClick={() => {
+                            toggleLike.mutate({
+                              member: user!.member_id,
+                              liked: memberData.member_id,
+                            });
+                            const updatedLikes = { ...likes };
+                            updatedLikes[memberData.member_id.toString()] =
+                              !likes[memberData.member_id.toString()];
+                            setLikes(updatedLikes);
+                          }}
                           className="mt-1 hover:cursor-pointer transition duration-300 ease-in-out"
                         />
                       </TooltipTrigger>
@@ -133,21 +131,28 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
                       <TooltipTrigger>
                         <Star
                           color="#FF599B"
-                          // fill={
-                          //   isFavorite && !favoriteTriggered
-                          //     ? "#FF599B"
-                          //     : !isFavorite && favoriteTriggered
-                          //     ? "#FF599B"
-                          //     : "white"
-                          // }
-                          // stroke={!isFavorite ? "#FF599B" : "white"}
+                          fill={
+                            favorites[memberData.member_id.toString()]
+                              ? "#FF599B"
+                              : "white"
+                          }
+                          stroke={
+                            !favorites[memberData.member_id.toString()]
+                              ? "#FF599B"
+                              : "white"
+                          }
                           size={50}
                           strokeWidth={1.5}
-                          // onClick={() =>
-                          //   toggleFavorite.mutate({
-                          //     member: user!.member_id,
-                          //     favored: member_id,
-                          // })
+                          onClick={() => {
+                            toggleFavorite.mutate({
+                              member: user!.member_id,
+                              favored: memberData.member_id,
+                            });
+                            const updatedFavorites = { ...favorites };
+                            updatedFavorites[memberData.member_id.toString()] =
+                              !favorites[memberData.member_id.toString()];
+                            setFavorites(updatedFavorites);
+                          }}
                           className="mt-1 hover:cursor-pointer transition duration-300 ease-in-out mr-4"
                         />
                       </TooltipTrigger>
@@ -188,16 +193,18 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
               />
               <p
                 className={`text-[#FF599B] mt-1 ${
-                  status === "Prefer not to say" ? "text-sm" : ""
+                  memberData.marital_status === "Prefer not to say"
+                    ? "text-sm"
+                    : ""
                 }`}
               >
-                {status}
+                {memberData.marital_status}
               </p>
             </div>
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <div className="flex flex-row rounded-full bg-[#FFF2F7] flex flex-row justify-center align-center space-x-2 py-2 px-4 dark:bg-[#3b0117] text=[#ff588e]">
+                  <div className="rounded-full bg-[#FFF2F7] flex flex-row justify-center align-center space-x-2 py-2 px-4 dark:bg-[#3b0117] text=[#ff588e]">
                     <img
                       alt={memberData.nationality}
                       height={20}

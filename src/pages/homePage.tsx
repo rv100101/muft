@@ -6,10 +6,11 @@ import useHomepageViewStore from "@/zustand/home/homepageView";
 import { useUserStore } from "@/zustand/auth/user";
 import HomepageSearchInput from "@/components/homeSearchUsersInput";
 import { Slider } from "@/components/ui/slider";
-import { useDebounce } from "usehooks-ts";
+import { useDebounce, useUpdateEffect } from "usehooks-ts";
 import Posts from "@/components/home/posts";
 import { useFilterStore } from "@/zustand/home/filter";
 import { Member, MemberData } from "@/types/home";
+import createMap from "@/lib/likesAndFavoritesHomeMap";
 
 const HomePage = () => {
   const updateFilters = useFilterStore((state) => state.updateFilters);
@@ -49,6 +50,10 @@ const HomePage = () => {
     (state) => state.setModifiedMemberList
   );
   const { user } = useUserStore();
+  const likes = useHomepageViewStore((state) => state.likes);
+  const favorites = useHomepageViewStore((state) => state.favorites);
+  const setLikes = useHomepageViewStore((state) => state.setLikes);
+  const setFavorites = useHomepageViewStore((state) => state.setFavorites);
   const memberList = useHomepageViewStore((state) => state.modifiedMemberList);
   const getMembers = membersQuery.getMembers(user!.member_id);
   const getMemberLikes = membersQuery.getMemberLikes(user!.member_id);
@@ -60,7 +65,7 @@ const HomePage = () => {
     queryFn: () => getMembers,
   });
 
-  const { data: memberLikes } = useQuery({
+  const { data: memberLikes, isLoading: likesLoading } = useQuery({
     enabled: memberList.length === 0,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
@@ -68,13 +73,34 @@ const HomePage = () => {
     queryFn: () => getMemberLikes,
   });
 
+  useUpdateEffect(() => {
+    if (Object.keys(likes).length !== 0) {
+      return;
+    }
+    if (memberList && memberLikes) {
+      const likes = createMap(memberList, memberLikes);
+      console.log(likes);
+      setLikes(likes);
+    }
+  }, [memberLikes, memberList, likes]);
   // favorites
-  const { data: memberFavorites } = useQuery({
+  const { data: memberFavorites, isLoading: favoritesLoading } = useQuery({
     refetchOnMount: false,
     refetchOnWindowFocus: true,
     queryKey: ["home-members-favs"],
     queryFn: () => getMemberFavorites,
   });
+
+  useUpdateEffect(() => {
+    if (Object.keys(favorites).length !== 0) {
+      return;
+    }
+    if (memberList && memberFavorites) {
+      const favorites = createMap(memberList, memberFavorites);
+      console.log(favorites);
+      setFavorites(favorites);
+    }
+  }, [memberFavorites, memberList, likes]);
 
   const toggleSuggestionTags = (index: number, suggestionValue: number) => {
     const newActiveTags = clickedTags.map((_, i) => i === index);
@@ -168,10 +194,12 @@ const HomePage = () => {
           member.age <= debouncedEndFilterVal
       );
 
-      filteredMemberList.sort((a, b) => a.age - b.age);
-      setMemberList(
-        debouncedStartFilterVal > 0 ? filteredMemberList : updatedMemberList
-      );
+      setMemberList(filteredMemberList);
+
+      // filteredMemberList.sort((a, b) => a.age - b.age);
+      // setMemberList(
+      //   debouncedStartFilterVal > 0 ? filteredMemberList : updatedMemberList
+      // );
     }
   }, [
     memberLikes,
@@ -189,7 +217,10 @@ const HomePage = () => {
       <div className="flex 2xl:justify-center w-full">
         <div className="flex 2xl:justify-center w-full lg:w-min justify-start lg:grid-cols-9 grid-cols-1 gap-4">
           <div className="hidden lg:block w-32"></div>
-          <Posts isLoading={retrievingMemberData} memberList={memberList} />
+          <Posts
+            isLoading={retrievingMemberData || likesLoading || favoritesLoading}
+            memberList={memberList}
+          />
           <div className="md:col-span-3 col-span-0 hidden lg:flex sm:flex-col overflow-auto no-scrollbar ml-10">
             <div className="w-[380px] h-5/6 pt-4 px-5 lg:p-4 sm:flex flex-col hidden ">
               <HomepageSearchInput />

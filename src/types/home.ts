@@ -34,3 +34,33 @@ export type MemberData = {
   last_active: string;
   gallery_uuid: string | null;
 };
+export type LikedMemberData = {
+  authorized: boolean;
+  ip_address: string;
+  member_id: number;
+  member_uuid: string;
+  nickname: string;
+  age: number;
+  gender: "M" | "F";
+  nationality: string;
+  country_code: string;
+  country_name: string;
+  state_name: string;
+  last_active: string;
+  gallery_uuid: string | null;
+};
+export type FavoredMemberData = {
+  authorized: boolean;
+  ip_address: string;
+  member_id: number;
+  member_uuid: string;
+  nickname: string;
+  age: number;
+  gender: "M" | "F";
+  nationality: string;
+  country_code: string;
+  country_name: string;
+  state_name: string;
+  last_active: string;
+  gallery_uuid: string | null;
+};

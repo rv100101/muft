@@ -366,7 +366,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                         alt="no image selected"
                       />
                       <div className="flex space-x-1 justify-center font-semibold text-2xl">
-                        <p>{data?.nickname}, </p>
+                        <p className=" whitespace-nowrap">{data?.nickname}, </p>
                         <p> {`${data?.age}`}</p>
                       </div>
                     </DialogContent>

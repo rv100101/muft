@@ -8,7 +8,9 @@ const ChatConversation = () => {
     <div className="border-l w-full h-full flex flex-col dark:text-white ">
       <MessageHeader />
       <ChatMessages />
-      <ChatInput />
+      <div className="flex-1">
+        <ChatInput />
+      </div>
     </div>
   );
 };
