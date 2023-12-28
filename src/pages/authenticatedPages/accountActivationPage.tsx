@@ -6,7 +6,7 @@ import { Loader2, LogOutIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { Field, Form, Formik } from "formik";
-import '@/index.css'
+import "@/index.css";
 import {
   Dialog,
   DialogContent,
@@ -18,7 +18,9 @@ import {
 import { DialogClose } from "@radix-ui/react-dialog";
 import { useCountdown } from "usehooks-ts";
 const pinSchema = Yup.object().shape({
-  pin: Yup.string().required().min(6, 'PIN should be 6 digits'),
+  pin: Yup.string()
+    .required("PIN is required")
+    .length(6, "PIN should be exactly 6 digits"),
 });
 
 const ActivateAccount = () => {
@@ -39,13 +41,11 @@ const ActivateAccount = () => {
   useEffect(() => {
     if (count <= 0) {
       stopCountdown();
-      resetCountdown()
+      resetCountdown();
       setIntervalValue((prev) => prev * 2);
       setCountDownComplete(true);
     }
   }, [count]);
-
-  console.log(count);
 
   const handleResendPin = async () => {
     setResendPinIsLoading(true);
@@ -82,7 +82,7 @@ const ActivateAccount = () => {
     try {
       const res = await accountActivationQuery.activate(
         user!.email_address,
-        parseInt(pin),
+        parseInt(pin)
       );
       if (!res.data.activated) {
         toast({
@@ -127,23 +127,23 @@ const ActivateAccount = () => {
           <p className="w-full text-sm font-semibold pb-2">
             We have sent an Activation PIN to your email.
           </p>
-          <p className="my-4 text-sm">
-            Please enter the PIN below:
-          </p>
+          <p className="my-4 text-sm">Please enter the PIN below:</p>
           <div
-            className={`flex items-center flex-row border rounded-full h-max py-1 px-5 ${touched.pin && errors.pin ? "border-rose-500 p-0" : ""
-              }`}
+            className={`flex items-center justify-center w-full flex-row border rounded-full h-max py-1 px-5 ${
+              touched.pin && errors.pin ? "border-rose-500 p-0" : ""
+            }`}
           >
             <Field
               name="pin"
               type="number"
-              className="appearance-none w-full decoration-none text-sm py-2  border-0 outline-0"
+              className="appearance-none decoration-none text-sm py-2  border-0 outline-0"
               placeholder="Activation PIN"
+              autoComplete="off"
             />
           </div>
-          {errors.pin
-            ? <p className="text-red-500 text-xs pl-2 pt-3">{errors.pin}</p>
-            : null}
+          {errors.pin ? (
+            <p className="text-red-500 text-xs pl-2 pt-3">{errors.pin}</p>
+          ) : null}
           <div className="flex w-full justify-between items-center space-x-2 py-4">
             {!user?.profile_completed && (
               <Dialog>

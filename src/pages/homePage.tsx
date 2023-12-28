@@ -338,6 +338,7 @@ const HomePage = () => {
                       // dir="right-to-left"
                       value={[filters!.max_age]}
                       // value={[endAgeSliderVal]}
+                      min={filters ? filters!.min_age + 1 : 18}
                       max={80}
                       step={1}
                       className="w-full ml-10 pr-5"
