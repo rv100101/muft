@@ -21,17 +21,18 @@ import { useEffect, useState } from "react";
 
 const DeactivateAccountContent = () => {
   const signOut = useUserStore((state) => state.reset);
+  const [showDialog, setShowDialog] = useState(false);
   const { setProfileData } = profileAboutContentStore();
   const { setProfileHeaderValues } = profileHeaderStore();
-  const { user } = useUserStore();
+  const { user, updateUser } = useUserStore();
   const [deleteModal, setDeleteModal] = useState(false);
   const [checked, setChecked] = useState<CheckedState>(false);
-  const [deactivateLoading, setDeactivateLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const queryClient = useQueryClient();
   const deactivateAccount = async () => {
     try {
-      setDeactivateLoading(true);
+      setIsLoading(true);
       const res = await axiosQuery.post("/DeactivateAccount", {
         member: user!.member_id,
       });
@@ -41,11 +42,35 @@ const DeactivateAccountContent = () => {
           description: "Changes might take awhile to take effect.",
           // variant: "success",
         });
-        setDeactivateLoading(false);
+        updateUser({ ...user!, temporarily_deactivated: true });
+        setIsLoading(false);
+        setChecked(false);
       }
     } catch (error) {
       console.log(error);
     }
+    setShowDialog(false);
+  };
+
+  const reactivateAccount = async () => {
+    try {
+      setIsLoading(true);
+      const res = await axiosQuery.post("/ReactivateAccount", {
+        member: user!.member_id,
+      });
+      if (res.data) {
+        toast({
+          title: "Your account has been reactivated!",
+          description: "Changes might take awhile to take effect.",
+          variant: "success",
+        });
+        updateUser({ ...user!, temporarily_deactivated: false });
+        setIsLoading(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    setShowDialog(false);
   };
 
   const deleteAccount = async () => {
@@ -77,18 +102,22 @@ const DeactivateAccountContent = () => {
   }, []);
   return (
     <div className="flex flex-col  w-full justify-center text-[#727272] space-y-2 px-5 py-5">
-      <p className="font-semibold pb-1">Deactivate Account</p>
+      <p className="font-semibold pb-1">
+        {user?.temporarily_deactivated
+          ? "Reactivate Account"
+          : "Deactivate Account"}
+      </p>
       {/* <p className="font-medium">Deactivate</p> */}
-      <Dialog>
+      <Dialog open={showDialog} onOpenChange={(val) => setShowDialog(val)}>
         <div className="flex flex-row w-full justify-between">
-          <p>Deactivate</p>
+          <p>{user?.temporarily_deactivated ? "Reactivate" : "Deactivate"}</p>
           <DialogTrigger asChild>
             <Button
               className={cn(
-                "text-white mt-4 h-10 w-full text-sm rounded-lf py-2 hover:bg-[#FF599B]/90 mt-5 w-24 dark:bg-[#1b1d1e] dark:hover:bg-red-700/90"
+                "text-white  h-10  text-sm rounded-lf py-2 hover:bg-[#FF599B]/90 mt-5 w-24 dark:bg-[#1b1d1e] dark:hover:bg-red-700/90"
               )}
             >
-              Deactivate
+              {user?.temporarily_deactivated ? "Reactivate" : "Deactivate"}
             </Button>
           </DialogTrigger>
 
@@ -96,58 +125,86 @@ const DeactivateAccountContent = () => {
             <DialogHeader>
               <div className="flex flex-row justify-between items-start  pb-5">
                 <DialogTitle className="font-medium">
-                  Deactivate profile
+                  {user?.temporarily_deactivated
+                    ? "Reactivate profile"
+                    : "Deactivate profile"}
                 </DialogTitle>
                 <DialogClose>
                   <X className="hover:cursor-pointer" size={20} />
                 </DialogClose>
               </div>
-              <DialogDescription className="pb-5">
-                By choosing 'Deactivate your account', you'll temporarily make
-                your profile invisible to other users on Muffin. While your
-                account is deactivated, your profile, photos, and messages will
-                be hidden, and you will not appear in any search results. But
-                don't worry, your account information isn't going anywhere.
-              </DialogDescription>
+              {!user?.temporarily_deactivated ? (
+                <DialogDescription className="pb-5">
+                  By choosing 'Deactivate your account', you'll temporarily make
+                  your profile invisible to other users on Muffin. While your
+                  account is deactivated, your profile, photos, and messages
+                  will be hidden, and you will not appear in any search results.
+                  But don't worry, your account information isn't going
+                  anywhere.
+                </DialogDescription>
+              ) : (
+                <DialogDescription className="pb-5">
+                  By choosing reactivating your account, you'll make your
+                  profile visible to other users on Muffin.{" "}
+                </DialogDescription>
+              )}
             </DialogHeader>
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="terms"
-                // checked={checked}
-                onCheckedChange={(state) => setChecked(state)}
-              />
-              <label
-                htmlFor="terms"
-                className="select-none text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                I am sure I want to proceed
-              </label>
-            </div>
+            {!user?.temporarily_deactivated && (
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="terms"
+                  // checked={checked}
+                  onCheckedChange={(state) => setChecked(state)}
+                />
+                <label
+                  htmlFor="terms"
+                  className="select-none text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  I am sure I want to proceed
+                </label>
+              </div>
+            )}
             <div className="flex flex-row justify-center">
               <div className="flex flex-row space-x-4">
                 <Button
-                  disabled={(!checked as boolean) || deleteLoading}
+                  disabled={
+                    (!user!.temporarily_deactivated && (!checked as boolean)) ||
+                    isLoading
+                  }
                   className={cn(
-                    "text-white mt-4 h-10 bg-orange-400 w-full text-sm rounded-lf py-2 hover:bg-orange-400/90 mt-5 w-24"
+                    "text-white h-10 text-sm rounded-lf py-2  mt-5 w-24",
+                    user?.temporarily_deactivated
+                      ? "bg-primary hover:bg-[#FF599B]/90"
+                      : "bg-orange-400 hover:bg-orange-400/90"
                   )}
-                  onClick={() => deactivateAccount()}
+                  onClick={() => {
+                    if (user?.temporarily_deactivated) {
+                      reactivateAccount();
+                    } else {
+                      deactivateAccount();
+                    }
+                  }}
                 >
-                  {deactivateLoading ? (
+                  {isLoading ? (
                     <Loader2 className="ml-2 h-full w-full animate-spin" />
+                  ) : user?.temporarily_deactivated ? (
+                    "Reactivate"
                   ) : (
                     "Deactivate"
                   )}
                 </Button>
-                <Button
-                  disabled={(!checked as boolean) || deactivateLoading}
-                  className={cn(
-                    "text-white mt-4 bg-red-500 h-10 w-full text-sm rounded-lf py-2 hover:bg-red-500/90 mt-5 w-24"
-                  )}
-                  // onClick={() => deleteAccount}
-                  onClick={() => setDeleteModal(true)}
-                >
-                  Delete
-                </Button>
+                {!user?.temporarily_deactivated && (
+                  <Button
+                    disabled={(!checked as boolean) || isLoading}
+                    className={cn(
+                      "text-white bg-red-500 h-10  text-sm rounded-lf py-2 hover:bg-red-500/90 mt-5 w-24"
+                    )}
+                    // onClick={() => deleteAccount}
+                    onClick={() => setDeleteModal(true)}
+                  >
+                    Delete
+                  </Button>
+                )}
               </div>
             </div>
           </DialogContent>
@@ -175,7 +232,7 @@ const DeactivateAccountContent = () => {
             <Button
               // disabled={(!checked as boolean) || deleteLoading}
               className={cn(
-                "text-white mt-4 bg-red-500 h-10 w-3/4 text-sm rounded-lf py-3 hover:bg-red-500/90 mt-5 "
+                "text-white bg-red-500 h-10 w-3/4 text-sm rounded-lf py-3 hover:bg-red-500/90 mt-5 "
               )}
               onClick={() => deleteAccount()}
             >
@@ -187,11 +244,11 @@ const DeactivateAccountContent = () => {
             </Button>
             <DialogClose>
               <Button
-                // disabled={(!checked as boolean) || deactivateLoading}
+                // disabled={(!checked as boolean) || isLoading}
                 className={cn(
-                  "text-white mt-4 bg-slate-500 h-10 w-full text-sm rounded-lf py-3 hover:bg-slate-500/90 mt-5 "
+                  "text-white bg-slate-500 h-10 w-full text-sm rounded-lf py-3 hover:bg-slate-500/90 mt-5 "
                 )}
-              // onClick={() => deleteAccount}
+                // onClick={() => deleteAccount}
               >
                 No
               </Button>
