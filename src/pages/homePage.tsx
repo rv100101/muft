@@ -11,7 +11,7 @@ import Posts from "@/components/home/posts";
 import { useFilterStore } from "@/zustand/home/filter";
 import { Member, MemberData } from "@/types/home";
 import createMap from "@/lib/likesAndFavoritesHomeMap";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 const HomePage = () => {
   const updateFilters = useFilterStore((state) => state.updateFilters);

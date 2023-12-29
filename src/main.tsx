@@ -5,6 +5,7 @@ import "./index.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import * as Sentry from "@sentry/react";
+import { HelmetProvider } from "react-helmet-async";
 
 Sentry.init({
   dsn: "https://fd6a643efc57d33d656c0a08f965cbbf@o1300880.ingest.sentry.io/4506415538765824",
@@ -22,8 +23,10 @@ const queryClient = new QueryClient();
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <Toaster />
-      <App />
+      <HelmetProvider>
+        <Toaster />
+        <App />
+      </HelmetProvider>
     </QueryClientProvider>
   </React.StrictMode>
 );

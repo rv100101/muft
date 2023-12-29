@@ -1,7 +1,7 @@
 import { releaseNotesData } from "@/lib/releaseNotes";
 import { Undo2 } from "lucide-react";
 import { Link } from "wouter";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 const ReleaseNotesPage = () => {
   const notes = releaseNotesData.map((data, index) => (

@@ -4,7 +4,7 @@ import Features from "@/components/features";
 import Cta from "@/components/cta";
 // import GetApp from "@/components/getApp";
 import { motion } from "framer-motion";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 const LandingPage = () => {
   return (

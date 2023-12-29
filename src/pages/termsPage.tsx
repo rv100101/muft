@@ -1,7 +1,7 @@
 import { termsAndConditionsData } from "@/lib/terms";
 import { Undo2 } from "lucide-react";
 import { Link } from "wouter";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 const TermsPage = () => {
   const terms = termsAndConditionsData.map((data, index) => (

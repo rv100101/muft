@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useLocation } from "wouter";
 import LikesMobileNav from "@/components/likesAndFavourites/likesMobileNav";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 const LikesPage = () => {
   const [tab] = useState<"LIKES" | "FAVOURITES">("LIKES");
   const [, setLocation] = useLocation();

@@ -79,7 +79,7 @@ const MyAccountContent = () => {
   // }
   return (
     <div className="flex flex-col  w-full  border-b justify-center text-[#727272] space-y-2 p-5">
-      <p className="font-semibold">My Account</p>
+      <p className="font-semibold text-lg">My Account</p>
       <Dialog>
         <div className="flex flex-row w-full justify-between items-center">
           <p className="font-medium pt-5">Change Password</p>
@@ -87,7 +87,7 @@ const MyAccountContent = () => {
           <DialogTrigger asChild>
             <Button
               className={cn(
-                "text-white mt-4 h-10 w-full text-sm rounded-lf py-2 hover:bg-[#FF599B]/90 mt-5 w-24 dark:bg-[#1b1d1e] dark:hover:bg-red-700/90"
+                "text-white h-10 text-sm rounded-lf py-2 hover:bg-[#FF599B]/90 w-24 dark:bg-[#1b1d1e] dark:hover:bg-red-700/90"
               )}
             >
               Update
@@ -151,7 +151,7 @@ const MyAccountContent = () => {
                     disabled={isLoading}
                     type="submit"
                     className={cn(
-                      "text-white mt-4 h-10 w-full text-sm rounded-full py-2 hover:bg-[#FF599B]/90 mt-5 w-24 dark:bg-[#ae2e51]",
+                      "text-whiteh-10 text-sm rounded-full py-2 hover:bg-[#FF599B]/90 w-24 dark:bg-[#ae2e51]",
                       isLoading ? "bg-[#FF8AB3]" : "bg-primary"
                     )}
                   >

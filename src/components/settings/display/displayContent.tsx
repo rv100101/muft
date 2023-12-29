@@ -45,9 +45,9 @@ const DisplayContent = () => {
 
   return (
     <div className="flex flex-col  w-full border-b justify-center text-[#727272] space-y-2 px-5 py-10">
-      <p className="font-semibold">Display Settings</p>
+      <p className="font-semibold text-lg">Display Settings</p>
       <p className="font-medium pt-5">Theme</p>
-      <div className="flex flex-row justify-center border rounded-lg p-5 space-x-2 lg:space-x-0">
+      <div className="flex flex-row justify-around sm:justify-center border-none sm:border rounded-lg py-5 space-x-2 ">
         <div className="flex flex-row w-full justify-center lg:space-x-3 space-x-3">
           <p>Light</p>
           <Switch

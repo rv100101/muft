@@ -3,7 +3,7 @@ import AuthenticatedLayout from "./layout";
 import ChatConversation from "@/components/messaging/chatConversation";
 import { cn } from "@/lib/utils";
 import useMobileMessagingViewStore from "@/zustand/messaging/mobileStateView";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 const MessagingPage = () => {
   const pageView = useMobileMessagingViewStore((state) => state.view);

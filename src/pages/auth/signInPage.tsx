@@ -1,6 +1,6 @@
 import SignInForm from "@/components/auth/signInForm";
 import Conversation from "@/components/conversation";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 const SignInPage = () => {
   return (

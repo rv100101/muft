@@ -101,8 +101,8 @@ const DeactivateAccountContent = () => {
     setChecked(false);
   }, []);
   return (
-    <div className="flex flex-col  w-full justify-center text-[#727272] space-y-2 px-5 py-5">
-      <p className="font-semibold pb-1">
+    <div className="flex flex-col  w-full justify-center text-[#727272] space-y-2 px-5 py-10">
+      <p className="font-semibold pb-1 text-lg">
         {user?.temporarily_deactivated
           ? "Reactivate Account"
           : "Deactivate Account"}
@@ -114,7 +114,7 @@ const DeactivateAccountContent = () => {
           <DialogTrigger asChild>
             <Button
               className={cn(
-                "text-white  h-10  text-sm rounded-lf py-2 hover:bg-[#FF599B]/90 mt-5 w-24 dark:bg-[#1b1d1e] dark:hover:bg-red-700/90"
+                "text-white  h-10  text-sm rounded-lf py-2 hover:bg-[#FF599B]/90 w-24 dark:bg-[#1b1d1e] dark:hover:bg-red-700/90"
               )}
             >
               {user?.temporarily_deactivated ? "Reactivate" : "Deactivate"}

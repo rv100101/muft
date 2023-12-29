@@ -5,7 +5,7 @@ import PushNotifcationContent from "@/components/settings/notification/pushNotif
 import DeactivateAccountContent from "@/components/settings/account/deactivateAccountContent";
 import MyAccountContent from "@/components/settings/account/myAccountContent";
 import MobileTopbar from "@/components/settings/mobileTopbar";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 const SettingsPage = () => {
   return (

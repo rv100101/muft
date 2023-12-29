@@ -50,7 +50,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Textarea } from "../ui/textarea";
 import useMobileMessagingViewStore from "@/zustand/messaging/mobileStateView";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { Skeleton } from "../ui/skeleton";
 
 type FormDataType = {

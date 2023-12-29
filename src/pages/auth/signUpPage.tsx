@@ -12,7 +12,7 @@ import { useMutation } from "@tanstack/react-query";
 import axiosQuery from "@/queries/axios";
 import { toast } from "@/components/ui/use-toast";
 import { useUserStore } from "@/zustand/auth/user";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 type FormDataType = {
   first_name: string;

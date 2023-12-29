@@ -8,7 +8,7 @@ const PushNotifcationContent = () => {
 
   return (
     <div className="flex flex-col border-b w-full justify-center text-[#727272] space-y-5 px-5 py-10">
-      <p className="font-semibold">Notifications</p>
+      <p className="font-semibold text-lg">Notifications</p>
       {/* <p className="font-medium text-md">Push Notifications</p> */}
       <div className="flex flex-row w-full  justify-between items-center">
         <p className="font-normal text-md">Enable Push notifications</p>
