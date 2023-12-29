@@ -1,39 +1,42 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <!-- HTML Meta Tags -->
-    <title>Muffin</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Explore Love Worldwide with Muffin, your gateway to finding love across continents."
+    />
+    <title>Muffin - Find Love Worldwide</title>
+
     <!-- Facebook Meta Tags -->
     <meta property="og:url" content="https://muffin.ph/" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Muffin" />
-    <meta property="og:description" content="Love from the first Muffin" />
+    <meta property="og:title" content="Muffin - Find Love Worldwide" />
+    <meta
+      property="og:description"
+      content="Explore Love Worldwide with Muffin, your gateway to finding love across continents."
+    />
     <meta property="og:image" content="https://muffin.ph/public/logo.png" />
 
     <!-- Twitter Meta Tags -->
     <meta name="twitter:card" content="summary" />
     <meta property="twitter:domain" content="muffin.ph" />
     <meta property="twitter:url" content="https://muffin.ph/" />
-    <meta name="twitter:title" content="Muffin" />
-    <meta property="og:description" content="Love from the first Muffin" />
+    <meta name="twitter:title" content="Muffin - Find Love Worldwide" />
+    <meta
+      name="twitter:description"
+      content="Explore Love Worldwide with Muffin, your gateway to finding love across continents."
+    />
     <meta name="twitter:image" content="https://muffin.ph/public/logo.png" />
 
     <!-- WhatsApp Meta Tag -->
     <meta property="og:whatsapp" content="share" />
-    <!-- Meta Tags Generated via https://www.opengraph.xyz -->
 
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Explore Love Worldwide with Muffin, your gateway to finding love across continents."
-    />
-    <!-- Google tag (gtag.js) -->
+    <!-- Google Tag Manager -->
     <script
       async
-      src="https://www.googletagmanager.com/gtag/js?
-id=G-0SMEZ7NPVX"
+      src="https://www.googletagmanager.com/gtag/js?id=G-0SMEZ7NPVX"
     ></script>
     <script>
       if (window.location.pathname === "/") {
@@ -50,6 +53,8 @@ id=G-0SMEZ7NPVX"
   </head>
   <body>
     <div id="root"></div>
+
+    <!-- OneSignal SDK -->
     <script
       src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js"
       defer
@@ -67,7 +72,11 @@ id=G-0SMEZ7NPVX"
         });
       });
     </script>
+
+    <!-- Main TypeScript Module -->
     <script type="module" src="/src/main.tsx"></script>
+
+    <!-- Google Tag Manager (Footer) -->
     <footer>
       <script>
         if (window.location.pathname === "/") {
