@@ -51,6 +51,7 @@ import * as Yup from "yup";
 import { Textarea } from "../ui/textarea";
 import useMobileMessagingViewStore from "@/zustand/messaging/mobileStateView";
 import { Helmet } from "react-helmet";
+import { Skeleton } from "../ui/skeleton";
 
 type FormDataType = {
   reason: string;
@@ -210,8 +211,18 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
   };
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
+    // Check if the selected file is an image (you can enhance this check)
+    const allowedImageTypes = ["image/jpeg", "image/png"];
     if (file) {
       const reader = new FileReader();
+      if (!allowedImageTypes.includes(file?.type)) {
+        toast({
+          title: "Please select a valid image file (JPEG, PNG)",
+          variant: "destructive",
+        });
+        setIsUploading(false);
+        return;
+      }
       reader.onloadend = () => {
         const base64String = reader.result as string; // Result is a data URL
         setSelectedFile(base64String);
@@ -229,8 +240,20 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
   const handleProfilePhotoUpload = async () => {
     try {
       setIsUploading(true);
+
+      // Check if a file is selected
+      if (!selectedFile) {
+        // Handle the case where no file is selected
+        toast({
+          title: "Please select a file to upload",
+          variant: "destructive",
+        });
+        setIsUploading(false);
+        return;
+      }
+
       const res = await uploadQueries.uploadProfilePicture(
-        selectedFile!,
+        selectedFile,
         user!.member_id
       );
       setData({
@@ -250,8 +273,9 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
       setSelectedFile(null);
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsUploading(false);
     }
-    setIsUploading(false);
   };
 
   const handleReportSubmit = async ({ reason }: FormDataType) => {
@@ -395,7 +419,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                 >
                   {isEditing && (
                     <img
-                      className={`select-none object-cover h-32 w-32 overflow-clip border-4 border-primary rounded-full`}
+                      className={`z-10 select-none object-cover h-32 w-32 overflow-clip border-4 border-primary rounded-full`}
                       src={
                         selectedFile
                           ? selectedFile
@@ -411,8 +435,11 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                   {showCamera && (
                     <CameraIcon className="absolute" fill="pink" />
                   )}
-                  {isUploading && (
+                  {/* {isUploading && (
                     <Loader2 className="absolute animate-spin text-primary" />
+                  )} */}
+                  {isUploading && (
+                    <Skeleton className="absolute z-40 h-32 w-32 rounded-full" />
                   )}
                   <input
                     type="file"
