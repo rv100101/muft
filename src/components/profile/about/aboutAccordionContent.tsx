@@ -32,7 +32,7 @@ import HealthForm from "./forms/healthForm";
 import MaritalStatusForm from "./forms/maritalStatusForm";
 import InterestsForm from "./forms/interestsForm";
 import { aboutAccordionTabView } from "@/zustand/profile/about/aboutAccordionTabView";
-import { useUpdateEffect } from "usehooks-ts";
+import { useEffectOnce, useUpdateEffect } from "usehooks-ts";
 import mapErrorsToSections from "@/lib/getFormErrorsIndex";
 import { useFormContext } from "react-hook-form";
 import { useState } from "react";
@@ -52,6 +52,10 @@ const AboutAccordionContent = () => {
   const {
     formState: { errors },
   } = useFormContext();
+
+  useEffectOnce(() => {
+    changeTab(1);
+  });
 
   useUpdateEffect(() => {
     const mappedErrors = mapErrorsToSections(errors);
