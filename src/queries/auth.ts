@@ -19,6 +19,12 @@ const getCountry = async (memberId: number) => {
   });
 };
 
+const getNickname = async (memberId: number) => {
+  return await axiosQuery.post("/GetNickname", {
+    member: memberId,
+  });
+};
+
 const isProfileCompleted = async (memberId: number) => {
   return await axiosQuery.post("/IsProfileCompleted", {
     member: memberId,
@@ -30,6 +36,7 @@ const authQuery = {
   getProfilePhoto,
   getCountry,
   isProfileCompleted,
+  getNickname,
 };
 
 export default authQuery;

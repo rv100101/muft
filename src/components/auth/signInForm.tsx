@@ -23,6 +23,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "../ui/button";
 import { usePasswordResetState } from "@/zustand/auth/passwordReset";
 import { useQueryClient } from "@tanstack/react-query";
+import { useUserNickname } from "@/zustand/auth/username";
 
 type FormDataType = {
   email: string;
@@ -36,6 +37,7 @@ const SignInForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const updateUser = useUserStore((state) => state.updateUser);
   const updateUserAvatar = useUserAvatar((state) => state.setAvatar);
+  const updateUserNickname = useUserNickname((state) => state.setNickname);
   const updateUserCountry = useUserCountry((state) => state.setCountry);
   const changePasswordResetState = usePasswordResetState(
     (state) => state.changeState
@@ -81,6 +83,7 @@ const SignInForm = () => {
       const profilePhotoData = await authQuery.getProfilePhoto(
         signInData.data.member_id
       );
+      const username = await authQuery.getNickname(signInData.data.member_id);
       const countryData: {
         data: {
           country_name: string;
@@ -91,6 +94,7 @@ const SignInForm = () => {
         updateUserCountry(countryData.data[0].country_name);
       }
       updateUserAvatar(profilePhotoData.data.gallery_uuid);
+      updateUserNickname(username.data[0].nickname);
       setIsLoading(false);
       const data: User | string = signInData.data;
       if (typeof data != "string" && data!.is_blocked) {
