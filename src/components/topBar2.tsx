@@ -1,5 +1,5 @@
 import { LogOutIcon, MenuIcon, Search, SlidersHorizontal } from "lucide-react";
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useState } from "react";
 import {
   Sheet,
   SheetContent,
@@ -25,88 +25,20 @@ import {
 } from "./ui/dialog";
 import { DialogClose, DialogTrigger } from "@radix-ui/react-dialog";
 import { Button } from "./ui/button";
-import { useFilterStore } from "@/zustand/home/filter";
-import { Slider } from "./ui/slider";
 import HomepageSearchInput from "./homeSearchUsersInput";
 import NotificationsListFiters from "./notifications/notificationListFilters";
+import HomeFilters from "./home/filters";
 
 const TopBar2 = ({ children }: { children: ReactNode }) => {
   const [location] = useLocation();
-  const updateFilters = useFilterStore((state) => state.updateFilters);
-  const filters = useFilterStore((state) => state.filters);
-  const [randomNumbers, setRandomNumbers] = useState<number[]>([
-    0, 0, 0, 0, 0, 0,
-  ]);
-
-  const [clickedTags, setClickedTags] = useState([
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-  ]);
-  const [startAgeSliderVal, setStartAgeSliderVal] = useState(23);
-  const [filtersTriggered, setFiltersTriggered] = useState(false);
-  const [searchTriggered, setSearchTriggered] = useState(false);
-  const [endAgeSliderVal, setEndAgeSliderVal] = useState(60);
-
-  const handleStartSliderChange = (val: Array<number>) => {
-    setStartAgeSliderVal(val[0]);
-    updateFilters({ max_age: endAgeSliderVal, min_age: val[0] });
-  };
-
-  const handleEndSliderChange = (val: Array<number>) => {
-    setEndAgeSliderVal(val[0]);
-    updateFilters({ max_age: val[0], min_age: startAgeSliderVal });
-  };
   const reset = useConversationHistoryStore((state) => state.resetToNull);
   const signOut = useUserStore((state) => state.reset);
 
+  const [searchTriggered, setSearchTriggered] = useState(false);
+  const [filtersTriggered, setFiltersTriggered] = useState(false);
   const setSelectedProfileId = useHomepageViewStore(
     (state) => state.setSelectedProfileId
   );
-
-  const generateRandomNumbers = () => {
-    const min = 23;
-    const max = 50;
-
-    // Create an array of possible values within the range
-    const possibleValues = Array.from(
-      { length: max - min + 1 },
-      (_, index) => min + index
-    );
-
-    // Shuffle the array using the Fisher-Yates algorithm
-    const shuffledValues = [...possibleValues].sort(() => Math.random() - 0.5);
-
-    // Take the first three elements
-    const selectedNumbers = shuffledValues.slice(0, 6);
-
-    // Update the state with the selected numbers
-    setRandomNumbers(selectedNumbers);
-  };
-
-  const toggleSuggestionTags = (index: number, suggestionValue: number) => {
-    const newActiveTags = clickedTags.map((_, i) => i === index);
-    if (suggestionValue === 100) {
-      setEndAgeSliderVal(100);
-      updateFilters({ max_age: 100, min_age: startAgeSliderVal });
-    } else {
-      setEndAgeSliderVal(suggestionValue + 5);
-      updateFilters({
-        max_age: suggestionValue + 5,
-        min_age: suggestionValue,
-      });
-    }
-
-    setStartAgeSliderVal(suggestionValue);
-    setClickedTags(newActiveTags);
-  };
-
-  useEffect(() => {
-    generateRandomNumbers();
-  }, []);
 
   // const [location] = useLocation();
   const queryClient = useQueryClient();
@@ -165,44 +97,6 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
     );
   });
 
-  // navLinks = [
-  //   ...navLinks,
-  //   <li key={navLinks.length + 1} className="w-full h-full">
-  //     <Link
-  //       className="h-10 px-4 py-2 hover:bg-accent hover:text-accent-foreground flex justify-start items-center space-x-2"
-  //       href={"/settings"}
-  //     >
-  //       <Link
-  //         onClick={signOut}
-  //         className="h-10 px-4 py-2 hover:bg-accent hover:text-accent-foreground flex justify-start items-center space-x-2"
-  //         href={"/"}
-  //       >
-  //         {<LogOutIcon size={20} />} <p className="text-sm">Sign out</p>
-  //       </Link>
-
-  //       {/* <Settings2Icon /> <p>Settings</p> */}
-  //     </Link>
-  //     <div className="flex items-start justify-end flex-col space-y-4 px-4 h-full mt-10 ">
-  //       <a
-  //         className="hover:text-slate-700 text-sm text-black"
-  //         href="https://softnames.bolddesk.com/"
-  //         target="__blank"
-  //       >
-  //         Help Center
-  //       </a>
-  //       <Link onClick={scrollToTop} href="/privacy-policy">
-  //         <a className="hover:text-slate-700 text-sm text-black">
-  //           Privacy Policy
-  //         </a>
-  //       </Link>
-  //       <Link onClick={scrollToTop} href="/terms">
-  //         <a className="hover:text-slate-700 text-sm text-black">
-  //           Terms of Service
-  //         </a>
-  //       </Link>
-  //     </div>
-  //   </li>,
-  // ];
   if (!user?.profile_completed) {
     return <></>;
   }
@@ -227,131 +121,7 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
       >
         {location === "/" && (
           <DialogContent className="flex flex-col sm:max-w-md opacity-100 w-4/5">
-            <p className="px-5 text-[#cfd8e4]">Suggested</p>
-            <div className="max-[320px]:flex-row max-[320px]:flex">
-              <div className="flex flex-row max-[320px]:flex-col max-[320px]:space-y-3 max-[320px]:w-24 max-[320px]:justify-start max-[320px]:space-x-0  justify-between items-center p-5 space-x-5">
-                <p
-                  onClick={() => {
-                    setStartAgeSliderVal(randomNumbers[0]);
-                    toggleSuggestionTags(0, randomNumbers[1]);
-                  }}
-                  className={`${
-                    !clickedTags[0]
-                      ? "bg-white text-[#ff569a]"
-                      : "bg-[#ff569a] text-white"
-                  } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
-                >
-                  {randomNumbers[0]}
-                </p>
-                <p
-                  onClick={() => {
-                    setStartAgeSliderVal(randomNumbers[1]);
-                    toggleSuggestionTags(1, randomNumbers[1]);
-                  }}
-                  className={`${
-                    !clickedTags[1]
-                      ? "bg-white text-[#ff569a]"
-                      : "bg-[#ff569a] text-white"
-                  } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
-                >
-                  {randomNumbers[1]}
-                </p>
-                <p
-                  onClick={() => {
-                    setStartAgeSliderVal(randomNumbers[2]);
-                    toggleSuggestionTags(2, randomNumbers[2]);
-                  }}
-                  className={`${
-                    !clickedTags[2]
-                      ? "bg-white text-[#ff569a]"
-                      : "bg-[#ff569a] text-white"
-                  } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
-                >
-                  {randomNumbers[2]}
-                </p>
-              </div>
-              <div className="flex flex-row justify-between  max-[320px]:flex-col max-[320px]:space-y-3 max-[320px]:w-24 max-[320px]:justify-start max-[320px]:space-x-0  items-center p-5 space-x-5">
-                <p
-                  onClick={() => {
-                    setStartAgeSliderVal(randomNumbers[3]);
-                    toggleSuggestionTags(3, randomNumbers[3]);
-                  }}
-                  className={`${
-                    !clickedTags[3]
-                      ? "bg-white text-[#ff569a]"
-                      : "bg-[#ff569a] text-white"
-                  } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
-                >
-                  {randomNumbers[3]}
-                </p>
-                <p
-                  onClick={() => {
-                    setStartAgeSliderVal(randomNumbers[4]);
-                    toggleSuggestionTags(4, randomNumbers[4]);
-                  }}
-                  className={`${
-                    !clickedTags[4]
-                      ? "bg-white text-[#ff569a]"
-                      : "bg-[#ff569a] text-white"
-                  } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
-                >
-                  {randomNumbers[4]}
-                </p>
-                <p
-                  onClick={() => {
-                    setStartAgeSliderVal(randomNumbers[5]);
-                    toggleSuggestionTags(5, randomNumbers[5]);
-                  }}
-                  className={`${
-                    !clickedTags[5]
-                      ? "bg-white text-[#ff569a]"
-                      : "bg-[#ff569a] text-white"
-                  } hover:bg-[#ff569a] hover:text-white text-center px-5 py-1 rounded-full  border border-[#ff569a] w-full hover:cursor-pointer`}
-                >
-                  {randomNumbers[5]}
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-row justify-between items-center">
-              <p className="px-5 text-[#cfd8e4]">Filter By</p>
-              {/* <p className="px-5 text-[#7e7e7e] text-xs underline hover:cursor-pointer">
-                Clear
-              </p> */}
-            </div>
-
-            <div className="flex flex-row justify-between items-center mt-5">
-              <p className="px-5 text-sm">Age</p>
-              <p className="px-5 text-sm">{`${startAgeSliderVal}-${endAgeSliderVal}`}</p>
-            </div>
-            {/* <form action="post" onSubmit={formik.handleSubmit}> */}
-            <div className="flex flex-row justify-center align-center py-5 px-5 mt-5 space-x-5">
-              <p className="text-slate-500 text-sm">From</p>
-              <Slider
-                // defaultValue={[50]}
-                value={[filters!.min_age]}
-                // value={[startAgeSliderVal]}
-                min={18}
-                max={80}
-                step={1}
-                className=" ml-10 pr-5"
-                onValueChange={handleStartSliderChange}
-                name="age"
-              />
-            </div>
-            <div className="flex flex-row justify-center align-center py-5 px-5">
-              <p className="text-slate-500 text-sm">To</p>
-              <Slider
-                // defaultValue={[50]}
-                // dir="right-to-left"
-                value={[filters!.max_age]}
-                // value={[endAgeSliderVal]}
-                max={80}
-                step={1}
-                className="w-full ml-10 pr-5"
-                onValueChange={handleEndSliderChange}
-                name="age"
-              />
-            </div>
+            <HomeFilters />
           </DialogContent>
         )}
 

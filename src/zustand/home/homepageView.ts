@@ -16,8 +16,16 @@ interface ViewState {
   isLiked: boolean;
   isFavored: boolean;
   dialogOpen: boolean;
+  isLoading: boolean;
+  setIsLoading: (val: boolean) => void;
 }
 const useHomepageViewStore = create<ViewState>()((set) => ({
+  isLoading: false,
+  setIsLoading: (val: boolean) => {
+    set(() => ({
+      isLoading: val,
+    }));
+  },
   selectedProfileId: null,
   isLiked: false,
   isFavored: false,
