@@ -38,13 +38,13 @@ function TopNav() {
     <motion.nav
       className={cn(
         "flex items-center justify-between mx-8 md:mx-12 lg:mx-36",
-        location.startsWith("/auth") ? "my-2" : "my-4",
+        location.startsWith("/auth") ? "my-2" : "my-4"
       )}
     >
       <motion.a
-        initial={location == "/"
-          ? { opacity: 0, scale: 0 }
-          : { opacity: 1, scale: 1 }}
+        initial={
+          location == "/" ? { opacity: 0, scale: 0 } : { opacity: 1, scale: 1 }
+        }
         whileInView={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.5 }}
         viewport={{ once: true }}
@@ -53,7 +53,7 @@ function TopNav() {
         <img
           className={cn(
             "w-24",
-            location.startsWith("/auth") ? "md:w-24" : "md:w-36",
+            location.startsWith("/auth") ? "md:w-24" : "md:w-36"
           )}
           src={logo}
           alt="muffin-logo"
@@ -74,7 +74,7 @@ function TopNav() {
               >
                 <a
                   className={cn(
-                    location.startsWith("/auth") ? "text-xs" : "text-md",
+                    location.startsWith("/auth") ? "text-xs" : "text-md"
                   )}
                   href="https://support.softnames.com/"
                   target="_blank"
@@ -90,11 +90,9 @@ function TopNav() {
             </motion.li>
           </div>
         )}
-        {!location.startsWith("/auth") &&
-          (
-            <div className="flex">
-              {
-                /* <motion.li variants={motionTop80}>
+        {!location.startsWith("/auth") && (
+          <div className="flex">
+            {/* <motion.li variants={motionTop80}>
                 <Button variant={"ghost"} className="font-light">
                   <a
                     className={cn(
@@ -117,51 +115,43 @@ function TopNav() {
                     Subscription
                   </a>
                 </Button>
-              </motion.li> */
-              }
-              <motion.li variants={motionTop80}>
-                <Button variant={"ghost"} className="font-light">
-                  <a
-                    className={cn(
-                      "text-md",
-                    )}
-                    href="https://support.softnames.com/"
-                    target="_blank"
-                  >
-                    FAQ
-                  </a>
-                </Button>
-              </motion.li>
-              <motion.li variants={motionTop80}>
-                <Button variant={"ghost"} className="font-light">
-                  <a
-                    className={cn(
-                      "text-md",
-                    )}
-                    href="https://support.softnames.com/"
-                    target="_blank"
-                  >
-                    Contact
-                  </a>
-                </Button>
-              </motion.li>
-              <motion.li variants={motionTop80}>
-                <Button variant={"ghost"} className="font-light">
-                  <a
-                    className={cn(
-                      "text-md",
-                    )}
-                    href="https://support.softnames.com/"
-                    target="_blank"
-                  >
-                    Support
-                  </a>
-                </Button>
-              </motion.li>
-            </div>
-          )}
-        {
-          /* <motion.li variants={motionTop80}>
+              </motion.li> */}
+            <motion.li variants={motionTop80}>
+              <Button variant={"ghost"} className="font-light">
+                <a
+                  className={cn("text-md")}
+                  href="https://support.softnames.com/"
+                  target="_blank"
+                >
+                  FAQ
+                </a>
+              </Button>
+            </motion.li>
+            <motion.li variants={motionTop80}>
+              <Button variant={"ghost"} className="font-light">
+                <a
+                  className={cn("text-md")}
+                  href="https://support.softnames.com/"
+                  target="_blank"
+                >
+                  Contact
+                </a>
+              </Button>
+            </motion.li>
+            <motion.li variants={motionTop80}>
+              <Button variant={"ghost"} className="font-light">
+                <a
+                  className={cn("text-md")}
+                  href="https://support.softnames.com/"
+                  target="_blank"
+                >
+                  Support
+                </a>
+              </Button>
+            </motion.li>
+          </div>
+        )}
+        {/* <motion.li variants={motionTop80}>
           <Link href="/auth/signin">
             <Button
               className={cn(
@@ -172,8 +162,7 @@ function TopNav() {
               Sign in
             </Button>
           </Link>
-        </motion.li> */
-        }
+        </motion.li> */}
       </motion.ul>
       <DropdownMenu>
         <DropdownMenuTrigger className="block md:hidden" asChild>
@@ -186,15 +175,13 @@ function TopNav() {
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
             <DropdownMenuItem>
-              <a href="/about">
-                About Us
-              </a>
+              <a href="/about">About Us</a>
             </DropdownMenuItem>
-            <DropdownMenuItem>
+            {/* <DropdownMenuItem>
               <a href="/subscription">
                 Subscription
               </a>
-            </DropdownMenuItem>
+            </DropdownMenuItem> */}
             <DropdownMenuItem>
               <a target="_blank" href="https://support.softnames.com/">
                 FAQ
@@ -211,8 +198,8 @@ function TopNav() {
               </a>
             </DropdownMenuItem>
           </DropdownMenuGroup>
-          <DropdownMenuSeparator /> {
-            /* <Link href="/auth/signin">
+          <DropdownMenuSeparator />{" "}
+          {/* <Link href="/auth/signin">
             <DropdownMenuItem
               className={cn(
                 "m-0 text text-white bg-primary hover:bg-[#d86392]",
@@ -221,8 +208,7 @@ function TopNav() {
             >
               Sign In
             </DropdownMenuItem>
-          </Link> */
-          }
+          </Link> */}
         </DropdownMenuContent>
       </DropdownMenu>
     </motion.nav>
