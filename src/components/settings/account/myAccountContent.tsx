@@ -93,7 +93,7 @@ const MyAccountContent = () => {
               Update
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
+          <DialogContent className="sm:max-w-[425px] w-96 left-[50%] top-[25%] sm:top-[50%]">
             <DialogHeader>
               <DialogTitle className="font-medium ">
                 Change Password
@@ -151,7 +151,7 @@ const MyAccountContent = () => {
                     disabled={isLoading}
                     type="submit"
                     className={cn(
-                      "text-whiteh-10 text-sm rounded-full py-2 hover:bg-[#FF599B]/90 w-24 dark:bg-[#ae2e51]",
+                      "text-white h-10 text-sm rounded-full py-2 hover:bg-[#FF599B]/90 w-24 dark:bg-[#ae2e51]",
                       isLoading ? "bg-[#FF8AB3]" : "bg-primary"
                     )}
                   >

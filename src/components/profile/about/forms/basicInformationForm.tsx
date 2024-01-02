@@ -290,6 +290,7 @@ const BasicInformationForm = () => {
                         field.onChange(e.target.value);
                       }}
                       type="date"
+                      placeholder="dd MMM yyyy"
                       className="outline-0 border rounded-lg w-full py-3 px-5"
                     />
                     <FormMessage />
