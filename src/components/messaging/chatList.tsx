@@ -49,6 +49,8 @@ const ChatList = () => {
 
   useEffect(() => {
     if (!selectedConversation && data && data.length !== 0) {
+      console.log(data);
+
       setSenderUserInfo({
         conversation_history_id: data[0].conversation_id,
         conversation_text: "",
@@ -78,6 +80,8 @@ const ChatList = () => {
       return conversation.recipient_id !== conversation.initiator_id;
     })
     .map((conversation, index) => {
+      console.log(conversation);
+
       return (
         <li
           onClick={() => {
@@ -126,7 +130,7 @@ const ChatList = () => {
               src={getImagePath(
                 conversation.gallery_uuid,
                 conversation.gender,
-                conversation.recipient_uuid
+                conversation.listed_uuid
               )}
               alt="user profile"
             />
@@ -150,6 +154,8 @@ const ChatList = () => {
         </li>
       );
     });
+
+  console.log(data);
 
   return (
     <ul className="no-scrollbar space-y-1 overflow-y-scroll h-full p-1">

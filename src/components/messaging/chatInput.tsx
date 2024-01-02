@@ -73,7 +73,6 @@ const ChatInput = () => {
         currentSelectedConversation!.memberId
       );
       // setUuid(res.data.conversation_uuid);
-      console.log();
 
       setSelectedConversation(
         user!.member_id,
@@ -163,7 +162,7 @@ const ChatInput = () => {
 
   const { selectedMemberName } = useLatestConversationStore();
   return (
-    <div className="flex w-full items-end rounded-lg h-max bg-[#F7F8FA] dark:text-white dark:bg-[#020817]">
+    <div className="flex w-full items-end rounded-lg h-max bg-[#F7F8FA] dark:text-white dark:bg-[#020817] pb-8 sm:pb-0">
       {selectedMemberName.length > 1 && user?.temporarily_deactivated ? (
         <p className="w-full flex justify-center text-red-700 m-8">
           You must Reactivate your account To continue chatting with
@@ -171,8 +170,8 @@ const ChatInput = () => {
         </p>
       ) : (
         <>
-          <div className="h-max w-full flex items-end justify-start mb-4 mt-1">
-            <div className="flex flex-col items-center justify-center mx-2 ">
+          <div className="h-max w-full flex items-end justify-start sm:mb-4 mt-1">
+            <div className="flex flex-col items-center justify-center mx-2">
               {currentSelectedConversation ? (
                 <Popover>
                   <PopoverTrigger disabled={!currentSelectedConversation}>

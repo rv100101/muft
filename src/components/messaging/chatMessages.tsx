@@ -9,7 +9,7 @@ import { useSelectedConversationData } from "@/zustand/messaging/selectedConvers
 import { useUserStore } from "@/zustand/auth/user";
 const ChatMessages = () => {
   const scrollableDivRef = useRef<HTMLDivElement | null>(null);
-  const user = useUserStore(state => state.user);
+  const user = useUserStore((state) => state.user);
   const latestConversation = useLatestConversationStore(
     (state) => state.conversation
   );
@@ -19,9 +19,6 @@ const ChatMessages = () => {
   const setConversationMessages = useSelectedConversationData(
     (state) => state.setMessages
   );
-  if (conversationMessages) {
-    console.log(conversationMessages![conversationMessages!.length - 1]);
-  }
 
   const fetchMessages = async () => {
     return await messagingQuery.getConversationHistory(
@@ -33,7 +30,7 @@ const ChatMessages = () => {
   const { isLoading, isSuccess, data } = useQuery({
     queryKey: ["current-selected-conversation", latestConversation],
     enabled: latestConversation != null,
-    refetchInterval: 500,
+    // refetchInterval: 500,
     refetchIntervalInBackground: true,
     queryFn: fetchMessages,
   });
@@ -53,7 +50,22 @@ const ChatMessages = () => {
     }
   }, [data, conversationMessages]);
 
-  console.log(conversationMessages);
+  useEffect(() => {
+    const conversationHistory = async () => {
+      await messagingQuery.getConversationHistory(630, user!.member_id);
+    };
+
+    if (
+      conversationMessages !== null &&
+      conversationMessages.length !== 0 &&
+      conversationMessages![conversationMessages!.length - 1] &&
+      conversationMessages![conversationMessages!.length - 1].created_user !==
+        user!.member_id
+    ) {
+      console.log("running chist");
+      conversationHistory();
+    }
+  }, [conversationMessages, user]);
 
   const messages = conversationMessages?.map((message, index) => {
     const gray = message.created_user == user!.member_id;
