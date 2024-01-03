@@ -409,7 +409,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                         </DialogClose>
                       </DialogHeader>
                       <img
-                        className={`h-full w-full`}
+                        className={`h-full object-cover max-h-96 sm:max-h-[500px] w-full`}
                         src={
                           selectedFile
                             ? selectedFile
@@ -539,12 +539,12 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                             !user?.temporarily_deactivated ? "/messages" : ""
                           }
                         >
-                          <p className="flex">
+                          <div className="flex">
                             <p>Chat</p>
                             <span>
                               <MessageCircleIcon className="h-4" />
                             </span>
-                          </p>
+                          </div>
                         </Link>
                       </Button>
                       <div className="flex space-x-2">
@@ -583,21 +583,13 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                         {/* more  */}
                         <Dialog>
                           <DropdownMenu modal={false}>
-                            <DropdownMenuTrigger>
-                              <Button
-                                type="button"
-                                variant={"outline"}
-                                className="hover:ring-2 transition-all ring-primary"
-                              >
-                                <span>
-                                  <MoreHorizontal
-                                    color="#FF599B"
-                                    fill={
-                                      favoriteTriggered ? "#FF599B" : "white"
-                                    }
-                                  />
-                                </span>
-                              </Button>
+                            <DropdownMenuTrigger className="rounded-md h-10 px-4 py-2 border border-input bg-background hover:bg-accent hover:text-accent-foreground hover:ring-2 transition-all ring-primary">
+                              <span>
+                                <MoreHorizontal
+                                  color="#FF599B"
+                                  fill={favoriteTriggered ? "#FF599B" : "white"}
+                                />
+                              </span>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent className="w-24">
                               <DropdownMenuGroup>
