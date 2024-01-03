@@ -118,10 +118,10 @@ function App() {
           component={pageRoutes.about.component}
         />
 
-        <Route
+        {/* <Route
           path={pageRoutes.subscription.path}
           component={pageRoutes.subscription.component}
-        />
+        /> */}
 
         {/* Authenticated routes */}
         {user && (
