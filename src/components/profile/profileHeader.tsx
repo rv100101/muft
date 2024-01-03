@@ -61,7 +61,6 @@ type FormDataType = {
 const ProfileHeader = ({ userId }: { userId: string }) => {
   const setView = useMobileMessagingViewStore((state) => state.setView);
   const [reportProcessing, setReportProcessing] = useState(false);
-
   const setEditModeFalse = profileAboutContentStore(
     (state) => state.setEditModeFalse
   );
@@ -355,6 +354,31 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
         ) : (
           <title>My Profile</title>
         )}
+        <meta
+          property="og:title"
+          content={
+            user !== null ? `${user.first_name}'s Profile` : "Loading..."
+          }
+        />
+        <meta property="og:description" content={"Muffin member"} />
+        <meta property="og:url" content={window.location.href} />
+        <meta
+          property="og:image"
+          content={
+            profileData !== null
+              ? getImagePath(
+                  profileData!.gallery_uuid,
+                  profileData!.gender,
+                  profileData!.member_uuid
+                )
+              : "https://muffin.ph/public/logo.png"
+          }
+        />
+        <meta
+          property="og:image:secure_url"
+          content={"https://muffin.ph/public/logo.png"}
+        />
+        <meta property="og:image:alt" content="User's profile image" />
       </Helmet>
       <div className="flex justify-start items-start space-x-2">
         {
