@@ -1,4 +1,0 @@
-User-agent: *
-Disallow:
-
-Sitemap: https://muffin.ae/sitemap.xml
