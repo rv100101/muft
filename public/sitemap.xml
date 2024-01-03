@@ -77,13 +77,6 @@
     <priority>0.7</priority>
   </url>
 
-  <!-- Subscription Page -->
-  <url>
-    <loc>https://muffin.ph/subscription</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
   <!-- Settings Page -->
   <url>
     <loc>https://muffin.ph/settings</loc>
