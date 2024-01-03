@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Landing Page -->
+  <url>
+    <loc>https://muffin.ph/</loc>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Privacy Policy Page -->
+  <url>
+    <loc>https://muffin.ph/privacy</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Terms Page -->
+  <url>
+    <loc>https://muffin.ph/terms</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Release Notes Page -->
+  <url>
+    <loc>https://muffin.ph/release-notes</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Messaging Page -->
+  <url>
+    <loc>https://muffin.ph/messages</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Notifications Page -->
+  <url>
+    <loc>https://muffin.ph/notifications</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Sign Up Page -->
+  <url>
+    <loc>https://muffin.ph/auth/signup</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Sign In Page -->
+  <url>
+    <loc>https://muffin.ph/auth/signin</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Likes Page -->
+  <url>
+    <loc>https://muffin.ph/likes</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Favorites Page -->
+  <url>
+    <loc>https://muffin.ph/favourites</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- About Page -->
+  <url>
+    <loc>https://muffin.ph/about</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Subscription Page -->
+  <url>
+    <loc>https://muffin.ph/subscription</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Settings Page -->
+  <url>
+    <loc>https://muffin.ph/settings</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+</urlset>
