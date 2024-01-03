@@ -135,7 +135,13 @@ function App() {
               component={pageRoutes.notificationsPage.component}
             />
             <Route path={"/profile/:id"}>
-              {(params) => <ViewUser id={params.id} />}
+              {(params) =>
+                user!.member_id.toString() == params.id ? (
+                  <ViewUser id={params.id} />
+                ) : (
+                  <Redirect to="/" />
+                )
+              }
             </Route>
             <Route
               path={pageRoutes.likes.path}
@@ -149,6 +155,9 @@ function App() {
               path={pageRoutes.settings.path}
               component={pageRoutes.settings.component}
             />
+            {(location == "/members" || location == "/profile") && (
+              <Redirect to="/" />
+            )}
             <Route path="/members/:id">
               {(params) => <ViewUser id={params.id} />}
             </Route>
