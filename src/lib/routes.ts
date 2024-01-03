@@ -21,14 +21,14 @@ export const routesWithFooterAndTopNav = [
   "/auth/signup",
   "/auth/signin",
   "/about",
-  "/subscription",
+  // "/subscription",
 ];
 
 export const noUserOnlyRoutes = [
   "/auth/signin",
   "/auth/signup",
   "/about",
-  "/subscription",
+  // "/subscription",
   "/privacy",
   "/terms",
   "/release-notes",
