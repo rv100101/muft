@@ -40,7 +40,7 @@ export const userOnlyRoutes = [
   "/members",
   "/likes",
   "/favourites",
-  "/Settings",
+  "/settings",
   "/privacy",
   "/terms",
   "/release-notes",

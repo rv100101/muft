@@ -43,7 +43,7 @@ const links: (
     name: "Favorites",
   },
   {
-    path: "/Settings",
+    path: "/settings",
     icon: Settings,
     name: "Settings",
   },
