@@ -9,7 +9,7 @@ const Benefits = () => {
         whileInView={{ opacity: 1 }}
         transition={{ delay: 1 }}
         viewport={{ once: true }}
-        className="font-semibold text-2xl md:text-4xl text-secondary text-center"
+        className="dark:text-white font-semibold text-2xl md:text-4xl text-secondary text-center"
       >
         {features.header}
       </motion.p>
@@ -18,7 +18,7 @@ const Benefits = () => {
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ delay: 1 }}
-        className="text-center text-secondary text-sm md:px-32"
+        className="dark:text-white text-center text-secondary text-sm md:px-32"
       >
         {features.description}
       </motion.p>

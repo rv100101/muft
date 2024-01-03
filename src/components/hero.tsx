@@ -61,7 +61,7 @@ const Hero = () => {
               delay: 2.5,
             }}
             viewport={{ once: true }}
-            className="z-20"
+            className="z-20 dark:text-black"
           >
             {banner.body}
           </motion.p>
@@ -79,10 +79,8 @@ const Hero = () => {
             viewport={{ once: true }}
             className="z-20 flex space-x-2 w-64 md:w-80"
           >
-            <Button className="hover:bg-[#FF599B]/90">
-              <a href="/auth/signin">
-                Sign In
-              </a>
+            <Button className="hover:bg-[#FF599B]/90 dark:bg-[#FF599B] dark:text-white">
+              <a href="/auth/signin">Sign In</a>
             </Button>
           </motion.div>
 
