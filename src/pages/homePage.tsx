@@ -53,7 +53,6 @@ const HomePage = () => {
     }
     if (memberList && memberLikes) {
       const likes = createMap(memberList, memberLikes);
-      console.log(likes);
       setLikes(likes);
     }
   }, [memberLikes, memberList, likes]);
@@ -72,7 +71,6 @@ const HomePage = () => {
     }
     if (memberList && memberFavorites) {
       const favorites = createMap(memberList, memberFavorites);
-      console.log(favorites);
       setFavorites(favorites);
     }
   }, [memberFavorites, memberList, likes]);

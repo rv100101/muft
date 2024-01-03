@@ -15,9 +15,10 @@ import { DialogClose } from "@radix-ui/react-dialog";
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
 import ProfileMobileNav from "./ProfileMobileNav";
 import { useQueryClient } from "@tanstack/react-query";
+import useReadConversationsStateStore from "@/zustand/messaging/readConversations";
 const ProfileTopNav = () => {
   const { isSaving } = profileAboutContentStore();
-
+  const { updateRead: setReadList } = useReadConversationsStateStore();
   const signOut = useUserStore((state) => state.reset);
   const user = useUserStore((state) => state.user);
   // const setSelectedHistoryMemberId = useLatestConversationStore(
@@ -37,7 +38,7 @@ const ProfileTopNav = () => {
               {!user?.profile_completed && (
                 <div className="flex sm:hidden ml-6">
                   <Dialog>
-                    <DialogTrigger >
+                    <DialogTrigger>
                       {<LogOutIcon size={20} className="text-primary" />}
                     </DialogTrigger>
                     <DialogContent className="sm:max-w-md opacity-100">
@@ -47,10 +48,13 @@ const ProfileTopNav = () => {
                         </DialogTitle>
                       </DialogHeader>
                       <DialogFooter className="sm:justify-start">
-                        <Button className="hover:bg-primary" onClick={() => {
-                          signOut()
-                          queryClient.invalidateQueries();
-                        }}>
+                        <Button
+                          className="hover:bg-primary"
+                          onClick={() => {
+                            signOut();
+                            queryClient.invalidateQueries();
+                          }}
+                        >
                           Yes
                         </Button>
                         <DialogClose asChild>
@@ -69,7 +73,9 @@ const ProfileTopNav = () => {
               )}
               <div className="ml-4 sm:ml-0 flex items-center space-x-4">
                 <p className="font-semibold mt-1 text-nowrap text-sm sm:text-base">
-                  {user?.profile_completed ? "PROFILE" : "COMPLETE YOUR PROFILE"}
+                  {user?.profile_completed
+                    ? "PROFILE"
+                    : "COMPLETE YOUR PROFILE"}
                 </p>
                 {!user?.profile_completed && (
                   <div className="hidden sm:flex w-full sm:w-min justify-end">
@@ -104,10 +110,14 @@ const ProfileTopNav = () => {
                     </DialogTitle>
                   </DialogHeader>
                   <DialogFooter className="sm:justify-start">
-                    <Button className="hover:bg-primary" onClick={() => {
-                      queryClient.clear();
-                      signOut()
-                    }}>
+                    <Button
+                      className="hover:bg-primary"
+                      onClick={() => {
+                        queryClient.clear();
+                        signOut();
+                        setReadList({});
+                      }}
+                    >
                       Yes
                     </Button>
                     <DialogClose asChild>
@@ -122,7 +132,8 @@ const ProfileTopNav = () => {
                   </DialogFooter>
                 </DialogContent>
               </Dialog>
-            )} {!user?.profile_completed && (
+            )}{" "}
+            {!user?.profile_completed && (
               <div className="flex sm:hidden w-full mr-4 sm:w-min justify-end">
                 <Button
                   type="submit"

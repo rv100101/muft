@@ -28,12 +28,13 @@ import { Button } from "./ui/button";
 import HomepageSearchInput from "./homeSearchUsersInput";
 import NotificationsListFiters from "./notifications/notificationListFilters";
 import HomeFilters from "./home/filters";
+import useReadConversationsStateStore from "@/zustand/messaging/readConversations";
 
 const TopBar2 = ({ children }: { children: ReactNode }) => {
   const [location] = useLocation();
   const reset = useConversationHistoryStore((state) => state.resetToNull);
   const signOut = useUserStore((state) => state.reset);
-
+  const { updateRead: setReadList } = useReadConversationsStateStore();
   const [searchTriggered, setSearchTriggered] = useState(false);
   const [filtersTriggered, setFiltersTriggered] = useState(false);
   const setSelectedProfileId = useHomepageViewStore(
@@ -210,6 +211,7 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
                     onClick={() => {
                       queryClient.invalidateQueries();
                       signOut();
+                      setReadList({});
                     }}
                   >
                     Yes

@@ -12,8 +12,12 @@ import { useSearchFilterStore } from "@/zustand/messaging/searchFilter";
 import { useSenderInfo } from "@/zustand/messaging/senderData";
 import { useUserStore } from "@/zustand/auth/user";
 import { cn } from "@/lib/utils";
+import useReadConversationsStateStore from "@/zustand/messaging/readConversations";
+import { Conversation } from "@/types/conversation";
 
 const ChatList = () => {
+  const { read: readList, updateRead: setReadList } =
+    useReadConversationsStateStore();
   const {
     setSelectedHistoryMemberName,
     setSelectedHistoryMemberId,
@@ -32,7 +36,20 @@ const ChatList = () => {
   const { isLoading, isSuccess, data } = useQuery({
     queryKey: ["conversations"],
     queryFn: () => messagingQuery.getConversations(user!.member_id),
+    onSuccess: (data: Conversation[]) => {
+      data.map((conv) => {
+        if (conv.conversation_uuid in readList) {
+          return;
+        } else {
+          readList[conv.conversation_uuid] = conv.is_read;
+        }
+      });
+      setReadList({ ...readList });
+    },
   });
+
+  console.log(readList);
+
   const searchFilterValue = useSearchFilterStore((state) => state.value);
 
   // This is used for page view switching in mobile view
@@ -82,6 +99,8 @@ const ChatList = () => {
     .map((conversation, index) => {
       console.log(conversation);
 
+      console.log(readList !== null, readList![conversation.conversation_uuid]);
+
       return (
         <li
           onClick={() => {
@@ -98,17 +117,16 @@ const ChatList = () => {
             variant={"ghost"}
             className={cn(
               "hover:bg-slate-50 w-full h-max items-start text-left dark:bg-slate-700 md:rounded-lg",
-              !openedConversations.includes(conversation.listed_id) &&
-                !conversation.is_read &&
+              // !openedConversations.includes(conversation.listed_id) &&
+              readList !== null &&
+                !readList[conversation.conversation_uuid] &&
                 "bg-accent",
               selectedHistoryMemberId === conversation.listed_id &&
                 "bg-slate-50"
             )}
             onClick={() => {
               if (!matches) {
-                console.log("heloo");
                 updateMessagingPageView();
-                console.log(conversation);
               }
               setConversation(
                 conversation.initiator_id,
@@ -123,6 +141,12 @@ const ChatList = () => {
 
               setSelectedHistoryMemberId(conversation.listed_id);
               setSelectedHistoryMemberName(conversation.recipient_nickname);
+              if (readList !== null) {
+                const newReadList = readList;
+                newReadList[conversation.conversation_uuid] = true;
+                console.log("new readlist: ", newReadList);
+                setReadList({ ...newReadList });
+              }
             }}
           >
             <img
@@ -154,8 +178,6 @@ const ChatList = () => {
         </li>
       );
     });
-
-  console.log(data);
 
   return (
     <ul className="no-scrollbar space-y-1 overflow-y-scroll h-full p-1">

@@ -11,6 +11,7 @@ import { toast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
 import axiosQuery from "@/queries/axios";
 import { useUserStore } from "@/zustand/auth/user";
+import useReadConversationsStateStore from "@/zustand/messaging/readConversations";
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
 import profileHeaderStore from "@/zustand/profile/profileHeaderStore";
 import { CheckedState } from "@radix-ui/react-checkbox";
@@ -21,6 +22,7 @@ import { useEffect, useState } from "react";
 
 const DeactivateAccountContent = () => {
   const signOut = useUserStore((state) => state.reset);
+  const { updateRead: setReadList } = useReadConversationsStateStore();
   const [showDialog, setShowDialog] = useState(false);
   const { setProfileData } = profileAboutContentStore();
   const { setProfileHeaderValues } = profileHeaderStore();
@@ -89,6 +91,7 @@ const DeactivateAccountContent = () => {
       setDeleteLoading(false);
       queryClient.clear();
       signOut();
+      setReadList({});
       setProfileData(null);
       setProfileHeaderValues(null);
       // }

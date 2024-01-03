@@ -21,9 +21,11 @@ import useConversationHistoryStore from "@/zustand/messaging/showConversation";
 import { useOrientation } from "@uidotdev/usehooks";
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
 import profileHeaderStore from "@/zustand/profile/profileHeaderStore";
+import useReadConversationsStateStore from "@/zustand/messaging/readConversations";
 
 const SideBar = () => {
   const orientation = useOrientation();
+  const { updateRead: setReadList } = useReadConversationsStateStore();
   const reset = useConversationHistoryStore((state) => state.resetToNull);
   const signOut = useUserStore((state) => state.reset);
   const { setProfileData } = profileAboutContentStore();
@@ -135,6 +137,7 @@ const SideBar = () => {
                     signOut();
                     setProfileData(null);
                     setProfileHeaderValues(null);
+                    setReadList({});
                   }}
                 >
                   Yes
