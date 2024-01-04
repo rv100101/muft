@@ -129,7 +129,7 @@ const SideBar = () => {
               <DialogHeader>
                 <DialogTitle>Are you sure you want to sign out?</DialogTitle>
               </DialogHeader>
-              <DialogFooter className="sm:justify-start">
+              <DialogFooter className="sm:justify-start items-center">
                 <Button
                   className="hover:bg-primary"
                   onClick={() => {
@@ -142,7 +142,7 @@ const SideBar = () => {
                 >
                   Yes
                 </Button>
-                <DialogClose asChild>
+                <DialogClose>
                   <Button
                     className="text-white hover:bg-secondary"
                     type="button"
