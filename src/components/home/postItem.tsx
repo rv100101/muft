@@ -5,7 +5,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip";
-import "react-lazy-load-image-component/src/effects/blur.css";
 import { useLocation } from "wouter";
 import { getImagePath } from "@/lib/images";
 import { MemberData } from "@/types/home";
