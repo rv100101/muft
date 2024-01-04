@@ -7,7 +7,7 @@ const ChatConversation = () => {
   return (
     <div className="sm:border-l w-full h-full flex flex-col dark:text-white ">
       <MessageHeader />
-      <div className="h-[calc(100vh-164px)]">
+      <div className="h-[calc(100dvh-164px)]">
         <ChatMessages />
       </div>
       <div className="fixed sm:static bottom-0 h-30">
