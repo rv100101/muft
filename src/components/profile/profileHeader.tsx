@@ -50,7 +50,6 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Textarea } from "../ui/textarea";
 import useMobileMessagingViewStore from "@/zustand/messaging/mobileStateView";
-import { Helmet } from "react-helmet-async";
 import { Skeleton } from "../ui/skeleton";
 
 type FormDataType = {
@@ -348,51 +347,6 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
 
   return (
     <div className="items-start p-5 border-b w-full">
-      <Helmet>
-        {location.startsWith("/members") ? (
-          <>
-            <title>{data?.nickname ?? "muffin"} | Muffin</title>
-            <link
-              rel="canonical"
-              href={`https://${window.location.hostname}/members/${userId}`}
-            />
-          </>
-        ) : (
-          <>
-            <title>My Profile</title>
-            <link
-              rel="canonical"
-              href={`https://${window.location.hostname}/profile/${userId}`}
-            />
-          </>
-        )}
-
-        <meta
-          property="og:title"
-          content={
-            user !== null ? `${user.first_name}'s Profile` : "Loading..."
-          }
-        />
-        <meta property="og:description" content={"Muffin member"} />
-        <meta property="og:url" content={window.location.href} />
-        <meta
-          property="og:image"
-          content={
-            profileData !== null
-              ? getImagePath(
-                  profileData!.gallery_uuid,
-                  profileData!.gender,
-                  profileData!.member_uuid
-                )
-              : "https://muffin.ph/public/logo.png"
-          }
-        />
-        <meta
-          property="og:image:secure_url"
-          content={"https://muffin.ph/public/logo.png"}
-        />
-        <meta property="og:image:alt" content="User's profile image" />
-      </Helmet>
       <div className="flex justify-start items-start space-x-2">
         {
           <div className="flex flex-col justify-center items-center space-y-2">
