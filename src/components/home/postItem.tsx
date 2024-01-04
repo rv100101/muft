@@ -5,6 +5,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip";
+import "react-lazy-load-image-component/src/effects/blur.css";
 import { useLocation } from "wouter";
 import { getImagePath } from "@/lib/images";
 import { MemberData } from "@/types/home";
@@ -12,6 +13,7 @@ import useHomepageViewStore from "@/zustand/home/homepageView";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axiosQuery from "@/queries/axios";
 import { useUserStore } from "@/zustand/auth/user";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 const PostItem = ({ memberData }: { memberData: MemberData }) => {
   const [, setLocation] = useLocation();
   const { likes, favorites, setFavorites, setLikes } = useHomepageViewStore();
@@ -69,7 +71,16 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
               onClick={() => handlePostItemClick()}
               className="absolute z-70 inset-0 bg-gradient-to-t from-black/60 from-1% via-transparent via49% to-transparent to-50%"
             />
-            <img
+            <LazyLoadImage
+              alt={"post image"}
+              src={getImagePath(
+                memberData.gallery_uuid,
+                memberData.gender,
+                memberData.member_uuid
+              )} // use normal <img> attributes as props
+              className="rounded-t-xl lg:w-[460px] w-[350px] h-[554px] xl:h-[454px] xl:w-[400px] object-cover"
+            />
+            {/* <img
               src={getImagePath(
                 memberData.gallery_uuid,
                 memberData.gender,
@@ -77,7 +88,7 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
               )}
               alt="post-img"
               className="rounded-t-xl lg:w-[460px] w-[350px] h-[554px] xl:h-[454px] xl:w-[400px] object-cover"
-            />
+            /> */}
             <div className="absolute bottom-0 w-full">
               <div className="flex flex-row w-full justify-between ">
                 <div
@@ -205,13 +216,12 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
               <Tooltip>
                 <TooltipTrigger asChild>
                   <div className="rounded-full bg-[#FFF2F7] flex flex-row justify-center align-center space-x-2 py-2 px-4 dark:bg-[#3b0117] text=[#ff588e]">
-                    <img
-                      alt={memberData.nationality}
+                    <LazyLoadImage
+                      alt={"post country flag"}
                       height={20}
                       width={30}
                       src={`http://purecatamphetamine.github.io/country-flag-icons/3x2/${memberData.country_code}.svg`}
                     />
-
                     {/* <p className="text-[#FF599B] mt-1 text-sm ">
                       {nationalityCode}
                     </p> */}
