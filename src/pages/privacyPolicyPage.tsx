@@ -16,6 +16,10 @@ const PrivacyPolicyPage = () => {
     <div className="space-y-4 md:space-y-8 md:my-8 py-8 px-6 md:rounded-2xl bg-secondaryBackground">
       <Helmet>
         <title>Privacy Policy</title>
+        <link
+          rel="canonical"
+          href={`https://${window.location.hostname}/privacy`}
+        />
       </Helmet>
       <div className="flex flex-row space-x-5 items-center">
         <Link href="/">

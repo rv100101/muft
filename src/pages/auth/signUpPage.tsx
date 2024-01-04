@@ -106,6 +106,10 @@ const SignUpPage = () => {
       <div className="h-[calc(100vh-70px)] md:h-[calc(100vh-88px)] justify-center items-center flex lg:gap-4 w-full lg:px-32 border-t">
         <Helmet>
           <title>Sign up</title>
+          <link
+            rel="canonical"
+            href={`https://${window.location.hostname}/auth/signup`}
+          />
           <meta
             name="description"
             content="Join our world love knows no borders."

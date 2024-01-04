@@ -66,6 +66,10 @@ const FavouritesPage = () => {
       >
         <Helmet>
           <title>Favorite</title>
+          <link
+            rel="canonical"
+            href={`https://${window.location.hostname}/favourites`}
+          />
         </Helmet>
         <div className="flex space-x-2 items-center">
           <div className="border-4 border-primary w-24 h-24 border-pink p-1 rounded-full">

@@ -15,7 +15,12 @@ const TermsPage = () => {
   return (
     <div className="space-y-4 md:space-y-8 md:my-8 py-8 px-6 md:rounded-2xl bg-secondaryBackground">
       <Helmet>
-        <title>Terms & Conditions</title>
+        {" "}
+        <title>Terms & Conditions</title>{" "}
+        <link
+          rel="canonical"
+          href={`https://${window.location.hostname}/terms`}
+        />
       </Helmet>
       <div className="flex flex-row space-x-5 items-center">
         <Link href="/">

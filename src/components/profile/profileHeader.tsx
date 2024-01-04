@@ -350,10 +350,23 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
     <div className="items-start p-5 border-b w-full">
       <Helmet>
         {location.startsWith("/members") ? (
-          <title>{data?.nickname ?? "muffin"} | Muffin</title>
+          <>
+            <title>{data?.nickname ?? "muffin"} | Muffin</title>
+            <link
+              rel="canonical"
+              href={`https://${window.location.hostname}/members/${userId}`}
+            />
+          </>
         ) : (
-          <title>My Profile</title>
+          <>
+            <title>My Profile</title>
+            <link
+              rel="canonical"
+              href={`https://${window.location.hostname}/profile/${userId}`}
+            />
+          </>
         )}
+
         <meta
           property="og:title"
           content={

@@ -12,6 +12,10 @@ const MessagingPage = () => {
     <AuthenticatedLayout>
       <Helmet>
         <title>Messages</title>
+        <link
+          rel="canonical"
+          href={`https://${window.location.hostname}/messages`}
+        />
       </Helmet>
       {/* Desktop view */}
       <div className="w-full h-full grid-cols-10 grid-rows-1 hidden lg:grid md:grid-cols-11">

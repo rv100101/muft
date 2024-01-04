@@ -12,6 +12,10 @@ const SettingsPage = () => {
     <AuthenticatedLayout>
       <Helmet>
         <title>Settings</title>
+        <link
+          rel="canonical"
+          href={`https://${window.location.hostname}/settings`}
+        />
       </Helmet>
       <div className="w-full flex flex-col h-full lg:items-center justify-start border">
         <MobileTopbar />

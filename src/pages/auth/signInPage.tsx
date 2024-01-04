@@ -8,6 +8,10 @@ const SignInPage = () => {
       <Helmet>
         <title>Sign in</title>
         <meta name="description" content="Keep Your Love Story Going" />
+        <link
+          rel="canonical"
+          href={`https://${window.location.hostname}/auth/signin`}
+        />
       </Helmet>
       <div className="flex h-max md:h-[calc(100vh-90px)] lg:items-center justify-center">
         <SignInForm />

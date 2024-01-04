@@ -24,6 +24,10 @@ const ReleaseNotesPage = () => {
     <div className="md:space-y-8 space-y-2 md:my-8 py-4 md:py-8 px-4 md:px-6 md:rounded-2xl bg-secondaryBackground">
       <Helmet>
         <title>Release Notes</title>
+        <link
+          rel="canonical"
+          href={`https://${window.location.hostname}/release-notes`}
+        />
       </Helmet>
       <div className="flex flex-row space-x-5 items-center">
         <Link href="/">
