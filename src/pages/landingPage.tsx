@@ -11,6 +11,7 @@ const LandingPage = () => {
     <>
       <Helmet>
         <title>Muffin | Find your Love</title>
+        <link rel="canonical" href={`https://${window.location.hostname}/`} />
       </Helmet>
       {/*<GetApp /> */}
       <div className="mx-8 md:mx-12 lg:mx-36">
