@@ -14,6 +14,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axiosQuery from "@/queries/axios";
 import { useUserStore } from "@/zustand/auth/user";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import logo from "@/assets/logo.svg";
 const PostItem = ({ memberData }: { memberData: MemberData }) => {
   const [, setLocation] = useLocation();
   const { likes, favorites, setFavorites, setLikes } = useHomepageViewStore();
@@ -72,6 +73,8 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
               className="absolute -translate-y-2 z-70 inset-0 bg-gradient-to-t from-black/60 from-1% via-transparent via49% to-transparent to-50%"
             />
             <LazyLoadImage
+              onClick={() => handlePostItemClick()}
+              placeholderSrc={logo}
               effect="opacity"
               alt={"post image"}
               src={getImagePath(
