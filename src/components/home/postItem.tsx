@@ -5,6 +5,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip";
+import "react-lazy-load-image-component/src/effects/opacity.css";
 import { useLocation } from "wouter";
 import { getImagePath } from "@/lib/images";
 import { MemberData } from "@/types/home";
@@ -68,16 +69,17 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
             {/* vignette */}
             <div
               onClick={() => handlePostItemClick()}
-              className="absolute z-70 inset-0 bg-gradient-to-t from-black/60 from-1% via-transparent via49% to-transparent to-50%"
+              className="absolute -translate-y-2 z-70 inset-0 bg-gradient-to-t from-black/60 from-1% via-transparent via49% to-transparent to-50%"
             />
             <LazyLoadImage
+              effect="opacity"
               alt={"post image"}
               src={getImagePath(
                 memberData.gallery_uuid,
                 memberData.gender,
                 memberData.member_uuid
               )} // use normal <img> attributes as props
-              className="rounded-t-xl lg:w-[460px] w-[350px] h-[554px] xl:h-[454px] xl:w-[400px] object-cover"
+              className="rounded-t-xl lg:w-[460px] z-20 w-[350px] h-[554px] xl:h-[454px] xl:w-[400px] object-cover"
             />
             {/* <img
               src={getImagePath(
@@ -216,6 +218,7 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
                 <TooltipTrigger asChild>
                   <div className="rounded-full bg-[#FFF2F7] flex flex-row justify-center align-center space-x-2 py-2 px-4 dark:bg-[#3b0117] text=[#ff588e]">
                     <LazyLoadImage
+                      effect="opacity"
                       alt={"post country flag"}
                       height={20}
                       width={30}
