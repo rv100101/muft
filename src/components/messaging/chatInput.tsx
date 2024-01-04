@@ -106,7 +106,7 @@ const ChatInput = () => {
 
   const sendMessage = async () => {
     console.log(currentSelectedConversation);
-    let newChatUuid = null;
+    const newChatUuid = null;
     console.log(newChatUuid);
 
     await messagingQuery.sendMessage(
@@ -162,7 +162,7 @@ const ChatInput = () => {
 
   const { selectedMemberName } = useLatestConversationStore();
   return (
-    <div className="flex w-full items-end rounded-lg h-max bg-[#F7F8FA] dark:text-white dark:bg-[#020817] pb-8 sm:pb-0">
+    <div className="flex w-full items-end rounded-lg h-max bg-[#F7F8FA] dark:text-white dark:bg-[#020817] pb-4 sm:pb-0">
       {selectedMemberName.length > 1 && user?.temporarily_deactivated ? (
         <p className="w-full flex justify-center text-red-700 m-8">
           You must Reactivate your account To continue chatting with
