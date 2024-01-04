@@ -33,7 +33,7 @@ const MessagingPage = () => {
         </div>
       )}
       {pageView == "CHAT-MESSAGES" && (
-        <div className="lg:hidden col-span-10 w-full h-full">
+        <div className="lg:hidden col-span-10 w-full h-dvh">
           <ChatConversation />
         </div>
       )}
