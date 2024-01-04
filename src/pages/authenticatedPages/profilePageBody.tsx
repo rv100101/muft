@@ -317,7 +317,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
           onSubmit={methods.handleSubmit(onSubmit)}
         >
           <ProfileTopNav />
-          <div className="lg:h-full h-screen overflow-y-scroll no-scrollbar flex flex-col">
+          <div className="lg:h-full h-screen overflow-y-scroll w-screen sm:w-full overflow-x-clip no-scrollbar flex flex-col">
             {user?.profile_completed && <ProfileHeader userId={userId} />}
             <AboutAccordion userId={parseInt(userId)} />
             {/* user?.profile_completed && <GallerySection userId={userId} /> */}

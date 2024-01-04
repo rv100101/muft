@@ -346,7 +346,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
   }
 
   return (
-    <div className="items-start p-5 border-b w-full">
+    <div className="items-start py-5 sm:p-5 border-b w-full">
       <div className="flex justify-start items-start space-x-2">
         {
           <div className="flex flex-col justify-center items-center space-y-2">
@@ -442,6 +442,15 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                 </Button>
               </>
             }
+            {
+              <p
+                className={
+                  "sm:hidden text-[#f0f9ff] border-[#075985] text-xs py-1 px-2 w-min rounded-md bg-[#38bdf8] hover:bg-[#38bdf8]/80"
+                }
+              >
+                Standard
+              </p>
+            }
           </div>
         }
         <div className="w-full">
@@ -454,22 +463,15 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                   }`}
                 >
                   <div className="flex lg:flex-col lg:justify-start flex-row space-x-4 lg:space-x-0">
-                    <div className="flex flex-col sm:flex-row space-x-1">
-                      <p className="font-semibold text-[#171717] text-sm sm:text-lg dark:text-white">
-                        {`${data!.nickname},`}
-                      </p>
-                      <p className="font-semibold text-primary text-lg">
-                        {data!.age}
-                      </p>
-                      {
-                        <p
-                          className={
-                            "sm:hidden mt-1 text-[#f0f9ff] border-[#075985] text-xs py-1 px-2 w-min rounded-md bg-[#38bdf8] hover:bg-[#38bdf8]/80"
-                          }
-                        >
-                          Standard
+                    <div className="flex flex-col space-x-1">
+                      <div className="flex items-center space-x-1">
+                        <p className="font-semibold text-[#171717] whitespace-nowrap text-sm sm:text-lg dark:text-white">
+                          {`${data!.nickname},`}
                         </p>
-                      }
+                        <p className="font-semibold text-primary sm:text-lg">
+                          {data!.age}
+                        </p>
+                      </div>
                     </div>
                     {
                       <p
@@ -482,7 +484,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                     }
                   </div>
                   {userId !== user!.member_id.toString() && (
-                    <div className="flex w-full lg:flex-row flex-col lg:justify-between lg:items-start lg:space-y-0 space-y-4 lg:pt-0 pt-5 lg:px-2">
+                    <div className="flex w-full lg:flex-row flex-col lg:justify-between lg:items-start lg:space-y-0 space-y-4 lg:pt-0 pt-1 sm:pt-5 lg:px-2">
                       <Button
                         disabled={!selectedConversation}
                         onClick={() => {
@@ -495,7 +497,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                           }
                         }}
                         type="button"
-                        className="text-xs border-primary hover:bg-primary px-2 py-1 lg:w-24 w-3/4 dark:bg-[#ae2e51] dark:text-white"
+                        className="text-xs border-primary hover:bg-primary px-2 py-1 lg:w-24 w-min sm:w-3/4 dark:bg-[#ae2e51] dark:text-white"
                       >
                         <Link
                           onClick={() => {
@@ -506,7 +508,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                             !user?.temporarily_deactivated ? "/messages" : ""
                           }
                         >
-                          <div className="flex">
+                          <div className="flex w-min">
                             <p>Chat</p>
                             <span>
                               <MessageCircleIcon className="h-4" />
@@ -517,7 +519,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                       <div className="flex space-x-2">
                         <Button
                           type="button"
-                          className="hover:ring-2 transition-all ring-primary"
+                          className="hover:ring-2 px-2 py-1 sm:py-2 sm:px-4  transition-all ring-primary"
                           variant={"outline"}
                           onClick={() =>
                             toggleLike.mutate({
@@ -534,7 +536,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                         <Button
                           type="button"
                           variant={"outline"}
-                          className="hover:ring-2 transition-all ring-primary"
+                          className="hover:ring-2 px-2 py-1 sm:py-2 sm:px-4  transition-all ring-primary"
                           onClick={() =>
                             toggleFavorite.mutate({
                               member: user!.member_id,
@@ -550,7 +552,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                         {/* more  */}
                         <Dialog>
                           <DropdownMenu modal={false}>
-                            <DropdownMenuTrigger className="rounded-md h-10 px-4 py-2 border border-input bg-background hover:bg-accent hover:text-accent-foreground hover:ring-2 transition-all ring-primary">
+                            <DropdownMenuTrigger className="rounded-md h-10 px-2 sm:px-4 py-1 sm:py-2 border border-input bg-background hover:bg-accent hover:text-accent-foreground hover:ring-2 transition-all ring-primary">
                               <span>
                                 <MoreHorizontal
                                   color="#FF599B"
