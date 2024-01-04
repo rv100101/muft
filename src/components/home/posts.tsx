@@ -38,15 +38,15 @@ const Posts = ({
       className="col-span-4 overflow-y-auto w-full lg:w-min no-scrollbar 2xl:w-1/2"
     >
       {isLoading ? (
-        <div className="no-scrollbar flex flex-col items-center lg:p-16 px-0 lg:w-[460px] w-screen h-screen sm:w-full rounded-b-xl space-y-4 border border-[#E0E0E0] dark:border-[#131d2d] lg:h-min overflow-y-auto scroll-smooth">
+        <div className="no-scrollbar flex flex-col items-center lg:p-5 px-0 lg:w-[500px] w-screen h-screen sm:w-full rounded-b-xl space-y-4 border border-[#E0E0E0] dark:border-[#131d2d] lg:h-min overflow-y-auto scroll-smooth">
           {/* <div className="flex flex-col justify-center space-x-4 w-full ml-5 mt-10 border w-full"> */}
-          <div className="flex flex-col items-center space-y-2 p-5 border bg-white m-5 lg:w-[470px] w-[350px] dark:bg-[#334155]">
+          <div className="flex flex-col items-center space-y-2 p-10 border bg-white m-5 lg:w-[500px] w-[350px] dark:bg-[#334155]">
             <Skeleton className="h-[500px] w-full" />
           </div>
-          <div className="flex flex-col items-center space-y-2 p-5 border bg-white m-5 lg:w-[470px] w-[350px] dark:bg-[#334155]">
+          <div className="flex flex-col items-center space-y-2 p-5 border bg-white m-5 lg:w-[500px] w-[350px] dark:bg-[#334155]">
             <Skeleton className="h-[300px] w-full" />
           </div>
-          <div className="flex flex-col items-center space-y-2 p-5 border bg-white m-5 lg:w-[470px] w-[350px] dark:bg-[#334155]">
+          <div className="flex flex-col items-center space-y-2 p-5 border bg-white m-5 lg:w-[500px] w-[350px] dark:bg-[#334155]">
             <Skeleton className="h-[300px] w-full" />
           </div>
           {/* </div> */}
