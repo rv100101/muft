@@ -14,7 +14,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axiosQuery from "@/queries/axios";
 import { useUserStore } from "@/zustand/auth/user";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import logo from "@/assets/logo.svg";
 import { Skeleton } from "../ui/skeleton";
 const PostItem = ({ memberData }: { memberData: MemberData }) => {
   const [, setLocation] = useLocation();
