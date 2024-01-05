@@ -103,7 +103,7 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
                     {memberData.nickname}
                   </p>
                   {/* <p className="text-white text-sm">{countryName}</p> */}
-                  <p className="drop-shadow-xl shadow-black text-white text-sm 2xl:text-lg">
+                  <p className="drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] text-white text-sm lg:text-lg 2xl:text-lg">
                     {`${memberData.state_name}, ${memberData.country_name}`}
                   </p>
                 </div>
