@@ -67,6 +67,7 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
       <div className="flex flex-col items-center justify-end h-full">
         <div className="flex flex-col h-full justify-center items-center">
           <div className="relative w-max rounded-t-md hover:cursor-pointer">
+            {/* vignette */}
             <LazyLoadImage
               onClick={() => handlePostItemClick()}
               placeholder={
@@ -102,7 +103,7 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
                     {memberData.nickname}
                   </p>
                   {/* <p className="text-white text-sm">{countryName}</p> */}
-                  <p className="shadow-xl shadow-black text-white text-sm 2xl:text-lg">
+                  <p className="drop-shadow-xl shadow-black text-white text-sm 2xl:text-lg">
                     {`${memberData.state_name}, ${memberData.country_name}`}
                   </p>
                 </div>
