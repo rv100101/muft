@@ -67,17 +67,15 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
       <div className="flex flex-col items-center justify-end h-full">
         <div className="flex flex-col h-full justify-center items-center">
           <div className="relative w-max rounded-t-md hover:cursor-pointer">
-            {/* vignette */}
-            <div onClick={() => handlePostItemClick()}
-              className="absolute -translate-y-2 z-70 inset-0 bg-gradient-to-t from-black/60 from-1% via-transparent via49% to-transparent to-50%"
-            />
             <LazyLoadImage
               onClick={() => handlePostItemClick()}
-              placeholder={<Skeleton className="h-full w-full" />}
+              placeholder={
+                <Skeleton className="h-full w-full" />
+              }
               effect="opacity"
               alt={"post image"}
               delayTime={100}
-              wrapperClassName="lg:w-[460px] w-[350px] h-[554px] xl:h-[454px] xl:w-[400px]"
+              wrapperClassName="relative lg:w-[460px] w-[350px] h-[554px] xl:h-[454px] xl:w-[400px]"
               src={getImagePath(
                 memberData.gallery_uuid,
                 memberData.gender,
@@ -104,7 +102,7 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
                     {memberData.nickname}
                   </p>
                   {/* <p className="text-white text-sm">{countryName}</p> */}
-                  <p className="drop-shadow-xl text-white text-sm 2xl:text-lg">
+                  <p className="shadow-xl shadow-black text-white text-sm 2xl:text-lg">
                     {`${memberData.state_name}, ${memberData.country_name}`}
                   </p>
                 </div>
@@ -219,7 +217,7 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <div className="rounded-full bg-[#FFF2F7] flex flex-row justify-center align-center space-x-2 py-2 px-4 dark:bg-[#3b0117] text=[#ff588e]">
+                  <div className="rounded-full bg-[#FFF2F7] flex flex-row justify-center items-center align-center space-x-2 py-2 px-4 dark:bg-[#3b0117] text=[#ff588e]">
                     <LazyLoadImage
                       effect="opacity"
                       alt={"post country flag"}
