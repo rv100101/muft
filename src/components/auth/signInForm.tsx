@@ -188,7 +188,7 @@ const SignInForm = () => {
             <Input
               autoComplete="off"
               type="text"
-              className="autofill:bg-yellow-200 mx-2 text-sm h-8 focus-visible:ring-offset-0 focus-visible:ring-0 border-0 rounded-full py-1 px-3 text-normal w-full"
+              className="autofill:bg-yellow-200 mx-2 text-sm focus-visible:ring-offset-0 focus-visible:ring-0 border-0 rounded-full py-1 px-3 text-normal w-full"
               placeholder="Email Address"
               {...formik.getFieldProps("email")}
               onChange={formik.handleChange}
