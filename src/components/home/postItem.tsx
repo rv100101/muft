@@ -15,6 +15,7 @@ import axiosQuery from "@/queries/axios";
 import { useUserStore } from "@/zustand/auth/user";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import logo from "@/assets/logo.svg";
+import { Skeleton } from "../ui/skeleton";
 const PostItem = ({ memberData }: { memberData: MemberData }) => {
   const [, setLocation] = useLocation();
   const { likes, favorites, setFavorites, setLikes } = useHomepageViewStore();
@@ -68,21 +69,22 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
         <div className="flex flex-col h-full justify-center items-center">
           <div className="relative w-max rounded-t-md hover:cursor-pointer">
             {/* vignette */}
-            <div
-              onClick={() => handlePostItemClick()}
+            <div onClick={() => handlePostItemClick()}
               className="absolute -translate-y-2 z-70 inset-0 bg-gradient-to-t from-black/60 from-1% via-transparent via49% to-transparent to-50%"
             />
             <LazyLoadImage
               onClick={() => handlePostItemClick()}
-              placeholderSrc={logo}
+              placeholder={<Skeleton className="h-full w-full" />}
               effect="opacity"
               alt={"post image"}
+              delayTime={100}
+              wrapperClassName="lg:w-[460px] w-[350px] h-[554px] xl:h-[454px] xl:w-[400px]"
               src={getImagePath(
                 memberData.gallery_uuid,
                 memberData.gender,
                 memberData.member_uuid
               )} // use normal <img> attributes as props
-              className="rounded-t-xl lg:w-[460px] z-20 w-[350px] h-[554px] xl:h-[454px] xl:w-[400px] object-cover"
+              className="rounded-t-xl lg:w-[460px] w-[350px] h-[554px] xl:h-[454px] xl:w-[400px] object-cover"
             />
             {/* <img
               src={getImagePath(
@@ -207,11 +209,10 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
                 className="mt-1 hover:cursor-pointer"
               />
               <p
-                className={`text-[#FF599B] mt-1 ${
-                  memberData.marital_status === "Prefer not to say"
-                    ? "text-sm"
-                    : ""
-                }`}
+                className={`text-[#FF599B] mt-1 ${memberData.marital_status === "Prefer not to say"
+                  ? "text-sm"
+                  : ""
+                  }`}
               >
                 {memberData.marital_status}
               </p>
