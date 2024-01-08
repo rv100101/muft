@@ -4,7 +4,7 @@ export const getImagePath = (
   member_uuid: string | null | undefined
 ) => {
   if (gallery_uuid != null) {
-    return `https://muffin0.blob.core.windows.net/profile/${member_uuid}/${gallery_uuid}.jpg`;
+    return `https://muffin0.blob.core.windows.net/profile/${member_uuid?.toLowerCase()}/${gallery_uuid.toLowerCase()}.jpg`;
   } else if (gallery_uuid == null && gender && gender[0] == "M") {
     return "https://muffin0.blob.core.windows.net/profile/male.png";
   } else if (gallery_uuid == null && gender && gender[0] == "F") {

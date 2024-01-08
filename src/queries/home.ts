@@ -6,9 +6,15 @@ const getMembers: (memberId: number) => Promise<MemberData[] | null> = async (
 ) => {
   try {
     // console.log("member: ", memberId);
+    const formData = new FormData();
+    formData.append(
+      "auth",
+      "0DB31DEE22DC4C03AD7DAAA9C29518FF3C08D931992A4A5CB0A4FF4CF4707DC6"
+    );
+    formData.append("member", memberId.toString());
     const res = await axiosQuery.post(
-      "https://muffinfunction.azurewebsites.net/api/HomePage",
-      { member: memberId }
+      "https://muffinapi.azurewebsites.net/home_page.php",
+      formData
     );
 
     const memberData: MemberData[] = res.data;
