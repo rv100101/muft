@@ -70,20 +70,6 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- Profile Page -->
-  <url>
-    <loc>https://muffin.ph/profile</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- Member Page -->
-  <url>
-    <loc>https://muffin.ph/members</loc>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
-  </url>
-
   <!-- About Page -->
   <url>
     <loc>https://muffin.ph/about</loc>
