@@ -1,3 +1,4 @@
+import PreferredLanguageDialog from "@/components/preferredLanguageDialog";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -167,6 +168,8 @@ const MyAccountContent = () => {
           </DialogContent>
         </div>
       </Dialog>
+
+      <PreferredLanguageDialog showTrigger={true} />
     </div>
   );
 };
