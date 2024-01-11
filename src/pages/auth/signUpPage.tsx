@@ -13,6 +13,7 @@ import axiosQuery from "@/queries/axios";
 import { toast } from "@/components/ui/use-toast";
 import { useUserStore } from "@/zustand/auth/user";
 import { Helmet } from "react-helmet-async";
+import { useTranslation } from "react-i18next";
 
 type FormDataType = {
   first_name: string;
@@ -20,8 +21,8 @@ type FormDataType = {
   email: string;
   password: string;
 };
-
 const SignUpPage = () => {
+  const [t, i18n] = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [, navigate] = useLocation();
@@ -105,7 +106,7 @@ const SignUpPage = () => {
     <>
       <div className="h-[calc(100vh-70px)] md:h-[calc(100vh-88px)] justify-center items-center flex lg:gap-4 w-full lg:px-32 border-t">
         <Helmet>
-          <title>Sign up</title>
+          <title>Sign Up</title>
           <link
             rel="canonical"
             href={`https://${window.location.hostname}/auth/signup`}
@@ -153,8 +154,11 @@ const SignUpPage = () => {
                 <UserIcon color="#98A2B3" size={20} className="mt-1" />
                 <input
                   type="text"
-                  className="ml-2 border-0 rounded-full py-2 px-4 text-normal focus:outline-0 w-full"
-                  placeholder="First Name"
+                  className={cn(
+                    "ml-2 border-0 rounded-full py-2 px-5 text-normal focus:outline-0 w-full",
+                    i18n.language == "ar" && "text-right"
+                  )}
+                  placeholder={t("signUp.firstName")}
                   {...formik.getFieldProps("first_name")}
                   name="first_name"
                   onChange={formik.handleChange}
@@ -196,8 +200,11 @@ const SignUpPage = () => {
                 <UserIcon color="#98A2B3" size={20} className="mt-1" />
                 <input
                   type="text"
-                  className="ml-2 border-0 w-full rounded-full py-2 px-5 text-normal focus:outline-0 w-full"
-                  placeholder="Last Name"
+                  className={cn(
+                    "ml-2 border-0 rounded-full py-2 px-5 text-normal focus:outline-0 w-full",
+                    i18n.language == "ar" && "text-right"
+                  )}
+                  placeholder={t("signUp.lastName")}
                   {...formik.getFieldProps("last_name")}
                   name="last_name"
                   onChange={formik.handleChange}
@@ -238,8 +245,11 @@ const SignUpPage = () => {
                 <input
                   type="text"
                   autoComplete="off"
-                  className="ml-2 border-0 rounded-full py-2 px-5 text-normal focus:outline-0 w-full"
-                  placeholder="example@email.com"
+                  className={cn(
+                    "ml-2 border-0 rounded-full py-2 px-5 text-normal focus:outline-0 w-full",
+                    i18n.language == "ar" && "text-right"
+                  )}
+                  placeholder={t("signIn.emailAddress")}
                   {...formik.getFieldProps("email")}
                   onChange={formik.handleChange}
                   name="email"
@@ -279,8 +289,11 @@ const SignUpPage = () => {
               >
                 <LockIcon color="#98A2B3" size={20} className="mt-1" />
                 <input
-                  className="appearance-none border-0 rounded-full py-2 px-5 text-normal focus:outline-0 w-full"
-                  placeholder="Password"
+                  className={cn(
+                    "ml-2 border-0 rounded-full py-2 px-5 text-normal focus:outline-0 w-full",
+                    i18n.language == "ar" && "text-right"
+                  )}
+                  placeholder={t("signIn.password")}
                   type={showPassword ? "text" : "password"}
                   {...formik.getFieldProps("password")}
                   onChange={formik.handleChange}
@@ -317,7 +330,7 @@ const SignUpPage = () => {
                 {isLoading ? (
                   <Loader2 className="ml-2 h-full w-full animate-spin" />
                 ) : (
-                  "Sign Up"
+                  t("signUp.signUp")
                 )}
               </Button>
             </div>
@@ -327,7 +340,7 @@ const SignUpPage = () => {
             href="/auth/signin"
             className="mt-8 underline text-[#4635E2] text-sm"
           >
-            Already have an account?
+            {t("signUp.alreadyHaveAccount")}
           </Link>
         </div>
         <div></div>
