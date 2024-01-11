@@ -22,8 +22,10 @@ import { useOrientation } from "@uidotdev/usehooks";
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
 import profileHeaderStore from "@/zustand/profile/profileHeaderStore";
 import useReadConversationsStateStore from "@/zustand/messaging/readConversations";
+import { useTranslation } from "react-i18next";
 
 const SideBar = () => {
+  const [t, i18n] = useTranslation();
   const orientation = useOrientation();
   const { updateRead: setReadList } = useReadConversationsStateStore();
   const reset = useConversationHistoryStore((state) => state.resetToNull);
@@ -38,7 +40,7 @@ const SideBar = () => {
   const user = useUserStore((state) => state.user);
   const navLinks = links(user!.member_id).map((link, index) => {
     return (
-      <li key={index} className="w-full">
+      <li key={index} className={cn("w-full")}>
         <Link
           className={cn(
             "h-10 px-4 py-2 hover:bg-accent hover:text-accent-foreground flex justify-start items-center space-x-2",
@@ -70,7 +72,14 @@ const SideBar = () => {
               size={20}
             />
           }
-          <p className="text-sm">{link.name}</p>
+          <p
+            className={cn(
+              "text-sm",
+              i18n.language == "ar" && "text-right w-full"
+            )}
+          >
+            {link.name}
+          </p>
         </Link>
       </li>
     );

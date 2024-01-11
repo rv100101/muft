@@ -9,7 +9,9 @@ import passwordResetQuery from "@/queries/password_reset";
 import { toast } from "../ui/use-toast";
 import { usePasswordResetState } from "@/zustand/auth/passwordReset";
 import { Loader2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 const SendResetPin = () => {
+  const [t, i18n] = useTranslation();
   const changePasswordResetState = usePasswordResetState(
     (state) => state.changeState
   );
@@ -52,10 +54,17 @@ const SendResetPin = () => {
   });
   return (
     <form onSubmit={emailForm.handleSubmit}>
-      <div className="space-y-4">
-        <h1 className="font-bold lg:text-2xl">Reset your password</h1>
+      <div
+        className={cn(
+          "space-y-4",
+          i18n.language == "ar" && "text-right w-full"
+        )}
+      >
+        <h1 className={cn("font-bold lg:text-2xl")}>
+          {t("forgotPassword.resetPassword")}
+        </h1>
         <hr />
-        <p>Please enter your email to proceed.</p>
+        <p>{t("forgotPassword.pleaseEnterEmail")}</p>
         <div className="flex items-center space-x-2 justify-around border-2 px-4 rounded-full">
           {/* <label htmlFor="email">Email</label>
           <MailIcon /> */}
@@ -65,8 +74,11 @@ const SendResetPin = () => {
             id="email"
             name="email"
             type="text"
-            placeholder="Email Address"
-            className="border-none focus-visible:ring-offset-0 focus-visible:ring-0"
+            placeholder={t("forgotPassword.emailAddress")}
+            className={cn(
+              "border-none focus-visible:ring-offset-0 focus-visible:ring-0",
+              i18n.language == "ar" && "text-right"
+            )}
           />
         </div>
         {emailForm.errors.email && (
@@ -77,14 +89,14 @@ const SendResetPin = () => {
         <hr />
         <div className="flex space-x-2 justify-end">
           <DialogClose className="hover: border border-primary rounded-md px-2 py-1 text-sm">
-            Cancel
+            {t("forgotPassword.cancel")}
           </DialogClose>
           <Button
             disabled={sendResetPinMutation.isLoading}
             className={cn("text-white w-max rounded-md hover:bg-[#FF599B]/90")}
             type="submit"
           >
-            Reset{" "}
+            {t("forgotPassword.reset")}
             {sendResetPinMutation.isLoading && (
               <span>
                 <Loader2 className="ml-2 h-min w-min animate-spin" />
