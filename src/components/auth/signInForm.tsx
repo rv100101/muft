@@ -24,12 +24,14 @@ import { Button } from "../ui/button";
 import { usePasswordResetState } from "@/zustand/auth/passwordReset";
 import { useQueryClient } from "@tanstack/react-query";
 import { useUserNickname } from "@/zustand/auth/username";
+import { useTranslation } from "react-i18next";
 
 type FormDataType = {
   email: string;
   password: string;
 };
 const SignInForm = () => {
+  const [t, i18n] = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
   const [blockedModal, showBlockedModal] = useState(false);
   const { toast } = useToast();
@@ -188,8 +190,11 @@ const SignInForm = () => {
             <Input
               autoComplete="off"
               type="text"
-              className="autofill:bg-yellow-200 mx-2 text-sm focus-visible:ring-offset-0 focus-visible:ring-0 border-0 rounded-full py-1 px-3 text-normal w-full"
-              placeholder="Email Address"
+              className={cn(
+                "rtl:mr-3 autofill:bg-yellow-200 mx-2 text-sm focus-visible:ring-offset-0 focus-visible:ring-0 border-0 rounded-full py-1 px-3 text-normal w-full",
+                i18n.language == "ar" && "text-right"
+              )}
+              placeholder={t("signIn.emailAddress")}
               {...formik.getFieldProps("email")}
               onChange={formik.handleChange}
               name="email"
@@ -226,8 +231,11 @@ const SignInForm = () => {
             <LockIcon color="#98A2B3" size={20} className="mt-1" />
 
             <Input
-              className="appearance-none focus-visible:ring-offset-0 focus-visible:ring-0 border-0 rounded-full py-2 px-5 text-normal focus:outline-0 w-full"
-              placeholder="Password"
+              className={cn(
+                "appearance-none focus-visible:ring-offset-0 focus-visible:ring-0 border-0 rounded-full py-2 px-5 text-normal focus:outline-0 w-full",
+                i18n.language == "ar" && "text-right"
+              )}
+              placeholder={t("signIn.password")}
               type={showPassword ? "text" : "password"}
               {...formik.getFieldProps("password")}
               onChange={formik.handleChange}
@@ -263,7 +271,7 @@ const SignInForm = () => {
             {isLoading ? (
               <Loader2 className="ml-2 h-full w-full animate-spin" />
             ) : (
-              "Sign In"
+              t("signIn.signIn")
             )}
           </Button>
         </div>
@@ -285,7 +293,7 @@ const SignInForm = () => {
               }}
               className="float-right underline text-[#4635E2] hover:text-[#FF8AB3] text-xs mt-2"
             >
-              Forgot Password?
+              {t("signIn.forgotPassword")}
             </DialogTrigger>
             <DialogContent className="w-72 md:w-full">
               <ForgotPassword />
@@ -293,14 +301,19 @@ const SignInForm = () => {
           </Dialog>
         </div>
       </form>
-      <div className="flex flex-row space-x-2">
-        <p className="text-xs mt-4">Don't have an Account?</p>
+      <div
+        className={cn(
+          "flex flex-row space-x-2",
+          i18n.language == "ar" && "flex-row-reverse"
+        )}
+      >
+        <p className="text-xs mt-4">{t("signIn.dontHaveAccount")}</p>
         <Link
           href="/auth/signup"
           onClick={scrollToTop}
           className="text-xs underline text-[#4635E2] mt-4 hover:text-[#FF8AB3]"
         >
-          Sign up here
+          {t("signIn.signUpHere")}
         </Link>
       </div>
     </div>

@@ -1,0 +1,143 @@
+{
+  "menu": {
+    "home": "الصفحة الرئيسية",
+    "messages": "الدردشة",
+    "myProfile": "حسابي",
+    "likes": "الإعجاب",
+    "favorites": "المحفوظات",
+    "settings": "الإعدادات",
+    "helpCenter": "الدعم الفني",
+    "privacyPolicy": "سياسية الخصوصية",
+    "termsAndConditions": "الأحكام والشروط",
+    "signOut": "خروج"
+  },
+  "search": {
+    "search": "بحث"
+  },
+  "filter": {
+    "filterBy": "التصنيف",
+    "age": "العمر",
+    "from": "من",
+    "to": "إلى",
+    "suggested": "المقترحات"
+  },
+  "messages": {
+    "typeAMessage": "اكتب رسالتك"
+  },
+  "likes": {
+    "likes": "الإعجاب",
+    "viewProfile": "عرض الحساب"
+  },
+  "favorites": {
+    "favorites": "المحفوظات",
+    "viewProfile": "عرض الحساب"
+  },
+  "settings": {
+    "settings": "الإعدادات",
+    "myAccount": "حسابي",
+    "changePassword": "كلمة السر",
+    "update": "تغيير",
+    "displaySettings": "العرض",
+    "theme": "سمة العرض",
+    "light": "فاتح",
+    "dark": "غامق",
+    "auto": "تلقائي",
+    "notifications": "التنبيهات",
+    "enablePushNotifications": "تفعيل التنبيهات",
+    "reactivateAccount": "تفعيل الحساب",
+    "reactivate": "تفعيل",
+    "deactivateAccount": "إيقاف الحساب",
+    "deactivate": "إيقاف"
+  },
+  "changePassword": {
+    "changePassword": "كلمة السر",
+    "newPassword": "كلمة السر الجديدة",
+    "password": "كلمة السر",
+    "reTypePassword": "تأكيد كلمة السر",
+    "update": "تغيير"
+  },
+  "deactivateProfile": {
+    "deactivateProfile": "إيقاف الحساب",
+    "proceed": "أنا متأكد من أنني أريد المتابعة",
+    "deactivate": "إيقاف الحساب",
+    "delete": "حذف الحساب",
+    "importantNotice": "ملاحظة هامة",
+    "permanentlyDelete": "حذف نهائي",
+    "no": "لا"
+  },
+  "signOut": {
+    "confirmSignOut": "هل تريد الخروج من الحساب الآن؟",
+    "yes": "نعم",
+    "no": "لا"
+  },
+  "memberDetails": {
+    "chat": "الدردشة",
+    "standard": "حساب عادي",
+    "about": "البيانات الرئيسية",
+    "basicInformation": "نبذة عامة",
+    "location": "المكان",
+    "background": "الخلفية",
+    "languages": "اللغات",
+    "appearance": "المظهر العام",
+    "lifestyle": "مستوى المعيشة",
+    "pets": "الحيوانات الأليفة",
+    "favoriteFood": "الأكل المفضل",
+    "health": "الحالة الصحية",
+    "employment": "الوظيفة",
+    "interests": "الاهتمامات",
+    "memberID": "رقم الحساب",
+    "nickname": "الاسم المستعار",
+    "gender": "الجنس",
+    "nationality": "الجنسية",
+    "age": "العمر",
+    "country": "البلد",
+    "state": "المنطقة",
+    "education": "المستوى التعليمي",
+    "religion": "الديانة",
+    "ethnicity": "العرق",
+    "eyeColor": "لون العين",
+    "haircut": "الشعر",
+    "height": "الطول",
+    "weight": "الوزن",
+    "bodyType": "الجسم",
+    "bodyArtType": "فنون الجسم",
+    "drinkingAlcohol": "المشروبات الكحولية",
+    "smokingCigarette": "التدخين",
+    "livingStatus": "حالة المعيشة",
+    "hasCar": "السيارة",
+    "workout": "الرياضة",
+    "disability": "الإعاقة البدنية",
+    "maritalStatus": "الحالة الاجتماعية",
+    "hasChildren": "لديك أطفال",
+    "wantChildren": "ترغب في الأطفال",
+    "status": "الحالة",
+    "occupation": "الوظيفة",
+    "monthlyIncome": "الدخل الشهري",
+    "block": "حجب الحساب",
+    "reportAbuse": "الإبلاغ عن الحساب"
+  },
+  "signIn": {
+    "emailAddress": "البريد الالكتروني",
+    "password": "كلمة السر",
+    "signIn": "دخول",
+    "forgotPassword": "نسيت كلمة السر؟",
+    "dontHaveAccount": "ليس لديك حساب؟",
+    "signUpHere": "قم بالتسجيل",
+    "help": "مساعدة"
+  },
+  "signUp": {
+    "firstName": "الاسم الأول",
+    "lastName": "الاسم الأخير",
+    "password": "كلمة السر",
+    "signUp": "تسجيل",
+    "alreadyHaveAccount": "لديك حساب؟",
+    "help": "مساعدة"
+  },
+  "forgotPassword": {
+    "resetPassword": "تغيير كلمة السر",
+    "pleaseEnterEmail": "يرجى كتابة البريد الالكتروني",
+    "emailAddress": "البريد الالكتروني",
+    "cancel": "إلغاء",
+    "reset": "تغيير"
+  }
+}

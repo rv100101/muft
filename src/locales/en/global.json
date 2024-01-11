@@ -1,0 +1,143 @@
+{
+  "menu": {
+    "home": "Home",
+    "messages": "Messages",
+    "myProfile": "My Profile",
+    "likes": "Likes",
+    "favorites": "Favorites",
+    "settings": "Settings",
+    "helpCenter": "Help Center",
+    "privacyPolicy": "Privacy Policy",
+    "termsAndConditions": "Terms & Conditions",
+    "signOut": "Sign Out"
+  },
+  "search": {
+    "search": "Search"
+  },
+  "filter": {
+    "filterBy": "Filter By",
+    "age": "Age",
+    "from": "From",
+    "to": "To",
+    "suggested": "Suggested"
+  },
+  "messages": {
+    "typeAMessage": "Type a Message"
+  },
+  "likes": {
+    "likes": "Likes",
+    "viewProfile": "View Profile"
+  },
+  "favorites": {
+    "favorites": "Favorites",
+    "viewProfile": "View Profile"
+  },
+  "settings": {
+    "settings": "Settings",
+    "myAccount": "My Account",
+    "changePassword": "Change Password",
+    "update": "Update",
+    "displaySettings": "Display Settings",
+    "theme": "Theme",
+    "light": "Light",
+    "dark": "Dark",
+    "auto": "Auto",
+    "notifications": "Notifications",
+    "enablePushNotifications": "Enable Push Notifications",
+    "reactivateAccount": "Reactivate Account",
+    "reactivate": "Reactivate",
+    "deactivateAccount": "Deactivate Account",
+    "deactivate": "Deactivate"
+  },
+  "changePassword": {
+    "changePassword": "Change Password",
+    "newPassword": "New Password",
+    "password": "Password",
+    "reTypePassword": "Re-Type Password",
+    "update": "Update"
+  },
+  "deactivateProfile": {
+    "deactivateProfile": "Deactivate Profile",
+    "proceed": "I am sure I want to proceed",
+    "deactivate": "Deactivate",
+    "delete": "Delete",
+    "importantNotice": "Important Notice",
+    "permanentlyDelete": "Permanenently Delete",
+    "no": "No"
+  },
+  "signOut": {
+    "confirmSignOut": "Are you sure you want to sign out?",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "memberDetails": {
+    "chat": "Chat",
+    "standard": "Standard",
+    "about": "ABOUT",
+    "basicInformation": "Basic Information",
+    "location": "Location",
+    "background": "Background",
+    "languages": "Languages",
+    "appearance": "Appearance",
+    "lifestyle": "Lifestyle",
+    "pets": "Pets",
+    "favoriteFood": "Favorite Food",
+    "health": "Health",
+    "employment": "Employment",
+    "interests": "Interests",
+    "memberID": "Member ID",
+    "nickname": "Nickname",
+    "gender": "Gender",
+    "nationality": "Nationality",
+    "age": "Age",
+    "country": "Country",
+    "state": "State",
+    "education": "Education",
+    "religion": "Religion",
+    "ethnicity": "Ethnicity",
+    "eyeColor": "Eye Color",
+    "haircut": "Haircut",
+    "height": "Height",
+    "weight": "Weight",
+    "bodyType": "Body Type",
+    "bodyArtType": "Body Art Type",
+    "drinkingAlcohol": "Drinking Alcohol",
+    "smokingCigarette": "Smoking Cigarette",
+    "livingStatus": "Living Status",
+    "hasCar": "Has Car",
+    "workout": "Workout",
+    "disability": "Disability",
+    "maritalStatus": "Marital Status",
+    "hasChildren": "Has Children",
+    "wantChildren": "Want Children",
+    "status": "Status",
+    "occupation": "Occupation",
+    "monthlyIncome": "Monthly Income",
+    "block": "Block",
+    "reportAbuse": "Report Abuse"
+  },
+  "signIn": {
+    "emailAddress": "Email Address",
+    "password": "Password",
+    "signIn": "Sign in",
+    "forgotPassword": "Forgot Password?",
+    "dontHaveAccount": "Don't have an Account?",
+    "signUpHere": "Sign up here",
+    "help": "Help"
+  },
+  "signUp": {
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "password": "Password",
+    "signUp": "Sign up",
+    "alreadyHaveAccount": "Already have an account?",
+    "help": "Help"
+  },
+  "forgotPassword": {
+    "resetPassword": "Reset your password",
+    "pleaseEnterEmail": "Please enter your email to proceed.",
+    "emailAddress": "Email Address",
+    "cancel": "Cancel",
+    "reset": "Reset"
+  }
+}

@@ -14,6 +14,7 @@ import { HelpCircle, Menu } from "lucide-react";
 import { motion } from "framer-motion";
 import { useLocation } from "wouter";
 import { cn } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
 const container = {
   none: { opacity: 1 },
   hidden: { opacity: 0 },
@@ -33,7 +34,7 @@ const motionTop80 = {
 
 function TopNav() {
   const [location] = useLocation();
-
+  const [t] = useTranslation();
   return (
     <motion.nav
       className={cn(
@@ -79,7 +80,7 @@ function TopNav() {
                   href="https://support.softnames.com/"
                   target="_blank"
                 >
-                  Help
+                  {t("signIn.help")}
                 </a>
                 <HelpCircle
                   color="#1B2950"

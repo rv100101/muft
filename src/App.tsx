@@ -17,16 +17,26 @@ import { useEffect } from "react";
 // import runOneSignal from "./lib/oneSignal";
 import * as Sentry from "@sentry/react";
 import { useUpdateEffect } from "usehooks-ts";
+import PreferredLanguageDialog from "./components/preferredLanguageDialog";
+import { usePreferredLanguageStore } from "./zustand/auth/preferred_language";
+import { useTranslation } from "react-i18next";
 function App() {
+  const [, i18n] = useTranslation();
   const [location] = useLocation();
   const user = useUserStore((state) => state.user);
   const toggleSystemDark = useSettingsStore((state) => state.toggleSystemDark);
 
+  const preffered = usePreferredLanguageStore((state) => state.preferred);
+
   const displaySettings = useSettingsStore((state) => state.settings);
 
-  // useEffect(() => {
-  //   runOneSignal();
-  // });
+  useEffect(() => {
+    if (preffered) {
+      if (i18n.language !== "preferred") {
+        i18n.changeLanguage(preffered);
+      }
+    }
+  }, [preffered, i18n]);
 
   useUpdateEffect(() => {
     if (user) {
@@ -76,6 +86,7 @@ function App() {
           location == "/auth/signin" ? "h-screen flex flex-col" : "h-full"
         )}
       >
+        <PreferredLanguageDialog />
         <div className="h-max">
           {routesWithFooterAndTopNav.includes(location) && !user && <TopNav />}
         </div>
