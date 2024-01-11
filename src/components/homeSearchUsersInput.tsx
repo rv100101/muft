@@ -8,6 +8,7 @@ import { useDebounce } from "usehooks-ts";
 import { Button } from "./ui/button";
 import { getImagePath } from "@/lib/images";
 import { useLocation } from "wouter";
+import { useTranslation } from "react-i18next";
 
 type SearchResultItem = {
   member_id: number;
@@ -20,6 +21,7 @@ type SearchResultItem = {
 };
 
 const HomepageSearchInput = () => {
+  const [t] = useTranslation();
   const [searchResults, setSearchResults] = useState([]);
   const [, setLocation] = useLocation();
 
@@ -62,7 +64,7 @@ const HomepageSearchInput = () => {
             }, 200);
           }}
           className="h-4 border-0 focus:outline-0 w-full placeholder-[#E0E0E0] text-sm dark:text-white dark:bg-[#020817]"
-          placeholder="Search"
+          placeholder={t("search.search")}
         />
         <SearchIcon />
       </div>

@@ -1,8 +1,10 @@
 import { Slider } from "@/components/ui/slider";
+import { cn } from "@/lib/utils";
 import { MemberData } from "@/types/home";
 import { useFilterStore } from "@/zustand/home/filter";
 import useHomepageViewStore from "@/zustand/home/homepageView";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useDebounce } from "usehooks-ts";
 const HomeFilters = ({
   isLoading,
@@ -11,6 +13,7 @@ const HomeFilters = ({
   isLoading: boolean;
   members: MemberData[] | null | undefined;
 }) => {
+  const [t, i18n] = useTranslation();
   const setMemberList = useHomepageViewStore(
     (state) => state.setModifiedMemberList
   );
@@ -114,15 +117,31 @@ const HomeFilters = ({
   };
   return (
     <div className="border-none sm:border-solid sm:border mt-5 py-5 mx-2 rounded-lg">
-      <div className="flex flex-row justify-between items-center">
-        <p className="px-0 sm:px-5 text-[#cfd8e4]">Filter By</p>
+      <div
+        className={cn(
+          "flex flex-row justify-between items-center",
+          i18n.language == "ar" && "justify-end"
+        )}
+      >
+        <p className="px-0 sm:px-5 text-[#cfd8e4]">{t("filter.filterBy")}</p>
         {/* <p className="px-5 text-[#7e7e7e] text-xs underline hover:cursor-pointer">
                     Clear
                   </p> */}
       </div>
 
-      <div className="flex flex-col border-none sm:border-solid sm:border m-0 sm:m-5 rounded-lg px-0 sm:px-5">
-        <p className="px-5 text-[#cfd8e4] pt-5 hidden sm:flex">Suggested</p>
+      <div
+        className={cn(
+          "flex flex-col border-none sm:border-solid sm:border m-0 sm:m-5 rounded-lg px-0 sm:px-5"
+        )}
+      >
+        <p
+          className={cn(
+            "px-5 text-[#cfd8e4] pt-5 hidden sm:flex",
+            i18n.language == "ar" && "justify-end"
+          )}
+        >
+          {t("filter.suggested")}
+        </p>
         <div className="flex flex-row justify-between items-center p-4 space-x-5">
           <p
             onClick={() => {
@@ -206,13 +225,13 @@ const HomeFilters = ({
           </p>
         </div>
         <div className="flex flex-row justify-between items-center mt-5">
-          <p className="px-5 text-sm">Age</p>
+          <p className={cn("px-5 text-sm")}>{t("filter.age")}</p>
           {/* <p className="px-5 text-sm">{`${startAgeSliderVal}-${endAgeSliderVal}`}</p> */}
           <p className="px-5 text-sm">{`${filters?.min_age}-${filters?.max_age}`}</p>
         </div>
         {/* <form action="post" onSubmit={formik.handleSubmit}> */}
         <div className="flex flex-row justify-center align-center py-5 px-5 mt-5 space-x-5">
-          <p className="text-slate-500 text-sm">From</p>
+          <p className="text-slate-500 text-sm">{t("filter.from")}</p>
           <Slider
             // defaultValue={[50]}
             value={[filters!.min_age]}
@@ -226,7 +245,7 @@ const HomeFilters = ({
           />
         </div>
         <div className="flex flex-row justify-center align-center py-5 px-5">
-          <p className="text-slate-500 text-sm">To</p>
+          <p className="text-slate-500 text-sm">{t("filter.to")}</p>
           <Slider
             // defaultValue={[50]}
             // dir="right-to-left"
