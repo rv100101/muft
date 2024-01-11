@@ -103,22 +103,27 @@ const SideBar = () => {
           <ul>{navLinks}</ul>
         </div>
 
-        <div className="flex flex-col space-y-4 px-4 ">
+        <div
+          className={cn(
+            "flex flex-col space-y-4 px-4",
+            i18n.language == "ar" && "items-end"
+          )}
+        >
           <a
             className="hover:text-slate-700 text-xs text-black dark:text-white"
             href="https://softnames.bolddesk.com/"
             target="__blank"
           >
-            Help Center
+            {t("menu.helpCenter")}
           </a>
           <Link onClick={scrollToTop} href={"/privacy"}>
             <a className="hover:text-slate-700 text-xs text-black dark:text-white">
-              Privacy Policy
+              {t("menu.privacyPolicy")}
             </a>
           </Link>
           <Link onClick={scrollToTop} href="/terms">
             <a className="hover:text-slate-700 text-xs text-black dark:text-white">
-              Terms & Conditions
+              {t("menu.termsAndConditions")}
             </a>
           </Link>
           {/* <Link onClick={scrollToTop} href="/release-notes">
@@ -131,7 +136,7 @@ const SideBar = () => {
             <DialogTrigger>
               <div className="flex space-x-2 my-4">
                 {<LogOutIcon size={20} className="text-primary" />}{" "}
-                <p className="text-sm">Sign out</p>
+                <p className="text-sm">{t("menu.signOut")}</p>
               </div>
             </DialogTrigger>
             <DialogContent className="sm:max-w-md opacity-100">
