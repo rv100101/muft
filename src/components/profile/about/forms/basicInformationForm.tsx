@@ -27,7 +27,7 @@ import { useState } from "react";
 import { useLocation } from "wouter";
 import { useTranslation } from "react-i18next";
 const BasicInformationForm = () => {
-  const [t] = useTranslation();
+  const [t, i18n] = useTranslation();
   const [location] = useLocation();
   const parts = location.split("/");
   const userId = parts[parts.length - 1];
@@ -79,7 +79,12 @@ const BasicInformationForm = () => {
       {!editMode && user?.profile_completed && (
         <>
           <div className="flex flex-row justify-between w-full px-5">
-            <div className="flex flex-row space-x-2 hover:cursor-pointer">
+            <div
+              className={cn(
+                "flex flex-row space-x-2 hover:cursor-pointer",
+                i18n.language == "ar" && "space-x-reverse"
+              )}
+            >
               <Hash
                 color="#ff569a"
                 size={30}
@@ -123,7 +128,12 @@ const BasicInformationForm = () => {
             </div>
           </div>
         ) : (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+          <div
+            className={cn(
+              "flex flex-row space-x-2 hover:cursor-pointer",
+              i18n.language == "ar" && "space-x-reverse"
+            )}
+          >
             <User2
               color="#ff569a"
               size={30}
@@ -177,7 +187,12 @@ const BasicInformationForm = () => {
             />
           </div>
         ) : (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+          <div
+            className={cn(
+              "flex flex-row space-x-2 hover:cursor-pointer",
+              i18n.language == "ar" && "space-x-reverse"
+            )}
+          >
             <Ghost
               color="#ff569a"
               size={30}
@@ -235,7 +250,12 @@ const BasicInformationForm = () => {
             />
           </div>
         ) : (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+          <div
+            className={cn(
+              "flex flex-row space-x-2 hover:cursor-pointer",
+              i18n.language == "ar" && "space-x-reverse"
+            )}
+          >
             <Flag
               color="#ff569a"
               size={30}
@@ -254,7 +274,12 @@ const BasicInformationForm = () => {
       </div>
       {!editMode && user?.profile_completed && (
         <div className="flex flex-row justify-between w-full px-5">
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+          <div
+            className={cn(
+              "flex flex-row space-x-2 hover:cursor-pointer",
+              i18n.language == "ar" && "space-x-reverse"
+            )}
+          >
             <Hourglass
               color="#ff569a"
               size={30}

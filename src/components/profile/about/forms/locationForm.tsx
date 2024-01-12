@@ -22,9 +22,10 @@ import { useUserStore } from "@/zustand/auth/user";
 import useSelectedCountryStore from "@/zustand/profile/location/selectedCountry";
 import { useUpdateEffect } from "usehooks-ts";
 import { useTranslation } from "react-i18next";
+import { cn } from "@/lib/utils";
 
 const LocationForm = () => {
-  const [t] = useTranslation();
+  const [t, i18n] = useTranslation();
   const setSelectedCountry = useSelectedCountryStore(
     (state) => state.setSelectedCountry
   );
@@ -122,7 +123,12 @@ const LocationForm = () => {
             />
           </div>
         ) : (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+          <div
+            className={cn(
+              "flex flex-row space-x-2 hover:cursor-pointer",
+              i18n.language == "ar" && "space-x-reverse"
+            )}
+          >
             <Map
               color="#ff5c9d"
               size={30}
@@ -179,7 +185,12 @@ const LocationForm = () => {
             />
           </div>
         ) : (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+          <div
+            className={cn(
+              "flex flex-row space-x-2 hover:cursor-pointer",
+              i18n.language == "ar" && "space-x-reverse"
+            )}
+          >
             <MapPin
               color="#ff5c9d"
               size={30}

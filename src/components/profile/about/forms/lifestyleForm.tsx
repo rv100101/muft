@@ -20,9 +20,10 @@ import {
 import { useFormContext } from "react-hook-form";
 import { useUserStore } from "@/zustand/auth/user";
 import { useTranslation } from "react-i18next";
+import { cn } from "@/lib/utils";
 
 const LifestyleForm = () => {
-  const [t] = useTranslation();
+  const [t, i18n] = useTranslation();
   const { control } = useFormContext();
   const isLoading = profileAboutContentStore((state) => state.isLoading);
   const data = profileAboutContentStore((state) => state.data);
@@ -85,7 +86,12 @@ const LifestyleForm = () => {
             />
           </div>
         ) : (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+          <div
+            className={cn(
+              "flex flex-row space-x-2 hover:cursor-pointer",
+              i18n.language == "ar" && "space-x-reverse"
+            )}
+          >
             <Beer
               color="#ff5c9d"
               size={30}
@@ -144,7 +150,12 @@ const LifestyleForm = () => {
             />
           </div>
         ) : (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+          <div
+            className={cn(
+              "flex flex-row space-x-2 hover:cursor-pointer",
+              i18n.language == "ar" && "space-x-reverse"
+            )}
+          >
             <Cigarette
               color="#ff5c9d"
               size={30}
@@ -203,7 +214,12 @@ const LifestyleForm = () => {
             />
           </div>
         ) : (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+          <div
+            className={cn(
+              "flex flex-row space-x-2 hover:cursor-pointer",
+              i18n.language == "ar" && "space-x-reverse"
+            )}
+          >
             <Home
               color="#ff5c9d"
               size={30}
@@ -262,7 +278,12 @@ const LifestyleForm = () => {
             />
           </div>
         ) : (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+          <div
+            className={cn(
+              "flex flex-row space-x-2 hover:cursor-pointer",
+              i18n.language == "ar" && "space-x-reverse"
+            )}
+          >
             <CarTaxiFront
               color="#ff5c9d"
               size={30}

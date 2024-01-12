@@ -21,9 +21,10 @@ import {
 import { useFormContext } from "react-hook-form";
 import { useUserStore } from "@/zustand/auth/user";
 import { useTranslation } from "react-i18next";
+import { cn } from "@/lib/utils";
 
 const AppearanceForm = () => {
-  const [t] = useTranslation();
+  const [t, i18n] = useTranslation();
   const { control } = useFormContext();
   const isLoading = profileAboutContentStore((state) => state.isLoading);
   const data = profileAboutContentStore((state) => state.data);
@@ -84,7 +85,12 @@ const AppearanceForm = () => {
             />
           </div>
         ) : (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+          <div
+            className={cn(
+              "flex flex-row space-x-2 hover:cursor-pointer",
+              i18n.language == "ar" && "space-x-reverse"
+            )}
+          >
             <EyeIcon
               color="#ff5c9d"
               size={30}
@@ -141,7 +147,12 @@ const AppearanceForm = () => {
             />
           </div>
         ) : (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+          <div
+            className={cn(
+              "flex flex-row space-x-2 hover:cursor-pointer",
+              i18n.language == "ar" && "space-x-reverse"
+            )}
+          >
             <Scissors
               color="#ff5c9d"
               size={30}
@@ -193,7 +204,12 @@ const AppearanceForm = () => {
             />
           </div>
         ) : (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+          <div
+            className={cn(
+              "flex flex-row space-x-2 hover:cursor-pointer",
+              i18n.language == "ar" && "space-x-reverse"
+            )}
+          >
             <Ruler
               color="#ff5c9d"
               size={30}
@@ -243,7 +259,12 @@ const AppearanceForm = () => {
             />
           </div>
         ) : (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+          <div
+            className={cn(
+              "flex flex-row space-x-2 hover:cursor-pointer",
+              i18n.language == "ar" && "space-x-reverse"
+            )}
+          >
             <Dumbbell
               color="#ff5c9d"
               size={30}
@@ -301,7 +322,12 @@ const AppearanceForm = () => {
             />
           </div>
         ) : (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+          <div
+            className={cn(
+              "flex flex-row space-x-2 hover:cursor-pointer",
+              i18n.language == "ar" && "space-x-reverse"
+            )}
+          >
             <User2
               color="#ff5c9d"
               size={30}
@@ -359,7 +385,12 @@ const AppearanceForm = () => {
             />
           </div>
         ) : (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+          <div
+            className={cn(
+              "flex flex-row space-x-2 hover:cursor-pointer",
+              i18n.language == "ar" && "space-x-reverse"
+            )}
+          >
             <Brush
               color="#ff5c9d"
               size={30}

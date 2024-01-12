@@ -5,7 +5,9 @@ import { useUserStore } from "@/zustand/auth/user";
 import { cn } from "@/lib/utils";
 
 import LanguageField from "./languageField";
+import { useTranslation } from "react-i18next";
 const LanguagesForm = () => {
+  const [, i18n] = useTranslation();
   const { data, editMode, isLoading, profileData } = profileAboutContentStore();
   const user = useUserStore((state) => state.user);
 
@@ -35,14 +37,24 @@ const LanguagesForm = () => {
             <LanguageField />
           </div>
         ) : (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+          <div
+            className={cn(
+              "flex flex-row space-x-2 hover:cursor-pointer",
+              i18n.language == "ar" && "space-x-reverse"
+            )}
+          >
             <LanguagesIcon
               color="#ff569a"
               size={30}
               className="hover:cursor-pointer mt-2 mr-3"
             />
             <div className="flex  flex-col justify-start space-y-1">
-              <p className="font-bold flex-wrap text-base text-primary flex flex-row space-x-3">
+              <p
+                className={cn(
+                  "font-bold flex-wrap text-base text-primary flex flex-row space-x-3",
+                  i18n.language == "ar" && "space-x-reverse"
+                )}
+              >
                 {[
                   ...new Set(
                     data?.language.map((lang) => (
