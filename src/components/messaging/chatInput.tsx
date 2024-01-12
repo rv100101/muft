@@ -15,7 +15,9 @@ import { useEffect, useState } from "react";
 import useLatestConversationStore from "@/zustand/messaging/showConversation";
 import { toast } from "../ui/use-toast";
 import { useUserStore } from "@/zustand/auth/user";
+import { useTranslation } from "react-i18next";
 const ChatInput = () => {
+  const [t] = useTranslation();
   const conversationMessages = useSelectedConversationData(
     (state) => state.messages
   );
@@ -207,7 +209,7 @@ const ChatInput = () => {
               onChange={(e) => {
                 setInputMessage(e.target.value);
               }}
-              placeholder="Type a message"
+              placeholder={t("messages.typeAMessage")}
             />
           </div>
           <Button

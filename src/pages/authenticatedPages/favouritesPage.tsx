@@ -19,7 +19,9 @@ import {
 import { useLocation } from "wouter";
 import FavoritesMobileNav from "@/components/likesAndFavourites/favoritesMobileNav";
 import { Helmet } from "react-helmet-async";
+import { useTranslation } from "react-i18next";
 const FavouritesPage = () => {
+  const [t] = useTranslation();
   const [, setLocation] = useLocation();
   const [tab] = useState<"LIKES" | "FAVOURITES">("FAVOURITES");
   const [filter] = useState<"ALL" | "CURRENT-COUNTRY">("ALL");
@@ -102,7 +104,7 @@ const FavouritesPage = () => {
                 }}
                 className="hover:bg-[#FF8AB3]"
               >
-                View Profile
+                {t("favorites.viewProfile")}
               </Button>
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -123,7 +125,9 @@ const FavouritesPage = () => {
         <FavoritesMobileNav />
         <div className="lg:pt-4">
           <div className="w-full h-full flex lg:items-center px-10 justify-between hidden lg:flex">
-            <h1 className="font-semibold text-lg">FAVORITES</h1>
+            <h1 className="font-semibold text-lg">
+              {t("favorites.favorites")}
+            </h1>
           </div>
           <div></div>
         </div>{" "}
@@ -182,7 +186,7 @@ const FavouritesPage = () => {
                 setSearch(e.target.value);
               }}
               className="h-4 border-0 focus:outline-0 w-full dark:text-white dark:bg-[#020817]"
-              placeholder="Search"
+              placeholder={t("search.search")}
             />
             <SearchIcon color="gray" />
           </div>
