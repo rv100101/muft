@@ -82,6 +82,7 @@ const MyAccountContent = () => {
   return (
     <div className="flex flex-col  w-full  border-b justify-center text-[#727272] space-y-2 p-5">
       <p className="font-semibold text-lg">{t("settings.myAccount")}</p>
+      <PreferredLanguageDialog showTrigger={true} triggerVariant={"default"} />
       <Dialog>
         <div className="flex flex-row w-full justify-between items-center">
           <p className="font-medium pt-5">{t("settings.changePassword")}</p>
@@ -169,7 +170,6 @@ const MyAccountContent = () => {
           </DialogContent>
         </div>
       </Dialog>
-      <PreferredLanguageDialog showTrigger={true} triggerVariant={"default"} />
     </div>
   );
 };
