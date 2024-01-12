@@ -19,8 +19,9 @@ import { useLocation } from "wouter";
 import LikesMobileNav from "@/components/likesAndFavourites/likesMobileNav";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
+import { cn } from "@/lib/utils";
 const LikesPage = () => {
-  const [t] = useTranslation();
+  const [t, i18n] = useTranslation();
   const [tab] = useState<"LIKES" | "FAVOURITES">("LIKES");
   const [, setLocation] = useLocation();
   const [search, setSearch] = useState<string>("");
@@ -56,7 +57,12 @@ const LikesPage = () => {
             href={`https://${window.location.hostname}/likes`}
           />
         </Helmet>
-        <div className="flex space-x-2 items-center">
+        <div
+          className={cn(
+            "flex space-x-2 items-center",
+            i18n.language == "ar" && "space-x-reverse"
+          )}
+        >
           <div className="border-4 border-primary w-24 h-24 border-pink p-1 rounded-full">
             <img
               className="w-full object-cover h-full rounded-full"
