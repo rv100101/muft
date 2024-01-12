@@ -86,8 +86,34 @@ const PreferredLanguageDialog = ({
           <SelectContent>
             <SelectGroup>
               <SelectLabel>Languages</SelectLabel>
-              <SelectItem value="ar">Arabic</SelectItem>
-              <SelectItem value="en">English</SelectItem>
+              <SelectItem value="en">
+                <p className="flex text-md">
+                  <span>
+                    <img
+                      className="mr-2"
+                      height={24}
+                      width={24}
+                      src="https://muffin0.blob.core.windows.net/flags/us.png"
+                      alt="english-flag"
+                    />
+                  </span>
+                  English
+                </p>
+              </SelectItem>
+              <SelectItem value="ar">
+                <p className="flex text-md">
+                  <span>
+                    <img
+                      className="mr-2"
+                      height={24}
+                      width={24}
+                      src="https://muffin0.blob.core.windows.net/flags/ae.png"
+                      alt="arabic-flag"
+                    />
+                  </span>
+                  العربية
+                </p>
+              </SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
