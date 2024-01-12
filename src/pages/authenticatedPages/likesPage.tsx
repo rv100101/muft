@@ -107,30 +107,7 @@ const LikesPage = () => {
             <h1 className="font-semibold  text-lg">{t("likes.likes")}</h1>
           </div>
         </div>{" "}
-        <div className="w-full flex h-max">
-          {/* <Button
-            onClick={() => {
-              setTab("LIKES");
-            }}
-            className={cn(
-              "w-full rounded-0 bg-transparent text-black border-r border-t rounded-none border-b p-8 text-[#727272] text-lg",
-              tab == "LIKES" && "border-b-4 border-b-[#404040]"
-            )}
-          >
-            LIKES
-          </Button>{" "}
-          <Button
-            onClick={() => {
-              setTab("FAVOURITES");
-            }}
-            className={cn(
-              "w-full rounded-0 bg-transparent text-black border-r border-t rounded-none border-b text-[#727272] text-lg p-8",
-              tab == "FAVOURITES" && "border-b-4 border-b-[#404040]"
-            )}
-          >
-            FAVOURITES
-          </Button> */}
-        </div>
+        <div className="w-full flex h-max"></div>
         {
           <div className="flex lg:justify-end justify-center h-max items-center px-8">
             <div className="w-max border py-4 px-6  space-x-2 rounded-xl flex items-center">

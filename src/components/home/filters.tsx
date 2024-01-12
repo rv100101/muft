@@ -13,7 +13,7 @@ const HomeFilters = ({
   isLoading: boolean;
   members: MemberData[] | null | undefined;
 }) => {
-  const [t, i18n] = useTranslation();
+  const [t] = useTranslation();
   const setMemberList = useHomepageViewStore(
     (state) => state.setModifiedMemberList
   );
@@ -117,12 +117,7 @@ const HomeFilters = ({
   };
   return (
     <div className="border-none sm:border-solid sm:border mt-5 py-5 mx-2 rounded-lg">
-      <div
-        className={cn(
-          "flex flex-row justify-between items-center",
-          i18n.language == "ar" && "justify-end"
-        )}
-      >
+      <div className={cn("flex flex-row justify-between items-center")}>
         <p className="px-0 sm:px-5 text-[#cfd8e4]">{t("filter.filterBy")}</p>
         {/* <p className="px-5 text-[#7e7e7e] text-xs underline hover:cursor-pointer">
                     Clear
@@ -134,12 +129,7 @@ const HomeFilters = ({
           "flex flex-col border-none sm:border-solid sm:border m-0 sm:m-5 rounded-lg px-0 sm:px-5"
         )}
       >
-        <p
-          className={cn(
-            "px-5 text-[#cfd8e4] pt-5 hidden sm:flex",
-            i18n.language == "ar" && "justify-end"
-          )}
-        >
+        <p className={cn("px-5 text-[#cfd8e4] pt-5 hidden sm:flex")}>
           {t("filter.suggested")}
         </p>
         <div className="flex flex-row justify-between items-center p-4 space-x-5">

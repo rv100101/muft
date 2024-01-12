@@ -21,7 +21,7 @@ const Posts = ({
   // Set the initial scroll position when the component mounts
   useEffect(() => {
     if (!isLoading && scrollPosition && containerRef.current) {
-      console.log('rerendering');
+      console.log("rerendering");
       containerRef.current.scrollTop = +scrollPosition;
     }
   }, [isLoading]);
@@ -67,7 +67,7 @@ const Posts = ({
               ))
             ) : (
               <div className="rounded-t-md lg:w-[460px] w-[350px] h-[554px] object-cover h-screen">
-                No Members Found.
+                No Members Found
               </div>
             )}
           </div>

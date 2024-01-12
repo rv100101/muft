@@ -72,21 +72,17 @@ const SideBar = () => {
               size={20}
             />
           }
-          <p
-            className={cn(
-              "text-sm",
-              i18n.language == "ar" && "text-right w-full"
-            )}
-          >
-            {link.name}
-          </p>
+          <p className={cn("text-sm")}>{link.name}</p>
         </Link>
       </li>
     );
   });
 
   return (
-    <div className="h-full border-r lg:flex sm:flex-col justify-between hidden">
+    <div
+      dir={i18n.language == "ar" ? "rtl" : "ltr"}
+      className="h-full border-r lg:flex sm:flex-col justify-between hidden"
+    >
       <div
         className={`h-full flex flex-col justify-between ${
           orientation.angle === 90 ? "overflow-scroll" : ""
@@ -103,12 +99,7 @@ const SideBar = () => {
           <ul>{navLinks}</ul>
         </div>
 
-        <div
-          className={cn(
-            "flex flex-col space-y-4 px-4",
-            i18n.language == "ar" && "items-end"
-          )}
-        >
+        <div className={cn("flex flex-col space-y-4 px-4")}>
           <a
             className="hover:text-slate-700 text-xs text-black dark:text-white"
             href="https://softnames.bolddesk.com/"
