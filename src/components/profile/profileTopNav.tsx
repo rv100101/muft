@@ -17,7 +17,9 @@ import ProfileMobileNav from "./ProfileMobileNav";
 import { useQueryClient } from "@tanstack/react-query";
 import useReadConversationsStateStore from "@/zustand/messaging/readConversations";
 import { cn } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
 const ProfileTopNav = () => {
+  const [t, i18n] = useTranslation();
   const { isSaving } = profileAboutContentStore();
   const { updateRead: setReadList } = useReadConversationsStateStore();
   const signOut = useUserStore((state) => state.reset);
@@ -71,7 +73,12 @@ const ProfileTopNav = () => {
                     </DialogContent>
                   </Dialog>
                 </div>
-                <div className="ml-4 sm:ml-0 items-center space-x-4  hidden lg:flex">
+                <div
+                  className={cn(
+                    "ml-4 sm:ml-0 items-center space-x-4  hidden lg:flex",
+                    i18n.language == "ar" && "space-x-reverse"
+                  )}
+                >
                   <p
                     className={cn(
                       "font-semibold mt-1 text-nowrap text-sm sm:text-base"
@@ -102,9 +109,14 @@ const ProfileTopNav = () => {
               {!user?.profile_completed && (
                 <Dialog>
                   <DialogTrigger className="w-36 hidden sm:flex">
-                    <div className="hidden sm:flex space-x-2 my-4">
+                    <div
+                      className={cn(
+                        "hidden sm:flex space-x-2 my-4",
+                        i18n.language == "ar" && "space-x-reverse"
+                      )}
+                    >
                       {<LogOutIcon size={20} className="text-primary" />}{" "}
-                      <p className="text-sm">Sign out</p>
+                      <p className="text-sm">{t("menu.signOut")}</p>
                     </div>
                   </DialogTrigger>
                   <DialogContent className="sm:max-w-md opacity-100">
@@ -138,7 +150,11 @@ const ProfileTopNav = () => {
                 </Dialog>
               )}{" "}
               {!user?.profile_completed && (
-                <div className="flex sm:hidden w-full mr-4 sm:w-min justify-end">
+                <div
+                  className={cn(
+                    "flex sm:hidden w-full mr-4 sm:w-min justify-end"
+                  )}
+                >
                   <Button
                     type="submit"
                     className="hover:bg-[#FF8AB3]/95"
