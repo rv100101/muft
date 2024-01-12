@@ -141,7 +141,7 @@ const SideBar = () => {
             </DialogTrigger>
             <DialogContent className="sm:max-w-md opacity-100">
               <DialogHeader>
-                <DialogTitle>Are you sure you want to sign out?</DialogTitle>
+                <DialogTitle>{t("signOut.confirmSignOut")}</DialogTitle>
               </DialogHeader>
               <DialogFooter className="sm:justify-start items-center">
                 <Button
@@ -154,7 +154,7 @@ const SideBar = () => {
                     setReadList({});
                   }}
                 >
-                  Yes
+                  {t("signOut.yes")}
                 </Button>
                 <DialogClose>
                   <Button
@@ -162,7 +162,7 @@ const SideBar = () => {
                     type="button"
                     variant="secondary"
                   >
-                    No
+                    {t("signOut.no")}
                   </Button>
                 </DialogClose>
               </DialogFooter>
