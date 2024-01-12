@@ -86,7 +86,10 @@ function App() {
           location == "/auth/signin" ? "h-screen flex flex-col" : "h-full"
         )}
       >
-        <PreferredLanguageDialog />
+        <PreferredLanguageDialog
+          showTrigger={false}
+          triggerVariant={"default"}
+        />
         <div className="h-max">
           {routesWithFooterAndTopNav.includes(location) && !user && <TopNav />}
         </div>

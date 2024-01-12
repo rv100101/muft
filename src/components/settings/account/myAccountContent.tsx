@@ -169,7 +169,7 @@ const MyAccountContent = () => {
           </DialogContent>
         </div>
       </Dialog>
-      <PreferredLanguageDialog showTrigger={true} />
+      <PreferredLanguageDialog showTrigger={true} triggerVariant={"default"} />
     </div>
   );
 };
