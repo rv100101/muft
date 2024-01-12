@@ -13,7 +13,7 @@ const HomeFilters = ({
   isLoading: boolean;
   members: MemberData[] | null | undefined;
 }) => {
-  const [t] = useTranslation();
+  const [t, i18n] = useTranslation();
   const setMemberList = useHomepageViewStore(
     (state) => state.setModifiedMemberList
   );
@@ -132,7 +132,12 @@ const HomeFilters = ({
         <p className={cn("px-5 text-[#cfd8e4] pt-5 hidden sm:flex")}>
           {t("filter.suggested")}
         </p>
-        <div className="flex flex-row justify-between items-center p-4 space-x-5">
+        <div
+          className={cn(
+            "flex flex-row justify-between items-center p-4 space-x-5",
+            i18n.language == "ar" ? "space-x-reverse space-x-5" : "space-x-5"
+          )}
+        >
           <p
             onClick={() => {
               setStartAgeSliderVal(randomNumbers[0]);
@@ -173,7 +178,12 @@ const HomeFilters = ({
             {randomNumbers[2]}
           </p>
         </div>
-        <div className="flex flex-row justify-between items-center p-4 space-x-5">
+        <div
+          className={cn(
+            "flex flex-row justify-between items-center p-4 space-x-5",
+            i18n.language == "ar" ? "space-x-reverse space-x-5" : "space-x-5"
+          )}
+        >
           <p
             onClick={() => {
               setStartAgeSliderVal(randomNumbers[3]);
@@ -220,9 +230,15 @@ const HomeFilters = ({
           <p className="px-5 text-sm">{`${filters?.min_age}-${filters?.max_age}`}</p>
         </div>
         {/* <form action="post" onSubmit={formik.handleSubmit}> */}
-        <div className="flex flex-row justify-center align-center py-5 px-5 mt-5 space-x-5">
+        <div
+          className={cn(
+            "flex flex-row justify-center align-center py-5 px-5",
+            i18n.language == "ar" ? "space-x-reverse space-x-4" : "space-x-2"
+          )}
+        >
           <p className="text-slate-500 text-sm">{t("filter.from")}</p>
           <Slider
+            inverted={i18n.language == "ar"}
             // defaultValue={[50]}
             value={[filters!.min_age]}
             // value={[startAgeSliderVal]}
@@ -234,9 +250,15 @@ const HomeFilters = ({
             name="age"
           />
         </div>
-        <div className="flex flex-row justify-center align-center py-5 px-5">
+        <div
+          className={cn(
+            "flex flex-row justify-center align-center py-5 px-5",
+            i18n.language == "ar" ? "space-x-reverse space-x-4" : "space-x-2"
+          )}
+        >
           <p className="text-slate-500 text-sm">{t("filter.to")}</p>
           <Slider
+            inverted={i18n.language == "ar"}
             // defaultValue={[50]}
             // dir="right-to-left"
             value={[filters!.max_age]}
