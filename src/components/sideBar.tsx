@@ -82,7 +82,10 @@ const SideBar = () => {
   return (
     <div
       dir={i18n.language == "ar" ? "rtl" : "ltr"}
-      className="h-full border-r lg:flex sm:flex-col justify-between hidden"
+      className={cn(
+        "h-full lg:flex sm:flex-col justify-between hidden",
+        i18n.language == "ar" ? "border-l" : "boder-r"
+      )}
     >
       <div
         className={`h-full flex flex-col justify-between ${
@@ -138,11 +141,25 @@ const SideBar = () => {
                 <p className="text-sm">{t("menu.signOut")}</p>
               </div>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-md opacity-100">
-              <DialogHeader>
+            <DialogContent
+              className={cn(
+                "sm:max-w-md opacity-100",
+                i18n.language == "ar"
+                  ? "space-x-reverse space-x-2"
+                  : "space-x-2"
+              )}
+            >
+              <DialogHeader
+                className={cn(i18n.language == "ar" && "w-full items-end")}
+              >
                 <DialogTitle>{t("signOut.confirmSignOut")}</DialogTitle>
               </DialogHeader>
-              <DialogFooter className="sm:justify-start items-center">
+              <DialogFooter
+                className={cn(
+                  "sm:justify-start items-center w-full",
+                  i18n.language == "ar" && "w-full justify-end items-end"
+                )}
+              >
                 <Button
                   className="hover:bg-primary"
                   onClick={() => {
