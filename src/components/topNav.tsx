@@ -15,6 +15,7 @@ import { motion } from "framer-motion";
 import { useLocation } from "wouter";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
+import PreferredLanguageDialog from "./preferredLanguageDialog";
 const container = {
   none: { opacity: 1 },
   hidden: { opacity: 0 },
@@ -149,6 +150,13 @@ function TopNav() {
                   Support
                 </a>
               </Button>
+            </motion.li>
+            <motion.li variants={motionTop80}>
+              <PreferredLanguageDialog
+                showTrigger={true}
+                triggerTitle={"Language"}
+                triggerVariant="default"
+              />
             </motion.li>
           </div>
         )}

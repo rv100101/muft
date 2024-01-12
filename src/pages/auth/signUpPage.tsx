@@ -14,6 +14,7 @@ import { toast } from "@/components/ui/use-toast";
 import { useUserStore } from "@/zustand/auth/user";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
+import { usePreferredLanguageStore } from "@/zustand/auth/preferred_language";
 
 type FormDataType = {
   first_name: string;
@@ -23,6 +24,7 @@ type FormDataType = {
 };
 const SignUpPage = () => {
   const [t, i18n] = useTranslation();
+  const preferred = usePreferredLanguageStore((state) => state.preferred);
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [, navigate] = useLocation();
@@ -66,7 +68,10 @@ const SignUpPage = () => {
   const handleSignUp = async (values: FormDataType) => {
     try {
       setIsLoading(true);
-      const response = await axiosQuery.post("/Signup", values);
+      const response = await axiosQuery.post("/Signup", {
+        ...values,
+        communication_language: preferred ?? "en",
+      });
       const data = await response.data;
       if (data) {
         setIsLoading(false);

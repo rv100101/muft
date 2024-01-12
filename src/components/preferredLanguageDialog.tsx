@@ -18,29 +18,55 @@ import {
 import { cn } from "@/lib/utils";
 
 import { usePreferredLanguageStore } from "@/zustand/auth/preferred_language";
+import { useUserStore } from "@/zustand/auth/user";
 import { DialogTrigger } from "@radix-ui/react-dialog";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-const PreferredLanguageDialog = ({ showTrigger = false }) => {
+const PreferredLanguageDialog = ({
+  showTrigger = false,
+  triggerTitle,
+  triggerVariant = "default",
+}: {
+  showTrigger: boolean;
+  triggerTitle?: null | string;
+  triggerVariant: string;
+}) => {
   const [t] = useTranslation();
+
   const { preferred, setPreferredLanguage } = usePreferredLanguageStore();
   const [selectVal, setSelectVal] = useState<string | null>(preferred);
   const [changePreferredLanguage, setChangePreferredLanguage] = useState(false);
+  const user = useUserStore((state) => state.user);
   return (
     <Dialog open={preferred == null || changePreferredLanguage}>
       {showTrigger && (
         <div className="flex justify-between items-center">
-          <p className="font-medium pt-5">
-            {t("settings.changePreferredLanguage")}
-          </p>
+          {user && (
+            <p className="font-medium pt-5">
+              {triggerTitle !== null
+                ? triggerTitle
+                : t("settings.changePreferredLanguage")}
+            </p>
+          )}
           <DialogTrigger className="flex">
             <Button
+              variant={
+                triggerVariant as
+                  | "default"
+                  | "destructive"
+                  | "outline"
+                  | "secondary"
+                  | "ghost"
+                  | "link"
+                  | null
+                  | undefined
+              }
               className={cn(
                 "text-white h-10 text-sm rounded-lf py-2 hover:bg-[#FF599B]/90 w-24 dark:bg-[#1b1d1e] dark:hover:bg-red-700/90"
               )}
               onClick={() => setChangePreferredLanguage(true)}
             >
-              {t("settings.change")}
+              {triggerTitle ? triggerTitle : t("settings.change")}
             </Button>
           </DialogTrigger>
         </div>
