@@ -9,7 +9,7 @@ import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 
 const SettingsPage = () => {
-  const [t] = useTranslation();
+  const [t, i18n] = useTranslation();
   return (
     <AuthenticatedLayout>
       <Helmet>
@@ -19,7 +19,10 @@ const SettingsPage = () => {
           href={`https://${window.location.hostname}/settings`}
         />
       </Helmet>
-      <div className="w-full flex flex-col h-full lg:items-center justify-start border">
+      <div
+        dir={i18n.language == "ar" ? "rtl" : "ltr"}
+        className="w-full flex flex-col h-full lg:items-center justify-start border"
+      >
         <MobileTopbar />
         <div className="lg:flex hidden flex-row lg:w-3/4 w-full border justify-between lg:p-5 py-2 items-center lg:border-b">
           <p className="select-none font-semibold w-full ">
