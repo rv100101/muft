@@ -22,8 +22,10 @@ import { Disability, Workout } from "@/types/profile";
 import { Accessibility, Dumbbell } from "lucide-react";
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { cn } from "@/lib/utils";
+
 const HealthForm = () => {
-  const [t] = useTranslation();
+  const [t, i18n] = useTranslation();
   const { control } = useFormContext();
   const { workout, disability } = selectOptions();
   const isLoading = profileAboutContentStore((state) => state.isLoading);
@@ -85,7 +87,12 @@ const HealthForm = () => {
             />
           </div>
         ) : (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+          <div
+            className={cn(
+              "flex flex-row space-x-2 hover:cursor-pointer",
+              i18n.language == "ar" && "space-x-reverse"
+            )}
+          >
             <Dumbbell
               color="#ff5c9d"
               size={30}
@@ -147,7 +154,12 @@ const HealthForm = () => {
             />
           </div>
         ) : (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+          <div
+            className={cn(
+              "flex flex-row space-x-2 hover:cursor-pointer",
+              i18n.language == "ar" && "space-x-reverse"
+            )}
+          >
             <Accessibility
               color="#ff5c9d"
               size={30}

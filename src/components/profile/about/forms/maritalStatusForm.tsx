@@ -22,8 +22,10 @@ import { HaveChildren, MaritalStatus, WantChildren } from "@/types/profile";
 import { Baby, Laugh, Ribbon } from "lucide-react";
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { cn } from "@/lib/utils";
+
 const MaritalStatusForm = () => {
-  const [t] = useTranslation();
+  const [t, i18n] = useTranslation();
   const { control } = useFormContext();
   const { maritalStatus, haveChildren, wantChildren } = selectOptions();
   const isLoading = profileAboutContentStore((state) => state.isLoading);
@@ -87,7 +89,12 @@ const MaritalStatusForm = () => {
             />
           </div>
         ) : (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+          <div
+            className={cn(
+              "flex flex-row space-x-2 hover:cursor-pointer",
+              i18n.language == "ar" && "space-x-reverse"
+            )}
+          >
             <Ribbon
               color="#ff569a"
               size={30}
@@ -147,7 +154,12 @@ const MaritalStatusForm = () => {
             />
           </div>
         ) : (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+          <div
+            className={cn(
+              "flex flex-row space-x-2 hover:cursor-pointer",
+              i18n.language == "ar" && "space-x-reverse"
+            )}
+          >
             <Baby
               color="#ff5c9d"
               size={30}
@@ -206,7 +218,12 @@ const MaritalStatusForm = () => {
             />
           </div>
         ) : (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+          <div
+            className={cn(
+              "flex flex-row space-x-2 hover:cursor-pointer",
+              i18n.language == "ar" && "space-x-reverse"
+            )}
+          >
             <Laugh
               color="#ff5c9d"
               size={30}

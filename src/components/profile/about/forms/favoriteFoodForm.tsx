@@ -6,8 +6,11 @@ import {} from "@/components/ui/select";
 import { useUserStore } from "@/zustand/auth/user";
 import FavoriteFoodField from "./favoriteFoodsField";
 import removeDuplicates from "@/lib/removeDulpicates";
+import { useTranslation } from "react-i18next";
+import { cn } from "@/lib/utils";
 
 const FavoriteFoodForm = () => {
+  const [, i18n] = useTranslation();
   const isLoading = profileAboutContentStore((state) => state.isLoading);
   const data = profileAboutContentStore((state) => state.data);
   const editMode = profileAboutContentStore((state) => state.editMode);
@@ -32,14 +35,24 @@ const FavoriteFoodForm = () => {
             <FavoriteFoodField />
           </div>
         ) : (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+          <div
+            className={cn(
+              "flex flex-row space-x-2 hover:cursor-pointer",
+              i18n.language == "ar" && "space-x-reverse"
+            )}
+          >
             <Drumstick
               color="#ff5c9d"
               size={30}
               className="hover:cursor-pointer mt-2 mr-3"
             />
             <div className="flex  flex-col justify-start space-y-1">
-              <p className="font-bold flex-wrap text-base text-primary flex flex-row space-x-3">
+              <p
+                className={cn(
+                  "font-bold flex-wrap text-base text-primary flex flex-row space-x-3",
+                  i18n.language == "ar" && "space-x-reverse"
+                )}
+              >
                 {removeDuplicates(data!.favoriteFood, "favorite_food_name").map(
                   (fave) => (
                     <p className="border font-normal rounded-lg px-5 py-1 bg-[#ffdeeb] text-[#fe68a0] border-[#fe68a0] hover:bg-[#ffdeeb]/60 mb-5 flex flex-row space-x-2">

@@ -20,9 +20,10 @@ import {
 } from "@/components/ui/form";
 import { useUserStore } from "@/zustand/auth/user";
 import { useTranslation } from "react-i18next";
+import { cn } from "@/lib/utils";
 
 const WorkEducationForm = () => {
-  const [t] = useTranslation();
+  const [t, i18n] = useTranslation();
   const { control } = useFormContext();
   const { data, editMode, isLoading } = profileAboutContentStore();
 
@@ -93,7 +94,12 @@ const WorkEducationForm = () => {
             />
           </div>
         ) : (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+          <div
+            className={cn(
+              "flex flex-row space-x-2 hover:cursor-pointer",
+              i18n.language == "ar" && "space-x-reverse"
+            )}
+          >
             <Briefcase
               color="#ff5c9d"
               size={30}
@@ -158,7 +164,12 @@ const WorkEducationForm = () => {
             />
           </div>
         ) : (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+          <div
+            className={cn(
+              "flex flex-row space-x-2 hover:cursor-pointer",
+              i18n.language == "ar" && "space-x-reverse"
+            )}
+          >
             <User
               color="#ff5c9d"
               size={30}
@@ -218,7 +229,12 @@ const WorkEducationForm = () => {
             />
           </div>
         ) : (
-          <div className="flex flex-row space-x-2 hover:cursor-pointer">
+          <div
+            className={cn(
+              "flex flex-row space-x-2 hover:cursor-pointer",
+              i18n.language == "ar" && "space-x-reverse"
+            )}
+          >
             <CircleDollarSign
               color="#ff5c9d"
               size={30}
