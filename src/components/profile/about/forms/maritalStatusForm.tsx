@@ -1,10 +1,7 @@
-
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
-import {
-} from "@/components/ui/form";
+import {} from "@/components/ui/form";
 import FormSkeletonLoading from "./formSkeletonLoading";
-import {
-} from "@/components/ui/select";
+import {} from "@/components/ui/select";
 import { useUserStore } from "@/zustand/auth/user";
 import {
   FormControl,
@@ -21,21 +18,21 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import selectOptions from "@/zustand/profile/selectData/selectOptions";
-import { HaveChildren, MaritalStatus, WantChildren, } from "@/types/profile";
+import { HaveChildren, MaritalStatus, WantChildren } from "@/types/profile";
 import { Baby, Laugh, Ribbon } from "lucide-react";
 import { useFormContext } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 const MaritalStatusForm = () => {
+  const [t] = useTranslation();
   const { control } = useFormContext();
-  const {
-    maritalStatus, haveChildren, wantChildren
-  } = selectOptions();
+  const { maritalStatus, haveChildren, wantChildren } = selectOptions();
   const isLoading = profileAboutContentStore((state) => state.isLoading);
   const data = profileAboutContentStore((state) => state.data);
   const editMode = profileAboutContentStore((state) => state.editMode);
   const user = useUserStore((state) => state.user);
 
   const isSaving = profileAboutContentStore((state) => state.isSaving);
-  const profileData = profileAboutContentStore(state => state.profileData);
+  const profileData = profileAboutContentStore((state) => state.profileData);
   if ((isLoading && profileData == null) || isSaving) {
     return (
       <div className="flex justify-start items-start space-x-4 w-full ml-5">
@@ -102,7 +99,9 @@ const MaritalStatusForm = () => {
                   ? data?.maritalStatus
                   : "Add Marital Status"}
               </p>
-              <p className="text-[#727272] text-xs">Marital Status</p>
+              <p className="text-[#727272] text-xs">
+                {t("memberDetails.maritalStatus")}
+              </p>
             </div>
           </div>
         )}
@@ -159,7 +158,9 @@ const MaritalStatusForm = () => {
               <p className="font-bold text-base text-primary">
                 {data!.haveChildren ? `${data!.haveChildren}` : "Add Children"}
               </p>
-              <p className="text-[#727272] text-xs">Has Children</p>
+              <p className="text-[#727272] text-xs">
+                {t("memberDetails.hasChildren")}
+              </p>
             </div>
           </div>
         )}
@@ -215,7 +216,9 @@ const MaritalStatusForm = () => {
               <p className="font-bold text-base text-primary">
                 {data!.wantChildren ? `${data!.wantChildren}` : "Want Children"}
               </p>
-              <p className="text-[#727272] text-xs">Want Children</p>
+              <p className="text-[#727272] text-xs">
+                {t("memberDetails.wantChildren")}
+              </p>
             </div>
           </div>
         )}

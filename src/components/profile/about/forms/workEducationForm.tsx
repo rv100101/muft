@@ -19,8 +19,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useUserStore } from "@/zustand/auth/user";
+import { useTranslation } from "react-i18next";
 
 const WorkEducationForm = () => {
+  const [t] = useTranslation();
   const { control } = useFormContext();
   const { data, editMode, isLoading } = profileAboutContentStore();
 
@@ -29,7 +31,7 @@ const WorkEducationForm = () => {
   const user = useUserStore((state) => state.user);
 
   const isSaving = profileAboutContentStore((state) => state.isSaving);
-  const profileData = profileAboutContentStore(state => state.profileData);
+  const profileData = profileAboutContentStore((state) => state.profileData);
   if ((isLoading && profileData == null) || isSaving) {
     return (
       <div className="flex justify-start items-start space-x-4 w-full ml-5">
@@ -62,19 +64,26 @@ const WorkEducationForm = () => {
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder={"Select employment status"} />
+                          <SelectValue
+                            placeholder={"Select employment status"}
+                          />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
                         {employmentStatus &&
-                          employmentStatus.map((data: EmploymentStatus, index) => {
-                            const { employment_status_name } = data;
-                            return (
-                              <SelectItem value={employment_status_name} key={index}>
-                                {employment_status_name}
-                              </SelectItem>
-                            );
-                          })}
+                          employmentStatus.map(
+                            (data: EmploymentStatus, index) => {
+                              const { employment_status_name } = data;
+                              return (
+                                <SelectItem
+                                  value={employment_status_name}
+                                  key={index}
+                                >
+                                  {employment_status_name}
+                                </SelectItem>
+                              );
+                            }
+                          )}
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -96,7 +105,9 @@ const WorkEducationForm = () => {
                   ? data!.employmentStatus
                   : "Add Employment Status"}
               </p>
-              <p className="text-[#727272] text-xs">Status</p>
+              <p className="text-[#727272] text-xs">
+                {t("memberDetails.status")}
+              </p>
             </div>
           </div>
         )}
@@ -126,19 +137,17 @@ const WorkEducationForm = () => {
                       </FormControl>
                       <SelectContent>
                         {occupations &&
-
                           [
                             ...new Set(
                               occupations.map((o) => o.occupation_title)
                             ),
-                          ]
-                            .map((title, index) => {
-                              return (
-                                <SelectItem value={title} key={index}>
-                                  {title}
-                                </SelectItem>
-                              );
-                            })}
+                          ].map((title, index) => {
+                            return (
+                              <SelectItem value={title} key={index}>
+                                {title}
+                              </SelectItem>
+                            );
+                          })}
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -161,7 +170,9 @@ const WorkEducationForm = () => {
                   ? data!.occupationTitle
                   : "Add Job Title"}
               </p>
-              <p className="text-[#727272] text-xs">Occupation</p>
+              <p className="text-[#727272] text-xs">
+                {t("memberDetails.occupation")}
+              </p>
             </div>
           </div>
         )}
@@ -217,7 +228,9 @@ const WorkEducationForm = () => {
               <p className="font-bold text-base text-primary">
                 {data!.income ? data!.income : "Add income range"}
               </p>
-              <p className="text-[#727272] text-xs">Monthly Income</p>
+              <p className="text-[#727272] text-xs">
+                {t("memberDetails.monthlyIncome")}
+              </p>
             </div>
           </div>
         )}

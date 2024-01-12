@@ -20,8 +20,10 @@ import {
 } from "@/components/ui/select";
 import { useFormContext } from "react-hook-form";
 import { useUserStore } from "@/zustand/auth/user";
+import { useTranslation } from "react-i18next";
 
 const AppearanceForm = () => {
+  const [t] = useTranslation();
   const { control } = useFormContext();
   const isLoading = profileAboutContentStore((state) => state.isLoading);
   const data = profileAboutContentStore((state) => state.data);
@@ -51,7 +53,7 @@ const AppearanceForm = () => {
                 return (
                   <FormItem>
                     <FormLabel className="text-primary" htmlFor="eyes">
-                      Eyes
+                      {t("memberDetails.eyeColor")}
                     </FormLabel>
                     <Select
                       onValueChange={field.onChange}
@@ -92,7 +94,9 @@ const AppearanceForm = () => {
               <p className="font-bold text-base text-primary">
                 {data!.eyes ? data!.eyes : "Add Eye Color"}
               </p>
-              <p className="text-[#727272] text-xs">Eye Color</p>
+              <p className="text-[#727272] text-xs">
+                {t("memberDetails.eyeColor")}
+              </p>
             </div>
           </div>
         )}
@@ -106,7 +110,7 @@ const AppearanceForm = () => {
                 return (
                   <FormItem>
                     <FormLabel className="text-primary" htmlFor="hair">
-                      Hair
+                      {t("memberDetails.haircut")}
                     </FormLabel>
                     <Select
                       onValueChange={field.onChange}
@@ -147,7 +151,9 @@ const AppearanceForm = () => {
               <p className="font-bold text-base text-primary">
                 {data!.hair ? data!.hair : "Add Haircut"}
               </p>
-              <p className="text-[#727272] text-xs">Haircut</p>
+              <p className="text-[#727272] text-xs">
+                {t("memberDetails.haircut")}
+              </p>
             </div>
           </div>
         )}
@@ -162,7 +168,7 @@ const AppearanceForm = () => {
                 return (
                   <FormItem>
                     <FormLabel className="text-primary" htmlFor="height">
-                      Height
+                      {t("memberDetails.height")}
                     </FormLabel>
                     <Input
                       placeholder="Enter height (cm)"
@@ -197,7 +203,9 @@ const AppearanceForm = () => {
               <p className="font-bold text-base text-primary">
                 {data!.height ? `${data!.height} cm` : "Add Height"}
               </p>
-              <p className="text-[#727272] text-xs">Height</p>
+              <p className="text-[#727272] text-xs">
+                {t("memberDetails.height")}
+              </p>
             </div>
           </div>
         )}
@@ -211,7 +219,7 @@ const AppearanceForm = () => {
                 return (
                   <FormItem>
                     <FormLabel className="text-primary" htmlFor="weight">
-                      Weight
+                      {t("memberDetails.weight")}
                     </FormLabel>
                     <Input
                       placeholder="Enter weight (lbs)"
@@ -245,7 +253,9 @@ const AppearanceForm = () => {
               <p className="font-bold text-base text-primary">
                 {data!.weight ? `${data!.weight} kg` : "Add Weight"}
               </p>
-              <p className="text-[#727272] text-xs">Weight</p>
+              <p className="text-[#727272] text-xs">
+                {t("memberDetails.weight")}
+              </p>
             </div>
           </div>
         )}
@@ -260,7 +270,7 @@ const AppearanceForm = () => {
                 return (
                   <FormItem>
                     <FormLabel className="text-primary" htmlFor="bodyType">
-                      Body Type
+                      {t("memberDetails.bodyType")}
                     </FormLabel>
                     <Select
                       onValueChange={field.onChange}
@@ -301,7 +311,9 @@ const AppearanceForm = () => {
               <p className="font-bold text-base text-primary">
                 {data!.bodyType ? data!.bodyType : "Add Body Type"}
               </p>
-              <p className="text-[#727272] text-xs">Body Type</p>
+              <p className="text-[#727272] text-xs">
+                {t("memberDetails.bodyType")}
+              </p>
             </div>
           </div>
         )}
@@ -315,7 +327,7 @@ const AppearanceForm = () => {
                 return (
                   <FormItem>
                     <FormLabel className="text-primary" htmlFor="bodyArt">
-                      Body Art
+                      {t("memberDetails.bodyArtType")}
                     </FormLabel>
                     <Select
                       onValueChange={field.onChange}
@@ -357,7 +369,9 @@ const AppearanceForm = () => {
               <p className="font-bold text-base text-primary">
                 {data!.bodyArt ? data!.bodyArt : "Add Body Art Type"}
               </p>
-              <p className="text-[#727272] text-xs">Body Art Type</p>
+              <p className="text-[#727272] text-xs">
+                {t("memberDetails.bodyArtType")}
+              </p>
             </div>
           </div>
         )}

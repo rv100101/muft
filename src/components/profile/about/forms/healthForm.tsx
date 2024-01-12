@@ -21,7 +21,9 @@ import selectOptions from "@/zustand/profile/selectData/selectOptions";
 import { Disability, Workout } from "@/types/profile";
 import { Accessibility, Dumbbell } from "lucide-react";
 import { useFormContext } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 const HealthForm = () => {
+  const [t] = useTranslation();
   const { control } = useFormContext();
   const { workout, disability } = selectOptions();
   const isLoading = profileAboutContentStore((state) => state.isLoading);
@@ -93,7 +95,9 @@ const HealthForm = () => {
               <p className="font-bold text-base text-primary">
                 {data!.workout ? `${data!.workout}` : "Add Workout"}
               </p>
-              <p className="text-[#727272] text-xs">Workout</p>
+              <p className="text-[#727272] text-xs">
+                {t("memberDetails.workout")}
+              </p>
             </div>
           </div>
         )}
@@ -153,7 +157,9 @@ const HealthForm = () => {
               <p className="font-bold text-base text-primary">
                 {data!.disability ? data!.disability : "Add Disability"}
               </p>
-              <p className="text-[#727272] text-xs">Disability</p>
+              <p className="text-[#727272] text-xs">
+                {t("memberDetails.disability")}
+              </p>
             </div>
           </div>
         )}

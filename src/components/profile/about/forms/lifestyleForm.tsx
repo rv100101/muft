@@ -19,8 +19,10 @@ import {
 } from "@/components/ui/select";
 import { useFormContext } from "react-hook-form";
 import { useUserStore } from "@/zustand/auth/user";
+import { useTranslation } from "react-i18next";
 
 const LifestyleForm = () => {
+  const [t] = useTranslation();
   const { control } = useFormContext();
   const isLoading = profileAboutContentStore((state) => state.isLoading);
   const data = profileAboutContentStore((state) => state.data);
@@ -93,7 +95,9 @@ const LifestyleForm = () => {
               <p className="font-bold text-base text-primary">
                 {data!.drinking ? data!.drinking : "Add Drink"}
               </p>
-              <p className="text-[#727272] text-xs">Drinking Alcohol</p>
+              <p className="text-[#727272] text-xs">
+                {t("memberDetails.drinkingAlcohol")}
+              </p>
             </div>
           </div>
         )}
@@ -150,7 +154,9 @@ const LifestyleForm = () => {
               <p className="font-bold text-base text-primary">
                 {data!.drinking ? data!.drinking : "Add Drink"}
               </p>
-              <p className="text-[#727272] text-xs">Smoking Cigarette</p>
+              <p className="text-[#727272] text-xs">
+                {t("memberDetails.smokingCigarette")}
+              </p>
             </div>
           </div>
         )}
@@ -207,7 +213,9 @@ const LifestyleForm = () => {
               <p className="font-bold text-base text-primary">
                 {data!.livingStatus ? data!.livingStatus : "Add Living Status"}
               </p>
-              <p className="text-[#727272] text-xs">Living Status</p>
+              <p className="text-[#727272] text-xs">
+                {t("memberDetails.livingStatus")}
+              </p>
             </div>
           </div>
         )}
@@ -264,7 +272,9 @@ const LifestyleForm = () => {
               <p className="font-bold text-base text-primary">
                 {data!.car ? data!.car : "Add Car"}
               </p>
-              <p className="text-[#727272] text-xs">Has Car</p>
+              <p className="text-[#727272] text-xs">
+                {t("memberDetails.hasCar")}
+              </p>
             </div>
           </div>
         )}

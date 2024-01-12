@@ -51,6 +51,7 @@ import * as Yup from "yup";
 import { Textarea } from "../ui/textarea";
 import useMobileMessagingViewStore from "@/zustand/messaging/mobileStateView";
 import { Skeleton } from "../ui/skeleton";
+import { useTranslation } from "react-i18next";
 
 type FormDataType = {
   reason: string;
@@ -159,6 +160,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const setAvatar = useUserAvatar((state) => state.setAvatar);
+  const [t] = useTranslation();
 
   const getConversationUuid = useCallback(async () => {
     if (location.startsWith("/profile")) {
@@ -479,7 +481,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                           "hidden sm:block mt-1 text-[#f0f9ff] border-[#075985] text-xs py-1 px-2 w-min rounded-md bg-[#38bdf8] hover:bg-[#38bdf8]/80"
                         }
                       >
-                        Standard
+                        {t("memberDetails.standard")}
                       </p>
                     }
                   </div>
@@ -509,7 +511,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                           }
                         >
                           <div className="flex w-min">
-                            <p>Chat</p>
+                            <p>{t("memberDetails.chat")}</p>
                             <span>
                               <MessageCircleIcon className="h-4" />
                             </span>
@@ -567,11 +569,11 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                                     handleBlockMember(parseInt(userId))
                                   }
                                 >
-                                  Block
+                                  {t("memberDetails.block")}
                                 </DropdownMenuItem>
                                 <DialogTrigger asChild>
                                   <DropdownMenuItem>
-                                    Report Abuse
+                                    {t("memberDetails.reportAbuse")}
                                   </DropdownMenuItem>
                                 </DialogTrigger>
                               </DropdownMenuGroup>

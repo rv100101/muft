@@ -25,7 +25,9 @@ import { cn } from "@/lib/utils";
 import { useEffectOnce } from "usehooks-ts";
 import { useState } from "react";
 import { useLocation } from "wouter";
+import { useTranslation } from "react-i18next";
 const BasicInformationForm = () => {
+  const [t] = useTranslation();
   const [location] = useLocation();
   const parts = location.split("/");
   const userId = parts[parts.length - 1];
@@ -50,16 +52,6 @@ const BasicInformationForm = () => {
     setMinDate(formattedMinDate);
     setMaxDate(formattedMaxDate);
   });
-
-  // const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   const selectedDate = event.target.value;
-
-  //   // Validate the selected date against the min and max dates
-  //   if (selectedDate < minDate || selectedDate > maxDate) {
-  //     // Reset the input value if the date is outside the allowed range
-  //     event.target.value = '';
-  //   }
-  // };
 
   const { control } = useFormContext();
   const { nationalities } = selectOptions();
@@ -95,7 +87,9 @@ const BasicInformationForm = () => {
               />
               <div className="flex flex-col justify-start space-y-1">
                 <p className="font-bold text-base text-primary">{userId}</p>
-                <p className="text-[#727272] text-xs">Member ID</p>
+                <p className="text-[#727272] text-xs">
+                  {t("memberDetails.memberID")}
+                </p>
               </div>
             </div>
           </div>
@@ -111,7 +105,7 @@ const BasicInformationForm = () => {
                   return (
                     <FormItem>
                       <FormLabel className="text-primary" htmlFor="nickname">
-                        Nickname
+                        {t("memberDetails.nickname")}
                       </FormLabel>
                       <Input
                         onChange={(e) => {
@@ -139,7 +133,9 @@ const BasicInformationForm = () => {
               <p className="font-bold text-base text-primary">
                 {data?.nickname}
               </p>
-              <p className="text-[#727272] text-xs">Nickname</p>
+              <p className="text-[#727272] text-xs">
+                {t("memberDetails.nickname")}
+              </p>
             </div>
           </div>
         )}
@@ -153,7 +149,7 @@ const BasicInformationForm = () => {
                 return (
                   <FormItem>
                     <FormLabel className="text-primary" htmlFor="gender">
-                      Gender
+                      {t("memberDetails.gender")}
                     </FormLabel>
                     <Select
                       onValueChange={field.onChange}
@@ -191,7 +187,9 @@ const BasicInformationForm = () => {
               <p className="font-bold text-base text-primary">
                 {data && data?.gender[0] == "M" ? "Male" : "Female"}
               </p>
-              <p className="text-[#727272] text-xs">Gender</p>
+              <p className="text-[#727272] text-xs">
+                {t("memberDetails.gender")}
+              </p>
             </div>
           </div>
         )}
@@ -205,7 +203,7 @@ const BasicInformationForm = () => {
                 return (
                   <FormItem>
                     <FormLabel className="text-primary" htmlFor="nationality">
-                      Nationality
+                      {t("memberDetails.nationality")}
                     </FormLabel>
                     <Select
                       onValueChange={field.onChange}
@@ -247,7 +245,9 @@ const BasicInformationForm = () => {
               <p className="font-bold text-base text-primary">
                 {data?.nationality ? data?.nationality : "Add Nationality"}
               </p>
-              <p className="text-[#727272] text-xs">Nationality</p>
+              <p className="text-[#727272] text-xs">
+                {t("memberDetails.nationality")}
+              </p>
             </div>
           </div>
         )}
@@ -262,7 +262,7 @@ const BasicInformationForm = () => {
             />
             <div className="flex flex-col justify-start space-y-1">
               <p className="font-bold text-base text-primary">{data?.age}y</p>
-              <p className="text-[#727272] text-xs">Age</p>
+              <p className="text-[#727272] text-xs">{t("memberDetails.age")}</p>
             </div>
           </div>
         </div>

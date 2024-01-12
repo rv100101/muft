@@ -1,8 +1,7 @@
-
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
 import { Church, GraduationCap, Users } from "lucide-react";
 import FormSkeletonLoading from "./formSkeletonLoading";
-import { Education, Ethnicity, Religion, } from "@/types/profile";
+import { Education, Ethnicity, Religion } from "@/types/profile";
 import selectOptions from "@/zustand/profile/selectData/selectOptions";
 import {
   Select,
@@ -20,8 +19,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useUserStore } from "@/zustand/auth/user";
+import { useTranslation } from "react-i18next";
 
 const BackgroundForm = () => {
+  const [t] = useTranslation();
   const { control } = useFormContext();
   const { data, editMode, isLoading } = profileAboutContentStore();
 
@@ -30,7 +31,7 @@ const BackgroundForm = () => {
   const user = useUserStore((state) => state.user);
 
   const isSaving = profileAboutContentStore((state) => state.isSaving);
-  const profileData = profileAboutContentStore(state => state.profileData);
+  const profileData = profileAboutContentStore((state) => state.profileData);
   if ((isLoading && profileData == null) || isSaving) {
     return (
       <div className="flex justify-start items-start space-x-4 w-full ml-5">
@@ -49,11 +50,10 @@ const BackgroundForm = () => {
             <FormField
               name="education"
               render={({ field }) => {
-                console.log(field);
                 return (
                   <FormItem>
                     <FormLabel className="text-primary" htmlFor="education">
-                      Education
+                      {t("memberDetails.education")}
                     </FormLabel>
                     <Select
                       onValueChange={field.onChange}
@@ -94,7 +94,9 @@ const BackgroundForm = () => {
               <p className="font-bold text-base text-primary">
                 {data!.education ? data!.education : "Add education info"}
               </p>
-              <p className="text-[#727272] text-xs">Educational Attainment</p>
+              <p className="text-[#727272] text-xs">
+                {t("memberDetails.education")}
+              </p>
             </div>
           </div>
         )}
@@ -108,7 +110,7 @@ const BackgroundForm = () => {
                 return (
                   <FormItem>
                     <FormLabel className="text-primary" htmlFor="religion">
-                      Religion
+                      {t("memberDetails.religion")}
                     </FormLabel>
                     <Select
                       onValueChange={field.onChange}
@@ -147,11 +149,14 @@ const BackgroundForm = () => {
               <p className="font-bold text-base text-primary">
                 {data?.religion ? data?.religion : "Add Religion"}
               </p>
-              <p className="text-[#727272] text-xs">Religion</p>
+              <p className="text-[#727272] text-xs">
+                {t("memberDetails.religion")}
+              </p>
             </div>
           </div>
         )}
-      </div> <div className="flex flex-row justify-between w-full px-5">
+      </div>{" "}
+      <div className="flex flex-row justify-between w-full px-5">
         {editMode || !user?.profile_completed ? (
           <div className="space-y-1 hover:cursor-pointer w-full items-center">
             <FormField
@@ -160,7 +165,7 @@ const BackgroundForm = () => {
                 return (
                   <FormItem>
                     <FormLabel className="text-primary" htmlFor="ethnicity">
-                      Ethnicity
+                      {t("memberDetails.ethnicity")}
                     </FormLabel>
                     <Select
                       onValueChange={field.onChange}
@@ -203,7 +208,9 @@ const BackgroundForm = () => {
               <p className="font-bold text-base text-primary">
                 {data?.ethnicity ? data?.ethnicity : "Add Ethnicity"}
               </p>
-              <p className="text-[#727272] text-xs">Ethnicity</p>
+              <p className="text-[#727272] text-xs">
+                {t("memberDetails.ethnicity")}
+              </p>
             </div>
           </div>
         )}

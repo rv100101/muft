@@ -21,8 +21,10 @@ import { Country, State } from "@/types/profile";
 import { useUserStore } from "@/zustand/auth/user";
 import useSelectedCountryStore from "@/zustand/profile/location/selectedCountry";
 import { useUpdateEffect } from "usehooks-ts";
+import { useTranslation } from "react-i18next";
 
 const LocationForm = () => {
+  const [t] = useTranslation();
   const setSelectedCountry = useSelectedCountryStore(
     (state) => state.setSelectedCountry
   );
@@ -84,7 +86,7 @@ const LocationForm = () => {
                 return (
                   <FormItem>
                     <FormLabel className="text-primary" htmlFor="country">
-                      Country
+                      {t("memberDetails.country")}
                     </FormLabel>
                     <Select
                       onValueChange={(e) => {
@@ -130,7 +132,9 @@ const LocationForm = () => {
               <p className="font-bold text-base text-primary">
                 {data!.country ? data!.country : "Add country info"}
               </p>
-              <p className="text-[#727272] text-xs">Country</p>
+              <p className="text-[#727272] text-xs">
+                {t("memberDetails.country")}
+              </p>
             </div>
           </div>
         )}
@@ -145,7 +149,7 @@ const LocationForm = () => {
                 return (
                   <FormItem>
                     <FormLabel className="text-primary" htmlFor="region">
-                      State
+                      {t("memberDetails.state")}
                     </FormLabel>
                     <Select
                       onValueChange={field.onChange}
@@ -186,7 +190,9 @@ const LocationForm = () => {
               <p className="font-bold text-base text-primary">
                 {data!.region ? data!.region : "Add Region Info"}
               </p>
-              <p className="text-[#727272] text-xs">State</p>
+              <p className="text-[#727272] text-xs">
+                {t("memberDetails.state")}
+              </p>
             </div>
           </div>
         )}

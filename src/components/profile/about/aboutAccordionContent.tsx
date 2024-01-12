@@ -36,8 +36,10 @@ import { useEffectOnce, useUpdateEffect } from "usehooks-ts";
 import mapErrorsToSections from "@/lib/getFormErrorsIndex";
 import { useFormContext } from "react-hook-form";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const AboutAccordionContent = () => {
+  const [t] = useTranslation();
   const [location] = useLocation();
   const {
     basicInfoHasErrors,
@@ -95,7 +97,7 @@ const AboutAccordionContent = () => {
               basicInfoHasErrors && "text-red-500"
             )}
           >
-            Basic Information{" "}
+            {t("memberDetails.basicInformation")}
             {basicInfoHasErrors && (
               <span>
                 <AlertCircle className="h-4 inline-flex text-red-500" />
@@ -119,7 +121,7 @@ const AboutAccordionContent = () => {
               locationHasErrors && "text-red-500"
             )}
           >
-            Location{" "}
+            {t("memberDetails.location")}
             {locationHasErrors && (
               <span>
                 <AlertCircle className="h-4 inline-flex text-red-500" />
@@ -147,7 +149,7 @@ const AboutAccordionContent = () => {
               locationHasErrors && "text-red-500"
             )}
           >
-            Background{" "}
+            {t("memberDetails.background")}
             {locationHasErrors && (
               <span>
                 <AlertCircle className="h-4 inline-flex text-red-500" />
@@ -175,7 +177,7 @@ const AboutAccordionContent = () => {
               locationHasErrors && "text-red-500"
             )}
           >
-            Languages{" "}
+            {t("memberDetails.languages")}
             {locationHasErrors && (
               <span>
                 <AlertCircle className="h-4 inline-flex text-red-500" />
@@ -203,7 +205,7 @@ const AboutAccordionContent = () => {
               locationHasErrors && "text-red-500"
             )}
           >
-            Appearance{" "}
+            {t("memberDetails.appearance")}
             {locationHasErrors && (
               <span>
                 <AlertCircle className="h-4 inline-flex text-red-500" />
@@ -231,7 +233,7 @@ const AboutAccordionContent = () => {
               locationHasErrors && "text-red-500"
             )}
           >
-            Lifestyle{" "}
+            {t("memberDetails.lifestyle")}
             {locationHasErrors && (
               <span>
                 <AlertCircle className="h-4 inline-flex text-red-500" />
@@ -259,7 +261,7 @@ const AboutAccordionContent = () => {
               locationHasErrors && "text-red-500"
             )}
           >
-            Pets{" "}
+            {t("memberDetails.pets")}
             {locationHasErrors && (
               <span>
                 <AlertCircle className="h-4 inline-flex text-red-500" />
@@ -287,7 +289,7 @@ const AboutAccordionContent = () => {
               locationHasErrors && "text-red-500"
             )}
           >
-            Favorite Food{" "}
+            {t("memberDetails.favoriteFood")}
             {locationHasErrors && (
               <span>
                 <AlertCircle className="h-4 inline-flex text-red-500" />
@@ -315,7 +317,7 @@ const AboutAccordionContent = () => {
               locationHasErrors && "text-red-500"
             )}
           >
-            Health{" "}
+            {t("memberDetails.health")}
             {locationHasErrors && (
               <span>
                 <AlertCircle className="h-4 inline-flex text-red-500" />
@@ -343,7 +345,7 @@ const AboutAccordionContent = () => {
               workAndEducationHasErrors && "text-red-500"
             )}
           >
-            Marital Status{" "}
+            {t("memberDetails.maritalStatus")}
             {workAndEducationHasErrors && (
               <span>
                 <AlertCircle className="h-4 inline-flex text-red-500" />
@@ -371,7 +373,7 @@ const AboutAccordionContent = () => {
               detailsInfoHasErrors && "text-red-500"
             )}
           >
-            Employment{" "}
+            {t("memberDetails.employment")}
             {detailsInfoHasErrors && (
               <span>
                 <Briefcase className="h-4 inline-flex text-red-500" />
@@ -399,7 +401,7 @@ const AboutAccordionContent = () => {
               additionalInfoHasErrors && "text-red-500"
             )}
           >
-            Interests{" "}
+            {t("memberDetails.interests")}
             {additionalInfoHasErrors && (
               <span>
                 <AlertCircle className="h-4 inline-flex text-red-500" />

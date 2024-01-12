@@ -46,7 +46,9 @@ import { useLocation } from "wouter";
 import useSelectedCountryStore from "@/zustand/profile/location/selectedCountry";
 import { convertJsonToConvertedObject } from "@/lib/utils";
 import { useEffectOnce, useUpdateEffect } from "usehooks-ts";
+import { useTranslation } from "react-i18next";
 const AboutAccordion = ({ userId }: { userId: number }) => {
+  const [t] = useTranslation();
   const [location] = useLocation();
   const { selectedCountry, setSelectedCountry } = useSelectedCountryStore();
   const { data: profileAboutContent, isSaving } = profileAboutContentStore();
@@ -402,7 +404,7 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
         <AccordionItem value="item-1" className="px-5 py-1 border-0">
           <AccordionTrigger className="hover:no-underline">
             <p className="uppercase font-[500] text-[#727272] no-underline">
-              About
+              {t("memberDetails.about")}
             </p>
           </AccordionTrigger>
           <AccordionContent>
