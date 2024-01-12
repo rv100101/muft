@@ -59,6 +59,7 @@ type FormDataType = {
 };
 
 const ProfileHeader = ({ userId }: { userId: string }) => {
+  const [, i18n] = useTranslation();
   const setView = useMobileMessagingViewStore((state) => state.setView);
   const [reportProcessing, setReportProcessing] = useState(false);
   const setEditModeFalse = profileAboutContentStore(
@@ -349,7 +350,12 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
 
   return (
     <div className="items-start py-5 sm:p-5 border-b w-full">
-      <div className="flex justify-start items-start space-x-2">
+      <div
+        className={cn(
+          "flex justify-start items-start space-x-2",
+          i18n.language == "ar" && "space-x-reverse"
+        )}
+      >
         {
           <div className="flex flex-col justify-center items-center space-y-2">
             {
@@ -390,7 +396,14 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                         }
                         alt="no image selected"
                       />
-                      <div className="flex space-x-1 justify-center font-semibold text-2xl">
+                      <div
+                        className={cn(
+                          "flex justify-center font-semibold text-2xl",
+                          i18n.language == "ar"
+                            ? "space-x-reverse space-x-1"
+                            : "space-x-1"
+                        )}
+                      >
                         <p className=" whitespace-nowrap">{data?.nickname}, </p>
                         <p> {`${data?.age}`}</p>
                       </div>
@@ -466,10 +479,18 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                 >
                   <div className="flex lg:flex-col lg:justify-start flex-row space-x-4 lg:space-x-0">
                     <div className="flex flex-col space-x-1">
-                      <div className="flex items-center space-x-1">
-                        <p className="font-semibold text-[#171717] whitespace-nowrap text-sm sm:text-lg dark:text-white">
-                          {`${data!.nickname},`}
-                        </p>
+                      <div
+                        className={cn(
+                          "flex items-center space-x-1",
+                          i18n.language == "ar" && "space-x-reverse"
+                        )}
+                      >
+                        <div className="flex">
+                          <p className="font-semibold text-[#171717] whitespace-nowrap text-sm sm:text-lg dark:text-white">
+                            {data!.nickname}
+                          </p>
+                          <p>,</p>
+                        </div>
                         <p className="font-semibold text-primary sm:text-lg">
                           {data!.age}
                         </p>
@@ -692,7 +713,12 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
             {userId === user!.member_id.toString() && (
               <>
                 {isEditing && (
-                  <div className="flex space-x-2">
+                  <div
+                    className={cn(
+                      "flex space-x-2",
+                      i18n.language == "ar" && "space-x-reverse"
+                    )}
+                  >
                     <Button
                       onClick={
                         !formState.isDirty
@@ -764,7 +790,12 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
           </div>
           {!isEditing && user!.is_active && (
             <div className="h-full hidden lg:block mt-3">
-              <div className="pt-5 flex w-full justify-start items-start flex-wrap text-xs space-x-2">
+              <div
+                className={cn(
+                  "pt-5 flex w-full justify-start items-start flex-wrap text-xs space-x-2",
+                  i18n.language == "ar" && "space-x-reverse"
+                )}
+              >
                 {/* {data.height && (
                   <p className="rounded-md w-max h-max bg-[#FFF2F7] text-[#FF599B] p-2 mb-2">
                     {`${data!.height} cm`}
