@@ -43,7 +43,7 @@ const PreferredLanguageDialog = ({
         <div className="flex justify-between items-center">
           {user && (
             <p className="font-medium pt-5">
-              {triggerTitle !== null
+              {triggerTitle
                 ? triggerTitle
                 : t("settings.changePreferredLanguage")}
             </p>
