@@ -37,6 +37,8 @@
     "myAccount": "My Account",
     "changePassword": "Change Password",
     "update": "Update",
+    "changePreferredLanguage": "Change Preferred Language",
+    "change": "Change",
     "displaySettings": "Display Settings",
     "theme": "Theme",
     "light": "Light",
@@ -58,10 +60,13 @@
   },
   "deactivateProfile": {
     "deactivateProfile": "Deactivate Profile",
+    "deactivateMessage": "By choosing 'Deactivate your account', you'll temporarily make your profile invisible to other users on Muffin. While your account is deactivated, your profile, photos, and messages will be hidden, and you will not appear in any search results. But don't worry, your account information isn't going anywhere.",
     "proceed": "I am sure I want to proceed",
     "deactivate": "Deactivate",
     "delete": "Delete",
     "importantNotice": "Important Notice",
+    "noticeDescription": "Deleting your account will permanently remove your profile, photos and messages.",
+    "cannotBeUndone": "This action cannot be undone later!",
     "permanentlyDelete": "Permanenently Delete",
     "no": "No"
   },

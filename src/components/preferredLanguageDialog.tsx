@@ -20,7 +20,9 @@ import { cn } from "@/lib/utils";
 import { usePreferredLanguageStore } from "@/zustand/auth/preferred_language";
 import { DialogTrigger } from "@radix-ui/react-dialog";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 const PreferredLanguageDialog = ({ showTrigger = false }) => {
+  const [t] = useTranslation();
   const { preferred, setPreferredLanguage } = usePreferredLanguageStore();
   const [selectVal, setSelectVal] = useState<string | null>(preferred);
   const [changePreferredLanguage, setChangePreferredLanguage] = useState(false);
@@ -28,7 +30,9 @@ const PreferredLanguageDialog = ({ showTrigger = false }) => {
     <Dialog open={preferred == null || changePreferredLanguage}>
       {showTrigger && (
         <div className="flex justify-between items-center">
-          <p className="font-medium pt-5">Change Preferred Language</p>
+          <p className="font-medium pt-5">
+            {t("settings.changePreferredLanguage")}
+          </p>
           <DialogTrigger className="flex">
             <Button
               className={cn(
@@ -36,7 +40,7 @@ const PreferredLanguageDialog = ({ showTrigger = false }) => {
               )}
               onClick={() => setChangePreferredLanguage(true)}
             >
-              Change
+              {t("settings.change")}
             </Button>
           </DialogTrigger>
         </div>

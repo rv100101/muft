@@ -6,8 +6,10 @@ import DeactivateAccountContent from "@/components/settings/account/deactivateAc
 import MyAccountContent from "@/components/settings/account/myAccountContent";
 import MobileTopbar from "@/components/settings/mobileTopbar";
 import { Helmet } from "react-helmet-async";
+import { useTranslation } from "react-i18next";
 
 const SettingsPage = () => {
+  const [t] = useTranslation();
   return (
     <AuthenticatedLayout>
       <Helmet>
@@ -20,7 +22,9 @@ const SettingsPage = () => {
       <div className="w-full flex flex-col h-full lg:items-center justify-start border">
         <MobileTopbar />
         <div className="lg:flex hidden flex-row lg:w-3/4 w-full border justify-between lg:p-5 py-2 items-center lg:border-b">
-          <p className="select-none font-semibold w-full ">SETTINGS</p>
+          <p className="select-none font-semibold w-full ">
+            {t("settings.settings")}
+          </p>
         </div>
         <div className="flex overflow-y-auto items-start lg:w-3/4 w-full h-full border">
           <div className="w-full lg:mt-0 mt-5 h-full">

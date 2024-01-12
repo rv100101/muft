@@ -19,8 +19,10 @@ import { DialogClose, DialogTitle } from "@radix-ui/react-dialog";
 import { useQueryClient } from "@tanstack/react-query";
 import { Loader2, X } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const DeactivateAccountContent = () => {
+  const [t] = useTranslation();
   const signOut = useUserStore((state) => state.reset);
   const { updateRead: setReadList } = useReadConversationsStateStore();
   const [showDialog, setShowDialog] = useState(false);
@@ -107,20 +109,26 @@ const DeactivateAccountContent = () => {
     <div className="flex flex-col  w-full justify-center text-[#727272] space-y-2 px-5 py-10">
       <p className="font-semibold pb-1 text-lg">
         {user?.temporarily_deactivated
-          ? "Reactivate Account"
-          : "Deactivate Account"}
+          ? t("settings.reactivateAccount")
+          : t("settings.deactivateAccount")}
       </p>
       {/* <p className="font-medium">Deactivate</p> */}
       <Dialog open={showDialog} onOpenChange={(val) => setShowDialog(val)}>
         <div className="flex flex-row w-full justify-between items-center">
-          <p>{user?.temporarily_deactivated ? "Reactivate" : "Deactivate"}</p>
+          <p>
+            {user?.temporarily_deactivated
+              ? t("settings.reactivate")
+              : t("settings.deactivate")}
+          </p>
           <DialogTrigger asChild>
             <Button
               className={cn(
                 "text-white  h-10  text-sm rounded-lf py-2 hover:bg-[#FF599B]/90 w-24 dark:bg-[#1b1d1e] dark:hover:bg-red-700/90"
               )}
             >
-              {user?.temporarily_deactivated ? "Reactivate" : "Deactivate"}
+              {user?.temporarily_deactivated
+                ? t("settings.reactivate")
+                : t("settings.deactivate")}
             </Button>
           </DialogTrigger>
 
@@ -129,8 +137,8 @@ const DeactivateAccountContent = () => {
               <div className="flex flex-row justify-between items-start  pb-5">
                 <DialogTitle className="font-medium">
                   {user?.temporarily_deactivated
-                    ? "Reactivate profile"
-                    : "Deactivate profile"}
+                    ? t("settings.reactivate")
+                    : t("settings.deactivate")}
                 </DialogTitle>
                 <DialogClose>
                   <X className="hover:cursor-pointer" size={20} />
@@ -138,12 +146,7 @@ const DeactivateAccountContent = () => {
               </div>
               {!user?.temporarily_deactivated ? (
                 <DialogDescription className="pb-5">
-                  By choosing 'Deactivate your account', you'll temporarily make
-                  your profile invisible to other users on Muffin. While your
-                  account is deactivated, your profile, photos, and messages
-                  will be hidden, and you will not appear in any search results.
-                  But don't worry, your account information isn't going
-                  anywhere.
+                  {t("deactivateProfile.deactivateMessage")}
                 </DialogDescription>
               ) : (
                 <DialogDescription className="pb-5">
@@ -163,7 +166,7 @@ const DeactivateAccountContent = () => {
                   htmlFor="terms"
                   className="select-none text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                 >
-                  I am sure I want to proceed
+                  {t("deactivateProfile.proceed")}
                 </label>
               </div>
             )}
@@ -191,9 +194,9 @@ const DeactivateAccountContent = () => {
                   {isLoading ? (
                     <Loader2 className="ml-2 h-full w-full animate-spin" />
                   ) : user?.temporarily_deactivated ? (
-                    "Reactivate"
+                    t("settings.reactivate")
                   ) : (
-                    "Deactivate"
+                    t("settings.deactivate")
                   )}
                 </Button>
                 {!user?.temporarily_deactivated && (
@@ -205,7 +208,7 @@ const DeactivateAccountContent = () => {
                     // onClick={() => deleteAccount}
                     onClick={() => setDeleteModal(true)}
                   >
-                    Delete
+                    {t("deactivateProfile.delete")}
                   </Button>
                 )}
               </div>
@@ -222,13 +225,12 @@ const DeactivateAccountContent = () => {
       >
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle> Important Notice</DialogTitle>
+            <DialogTitle>{t("deactivateProfile.importantNotice")}</DialogTitle>
             <DialogDescription>
-              Deleting your account will permanently remove your profile, photos
-              and messages.
+              {t("deactivateProfile.noticeDescription")}
             </DialogDescription>
             <DialogDescription className="pt-5">
-              This action cannot be undone later!
+              {t("deactivateProfile.cannotBeUndone")}
             </DialogDescription>
           </DialogHeader>
           <div className="flex flex-row space-x-4">
@@ -242,7 +244,7 @@ const DeactivateAccountContent = () => {
               {deleteLoading ? (
                 <Loader2 className="ml-2 h-full w-full animate-spin" />
               ) : (
-                "Permanenently Delete"
+                t("deactivateProfile.permanentlyDelete")
               )}
             </Button>
             <DialogClose>
@@ -253,7 +255,7 @@ const DeactivateAccountContent = () => {
                 )}
                 // onClick={() => deleteAccount}
               >
-                No
+                {t("deactivateProfile.no")}
               </Button>
             </DialogClose>
           </div>

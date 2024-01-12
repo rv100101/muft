@@ -1,17 +1,19 @@
 // import { Label } from "@/components/ui/label";
 // import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Switch } from "@/components/ui/switch";
+import { useTranslation } from "react-i18next";
 import OneSignal from "react-onesignal";
 
 const PushNotifcationContent = () => {
-  console.log(OneSignal.User.PushSubscription.optedIn);
-
+  const [t] = useTranslation();
   return (
     <div className="flex flex-col border-b w-full justify-center text-[#727272] space-y-5 px-5 py-10">
-      <p className="font-semibold text-lg">Notifications</p>
+      <p className="font-semibold text-lg">{t("settings.notifications")}</p>
       {/* <p className="font-medium text-md">Push Notifications</p> */}
       <div className="flex flex-row w-full  justify-between items-center">
-        <p className="font-normal text-md">Enable Push notifications</p>
+        <p className="font-normal text-md">
+          {t("settings.enablePushNotifications")}
+        </p>
         <Switch
           id="airplane-mode"
           checked={OneSignal.User.PushSubscription.optedIn}

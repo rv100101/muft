@@ -17,6 +17,7 @@ import { DialogClose, DialogTrigger } from "@radix-ui/react-dialog";
 import { useFormik } from "formik";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 
 type FormDataType = {
@@ -26,7 +27,7 @@ type FormDataType = {
 
 const MyAccountContent = () => {
   const { user } = useUserStore();
-
+  const [t] = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   // const getMembers = profileQuery.getProfileHeader(user!.member_id);
 
@@ -80,10 +81,10 @@ const MyAccountContent = () => {
   // }
   return (
     <div className="flex flex-col  w-full  border-b justify-center text-[#727272] space-y-2 p-5">
-      <p className="font-semibold text-lg">My Account</p>
+      <p className="font-semibold text-lg">{t("settings.myAccount")}</p>
       <Dialog>
         <div className="flex flex-row w-full justify-between items-center">
-          <p className="font-medium pt-5">Change Password</p>
+          <p className="font-medium pt-5">{t("settings.changePassword")}</p>
 
           <DialogTrigger asChild>
             <Button
@@ -91,13 +92,13 @@ const MyAccountContent = () => {
                 "text-white h-10 text-sm rounded-lf py-2 hover:bg-[#FF599B]/90 w-24 dark:bg-[#1b1d1e] dark:hover:bg-red-700/90"
               )}
             >
-              Update
+              {t("settings.update")}
             </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px] w-96 left-[50%] top-[25%] sm:top-[50%]">
             <DialogHeader>
               <DialogTitle className="font-medium ">
-                Change Password
+                {t("changePassword.changePassword")}
               </DialogTitle>
             </DialogHeader>
             <form
@@ -107,13 +108,13 @@ const MyAccountContent = () => {
             >
               <div className="flex flex-col w-full justify-between space-y-2 pt-5">
                 <label htmlFor="" className="font-medium text-sm">
-                  New Password
+                  {t("changePassword.newPassword")}
                 </label>
                 <Input
                   type="password"
                   className="rounded rounded-lg"
                   // className="autofill:bg-yellow-200 mx-2 text-sm h-8 focus-visible:ring-offset-0 focus-visible:ring-0 border-0 rounded-full py-1 px-5 text-normal w-full"
-                  placeholder="Password"
+                  placeholder={t("changePassword.password")}
                   {...formik.getFieldProps("newPassword")}
                   onChange={formik.handleChange}
                   name="newPassword"
@@ -128,13 +129,13 @@ const MyAccountContent = () => {
 
               <div className="flex flex-col w-full justify-between space-y-2 pt-5">
                 <label htmlFor="" className="font-medium text-sm">
-                  Re-Type Password
+                  {t("changePassword.reTypePassword")}
                 </label>
                 <Input
                   type="password"
                   className="rounded rounded-lg"
                   // className="autofill:bg-yellow-200 mx-2 text-sm h-8 focus-visible:ring-offset-0 focus-visible:ring-0 border-0 rounded-full py-1 px-5 text-normal w-full"
-                  placeholder="Password"
+                  placeholder={t("changePassword.password")}
                   {...formik.getFieldProps("rePassword")}
                   onChange={formik.handleChange}
                   name="rePassword"
@@ -159,7 +160,7 @@ const MyAccountContent = () => {
                     {isLoading ? (
                       <Loader2 className="ml-2 h-full w-full animate-spin" />
                     ) : (
-                      "Update"
+                      t("settings.update")
                     )}
                   </Button>
                 </div>
@@ -168,7 +169,6 @@ const MyAccountContent = () => {
           </DialogContent>
         </div>
       </Dialog>
-
       <PreferredLanguageDialog showTrigger={true} />
     </div>
   );
