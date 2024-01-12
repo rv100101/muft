@@ -14,8 +14,10 @@ import { useUserStore } from "@/zustand/auth/user";
 import { cn } from "@/lib/utils";
 import useReadConversationsStateStore from "@/zustand/messaging/readConversations";
 import { Conversation } from "@/types/conversation";
+import { useTranslation } from "react-i18next";
 
 const ChatList = () => {
+  const [, i18n] = useTranslation();
   const { read: readList, updateRead: setReadList } =
     useReadConversationsStateStore();
   const {
@@ -150,7 +152,10 @@ const ChatList = () => {
             }}
           >
             <img
-              className="w-12 h-12 mr-2 object-cover rounded-full "
+              className={cn(
+                "w-12 h-12 mr-2 object-cover rounded-full",
+                i18n.language == "ar" && "ml-2"
+              )}
               src={getImagePath(
                 conversation.gallery_uuid,
                 conversation.gender,
@@ -169,7 +174,7 @@ const ChatList = () => {
                 >
                   {conversation.listed_nickname}
                 </p>
-                <p className="text-xs xs:hidden">
+                <p className="text-xs xs:hidden" dir="ltr">
                   {moment(`${conversation.created_date}Z`).fromNow()}
                 </p>
               </div>
