@@ -43,10 +43,11 @@ const SideBar = () => {
       <li key={index} className={cn("w-full")}>
         <Link
           className={cn(
-            "h-10 px-4 py-2 hover:bg-accent hover:text-accent-foreground flex justify-start items-center space-x-2",
+            "h-10 px-4 py-2 hover:bg-accent hover:text-accent-foreground flex justify-start items-center",
             location.endsWith(link.path)
               ? "font-semibold bg-accent"
-              : "font-normal"
+              : "font-normal",
+            i18n.language == "ar" ? "space-x-reverse space-x-2" : "space-x-2"
           )}
           href={link.path}
           onClick={() => {
@@ -125,7 +126,14 @@ const SideBar = () => {
           <hr />
           <Dialog>
             <DialogTrigger>
-              <div className="flex space-x-2 my-4">
+              <div
+                className={cn(
+                  "flex space-x-2 my-4",
+                  i18n.language == "ar"
+                    ? "space-x-reverse space-x-2"
+                    : "space-x-2"
+                )}
+              >
                 {<LogOutIcon size={20} className="text-primary" />}{" "}
                 <p className="text-sm">{t("menu.signOut")}</p>
               </div>

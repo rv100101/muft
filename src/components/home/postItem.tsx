@@ -70,9 +70,7 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
             {/* vignette */}
             <LazyLoadImage
               onClick={() => handlePostItemClick()}
-              placeholder={
-                <Skeleton className="h-full w-full" />
-              }
+              placeholder={<Skeleton className="h-full w-full" />}
               effect="opacity"
               alt={"post image"}
               delayTime={100}
@@ -94,7 +92,7 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
               className="rounded-t-xl lg:w-[460px] w-[350px] h-[554px] xl:h-[454px] xl:w-[400px] object-cover"
             /> */}
             <div className="absolute bottom-0 w-full">
-              <div className="flex flex-row w-full justify-between ">
+              <div dir="ltr" className="flex flex-row w-full justify-between ">
                 <div
                   onClick={() => handlePostItemClick()}
                   className="flex flex-col p-8 hover:cursor-pointer"
@@ -108,7 +106,10 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
                   </p>
                 </div>
                 <TooltipProvider>
-                  <div className="flex items-center space-x-2 justify-center mb-5">
+                  <div
+                    dir="ltr"
+                    className="flex items-center space-x-2 justify-center mb-5"
+                  >
                     <Tooltip>
                       <TooltipTrigger>
                         <Heart
@@ -185,7 +186,10 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
           {/* bio */}
           <div className="flex flex-col justify-center items-center"></div>
           <div className="flex flex-row justify-start space-x-3 mt-5 pb-5 lg:px-0 px-2">
-            <div className="rounded-full bg-[#FFF2F7] flex flex-row justify-center align-center space-x-2 py-2 px-4 dark:bg-[#3b0117] text=[#ff588e]">
+            <div
+              dir="ltr"
+              className="rounded-full bg-[#FFF2F7] flex flex-row justify-center align-center space-x-2 py-2 px-4 dark:bg-[#3b0117] text=[#ff588e]"
+            >
               <CalendarClock
                 color="#FF599B"
                 fill="white"
@@ -207,10 +211,11 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
                 className="mt-1 hover:cursor-pointer"
               />
               <p
-                className={`text-[#FF599B] mt-1 ${memberData.marital_status === "Prefer not to say"
-                  ? "text-sm"
-                  : ""
-                  }`}
+                className={`text-[#FF599B] mt-1 ${
+                  memberData.marital_status === "Prefer not to say"
+                    ? "text-sm"
+                    : ""
+                }`}
               >
                 {memberData.marital_status}
               </p>
