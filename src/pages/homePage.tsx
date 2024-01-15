@@ -40,7 +40,7 @@ const HomePage = () => {
   const { data: members, isLoading: retrievingMemberData } = useQuery({
     refetchOnMount: false,
     refetchOnWindowFocus: false,
-    queryKey: ["home-members"],
+    queryKey: ["home-members", preferredLang],
     queryFn: () => getMembers,
   });
 
@@ -48,7 +48,7 @@ const HomePage = () => {
     enabled: memberList.length === 0,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
-    queryKey: ["home-members-likes"],
+    queryKey: ["home-members-likes", preferredLang],
     queryFn: () => getMemberLikes,
   });
 
@@ -66,7 +66,7 @@ const HomePage = () => {
   const { data: memberFavorites, isLoading: favoritesLoading } = useQuery({
     refetchOnMount: false,
     refetchOnWindowFocus: true,
-    queryKey: ["home-members-favs"],
+    queryKey: ["home-members-favs", preferredLang],
     queryFn: () => getMemberFavorites,
   });
 

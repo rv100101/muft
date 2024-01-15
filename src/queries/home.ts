@@ -15,7 +15,7 @@ const getMembers: (
     formData.append("member", memberId.toString());
     formData.append("lang", lang);
     const res = await axiosQuery.post(
-      "https://muffinapi.azurewebsites.net/home_page.php",
+      "https://muffinapi.azurewebsites.net/home.php",
       formData
     );
 
