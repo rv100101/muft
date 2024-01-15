@@ -86,7 +86,7 @@ const DeactivateAccountContent = () => {
       // });
       // if (res.data) {
       toast({
-        title: "Account has been deleted, Bye!",
+        title: "Account has been deleted",
         description: "Changes might take awhile to take effect.",
         // variant: "success",
       });

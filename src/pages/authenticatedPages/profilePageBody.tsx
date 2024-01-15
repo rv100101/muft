@@ -295,7 +295,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
       toast({
         variant: "destructive",
         title: "All Fields are required",
-        description: "check all tabs to ensure all fields are inputted.",
+        description: "Check all tabs to ensure all fields are inputted.",
         action: <ToastAction altText="Goto schedule to undo">Okay</ToastAction>,
       });
     }

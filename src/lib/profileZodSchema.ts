@@ -158,7 +158,7 @@ export const ProfileFormSchema = z.object({
     .min(2, { message: "Hair type is required" }),
   eyes: z
     .string({
-      required_error: "Eyes is required",
+      required_error: "Eye type is required",
     })
     .min(2, { message: "Eye type is required" }),
   bodyArt: z
@@ -168,12 +168,12 @@ export const ProfileFormSchema = z.object({
     .min(2, { message: "Body art is required" }),
   haveChildren: z
     .string({
-      required_error: "Have children is required",
+      required_error: "This field is required",
     })
     .min(2, { message: "This field is required" }),
   wantChildren: z
     .string({
-      required_error: "Want children is required",
+      required_error: "This field is required",
     })
     .min(2, { message: "This field is required" }),
   workout: z
@@ -198,14 +198,14 @@ export const ProfileFormSchema = z.object({
     }),
   drinking: z
     .string({
-      required_error: "Drinking is required",
+      required_error: "This field is required",
     })
-    .min(2, { message: "Drinking is required" }),
+    .min(2, { message: "This field is required" }),
   smoking: z
     .string({
-      required_error: "Smoking is required",
+      required_error: "This field is required",
     })
-    .min(2, { message: "Smoking is required" }),
+    .min(2, { message: "This field is required" }),
   livingStatus: z
     .string({
       required_error: "Living status is required",
@@ -213,7 +213,7 @@ export const ProfileFormSchema = z.object({
     .min(2, { message: "Living status is required" }),
   car: z
     .string({
-      required_error: "Car is required",
+      required_error: "This field is required",
     })
-    .min(2, { message: "Car is required" }),
+    .min(2, { message: "This field is required" }),
 });
