@@ -194,7 +194,7 @@ const ProfileTopNav = () => {
               {!user?.profile_completed && (
                 <div
                   className={cn(
-                    "flex sm:hidden w-full mr-4 sm:w-min justify-end"
+                    "flex sm:hidden w-full mr-4 sm:w-min justify- sm:justify-end"
                   )}
                 >
                   <Button
