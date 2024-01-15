@@ -27,7 +27,7 @@ type FormDataType = {
 
 const MyAccountContent = () => {
   const { user } = useUserStore();
-  const [t] = useTranslation();
+  const [t, i18n] = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   // const getMembers = profileQuery.getProfileHeader(user!.member_id);
 
@@ -86,7 +86,6 @@ const MyAccountContent = () => {
       <Dialog>
         <div className="flex flex-row w-full justify-between items-center">
           <p className="font-medium pt-5">{t("settings.changePassword")}</p>
-
           <DialogTrigger asChild>
             <Button
               className={cn(
@@ -96,9 +95,17 @@ const MyAccountContent = () => {
               {t("settings.update")}
             </Button>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px] w-96 left-[50%] top-[25%] sm:top-[50%]">
+          <DialogContent
+            dir={i18n.language == "ar" ? "rtl" : "ltr"}
+            className="sm:max-w-[425px] w-96 left-[50%] top-[25%] sm:top-[50%]"
+          >
             <DialogHeader>
-              <DialogTitle className="font-medium ">
+              <DialogTitle
+                className={cn(
+                  "font-medium",
+                  i18n.language == "ar" && "flex justify-start w-full"
+                )}
+              >
                 {t("changePassword.changePassword")}
               </DialogTitle>
             </DialogHeader>

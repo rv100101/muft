@@ -38,12 +38,12 @@ const SignUpPage = () => {
     },
     validationSchema: Yup.object({
       first_name: Yup.string()
-        .matches(/^[a-zA-Z]+$/, "Password must only contain letters A-Z")
+        .matches(/^[a-zA-Z]+$/, "Name must only contain letters A-Z")
         .matches(/^[^\s\d][^\d]*$/, "Invalid name")
         .max(12, "Name is too long")
         .required("First name is required"),
       last_name: Yup.string()
-        .matches(/^[a-zA-Z]+$/, "Password must only contain letters A-Z")
+        .matches(/^[a-zA-Z]+$/, "Name must only contain letters A-Z")
         .matches(/^[^\s\d][^\d]*$/, "Invalid name")
         .max(12, "Name is too long")
         .required("Last name is required"),
