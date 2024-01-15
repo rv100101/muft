@@ -11,6 +11,7 @@ import languageQuery from "@/queries/language";
 import { usePreferredLanguageStore } from "@/zustand/auth/preferred_language";
 import { useUserStore } from "@/zustand/auth/user";
 import { DialogTrigger } from "@radix-ui/react-dialog";
+import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 const PreferredLanguageDialog = ({
@@ -26,6 +27,7 @@ const PreferredLanguageDialog = ({
   const { preferred, setPreferredLanguage } = usePreferredLanguageStore();
   const [changePreferredLanguage, setChangePreferredLanguage] = useState(false);
   const user = useUserStore((state) => state.user);
+  const queryClient = useQueryClient();
   return (
     <Dialog open={preferred == null || changePreferredLanguage}>
       {showTrigger && (
@@ -75,6 +77,7 @@ const PreferredLanguageDialog = ({
                   "en",
                   user.member_id
                 );
+                queryClient.invalidateQueries({ queryKey: ["home-members"] });
               }
             }}
             className="text-center font-semibold cursor-pointer"
@@ -97,6 +100,7 @@ const PreferredLanguageDialog = ({
                   "ar",
                   user.member_id
                 );
+                queryClient.invalidateQueries({ queryKey: ["home-members"] });
               }
             }}
             className="text-center font-semibold cursor-pointer"

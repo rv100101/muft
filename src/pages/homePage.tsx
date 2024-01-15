@@ -48,7 +48,7 @@ const HomePage = () => {
     enabled: memberList.length === 0,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
-    queryKey: ["home-members-likes", preferredLang],
+    queryKey: ["home-members-likes"],
     queryFn: () => getMemberLikes,
   });
 
@@ -66,7 +66,7 @@ const HomePage = () => {
   const { data: memberFavorites, isLoading: favoritesLoading } = useQuery({
     refetchOnMount: false,
     refetchOnWindowFocus: true,
-    queryKey: ["home-members-favs", preferredLang],
+    queryKey: ["home-members-favs"],
     queryFn: () => getMemberFavorites,
   });
 
