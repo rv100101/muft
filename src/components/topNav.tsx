@@ -35,7 +35,7 @@ const motionTop80 = {
 
 function TopNav() {
   const [location] = useLocation();
-  const [t] = useTranslation();
+  const [t, i18n] = useTranslation();
   return (
     <motion.nav
       className={cn(
@@ -154,7 +154,7 @@ function TopNav() {
             <motion.li variants={motionTop80}>
               <PreferredLanguageDialog
                 showTrigger={true}
-                triggerTitle={"Language"}
+                triggerTitle={i18n.language == "en" ? "العربية" : "English"}
                 triggerVariant="default"
               />
             </motion.li>
