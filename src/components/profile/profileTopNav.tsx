@@ -18,6 +18,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import useReadConversationsStateStore from "@/zustand/messaging/readConversations";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
+import PreferredLanguageDialog from "../preferredLanguageDialog";
 const ProfileTopNav = () => {
   const [t, i18n] = useTranslation();
   const { isSaving } = profileAboutContentStore();
@@ -35,7 +36,11 @@ const ProfileTopNav = () => {
     <>
       <ProfileMobileNav />
       {!user?.profile_completed && (
-        <div className="flex flex-row w-full justify-between lg:p-5 py-2 border-b">
+        <div
+          className={cn(
+            "flex flex-row w-full justify-between lg:p-5 py-2 border-b"
+          )}
+        >
           <div className="flex justify-center w-full space-x-5 ">
             <div className="flex justify-between items-center h-min w-full">
               <div className="items-center justify-start w-full flex">
@@ -85,8 +90,8 @@ const ProfileTopNav = () => {
                     )}
                   >
                     {user?.profile_completed
-                      ? "PROFILE"
-                      : "COMPLETE YOUR PROFILE"}
+                      ? t("general.profile")
+                      : t("general.completeYourProfile")}
                   </p>
                   {!user?.profile_completed && (
                     <div className="hidden sm:flex w-full sm:w-min justify-end">
@@ -95,7 +100,7 @@ const ProfileTopNav = () => {
                         className="hover:bg-[#FF8AB3]/95"
                         disabled={isSaving}
                       >
-                        Save
+                        {t("general.save")}
                         {isSaving && (
                           <span>
                             <Loader2 className="ml-2 h-6 w-6 animate-spin" />
@@ -107,47 +112,84 @@ const ProfileTopNav = () => {
                 </div>
               </div>
               {!user?.profile_completed && (
-                <Dialog>
-                  <DialogTrigger className="w-36 hidden sm:flex">
-                    <div
+                <div
+                  className={cn(
+                    "flex w-max items-center space-x-2",
+                    i18n.language == "ar" && "space-x-reverse space-x-8"
+                  )}
+                >
+                  <PreferredLanguageDialog
+                    showTrigger={true}
+                    triggerTitle={i18n.language == "en" ? "العربية" : "English"}
+                    triggerVariant="default"
+                  />
+                  <Dialog>
+                    <DialogTrigger className="w-36 hidden sm:flex">
+                      <div
+                        className={cn(
+                          "hidden sm:flex space-x-2 my-4",
+                          i18n.language == "ar"
+                            ? "space-x-reverse space-x-2"
+                            : "space-x-2"
+                        )}
+                      >
+                        {
+                          <LogOutIcon
+                            size={20}
+                            className={cn(
+                              "text-primary flex-1",
+                              i18n.language == "ar" && "rotate-180"
+                            )}
+                          />
+                        }{" "}
+                        <p className="text-sm">{t("menu.signOut")}</p>
+                      </div>
+                    </DialogTrigger>
+                    <DialogContent
                       className={cn(
-                        "hidden sm:flex space-x-2 my-4",
-                        i18n.language == "ar" && "space-x-reverse"
+                        "sm:max-w-md opacity-100",
+                        i18n.language == "ar"
+                          ? "space-x-reverse space-x-2"
+                          : "space-x-2"
                       )}
                     >
-                      {<LogOutIcon size={20} className="text-primary" />}{" "}
-                      <p className="text-sm">{t("menu.signOut")}</p>
-                    </div>
-                  </DialogTrigger>
-                  <DialogContent className="sm:max-w-md opacity-100">
-                    <DialogHeader>
-                      <DialogTitle>
-                        Are you sure you want to sign out?
-                      </DialogTitle>
-                    </DialogHeader>
-                    <DialogFooter className="sm:justify-start">
-                      <Button
-                        className="hover:bg-primary"
-                        onClick={() => {
-                          queryClient.clear();
-                          signOut();
-                          setReadList({});
-                        }}
+                      <DialogHeader
+                        className={cn(
+                          i18n.language == "ar" && "w-full items-end"
+                        )}
                       >
-                        Yes
-                      </Button>
-                      <DialogClose asChild>
+                        <DialogTitle>{t("signOut.confirmSignOut")}</DialogTitle>
+                      </DialogHeader>
+                      <DialogFooter
+                        className={cn(
+                          "sm:justify-start items-center w-full",
+                          i18n.language == "ar" &&
+                            "w-full justify-end items-end"
+                        )}
+                      >
                         <Button
-                          className="text-white hover:bg-secondary"
-                          type="button"
-                          variant="secondary"
+                          className="hover:bg-primary"
+                          onClick={() => {
+                            queryClient.clear();
+                            signOut();
+                            setReadList({});
+                          }}
                         >
-                          No
+                          {t("signOut.yes")}
                         </Button>
-                      </DialogClose>
-                    </DialogFooter>
-                  </DialogContent>
-                </Dialog>
+                        <DialogClose>
+                          <Button
+                            className="text-white hover:bg-secondary"
+                            type="button"
+                            variant="secondary"
+                          >
+                            {t("signOut.no")}
+                          </Button>
+                        </DialogClose>
+                      </DialogFooter>
+                    </DialogContent>
+                  </Dialog>
+                </div>
               )}{" "}
               {!user?.profile_completed && (
                 <div

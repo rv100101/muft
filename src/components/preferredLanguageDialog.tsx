@@ -30,7 +30,7 @@ const PreferredLanguageDialog = ({
     <Dialog open={preferred == null || changePreferredLanguage}>
       {showTrigger && (
         <div className="flex justify-between items-center">
-          {user && (
+          {user && user.profile_completed && (
             <p className="font-medium pt-5">
               {triggerTitle
                 ? triggerTitle
@@ -39,6 +39,7 @@ const PreferredLanguageDialog = ({
           )}
           <DialogTrigger className="flex">
             <Button
+              type="button"
               variant={
                 triggerVariant as
                   | "default"
