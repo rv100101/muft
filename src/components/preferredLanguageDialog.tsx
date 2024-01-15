@@ -6,6 +6,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
+import languageQuery from "@/queries/language";
 
 import { usePreferredLanguageStore } from "@/zustand/auth/preferred_language";
 import { useUserStore } from "@/zustand/auth/user";
@@ -22,7 +23,6 @@ const PreferredLanguageDialog = ({
   triggerVariant: string;
 }) => {
   const [t] = useTranslation();
-
   const { preferred, setPreferredLanguage } = usePreferredLanguageStore();
   const [changePreferredLanguage, setChangePreferredLanguage] = useState(false);
   const user = useUserStore((state) => state.user);
@@ -67,9 +67,15 @@ const PreferredLanguageDialog = ({
         </DialogHeader>
         <div className="grid grid-cols-2 mt-2">
           <p
-            onClick={() => {
+            onClick={async () => {
               setPreferredLanguage("en");
               setChangePreferredLanguage(false);
+              if (user !== null) {
+                await languageQuery.updateLanguagePreference(
+                  "en",
+                  user.member_id
+                );
+              }
             }}
             className="text-center font-semibold cursor-pointer"
           >
@@ -83,9 +89,15 @@ const PreferredLanguageDialog = ({
             English
           </p>
           <p
-            onClick={() => {
+            onClick={async () => {
               setPreferredLanguage("ar");
               setChangePreferredLanguage(false);
+              if (user !== null) {
+                await languageQuery.updateLanguagePreference(
+                  "ar",
+                  user.member_id
+                );
+              }
             }}
             className="text-center font-semibold cursor-pointer"
           >

@@ -25,6 +25,7 @@ import { usePasswordResetState } from "@/zustand/auth/passwordReset";
 import { useQueryClient } from "@tanstack/react-query";
 import { useUserNickname } from "@/zustand/auth/username";
 import { useTranslation } from "react-i18next";
+import languageQuery from "@/queries/language";
 
 type FormDataType = {
   email: string;
@@ -91,6 +92,17 @@ const SignInForm = () => {
           country_name: string;
         }[];
       } = await authQuery.getCountry(69);
+
+      await languageQuery.updateLanguagePreference(
+        i18n.language,
+        signInData.data.member_id
+      );
+
+      // const pref = await languageQuery.getLanguagePreference(
+      //   signInData.data.member_id
+      // );
+
+      // console.log(pref);
 
       if (countryData.data.length !== 0) {
         updateUserCountry(countryData.data[0].country_name);
