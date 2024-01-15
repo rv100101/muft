@@ -20,6 +20,7 @@ import { useUpdateEffect } from "usehooks-ts";
 import PreferredLanguageDialog from "./components/preferredLanguageDialog";
 import { usePreferredLanguageStore } from "./zustand/auth/preferred_language";
 import { useTranslation } from "react-i18next";
+import { isPm } from "./lib/isPm";
 function App() {
   const [, i18n] = useTranslation();
   const [location] = useLocation();
@@ -60,22 +61,27 @@ function App() {
       document.documentElement.classList.add("light");
       document.documentElement.classList.remove("dark");
     } else {
-      if (
-        window.matchMedia &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches
-      ) {
-        // setSystemDark(true);
+      if (isPm()) {
         toggleSystemDark(true);
-        // User prefers dark mode
-        document.documentElement.classList.add("dark");
-        document.documentElement.classList.remove("light");
       } else {
-        // setSystemDark(false);
         toggleSystemDark(false);
-        // User prefers light mode
-        document.documentElement.classList.add("light");
-        document.documentElement.classList.remove("dark");
       }
+      // if (
+      //   window.matchMedia &&
+      //   window.matchMedia("(prefers-color-scheme: dark)").matches
+      // ) {
+      //   // setSystemDark(true);
+      //   toggleSystemDark(true);
+      //   // User prefers dark mode
+      //   document.documentElement.classList.add("dark");
+      //   document.documentElement.classList.remove("light");
+      // } else {
+      //   // setSystemDark(false);
+      //   toggleSystemDark(false);
+      //   // User prefers light mode
+      //   document.documentElement.classList.add("light");
+      //   document.documentElement.classList.remove("dark");
+      // }
     }
   }, [displaySettings, toggleSystemDark]);
 

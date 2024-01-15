@@ -1,4 +1,5 @@
 import { Switch } from "@/components/ui/switch";
+import { isPm } from "@/lib/isPm";
 import { cn } from "@/lib/utils";
 import { useSettingsStore } from "@/zustand/settings/displaySettingsStore";
 import { useEffect } from "react";
@@ -27,22 +28,27 @@ const DisplayContent = () => {
       document.documentElement.classList.add("light");
       document.documentElement.classList.remove("dark");
     } else {
-      if (
-        window.matchMedia &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches
-      ) {
-        // setSystemDark(true);
+      if (isPm()) {
         toggleSystemDark(true);
-        // User prefers dark mode
-        document.documentElement.classList.add("dark");
-        document.documentElement.classList.remove("light");
       } else {
-        // setSystemDark(false);
         toggleSystemDark(false);
-        // User prefers light mode
-        document.documentElement.classList.add("light");
-        document.documentElement.classList.remove("dark");
       }
+      // if (
+      //   window.matchMedia &&
+      //   window.matchMedia("(prefers-color-scheme: dark)").matches
+      // ) {
+      //   // setSystemDark(true);
+      //   toggleSystemDark(true);
+      //   // User prefers dark mode
+      //   document.documentElement.classList.add("dark");
+      //   document.documentElement.classList.remove("light");
+      // } else {
+      //   // setSystemDark(false);
+      //   toggleSystemDark(false);
+      //   // User prefers light mode
+      //   document.documentElement.classList.add("light");
+      //   document.documentElement.classList.remove("dark");
+      // }
     }
   }, [displaySettings, toggleSystemDark]);
 
