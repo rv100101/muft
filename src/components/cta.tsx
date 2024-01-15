@@ -2,7 +2,6 @@
 // import AppStore from "@/assets/app-store.png";
 import CtaPhone from "@/assets/cta-phone.png";
 import { motion } from "framer-motion";
-import { callToAction } from "@/lib/homepage";
 import { Button } from "./ui/button";
 import { useTranslation } from "react-i18next";
 const staggerMotion = {
@@ -22,9 +21,12 @@ const child = {
 };
 
 const Cta = () => {
-  const [t] = useTranslation();
+  const [t, i18n] = useTranslation();
   return (
-    <motion.div className="mx-8 lg:mx-36 mt-8 md:mt-12 lg:mt-64">
+    <motion.div
+      dir={i18n.language == "ar" ? "rtl" : "ltr"}
+      className="mx-8 lg:mx-36 mt-8 md:mt-12 lg:mt-64"
+    >
       <motion.div
         variants={staggerMotion}
         viewport={{ once: true }}
@@ -47,9 +49,11 @@ const Cta = () => {
           className="space-y-4 col-span-2 text-secondary"
         >
           <p className="text-4xl font-semibold text-white">
-            {callToAction.header}
+            {t("landingPage.letsBakeLoveTogether")}
           </p>
-          <p className="text-white font-light">{callToAction.description}</p>
+          <p className="text-white font-light">
+            {t("landingPage.experienceLoveAnew")}
+          </p>
 
           <motion.div variants={child} className="flex space-x-2">
             <Button className="hover:bg-[#FF599B]/90">

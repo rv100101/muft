@@ -6,8 +6,10 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useMediaQuery, useTimeout } from "usehooks-ts";
 import { useLocation } from "wouter";
+import { useTranslation } from "react-i18next";
 
 const Conversation = () => {
+  const [t, i18n] = useTranslation();
   const [visible, setVisible] = useState(false);
   const [location] = useLocation();
   const hide = () => setVisible(true);
@@ -17,11 +19,13 @@ const Conversation = () => {
 
   const matches = useMediaQuery("(min-width: 768px)");
 
+  useEffect(() => {}, [i18n.language]);
+
   const firstTextToType = matches
-    ? "What was it about my profile that caught your attention and made flirt?"
+    ? t("landingPage.emilyFlirtQuestion")
     : "What caught your eye?";
   const secondTextToType = matches
-    ? "Your captivating smile drew me in, and your intriguing interests made me want to flirt."
+    ? t("landingPage.mikeResponse")
     : "Smile and interests.";
 
   const [firstTypedChat, setFirstTypedChat] = useState("");
@@ -69,7 +73,10 @@ const Conversation = () => {
   ]);
 
   return (
-    <div className="flex h-full justify-center md:justify-end items-center relative">
+    <div
+      dir={i18n.language == "ar" ? "rtl" : "ltr"}
+      className="flex h-full justify-center md:justify-end items-center relative"
+    >
       <motion.img
         initial={{
           scale: 0,
@@ -95,7 +102,7 @@ const Conversation = () => {
       />
       {firstChatIndex >= firstTextToType.length && (
         <ChatCard
-          className="h-12 rounded-br-lg w-48 md:w-full md:h-max absolute flex items-start translate-y-14 md:translate-y-36 md:translate-x-12 lg:translate-x-20"
+          className="h-12 rounded-br-lg w-48 md:w-full md:h-max absolute flex items-start translate-y-14 md:translate-y-36"
           text={secondTypedChat}
           img={heroAvatar2}
           avatarFirst={false}

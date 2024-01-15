@@ -206,8 +206,13 @@ function TopNav() {
                 Support
               </a>
             </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <PreferredLanguageDialog
+              showTrigger={true}
+              triggerTitle={i18n.language == "en" ? "العربية" : "English"}
+              triggerVariant="default"
+            />
           </DropdownMenuGroup>
-          <DropdownMenuSeparator />{" "}
           {/* <Link href="/auth/signin">
             <DropdownMenuItem
               className={cn(

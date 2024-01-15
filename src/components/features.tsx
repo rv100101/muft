@@ -6,6 +6,9 @@ import BottomNav from "@/assets/features_section/bottom-nav.png";
 import AddToStory from "@/assets/features_section/add-to-story.png";
 import { motion } from "framer-motion";
 import { features } from "@/lib/homepage";
+import { useTranslation } from "react-i18next";
+import { useState } from "react";
+import { useUpdateEffect } from "usehooks-ts";
 
 const imageContainer = {
   hidden: { opacity: 0 },
@@ -46,20 +49,69 @@ const itemA = {
 };
 
 const Features = () => {
-  const featureComponents = features.data.map((feature) => {
+  const [t, i18n] = useTranslation();
+  const [muffinFeats, setMuffinFeats] = useState([
+    {
+      title: t("landingPage.smartMatches"),
+      description: t("landingPage.advancedAlgorithm"),
+      img: features.data[0].icon,
+    },
+    {
+      title: t("landingPage.secureAndPrivate"),
+      description: t("landingPage.safetyFirst"),
+      img: features.data[1].icon,
+    },
+    {
+      title: t("landingPage.inDepthProfiles"),
+      description: t("landingPage.unlockUniqueCompatibility"),
+      img: features.data[2].icon,
+    },
+    {
+      title: t("landingPage.globalReach"),
+      description: t("landingPage.leverageComprehensiveMemberProfiles"),
+      img: features.data[3].icon,
+    },
+  ]);
+
+  useUpdateEffect(() => {
+    setMuffinFeats([
+      {
+        title: t("landingPage.smartMatches"),
+        description: t("landingPage.advancedAlgorithm"),
+        img: features.data[0].icon,
+      },
+      {
+        title: t("landingPage.secureAndPrivate"),
+        description: t("landingPage.safetyFirst"),
+        img: features.data[1].icon,
+      },
+      {
+        title: t("landingPage.inDepthProfiles"),
+        description: t("landingPage.unlockUniqueCompatibility"),
+        img: features.data[2].icon,
+      },
+      {
+        title: t("landingPage.globalReach"),
+        description: t("landingPage.leverageComprehensiveMemberProfiles"),
+        img: features.data[3].icon,
+      },
+    ]);
+  }, [t]);
+
+  const featureComponents = muffinFeats.map((feature) => {
     return (
       <motion.div variants={itemA}>
         <FeatureCard
           title={feature.title}
           description={feature.description}
-          img={feature.icon}
+          img={feature.img}
         />
       </motion.div>
     );
   });
 
   return (
-    <section className="mt-12">
+    <section dir={i18n.language == "ar" ? "rtl" : "ltr"} className="mt-12">
       <motion.div
         viewport={{ once: true }}
         className="grid md:grid-cols-3 gap-4 md:gap-12 h-max w-full"

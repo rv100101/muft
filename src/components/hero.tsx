@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { banner } from "@/lib/homepage";
 // import GooglePlay from "@/assets/google-play.png";
 // import AppStore from "@/assets/app-store.png";
 import Conversation from "./conversation";
@@ -7,9 +6,10 @@ import { Button } from "./ui/button";
 import { useTranslation } from "react-i18next";
 
 const Hero = () => {
-  const [t] = useTranslation();
+  const [t, i18n] = useTranslation();
   return (
     <motion.div
+      dir={i18n.language == "ar" ? "rtl" : "ltr"}
       initial={{
         scale: 0,
       }}
@@ -50,7 +50,7 @@ const Hero = () => {
             viewport={{ once: true }}
             className="z-20 text-3xl md:text-4xl font-semibold text-secondary"
           >
-            {banner.header}
+            {t("landingPage.loveFromFirstMuffin")}
           </motion.h1>
           <motion.p
             initial={{
@@ -65,7 +65,7 @@ const Hero = () => {
             viewport={{ once: true }}
             className="z-20 dark:text-black"
           >
-            {banner.body}
+            {t("landingPage.unlockTrueRomance")}
           </motion.p>
 
           <motion.div

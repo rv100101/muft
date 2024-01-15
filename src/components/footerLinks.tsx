@@ -1,20 +1,27 @@
-import { scrollToTop } from "@/lib/utils";
+import { cn, scrollToTop } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
 import { Link } from "wouter";
 
 const FooterLinks = () => {
+  const [t, i18n] = useTranslation();
   return (
-    <ul className="flex justify-center list-none space-x-4 text-xs md:text-md">
+    <ul
+      className={cn(
+        "flex justify-center list-none space-x-4 text-xs md:text-md",
+        i18n.language == "ar" && "space-x-reverse"
+      )}
+    >
       <li>
         <Link onClick={scrollToTop} href="/privacy">
           <a className="text-white underline font-light hover:text-slate-400">
-            Privacy Policy
+            {t("landingPage.privacyPolicy")}
           </a>
         </Link>
       </li>
       <li>
         <Link onClick={scrollToTop} href="/terms">
           <a className="text-white underline font-light hover:text-slate-400">
-            Terms & Conditions
+            {t("landingPage.termsAndConditions")}
           </a>
         </Link>
       </li>
