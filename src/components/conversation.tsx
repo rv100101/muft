@@ -19,19 +19,24 @@ const Conversation = () => {
 
   const matches = useMediaQuery("(min-width: 768px)");
 
-  useEffect(() => {}, [i18n.language]);
-
   const firstTextToType = matches
     ? t("landingPage.emilyFlirtQuestion")
-    : "What caught your eye?";
+    : t("landingPage.mobileEmilyFlirtQuestion");
   const secondTextToType = matches
     ? t("landingPage.mikeResponse")
-    : "Smile and interests.";
+    : t("landingPage.mobileMikeResponse");
 
   const [firstTypedChat, setFirstTypedChat] = useState("");
   const [secondTypedChat, setSecondTypedChat] = useState("");
   const [firstChatIndex, setFirstChatIndex] = useState(0);
   const [secondChatIndex, setSecondChatIndex] = useState(0);
+
+  useEffect(() => {
+    setFirstTypedChat("");
+    setSecondTypedChat("");
+    setFirstChatIndex(0);
+    setSecondChatIndex(0);
+  }, [i18n.language]);
 
   useEffect(() => {
     const firstTypingInterval = setInterval(() => {
