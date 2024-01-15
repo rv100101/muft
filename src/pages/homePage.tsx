@@ -12,6 +12,7 @@ import createMap from "@/lib/likesAndFavoritesHomeMap";
 import { Helmet } from "react-helmet-async";
 import HomeFilters from "@/components/home/filters";
 import { useFilterStore } from "@/zustand/home/filter";
+import { usePreferredLanguageStore } from "@/zustand/auth/preferred_language";
 
 const HomePage = () => {
   const setSelectedProfileId = useHomepageViewStore(
@@ -24,10 +25,14 @@ const HomePage = () => {
   const { user } = useUserStore();
   const likes = useHomepageViewStore((state) => state.likes);
   const favorites = useHomepageViewStore((state) => state.favorites);
+  const preferredLang = usePreferredLanguageStore((state) => state.preferred);
   const setLikes = useHomepageViewStore((state) => state.setLikes);
   const setFavorites = useHomepageViewStore((state) => state.setFavorites);
   const memberList = useHomepageViewStore((state) => state.modifiedMemberList);
-  const getMembers = membersQuery.getMembers(user!.member_id);
+  const getMembers = membersQuery.getMembers(
+    user!.member_id,
+    preferredLang ?? "en"
+  );
   const getMemberLikes = membersQuery.getMemberLikes(user!.member_id);
   const filters = useFilterStore((state) => state.filters);
 

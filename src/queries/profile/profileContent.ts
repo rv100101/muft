@@ -18,14 +18,34 @@ const removeNull = (
   return result;
 };
 
-const fetchMemberDetails = async (memberId: number, userId: number) => {
+// const fetchMemberDetails = async (memberId: number, userId: number) => {
+//   try {
+//     const details = await axiosQuery.post("/MemberDetails", {
+//       member: memberId,
+//       user: userId,
+//     });
+//     const { data } = details;
+//     return data;
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+
+const fetchMemberDetails = async (memberId: number, lang: string) => {
+  const formData = new FormData();
+  formData.append(
+    "auth",
+    "0DB31DEE22DC4C03AD7DAAA9C29518FF3C08D931992A4A5CB0A4FF4CF4707DC6"
+  );
+  formData.append("member", memberId.toString());
+  formData.append("lang", lang);
   try {
-    const details = await axiosQuery.post("/MemberDetails", {
-      member: memberId,
-      user: userId,
-    });
+    const details = await axiosQuery.post(
+      "https://muffinapi.azurewebsites.net/member_details.php",
+      formData
+    );
     const { data } = details;
-    return data;
+    return data[0];
   } catch (error) {
     console.log(error);
   }

@@ -47,9 +47,13 @@ import useSelectedCountryStore from "@/zustand/profile/location/selectedCountry"
 import { convertJsonToConvertedObject } from "@/lib/utils";
 import { useEffectOnce, useUpdateEffect } from "usehooks-ts";
 import { useTranslation } from "react-i18next";
+import { usePreferredLanguageStore } from "@/zustand/auth/preferred_language";
 const AboutAccordion = ({ userId }: { userId: number }) => {
   const [t] = useTranslation();
   const [location] = useLocation();
+  const preferredLanguage = usePreferredLanguageStore(
+    (state) => state.preferred
+  );
   const { selectedCountry, setSelectedCountry } = useSelectedCountryStore();
   const { data: profileAboutContent, isSaving } = profileAboutContentStore();
   // const user = useUserStore((state) => state.user);
@@ -108,7 +112,7 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
         await profileContentQuery.fetchAdditionalInformation(userId);
       const memberDetails = await profileContentQuery.fetchMemberDetails(
         userId,
-        userId
+        preferredLanguage ?? "en"
       );
       let jsonArray: string | null = null;
       if (typeof memberDetails == "string" && memberDetails.length !== 0) {
@@ -242,11 +246,12 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
     if (countries.length !== 0 && profileAboutContent) {
       console.log(countries, profileAboutContent);
       if (profileAboutContent.country.length !== 0) {
-        setSelectedCountry(
-          countries.filter(
-            (c) => c.country_name == profileAboutContent!.country
-          )[0].country_code
-        );
+        console.log(profileAboutContent);
+        setSelectedCountry(profileAboutContent.country_code);
+        // countries.filter(
+
+        //   (c) => c.country_name == profileAboutContent!.country
+        // )[0].country_code
       }
     }
   }, [countries, profileAboutContent]);
@@ -360,8 +365,11 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
   });
 
   useQuery({
-    queryFn: () => profileContentQuery.editOptions.getStates(selectedCountry),
-    enabled: selectedCountry.length !== 0,
+    queryFn: () =>
+      profileContentQuery.editOptions.getStates(
+        profileAboutContent?.country_code ?? ""
+      ),
+    // enabled: selectedCountry.length !== 0,
     queryKey: ["states", selectedCountry],
     onSuccess: (data: State[]) => {
       setStates(data);

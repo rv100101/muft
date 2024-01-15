@@ -11,7 +11,9 @@ export const scrollToTop = () => {
     behavior: "smooth",
   });
 };
+
 interface ProfileDetails {
+  country_code: string;
   religion: string;
   gender: string;
   nationality: string;
@@ -47,6 +49,7 @@ export function convertJsonToConvertedObject(
   jsonResponse: any
 ): ProfileDetails {
   const converted: ProfileDetails = {
+    country_code: jsonResponse.country_code || "",
     member_uuid: jsonResponse.member_uuid || "",
     religion: jsonResponse.religion_name || "",
     gender: jsonResponse.gender || "",

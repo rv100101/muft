@@ -21,6 +21,7 @@ export type ProfileAbout = {
   interest: Interest[];
   favoriteFood: FavoriteFood[];
   country: string;
+  country_code: string;
   region: string;
   hair: string;
   eyes: string;
