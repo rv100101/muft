@@ -2,19 +2,9 @@ import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 
 import { usePreferredLanguageStore } from "@/zustand/auth/preferred_language";
@@ -34,7 +24,6 @@ const PreferredLanguageDialog = ({
   const [t] = useTranslation();
 
   const { preferred, setPreferredLanguage } = usePreferredLanguageStore();
-  const [selectVal, setSelectVal] = useState<string | null>(preferred);
   const [changePreferredLanguage, setChangePreferredLanguage] = useState(false);
   const user = useUserStore((state) => state.user);
   return (
@@ -72,66 +61,43 @@ const PreferredLanguageDialog = ({
         </div>
       )}
       <DialogContent>
-        <DialogHeader className="whitespace-nowrap">
+        <DialogHeader className="whitespace-nowrap mb-2">
           <DialogTitle>Choose your preferred language</DialogTitle>
         </DialogHeader>
-        <Select
-          onValueChange={(val) => {
-            setSelectVal(val);
-          }}
-        >
-          <SelectTrigger>
-            <SelectValue className="text-left" placeholder="Select language" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectLabel>Languages</SelectLabel>
-              <SelectItem value="en">
-                <p className="flex text-md">
-                  <span>
-                    <img
-                      className="mr-2"
-                      height={24}
-                      width={24}
-                      src="https://muffin0.blob.core.windows.net/flags/us.png"
-                      alt="english-flag"
-                    />
-                  </span>
-                  English
-                </p>
-              </SelectItem>
-              <SelectItem value="ar">
-                <p className="flex text-md">
-                  <span>
-                    <img
-                      className="mr-2"
-                      height={24}
-                      width={24}
-                      src="https://muffin0.blob.core.windows.net/flags/ae.png"
-                      alt="arabic-flag"
-                    />
-                  </span>
-                  العربية
-                </p>
-              </SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-        <DialogFooter>
-          <Button
-            className="
-          hover:bg-[#FF599B]/90
-          "
+        <div className="grid grid-cols-2 mt-2">
+          <p
             onClick={() => {
-              if (selectVal !== null) {
-                setPreferredLanguage(selectVal);
-                setChangePreferredLanguage(false);
-              }
+              setPreferredLanguage("en");
+              setChangePreferredLanguage(false);
             }}
+            className="text-center font-semibold cursor-pointer"
           >
-            Save
-          </Button>
-        </DialogFooter>
+            <span className="flex w-full justify-center mb-1">
+              <img
+                className="mr-2 h-24"
+                src="https://muffin0.blob.core.windows.net/flags/us.png"
+                alt="english-flag"
+              />
+            </span>
+            English
+          </p>
+          <p
+            onClick={() => {
+              setPreferredLanguage("ar");
+              setChangePreferredLanguage(false);
+            }}
+            className="text-center font-semibold cursor-pointer"
+          >
+            <span className="flex w-full justify-center mb-1">
+              <img
+                className="mr-2 h-24"
+                src="https://muffin0.blob.core.windows.net/flags/ae.png"
+                alt="arabic-flag"
+              />
+            </span>
+            العربية
+          </p>
+        </div>
       </DialogContent>
     </Dialog>
   );

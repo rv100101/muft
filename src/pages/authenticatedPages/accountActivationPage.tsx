@@ -95,7 +95,7 @@ const ActivateAccount = () => {
         updateUser({ ...user, is_active: true } as User);
         toast({
           duration: 1500,
-          title: "Well Done",
+          title: "Well done!",
           description: "Account Verified!",
         });
       }
