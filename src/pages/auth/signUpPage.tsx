@@ -14,7 +14,6 @@ import { toast } from "@/components/ui/use-toast";
 import { useUserStore } from "@/zustand/auth/user";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
-import { usePreferredLanguageStore } from "@/zustand/auth/preferred_language";
 
 type FormDataType = {
   first_name: string;
@@ -24,7 +23,6 @@ type FormDataType = {
 };
 const SignUpPage = () => {
   const [t, i18n] = useTranslation();
-  const preferred = usePreferredLanguageStore((state) => state.preferred);
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [, navigate] = useLocation();
@@ -70,7 +68,6 @@ const SignUpPage = () => {
       setIsLoading(true);
       const response = await axiosQuery.post("/Signup", {
         ...values,
-        communication_language: preferred ?? "en",
       });
       const data = await response.data;
       if (data) {
@@ -150,11 +147,10 @@ const SignUpPage = () => {
                 First name
               </label> */}
               <div
-                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${
-                  formik.touched.first_name && formik.errors.first_name
-                    ? "border-rose-500"
-                    : ""
-                }`}
+                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${formik.touched.first_name && formik.errors.first_name
+                  ? "border-rose-500"
+                  : ""
+                  }`}
               >
                 <UserIcon color="#98A2B3" size={20} className="mt-1" />
                 <input
@@ -172,11 +168,10 @@ const SignUpPage = () => {
                 <InfoIcon
                   color="#D92D20"
                   size={20}
-                  className={`mt-1 ${
-                    formik.touched.first_name && formik.errors.first_name
-                      ? "visible"
-                      : "hidden"
-                  }`}
+                  className={`mt-1 ${formik.touched.first_name && formik.errors.first_name
+                    ? "visible"
+                    : "hidden"
+                    }`}
                 />
               </div>
               {formik.touched.first_name && formik.errors.first_name ? (
@@ -196,11 +191,10 @@ const SignUpPage = () => {
               </label> */}
 
               <div
-                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${
-                  formik.touched.last_name && formik.errors.last_name
-                    ? "border-rose-500"
-                    : ""
-                }`}
+                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${formik.touched.last_name && formik.errors.last_name
+                  ? "border-rose-500"
+                  : ""
+                  }`}
               >
                 <UserIcon color="#98A2B3" size={20} className="mt-1" />
                 <input
@@ -218,11 +212,10 @@ const SignUpPage = () => {
                 <InfoIcon
                   color="#D92D20"
                   size={20}
-                  className={`mt-1 ${
-                    formik.touched.last_name && formik.errors.last_name
-                      ? "visible"
-                      : "hidden"
-                  }`}
+                  className={`mt-1 ${formik.touched.last_name && formik.errors.last_name
+                    ? "visible"
+                    : "hidden"
+                    }`}
                 />
               </div>
               {formik.touched.last_name && formik.errors.last_name ? (
@@ -240,11 +233,10 @@ const SignUpPage = () => {
                 Email
               </label> */}
               <div
-                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${
-                  formik.touched.email && formik.errors.email
-                    ? "border-rose-500"
-                    : ""
-                }`}
+                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${formik.touched.email && formik.errors.email
+                  ? "border-rose-500"
+                  : ""
+                  }`}
               >
                 <MailIcon color="#98A2B3" size={20} className="mt-1" />
                 <input
@@ -263,11 +255,10 @@ const SignUpPage = () => {
                 <InfoIcon
                   color="#D92D20"
                   size={20}
-                  className={`mt-1 ${
-                    formik.touched.email && formik.errors.email
-                      ? "visible"
-                      : "hidden"
-                  }`}
+                  className={`mt-1 ${formik.touched.email && formik.errors.email
+                    ? "visible"
+                    : "hidden"
+                    }`}
                 />
               </div>
               {formik.touched.email && formik.errors.email ? (
@@ -286,11 +277,10 @@ const SignUpPage = () => {
                 Password
               </label> */}
               <div
-                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${
-                  formik.touched.password && formik.errors.password
-                    ? "border-rose-500"
-                    : ""
-                }`}
+                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${formik.touched.password && formik.errors.password
+                  ? "border-rose-500"
+                  : ""
+                  }`}
               >
                 <LockIcon color="#98A2B3" size={20} className="mt-1" />
                 <input
@@ -305,11 +295,10 @@ const SignUpPage = () => {
                   onBlur={formik.handleBlur}
                 />
                 <button
-                  className={`mt-1 ${
-                    formik.touched.password &&
+                  className={`mt-1 ${formik.touched.password &&
                     formik.errors.password &&
                     "ml-2 text-[#D92D20]"
-                  }`}
+                    }`}
                   onClick={() => setShowPassword((prev) => !prev)}
                   type="button"
                 >
