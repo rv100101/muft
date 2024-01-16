@@ -80,7 +80,7 @@ const Conversation = () => {
   return (
     <div
       dir={i18n.language == "ar" ? "rtl" : "ltr"}
-      className="flex h-full justify-center md:justify-end items-center relative"
+      className="select-none flex h-full justify-center md:justify-end items-center relative"
     >
       <motion.img
         initial={{
@@ -97,7 +97,7 @@ const Conversation = () => {
         alt="phone image"
       />
       <ChatCard
-        className="absolute flex items-start md:w-full w-48 -translate-x-12 -translate-y-12 md:-translate-x-1  md:-translate-y-16"
+        className="select-none absolute flex items-start md:w-full w-48 -translate-x-12 -translate-y-12 md:-translate-x-1  md:-translate-y-16"
         text={firstTypedChat}
         img={heroAvatar1}
         avatarFirst={true}

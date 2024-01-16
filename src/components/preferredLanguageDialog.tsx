@@ -10,8 +10,9 @@ import languageQuery from "@/queries/language";
 
 import { usePreferredLanguageStore } from "@/zustand/auth/preferred_language";
 import { useUserStore } from "@/zustand/auth/user";
-import { DialogTrigger } from "@radix-ui/react-dialog";
+import { DialogClose, DialogTrigger } from "@radix-ui/react-dialog";
 import { useQueryClient } from "@tanstack/react-query";
+import { X } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 const PreferredLanguageDialog = ({
@@ -64,8 +65,16 @@ const PreferredLanguageDialog = ({
         </div>
       )}
       <DialogContent className="w-72 sm:w-full">
-        <DialogHeader className="whitespace-nowrap mb-2">
-          <DialogTitle className="text-sm sm:text-base">Choose your preferred language</DialogTitle>
+        <DialogHeader dir="ltr" className="mb-2 w-full flex justify-end">
+          <div className="flex">
+            <DialogTitle className="text-sm sm:text-base flex w-full items-center">Choose your preferred language
+            </DialogTitle>
+            <DialogClose onClick={() => {
+              setChangePreferredLanguage(false);
+            }}>
+              <X className="hover:cursor-pointer ml-auto" size={20} />
+            </DialogClose>
+          </div>
         </DialogHeader>
         <div className="grid grid-cols-2 mt-2">
           <p
