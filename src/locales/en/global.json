@@ -152,7 +152,9 @@
     "occupation": "Occupation",
     "monthlyIncome": "Monthly Income",
     "block": "Block",
-    "reportAbuse": "Report Abuse"
+    "reportAbuse": "Report Abuse",
+    "heightCm": "cm",
+    "weightKg": "kg"
   },
   "signIn": {
     "emailAddress": "Email Address",

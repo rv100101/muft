@@ -217,7 +217,7 @@ const AppearanceForm = () => {
             />
             <div className="flex flex-col justify-start space-y-1">
               <p className="font-bold text-base text-primary">
-                {data!.height ? `${data!.height} cm` : "Add Height"}
+                {data!.height ? `${data!.height} ${t("memberDetails.heightCm")}` : "Add Height"}
               </p>
               <p className="text-[#727272] text-xs">
                 {t("memberDetails.height")}
@@ -272,7 +272,7 @@ const AppearanceForm = () => {
             />
             <div className="flex flex-col justify-start space-y-1">
               <p className="font-bold text-base text-primary">
-                {data!.weight ? `${data!.weight} kg` : "Add Weight"}
+                {data!.weight ? `${data!.weight} ${t("memberDetails.weightKg")}` : "Add Weight"}
               </p>
               <p className="text-[#727272] text-xs">
                 {t("memberDetails.weight")}

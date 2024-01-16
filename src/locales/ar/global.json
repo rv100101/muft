@@ -152,7 +152,9 @@
     "occupation": "الوظيفة",
     "monthlyIncome": "الدخل الشهري",
     "block": "حجب الحساب",
-    "reportAbuse": "الإبلاغ عن الحساب"
+    "reportAbuse": "الإبلاغ عن الحساب",
+    "heightCm": "سم",
+    "weightKg": "كغ"
   },
   "signIn": {
     "emailAddress": "البريد الالكتروني",
