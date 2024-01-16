@@ -22,7 +22,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 const DeactivateAccountContent = () => {
-  const [t] = useTranslation();
+  const [t, i18n] = useTranslation();
   const signOut = useUserStore((state) => state.reset);
   const { updateRead: setReadList } = useReadConversationsStateStore();
   const [showDialog, setShowDialog] = useState(false);
@@ -132,7 +132,7 @@ const DeactivateAccountContent = () => {
             </Button>
           </DialogTrigger>
 
-          <DialogContent className="sm:max-w-[425px]">
+          <DialogContent dir={i18n.language == 'ar' ? 'rtl' : "ltr"} className="sm:max-w-[425px]">
             <DialogHeader>
               <div className="flex flex-row justify-between items-start  pb-5">
                 <DialogTitle className="font-medium">
@@ -156,7 +156,7 @@ const DeactivateAccountContent = () => {
               )}
             </DialogHeader>
             {!user?.temporarily_deactivated && (
-              <div className="flex items-center space-x-2">
+              <div className={cn("flex items-center space-x-2", i18n.language == 'ar' && 'space-x-reverse')}>
                 <Checkbox
                   id="terms"
                   // checked={checked}
@@ -171,7 +171,7 @@ const DeactivateAccountContent = () => {
               </div>
             )}
             <div className="flex flex-row justify-center">
-              <div className="flex flex-row space-x-4">
+              <div className={cn("flex flex-row space-x-4", i18n.language == 'ar' && 'space-x-reverse')}>
                 <Button
                   disabled={
                     (!user!.temporarily_deactivated && (!checked as boolean)) ||
@@ -253,7 +253,7 @@ const DeactivateAccountContent = () => {
                 className={cn(
                   "text-white bg-slate-500 h-10 w-full text-sm rounded-lf py-3 hover:bg-slate-500/90 mt-5 "
                 )}
-                // onClick={() => deleteAccount}
+              // onClick={() => deleteAccount}
               >
                 {t("deactivateProfile.no")}
               </Button>

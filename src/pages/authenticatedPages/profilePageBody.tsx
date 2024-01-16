@@ -41,6 +41,8 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
   const [open] = useState(true);
   useEffect(() => {
     if (data && headerValues) {
+      console.log(data);
+
       methods.reset({
         car: data.car ?? "",
         gender: data.gender,

@@ -12,7 +12,6 @@ import { usePreferredLanguageStore } from "@/zustand/auth/preferred_language";
 import { useUserStore } from "@/zustand/auth/user";
 import { DialogClose, DialogTrigger } from "@radix-ui/react-dialog";
 import { useQueryClient } from "@tanstack/react-query";
-import { X } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 const PreferredLanguageDialog = ({
@@ -24,7 +23,7 @@ const PreferredLanguageDialog = ({
   triggerTitle?: null | string;
   triggerVariant: string;
 }) => {
-  const [t] = useTranslation();
+  const [t, i18n] = useTranslation();
   const { preferred, setPreferredLanguage } = usePreferredLanguageStore();
   const [changePreferredLanguage, setChangePreferredLanguage] = useState(false);
   const user = useUserStore((state) => state.user);
@@ -65,14 +64,11 @@ const PreferredLanguageDialog = ({
         </div>
       )}
       <DialogContent className="w-72 sm:w-full">
-        <DialogHeader dir="ltr" className="mb-2 w-full flex justify-end">
+        <DialogHeader dir={i18n.language == 'ar' ? "rtl" : "ltr"} className="mb-2 w-full flex justify-end">
           <div className="flex">
-            <DialogTitle className="text-sm sm:text-base flex w-full items-center">Choose your preferred language
+            <DialogTitle className="text-sm sm:text-base flex w-full items-center">{t("general.chooseYourPreferredLanguage")}
             </DialogTitle>
-            <DialogClose onClick={() => {
-              setChangePreferredLanguage(false);
-            }}>
-              <X className="hover:cursor-pointer ml-auto" size={20} />
+            <DialogClose >
             </DialogClose>
           </div>
         </DialogHeader>
@@ -81,7 +77,7 @@ const PreferredLanguageDialog = ({
             onClick={async () => {
               setPreferredLanguage("en");
               setChangePreferredLanguage(false);
-              if (user !== null) {
+              if (user !== null && i18n.language !== 'en') {
                 await languageQuery.updateLanguagePreference(
                   "en",
                   user.member_id
@@ -104,7 +100,7 @@ const PreferredLanguageDialog = ({
             onClick={async () => {
               setPreferredLanguage("ar");
               setChangePreferredLanguage(false);
-              if (user !== null) {
+              if (user !== null && i18n.language !== 'ar') {
                 await languageQuery.updateLanguagePreference(
                   "ar",
                   user.member_id

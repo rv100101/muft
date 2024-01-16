@@ -740,7 +740,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                         "hover:bg-green-400/80 bg-green-400"
                       )}
                     >
-                      Save
+                      <p>{t("general.save")}</p>
                       {isSaving && (
                         <span>
                           <Loader2 className="ml-2 h-4 w-4 animate-spin" />
@@ -759,7 +759,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                           "text-[#727272] bg-[#E8ECEF] hover:bg-[#E8ECEF]/80"
                         )}
                       >
-                        <p>Cancel</p>
+                        <p>{t("forgotPassword.cancel")}</p>
                       </Button>
                     )}
                   </div>

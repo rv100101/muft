@@ -2,7 +2,9 @@
   "general": {
     "save": "Save",
     "completeYourProfile": "COMPLETE YOUR PROFILE",
-    "profile": "PROFILE"
+    "profile": "PROFILE",
+    "preferredLanguage": "Preferred Language",
+    "chooseYourPreferredLanguage": "Choose your preferred language"
   },
   "landingPage": {
     "joinNow": "Join Now",

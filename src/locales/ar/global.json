@@ -2,7 +2,9 @@
   "general": {
     "save": "يحفظ",
     "completeYourProfile": "أكمل ملفك الشخصي",
-    "profile": "مظهر جانبي"
+    "profile": "مظهر جانبي",
+    "preferredLanguage": "اللغة المفضلة",
+    "chooseYourPreferredLanguage": "اختر لغتك المفضلة"
   },
   "landingPage": {
     "joinNow": "انضم الآن",

@@ -38,6 +38,7 @@ const fetchMemberDetails = async (memberId: number, lang: string) => {
     "0DB31DEE22DC4C03AD7DAAA9C29518FF3C08D931992A4A5CB0A4FF4CF4707DC6"
   );
   formData.append("member", memberId.toString());
+  formData.append("sender", memberId.toString());
   formData.append("lang", lang);
   try {
     const details = await axiosQuery.post(
@@ -45,6 +46,7 @@ const fetchMemberDetails = async (memberId: number, lang: string) => {
       formData
     );
     const { data } = details;
+    console.log(data);
     return data[0];
   } catch (error) {
     console.log(error);
@@ -57,9 +59,9 @@ const fetchAdditionalInformation = async (userId: number) => {
       member: userId,
     });
 
-    const lifestyle = await axiosQuery.post("/GetLifestyle", {
-      member: userId,
-    });
+    // const lifestyle = await axiosQuery.post("/GetLifestyle", {
+    //   member: userId,
+    // });
 
     const interests = await axiosQuery.post("/GetInterests", {
       member: userId,
@@ -79,7 +81,6 @@ const fetchAdditionalInformation = async (userId: number) => {
 
     let additionalInformation: Record<string, string | []> = {
       pets: pets.data,
-      car: lifestyle.data.car_name,
       interest: interests.data ?? [],
       language: languages.data ?? [],
       height: appearance.data.height,
