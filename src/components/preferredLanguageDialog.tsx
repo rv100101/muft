@@ -44,14 +44,14 @@ const PreferredLanguageDialog = ({
               type="button"
               variant={
                 triggerVariant as
-                  | "default"
-                  | "destructive"
-                  | "outline"
-                  | "secondary"
-                  | "ghost"
-                  | "link"
-                  | null
-                  | undefined
+                | "default"
+                | "destructive"
+                | "outline"
+                | "secondary"
+                | "ghost"
+                | "link"
+                | null
+                | undefined
               }
               className={cn(
                 "text-white h-10 text-sm rounded-lf py-2 hover:bg-[#FF599B]/90 w-24 dark:bg-[#1b1d1e] dark:hover:bg-red-700/90"

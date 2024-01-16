@@ -65,7 +65,7 @@ function TopNav() {
         variants={container}
         initial={location == "/" ? "hidden" : "none"}
         animate="show"
-        className="space-x-4 hidden md:flex"
+        className="md:space-x-4 flex"
       >
         {location.startsWith("/auth") && (
           <div>
@@ -93,8 +93,9 @@ function TopNav() {
           </div>
         )}
         {!location.startsWith("/auth") && (
-          <div className="flex">
-            {/* <motion.li variants={motionTop80}>
+          <>
+            <div className="hidden md:flex">
+              {/* <motion.li variants={motionTop80}>
                 <Button variant={"ghost"} className="font-light">
                   <a
                     className={cn(
@@ -118,39 +119,40 @@ function TopNav() {
                   </a>
                 </Button>
               </motion.li> */}
-            <motion.li variants={motionTop80}>
-              <Button variant={"ghost"} className="font-light">
-                <a
-                  className={cn("text-md")}
-                  href="https://support.softnames.com/"
-                  target="_blank"
-                >
-                  FAQ
-                </a>
-              </Button>
-            </motion.li>
-            <motion.li variants={motionTop80}>
-              <Button variant={"ghost"} className="font-light">
-                <a
-                  className={cn("text-md")}
-                  href="https://support.softnames.com/"
-                  target="_blank"
-                >
-                  Contact
-                </a>
-              </Button>
-            </motion.li>
-            <motion.li variants={motionTop80}>
-              <Button variant={"ghost"} className="font-light">
-                <a
-                  className={cn("text-md")}
-                  href="https://support.softnames.com/"
-                  target="_blank"
-                >
-                  Support
-                </a>
-              </Button>
-            </motion.li>
+              <motion.li variants={motionTop80}>
+                <Button variant={"ghost"} className="font-light">
+                  <a
+                    className={cn("text-md")}
+                    href="https://support.softnames.com/"
+                    target="_blank"
+                  >
+                    {t("landingPage.faq")}
+                  </a>
+                </Button>
+              </motion.li>
+              <motion.li variants={motionTop80}>
+                <Button variant={"ghost"} className="font-light">
+                  <a
+                    className={cn("text-md")}
+                    href="https://support.softnames.com/"
+                    target="_blank"
+                  >
+                    {t("landingPage.contact")}
+                  </a>
+                </Button>
+              </motion.li>
+              <motion.li variants={motionTop80}>
+                <Button variant={"ghost"} className="font-light">
+                  <a
+                    className={cn("text-md")}
+                    href="https://support.softnames.com/"
+                    target="_blank"
+                  >
+                    {t("landingPage.support")}
+                  </a>
+                </Button>
+              </motion.li>
+            </div>
             <motion.li variants={motionTop80}>
               <PreferredLanguageDialog
                 showTrigger={true}
@@ -158,7 +160,7 @@ function TopNav() {
                 triggerVariant="default"
               />
             </motion.li>
-          </div>
+          </>
         )}
         {/* <motion.li variants={motionTop80}>
           <Link href="/auth/signin">
@@ -172,48 +174,42 @@ function TopNav() {
             </Button>
           </Link>
         </motion.li> */}
-      </motion.ul>
-      <DropdownMenu>
-        <DropdownMenuTrigger className="block md:hidden" asChild>
-          <Button variant="outline">
-            <Menu />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-48">
-          <DropdownMenuLabel>Muffin</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuGroup>
-            <DropdownMenuItem>
-              <a href="/about">About Us</a>
-            </DropdownMenuItem>
-            {/* <DropdownMenuItem>
+        <motion.li>
+          <DropdownMenu dir={i18n.language == 'ar' ? "rtl" : 'ltr'} >
+            <DropdownMenuTrigger className="block md:hidden ml-2" asChild>
+              <Button variant="outline">
+                <Menu />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-48">
+              <DropdownMenuLabel>Muffin</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuGroup>
+                {/* <DropdownMenuItem>
+              <a href="/about">{t("landingPage.aboutUs")}</a>
+            </DropdownMenuItem> */}
+                {/* <DropdownMenuItem>
               <a href="/subscription">
                 Subscription
               </a>
             </DropdownMenuItem> */}
-            <DropdownMenuItem>
-              <a target="_blank" href="https://support.softnames.com/">
-                FAQ
-              </a>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <a target="_blank" href="https://support.softnames.com/">
-                Contact Us
-              </a>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <a target="_blank" href="https://support.softnames.com/">
-                Support
-              </a>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <PreferredLanguageDialog
-              showTrigger={true}
-              triggerTitle={i18n.language == "en" ? "العربية" : "English"}
-              triggerVariant="default"
-            />
-          </DropdownMenuGroup>
-          {/* <Link href="/auth/signin">
+                <DropdownMenuItem>
+                  <a target="_blank" href="https://support.softnames.com/">
+                    {t("landingPage.faq")}
+                  </a>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <a target="_blank" href="https://support.softnames.com/">
+                    {t("landingPage.contactUs")}
+                  </a>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <a target="_blank" href="https://support.softnames.com/">
+                    {t("landingPage.support")}
+                  </a>
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+              {/* <Link href="/auth/signin">
             <DropdownMenuItem
               className={cn(
                 "m-0 text text-white bg-primary hover:bg-[#d86392]",
@@ -223,9 +219,11 @@ function TopNav() {
               Sign In
             </DropdownMenuItem>
           </Link> */}
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </motion.nav>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </motion.li>
+      </motion.ul>
+    </motion.nav >
   );
 }
 

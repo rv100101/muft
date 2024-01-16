@@ -9,6 +9,7 @@ import { Button } from "./ui/button";
 import { getImagePath } from "@/lib/images";
 import { useLocation } from "wouter";
 import { useTranslation } from "react-i18next";
+import { cn } from "@/lib/utils";
 
 type SearchResultItem = {
   member_id: number;
@@ -21,7 +22,7 @@ type SearchResultItem = {
 };
 
 const HomepageSearchInput = () => {
-  const [t] = useTranslation();
+  const [t, i18n] = useTranslation();
   const [searchResults, setSearchResults] = useState([]);
   const [, setLocation] = useLocation();
 
@@ -51,7 +52,8 @@ const HomepageSearchInput = () => {
 
   return (
     <div className="lg:w-[330px] flex flex-col justify-center items-center">
-      <div className="hover:cursor-pointer w-full border-2 p-2 space-x-2 rounded-xl flex items-center px-5 mx-2">
+      <div className={cn("hover:cursor-pointer w-full border-2 p-2 space-x-2 rounded-xl flex items-center px-5 mx-2",
+        i18n.language == 'ar' && 'space-x-reverse')}>
         <input
           value={searchValue}
           onChange={(e) => {

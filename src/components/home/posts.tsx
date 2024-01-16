@@ -66,7 +66,7 @@ const Posts = ({
                 <PostItem key={index} memberData={post} />
               ))
             ) : (
-              <div className="rounded-t-md lg:w-[460px] w-[350px] h-[554px] object-cover h-screen">
+              <div className="rounded-t-md lg:w-[460px] w-[350px] object-cover h-screen">
                 No Members Found
               </div>
             )}

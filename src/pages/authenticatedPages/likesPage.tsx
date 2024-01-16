@@ -109,7 +109,7 @@ const LikesPage = () => {
       <div className="flex flex-col w-full h-full space-y-4">
         <LikesMobileNav />
         <div className="lg:pt-4">
-          <div className="w-full h-full flex items-center justify-between px-10 hidden lg:flex">
+          <div className="w-full h-full items-center justify-between px-10 hidden lg:flex">
             <h1 className="font-semibold  text-lg">{t("likes.likes")}</h1>
           </div>
         </div>{" "}
@@ -129,7 +129,7 @@ const LikesPage = () => {
             </div>
           </div>
         }
-        <div className="grid gap-4 py-2 lg:px-8 px-3 grid overflow-y-auto lg:grid-cols-2 rows-auto">
+        <div className="gap-4 py-2 lg:px-8 px-3 grid overflow-y-auto lg:grid-cols-2 rows-auto">
           {likesQueryResults.isLoading && <SkeletonLoading />}
           {tab == "LIKES" && likes}
           {!likesQueryResults.isLoading &&

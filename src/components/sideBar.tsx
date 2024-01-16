@@ -88,9 +88,8 @@ const SideBar = () => {
       )}
     >
       <div
-        className={`h-full flex flex-col justify-between ${
-          orientation.angle === 90 ? "overflow-scroll" : ""
-        }`}
+        className={`h-full flex flex-col justify-between ${orientation.angle === 90 ? "overflow-scroll" : ""
+          }`}
       >
         <div className="flex flex-col w-[220px]">
           <Link href="/">

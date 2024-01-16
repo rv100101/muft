@@ -5,7 +5,10 @@ import useConversationHistoryStore from "@/zustand/messaging/showConversation";
 import { getImagePath } from "@/lib/images";
 import useLatestConversationStore from "@/zustand/messaging/showConversation";
 import { Link } from "wouter";
+import { cn } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
 const MessageHeader = () => {
+  const [, i18n] = useTranslation();
   const selectedHistoryMemberId = useLatestConversationStore(
     (state) => state.selectedHistoryMemberId
   );
@@ -22,13 +25,13 @@ const MessageHeader = () => {
     <div className="flex justify-between h-16 w-full items-center border-b p-2">
       {currentConversationData && (
         <>
-          <div className="flex h-full items-center space-x-2">
+          <div className={cn("flex h-full items-center space-x-2", i18n.language == 'ar' && 'space-x-reverse')}>
             <Button
               variant={"ghost"}
               className="lg:hidden p-0 hover:bg-transparent"
               onClick={updateMessagingPageView}
             >
-              <ArrowLeftIcon />
+              <ArrowLeftIcon className={cn(i18n.language == 'ar' && 'rotate-180')} />
             </Button>
             <Link
               href={

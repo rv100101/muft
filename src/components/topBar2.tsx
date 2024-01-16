@@ -29,8 +29,10 @@ import HomepageSearchInput from "./homeSearchUsersInput";
 import NotificationsListFiters from "./notifications/notificationListFilters";
 import HomeFilters from "./home/filters";
 import useReadConversationsStateStore from "@/zustand/messaging/readConversations";
+import { useTranslation } from "react-i18next";
 
 const TopBar2 = ({ children }: { children: ReactNode }) => {
+  const [t, i18n] = useTranslation();
   const [location] = useLocation();
   const reset = useConversationHistoryStore((state) => state.resetToNull);
   const signOut = useUserStore((state) => state.reset);
@@ -46,15 +48,18 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
   const user = useUserStore((state) => state.user);
   const navLinks = links(user!.member_id).map((link, index) => {
     return (
-      <li key={index} className="w-full">
+      <li
+        dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+        key={index} className="w-full">
         <Link
           className={cn(
             "h-10 px-4 py-2 hover:bg-accent hover:text-accent-foreground flex justify-start items-center space-x-2",
             location.startsWith("/profile") && link.path.startsWith("/profile")
               ? "font-semibold bg-accent"
               : location.endsWith(link.path)
-              ? "font-semibold bg-accent"
-              : "font-normal"
+                ? "font-semibold bg-accent"
+                : "font-normal",
+            i18n.language == 'ar' && 'space-x-reverse'
           )}
           href={
             link.name == "My Profile"
@@ -77,11 +82,11 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
             <link.icon
               fill={
                 location.startsWith("/profile") &&
-                link.path.startsWith("/profile")
+                  link.path.startsWith("/profile")
                   ? "black"
                   : location.endsWith(link.path)
-                  ? "black"
-                  : "white"
+                    ? "black"
+                    : "white"
               }
               stroke={
                 link.name == "Home" && location.endsWith(link.path)
@@ -103,7 +108,9 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
   }
 
   return (
-    <div className="flex lg:h-full h-8 lg:items-start items-center lg:space-x-0 space-x-4  lg:pl-0 pl-5 lg:border-0 border-b px-10 py-8">
+    <div dir={i18n.language == 'ar' ? 'rtl' : 'ltr'} className={cn("flex lg:h-full h-8 lg:items-start items-center lg:space-x-0 space-x-4  lg:pl-0 pl-5 lg:border-0 border-b px-10 py-8",
+      i18n.language == 'ar' && 'space-x-reverse space-x-4'
+    )}>
       {/* search */}
       <Dialog
         open={searchTriggered}
@@ -135,14 +142,13 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
       </Dialog>
       <Sheet>
         <div className="flex justify-between w-full">
-          <SheetTrigger className="flex flex-row lg:hidden w-full space-x-5">
+          <SheetTrigger className={cn("flex flex-row lg:hidden w-full space-x-5", i18n.language == 'ar' && 'space-x-reverse')}>
             <MenuIcon />
             {children}
           </SheetTrigger>
 
           {location === "/" || location === "/notifications" ? (
-            <div className="flex flex-row space-x-3 justify-end">
-              {" "}
+            <div className={cn("flex flex-row space-x-3 justify-end", i18n.language == 'ar' && 'space-x-reverse')}>
               <SlidersHorizontal
                 size={20}
                 onClick={() => {
@@ -162,7 +168,7 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
             <></>
           )}
         </div>
-        <SheetContent side={"left"}>
+        <SheetContent side={i18n.language == 'en' ? "left" : "right"}>
           <SheetHeader>
             <SheetTitle>
               <Link href="/">
@@ -175,30 +181,32 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
             </SheetTitle>{" "}
             <ul>{navLinks}</ul>
             <hr />
-            <div className="flex items-start justify-end flex-col space-y-4 px-4 h-full mt-10 pt-5 ">
+            <div dir={i18n.language == 'ar' ? "rtl" : "ltr"} className="flex items-start justify-end flex-col space-y-4 px-4 h-full mt-10 pt-5 ">
               <a
                 className="hover:text-slate-700 text-sm text-black dark:text-white"
                 href="https://softnames.bolddesk.com/"
                 target="__blank"
               >
-                Help Center
+                {t("menu.helpCenter")}
               </a>
               <Link onClick={scrollToTop} href="/privacy">
                 <a className="hover:text-slate-700 text-sm text-black dark:text-white">
-                  Privacy Policy
+                  {t("menu.privacyPolicy")}
                 </a>
               </Link>
               <Link onClick={scrollToTop} href="/terms">
                 <a className="hover:text-slate-700 text-sm text-black dark:text-white">
-                  Terms & Conditions
+                  {t("menu.termsAndConditions")}
                 </a>
               </Link>
             </div>
             <Dialog>
               <DialogTrigger>
-                <div className="flex space-x-2 my-4 ml-3">
+                <div dir={i18n.language == 'ar' ? "rtl" : "ltr"} className={cn("flex space-x-2 my-4 ml-3", i18n.language == 'ar' && "space-x-reverse")}>
                   {<LogOutIcon size={20} className="text-primary" />}{" "}
-                  <p className="text-sm">Sign out</p>
+                  <p className="text-sm">
+                    {t("menu.signOut")}
+                  </p>
                 </div>
               </DialogTrigger>
               <DialogContent className="w-96 sm:max-w-md opacity-100">
