@@ -63,9 +63,9 @@ const PreferredLanguageDialog = ({
           </DialogTrigger>
         </div>
       )}
-      <DialogContent>
+      <DialogContent className="w-72 sm:w-full">
         <DialogHeader className="whitespace-nowrap mb-2">
-          <DialogTitle>Choose your preferred language</DialogTitle>
+          <DialogTitle className="text-sm sm:text-base">Choose your preferred language</DialogTitle>
         </DialogHeader>
         <div className="grid grid-cols-2 mt-2">
           <p
