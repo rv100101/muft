@@ -1,3 +1,10 @@
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useState } from "react";
 import { Eye, EyeOff, Loader2, UserIcon } from "lucide-react";
 import { MailIcon } from "lucide-react";
@@ -9,22 +16,22 @@ import { Link, useLocation } from "wouter";
 import { cn, scrollToTop } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useMutation } from "@tanstack/react-query";
-import axiosQuery from "@/queries/axios";
 import { toast } from "@/components/ui/use-toast";
 import { useUserStore } from "@/zustand/auth/user";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
-import { usePreferredLanguageStore } from "@/zustand/auth/preferred_language";
+import authQuery from "@/queries/auth";
 
-type FormDataType = {
+export type SignUpDataType = {
   first_name: string;
   last_name: string;
   email: string;
   password: string;
+  lang: string;
 };
+
 const SignUpPage = () => {
   const [t, i18n] = useTranslation();
-  const preferred = usePreferredLanguageStore((state) => state.preferred);
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [, navigate] = useLocation();
@@ -35,6 +42,7 @@ const SignUpPage = () => {
       last_name: "",
       email: "",
       password: "",
+      lang: ""
     },
     validationSchema: Yup.object({
       first_name: Yup.string()
@@ -61,19 +69,23 @@ const SignUpPage = () => {
           /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z0-9\W_]{10,25}$/,
           "Password must contain alphanumeric and special characters"
         ),
+      lang: Yup.string()
+        .required("Please choose a language")
     }),
-    onSubmit: (values: FormDataType) => signUp.mutate(values),
+    onSubmit: (values: SignUpDataType) => signUp.mutate(values),
   });
 
-  const handleSignUp = async (values: FormDataType) => {
+  const handleSignUp = async (values: SignUpDataType) => {
     try {
       setIsLoading(true);
-      const response = await axiosQuery.post("/Signup", {
-        ...values,
-        communication_language: preferred ?? "en",
-      });
-      const data = await response.data;
-      if (data) {
+      // const response = await axiosQuery.post("/Signup", {
+      //   ...values,
+      //   communication_language: preferred ?? "en",
+      // });
+      // const data = await response.data;
+      const response = await authQuery.signUp(values);
+      if (response.data.length !== 0) {
+        const data = response.data[0];
         setIsLoading(false);
         return data;
       }
@@ -150,11 +162,10 @@ const SignUpPage = () => {
                 First name
               </label> */}
               <div
-                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${
-                  formik.touched.first_name && formik.errors.first_name
-                    ? "border-rose-500"
-                    : ""
-                }`}
+                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${formik.touched.first_name && formik.errors.first_name
+                  ? "border-rose-500"
+                  : ""
+                  }`}
               >
                 <UserIcon color="#98A2B3" size={20} className="mt-1" />
                 <input
@@ -172,15 +183,14 @@ const SignUpPage = () => {
                 <InfoIcon
                   color="#D92D20"
                   size={20}
-                  className={`mt-1 ${
-                    formik.touched.first_name && formik.errors.first_name
-                      ? "visible"
-                      : "hidden"
-                  }`}
+                  className={`mt-1 ${formik.touched.first_name && formik.errors.first_name
+                    ? "visible"
+                    : "hidden"
+                    }`}
                 />
               </div>
               {formik.touched.first_name && formik.errors.first_name ? (
-                <div className="error text-red-500 text-sm ml-5 pt-2">
+                <div className="error text-red-500 ml-5 text-xs pt-2 mr-3">
                   {formik.errors.first_name}
                 </div>
               ) : null}
@@ -196,11 +206,10 @@ const SignUpPage = () => {
               </label> */}
 
               <div
-                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${
-                  formik.touched.last_name && formik.errors.last_name
-                    ? "border-rose-500"
-                    : ""
-                }`}
+                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${formik.touched.last_name && formik.errors.last_name
+                  ? "border-rose-500"
+                  : ""
+                  }`}
               >
                 <UserIcon color="#98A2B3" size={20} className="mt-1" />
                 <input
@@ -218,15 +227,14 @@ const SignUpPage = () => {
                 <InfoIcon
                   color="#D92D20"
                   size={20}
-                  className={`mt-1 ${
-                    formik.touched.last_name && formik.errors.last_name
-                      ? "visible"
-                      : "hidden"
-                  }`}
+                  className={`mt-1 ${formik.touched.last_name && formik.errors.last_name
+                    ? "visible"
+                    : "hidden"
+                    }`}
                 />
               </div>
               {formik.touched.last_name && formik.errors.last_name ? (
-                <div className="error text-red-500 text-sm ml-5 pt-2">
+                <div className="error text-red-500 ml-5 text-xs pt-2 mr-3">
                   {formik.errors.last_name}
                 </div>
               ) : null}
@@ -240,11 +248,10 @@ const SignUpPage = () => {
                 Email
               </label> */}
               <div
-                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${
-                  formik.touched.email && formik.errors.email
-                    ? "border-rose-500"
-                    : ""
-                }`}
+                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${formik.touched.email && formik.errors.email
+                  ? "border-rose-500"
+                  : ""
+                  }`}
               >
                 <MailIcon color="#98A2B3" size={20} className="mt-1" />
                 <input
@@ -263,15 +270,14 @@ const SignUpPage = () => {
                 <InfoIcon
                   color="#D92D20"
                   size={20}
-                  className={`mt-1 ${
-                    formik.touched.email && formik.errors.email
-                      ? "visible"
-                      : "hidden"
-                  }`}
+                  className={`mt-1 ${formik.touched.email && formik.errors.email
+                    ? "visible"
+                    : "hidden"
+                    }`}
                 />
               </div>
               {formik.touched.email && formik.errors.email ? (
-                <div className="error text-red-500 ml-5 text-sm pt-2">
+                <div className="error text-red-500 ml-5 text-xs pt-2 mr-3">
                   {formik.errors.email}
                 </div>
               ) : null}
@@ -286,11 +292,10 @@ const SignUpPage = () => {
                 Password
               </label> */}
               <div
-                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${
-                  formik.touched.password && formik.errors.password
-                    ? "border-rose-500"
-                    : ""
-                }`}
+                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${formik.touched.password && formik.errors.password
+                  ? "border-rose-500"
+                  : ""
+                  }`}
               >
                 <LockIcon color="#98A2B3" size={20} className="mt-1" />
                 <input
@@ -305,20 +310,47 @@ const SignUpPage = () => {
                   onBlur={formik.handleBlur}
                 />
                 <button
-                  className={`mt-1 ${
-                    formik.touched.password &&
+                  className={`mt-1 ${formik.touched.password &&
                     formik.errors.password &&
-                    "ml-2 text-[#D92D20]"
-                  }`}
-                  onClick={() => setShowPassword((prev) => !prev)}
-                  type="button"
+                    "ml-2 text-[#D92D20]"}`}
+                  onClick={() => setShowPassword((prev) => !prev)} type="button"
                 >
                   {showPassword ? <EyeOff /> : <Eye />}
                 </button>
               </div>
               {formik.touched.password && formik.errors.password ? (
-                <div className="error text-red-500 ml-5 text-sm pt-2">
+                <div className="error text-red-500 ml-5 text-xs pt-2 mr-3">
                   {formik.errors.password}
+                </div>
+              ) : null}
+            </div>
+            <div
+              className={`flex h-max flex-col rounded-full px-5 mx-3 `}
+            >
+              <Select
+                dir={i18n.language ? "rtl" : "ltr"}
+                onValueChange={(val) => {
+                  formik.setFieldValue('lang', val);
+                }}
+              >
+                <SelectTrigger name="lang" onBlur={formik.handleBlur} className={` rounded-full ${formik.touched.lang && formik.errors.lang
+                  ? "border-rose-500"
+                  : ""
+                  }
+                `}>
+                  <SelectValue placeholder={t("general.preferredLanguage")} />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value={'en'}>English
+                  </SelectItem>
+                  <SelectItem value={'ar'}>
+                    العربية
+                  </SelectItem>
+                </SelectContent>
+              </Select>{" "}
+              {formik.touched.lang && formik.errors.lang ? (
+                <div className="error text-red-500 ml-2 text-xs pt-2">
+                  {formik.errors.lang}
                 </div>
               ) : null}
             </div>
@@ -343,13 +375,12 @@ const SignUpPage = () => {
           <Link
             onClick={scrollToTop}
             href="/auth/signin"
-            className="mt-8 underline text-[#4635E2] text-sm"
+            className="mt-2 underline text-[#4635E2] text-sm"
           >
             {t("signUp.alreadyHaveAccount")}
           </Link>
-        </div>
-        <div></div>
-      </div>
+        </div >
+      </div >
     </>
   );
 };
