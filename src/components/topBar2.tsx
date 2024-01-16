@@ -209,9 +209,9 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
                   </p>
                 </div>
               </DialogTrigger>
-              <DialogContent className="w-96 sm:max-w-md opacity-100">
+              <DialogContent className="w-72 sm:max-w-md opacity-100">
                 <DialogHeader>
-                  <DialogTitle>Are you sure you want to sign out?</DialogTitle>
+                  <DialogTitle>{t("signOut.confirmSignOut")}</DialogTitle>
                 </DialogHeader>
                 <DialogFooter className="sm:justify-start flex flex-col space-y-2 sm:space-y-0 pt-5">
                   <Button
@@ -222,7 +222,7 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
                       setReadList({});
                     }}
                   >
-                    Yes
+                    {t("signOut.yes")}
                   </Button>
                   <DialogClose asChild>
                     <Button
@@ -230,7 +230,7 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
                       type="button"
                       variant="secondary"
                     >
-                      No
+                      {t("signOut.no")}
                     </Button>
                   </DialogClose>
                 </DialogFooter>
