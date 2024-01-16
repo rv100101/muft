@@ -199,9 +199,18 @@ const BasicInformationForm = () => {
               className="hover:cursor-pointer mt-2 mr-3"
             />
             <div className="flex flex-col justify-start space-y-1">
-              <p className="font-bold text-base text-primary">
-                {data && data?.gender[0] == "M" ? "Male" : "Female"}
-              </p>
+              {
+                i18n.language !== 'ar' &&
+                <p className="font-bold text-base text-primary">
+                  {data && data?.gender[0] == "M" ? "Male" : "Female"}
+                </p>
+              }
+              {
+                i18n.language === 'ar' &&
+                <p className="font-bold text-base text-primary">
+                  {data && i18n.language === 'ar' ? data?.gender : "Male"}
+                </p>
+              }
               <p className="text-[#727272] text-xs">
                 {t("memberDetails.gender")}
               </p>
