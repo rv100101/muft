@@ -332,7 +332,7 @@ const SignUpPage = () => {
               className={`flex h-max flex-col rounded-full px-5 mx-3 `}
             >
               <Select
-                dir={i18n.language ? "rtl" : "ltr"}
+                dir={i18n.language == 'ar' ? "rtl" : "ltr"}
                 onValueChange={(val) => {
                   formik.setFieldValue('lang', val);
                 }}
