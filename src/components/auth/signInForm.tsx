@@ -98,11 +98,12 @@ const SignInForm = () => {
         signInData.data.member_id
       );
 
-      // const pref = await languageQuery.getLanguagePreference(
-      //   signInData.data.member_id
-      // );
+      const pref = await languageQuery.getLanguagePreference(
+        signInData.data.member_id,
+        i18n.language
+      );
 
-      // console.log(pref);
+      console.log(pref);
 
       if (countryData.data.length !== 0) {
         updateUserCountry(countryData.data[0].country_name);
