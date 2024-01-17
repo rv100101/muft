@@ -106,7 +106,7 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
   });
 
   const { isLoading: currentUserLoading, isRefetching } = useQuery({
-    queryKey: ["profileContent", userId],
+    queryKey: ["profileContent", userId, preferredLanguage],
     queryFn: async () => {
       const additionalInformation =
         await profileContentQuery.fetchAdditionalInformation(userId);

@@ -295,7 +295,7 @@ const BasicInformationForm = () => {
               className="hover:cursor-pointer mt-2 mr-3"
             />
             <div className="flex flex-col justify-start space-y-1">
-              <p className="font-bold text-base text-primary">{data?.age}y</p>
+              <p className="font-bold text-base text-primary">{data?.age}{t("memberDetails.years")}</p>
               <p className="text-[#727272] text-xs">{t("memberDetails.age")}</p>
             </div>
           </div>

@@ -530,7 +530,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                             !user?.temporarily_deactivated ? "/messages" : ""
                           }
                         >
-                          <div className="flex w-min">
+                          <div className={cn("flex w-min", i18n.language == 'ar' && "flex-row-reverse")}>
                             <p>{t("memberDetails.chat")}</p>
                             <span>
                               <MessageCircleIcon className="h-4" />
