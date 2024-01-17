@@ -22,6 +22,7 @@ import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 import authQuery from "@/queries/auth";
 
+
 export type SignUpDataType = {
   first_name: string;
   last_name: string;
@@ -90,6 +91,7 @@ const SignUpPage = () => {
         return data;
       }
     } catch (err: unknown) {
+      setIsLoading(false);
       console.log("err", err);
     }
   };
@@ -312,8 +314,10 @@ const SignUpPage = () => {
                 <button
                   className={`mt-1 ${formik.touched.password &&
                     formik.errors.password &&
-                    "ml-2 text-[#D92D20]"}`}
-                  onClick={() => setShowPassword((prev) => !prev)} type="button"
+                    "ml-2 text-[#D92D20]"
+                    }`}
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  type="button"
                 >
                   {showPassword ? <EyeOff /> : <Eye />}
                 </button>
