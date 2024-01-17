@@ -98,11 +98,12 @@ const SignInForm = () => {
         signInData.data.member_id
       );
 
-      // const pref = await languageQuery.getLanguagePreference(
-      //   signInData.data.member_id
-      // );
+      const pref = await languageQuery.getLanguagePreference(
+        signInData.data.member_id,
+        i18n.language
+      );
 
-      // console.log(pref);
+      console.log(pref);
 
       if (countryData.data.length !== 0) {
         updateUserCountry(countryData.data[0].country_name);
@@ -192,11 +193,10 @@ const SignInForm = () => {
             Email
           </label> */}
           <div
-            className={`flex items-center flex-row border rounded-full h-max py-1 px-5 ${
-              formik.touched.email && formik.errors.email
-                ? "border-rose-500 p-0"
-                : ""
-            }`}
+            className={`flex items-center flex-row border rounded-full h-max py-1 px-5 ${formik.touched.email && formik.errors.email
+              ? "border-rose-500 p-0"
+              : ""
+              }`}
           >
             <MailIcon color="#98A2B3" size={20} className="mt-1" />
             <Input
@@ -215,11 +215,10 @@ const SignInForm = () => {
             <InfoIcon
               color="#D92D20"
               size={30}
-              className={`mt-1 ${
-                formik.touched.email && formik.errors.email
-                  ? "visible"
-                  : "hidden"
-              }`}
+              className={`mt-1 ${formik.touched.email && formik.errors.email
+                ? "visible"
+                : "hidden"
+                }`}
             />
           </div>
           {formik.touched.email && formik.errors.email ? (
@@ -234,11 +233,10 @@ const SignInForm = () => {
             Password
           </label> */}
           <div
-            className={`flex h-max flex-row border items-center rounded-full py-1 px-5 ${
-              formik.touched.password && formik.errors.password
-                ? "border-rose-500"
-                : ""
-            }`}
+            className={`flex h-max flex-row border items-center rounded-full py-1 px-5 ${formik.touched.password && formik.errors.password
+              ? "border-rose-500"
+              : ""
+              }`}
           >
             <LockIcon color="#98A2B3" size={20} className="mt-1" />
 
@@ -254,11 +252,10 @@ const SignInForm = () => {
               onBlur={formik.handleBlur}
             />
             <button
-              className={`mt-1 ${
-                formik.touched.password &&
+              className={`mt-1 ${formik.touched.password &&
                 formik.errors.password &&
                 "ml-2 text-[#D92D20]"
-              }`}
+                }`}
               onClick={() => setShowPassword((prev) => !prev)}
               type="button"
             >
@@ -316,7 +313,7 @@ const SignInForm = () => {
       <div
         className={cn(
           "flex flex-row space-x-2",
-          i18n.language == "ar" && "flex-row-reverse"
+          i18n.language == "ar" && "flex-row-reverse space-x-reverse"
         )}
       >
         <p className="text-xs mt-4">{t("signIn.dontHaveAccount")}</p>
