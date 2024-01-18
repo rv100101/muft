@@ -101,7 +101,7 @@ const Conversation = () => {
         text={firstTypedChat}
         img={heroAvatar1}
         avatarFirst={true}
-        name="Emily"
+        name={t("landingPage.emily")}
         time="05:16 AM"
         borderRadius="rounded-tr-xl rounded-br-xl rounded-bl-xl shadow-xl"
       />
@@ -111,7 +111,7 @@ const Conversation = () => {
           text={secondTypedChat}
           img={heroAvatar2}
           avatarFirst={false}
-          name="Mike"
+          name={t("landingPage.mike")}
           time="10:23 AM"
           borderRadius="rounded-tl-xl rounded-bl-xl rounded-br-xl shadow-xl"
         />
