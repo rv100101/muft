@@ -58,6 +58,14 @@ const BasicInformationForm = () => {
   const { data, editMode, isLoading, profileData } = profileAboutContentStore();
   const user = useUserStore((state) => state.user);
 
+  const getGender = (value: string) => {
+    if (value == t('memberDetails.male')) {
+      return 'M';
+    } else {
+      return 'F';
+    }
+  }
+
   if ((isLoading && profileData == null) || isSaving) {
     return (
       <div className="flex justify-start items-start space-x-4 w-full ml-5">
@@ -164,9 +172,7 @@ const BasicInformationForm = () => {
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={
-                        field.value && field.value.length > 1
-                          ? field.value[0]
-                          : field.value
+                        getGender(field.value)
                       }
                     >
                       <FormControl>
