@@ -302,9 +302,9 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
   });
 
   useQuery({
-    queryFn: () => profileContentQuery.editOptions.getDisability(),
+    queryFn: () => profileContentQuery.editOptions.getDisability(i18n.language),
     refetchInterval: Infinity,
-    queryKey: ["disability"],
+    queryKey: ["disability", i18n.language],
     onSuccess: (data: Disability[]) => {
       setDisability(data);
     },

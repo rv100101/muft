@@ -132,7 +132,9 @@ const HealthForm = () => {
                           />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent>
+                      <SelectContent
+                        dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                      >
                         {disability &&
                           disability.map((data: Disability) => {
                             return (
