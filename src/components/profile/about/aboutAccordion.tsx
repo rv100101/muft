@@ -168,9 +168,9 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
   });
 
   useQuery({
-    queryFn: () => profileContentQuery.editOptions.getEthnicity(),
+    queryFn: () => profileContentQuery.editOptions.getEthnicity(i18n.language),
     refetchInterval: Infinity,
-    queryKey: ["ethnicities"],
+    queryKey: ["ethnicities", i18n.language],
     onSuccess: (data: Ethnicity[]) => {
       setEthnicities(data);
     },
