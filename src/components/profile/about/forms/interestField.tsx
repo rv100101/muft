@@ -9,7 +9,6 @@ import selectOptions from "@/zustand/profile/selectData/selectOptions";
 import {
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { useFormContext } from "react-hook-form";
@@ -79,9 +78,9 @@ export default function InterestField() {
       render={() => {
         return (
           <FormItem>
-            <FormLabel className="text-primary" htmlFor="maritalStatus">
+            {/* <FormLabel className="text-primary" htmlFor="maritalStatus">
               Interests
-            </FormLabel>
+            </FormLabel> */}
             <Command
               onKeyDown={handleKeyDown}
               className="overflow-visible bg-transparent"

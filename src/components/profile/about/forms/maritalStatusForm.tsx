@@ -1,7 +1,7 @@
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
-import {} from "@/components/ui/form";
+import { } from "@/components/ui/form";
 import FormSkeletonLoading from "./formSkeletonLoading";
-import {} from "@/components/ui/select";
+import { } from "@/components/ui/select";
 import { useUserStore } from "@/zustand/auth/user";
 import {
   FormControl,
@@ -55,7 +55,7 @@ const MaritalStatusForm = () => {
                 return (
                   <FormItem>
                     <FormLabel className="text-primary" htmlFor="maritalStatus">
-                      Marital Status
+                      {t("memberDetails.maritalStatus")}
                     </FormLabel>
                     <Select
                       onValueChange={field.onChange}
@@ -122,7 +122,7 @@ const MaritalStatusForm = () => {
                 return (
                   <FormItem>
                     <FormLabel className="text-primary" htmlFor="haveChildren">
-                      Have Children?
+                      {t("memberDetails.haveChildrenLabel")}
                     </FormLabel>
                     <Select
                       onValueChange={field.onChange}
@@ -186,7 +186,7 @@ const MaritalStatusForm = () => {
                 return (
                   <FormItem>
                     <FormLabel className="text-primary" htmlFor="wantChildren">
-                      Want Children?
+                      {t("memberDetails.wantChildrenLabel")}
                     </FormLabel>
                     <Select
                       onValueChange={field.onChange}

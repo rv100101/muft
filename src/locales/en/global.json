@@ -113,6 +113,10 @@
     "no": "No"
   },
   "memberDetails": {
+    "birthDay": "Birthday",
+    "drinking": "Drinking",
+    "smoking": "Smoking",
+    "car": "Car",
     "years": "y",
     "edit": "Edit",
     "chat": "Chat",

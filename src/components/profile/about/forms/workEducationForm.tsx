@@ -57,7 +57,7 @@ const WorkEducationForm = () => {
                       className="text-primary"
                       htmlFor="employmentStatus"
                     >
-                      Employment Status
+                      {t("memberDetails.status")}
                     </FormLabel>
                     <Select
                       onValueChange={field.onChange}
@@ -130,7 +130,7 @@ const WorkEducationForm = () => {
                       className="text-primary"
                       htmlFor="occupationTitle"
                     >
-                      Occupation
+                      {t("memberDetails.occupation")}
                     </FormLabel>
                     <Select
                       onValueChange={field.onChange}
@@ -198,7 +198,7 @@ const WorkEducationForm = () => {
                 return (
                   <FormItem>
                     <FormLabel className="text-primary" htmlFor="income">
-                      Income Range
+                      {t("memberDetails.monthlyIncome")}
                     </FormLabel>
                     <Select
                       onValueChange={field.onChange}

@@ -1,7 +1,7 @@
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
-import {} from "@/components/ui/form";
+import { } from "@/components/ui/form";
 import FormSkeletonLoading from "./formSkeletonLoading";
-import {} from "@/components/ui/select";
+import { } from "@/components/ui/select";
 import { useUserStore } from "@/zustand/auth/user";
 import {
   FormControl,
@@ -55,7 +55,7 @@ const HealthForm = () => {
                 return (
                   <FormItem>
                     <FormLabel className="text-primary" htmlFor="weight">
-                      Workout
+                      {t("memberDetails.workout")}
                     </FormLabel>
                     <Select
                       onValueChange={field.onChange}
@@ -119,7 +119,7 @@ const HealthForm = () => {
                 return (
                   <FormItem>
                     <FormLabel className="text-primary" htmlFor="disability">
-                      disability
+                      {t("memberDetails.disability")}
                     </FormLabel>
                     <Select
                       onValueChange={field.onChange}

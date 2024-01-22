@@ -310,7 +310,7 @@ const BasicInformationForm = () => {
                 return (
                   <FormItem>
                     <FormLabel className="text-primary" htmlFor="birthInfo">
-                      Birthday
+                      {t("memberDetails.birthDay")}
                     </FormLabel>
                     <Input
                       min={minDate}
@@ -347,7 +347,7 @@ const BasicInformationForm = () => {
                     ? moment(data?.birthInfo).format("DD MMM yyyy")
                     : "Add Birthday"}
                 </p>
-                <p className="text-[#727272] text-xs">Birthday</p>
+                <p className="text-[#727272] text-xs">{t("memberDetails.birthDay")}</p>
               </div>
             </div>
           )

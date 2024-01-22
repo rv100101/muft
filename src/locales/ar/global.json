@@ -113,6 +113,10 @@
     "no": "لا"
   },
   "memberDetails": {
+    "birthDay": "تاريخ الميلاد",
+    "drinking": "المشروبات الكحولية",
+    "smoking": "التدخين",
+    "car": "السيارة",
     "years": "سنة",
     "edit": "حرر",
     "chat": "الدردشة",
@@ -153,7 +157,9 @@
     "disability": "الإعاقة البدنية",
     "maritalStatus": "الحالة الاجتماعية",
     "hasChildren": "لديك أطفال",
+    "haveChildrenLabel": "لديك أطفال؟",
     "wantChildren": "ترغب في الأطفال",
+    "wantChildrenLabel": "ترغب في الأطفال؟",
     "status": "الحالة",
     "occupation": "الوظيفة",
     "monthlyIncome": "الدخل الشهري",

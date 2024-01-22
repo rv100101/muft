@@ -53,7 +53,7 @@ const LifestyleForm = () => {
                 return (
                   <FormItem>
                     <FormLabel className="text-primary" htmlFor="drinking">
-                      Drinking
+                      {t("memberDetails.drinking")}
                     </FormLabel>
                     <Select
                       onValueChange={field.onChange}
@@ -117,7 +117,7 @@ const LifestyleForm = () => {
                 return (
                   <FormItem>
                     <FormLabel className="text-primary" htmlFor="smoking">
-                      Smoking
+                      {t("memberDetails.smoking")}
                     </FormLabel>
                     <Select
                       onValueChange={field.onChange}
@@ -181,7 +181,7 @@ const LifestyleForm = () => {
                 return (
                   <FormItem>
                     <FormLabel className="text-primary" htmlFor="livingStatus">
-                      Living Status
+                      {t("memberDetails.livingStatus")}
                     </FormLabel>
                     <Select
                       onValueChange={field.onChange}
@@ -245,7 +245,7 @@ const LifestyleForm = () => {
                 return (
                   <FormItem>
                     <FormLabel className="text-primary" htmlFor="car">
-                      Car
+                      {t("memberDetails.car")}
                     </FormLabel>
                     <Select
                       onValueChange={field.onChange}

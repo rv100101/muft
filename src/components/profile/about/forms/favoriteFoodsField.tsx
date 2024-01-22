@@ -9,7 +9,6 @@ import selectOptions from "@/zustand/profile/selectData/selectOptions";
 import {
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { useFormContext } from "react-hook-form";
@@ -81,9 +80,9 @@ export default function FavoriteFoodField() {
       render={() => {
         return (
           <FormItem>
-            <FormLabel className="text-primary" htmlFor="favoriteFood">
+            {/* <FormLabel className="text-primary" htmlFor="favoriteFood">
               Favorite Foods
-            </FormLabel>
+            </FormLabel> */}
             <Command
               onKeyDown={handleKeyDown}
               className="overflow-visible bg-transparent"
