@@ -93,6 +93,7 @@ const LocationForm = () => {
                       onValueChange={(e) => {
                         field.onChange(e);
                         const country = getCountryData(e);
+                        console.log(country?.country_code);
                         setSelectedCountryCode(country!.country_code);
                         setSelectedCountry(country!.country_code);
                         setValue("region", "");
@@ -104,7 +105,9 @@ const LocationForm = () => {
                           <SelectValue placeholder={"Select country"} />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent>
+                      <SelectContent
+                        dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                      >
                         {countries &&
                           countries.map((data: Country, index: number) => {
                             return (
@@ -166,7 +169,9 @@ const LocationForm = () => {
                           <SelectValue placeholder={"Select state"} />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent>
+                      <SelectContent
+                        dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                      >
                         {states &&
                           states.map((data: State, index: number) => {
                             return (

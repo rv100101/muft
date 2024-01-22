@@ -234,9 +234,9 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
   });
 
   useQuery({
-    queryFn: () => profileContentQuery.editOptions.getCountries(),
+    queryFn: () => profileContentQuery.editOptions.getCountries(i18n.language),
     refetchInterval: Infinity,
-    queryKey: ["countries"],
+    queryKey: ["countries", i18n.language],
     onSuccess: (data: Country[]) => {
       setCountries(data);
     },
@@ -367,10 +367,10 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
   useQuery({
     queryFn: () =>
       profileContentQuery.editOptions.getStates(
-        profileAboutContent?.country_code ?? ""
+        selectedCountry ?? "", i18n.language
       ),
     // enabled: selectedCountry.length !== 0,
-    queryKey: ["states", selectedCountry],
+    queryKey: ["states", selectedCountry, i18n.language],
     onSuccess: (data: State[]) => {
       setStates(data);
     },
