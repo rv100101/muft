@@ -174,9 +174,13 @@ const BasicInformationForm = () => {
                           <SelectValue placeholder={"Select gender"} />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent>
-                        <SelectItem value={"M"}>Male</SelectItem>
-                        <SelectItem value={"F"}>Female</SelectItem>
+                      <SelectContent dir={i18n.language == 'ar' ? "rtl" : "ltr"}>
+                        <SelectItem value={"M"}>
+                          {t("memberDetails.male")}
+                        </SelectItem>
+                        <SelectItem value={"F"}>
+                          {t("memberDetails.female")}
+                        </SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -238,7 +242,9 @@ const BasicInformationForm = () => {
                           <SelectValue placeholder={"Select nationality"} />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent>
+                      <SelectContent
+                        dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                      >
                         {nationalities.map(
                           (data: Nationality, index: number) => {
                             const { nationality } = data;

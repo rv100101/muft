@@ -113,6 +113,8 @@
     "no": "No"
   },
   "memberDetails": {
+    "male": "Male",
+    "female": "Female",
     "birthDay": "Birthday",
     "drinking": "Drinking",
     "smoking": "Smoking",

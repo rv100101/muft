@@ -113,6 +113,8 @@
     "no": "لا"
   },
   "memberDetails": {
+    "male": "ذكر",
+    "female": "أنثى",
     "birthDay": "تاريخ الميلاد",
     "drinking": "المشروبات الكحولية",
     "smoking": "التدخين",
