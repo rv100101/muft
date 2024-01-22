@@ -60,7 +60,7 @@ const HomePage = () => {
       const likes = createMap(memberList, memberLikes);
       setLikes(likes);
     }
-  }, [memberLikes, memberList, likes]);
+  }, [memberLikes, memberList]);
 
   // favorites
   const { data: memberFavorites, isLoading: favoritesLoading } = useQuery({
@@ -146,7 +146,7 @@ const HomePage = () => {
     return () => {
       setSelectedProfileId(null);
     };
-  });
+  }, [setSelectedProfileId]);
 
   return (
     <AuthenticatedLayout>
