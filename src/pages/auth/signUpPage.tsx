@@ -21,6 +21,7 @@ import { useUserStore } from "@/zustand/auth/user";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 import authQuery from "@/queries/auth";
+import { usePreferredLanguageStore } from "@/zustand/auth/preferred_language";
 
 
 export type SignUpDataType = {
@@ -35,6 +36,7 @@ const SignUpPage = () => {
   const [t, i18n] = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const setPreferredLanguage = usePreferredLanguageStore(state => state.setPreferredLanguage);
   const [, navigate] = useLocation();
   const updateUser = useUserStore((state) => state.updateUser);
   const formik = useFormik({
@@ -90,6 +92,7 @@ const SignUpPage = () => {
       if (response.data.length !== 0) {
         const data = response.data[0];
         setIsLoading(false);
+        setPreferredLanguage(values.lang);
         return data;
       }
     } catch (err: unknown) {
