@@ -65,7 +65,9 @@ const BackgroundForm = () => {
                           <SelectValue placeholder={"Select education"} />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent>
+                      <SelectContent
+                        dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                      >
                         {educations &&
                           educations.map((data: Education, index) => {
                             const { education_name: education } = data;
@@ -127,7 +129,9 @@ const BackgroundForm = () => {
                           <SelectValue placeholder={"Select religion"} />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent>
+                      <SelectContent
+                        dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                      >
                         {religion.map((data: Religion, index: number) => {
                           const { religion_name } = data;
                           return (
@@ -187,7 +191,9 @@ const BackgroundForm = () => {
                           <SelectValue placeholder={"Select ethnicity"} />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent>
+                      <SelectContent
+                        dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                      >
                         {ethnicities.map((data: Ethnicity) => {
                           const { ethnicity_name, ethnicity_id } = data;
                           return (

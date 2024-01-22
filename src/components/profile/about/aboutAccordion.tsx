@@ -390,8 +390,8 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
 
   useQuery({
     refetchInterval: Infinity,
-    queryFn: () => profileContentQuery.editOptions.getReligion(),
-    queryKey: ["religion"],
+    queryFn: () => profileContentQuery.editOptions.getReligion(i18n.language),
+    queryKey: ["religion", i18n.language],
     onSuccess: (data: Religion[]) => {
       setReligion(data);
     },
