@@ -8,6 +8,7 @@ import { Command as CommandPrimitive } from "cmdk";
 import selectOptions from "@/zustand/profile/selectData/selectOptions";
 import {
   FormField,
+  FormLabel,
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
@@ -98,9 +99,7 @@ export default function LanguageField() {
       render={() => {
         return (
           <FormItem>
-            {/* <FormLabel className="text-primary" htmlFor="maritalStatus">
-              Languages
-            </FormLabel> */}
+            <FormLabel className="text-primary" htmlFor="maritalStatus" />
             <Command
               onKeyDown={handleKeyDown}
               className="overflow-visible bg-transparent"
