@@ -141,9 +141,9 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
     refetchOnWindowFocus: false,
   });
   useQuery({
-    queryFn: () => profileContentQuery.editOptions.getNationality(),
+    queryFn: () => profileContentQuery.editOptions.getNationality(i18n.language),
     refetchInterval: Infinity,
-    queryKey: ["nationalities"],
+    queryKey: ["nationalities", i18n.language],
     onSuccess: (data: Nationality[]) => {
       setNationalities(data);
     },

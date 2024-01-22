@@ -249,9 +249,18 @@ const fetchLocationInitialData = async (userId: number) => {
 // maritalStatus
 // languages
 
-const getNationality = async () => {
+const getNationality = async (lang: string) => {
   try {
-    const response = await axiosQuery.post("/Nationalities");
+    const formData = new FormData();
+    formData.append(
+      "auth",
+      "0DB31DEE22DC4C03AD7DAAA9C29518FF3C08D931992A4A5CB0A4FF4CF4707DC6"
+    );
+    formData.append("lang", lang);
+    const response = await axiosQuery.post(
+      "https://muffinapi.azurewebsites.net/nationalities.php",
+      formData
+    );
     return response.data;
   } catch (error) {
     return [];
