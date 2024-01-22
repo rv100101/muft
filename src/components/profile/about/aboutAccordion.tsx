@@ -49,7 +49,7 @@ import { useEffectOnce, useUpdateEffect } from "usehooks-ts";
 import { useTranslation } from "react-i18next";
 import { usePreferredLanguageStore } from "@/zustand/auth/preferred_language";
 const AboutAccordion = ({ userId }: { userId: number }) => {
-  const [t] = useTranslation();
+  const [t, i18n] = useTranslation();
   const [location] = useLocation();
   const preferredLanguage = usePreferredLanguageStore(
     (state) => state.preferred
@@ -189,9 +189,9 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
   });
 
   useQuery({
-    queryFn: () => profileContentQuery.editOptions.getEducation(),
+    queryFn: () => profileContentQuery.editOptions.getEducation(i18n.language),
     refetchInterval: Infinity,
-    queryKey: ["educations"],
+    queryKey: ["educations", i18n.language],
     onSuccess: (data: Education[]) => {
       setEducations(data);
     },

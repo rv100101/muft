@@ -408,9 +408,18 @@ const getCar = async () => {
   }
 };
 
-const getEducation = async () => {
+const getEducation = async (lang: string) => {
   try {
-    const response = await axiosQuery.post("/Education");
+    const formData = new FormData();
+    formData.append(
+      "auth",
+      "0DB31DEE22DC4C03AD7DAAA9C29518FF3C08D931992A4A5CB0A4FF4CF4707DC6"
+    );
+    formData.append("lang", lang);
+    const response = await axiosQuery.post(
+      "https://muffinapi.azurewebsites.net/education.php",
+      formData
+    );
     return response.data;
   } catch (error) {
     return [];
