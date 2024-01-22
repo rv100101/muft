@@ -148,7 +148,7 @@ export const ProfileFormSchema = z.object({
     .string({
       required_error: "Nickname required",
     })
-    .min(2, { message: "Nickname is required" })
+    .min(3, { message: "Nickname is too short" })
     .max(12, { message: "Value should not exceed 12 characters" }),
 
   hair: z
