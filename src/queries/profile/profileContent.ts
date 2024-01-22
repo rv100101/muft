@@ -332,11 +332,19 @@ const getMaritalStatus = async () => {
   }
 };
 
-const getLanguages = async () => {
+const getLanguages = async (lang: string, member: number) => {
   try {
-    const response = await axiosQuery.post("/Languages", {
-      member: 999,
-    });
+    const formData = new FormData();
+    formData.append(
+      "auth",
+      "0DB31DEE22DC4C03AD7DAAA9C29518FF3C08D931992A4A5CB0A4FF4CF4707DC6"
+    );
+    formData.append("lang", lang);
+    formData.append("member", member.toString());
+    const response = await axiosQuery.post(
+      "https://muffinapi.azurewebsites.net/languages.php",
+      formData
+    );
     return response.data;
   } catch (error) {
     return [];

@@ -150,7 +150,7 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
   });
 
   useQuery({
-    queryFn: () => profileContentQuery.editOptions.getLanguages(),
+    queryFn: () => profileContentQuery.editOptions.getLanguages(i18n.language, userId),
     refetchInterval: Infinity,
     queryKey: ["languages"],
     onSuccess: (data: Languages[]) => {
