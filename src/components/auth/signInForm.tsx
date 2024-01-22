@@ -25,7 +25,7 @@ import { usePasswordResetState } from "@/zustand/auth/passwordReset";
 import { useQueryClient } from "@tanstack/react-query";
 import { useUserNickname } from "@/zustand/auth/username";
 import { useTranslation } from "react-i18next";
-import languageQuery from "@/queries/language";
+import { usePreferredLanguageStore } from "@/zustand/auth/preferred_language";
 
 type FormDataType = {
   email: string;
@@ -38,6 +38,7 @@ const SignInForm = () => {
   const { toast } = useToast();
   const [, navigate] = useLocation();
   const [isLoading, setIsLoading] = useState(false);
+  const setPreferredLanguage = usePreferredLanguageStore(state => state.setPreferredLanguage);
   const updateUser = useUserStore((state) => state.updateUser);
   const updateUserAvatar = useUserAvatar((state) => state.setAvatar);
   const updateUserNickname = useUserNickname((state) => state.setNickname);
@@ -72,38 +73,28 @@ const SignInForm = () => {
     try {
       setIsLoading(true);
       const signInData = await authQuery.signIn(values.email, values.password);
-      if (typeof signInData.data == "string") {
+      if (!signInData) {
         setIsLoading(false);
         formik.values.password = "";
         formik.setFieldError("email", "Invalid credentials");
         formik.setFieldError("password", "Invalid credentials");
         toast({
+          variant: "destructive",
           title: "Invalid username or password.",
           description: "Please check your credentials and try again",
         });
         return;
       }
+      setPreferredLanguage(signInData.communication_language);
       const profilePhotoData = await authQuery.getProfilePhoto(
-        signInData.data.member_id
+        signInData.member_id
       );
-      const username = await authQuery.getNickname(signInData.data.member_id);
+      const username = await authQuery.getNickname(signInData.member_id);
       const countryData: {
         data: {
           country_name: string;
         }[];
-      } = await authQuery.getCountry(69);
-
-      await languageQuery.updateLanguagePreference(
-        i18n.language,
-        signInData.data.member_id
-      );
-
-      const pref = await languageQuery.getLanguagePreference(
-        signInData.data.member_id,
-        i18n.language
-      );
-
-      console.log(pref);
+      } = await authQuery.getCountry(signInData.member_id);
 
       if (countryData.data.length !== 0) {
         updateUserCountry(countryData.data[0].country_name);
@@ -111,12 +102,12 @@ const SignInForm = () => {
       updateUserAvatar(profilePhotoData.data.gallery_uuid);
       updateUserNickname(username.data[0].nickname);
       setIsLoading(false);
-      const data: User | string = signInData.data;
-      if (typeof data != "string" && data!.is_blocked) {
+      const data: User | null = signInData;
+      if (data && data!.is_blocked) {
         showBlockedModal(true);
         return;
       }
-      if (typeof data != "string" && data!.authorized) {
+      if (data && data!.authorized) {
         queryClient.invalidateQueries({
           queryKey: ["home-members"],
         });

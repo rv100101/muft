@@ -2,10 +2,26 @@ import { SignUpDataType } from "@/pages/auth/signUpPage";
 import axiosQuery from "./axios";
 
 const signIn = async (email: string, password: string) => {
-  return await axiosQuery.post("/Signin", {
-    email,
-    password,
-  });
+  const formData = new FormData();
+  formData.append(
+    "auth",
+    "0DB31DEE22DC4C03AD7DAAA9C29518FF3C08D931992A4A5CB0A4FF4CF4707DC6"
+  );
+  formData.append("email", email);
+  formData.append("password", password);
+  try {
+    const response = await axiosQuery.post(
+      "https://muffinapi.azurewebsites.net/signin.php",
+      formData
+    );
+    if (response.data.length !== 0) {
+      return response.data[0];
+    } else {
+      return null;
+    }
+  } catch (error) {
+    return null;
+  }
 };
 
 const signUp = async (values: SignUpDataType) => {
