@@ -38,6 +38,8 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
     resolver: zodResolver(ProfileFormSchema),
   });
 
+  console.log(methods);
+
   const [open] = useState(true);
   useEffect(() => {
     if (data && headerValues) {

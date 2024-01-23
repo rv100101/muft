@@ -10,7 +10,7 @@ function removeDuplicates<
   const uniqueKeys: Record<string, boolean> = {};
 
   if (typeof arr !== "object") {
-    return [];
+    return arr;
   }
 
   if (arr.length == 0) {

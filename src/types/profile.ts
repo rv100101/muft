@@ -106,7 +106,7 @@ export type Disability = {
 };
 
 export type Pets = {
-  pet_id: number;
+  pet_id: string;
   pet_name: string;
 };
 
@@ -131,7 +131,7 @@ export type Car = {
 };
 
 export type Interest = {
-  interest_id: number;
+  interest_id: string;
   interest_name: string;
 };
 

@@ -121,7 +121,7 @@ const fetchAdditionalInformation = async (userId: number, lang: string) => {
     console.log(languages);
 
     let additionalInformation: Record<string, string | []> = {
-      pets: pets.data,
+      pets: pets.data ?? [],
       interest: interests.data ?? [],
       language: languages.data ?? [],
       height: appearance.data.height,

@@ -111,7 +111,7 @@ export const ProfileFormSchema = z.object({
     .array(
       z.object({
         interest_name: z.string(),
-        interest_id: z.number(),
+        interest_id: z.string(),
       })
     )
     .refine((data) => data.length > 0, {
@@ -121,7 +121,7 @@ export const ProfileFormSchema = z.object({
     .array(
       z.object({
         favorite_food_name: z.string(),
-        favorite_food_id: z.number(),
+        favorite_food_id: z.string(),
         authorized: z.boolean(),
         ip_address: z.string(),
       })
@@ -190,7 +190,7 @@ export const ProfileFormSchema = z.object({
     .array(
       z.object({
         pet_name: z.string(),
-        pet_id: z.number(),
+        pet_id: z.string(),
       })
     )
     .refine((data) => data.length > 0, {
