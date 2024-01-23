@@ -114,6 +114,8 @@
   },
   "memberDetails": {
     "male": "Male",
+    "haveChildrenLabel": "Have children?",
+    "wantChildrenLabel": "Want children?",
     "female": "Female",
     "birthDay": "Birthday",
     "drinking": "Drinking",
