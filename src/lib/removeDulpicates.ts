@@ -9,6 +9,10 @@ function removeDuplicates<
   // Create an object to keep track of unique keys
   const uniqueKeys: Record<string, boolean> = {};
 
+  if (typeof arr !== "object") {
+    return [];
+  }
+
   if (arr.length == 0) {
     return arr;
   }
