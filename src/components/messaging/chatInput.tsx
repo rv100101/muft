@@ -90,7 +90,7 @@ const ChatInput = () => {
     } catch (error) {
       toast({
         variant: "destructive",
-        title: "Cannot create new conversation",
+        title: t("alerts.cannotCreateConversation"),
       });
       return null;
     }

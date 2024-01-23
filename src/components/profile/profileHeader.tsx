@@ -59,7 +59,7 @@ type FormDataType = {
 };
 
 const ProfileHeader = ({ userId }: { userId: string }) => {
-  const [, i18n] = useTranslation();
+  const [t, i18n] = useTranslation();
   const setView = useMobileMessagingViewStore((state) => state.setView);
   const [reportProcessing, setReportProcessing] = useState(false);
   const setEditModeFalse = profileAboutContentStore(
@@ -161,7 +161,6 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const setAvatar = useUserAvatar((state) => state.setAvatar);
-  const [t] = useTranslation();
 
   const getConversationUuid = useCallback(async () => {
     if (location.startsWith("/profile")) {
@@ -294,8 +293,8 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
 
       // setReportProcessing(false);
       toast({
-        title: "Reported",
-        description: "Changes might take awhile to take effect.",
+        title: t("alerts.reported"),
+        description: t("alerts.changesTakeAwhile"),
         // variant: "success",
       });
 
@@ -319,7 +318,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
       if (res.data) {
         toast({
           title: "User has been Blocked",
-          description: "Changes might take awhile to take effect.",
+          description: t("alerts.changesTakeAwhile"),
           variant: "success",
         });
       }

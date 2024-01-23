@@ -7,8 +7,10 @@ import * as Yup from "yup";
 import { useMutation } from "@tanstack/react-query";
 import passwordResetQuery from "@/queries/password_reset";
 import { toast } from "../ui/use-toast";
+import { useTranslation } from "react-i18next";
 
 const EnterResetCode = () => {
+  const [t] = useTranslation();
   const changePasswordResetState = usePasswordResetState(
     (state) => state.changeState
   );
@@ -35,7 +37,7 @@ const EnterResetCode = () => {
         toast({
           duration: 1500,
           variant: "destructive",
-          title: "Please try again",
+          title: t("alerts.tryAgainLater"),
           description: "Invalid pin",
         });
         return;
@@ -62,11 +64,10 @@ const EnterResetCode = () => {
               We have sent a pin to your email.
             </label>
             <div
-              className={`flex flex-row border items-center justify-center rounded-full py-1 px-5 ${
-                pinForm.touched.pin && pinForm.errors.pin
-                  ? "border-rose-500 p-0"
-                  : ""
-              }`}
+              className={`flex flex-row border items-center justify-center rounded-full py-1 px-5 ${pinForm.touched.pin && pinForm.errors.pin
+                ? "border-rose-500 p-0"
+                : ""
+                }`}
             >
               <ShieldCheck color="#98A2B3" size={20} className="mt-1" />
               <input
@@ -75,17 +76,16 @@ const EnterResetCode = () => {
                 placeholder="Enter pin"
                 {...pinForm.getFieldProps("pin")}
                 name="pin"
-                // onChange={pinForm.handleChange}
-                // onBlur={pinForm.handleBlur}
+              // onChange={pinForm.handleChange}
+              // onBlur={pinForm.handleBlur}
               />
               <InfoIcon
                 color="#D92D20"
                 size={20}
-                className={`mt-1 ${
-                  pinForm.touched.pin && pinForm.errors.pin
-                    ? "visible"
-                    : "hidden"
-                }`}
+                className={`mt-1 ${pinForm.touched.pin && pinForm.errors.pin
+                  ? "visible"
+                  : "hidden"
+                  }`}
               />
             </div>
             {pinForm.errors.pin && (

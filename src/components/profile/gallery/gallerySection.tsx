@@ -18,6 +18,7 @@ import { Button } from "@/components/ui/button";
 import DeleteDialog from "./deleteDialog";
 import uploadQueries from "@/queries/uploading";
 import { toast } from "@/components/ui/use-toast";
+import { useTranslation } from "react-i18next";
 
 type Gallery = {
   authorized: boolean;
@@ -28,6 +29,7 @@ type Gallery = {
 };
 
 const GallerySection = ({ userId }: { userId: string }) => {
+  const [t] = useTranslation();
   const [hoveredPictureIndex, setHoveredPictureIndex] = useState<number | null>(
     null
   );
@@ -108,7 +110,7 @@ const GallerySection = ({ userId }: { userId: string }) => {
     onError: () => {
       console.log("Failed");
       toast({
-        title: "Something went wrong!",
+        title: t("alerts.somethingWentWrong"),
         description: "Cannot delete photo",
         variant: "destructive",
       });
@@ -130,7 +132,7 @@ const GallerySection = ({ userId }: { userId: string }) => {
     },
     onError: () => {
       toast({
-        title: "Something went wrong!",
+        title: t("alerts.somethingWentWrong"),
         description: "Cannot upload photo",
         variant: "destructive",
       });

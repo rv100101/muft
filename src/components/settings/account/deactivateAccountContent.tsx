@@ -43,7 +43,7 @@ const DeactivateAccountContent = () => {
       if (res.data) {
         toast({
           title: "Account has been deactivated",
-          description: "Changes might take awhile to take effect.",
+          description: t("alerts.changesTakeAwhile"),
           // variant: "success",
         });
         updateUser({ ...user!, temporarily_deactivated: true });
@@ -65,7 +65,7 @@ const DeactivateAccountContent = () => {
       if (res.data) {
         toast({
           title: "Your account has been reactivated!",
-          description: "Changes might take awhile to take effect.",
+          description: t("alerts.changesTakeAwhile"),
           variant: "success",
         });
         updateUser({ ...user!, temporarily_deactivated: false });
@@ -87,7 +87,7 @@ const DeactivateAccountContent = () => {
       // if (res.data) {
       toast({
         title: "Account has been deleted",
-        description: "Changes might take awhile to take effect.",
+        description: t("alerts.changesTakeAwhile"),
         // variant: "success",
       });
       setDeleteLoading(false);

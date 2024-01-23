@@ -36,7 +36,7 @@ const SendResetPin = () => {
       if (typeof res.data == "string") {
         toast({
           variant: "destructive",
-          title: "Please try again",
+          title: t("alerts.tryAgainLater"),
           description: "Invalid email",
         });
         return;

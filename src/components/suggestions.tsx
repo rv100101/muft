@@ -28,6 +28,7 @@ import { useState } from "react";
 import { toast } from "./ui/use-toast";
 import messagingQuery from "@/queries/messaging";
 import useLatestConversationStore from "@/zustand/messaging/showConversation";
+import { useTranslation } from "react-i18next";
 
 type Member = {
   age: number;
@@ -50,6 +51,7 @@ type Member = {
 };
 
 const Suggestions = ({ members }: { members: Member[] }) => {
+  const [t] = useTranslation();
   const setSelectedConversation = useLatestConversationStore(
     (state) => state.setConversation,
   );
@@ -137,8 +139,8 @@ const Suggestions = ({ members }: { members: Member[] }) => {
 
       setReportProcessing(false);
       toast({
-        title: "Reported",
-        description: "Changes might take awhile to take effect.",
+        title: t("alerts.reported"),
+        description: t("alerts.changesTakeAwhile"),
         // variant: "success",
       });
 
@@ -183,7 +185,7 @@ const Suggestions = ({ members }: { members: Member[] }) => {
     } catch (error) {
       toast({
         variant: "destructive",
-        title: "Cannot create new conversation",
+        title: t("alerts.cannotCreateConversation"),
       });
       return null;
     }
@@ -235,8 +237,8 @@ const Suggestions = ({ members }: { members: Member[] }) => {
                     {suggestion.isLiked && !likeTriggered
                       ? "Unlike"
                       : !suggestion.isLiked && likeTriggered
-                      ? "Unlike"
-                      : "Like"}
+                        ? "Unlike"
+                        : "Like"}
                   </Button>
                   <Button
                     variant={"ghost"}
@@ -249,8 +251,8 @@ const Suggestions = ({ members }: { members: Member[] }) => {
                     {suggestion.isFavorite && !favoriteTriggered
                       ? "UnFavorite"
                       : !suggestion.isFavorite && favoriteTriggered
-                      ? "UnFavorite"
-                      : "Favorite"}
+                        ? "UnFavorite"
+                        : "Favorite"}
                   </Button>
                   <Button
                     variant={"ghost"}
@@ -316,7 +318,7 @@ const Suggestions = ({ members }: { members: Member[] }) => {
                       type="submit"
                       className="bg-red-500 flex flex-row space-x-1"
                       onClick={() => handleReportSubmit(suggestion.member_id)}
-                      // disabled={reportProcessing}
+                    // disabled={reportProcessing}
                     >
                       <p>{reportProcessing ? "Reporting" : "Report"}</p>{" "}
                       <Flag size={15} />

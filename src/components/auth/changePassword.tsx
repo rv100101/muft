@@ -43,14 +43,14 @@ const ChangePassword = () => {
       try {
         await passwordResetQuery.changePassword(email, values.password);
         toast({
-          title: "Sucessful",
-          description: "Password is successfully changed",
+          title: t("alerts.successful"),
+          description: t("alerts.passwordSuccessfullyChanged"),
           variant: "success",
         });
       } catch (error) {
         toast({
-          title: "Something went wrong",
-          description: "Please try again later",
+          title: t("alerts.somethingWentWrong"),
+          description: t("alerts.tryAgainLater"),
           variant: "destructive",
         });
         console.log(error);
@@ -71,11 +71,10 @@ const ChangePassword = () => {
       >
         <div className="flex flex-col items-start justify-start">
           <div
-            className={`flex items-center flex-row border rounded-full py-1 px-5w w-full px-4 ${
-              formik.touched.password && formik.errors.password
-                ? "border-rose-500"
-                : ""
-            }`}
+            className={`flex items-center flex-row border rounded-full py-1 px-5w w-full px-4 ${formik.touched.password && formik.errors.password
+              ? "border-rose-500"
+              : ""
+              }`}
           >
             <LockIcon color="#98A2B3" size={20} className="mt-1" />
 
@@ -88,11 +87,10 @@ const ChangePassword = () => {
               onBlur={formik.handleBlur}
             />
             <button
-              className={`mt-1 ${
-                formik.touched.password &&
+              className={`mt-1 ${formik.touched.password &&
                 formik.errors.password &&
                 "ml-2 text-[#D92D20]"
-              }`}
+                }`}
               onClick={() => setShowPassword((prev) => !prev)}
               type="button"
             >
@@ -107,11 +105,10 @@ const ChangePassword = () => {
         </div>
         <div className="flex flex-col items-start justify-start space-y-1">
           <div
-            className={`flex items-center flex-row border rounded-full py-1 px-5w w-full px-4 ${
-              formik.touched.confirmPassword && formik.errors.confirmPassword
-                ? "border-rose-500"
-                : ""
-            }`}
+            className={`flex items-center flex-row border rounded-full py-1 px-5w w-full px-4 ${formik.touched.confirmPassword && formik.errors.confirmPassword
+              ? "border-rose-500"
+              : ""
+              }`}
           >
             <LockIcon color="#98A2B3" size={20} className="mt-1" />
             <input
@@ -126,11 +123,10 @@ const ChangePassword = () => {
             <InfoIcon
               color="#D92D20"
               size={20}
-              className={`mt-1 ${
-                formik.touched.confirmPassword && formik.errors.confirmPassword
-                  ? "visible"
-                  : "hidden"
-              }`}
+              className={`mt-1 ${formik.touched.confirmPassword && formik.errors.confirmPassword
+                ? "visible"
+                : "hidden"
+                }`}
             />
           </div>
           {formik.touched.confirmPassword && formik.errors.confirmPassword ? (

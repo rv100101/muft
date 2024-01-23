@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/dialog";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { useCountdown } from "usehooks-ts";
+import { useTranslation } from "react-i18next";
 const pinSchema = Yup.object().shape({
   pin: Yup.string()
     .required("PIN is required")
@@ -34,6 +35,8 @@ const ActivateAccount = () => {
   const [activateIsLoading, setActivateIsLoading] = useState(false);
   const [countDownComplete, setCountDownComplete] = useState(true);
   const { updateUser, user, reset } = useUserStore();
+  const [t] = useTranslation();
+
   type FormDataType = {
     pin: string;
   };
@@ -55,8 +58,8 @@ const ActivateAccount = () => {
       if (res.data == "") {
         toast({
           variant: "destructive",
-          title: "Something went wrong",
-          description: "Please try again",
+          title: t("alerts.somethingWentWrong"),
+          description: t("alerts.tryAgainLater"),
         });
       } else {
         toast({
@@ -70,8 +73,8 @@ const ActivateAccount = () => {
     } catch (e) {
       toast({
         variant: "destructive",
-        title: "Something went wrong",
-        description: "Please try again",
+        title: t("alerts.somethingWentWrong"),
+        description: t("alerts.tryAgainLater"),
       });
     }
     setResendPinIsLoading(false);
@@ -89,7 +92,7 @@ const ActivateAccount = () => {
           duration: 1500,
           variant: "destructive",
           title: "The PIN is incorrect!",
-          description: "Please try again",
+          description: t("alerts.tryAgainLater"),
         });
       } else {
         updateUser({ ...user, is_active: true } as User);
@@ -103,7 +106,7 @@ const ActivateAccount = () => {
       console.log(error);
       toast({
         title: "The PIN is incorrect!",
-        description: "Please try again",
+        description: t("alerts.tryAgainLater"),
       });
     }
     setActivateIsLoading(false);
@@ -129,9 +132,8 @@ const ActivateAccount = () => {
           </p>
           <p className="my-4 text-sm">Please enter the PIN below:</p>
           <div
-            className={`flex items-center justify-center w-full flex-row border rounded-full h-max py-1 px-5 ${
-              touched.pin && errors.pin ? "border-rose-500 p-0" : ""
-            }`}
+            className={`flex items-center justify-center w-full flex-row border rounded-full h-max py-1 px-5 ${touched.pin && errors.pin ? "border-rose-500 p-0" : ""
+              }`}
           >
             <Field
               name="pin"
