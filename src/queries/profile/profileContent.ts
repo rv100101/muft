@@ -46,38 +46,79 @@ const fetchMemberDetails = async (memberId: number, lang: string) => {
       formData
     );
     const { data } = details;
-    console.log(data);
     return data[0];
   } catch (error) {
     console.log(error);
   }
 };
 
-const fetchAdditionalInformation = async (userId: number) => {
+const fetchAdditionalInformation = async (userId: number, lang: string) => {
+  const id = userId.toString();
+
+  const languagesFormData = new FormData();
+  languagesFormData.append(
+    "auth",
+    "0DB31DEE22DC4C03AD7DAAA9C29518FF3C08D931992A4A5CB0A4FF4CF4707DC6"
+  );
+  languagesFormData.append("member", id);
+  languagesFormData.append("lang", lang);
+
+  const petsFormData = new FormData();
+  petsFormData.append(
+    "auth",
+    "0DB31DEE22DC4C03AD7DAAA9C29518FF3C08D931992A4A5CB0A4FF4CF4707DC6"
+  );
+  petsFormData.append("member", id);
+  petsFormData.append("lang", lang);
+
+  const interestFormData = new FormData();
+  interestFormData.append(
+    "auth",
+    "0DB31DEE22DC4C03AD7DAAA9C29518FF3C08D931992A4A5CB0A4FF4CF4707DC6"
+  );
+  interestFormData.append("member", id);
+  interestFormData.append("lang", lang);
+
+  const favoriteFoodFormData = new FormData();
+  favoriteFoodFormData.append(
+    "auth",
+    "0DB31DEE22DC4C03AD7DAAA9C29518FF3C08D931992A4A5CB0A4FF4CF4707DC6"
+  );
+  favoriteFoodFormData.append("member", id);
+  favoriteFoodFormData.append("lang", lang);
+
   try {
-    const pets = await axiosQuery.post("/GetPets", {
-      member: userId,
-    });
+    const pets = await axiosQuery.post(
+      "https://muffinapi.azurewebsites.net/member_pets.php",
+      petsFormData
+    );
 
-    // const lifestyle = await axiosQuery.post("/GetLifestyle", {
-    //   member: userId,
-    // });
+    console.log(pets);
 
-    const interests = await axiosQuery.post("/GetInterests", {
-      member: userId,
-    });
+    const interests = await axiosQuery.post(
+      "https://muffinapi.azurewebsites.net/member_interests.php",
+      interestFormData
+    );
 
-    const languages = await axiosQuery.post("/GetLanguages", {
-      member: userId,
-    });
+    console.log(interests);
+
+    const languages = await axiosQuery.post(
+      "https://muffinapi.azurewebsites.net/member_languages.php",
+      languagesFormData
+    );
+
+    console.log(languages);
 
     const appearance = await axiosQuery.post("/GetAppearance", {
       member: userId,
     });
 
-    const favoriteFood = await axiosQuery.post("/GetFavoriteFood", {
-      member: userId,
-    });
+    const favoriteFood = await axiosQuery.post(
+      "https://muffinapi.azurewebsites.net/member_favorite_food.php",
+      favoriteFoodFormData
+    );
+
+    console.log(languages);
 
     let additionalInformation: Record<string, string | []> = {
       pets: pets.data,
@@ -351,9 +392,18 @@ const getLanguages = async (lang: string, member: number) => {
   }
 };
 
-const getHair = async () => {
+const getHair = async (lang: string) => {
   try {
-    const response = await axiosQuery.post("/Hair");
+    const formData = new FormData();
+    formData.append(
+      "auth",
+      "0DB31DEE22DC4C03AD7DAAA9C29518FF3C08D931992A4A5CB0A4FF4CF4707DC6"
+    );
+    formData.append("lang", lang);
+    const response = await axiosQuery.post(
+      "https://muffinapi.azurewebsites.net/hair.php",
+      formData
+    );
     return response.data;
   } catch (error) {
     return [];
@@ -416,36 +466,72 @@ const getPets = async () => {
   }
 };
 
-const getDrink = async () => {
+const getDrink = async (lang: string) => {
+  const formData = new FormData();
+  formData.append(
+    "auth",
+    "0DB31DEE22DC4C03AD7DAAA9C29518FF3C08D931992A4A5CB0A4FF4CF4707DC6"
+  );
+  formData.append("lang", lang);
   try {
-    const response = await axiosQuery.post("/Drink");
+    const response = await axiosQuery.post(
+      "https://muffinapi.azurewebsites.net/drink.php",
+      formData
+    );
     return response.data;
   } catch (error) {
     return [];
   }
 };
 
-const getSmoke = async () => {
+const getSmoke = async (lang: string) => {
+  const formData = new FormData();
+  formData.append(
+    "auth",
+    "0DB31DEE22DC4C03AD7DAAA9C29518FF3C08D931992A4A5CB0A4FF4CF4707DC6"
+  );
+  formData.append("lang", lang);
   try {
-    const response = await axiosQuery.post("/Smoke");
+    const response = await axiosQuery.post(
+      "https://muffinapi.azurewebsites.net/smoking.php",
+      formData
+    );
     return response.data;
   } catch (error) {
     return [];
   }
 };
 
-const getLivingStatus = async () => {
+const getLivingStatus = async (lang: string) => {
+  const formData = new FormData();
+  formData.append(
+    "auth",
+    "0DB31DEE22DC4C03AD7DAAA9C29518FF3C08D931992A4A5CB0A4FF4CF4707DC6"
+  );
+  formData.append("lang", lang);
   try {
-    const response = await axiosQuery.post("/LivingStatus");
+    const response = await axiosQuery.post(
+      "https://muffinapi.azurewebsites.net/living_status.php",
+      formData
+    );
     return response.data;
   } catch (error) {
     return [];
   }
 };
 
-const getCar = async () => {
+const getCar = async (lang: string) => {
+  const formData = new FormData();
+  formData.append(
+    "auth",
+    "0DB31DEE22DC4C03AD7DAAA9C29518FF3C08D931992A4A5CB0A4FF4CF4707DC6"
+  );
+  formData.append("lang", lang);
   try {
-    const response = await axiosQuery.post("/Car");
+    const response = await axiosQuery.post(
+      "https://muffinapi.azurewebsites.net/car.php",
+      formData
+    );
     return response.data;
   } catch (error) {
     return [];
@@ -499,9 +585,18 @@ const getFavoriteFoods = async () => {
   }
 };
 
-const getBodyTypes = async () => {
+const getBodyTypes = async (lang: string) => {
   try {
-    const response = await axiosQuery.post("/BodyTypes");
+    const formData = new FormData();
+    formData.append(
+      "auth",
+      "0DB31DEE22DC4C03AD7DAAA9C29518FF3C08D931992A4A5CB0A4FF4CF4707DC6"
+    );
+    formData.append("lang", lang);
+    const response = await axiosQuery.post(
+      "https://muffinapi.azurewebsites.net/body_type.php",
+      formData
+    );
     return response.data;
   } catch (error) {
     return [];
@@ -545,18 +640,36 @@ const getStates = async (countryCode: string, lang: string) => {
   }
 };
 
-const getEyes = async () => {
+const getEyes = async (lang: string) => {
   try {
-    const response = await axiosQuery.post("/Eyes");
+    const formData = new FormData();
+    formData.append(
+      "auth",
+      "0DB31DEE22DC4C03AD7DAAA9C29518FF3C08D931992A4A5CB0A4FF4CF4707DC6"
+    );
+    formData.append("lang", lang);
+    const response = await axiosQuery.post(
+      "https://muffinapi.azurewebsites.net/eyes.php",
+      formData
+    );
     return response.data;
   } catch (error) {
     return [];
   }
 };
 
-const getBodyArts = async () => {
+const getBodyArts = async (lang: string) => {
   try {
-    const response = await axiosQuery.post("/BodyArts");
+    const formData = new FormData();
+    formData.append(
+      "auth",
+      "0DB31DEE22DC4C03AD7DAAA9C29518FF3C08D931992A4A5CB0A4FF4CF4707DC6"
+    );
+    formData.append("lang", lang);
+    const response = await axiosQuery.post(
+      "https://muffinapi.azurewebsites.net/body_arts.php",
+      formData
+    );
     return response.data;
   } catch (error) {
     return [];

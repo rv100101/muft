@@ -9,6 +9,9 @@ function removeDuplicates<
   // Create an object to keep track of unique keys
   const uniqueKeys: Record<string, boolean> = {};
 
+  if (arr.length == 0) {
+    return arr;
+  }
   // Filter the array to include only the first occurrence of each key
   const result = arr.filter((obj) => {
     const keyValue = obj[key];

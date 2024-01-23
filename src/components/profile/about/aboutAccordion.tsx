@@ -106,10 +106,10 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
   });
 
   const { isLoading: currentUserLoading, isRefetching } = useQuery({
-    queryKey: ["profileContent", userId, preferredLanguage],
+    queryKey: ["profileContent", userId, i18n.language],
     queryFn: async () => {
       const additionalInformation =
-        await profileContentQuery.fetchAdditionalInformation(userId);
+        await profileContentQuery.fetchAdditionalInformation(userId, i18n.language);
       const memberDetails = await profileContentQuery.fetchMemberDetails(
         userId,
         preferredLanguage ?? "en"
@@ -130,6 +130,8 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
       return details;
     },
     onSuccess: (data: ProfileAbout) => {
+      console.log(data);
+
       setAboutData(data);
       if (location.startsWith("/profile")) {
         setProfileData(data);
@@ -225,9 +227,9 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
   });
 
   useQuery({
-    queryFn: () => profileContentQuery.editOptions.getBodyTypes(),
+    queryFn: () => profileContentQuery.editOptions.getBodyTypes(i18n.language),
     refetchInterval: Infinity,
-    queryKey: ["bodyTypes"],
+    queryKey: ["bodyTypes", i18n.language],
     onSuccess: (data: BodyType[]) => {
       setBodyTypes(data);
     },
@@ -257,18 +259,18 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
   }, [countries, profileAboutContent]);
 
   useQuery({
-    queryFn: () => profileContentQuery.editOptions.getHair(),
+    queryFn: () => profileContentQuery.editOptions.getHair(i18n.language),
     refetchInterval: Infinity,
-    queryKey: ["hair"],
+    queryKey: ["hair", i18n.language],
     onSuccess: (data: Hair[]) => {
       setHair(data);
     },
   });
 
   useQuery({
-    queryFn: () => profileContentQuery.editOptions.getEyes(),
+    queryFn: () => profileContentQuery.editOptions.getEyes(i18n.language),
     refetchInterval: Infinity,
-    queryKey: ["eyes"],
+    queryKey: ["eyes", i18n.language],
     onSuccess: (data: Eye[]) => {
       setEyes(data);
     },
@@ -320,45 +322,47 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
   });
 
   useQuery({
-    queryFn: () => profileContentQuery.editOptions.getDrink(),
+    queryFn: () => profileContentQuery.editOptions.getDrink(i18n.language),
     refetchInterval: Infinity,
-    queryKey: ["drinks"],
+    queryKey: ["drinks", i18n.language],
     onSuccess: (data: Drink[]) => {
+      console.log("drink", data);
       setDrinks(data);
     },
   });
 
   useQuery({
-    queryFn: () => profileContentQuery.editOptions.getSmoke(),
+    queryFn: () => profileContentQuery.editOptions.getSmoke(i18n.language),
     refetchInterval: Infinity,
-    queryKey: ["smokes"],
+    queryKey: ["smokes", i18n.language],
     onSuccess: (data: Smoke[]) => {
+      console.log("smoke", data);
       setSmoke(data);
     },
   });
 
   useQuery({
-    queryFn: () => profileContentQuery.editOptions.getLivingStatus(),
+    queryFn: () => profileContentQuery.editOptions.getLivingStatus(i18n.language),
     refetchInterval: Infinity,
-    queryKey: ["livingStatus"],
+    queryKey: ["livingStatus", i18n.language],
     onSuccess: (data: LivingStatus[]) => {
       setLivingStatus(data);
     },
   });
 
   useQuery({
-    queryFn: () => profileContentQuery.editOptions.getCar(),
+    queryFn: () => profileContentQuery.editOptions.getCar(i18n.language),
     refetchInterval: Infinity,
-    queryKey: ["car"],
+    queryKey: ["car", i18n.language],
     onSuccess: (data: Car[]) => {
       setCar(data);
     },
   });
 
   useQuery({
-    queryFn: () => profileContentQuery.editOptions.getBodyArts(),
+    queryFn: () => profileContentQuery.editOptions.getBodyArts(i18n.language),
     refetchInterval: Infinity,
-    queryKey: ["bodyArts"],
+    queryKey: ["bodyArts", i18n.language],
     onSuccess: (data: BodyArt[]) => {
       setBodyArts(data);
     },
