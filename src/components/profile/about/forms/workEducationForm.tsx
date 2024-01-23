@@ -66,7 +66,7 @@ const WorkEducationForm = () => {
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue
-                            placeholder={"Select employment status"}
+                            placeholder={i18n.language == 'en' ? "Select employment status" : "يرجى الاختيار"}
                           />
                         </SelectTrigger>
                       </FormControl>
@@ -138,7 +138,9 @@ const WorkEducationForm = () => {
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder={"Select occupation"} />
+                          <SelectValue
+                            placeholder={i18n.language == 'en' ? "Select occupation" : "يرجى الاختيار"}
+                          />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -206,7 +208,9 @@ const WorkEducationForm = () => {
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder={"Select Income Range"} />
+                          <SelectValue
+                            placeholder={i18n.language == 'en' ? "Select income range" : "يرجى الاختيار"}
+                          />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>

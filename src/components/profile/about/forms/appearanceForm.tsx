@@ -62,7 +62,9 @@ const AppearanceForm = () => {
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder={"Select eye type"} />
+                          <SelectValue
+                            placeholder={i18n.language == 'en' ? "Select eye type" : "يرجى الاختيار"}
+                          />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -124,7 +126,9 @@ const AppearanceForm = () => {
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder={"Select hair"} />
+                          <SelectValue
+                            placeholder={i18n.language == 'en' ? "Select hair" : "يرجى الاختيار"}
+                          />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -299,7 +303,9 @@ const AppearanceForm = () => {
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder={"Select body type"} />
+                          <SelectValue
+                            placeholder={i18n.language == 'en' ? "Select body type" : "يرجى الاختيار"}
+                          />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -361,7 +367,9 @@ const AppearanceForm = () => {
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder={"Select body art"} />
+                          <SelectValue
+                            placeholder={i18n.language == 'en' ? "Select body art" : "يرجى الاختيار"}
+                          />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>

@@ -102,7 +102,7 @@ const LocationForm = () => {
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder={"Select country"} />
+                          <SelectValue placeholder={i18n.language == 'en' ? "Select country" : "يرجى الاختيار"} />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent
@@ -166,7 +166,7 @@ const LocationForm = () => {
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder={"Select state"} />
+                          <SelectValue placeholder={i18n.language == 'en' ? "Select state" : "يرجى الاختيار"} />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent

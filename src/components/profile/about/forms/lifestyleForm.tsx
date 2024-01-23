@@ -61,7 +61,9 @@ const LifestyleForm = () => {
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder={"Do you drink?"} />
+                          <SelectValue
+                            placeholder={i18n.language == 'en' ? "Do you drink?" : "يرجى الاختيار"}
+                          />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -125,7 +127,9 @@ const LifestyleForm = () => {
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder={"Do you smoke?"} />
+                          <SelectValue
+                            placeholder={i18n.language == 'en' ? "Do you smoke?" : "يرجى الاختيار"}
+                          />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -189,7 +193,9 @@ const LifestyleForm = () => {
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder={"Select living status"} />
+                          <SelectValue
+                            placeholder={i18n.language == 'en' ? "Select living status" : "يرجى الاختيار"}
+                          />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -253,7 +259,9 @@ const LifestyleForm = () => {
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder={"Select car"} />
+                          <SelectValue
+                            placeholder={i18n.language == 'en' ? "Select car" : "يرجى الاختيار"}
+                          />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>

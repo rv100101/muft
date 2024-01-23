@@ -63,7 +63,9 @@ const MaritalStatusForm = () => {
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder={"Select marital status"} />
+                          <SelectValue
+                            placeholder={i18n.language == 'en' ? "Select marital status" : "يرجى الاختيار"}
+                          />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -130,7 +132,9 @@ const MaritalStatusForm = () => {
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder={"Do you have children?"} />
+                          <SelectValue
+                            placeholder={i18n.language == 'en' ? "Do you have children?" : "يرجى الاختيار"}
+                          />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -194,7 +198,9 @@ const MaritalStatusForm = () => {
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder={"Do you want children?"} />
+                          <SelectValue
+                            placeholder={i18n.language == 'en' ? "Do you want children?" : "يرجى الاختيار"}
+                          />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>

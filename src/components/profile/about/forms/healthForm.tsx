@@ -63,7 +63,9 @@ const HealthForm = () => {
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder={"Do you workout?"} />
+                          <SelectValue
+                            placeholder={i18n.language == 'en' ? "Do you workout?" : "يرجى الاختيار"}
+                          />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -128,7 +130,7 @@ const HealthForm = () => {
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue
-                            placeholder={"Do you have a disability?"}
+                            placeholder={i18n.language == 'en' ? "Do you have a disability?" : "يرجى الاختيار"}
                           />
                         </SelectTrigger>
                       </FormControl>

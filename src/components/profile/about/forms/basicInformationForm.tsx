@@ -177,7 +177,7 @@ const BasicInformationForm = () => {
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder={"Select gender"} />
+                          <SelectValue placeholder={i18n.language == 'en' ? "Select gender" : "يرجى الاختيار"} />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent dir={i18n.language == 'ar' ? "rtl" : "ltr"}>
@@ -245,7 +245,7 @@ const BasicInformationForm = () => {
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder={"Select nationality"} />
+                          <SelectValue placeholder={i18n.language == 'en' ? "Select nationality" : "يرجى الاختيار"} />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent

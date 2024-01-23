@@ -62,7 +62,9 @@ const BackgroundForm = () => {
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder={"Select education"} />
+                          <SelectValue
+                            placeholder={i18n.language == 'en' ? "Select education" : "يرجى الاختيار"}
+                          />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent
@@ -126,7 +128,9 @@ const BackgroundForm = () => {
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder={"Select religion"} />
+                          <SelectValue
+                            placeholder={i18n.language == 'en' ? "Select religion" : "يرجى الاختيار"}
+                          />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent
@@ -188,7 +192,9 @@ const BackgroundForm = () => {
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder={"Select ethnicity"} />
+                          <SelectValue
+                            placeholder={i18n.language == 'en' ? "Select ethnicity" : "يرجى الاختيار"}
+                          />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent
