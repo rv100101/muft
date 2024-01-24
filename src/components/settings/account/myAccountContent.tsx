@@ -43,11 +43,11 @@ const MyAccountContent = () => {
     },
     validationSchema: Yup.object({
       newPassword: Yup.string()
-        .required("Field is required")
-        .min(10, "Password must be at least 10 characters"),
+        .required(t("validation.passwordRequired"))
+        .min(10, t("validation.passwordLength")),
       rePassword: Yup.string()
-        .required("Field is required")
-        .oneOf([Yup.ref("newPassword"), ""], "Passwords must match"),
+        .required(t("validation.fieldRequired"))
+        .oneOf([Yup.ref("newPassword"), ""], t("validation.passwordsMustMatch")),
     }),
     onSubmit: (values: FormDataType) => handleSignIn(values),
   });
