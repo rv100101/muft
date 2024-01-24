@@ -37,7 +37,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
   const queryClient = useQueryClient();
   const methods = useForm({
     defaultValues: emptyDefault,
-    resolver: zodResolver(ProfileFormSchema),
+    resolver: zodResolver(ProfileFormSchema(t)),
   });
 
   console.log(methods);
@@ -299,8 +299,8 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
     if (Object.getOwnPropertyNames(methods.formState.errors).length > 0) {
       toast({
         variant: "destructive",
-        title: t("alerts.checkAllTabsToEnsureFieldsInputted"),
-        description: "Check all tabs to ensure all fields are inputted.",
+        title: t("alerts.allFieldsRequired"),
+        description: t("alerts.checkAllTabsToEnsureFieldsInputted"),
         action: <ToastAction altText="Goto schedule to undo">Okay</ToastAction>,
       });
     }

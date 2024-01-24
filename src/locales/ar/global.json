@@ -243,6 +243,7 @@
     "profileSaved": "تم حفظ البيانات"
   },
   "validation": {
+    "selectGender": "الرجاء اختيار الجنس",
     "firstNameRequired": "الاسم الأول مطلوب",
     "lastNameRequired": "الاسم الأخير مطلوب",
     "invalidCredentials": "بيانات الاعتماد غير صالحة",

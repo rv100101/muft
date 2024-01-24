@@ -1,4 +1,5 @@
 import { FavoriteFood, Interest, Languages, Pets } from "@/types/profile";
+import { TFunction } from "i18next";
 import * as z from "zod";
 
 export const emptyDefault = {
@@ -36,184 +37,185 @@ export const emptyDefault = {
   interest: [] as Interest[],
 };
 
-export const ProfileFormSchema = z.object({
-  gender: z.string().min(1, { message: "Please select a gender" }),
-  nationality: z
-    .string({
-      required_error: "This field is required",
-    })
-    .min(2, { message: "Please select a nationality" }),
-  birthInfo: z
-    .string({
-      required_error: "This field is required",
-    })
-    .min(2, { message: "Please enter your birthday" }),
-  ethnicity: z
-    .string({
-      required_error: "This field is required",
-    })
-    .min(2, { message: "Please select an ethnicity" }),
-  maritalStatus: z
-    .string({
-      required_error: "This field is required",
-    })
-    .min(2, { message: "Please select a marital status" }),
-  language: z
-    .array(
-      z.object({
-        language_name: z.string(),
-        language_code: z.string(),
+export const ProfileFormSchema = (t: TFunction<"translation", undefined>) =>
+  z.object({
+    gender: z.string().min(1, { message: t("validation.selectGender") }),
+    nationality: z
+      .string({
+        required_error: t("validation.fieldRequired"),
       })
-    )
-    .refine((data) => data.length > 0, {
-      message: "Pick at least one language",
-    }),
-  education: z
-    .string({
-      required_error: "Education information is required",
-    })
-    .min(2, { message: "Please select an education" }),
-  employmentStatus: z
-    .string({ required_error: "This field is required" })
-    .min(2, { message: "Please select employment status" }),
-  occupationTitle: z
-    .string({
-      required_error: "Occupation information is required",
-    })
-    .min(2, { message: "Please select an occupation" }),
-  income: z
-    .string({
-      required_error: "Income information is required",
-    })
-    .min(2, { message: "Please select income range" }),
-  height: z
-    .number({
-      required_error: "Height is required",
-      invalid_type_error: "Height must be a number",
-    })
-    .min(55, { message: "Minimum height is 55 cm" })
-    .max(260, { message: "Max height is 260 cm" })
-    .nonnegative({ message: "Invalid height" }),
-  weight: z
-    .number({
-      required_error: "Weight is required",
-      invalid_type_error: "Weight must be a number",
-    })
-    .min(25, { message: "Minimum weight is 25 kg" })
-    .max(600, { message: "Max weight is 600 kg" })
-    .nonnegative({ message: "Invalid weight" }),
-  bodyType: z
-    .string({
-      required_error: "Please select body type that matches you",
-    })
-    .min(2, { message: "Please select your body type" }),
-  interest: z
-    .array(
-      z.object({
-        interest_name: z.string(),
-        interest_id: z.string(),
+      .min(2, { message: t("validation.selectNationality") }),
+    birthInfo: z
+      .string({
+        required_error: t("validation.fieldRequired"),
       })
-    )
-    .refine((data) => data.length > 0, {
-      message: "Pick at least one interest",
-    }),
-  favoriteFood: z
-    .array(
-      z.object({
-        favorite_food_name: z.string(),
-        favorite_food_id: z.string(),
-        authorized: z.boolean(),
-        ip_address: z.string(),
+      .min(2, { message: t("validation.enterBirthday") }),
+    ethnicity: z
+      .string({
+        required_error: t("validation.fieldRequired"),
       })
-    )
-    .refine((data) => data.length > 0, {
-      message: "Pick at least one favorite food",
-    }),
-  country: z
-    .string({
-      required_error: "Country is required",
-    })
-    .min(2, { message: "Invalid country" }),
-  region: z
-    .string({
-      required_error: "Region is required",
-    })
-    .min(2, { message: "Invalid region" }),
-  religion: z
-    .string({
-      required_error: "Religion is required",
-    })
-    .min(2, { message: "Religion is required" }),
-  nickname: z
-    .string({
-      required_error: "Nickname required",
-    })
-    .min(3, { message: "Nickname is too short" })
-    .max(12, { message: "Value should not exceed 12 characters" }),
+      .min(2, { message: t("validation.selectEthnicity") }),
+    maritalStatus: z
+      .string({
+        required_error: t("validation.fieldRequired"),
+      })
+      .min(2, { message: t("validation.selectMaritalStatus") }),
+    language: z
+      .array(
+        z.object({
+          language_name: z.string(),
+          language_code: z.string(),
+        })
+      )
+      .refine((data) => data.length > 0, {
+        message: t("validation.pickLanguage"),
+      }),
+    education: z
+      .string({
+        required_error: t("validation.educationInfoRequired"),
+      })
+      .min(2, { message: t("validation.selectEducation") }),
+    employmentStatus: z
+      .string({ required_error: t("validation.fieldRequired") })
+      .min(2, { message: t("validation.selectEmploymentStatus") }),
+    occupationTitle: z
+      .string({
+        required_error: t("validation.occupationInfoRequired"),
+      })
+      .min(2, { message: t("validation.selectOccupation") }),
+    income: z
+      .string({
+        required_error: t("validation.incomeInfoRequired"),
+      })
+      .min(2, { message: t("validation.selectIncomeRange") }),
+    height: z
+      .number({
+        required_error: t("validation.heightRequired"),
+        invalid_type_error: t("validation.heightNumbersOnly"),
+      })
+      .min(55, { message: t("validation.minHeight") })
+      .max(260, { message: t("validation.maxHeight") })
+      .nonnegative({ message: t("validation.invalidHeight") }),
+    weight: z
+      .number({
+        required_error: t("validation.weightRequired"),
+        invalid_type_error: t("validation.weightNumbersOnly"),
+      })
+      .min(25, { message: t("validation.minWeight") })
+      .max(600, { message: t("validation.maxWeight") })
+      .nonnegative({ message: t("validation.invalidWeight") }),
+    bodyType: z
+      .string({
+        required_error: t("validation.selectBodyType"),
+      })
+      .min(2, { message: t("validation.selectYourBodyType") }),
+    interest: z
+      .array(
+        z.object({
+          interest_name: z.string(),
+          interest_id: z.string(),
+        })
+      )
+      .refine((data) => data.length > 0, {
+        message: t("validation.pickInterest"),
+      }),
+    favoriteFood: z
+      .array(
+        z.object({
+          favorite_food_name: z.string(),
+          favorite_food_id: z.string(),
+          authorized: z.boolean(),
+          ip_address: z.string(),
+        })
+      )
+      .refine((data) => data.length > 0, {
+        message: t("validation.pickFavoriteFood"),
+      }),
+    country: z
+      .string({
+        required_error: t("validation.countryRequired"),
+      })
+      .min(2, { message: t("validation.invalidCountry") }),
+    region: z
+      .string({
+        required_error: t("validation.regionRequired"),
+      })
+      .min(2, { message: t("validation.invalidRegion") }),
+    religion: z
+      .string({
+        required_error: t("validation.religionRequired"),
+      })
+      .min(2, { message: t("validation.religionRequired") }),
+    nickname: z
+      .string({
+        required_error: t("validation.nicknameRequired"),
+      })
+      .min(3, { message: t("validation.nameIsTooShort") })
+      .max(12, { message: t("validation.nicknameLength") }),
 
-  hair: z
-    .string({
-      required_error: "Hair type is required",
-    })
-    .min(2, { message: "Hair type is required" }),
-  eyes: z
-    .string({
-      required_error: "Eye type is required",
-    })
-    .min(2, { message: "Eye type is required" }),
-  bodyArt: z
-    .string({
-      required_error: "Body art is required",
-    })
-    .min(2, { message: "Body art is required" }),
-  haveChildren: z
-    .string({
-      required_error: "This field is required",
-    })
-    .min(2, { message: "This field is required" }),
-  wantChildren: z
-    .string({
-      required_error: "This field is required",
-    })
-    .min(2, { message: "This field is required" }),
-  workout: z
-    .string({
-      required_error: "Workout is required",
-    })
-    .min(2, { message: "Workout is required" }),
-  disability: z
-    .string({
-      required_error: "Disability is required",
-    })
-    .min(2, { message: "Disability is required" }),
-  pets: z
-    .array(
-      z.object({
-        pet_name: z.string(),
-        pet_id: z.string(),
+    hair: z
+      .string({
+        required_error: t("validation.hairTypeRequired"),
       })
-    )
-    .refine((data) => data.length > 0, {
-      message: "Pick at least one pet",
-    }),
-  drinking: z
-    .string({
-      required_error: "This field is required",
-    })
-    .min(2, { message: "This field is required" }),
-  smoking: z
-    .string({
-      required_error: "This field is required",
-    })
-    .min(2, { message: "This field is required" }),
-  livingStatus: z
-    .string({
-      required_error: "Living status is required",
-    })
-    .min(2, { message: "Living status is required" }),
-  car: z
-    .string({
-      required_error: "This field is required",
-    })
-    .min(2, { message: "This field is required" }),
-});
+      .min(2, { message: t("validation.hairTypeRequired") }),
+    eyes: z
+      .string({
+        required_error: t("validation.eyeTypeRequired"),
+      })
+      .min(2, { message: t("validation.eyeTypeRequired") }),
+    bodyArt: z
+      .string({
+        required_error: t("validation.bodyArtRequired"),
+      })
+      .min(2, { message: t("validation.bodyArtRequired") }),
+    haveChildren: z
+      .string({
+        required_error: t("validation.fieldRequired"),
+      })
+      .min(2, { message: t("validation.fieldRequired") }),
+    wantChildren: z
+      .string({
+        required_error: t("validation.fieldRequired"),
+      })
+      .min(2, { message: t("validation.fieldRequired") }),
+    workout: z
+      .string({
+        required_error: t("validation.workoutRequired"),
+      })
+      .min(2, { message: t("validation.workoutRequired") }),
+    disability: z
+      .string({
+        required_error: t("validation.disabilityRequired"),
+      })
+      .min(2, { message: t("validation.disabilityRequired") }),
+    pets: z
+      .array(
+        z.object({
+          pet_name: z.string(),
+          pet_id: z.string(),
+        })
+      )
+      .refine((data) => data.length > 0, {
+        message: t("validation.pickPet"),
+      }),
+    drinking: z
+      .string({
+        required_error: t("validation.drinkingRequired"),
+      })
+      .min(2, { message: t("validation.fieldRequired") }),
+    smoking: z
+      .string({
+        required_error: t("validation.fieldRequired"),
+      })
+      .min(2, { message: t("validation.fieldRequired") }),
+    livingStatus: z
+      .string({
+        required_error: t("validation.fieldRequired"),
+      })
+      .min(2, { message: t("validation.fieldRequired") }),
+    car: z
+      .string({
+        required_error: t("validation.fieldRequired"),
+      })
+      .min(2, { message: t("validation.fieldRequired") }),
+  });
