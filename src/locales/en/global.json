@@ -240,6 +240,7 @@
   },
   "validation": {
     "firstNameRequired": "First name required",
+    "invalidCredentials": "Invalid credentials",
     "lastNameRequired": "Last name required",
     "nameIsTooShort": "Name is too short",
     "nameIsTooLong": "Name is too long",

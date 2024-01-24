@@ -241,6 +241,7 @@
   "validation": {
     "firstNameRequired": "الاسم الأول مطلوب",
     "lastNameRequired": "الاسم الأخير مطلوب",
+    "invalidCredentials": "بيانات الاعتماد غير صالحة",
     "nameIsTooShort": "الاسم قصير جدا",
     "nameIsTooLong": "الاسم طويل جدا",
     "passwordRequired": "كلمة السر مطلوبة",

@@ -58,13 +58,15 @@ const SignInForm = () => {
       email: Yup.string()
         .matches(
           /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-          "Invalid email address"
+          t("validation.invalidEmail")
         )
-        .email("Invalid email address")
-        .required("Email is required"),
+        .email(t("validation.invalidEmail"))
+        .required(t("validation.emailRequired")),
       password: Yup.string()
-        .required("Password is required")
-        .min(10, "Password must be at least 10 characters"),
+        .required(t("validation.passwordRequired"))
+        .min(10,
+          t("validation.passwordLength")
+        ),
     }),
     onSubmit: (values: FormDataType) => handleSignIn(values),
   });
@@ -76,8 +78,8 @@ const SignInForm = () => {
       if (!signInData) {
         setIsLoading(false);
         formik.values.password = "";
-        formik.setFieldError("email", "Invalid credentials");
-        formik.setFieldError("password", "Invalid credentials");
+        formik.setFieldError("email", t("validation.invalidCredentials"));
+        formik.setFieldError("password", t("validation.invalidCredentials"));
         toast({
           variant: "destructive",
           title: t("alert.invalidUsernameOrPassword"),
@@ -213,7 +215,9 @@ const SignInForm = () => {
             />
           </div>
           {formik.touched.email && formik.errors.email ? (
-            <div className="error text-xs text-red-500 ml-5 pt-2">
+            <div
+              dir={i18n.language == 'ar' ? 'rtl' : 'ltr'}
+              className="error text-xs text-red-500 ml-5 pt-2">
               {formik.errors.email}
             </div>
           ) : null}
@@ -254,7 +258,9 @@ const SignInForm = () => {
             </button>
           </div>
           {formik.touched.password && formik.errors.password ? (
-            <div className="error text-red-500 ml-5 text-xs pt-2">
+            <div
+              dir={i18n.language == 'ar' ? 'rtl' : 'ltr'}
+              className="error text-red-500 ml-5 text-xs pt-2">
               {formik.errors.password}
             </div>
           ) : null}
