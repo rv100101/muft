@@ -99,7 +99,7 @@ const GallerySection = ({ userId }: { userId: string }) => {
       await uploadQueries.deleteGalleryPhoto(selectedPictureId!),
     onSuccess: () => {
       toast({
-        title: "Photo successfuly deleted",
+        title: t("alerts.photoSuccessfullyDeleted"),
         variant: "success",
       });
       setSelectedPictureId(null);
@@ -122,7 +122,7 @@ const GallerySection = ({ userId }: { userId: string }) => {
       await uploadQueries.uploadGalleryPhoto(selectedFile!, user!.member_id),
     onSuccess: () => {
       toast({
-        title: "Photo successfuly uploaded",
+        title: t("alerts.photoSuccessfullyUploaded"),
         variant: "success",
       });
       setSelectedFile(null);
@@ -133,7 +133,7 @@ const GallerySection = ({ userId }: { userId: string }) => {
     onError: () => {
       toast({
         title: t("alerts.somethingWentWrong"),
-        description: "Cannot upload photo",
+        description: t("alerts.cannotUploadPhoto"),
         variant: "destructive",
       });
     },

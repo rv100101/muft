@@ -37,7 +37,7 @@ const SendResetPin = () => {
         toast({
           variant: "destructive",
           title: t("alerts.tryAgainLater"),
-          description: "Invalid email",
+          description: t("alerts.invalidEmail"),
         });
         return;
       } else {
@@ -45,8 +45,8 @@ const SendResetPin = () => {
           changePasswordResetState("VERIFY");
           setEmail(res.data.email_address);
           toast({
-            title: "Password reset pin sent to your email",
-            description: "Check your email for the pin to change your password",
+            title: t("alerts.passwordResetPinSent"),
+            description: t("alerts.checkEmailForPin"),
           });
         }
       }

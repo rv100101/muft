@@ -214,7 +214,7 @@
     "selectValidImageFile": "Please select a valid image file (JPEG, PNG)",
     "selectFileToUpload": "Please select a file to upload",
     "photoSuccessfullyUpdated": "Photo successfully updated",
-    "userBlockedChangesTakeAwhile": "User has been Blocked\n\nChanges might take awhile to take effect.",
+    "userBlocked": "User has been Blocked",
     "reactivateYourAccount": "You must Reactivate your account",
     "continueChattingWith": "To continue chatting with",
     "photoSuccessfullyDeleted": "Photo successfully deleted",
@@ -241,6 +241,8 @@
   "validation": {
     "firstNameRequired": "First name required",
     "lastNameRequired": "Last name required",
+    "nameIsTooShort": "Name is too short",
+    "nameIsTooLong": "Name is too long",
     "passwordRequired": "Password is required",
     "passwordLength": "Password must be at least 10 characters",
     "passwordComplexity": "Password must contain alphanumeric and special characters",

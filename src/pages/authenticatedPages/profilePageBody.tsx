@@ -21,9 +21,11 @@ import removeExistingData from "@/lib/removeExistingData";
 import calculateAge from "@/lib/calculateAge";
 import { aboutAccordionTabView } from "@/zustand/profile/about/aboutAccordionTabView";
 import authQuery from "@/queries/auth";
+import { useTranslation } from "react-i18next";
 // import getDeletedItems from "@/lib/getDeleted";
 
 const ProfilePageBody = ({ userId }: { userId: string }) => {
+  const [t] = useTranslation();
   const headerValues = profileHeaderStore((state) => state.headerValues);
   const setHeaderValues = profileHeaderStore((state) => state.setHeaderValues);
   const { data, setEditModeFalse, toggleEditMode, setData } =
@@ -285,7 +287,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
       queryClient.invalidateQueries(["home-members"]);
       toast({
         variant: "success",
-        title: "Profile saved!",
+        title: t("alerts.profileSaved"),
       });
       setEditModeFalse();
     } catch (error) {
@@ -297,7 +299,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
     if (Object.getOwnPropertyNames(methods.formState.errors).length > 0) {
       toast({
         variant: "destructive",
-        title: "All Fields are required",
+        title: t("alerts.checkAllTabsToEnsureFieldsInputted"),
         description: "Check all tabs to ensure all fields are inputted.",
         action: <ToastAction altText="Goto schedule to undo">Okay</ToastAction>,
       });

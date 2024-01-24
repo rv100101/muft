@@ -214,7 +214,7 @@
     "selectValidImageFile": "يرجى اختيار صورة مناسبة مثلا JPEG أو PNG",
     "selectFileToUpload": "يرجى اختيار الملف",
     "photoSuccessfullyUpdated": "تم تحديث الصورة",
-    "userBlockedChangesTakeAwhile": "تم حجب المستخدم\n\nقد يأخذ التحديث بعضا من الوقت",
+    "userBlocked": "تم حظر المستخدم",
     "reactivateYourAccount": "يتوجب عليك إعادة تفعيل الحساب",
     "continueChattingWith": "لمتابعة الدردشة مع",
     "photoSuccessfullyDeleted": "تم حذف الصورة",
@@ -241,6 +241,8 @@
   "validation": {
     "firstNameRequired": "الاسم الأول مطلوب",
     "lastNameRequired": "الاسم الأخير مطلوب",
+    "nameIsTooShort": "الاسم قصير جدا",
+    "nameIsTooLong": "الاسم طويل جدا",
     "passwordRequired": "كلمة السر مطلوبة",
     "passwordLength": "كلمة السر يجب أن لا تقل عن 10 حروف",
     "passwordComplexity": "كلمة السر يجب أن تحتوي على حروف وأرقام ورموز",

@@ -51,31 +51,31 @@ const SignUpPage = () => {
       first_name: Yup.string()
         .matches(/^[a-zA-Z]+$/, "Name must only contain letters A-Z")
         .matches(/^[^\s\d][^\d]*$/, "Invalid name")
-        .min(3, "Name is too short")
-        .max(12, "Name is too long")
-        .required("First name is required"),
+        .min(3, t("validation.nameIsTooShort"))
+        .max(12, t("validation.nameIsTooLong"))
+        .required(t("validation.firstNameRequired")),
       last_name: Yup.string()
         .matches(/^[a-zA-Z]+$/, "Name must only contain letters A-Z")
         .matches(/^[^\s\d][^\d]*$/, "Invalid name")
-        .min(3, "Name is too short")
-        .max(12, "Name is too long")
-        .required("Last name is required"),
+        .min(3, t("validation.nameIsTooShort"))
+        .max(12, t("validation.nameIsTooLong"))
+        .required(t("validation.lastNameRequired")),
       email: Yup.string()
         .matches(
           /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-          "Invalid email address"
+          t("validation.invalidEmail")
         )
-        .email("Invalid email address")
-        .required("Email is required"),
+        .email(t("validation.invalidEmail"))
+        .required(t("validation.emailRequired")),
       password: Yup.string()
-        .required("Password is required")
-        .min(10, "Password must be at least 10 characters")
+        .required(t("validation.passwordRequired"))
+        .min(10, t("validation.passwordLength"))
         .matches(
           /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z0-9\W_]{10,25}$/,
-          "Password must contain alphanumeric and special characters"
+          t("validation.passwordComplexity")
         ),
       lang: Yup.string()
-        .required("Please choose a language")
+        .required(t("validation.pickLanguage"))
     }),
     onSubmit: (values: SignUpDataType) => signUp.mutate(values),
   });
@@ -107,13 +107,13 @@ const SignUpPage = () => {
       if (data.member_exists) {
         toast({
           variant: "destructive",
-          title: "Uh oh! Something went wrong.",
+          title: t("alerts.somethingWentWrongUhOh"),
           description: "User already exists",
         });
       } else {
         toast({
           variant: "success",
-          title: "Account successfuly created!",
+          title: t("alerts.accountSuccessfullyCreated"),
         });
 
         updateUser(data);
@@ -197,7 +197,9 @@ const SignUpPage = () => {
                 />
               </div>
               {formik.touched.first_name && formik.errors.first_name ? (
-                <div className="error text-red-500 ml-5 text-xs pt-2 mr-3">
+                <div
+                  dir={i18n.language == 'ar' ? 'rtl' : 'ltr'}
+                  className="error text-red-500 ml-5 text-xs pt-2 mr-3">
                   {formik.errors.first_name}
                 </div>
               ) : null}
@@ -241,7 +243,9 @@ const SignUpPage = () => {
                 />
               </div>
               {formik.touched.last_name && formik.errors.last_name ? (
-                <div className="error text-red-500 ml-5 text-xs pt-2 mr-3">
+                <div
+                  dir={i18n.language == 'ar' ? 'rtl' : 'ltr'}
+                  className="error text-red-500 ml-5 text-xs pt-2 mr-3">
                   {formik.errors.last_name}
                 </div>
               ) : null}
@@ -284,7 +288,9 @@ const SignUpPage = () => {
                 />
               </div>
               {formik.touched.email && formik.errors.email ? (
-                <div className="error text-red-500 ml-5 text-xs pt-2 mr-3">
+                <div
+                  dir={i18n.language == 'ar' ? 'rtl' : 'ltr'}
+                  className="error text-red-500 ml-5 text-xs pt-2 mr-3">
                   {formik.errors.email}
                 </div>
               ) : null}
@@ -328,7 +334,9 @@ const SignUpPage = () => {
                 </button>
               </div>
               {formik.touched.password && formik.errors.password ? (
-                <div className="error text-red-500 ml-5 text-xs pt-2 mr-3">
+                <div
+                  dir={i18n.language == 'ar' ? 'rtl' : 'ltr'}
+                  className="error text-red-500 ml-5 text-xs pt-2 mr-3">
                   {formik.errors.password}
                 </div>
               ) : null}
@@ -358,7 +366,9 @@ const SignUpPage = () => {
                 </SelectContent>
               </Select>{" "}
               {formik.touched.lang && formik.errors.lang ? (
-                <div className="error text-red-500 ml-2 text-xs pt-2">
+                <div
+                  dir={i18n.language == 'ar' ? 'rtl' : 'ltr'}
+                  className="error text-red-500 ml-2 text-xs pt-2">
                   {formik.errors.lang}
                 </div>
               ) : null}

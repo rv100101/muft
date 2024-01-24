@@ -217,7 +217,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
       const reader = new FileReader();
       if (!allowedImageTypes.includes(file?.type)) {
         toast({
-          title: "Please select a valid image file (JPEG, PNG)",
+          title: t("alert.selectValidImageFile"),
           variant: "destructive",
         });
         setIsUploading(false);
@@ -245,7 +245,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
       if (!selectedFile) {
         // Handle the case where no file is selected
         toast({
-          title: "Please select a file to upload",
+          title: t("alert.selectFileToUpload"),
           variant: "destructive",
         });
         setIsUploading(false);
@@ -266,7 +266,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
       });
       setAvatar(res.data[0].gallery_uuid);
       toast({
-        title: "Photo successfully updated",
+        title: t("alert.photoSuccessfullyUpdated"),
         variant: "success",
       });
       setEditModeFalse();
@@ -317,7 +317,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
 
       if (res.data) {
         toast({
-          title: "User has been Blocked",
+          title: t("alerts.userBlocked"),
           description: t("alerts.changesTakeAwhile"),
           variant: "success",
         });
@@ -511,8 +511,8 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                         onClick={() => {
                           if (user?.temporarily_deactivated) {
                             toast({
-                              title: "You must Reactivate your account",
-                              description: `To continue chatting with ${data?.nickname}`,
+                              title: t("alerts.reactivateYourAccount"),
+                              description: t("alerts.continueChattingWith"),
                               variant: "destructive",
                             });
                           }

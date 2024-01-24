@@ -44,8 +44,8 @@ const EnterResetCode = () => {
       } else {
         changePasswordResetState("CHANGE");
         toast({
-          title: "Pin verified!",
-          description: "Enter your new password",
+          title: t("alerts.pinVerified"),
+          description: t("alerts.enterNewPassword"),
         });
       }
     },

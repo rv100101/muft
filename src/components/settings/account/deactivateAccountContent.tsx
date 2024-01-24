@@ -42,7 +42,7 @@ const DeactivateAccountContent = () => {
       });
       if (res.data) {
         toast({
-          title: "Account has been deactivated",
+          title: t("alerts.accountDeactivated"),
           description: t("alerts.changesTakeAwhile"),
           // variant: "success",
         });
@@ -64,7 +64,7 @@ const DeactivateAccountContent = () => {
       });
       if (res.data) {
         toast({
-          title: "Your account has been reactivated!",
+          title: t("alerts.accountReactivated"),
           description: t("alerts.changesTakeAwhile"),
           variant: "success",
         });
@@ -86,7 +86,7 @@ const DeactivateAccountContent = () => {
       // });
       // if (res.data) {
       toast({
-        title: "Account has been deleted",
+        title: t("alerts.accountDeleted"),
         description: t("alerts.changesTakeAwhile"),
         // variant: "success",
       });

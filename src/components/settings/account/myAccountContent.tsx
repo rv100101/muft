@@ -65,7 +65,7 @@ const MyAccountContent = () => {
       });
       if (res.data) {
         toast({
-          title: "Password has been updated",
+          title: t("alerts.passwordUpdated"),
           description: t("alerts.changesTakeAwhile"),
           variant: "success",
         });

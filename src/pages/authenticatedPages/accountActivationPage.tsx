@@ -64,8 +64,8 @@ const ActivateAccount = () => {
       } else {
         toast({
           variant: "success",
-          title: "Successfuly sent a new PIN",
-          description: "Please check your email",
+          title: t("alerts.successfullySentNewPin"),
+          description: t("alerts.checkYourEmail"),
         });
         setCountDownComplete(false);
         startCountdown();
@@ -91,21 +91,21 @@ const ActivateAccount = () => {
         toast({
           duration: 1500,
           variant: "destructive",
-          title: "The PIN is incorrect!",
+          title: t("alerts.pinIsIncorrect"),
           description: t("alerts.tryAgainLater"),
         });
       } else {
         updateUser({ ...user, is_active: true } as User);
         toast({
           duration: 1500,
-          title: "Well done!",
-          description: "Account Verified!",
+          title: t("alerts.wellDone"),
+          description: t("alerts.accountVerified"),
         });
       }
     } catch (error) {
       console.log(error);
       toast({
-        title: "The PIN is incorrect!",
+        title: t("alerts.pinIsIncorrect"),
         description: t("alerts.tryAgainLater"),
       });
     }
