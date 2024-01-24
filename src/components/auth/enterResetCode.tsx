@@ -10,7 +10,7 @@ import { toast } from "../ui/use-toast";
 import { useTranslation } from "react-i18next";
 
 const EnterResetCode = () => {
-  const [t] = useTranslation();
+  const [t, i18n] = useTranslation();
   const changePasswordResetState = usePasswordResetState(
     (state) => state.changeState
   );
@@ -20,9 +20,9 @@ const EnterResetCode = () => {
     initialValues: { pin: "" },
     validationSchema: Yup.object({
       pin: Yup.string()
-        .matches(/^[0-9]+$/, "Pin must only contain numbers")
-        .max(6, "Pin should not exceed 6 digits")
-        .required("Pin is required"),
+        .matches(/^[0-9]+$/, t("validation.pinNumbersOnly"))
+        .max(6, t("validation.pinLength"))
+        .required(t("validation.pinRequired")),
     }),
     onSubmit(values: { pin: string }) {
       verifyPinMutation.mutate({ pin: values.pin, email: email });
@@ -33,12 +33,12 @@ const EnterResetCode = () => {
     mutationFn: passwordResetQuery.verifyPasswordPin,
     onSuccess: (res) => {
       if (!res.data[0].verified) {
-        pinForm.setFieldError("pin", "Invalid pin");
+        pinForm.setFieldError("pin", t("validation.invalidPin"));
         toast({
           duration: 1500,
           variant: "destructive",
           title: t("alerts.tryAgainLater"),
-          description: "Invalid pin",
+          description: t("validation.invalidPin"),
         });
         return;
       } else {
@@ -52,16 +52,16 @@ const EnterResetCode = () => {
   });
 
   return (
-    <>
+    <div dir={i18n.language == 'ar' ? 'rtl' : "ltr"}>
       <p className="font-bold text-lg text-[#1B2950] w-full border-b-2 border-[#E0E0E0] pb-5">
-        Enter Pin Number
+        {t("forgotPassword.enterPinNumber")}
       </p>
 
       <div>
         <form action="post" onSubmit={pinForm.handleSubmit}>
           <div className="flex flex-col space-y-1">
             <label htmlFor="pin" className="text-sm text-bold mb-1 ml-5">
-              We have sent a pin to your email.
+              {t("forgotPassword.sentAPinToEmail")}
             </label>
             <div
               className={`flex flex-row border items-center justify-center rounded-full py-1 px-5 ${pinForm.touched.pin && pinForm.errors.pin
@@ -73,7 +73,7 @@ const EnterResetCode = () => {
               <input
                 type="text"
                 className="border-0 rounded-full py-1 px-5 text-normal focus:outline-0 w-full"
-                placeholder="Enter pin"
+                placeholder={t("forgotPassword.enterPin")}
                 {...pinForm.getFieldProps("pin")}
                 name="pin"
               // onChange={pinForm.handleChange}
@@ -89,7 +89,7 @@ const EnterResetCode = () => {
               />
             </div>
             {pinForm.errors.pin && (
-              <div className="error text-red-500 text-sm ml-2">
+              <div dir={i18n.language == 'ar' ? 'rtl' : 'ltr'} className="error text-red-500 text-sm ml-2">
                 {pinForm.errors.pin}
               </div>
             )}
@@ -101,12 +101,12 @@ const EnterResetCode = () => {
                 "text-white w-max rounded-md hover:bg-[#FF599B]/90"
               )}
             >
-              Verify
+              {t("general.verify")}
             </Button>
           </div>
         </form>
       </div>
-    </>
+    </div>
   );
 };
 

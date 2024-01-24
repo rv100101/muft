@@ -4,7 +4,8 @@
     "completeYourProfile": "أكمل ملفك الشخصي",
     "profile": "مظهر جانبي",
     "preferredLanguage": "اللغة المفضلة",
-    "chooseYourPreferredLanguage": "اختر لغتك المفضلة"
+    "chooseYourPreferredLanguage": "اختر لغتك المفضلة",
+    "verify": "تثبت"
   },
   "landingPage": {
     "joinNow": "انضم الآن",
@@ -192,7 +193,10 @@
     "pleaseEnterEmail": "يرجى كتابة البريد الالكتروني",
     "emailAddress": "البريد الالكتروني",
     "cancel": "إلغاء",
-    "reset": "تغيير"
+    "reset": "تغيير",
+    "enterPinNumber": "أدخل الرقم السري",
+    "sentAPinToEmail": "إرسال رقم تعريف شخصي إلى بريدك الإلكتروني",
+    "enterPin": "أدخل رقم التعريف الشخصي"
   },
   "alerts": {
     "reported": "تم إرسال البيانات",
@@ -251,6 +255,7 @@
     "pinNumbersOnly": "الرمز السري هو أرقام فقط",
     "pinLength": "الرمز السري لا يتجاوز 6 أرقام",
     "pinRequired": "الرمز السري مطلوب",
+    "invalidPin": "رقم التعريف الشخصي غير صالح",
     "invalidEmail": "البريد الالكتروني غير صحيح",
     "emailRequired": "البريد الالكتروني مطلوب",
     "fieldRequired": "هذه المعلومة مطلوبة",

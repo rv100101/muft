@@ -14,7 +14,7 @@ type FormDataType = {
 };
 
 const ChangePassword = () => {
-  const [t] = useTranslation();
+  const [t, i18n] = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const email = usePasswordResetState((state) => state.email);
@@ -26,15 +26,15 @@ const ChangePassword = () => {
     },
     validationSchema: Yup.object({
       password: Yup.string()
-        .required("Password is required")
-        .min(10, "Password must be at least 10 characters")
+        .required(t("validation.passwordRequired"))
+        .min(10, t("validation.passwordLength"))
         .matches(
           /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z0-9\W_]{10,25}$/,
-          "Password must contain alphanumeric and special characters"
+          t("validation.passwordComplexity")
         ),
       confirmPassword: Yup.string().oneOf(
         [Yup.ref("password"), ""],
-        "Passwords must match"
+        t("validation.passwordsMustMatch")
       ),
     }),
     onSubmit: async (values: FormDataType) => {
@@ -60,7 +60,9 @@ const ChangePassword = () => {
   });
 
   return (
-    <div className="space-y-2">
+    <div
+      dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+      className="space-y-2">
       <p className="mb-2 text-xl font-semibold">
         {t("changePassword.changePassword")}
       </p>
@@ -80,7 +82,7 @@ const ChangePassword = () => {
 
             <input
               className="appearance-none border-0 rounded-full py-2 px-5 text-normal focus:outline-0 w-full"
-              placeholder="Password"
+              placeholder={t("signUp.password")}
               type={showPassword ? "text" : "password"}
               {...formik.getFieldProps("password")}
               onChange={formik.handleChange}
@@ -114,7 +116,7 @@ const ChangePassword = () => {
             <input
               type="password"
               className="border-0 rounded-full py-2 px-5 text-normal focus:outline-0 w-full"
-              placeholder="Confirm Password"
+              placeholder={t("changePassword.reTypePassword")}
               {...formik.getFieldProps("confirmPassword")}
               name="confirmPassword"
               onChange={formik.handleChange}
@@ -135,13 +137,13 @@ const ChangePassword = () => {
             </div>
           ) : null}
         </div>
-        <div className="flex justify-end">
+        <div className="flex">
           <Button
             disabled={isLoading}
             className="hover:bg-primary"
             type="submit"
           >
-            Save
+            {t("general.save")}
           </Button>
         </div>
       </form>

@@ -22,8 +22,8 @@ const SendResetPin = () => {
     },
     validationSchema: Yup.object({
       email: Yup.string()
-        .email("Invalid email address")
-        .required("Email is required"),
+        .email(t("validation.invalidEmail"))
+        .required(t("validation.emailRequired")),
     }),
     onSubmit(values: { email: string }) {
       sendResetPinMutation.mutate(values);

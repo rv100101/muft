@@ -4,7 +4,8 @@
     "completeYourProfile": "COMPLETE YOUR PROFILE",
     "profile": "PROFILE",
     "preferredLanguage": "Preferred Language",
-    "chooseYourPreferredLanguage": "Choose your preferred language"
+    "chooseYourPreferredLanguage": "Choose your preferred language",
+    "verify": "Verify"
   },
   "landingPage": {
     "joinNow": "Join Now",
@@ -192,7 +193,10 @@
     "pleaseEnterEmail": "Please enter your email to proceed.",
     "emailAddress": "Email Address",
     "cancel": "Cancel",
-    "reset": "Reset"
+    "reset": "Reset",
+    "enterPinNumber": "Enter Pin Number",
+    "sentAPinToEmail": "We have sent a pin to your email.",
+    "enterPin": "Enter pin"
   },
   "alerts": {
     "reported": "Reported",
@@ -251,6 +255,7 @@
     "pinNumbersOnly": "Pin must only contain numbers",
     "pinLength": "Pin should not exceed 6 digits",
     "pinRequired": "Pin is required",
+    "invalidPin": "Invalid pin",
     "invalidEmail": "Invalid email address",
     "emailRequired": "Email is required",
     "fieldRequired": "This field is required",
