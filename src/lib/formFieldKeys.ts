@@ -32,11 +32,48 @@ export const fields = [
   "car",
 ];
 
-export const basicInfoFields = [
-  "gender",
-  "nationality",
-  "birthInfo",
-  "nickname",
+const basicInfoFields = ["gender", "nationality", "birthInfo", "nickname"];
+
+const locationFields = ["country", "region"];
+
+const backgroundFields = ["education", "religion", "ethnicity"];
+
+const languagesFields = ["language"];
+
+const appearanceFields = [
+  "eyes",
+  "hair",
+  "height",
+  "weight",
+  "bodyType",
+  "bodyArt",
 ];
 
-export const locationFields = ["country", "region"];
+const lifestyleFields = ["drinking", "smoking", "livingStatus", "car"];
+
+const petsFields = ["pets"];
+
+const favoriteFoodsFields = ["favoriteFood"];
+
+const healthFields = ["workout", "disability"];
+
+const maritalStatusFields = ["maritalStatus", "haveChildren", "wantChildren"];
+
+const employmentFields = ["employmentStatus", "occupationTitle", "income"];
+
+const interestsFields = ["interest"];
+
+export const fieldNames = [
+  basicInfoFields,
+  locationFields,
+  backgroundFields,
+  languagesFields,
+  appearanceFields,
+  lifestyleFields,
+  petsFields,
+  favoriteFoodsFields,
+  healthFields,
+  maritalStatusFields,
+  employmentFields,
+  interestsFields,
+];

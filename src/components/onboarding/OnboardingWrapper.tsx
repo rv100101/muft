@@ -4,7 +4,7 @@ import { Progress } from "../ui/progress"
 import BasicInformationStep from "./BasicInformationStep"
 import { cn } from "@/lib/utils"
 import { FieldErrors, FieldValues, useFormContext } from "react-hook-form"
-import { basicInfoFields, locationFields } from "@/lib/formFieldKeys"
+import { fieldNames } from "@/lib/formFieldKeys"
 import { useCallback } from "react"
 import LocationStep from "./LocationStep"
 
@@ -30,13 +30,7 @@ const OnboardingWrapper = () => {
 
   const handleNext = useCallback(() => {
     const getFields: () => string[] = () => {
-      if (step == 1) {
-        return basicInfoFields;
-      }
-      if (step == 2) {
-        return locationFields;
-      }
-      return [];
+      return fieldNames[step - 1]
     }
 
     if (Object.keys(errors).length == 0) {
@@ -74,53 +68,16 @@ const OnboardingWrapper = () => {
 }
 
 const StepView = ({ step }: { step: number }) => {
-  if (step == 1) {
-    return <BasicInformationStep />
-  }
-  if (step == 2) {
-    return <LocationStep />
-  }
-  return <></>
+  const forms = [<BasicInformationStep />, <LocationStep />,];
+  return forms[step - 1];
 }
 
 const StepHeader = ({ step }: { step: number }) => {
-  if (step == 1) {
-    return <h1 className="font-semibold ">Let's start with the basics ✅</h1>
-  }
-  if (step == 2) {
-    return <h1 className="font-semibold">Where are you from? 🗺️</h1>
-  }
-  if (step == 3) {
-    return <h1 className="font-semibold">Where are you from? 🗺️</h1>
-  }
-  if (step == 4) {
-    return <h1 className="font-semibold">Where are you from? 🗺️</h1>
-  }
-  if (step == 5) {
-    return <h1 className="font-semibold">Where are you from? 🗺️</h1>
-  }
-  if (step == 6) {
-    return <h1 className="font-semibold">Where are you from? 🗺️</h1>
-  }
-  if (step == 7) {
-    return <h1 className="font-semibold">Where are you from? 🗺️</h1>
-  }
-  if (step == 8) {
-    return <h1 className="font-semibold">Where are you from? 🗺️</h1>
-  }
-  if (step == 9) {
-    return <h1 className="font-semibold">Where are you from? 🗺️</h1>
-  }
-  if (step == 10) {
-    return <h1 className="font-semibold">Where are you from? 🗺️</h1>
-  }
-  if (step == 11) {
-    return <h1 className="font-semibold">Where are you from? 🗺️</h1>
-  }
-  if (step == 12) {
-    return <h1 className="font-semibold">Where are you from? 🗺️</h1>
-  }
-  return <></>
+  const headers = [
+    <h1 className="font-semibold ">Let's start with the basics ✅</h1>,
+    <h1 className="font-semibold">Where are you from? 🗺️</h1>
+  ];
+  return headers[step - 1];
 }
 
 export default OnboardingWrapper
