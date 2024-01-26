@@ -325,7 +325,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
           onSubmit={methods.handleSubmit(onSubmit)}
         >
           {
-            user?.first_time ? <div className="w-full h-full flex justify-start my-8 items-center flex-col px-4">
+            user?.first_time ? <div className="w-full h-min flex justify-start my-8 items-center flex-col px-4">
               <OnboardingWrapper />
             </div> :
               <>

@@ -7,8 +7,23 @@ import { FieldErrors, FieldValues, useFormContext } from "react-hook-form"
 import { fieldNames } from "@/lib/formFieldKeys"
 import { useCallback } from "react"
 import LocationStep from "./LocationStep"
+import BackgroundStep from "./BackgroundStep"
+import LanguagesStep from "./LanguagesStep"
+import AppearanceStep from "./AppearanceStep"
+import LifestyleStep from "./LifestyleStep"
+import PetsStep from "./PetsStep"
+import FavoriteFoodStep from "./FavoriteFoodStep"
+import HealthStep from "./HealthStep"
+import MaritalStatusStep from "./MaritalStatusStep"
+import EmploymentStatusStep from "./EmploymentStatusStep"
+import InterestsStep from "./InterestsStep"
+import profileAboutContentStore from "@/zustand/profile/profileAboutStore"
+import { Loader2 } from "lucide-react"
 
 const OnboardingWrapper = () => {
+  const {
+    isSaving,
+  } = profileAboutContentStore();
   const {
     formState: { errors },
   } = useFormContext();
@@ -60,7 +75,15 @@ const OnboardingWrapper = () => {
         }
         {
           step !== 12 ? <Button className="hover:bg-[#FF599B]/90" onClick={handleNext} >Next</Button>
-            : <Button className="hover:bg-[#FF599B]/90" onClick={() => { }} >Save</Button>
+            : <Button className="hover:bg-[#FF599B]/90"
+              disabled={isSaving}
+              type="submit" >Finish
+              {isSaving && (
+                <span>
+                  <Loader2 className="ml-2 h-4 w-4 animate-spin" />
+                </span>
+              )}
+            </Button>
         }
       </div >
     </>
@@ -68,14 +91,27 @@ const OnboardingWrapper = () => {
 }
 
 const StepView = ({ step }: { step: number }) => {
-  const forms = [<BasicInformationStep />, <LocationStep />,];
+  const forms = [
+    <BasicInformationStep />, <LocationStep />, <BackgroundStep />, <LanguagesStep />, <AppearanceStep />, <LifestyleStep />, <PetsStep />,
+    <FavoriteFoodStep />, <HealthStep />, <MaritalStatusStep />, <EmploymentStatusStep />, <InterestsStep />
+  ];
   return forms[step - 1];
 }
 
 const StepHeader = ({ step }: { step: number }) => {
   const headers = [
     <h1 className="font-semibold ">Let's start with the basics ✅</h1>,
-    <h1 className="font-semibold">Where are you from? 🗺️</h1>
+    <h1 className="font-semibold">Where are you from? 🗺️</h1>,
+    <h1 className="font-semibold">Tell us your background 🏫</h1>,
+    <h1 className="font-semibold">Language 🦜</h1>,
+    <h1 className="font-semibold">Appearance ✨</h1>,
+    <h1 className="font-semibold">Lifestyle ☀️</h1>,
+    <h1 className="font-semibold">Pets 🐹</h1>,
+    <h1 className="font-semibold">Favorite Foods 🍲</h1>,
+    <h1 className="font-semibold">Health 🌱</h1>,
+    <h1 className="font-semibold">Marital Status 💍</h1>,
+    <h1 className="font-semibold">Employment 💼</h1>,
+    <h1 className="font-semibold">Interests 🎲</h1>,
   ];
   return headers[step - 1];
 }
