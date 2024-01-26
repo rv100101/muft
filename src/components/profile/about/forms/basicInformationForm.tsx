@@ -59,11 +59,9 @@ const BasicInformationForm = () => {
   const user = useUserStore((state) => state.user);
 
   const getGender = (value: string) => {
-    if (value == t('memberDetails.male')) {
-      return 'M';
-    } else {
-      return 'F';
-    }
+    if (value == t('memberDetails.male')) { return 'M' }
+    else if (value == t('memberDetails.female')) { return 'F' }
+    else { return '' }
   }
 
   if ((isLoading && profileData == null) || isSaving) {
