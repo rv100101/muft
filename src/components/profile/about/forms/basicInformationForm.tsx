@@ -79,8 +79,9 @@ const BasicInformationForm = () => {
   return (
     <div
       className={cn(
-        "flex flex-col h-96  w-full space-y-4",
-        !user?.profile_completed && "h-full"
+        "h-96 w-full",
+        !user?.profile_completed && "h-full",
+        user?.first_time ? "grid grid-flow-row grid-cols-2 gap-2 sm:gap-4" : "flex flex-col space-y-4"
       )}
     >
       {" "}
@@ -160,7 +161,7 @@ const BasicInformationForm = () => {
       </div>
       <div className="flex flex-row justify-between w-full px-5">
         {editMode || !user?.profile_completed ? (
-          <div className="flex flex-col w-full">
+          <div className={cn("w-full flex flex-col")}>
             <FormField
               name="gender"
               render={({ field }) => {

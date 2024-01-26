@@ -1,0 +1,42 @@
+export const fields = [
+  "gender",
+  "nationality",
+  "birthInfo",
+  "ethnicity",
+  "maritalStatus",
+  "language",
+  "education",
+  "employmentStatus",
+  "occupationTitle",
+  "income",
+  "height",
+  "weight",
+  "bodyType",
+  "interest",
+  "favoriteFood",
+  "country",
+  "region",
+  "religion",
+  "nickname",
+  "hair",
+  "eyes",
+  "bodyArt",
+  "haveChildren",
+  "wantChildren",
+  "workout",
+  "disability",
+  "pets",
+  "drinking",
+  "smoking",
+  "livingStatus",
+  "car",
+];
+
+export const basicInfoFields = [
+  "gender",
+  "nationality",
+  "birthInfo",
+  "nickname",
+];
+
+export const locationFields = ["country", "region"];

@@ -22,6 +22,8 @@ import calculateAge from "@/lib/calculateAge";
 import { aboutAccordionTabView } from "@/zustand/profile/about/aboutAccordionTabView";
 import authQuery from "@/queries/auth";
 import { useTranslation } from "react-i18next";
+import { cn } from "@/lib/utils";
+import OnboardingWrapper from "@/components/onboarding/OnboardingWrapper";
 // import getDeletedItems from "@/lib/getDeleted";
 
 const ProfilePageBody = ({ userId }: { userId: string }) => {
@@ -296,7 +298,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
     setIsSaving(false);
   };
   useEffect(() => {
-    if (Object.getOwnPropertyNames(methods.formState.errors).length > 0) {
+    if (Object.getOwnPropertyNames(methods.formState.errors).length > 0 && !user!.first_time) {
       toast({
         variant: "destructive",
         title: t("alerts.allFieldsRequired"),
@@ -304,9 +306,10 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
         action: <ToastAction altText="Goto schedule to undo">Okay</ToastAction>,
       });
     }
-  }, [methods.formState.errors]);
+  }, [methods.formState.errors, t, user]);
+
   return (
-    <div className="flex h-screen flex-col justify-start w-full lg:w-3/4 border mx-auto">
+    <div className={cn("flex h-screen flex-col justify-start w-full lg:w-3/4 mx-auto", !user?.first_time && 'border')}>
       {!user!.is_active && (
         <div className="h-full overflow-y-scroll flex flex-col">
           <Dialog open={open}>
@@ -321,12 +324,19 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
           className="flex flex-col h-full"
           onSubmit={methods.handleSubmit(onSubmit)}
         >
-          <ProfileTopNav />
-          <div className="lg:h-full h-screen overflow-y-scroll w-screen sm:w-full overflow-x-clip no-scrollbar flex flex-col">
-            {user?.profile_completed && <ProfileHeader userId={userId} />}
-            <AboutAccordion userId={parseInt(userId)} />
-            {/* user?.profile_completed && <GallerySection userId={userId} /> */}
-          </div>
+          {
+            user?.first_time ? <div className="w-full h-full flex justify-start my-8 items-center flex-col px-4">
+              <OnboardingWrapper />
+            </div> :
+              <>
+                <ProfileTopNav />
+                <div className="lg:h-full h-screen overflow-y-scroll w-screen sm:w-full overflow-x-clip no-scrollbar flex flex-col">
+                  {user?.profile_completed && <ProfileHeader userId={userId} />}
+                  <AboutAccordion userId={parseInt(userId)} />
+                  {/* user?.profile_completed && <GallerySection userId={userId} /> */}
+                </div>
+              </>
+          }
         </form>
       </FormProvider>
     </div>
