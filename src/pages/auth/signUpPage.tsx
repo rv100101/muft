@@ -115,8 +115,9 @@ const SignUpPage = () => {
           variant: "success",
           title: t("alerts.accountSuccessfullyCreated"),
         });
-
-        updateUser(data);
+        updateUser({
+          ...data, profile_completed: false, first_time: true
+        });
         navigate("/", { replace: true });
       }
     },

@@ -82,8 +82,8 @@ const SignInForm = () => {
         formik.setFieldError("password", t("validation.invalidCredentials"));
         toast({
           variant: "destructive",
-          title: t("alert.invalidUsernameOrPassword"),
-          description: t("alert.checkCredentialsAndTryAgain"),
+          title: t("alerts.invalidUsernameOrPassword"),
+          description: t("alerts.checkCredentialsAndTryAgain"),
         });
         return;
       }

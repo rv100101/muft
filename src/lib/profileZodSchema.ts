@@ -192,7 +192,7 @@ export const ProfileFormSchema = (t: TFunction<"translation", undefined>) =>
       .array(
         z.object({
           pet_name: z.string().or(z.number()),
-          pet_id: z.number(),
+          pet_id: z.string().or(z.number()),
         })
       )
       .refine((data) => data.length > 0, {

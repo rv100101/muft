@@ -1,8 +1,8 @@
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
 import { Dog } from "lucide-react";
-import {} from "@/components/ui/form";
+import { } from "@/components/ui/form";
 import FormSkeletonLoading from "./formSkeletonLoading";
-import {} from "@/components/ui/select";
+import { } from "@/components/ui/select";
 import { useUserStore } from "@/zustand/auth/user";
 import PetsField from "./petsField";
 import removeDuplicates from "@/lib/removeDulpicates";
@@ -18,7 +18,7 @@ const PetsForm = () => {
 
   const isSaving = profileAboutContentStore((state) => state.isSaving);
   const profileData = profileAboutContentStore((state) => state.profileData);
-  if ((isLoading && profileData == null) || isSaving) {
+  if ((isLoading && profileData == null && user?.profile_completed) || isSaving) {
     return (
       <div className="flex justify-start items-start space-x-4 w-full ml-5">
         <div className="space-y-2">

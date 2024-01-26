@@ -298,7 +298,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
     setIsSaving(false);
   };
   useEffect(() => {
-    if (Object.getOwnPropertyNames(methods.formState.errors).length > 0 && !user!.first_time) {
+    if (Object.getOwnPropertyNames(methods.formState.errors).length > 0 && user!.profile_completed) {
       toast({
         variant: "destructive",
         title: t("alerts.allFieldsRequired"),
@@ -309,7 +309,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
   }, [methods.formState.errors, t, user]);
 
   return (
-    <div className={cn("flex h-screen flex-col justify-start w-full lg:w-3/4 mx-auto", !user?.first_time && 'border')}>
+    <div className={cn("flex h-screen flex-col justify-start w-full lg:w-3/4 mx-auto", user?.profile_completed && 'border')}>
       {!user!.is_active && (
         <div className="h-full overflow-y-scroll flex flex-col">
           <Dialog open={open}>

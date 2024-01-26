@@ -33,6 +33,7 @@ const BasicInformationForm = () => {
   const userId = parts[parts.length - 1];
   const [minDate, setMinDate] = useState("");
   const [maxDate, setMaxDate] = useState("");
+  const user = useUserStore(state => state.user);
   const isSaving = profileAboutContentStore((state) => state.isSaving);
   useEffectOnce(() => {
     const currentDate = new Date();
@@ -56,7 +57,6 @@ const BasicInformationForm = () => {
   const { control } = useFormContext();
   const { nationalities } = selectOptions();
   const { data, editMode, isLoading, profileData } = profileAboutContentStore();
-  const user = useUserStore((state) => state.user);
 
   const getGender = (value: string) => {
     if (value == t('memberDetails.male')) { return 'M' }
@@ -64,7 +64,7 @@ const BasicInformationForm = () => {
     else { return '' }
   }
 
-  if ((isLoading && profileData == null) || isSaving) {
+  if ((isLoading && profileData == null && user?.profile_completed) || isSaving) {
     return (
       <div className="flex justify-start items-start space-x-4 w-full ml-5">
         <div className="space-y-2">
