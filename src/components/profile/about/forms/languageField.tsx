@@ -32,8 +32,11 @@ export default function LanguageField() {
   const [selectables, setSelectables] = React.useState<Languages[]>([]);
   const [inputValue, setInputValue] = React.useState("");
   const { languages } = selectOptions();
-
   useUpdateEffect(() => {
+    console.log(
+      languages,
+      selected,
+    );
     const selectables = removeExistingData(
       languages,
       selected,
@@ -148,11 +151,11 @@ export default function LanguageField() {
                 {open && selectables.length > 0 ? (
                   <div className="absolute w-full z-10 top-0 rounded-md border bg-popover text-popover-foreground shadow-md outline-none animate-in">
                     <CommandGroup className="h-40 sm:h-96 overflow-auto ">
-                      {selectables.map((framework) => {
+                      {selectables.map((framework, index) => {
                         return (
                           <CommandItem
+                            key={index}
                             className={"cursor-pointer"}
-                            key={framework.member_language_id}
                             onMouseDown={(e) => {
                               e.preventDefault();
                               e.stopPropagation();

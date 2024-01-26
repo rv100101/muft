@@ -17,9 +17,9 @@ const LanguagesStep = () => {
 
   useQuery({
     queryFn: () => profileContentQuery.editOptions.getLanguages(i18n.language, user!.member_id),
-    refetchInterval: Infinity,
     queryKey: ["languages"],
     onSuccess: (data: Languages[]) => {
+      console.log(data);
       setLanguages(data);
     },
   });
