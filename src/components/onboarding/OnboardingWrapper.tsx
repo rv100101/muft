@@ -73,7 +73,7 @@ const OnboardingWrapper = () => {
       </div>
       <StepView step={step} />
       <hr className="h-4 w-full sm:w-1/2 mt-8" />
-      <div className={cn("w-full sm:w-1/2 flex justify-end", step !== 1 && "justify-between")}>
+      <div className={cn("w-full px-8 sm:w-1/2 flex justify-end", step !== 1 && "justify-between")}>
         {
           step !== 1 && <Button type="button" className="hover:bg-[#FF599B]/90" onClick={() => {
             setStep(step - 1)
@@ -82,7 +82,7 @@ const OnboardingWrapper = () => {
         }
         {
           step !== 12 ? <Button type="submit" className="hover:bg-[#FF599B]/90" onClick={handleNext} >Next</Button>
-            : <Button className="hover:bg-[#FF599B]/90"
+            : <Button className=" hover:bg-[#FF599B]/90"
               disabled={isSaving}
               onClick={() => {
                 setIsFinished(true);

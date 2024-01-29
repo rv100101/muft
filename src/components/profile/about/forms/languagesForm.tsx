@@ -22,13 +22,11 @@ const LanguagesForm = () => {
     );
   }
 
-  console.log(data);
-
   return (
     <div
       className={cn(
-        "flex flex-col w-full h-full space-y-4",
-        !user?.profile_completed && "h-full"
+        "flex flex-col w-full space-y-4",
+        // !user?.profile_completed && "h-full"
       )}
     >
       <div className="flex h-full flex-row justify-between w-full px-5">

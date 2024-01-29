@@ -17,11 +17,14 @@ import { Languages } from "@/types/profile";
 import { useEffectOnce, useUpdateEffect } from "usehooks-ts";
 import deleteMultiselectValuesStore from "@/zustand/profile/about/deleteMultiselectValues";
 import removeExistingData from "@/lib/removeExistingData";
+import { cn } from "@/lib/utils";
+import { useUserStore } from "@/zustand/auth/user";
 
 export default function LanguageField() {
   const setLanguagesToDelete = deleteMultiselectValuesStore(
     (state) => state.setLanguagesToDelete
   );
+  const user = useUserStore(state => state.user);
   const { control, watch, setValue } = useFormContext();
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [open, setOpen] = React.useState(false);
@@ -37,17 +40,11 @@ export default function LanguageField() {
   console.log(selected);
 
   useUpdateEffect(() => {
-    console.log(
-      languages,
-      selected,
-    );
-
     const selectables = removeExistingData(
       languages,
       selected,
       "language_name"
     );
-    console.log(selectables);
     setSelectables(selectables);
   }, [selected, languages]);
 
@@ -108,7 +105,7 @@ export default function LanguageField() {
       render={() => {
         return (
           <FormItem>
-            <FormLabel className="text-primary" htmlFor="maritalStatus" />
+            <FormLabel className="text-primary" htmlFor="language" />
             <Command
               onKeyDown={handleKeyDown}
               className="overflow-visible bg-transparent"
@@ -153,9 +150,9 @@ export default function LanguageField() {
                   />
                 </div>
               </div>
-              <div className="relative mt-2 lg:h-full h-screen">
+              <div className={cn("relative mt-2 lg:h-full", !user?.profile_completed ? 'h-full' : 'h-screen')}>
                 {open && selectables.length > 0 ? (
-                  <div className="absolute w-full z-10 top-0 rounded-md border bg-popover text-popover-foreground shadow-md outline-none animate-in">
+                  <div className="absolute w-full top-0 rounded-md border bg-popover text-popover-foreground shadow-md outline-none animate-in">
                     <CommandGroup className="h-40 sm:h-96 overflow-auto ">
                       {selectables.map((framework, index) => {
                         return (
