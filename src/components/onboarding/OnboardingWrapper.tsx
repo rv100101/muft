@@ -22,7 +22,7 @@ import { Loader2 } from "lucide-react"
 
 const OnboardingWrapper = () => {
   const {
-    isSaving,
+    isSaving
   } = profileAboutContentStore();
   const {
     formState: { errors },
@@ -48,7 +48,7 @@ const OnboardingWrapper = () => {
     const getFields: () => string[] = () => {
       return fieldNames[step - 1]
     }
-
+    const validateFields = getFields();
     if (Object.keys(errors).length == 0) {
       if (step == 1) {
         return;
@@ -57,9 +57,6 @@ const OnboardingWrapper = () => {
         setStep(step + 1);
       }
     }
-
-    const validateFields = getFields();
-
     const pass = checkKeysInErrorObject(validateFields, errors);
     if (pass) {
       setStep(step + 1);

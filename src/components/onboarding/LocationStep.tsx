@@ -49,7 +49,7 @@ const LocationStep = () => {
   }, [countries, profileAboutContent]);
 
   return (
-    <div className="w-1/2"><LocationForm /></div>
+    <div className="w-full sm:w-1/2"><LocationForm /></div>
   )
 }
 

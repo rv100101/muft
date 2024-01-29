@@ -81,7 +81,7 @@ const LocationForm = () => {
       className={cn(
         "h-96 w-full",
         !user?.profile_completed && "h-full",
-        !user?.profile_completed ? "grid grid-flow-row grid-cols-2 gap-2 sm:gap-4" : "flex flex-col space-y-4"
+        !user?.profile_completed ? "sm:grid sm:grid-flow-row sm:grid-cols-2 gap-2 sm:gap-4" : "flex flex-col space-y-4"
       )}
     >
       <div className="flex flex-row justify-between w-full px-5">
