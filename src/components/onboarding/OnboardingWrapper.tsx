@@ -63,6 +63,8 @@ const OnboardingWrapper = () => {
     }
   }, [errors, setStep, step]);
 
+  console.log(isSaving);
+
   return (
     <>
       <div className="my-8 text-lg">
@@ -75,10 +77,12 @@ const OnboardingWrapper = () => {
       <hr className="h-4 w-full sm:w-1/2 mt-8" />
       <div className={cn("w-full px-8 sm:w-1/2 flex justify-end", step !== 1 && "justify-between")}>
         {
-          step !== 1 && <Button type="button" className="hover:bg-[#FF599B]/90" onClick={() => {
-            setStep(step - 1)
-            setIsFinished(false);
-          }}>Back</Button>
+          step !== 1 && <Button
+            disabled={isSaving}
+            type="button" className="hover:bg-[#FF599B]/90" onClick={() => {
+              setStep(step - 1)
+              setIsFinished(false);
+            }}>Back</Button>
         }
         {
           step !== 12 ? <Button type="submit" className="hover:bg-[#FF599B]/90" onClick={handleNext} >Next</Button>

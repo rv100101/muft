@@ -7,8 +7,10 @@ import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
 import { emptyDefault, ProfileFormSchema } from "@/lib/profileZodSchema";
 import { useEffect, useState } from "react";
 import profileHeaderStore from "@/zustand/profile/profileHeaderStore";
+import profileContentQuery from "@/queries/profile/profileContent";
 import selectOptions from "@/zustand/profile/selectData/selectOptions";
-import { useUserStore } from "@/zustand/auth/user";
+import { User, useUserStore } from "@/zustand/auth/user";
+import { useQueryClient } from "@tanstack/react-query";
 import { ToastAction } from "@/components/ui/toast";
 import { toast } from "@/components/ui/use-toast";
 import { Dialog } from "@radix-ui/react-dialog";
@@ -16,18 +18,24 @@ import { DialogContent } from "@/components/ui/dialog";
 import ActivateAccount from "./accountActivationPage";
 import removeDuplicates from "@/lib/removeDulpicates";
 import removeExistingData from "@/lib/removeExistingData";
+import calculateAge from "@/lib/calculateAge";
+import { aboutAccordionTabView } from "@/zustand/profile/about/aboutAccordionTabView";
+import authQuery from "@/queries/auth";
 import { useTranslation } from "react-i18next";
-import { cn } from "@/lib/utils";
-import OnboardingWrapper from "@/components/onboarding/OnboardingWrapper";
 import onboardingStore from "@/zustand/profile/onboarding/onboardingStore";
+import OnboardingWrapper from "@/components/onboarding/OnboardingWrapper";
+import { cn } from "@/lib/utils";
 // import getDeletedItems from "@/lib/getDeleted";
 
 const ProfilePageBody = ({ userId }: { userId: string }) => {
   const [t] = useTranslation();
   const headerValues = profileHeaderStore((state) => state.headerValues);
-  const { data, setEditModeFalse, toggleEditMode, } =
+  const setHeaderValues = profileHeaderStore((state) => state.setHeaderValues);
+  const { data, setEditModeFalse, toggleEditMode, setData, setIsSaving } =
     profileAboutContentStore();
-  const { setIsSaving } = profileAboutContentStore();
+  const updateUser = useUserStore((state) => state.updateUser);
+  const changeTab = aboutAccordionTabView((state) => state.changeTab);
+  const queryClient = useQueryClient();
   const { user } = useUserStore();
   const methods = useForm({
     defaultValues: emptyDefault,
@@ -276,24 +284,21 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
         religion: religion?.religion_id,
         employmentStatus: employmentStatus?.employment_status_id,
       };
-      // await profileContentQuery.saveInformation(finalFormData, user!.member_id);
-      // await authQuery.isProfileCompleted(user!.member_id);
-      // console.log(formData);
-      // const age = calculateAge(formData.birthInfo);
-      // setHeaderValues({ ...headerValues!, nickname: formData.nickname, age });
-      // setData({ ...data!, ...formData, age });
-      // changeTab(1);
-      // updateUser({ ...user, profile_completed: true } as User);
-      // queryClient.invalidateQueries(["profileHeader"]);
-      // queryClient.invalidateQueries(["profileContent"]);
-      // queryClient.invalidateQueries(["home-members"]);
-      // toast({
-      //   variant: "success",
-      //   title: t("alerts.profileSaved"),
-      // });
-      console.log(finalFormData);
-
-      alert("saved");
+      await profileContentQuery.saveInformation(finalFormData, user!.member_id);
+      await authQuery.isProfileCompleted(user!.member_id);
+      console.log(formData);
+      const age = calculateAge(formData.birthInfo);
+      setHeaderValues({ ...headerValues!, nickname: formData.nickname, age });
+      setData({ ...data!, ...formData, age });
+      changeTab(1);
+      updateUser({ ...user, profile_completed: true } as User);
+      queryClient.invalidateQueries(["profileHeader"]);
+      queryClient.invalidateQueries(["profileContent"]);
+      queryClient.invalidateQueries(["home-members"]);
+      toast({
+        variant: "success",
+        title: t("alerts.profileSaved"),
+      });
       setEditModeFalse();
     } catch (error) {
       console.log(error);
