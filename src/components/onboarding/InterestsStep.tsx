@@ -19,7 +19,7 @@ const InterestsStep = () => {
   });
 
   return (
-    <div className="w-1/2">
+    <div className="h-36 w-full sm:w-1/2">
       <InterestsForm />
     </div>
   )
