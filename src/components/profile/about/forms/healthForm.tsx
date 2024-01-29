@@ -136,6 +136,7 @@ const HealthForm = () => {
                       </FormControl>
                       <SelectContent
                         dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                        className="min-h-min max-h-44 w-min"
                       >
                         {disability &&
                           disability.map((data: Disability) => {

@@ -73,7 +73,10 @@ const AppearanceForm = () => {
                           />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent>
+                      <SelectContent
+                        dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                        className="min-h-min max-h-44 w-min"
+                      >
                         {eyes &&
                           eyes.map((data: Eye, index: number) => {
                             const { eyes_name } = data;
@@ -137,7 +140,10 @@ const AppearanceForm = () => {
                           />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent>
+                      <SelectContent
+                        dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                        className="min-h-min max-h-44 w-min"
+                      >
                         {hair &&
                           hair.map((data: Hair, index: number) => {
                             const { hair_name } = data;
@@ -316,7 +322,10 @@ const AppearanceForm = () => {
                           />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent>
+                      <SelectContent
+                        dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                        className="min-h-min max-h-44 w-min"
+                      >
                         {bodyTypes &&
                           bodyTypes.map((data: BodyType) => {
                             const { body: bodyType, body_type_id } = data;
@@ -380,7 +389,10 @@ const AppearanceForm = () => {
                           />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent>
+                      <SelectContent
+                        dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                        className="min-h-min max-h-44 w-min"
+                      >
                         {bodyArts &&
                           bodyArts.map((data: BodyArt, index: number) => {
                             const { body } = data;

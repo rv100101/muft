@@ -253,6 +253,7 @@ const BasicInformationForm = () => {
                       </FormControl>
                       <SelectContent
                         dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                        className="h-44 w-min"
                       >
                         {nationalities.map(
                           (data: Nationality, index: number) => {

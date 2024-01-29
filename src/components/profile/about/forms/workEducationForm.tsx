@@ -70,7 +70,10 @@ const WorkEducationForm = () => {
                           />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent>
+                      <SelectContent
+                        dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                        className="min-h-min max-h-44 w-min"
+                      >
                         {employmentStatus &&
                           employmentStatus.map(
                             (data: EmploymentStatus, index) => {
@@ -143,7 +146,10 @@ const WorkEducationForm = () => {
                           />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent>
+                      <SelectContent
+                        dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                        className="min-h-min max-h-44 w-min"
+                      >
                         {occupations &&
                           [
                             ...new Set(
@@ -213,7 +219,10 @@ const WorkEducationForm = () => {
                           />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent>
+                      <SelectContent
+                        dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                        className="min-h-min max-h-44 w-min"
+                      >
                         {incomes &&
                           incomes.map((data: Income, index) => {
                             const { income_range: income } = data;
