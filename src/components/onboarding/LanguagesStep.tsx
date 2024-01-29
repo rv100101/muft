@@ -14,7 +14,6 @@ const LanguagesStep = () => {
 
   const user = useUserStore(state => state.user);
 
-
   useQuery({
     queryFn: () => profileContentQuery.editOptions.getLanguages(i18n.language, user!.member_id),
     queryKey: ["languages"],

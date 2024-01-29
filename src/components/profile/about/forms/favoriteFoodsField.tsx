@@ -35,7 +35,7 @@ export default function FavoriteFoodField() {
       "favorite_food_name"
     );
     setSelectables(selectables);
-  }, [selected]);
+  }, [selected, favoriteFoods]);
 
   const handleUnselect = React.useCallback((framework: FavoriteFood) => {
     setSelected((prev) =>

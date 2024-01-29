@@ -29,7 +29,7 @@ export default function PetsField() {
   useUpdateEffect(() => {
     const selectables = removeExistingData(pets, selected, "pet_name");
     setSelectables(selectables);
-  }, [selected]);
+  }, [selected, pets]);
 
   const handleUnselect = React.useCallback((framework: Pets) => {
     setSelected((prev) =>

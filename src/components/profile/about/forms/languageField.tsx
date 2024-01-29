@@ -32,18 +32,24 @@ export default function LanguageField() {
   const [selectables, setSelectables] = React.useState<Languages[]>([]);
   const [inputValue, setInputValue] = React.useState("");
   const { languages } = selectOptions();
+  console.log(selectables);
+  console.log(languages);
+  console.log(selected);
+
   useUpdateEffect(() => {
     console.log(
       languages,
       selected,
     );
+
     const selectables = removeExistingData(
       languages,
       selected,
       "language_name"
     );
+    console.log(selectables);
     setSelectables(selectables);
-  }, [selected]);
+  }, [selected, languages]);
 
   const handleUnselect = React.useCallback(
     (

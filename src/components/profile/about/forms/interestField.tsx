@@ -33,7 +33,7 @@ export default function InterestField() {
       "interest_name"
     );
     setSelectables(selectables);
-  }, [selected]);
+  }, [selected, interests]);
 
   const handleUnselect = React.useCallback((framework: Interest) => {
     setSelected((prev) =>
