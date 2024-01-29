@@ -40,7 +40,7 @@ const BackgroundStep = () => {
   });
 
   return (
-    <div className="w-1/2">
+    <div className="w-full sm:w-1/2">
       <BackgroundForm />
     </div>
   )
