@@ -22,6 +22,7 @@ import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 import authQuery from "@/queries/auth";
 import { usePreferredLanguageStore } from "@/zustand/auth/preferred_language";
+import profileAboutContentStore, { initialState } from "@/zustand/profile/profileAboutStore";
 
 
 export type SignUpDataType = {
@@ -33,6 +34,7 @@ export type SignUpDataType = {
 };
 
 const SignUpPage = () => {
+  const setData = profileAboutContentStore(state => state.setData);
   const [t, i18n] = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -104,6 +106,7 @@ const SignUpPage = () => {
   const signUp = useMutation({
     mutationFn: handleSignUp,
     onSuccess: async (data) => {
+      setData(initialState);
       if (data.member_exists) {
         toast({
           variant: "destructive",

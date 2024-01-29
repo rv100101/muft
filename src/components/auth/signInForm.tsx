@@ -26,12 +26,14 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useUserNickname } from "@/zustand/auth/username";
 import { useTranslation } from "react-i18next";
 import { usePreferredLanguageStore } from "@/zustand/auth/preferred_language";
+import profileAboutContentStore, { initialState } from "@/zustand/profile/profileAboutStore";
 
 type FormDataType = {
   email: string;
   password: string;
 };
 const SignInForm = () => {
+  const setData = profileAboutContentStore(state => state.setData);
   const [t, i18n] = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
   const [blockedModal, showBlockedModal] = useState(false);
@@ -73,6 +75,7 @@ const SignInForm = () => {
 
   const handleSignIn = async (values: FormDataType) => {
     try {
+      setData(initialState);
       setIsLoading(true);
       const signInData = await authQuery.signIn(values.email, values.password);
       if (!signInData) {
