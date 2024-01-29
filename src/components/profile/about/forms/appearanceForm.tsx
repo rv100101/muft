@@ -34,7 +34,7 @@ const AppearanceForm = () => {
 
   const isSaving = profileAboutContentStore((state) => state.isSaving);
   const profileData = profileAboutContentStore((state) => state.profileData);
-  if ((isLoading && profileData == null) || isSaving) {
+  if ((isLoading && profileData == null && user?.profile_completed) || isSaving) {
     return (
       <div className="flex justify-start items-start space-x-4 w-full ml-5">
         <div className="space-y-2">
@@ -44,7 +44,13 @@ const AppearanceForm = () => {
     );
   }
   return (
-    <div className="flex flex-col w-full space-y-4">
+    <div
+      className={cn(
+        "h-96 w-full",
+        !user?.profile_completed && "h-full",
+        !user?.profile_completed ? "grid grid-flow-row grid-cols-2 gap-1 sm:gap-4" : "flex flex-col space-y-4"
+      )}
+    >
       <div className="flex flex-row justify-between w-full px-5">
         {editMode || !user?.profile_completed ? (
           <div className="space-y-1 hover:cursor-pointer w-full items-center">
@@ -189,16 +195,16 @@ const AppearanceForm = () => {
                       placeholder="Enter height (cm)"
                       type="number"
                       onChange={(e) => {
-                        if (
-                          e.target.value !== "" &&
-                          typeof parseInt(e.target.value) === "number"
-                        ) {
-                          field.onChange(parseInt(e.target.value));
-                        }
+                        // if (
+                        //   e.target.value !== "" &&
+                        //   typeof parseInt(e.target.value) === "number"
+                        // ) {
+                        field.onChange(parseInt(e.target.value));
+                        // }
                       }}
                       value={field.value}
                       defaultValue={field.value}
-                      className="outline-0 border border rounded-lg w-full py-3 px-5"
+                      className="outline-0 border rounded-lg w-full py-3 px-5"
                       name="height"
                     />
                     <FormMessage />
@@ -245,12 +251,12 @@ const AppearanceForm = () => {
                       placeholder="Enter weight (lbs)"
                       type="number"
                       onChange={(e) => {
-                        if (
-                          e.target.value !== "" &&
-                          typeof parseInt(e.target.value) === "number"
-                        ) {
-                          field.onChange(parseInt(e.target.value));
-                        }
+                        // if (
+                        //   e.target.value !== "" &&
+                        //   typeof parseInt(e.target.value) === "number"
+                        // ) {
+                        field.onChange(parseInt(e.target.value));
+                        // }
                       }}
                       defaultValue={field.value}
                       className="outline-0 border rounded-lg w-full py-3 px-5"

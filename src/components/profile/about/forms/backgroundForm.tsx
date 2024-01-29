@@ -33,7 +33,11 @@ const BackgroundForm = () => {
 
   const isSaving = profileAboutContentStore((state) => state.isSaving);
   const profileData = profileAboutContentStore((state) => state.profileData);
-  if ((isLoading && profileData == null) || isSaving) {
+  console.log(
+    (isLoading && profileData == null && user?.profile_completed) || isSaving
+  );
+
+  if ((isLoading && profileData == null && user?.profile_completed) || isSaving) {
     return (
       <div className="flex justify-start items-start space-x-4 w-full ml-5">
         <div className="space-y-2">
@@ -44,7 +48,13 @@ const BackgroundForm = () => {
   }
 
   return (
-    <div className="flex flex-col w-full space-y-4">
+    <div
+      className={cn(
+        "h-96 w-full",
+        !user?.profile_completed && "h-full",
+        !user?.profile_completed ? "sm:grid sm:grid-flow-row sm:grid-cols-2 gap-2 sm:gap-4" : "flex flex-col space-y-4"
+      )}
+    >
       <div className="flex flex-row justify-between w-full px-5">
         {editMode || !user?.profile_completed ? (
           <div className="space-y-1 hover:cursor-pointer w-full items-center">
@@ -177,7 +187,7 @@ const BackgroundForm = () => {
       </div>{" "}
       <div className="flex flex-row justify-between w-full px-5">
         {editMode || !user?.profile_completed ? (
-          <div className="space-y-1 hover:cursor-pointer w-full items-center">
+          <div className="space-y-1 hover:cursor-pointer w-full ">
             <FormField
               name="ethnicity"
               render={({ field }) => {

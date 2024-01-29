@@ -12,7 +12,7 @@ const LanguagesForm = () => {
   const user = useUserStore((state) => state.user);
 
   const isSaving = profileAboutContentStore((state) => state.isSaving);
-  if ((isLoading && profileData == null) || isSaving) {
+  if ((isLoading && profileData == null && user?.profile_completed) || isSaving) {
     return (
       <div className="flex justify-start items-start space-x-4 w-full ml-5">
         <div className="space-y-2">
@@ -22,13 +22,11 @@ const LanguagesForm = () => {
     );
   }
 
-  console.log(data);
-
   return (
     <div
       className={cn(
-        "flex flex-col w-full h-full space-y-4",
-        !user?.profile_completed && "h-full"
+        "flex flex-col w-full space-y-4",
+        // !user?.profile_completed && "h-full"
       )}
     >
       <div className="flex h-full flex-row justify-between w-full px-5">

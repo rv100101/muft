@@ -15,8 +15,11 @@ import { useFormContext } from "react-hook-form";
 import { FavoriteFood } from "@/types/profile";
 import { useEffectOnce, useUpdateEffect } from "usehooks-ts";
 import removeExistingData from "@/lib/removeExistingData";
+import { useUserStore } from "@/zustand/auth/user";
+import { cn } from "@/lib/utils";
 
 export default function FavoriteFoodField() {
+  const user = useUserStore(state => state.user);
   const { control, watch, setValue } = useFormContext();
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [open, setOpen] = React.useState(false);
@@ -35,7 +38,7 @@ export default function FavoriteFoodField() {
       "favorite_food_name"
     );
     setSelectables(selectables);
-  }, [selected]);
+  }, [selected, favoriteFoods]);
 
   const handleUnselect = React.useCallback((framework: FavoriteFood) => {
     setSelected((prev) =>
@@ -127,7 +130,7 @@ export default function FavoriteFoodField() {
                   />
                 </div>
               </div>
-              <div className="relative mt-2 lg:h-full h-screen">
+              <div className={cn("relative mt-2 lg:h-full", !user?.profile_completed ? 'h-full' : 'h-screen')}>
                 {open && selectables.length > 0 ? (
                   <div className="absolute w-full z-10 top-0 rounded-md border bg-popover text-popover-foreground shadow-md outline-none animate-in">
                     <CommandGroup className="h-40 overflow-auto">

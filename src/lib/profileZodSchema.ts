@@ -113,7 +113,7 @@ export const ProfileFormSchema = (t: TFunction<"translation", undefined>) =>
       .array(
         z.object({
           interest_name: z.string(),
-          interest_id: z.string(),
+          interest_id: z.string().or(z.number()),
         })
       )
       .refine((data) => data.length > 0, {
@@ -123,7 +123,7 @@ export const ProfileFormSchema = (t: TFunction<"translation", undefined>) =>
       .array(
         z.object({
           favorite_food_name: z.string(),
-          favorite_food_id: z.string(),
+          favorite_food_id: z.string().or(z.number()),
           authorized: z.boolean(),
           ip_address: z.string(),
         })
@@ -191,8 +191,8 @@ export const ProfileFormSchema = (t: TFunction<"translation", undefined>) =>
     pets: z
       .array(
         z.object({
-          pet_name: z.string(),
-          pet_id: z.string(),
+          pet_name: z.string().or(z.number()),
+          pet_id: z.string().or(z.number()),
         })
       )
       .refine((data) => data.length > 0, {

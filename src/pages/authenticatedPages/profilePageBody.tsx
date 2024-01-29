@@ -22,19 +22,21 @@ import calculateAge from "@/lib/calculateAge";
 import { aboutAccordionTabView } from "@/zustand/profile/about/aboutAccordionTabView";
 import authQuery from "@/queries/auth";
 import { useTranslation } from "react-i18next";
+import onboardingStore from "@/zustand/profile/onboarding/onboardingStore";
+import OnboardingWrapper from "@/components/onboarding/OnboardingWrapper";
+import { cn } from "@/lib/utils";
 // import getDeletedItems from "@/lib/getDeleted";
 
 const ProfilePageBody = ({ userId }: { userId: string }) => {
   const [t] = useTranslation();
   const headerValues = profileHeaderStore((state) => state.headerValues);
   const setHeaderValues = profileHeaderStore((state) => state.setHeaderValues);
-  const { data, setEditModeFalse, toggleEditMode, setData } =
+  const { data, setEditModeFalse, toggleEditMode, setData, setIsSaving } =
     profileAboutContentStore();
-  const { setIsSaving } = profileAboutContentStore();
-  const { user } = useUserStore();
   const updateUser = useUserStore((state) => state.updateUser);
   const changeTab = aboutAccordionTabView((state) => state.changeTab);
   const queryClient = useQueryClient();
+  const { user } = useUserStore();
   const methods = useForm({
     defaultValues: emptyDefault,
     resolver: zodResolver(ProfileFormSchema(t)),
@@ -172,7 +174,13 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
   const getEmploymentStatus = (name: string) =>
     employmentStatus.find((s) => s.employment_status_name === name);
 
+  const isFinished = onboardingStore(state => state.isFinished);
+
   const onSubmit = async (formData: any) => {
+    // for onboarding finish validation
+    if (!isFinished) {
+      return;
+    }
     if (data && !methods.formState.isDirty) {
       toggleEditMode();
       return;
@@ -209,24 +217,26 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
       const religion = getReligion(formData.religion);
       const disability = getDisabilityData(formData.disability);
       const employmentStatus = getEmploymentStatus(formData.employmentStatus);
+      console.log(formData);
+      console.log(data);
       const finalLanguages = removeExistingData(
         formData.language,
-        data!.language,
+        data?.language ?? [],
         "language_name"
       );
       const finalFavoriteFood = removeExistingData(
         formData.favoriteFood,
-        data!.favoriteFood,
+        data?.favoriteFood ?? [],
         "favorite_food_name"
       );
       const finalPets = removeExistingData(
         formData.pets,
-        data!.pets,
+        data?.pets ?? [],
         "pet_name"
       );
       const finalInterests = removeExistingData(
         formData.interest,
-        data!.interest,
+        data?.interest ?? [],
         "interest_name"
       );
       finalFormData = {
@@ -296,7 +306,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
     setIsSaving(false);
   };
   useEffect(() => {
-    if (Object.getOwnPropertyNames(methods.formState.errors).length > 0) {
+    if (Object.getOwnPropertyNames(methods.formState.errors).length > 0 && user!.profile_completed) {
       toast({
         variant: "destructive",
         title: t("alerts.allFieldsRequired"),
@@ -304,9 +314,10 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
         action: <ToastAction altText="Goto schedule to undo">Okay</ToastAction>,
       });
     }
-  }, [methods.formState.errors]);
+  }, [methods.formState.errors, t, user]);
+
   return (
-    <div className="flex h-screen flex-col justify-start w-full lg:w-3/4 border mx-auto">
+    <div className={cn("flex h-screen flex-col justify-start w-full lg:w-3/4 mx-auto", user?.profile_completed && 'border')}>
       {!user!.is_active && (
         <div className="h-full overflow-y-scroll flex flex-col">
           <Dialog open={open}>
@@ -321,12 +332,19 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
           className="flex flex-col h-full"
           onSubmit={methods.handleSubmit(onSubmit)}
         >
-          <ProfileTopNav />
-          <div className="lg:h-full h-screen overflow-y-scroll w-screen sm:w-full overflow-x-clip no-scrollbar flex flex-col">
-            {user?.profile_completed && <ProfileHeader userId={userId} />}
-            <AboutAccordion userId={parseInt(userId)} />
-            {/* user?.profile_completed && <GallerySection userId={userId} /> */}
-          </div>
+          {
+            !user?.profile_completed ? <div className="w-full h-min flex justify-start my-8 items-center flex-col px-4">
+              <OnboardingWrapper />
+            </div> :
+              <>
+                <ProfileTopNav />
+                <div className="lg:h-full h-screen overflow-y-scroll w-screen sm:w-full overflow-x-clip no-scrollbar flex flex-col">
+                  {user?.profile_completed && <ProfileHeader userId={userId} />}
+                  <AboutAccordion userId={parseInt(userId)} />
+                  {/* user?.profile_completed && <GallerySection userId={userId} /> */}
+                </div>
+              </>
+          }
         </form>
       </FormProvider>
     </div>

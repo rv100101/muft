@@ -15,8 +15,11 @@ import { useFormContext } from "react-hook-form";
 import { Interest } from "@/types/profile";
 import { useEffectOnce, useUpdateEffect } from "usehooks-ts";
 import removeExistingData from "@/lib/removeExistingData";
+import { useUserStore } from "@/zustand/auth/user";
+import { cn } from "@/lib/utils";
 
 export default function InterestField() {
+  const user = useUserStore(state => state.user);
   const { control, watch, setValue } = useFormContext();
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [open, setOpen] = React.useState(false);
@@ -33,7 +36,7 @@ export default function InterestField() {
       "interest_name"
     );
     setSelectables(selectables);
-  }, [selected]);
+  }, [selected, interests]);
 
   const handleUnselect = React.useCallback((framework: Interest) => {
     setSelected((prev) =>
@@ -87,10 +90,10 @@ export default function InterestField() {
             >
               <div className="group border border-input px-3 py-2 text-sm ring-offset-background rounded-md focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">
                 <div className="flex gap-1 flex-wrap">
-                  {selected.map((framework) => {
+                  {selected.map((framework, index: number) => {
                     return (
                       <Badge
-                        key={framework.interest_name}
+                        key={index}
                         className="bg-white dark:bg-[#3b0117] dark:text-white dark:border-[#df4798] border-primary border"
                         variant="secondary"
                       >
@@ -125,14 +128,14 @@ export default function InterestField() {
                   />
                 </div>
               </div>
-              <div className="relative mt-2 lg:h-full h-screen">
+              <div className={cn("relative mt-2 lg:h-full", !user?.profile_completed ? 'h-full' : 'h-screen')}>
                 {open && selectables.length > 0 ? (
                   <div className="absolute w-full z-10 top-0 rounded-md border bg-popover text-popover-foreground shadow-md outline-none animate-in">
                     <CommandGroup className="h-40 overflow-auto">
-                      {selectables.map((framework) => {
+                      {selectables.map((framework, index: number) => {
                         return (
                           <CommandItem
-                            key={framework.interest_id}
+                            key={index}
                             onMouseDown={(e) => {
                               e.preventDefault();
                               e.stopPropagation();

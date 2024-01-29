@@ -52,6 +52,7 @@ import { Textarea } from "../ui/textarea";
 import useMobileMessagingViewStore from "@/zustand/messaging/mobileStateView";
 import { Skeleton } from "../ui/skeleton";
 import { useTranslation } from "react-i18next";
+import onboardingStore from "@/zustand/profile/onboarding/onboardingStore";
 
 type FormDataType = {
   reason: string;
@@ -83,7 +84,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
     (state) => state.toggleIsFavored
   );
   const toggleIsLiked = useHomepageViewStore((state) => state.toggleIsLiked);
-
+  const setIsFinished = onboardingStore(state => state.setIsFinished);
   // const [likeTriggered, toggleLikeIcon] = useState(false);
   const [favoriteTriggered, toggleFavoriteIcon] = useState(false);
   const toggleLike = useMutation({
@@ -708,61 +709,60 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
               )} */}
             </div>
             {userId === user!.member_id.toString() && (
-              <>
-                {isEditing && (
-                  <div
+              <> {isEditing && (<div
+                className={cn(
+                  "flex space-x-2",
+                  i18n.language == "ar" && "space-x-reverse"
+                )}
+              >
+                <Button
+                  onClick={
+                    !formState.isDirty
+                      ? () => { }
+                      : () => {
+                        // if (isEditing && !formState.isValid) {
+                        //   toast({
+                        //     variant: "destructive",
+                        //     title: "Cannot save your profile",
+                        //     description:
+                        //       "Please make sure all the required fields are satisfied.",
+                        //     duration: 4000,
+                        //   });
+                        // }
+                        setIsFinished(true);
+                      }
+                  }
+                  disabled={isSaving || isUploading}
+                  type={"submit"}
+                  className={cn(
+                    "text-xs rounded-2xl h-max",
+                    "hover:bg-green-400/80 bg-green-400"
+                  )}
+                >
+                  <p>{t("general.save")}</p>
+                  {isSaving && (
+                    <span>
+                      <Loader2 className="ml-2 h-4 w-4 animate-spin" />
+                    </span>
+                  )}
+                </Button>
+                {!isSaving && (
+                  <Button
+                    type={"button"}
+                    onClick={() => {
+                      toggleEditMode();
+                      resetMultiselectDeletedItems();
+                    }}
                     className={cn(
-                      "flex space-x-2",
-                      i18n.language == "ar" && "space-x-reverse"
+                      "text-xs rounded-2xl h-max",
+                      "text-[#727272] bg-[#E8ECEF] hover:bg-[#E8ECEF]/80"
                     )}
                   >
-                    <Button
-                      onClick={
-                        !formState.isDirty
-                          ? () => { }
-                          : () => {
-                            // if (isEditing && !formState.isValid) {
-                            //   toast({
-                            //     variant: "destructive",
-                            //     title: "Cannot save your profile",
-                            //     description:
-                            //       "Please make sure all the required fields are satisfied.",
-                            //     duration: 4000,
-                            //   });
-                            // }
-                          }
-                      }
-                      disabled={isSaving || isUploading}
-                      type={"submit"}
-                      className={cn(
-                        "text-xs rounded-2xl h-max",
-                        "hover:bg-green-400/80 bg-green-400"
-                      )}
-                    >
-                      <p>{t("general.save")}</p>
-                      {isSaving && (
-                        <span>
-                          <Loader2 className="ml-2 h-4 w-4 animate-spin" />
-                        </span>
-                      )}
-                    </Button>
-                    {!isSaving && (
-                      <Button
-                        type={"button"}
-                        onClick={() => {
-                          toggleEditMode();
-                          resetMultiselectDeletedItems();
-                        }}
-                        className={cn(
-                          "text-xs rounded-2xl h-max",
-                          "text-[#727272] bg-[#E8ECEF] hover:bg-[#E8ECEF]/80"
-                        )}
-                      >
-                        <p>{t("forgotPassword.cancel")}</p>
-                      </Button>
-                    )}
-                  </div>
+                    <p>{t("forgotPassword.cancel")}</p>
+                  </Button>
                 )}
+              </div>
+              )}
                 {!isEditing && (
                   <Button
                     type={"button"}

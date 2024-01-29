@@ -2,6 +2,47 @@ import { FavoriteFood, Interest, Languages, Pets } from "@/types/profile";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
+export const initialState: ProfileAbout = {
+  nickname: "",
+  gender: "",
+  nationality: "",
+  birthInfo: "",
+  religion: "",
+  ethnicity: "",
+  maritalStatus: "",
+  language: [],
+  education: "",
+  employmentStatus: "",
+  occupationTitle: "",
+  income: "",
+  height: 0,
+  weight: 0,
+  bodyType: "",
+  interest: [],
+  favoriteFood: [],
+  country: "",
+  country_code: "",
+  region: "",
+  hair: "",
+  eyes: "",
+  bodyArt: "",
+  haveChildren: "",
+  wantChildren: "",
+  workout: "",
+  disability: "",
+  pets: [],
+  drinking: "",
+  smoking: "",
+  livingStatus: "",
+  car: "",
+  age: 0,
+  member_uuid: null,
+  member_id: null,
+  gallery_uuid: null,
+  is_liked: null,
+  is_favored: null,
+};
+
 export type ProfileAbout = {
   nickname: string;
   gender: string;

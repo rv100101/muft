@@ -33,6 +33,7 @@ const BasicInformationForm = () => {
   const userId = parts[parts.length - 1];
   const [minDate, setMinDate] = useState("");
   const [maxDate, setMaxDate] = useState("");
+  const user = useUserStore(state => state.user);
   const isSaving = profileAboutContentStore((state) => state.isSaving);
   useEffectOnce(() => {
     const currentDate = new Date();
@@ -56,17 +57,21 @@ const BasicInformationForm = () => {
   const { control } = useFormContext();
   const { nationalities } = selectOptions();
   const { data, editMode, isLoading, profileData } = profileAboutContentStore();
-  const user = useUserStore((state) => state.user);
 
-  const getGender = (value: string) => {
-    if (value == t('memberDetails.male')) {
-      return 'M';
-    } else {
-      return 'F';
+  const getGender: (value: string) => string = (value: string) => {
+    console.log(value);
+    if (value == t('memberDetails.male') || value == 'M') {
+      console.log('return M');
+      return 'M'
     }
+    else if (value == t('memberDetails.female') || value == 'F') {
+      console.log('return F');
+      return 'F'
+    }
+    else { return '' }
   }
 
-  if ((isLoading && profileData == null) || isSaving) {
+  if ((isLoading && profileData == null && user?.profile_completed) || isSaving) {
     return (
       <div className="flex justify-start items-start space-x-4 w-full ml-5">
         <div className="space-y-2">
@@ -79,8 +84,9 @@ const BasicInformationForm = () => {
   return (
     <div
       className={cn(
-        "flex flex-col h-96  w-full space-y-4",
-        !user?.profile_completed && "h-full"
+        "h-96 w-full",
+        !user?.profile_completed && "h-full",
+        !user?.profile_completed ? "sm:grid sm:grid-flow-row sm:grid-cols-2 gap-2 sm:gap-4" : "flex flex-col space-y-4"
       )}
     >
       {" "}
@@ -160,7 +166,7 @@ const BasicInformationForm = () => {
       </div>
       <div className="flex flex-row justify-between w-full px-5">
         {editMode || !user?.profile_completed ? (
-          <div className="flex flex-col w-full">
+          <div className={cn("w-full flex flex-col")}>
             <FormField
               name="gender"
               render={({ field }) => {
