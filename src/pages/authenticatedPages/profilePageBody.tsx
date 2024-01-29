@@ -7,10 +7,8 @@ import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
 import { emptyDefault, ProfileFormSchema } from "@/lib/profileZodSchema";
 import { useEffect, useState } from "react";
 import profileHeaderStore from "@/zustand/profile/profileHeaderStore";
-import profileContentQuery from "@/queries/profile/profileContent";
 import selectOptions from "@/zustand/profile/selectData/selectOptions";
-import { User, useUserStore } from "@/zustand/auth/user";
-import { useQueryClient } from "@tanstack/react-query";
+import { useUserStore } from "@/zustand/auth/user";
 import { ToastAction } from "@/components/ui/toast";
 import { toast } from "@/components/ui/use-toast";
 import { Dialog } from "@radix-ui/react-dialog";
@@ -18,25 +16,19 @@ import { DialogContent } from "@/components/ui/dialog";
 import ActivateAccount from "./accountActivationPage";
 import removeDuplicates from "@/lib/removeDulpicates";
 import removeExistingData from "@/lib/removeExistingData";
-import calculateAge from "@/lib/calculateAge";
-import { aboutAccordionTabView } from "@/zustand/profile/about/aboutAccordionTabView";
-import authQuery from "@/queries/auth";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
 import OnboardingWrapper from "@/components/onboarding/OnboardingWrapper";
+import onboardingStore from "@/zustand/profile/onboarding/onboardingStore";
 // import getDeletedItems from "@/lib/getDeleted";
 
 const ProfilePageBody = ({ userId }: { userId: string }) => {
   const [t] = useTranslation();
   const headerValues = profileHeaderStore((state) => state.headerValues);
-  const setHeaderValues = profileHeaderStore((state) => state.setHeaderValues);
-  const { data, setEditModeFalse, toggleEditMode, setData } =
+  const { data, setEditModeFalse, toggleEditMode, } =
     profileAboutContentStore();
   const { setIsSaving } = profileAboutContentStore();
   const { user } = useUserStore();
-  const updateUser = useUserStore((state) => state.updateUser);
-  const changeTab = aboutAccordionTabView((state) => state.changeTab);
-  const queryClient = useQueryClient();
   const methods = useForm({
     defaultValues: emptyDefault,
     resolver: zodResolver(ProfileFormSchema(t)),
@@ -174,7 +166,13 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
   const getEmploymentStatus = (name: string) =>
     employmentStatus.find((s) => s.employment_status_name === name);
 
+  const isFinished = onboardingStore(state => state.isFinished);
+
   const onSubmit = async (formData: any) => {
+    // for onboarding finish validation
+    if (!isFinished) {
+      return;
+    }
     if (data && !methods.formState.isDirty) {
       toggleEditMode();
       return;
@@ -211,24 +209,26 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
       const religion = getReligion(formData.religion);
       const disability = getDisabilityData(formData.disability);
       const employmentStatus = getEmploymentStatus(formData.employmentStatus);
+      console.log(formData);
+      console.log(data);
       const finalLanguages = removeExistingData(
         formData.language,
-        data!.language,
+        data?.language ?? [],
         "language_name"
       );
       const finalFavoriteFood = removeExistingData(
         formData.favoriteFood,
-        data!.favoriteFood,
+        data?.favoriteFood ?? [],
         "favorite_food_name"
       );
       const finalPets = removeExistingData(
         formData.pets,
-        data!.pets,
+        data?.pets ?? [],
         "pet_name"
       );
       const finalInterests = removeExistingData(
         formData.interest,
-        data!.interest,
+        data?.interest ?? [],
         "interest_name"
       );
       finalFormData = {

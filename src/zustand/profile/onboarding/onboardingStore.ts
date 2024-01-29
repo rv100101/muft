@@ -5,6 +5,8 @@ interface OnboardingState {
   setStep: (val: number) => void;
   currentFieldHasErrors: boolean;
   setCurrentFieldHasErrors: (val: boolean) => void;
+  isFinished: boolean;
+  setIsFinished: (val: boolean) => void;
 }
 
 const onboardingStore = create<OnboardingState>((set) => ({
@@ -18,6 +20,12 @@ const onboardingStore = create<OnboardingState>((set) => ({
     set(() => ({
       currentFieldHasErrors: val,
     })),
+  isFinished: false,
+  setIsFinished: (val) => {
+    set(() => ({
+      isFinished: val,
+    }));
+  },
 }));
 
 export default onboardingStore;

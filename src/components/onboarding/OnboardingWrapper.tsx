@@ -31,6 +31,7 @@ const OnboardingWrapper = () => {
 
   const step = onboardingStore(state => state.step);
   const setStep = onboardingStore(state => state.setStep);
+  const setIsFinished = onboardingStore(state => state.setIsFinished);
 
   function checkKeysInErrorObject(keys: string[], errorObj: FieldErrors<FieldValues>): boolean {
     for (const key of keys) {
@@ -49,8 +50,14 @@ const OnboardingWrapper = () => {
     }
 
     if (Object.keys(errors).length == 0) {
-      return;
+      if (step == 1) {
+        return;
+      }
+      else {
+        setStep(step + 1);
+      }
     }
+
     const validateFields = getFields();
 
     const pass = checkKeysInErrorObject(validateFields, errors);
@@ -71,12 +78,18 @@ const OnboardingWrapper = () => {
       <hr className="h-4 w-full sm:w-1/2 mt-8" />
       <div className={cn("w-full sm:w-1/2 flex justify-end", step !== 1 && "justify-between")}>
         {
-          step !== 1 && <Button type="button" className="hover:bg-[#FF599B]/90" onClick={() => setStep(step - 1)}>Back</Button>
+          step !== 1 && <Button type="button" className="hover:bg-[#FF599B]/90" onClick={() => {
+            setStep(step - 1)
+            setIsFinished(false);
+          }}>Back</Button>
         }
         {
           step !== 12 ? <Button type="submit" className="hover:bg-[#FF599B]/90" onClick={handleNext} >Next</Button>
             : <Button className="hover:bg-[#FF599B]/90"
               disabled={isSaving}
+              onClick={() => {
+                setIsFinished(true);
+              }}
               type="submit" >Finish
               {isSaving && (
                 <span>
@@ -95,6 +108,9 @@ const StepView = ({ step }: { step: number }) => {
     <BasicInformationStep />, <LocationStep />, <BackgroundStep />, <LanguagesStep />, <AppearanceStep />, <LifestyleStep />, <PetsStep />,
     <FavoriteFoodStep />, <HealthStep />, <MaritalStatusStep />, <EmploymentStatusStep />, <InterestsStep />
   ];
+  if (step > forms.length) {
+    return forms[-1];
+  }
   return forms[step - 1];
 }
 
@@ -113,6 +129,9 @@ const StepHeader = ({ step }: { step: number }) => {
     <h1 className="font-semibold">Employment 💼</h1>,
     <h1 className="font-semibold">Interests 🎲</h1>,
   ];
+  if (step > headers.length) {
+    return headers[-1];
+  }
   return headers[step - 1];
 }
 
