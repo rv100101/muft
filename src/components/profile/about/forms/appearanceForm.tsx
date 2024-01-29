@@ -186,6 +186,7 @@ const AppearanceForm = () => {
             <FormField
               name="height"
               render={({ field }) => {
+                console.log(field.value);
                 return (
                   <FormItem>
                     <FormLabel className="text-primary" htmlFor="height">
@@ -202,8 +203,8 @@ const AppearanceForm = () => {
                         field.onChange(parseInt(e.target.value));
                         // }
                       }}
-                      value={field.value}
-                      defaultValue={field.value}
+                      value={field.value == 0 ? "" : field.value}
+                      defaultValue={field.value == 0 ? "" : field.value}
                       className="outline-0 border rounded-lg w-full py-3 px-5"
                       name="height"
                     />
@@ -258,7 +259,8 @@ const AppearanceForm = () => {
                         field.onChange(parseInt(e.target.value));
                         // }
                       }}
-                      defaultValue={field.value}
+                      value={field.value == 0 ? "" : field.value}
+                      defaultValue={field.value == 0 ? "" : field.value}
                       className="outline-0 border rounded-lg w-full py-3 px-5"
                       name="weight"
                     />

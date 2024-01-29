@@ -8,7 +8,6 @@ import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
 import useSelectedCountryStore from "@/zustand/profile/location/selectedCountry";
 import LocationForm from "../profile/about/forms/locationForm";
 const LocationStep = () => {
-
   const [, i18n] = useTranslation();
   const {
     setCountries, setStates, countries

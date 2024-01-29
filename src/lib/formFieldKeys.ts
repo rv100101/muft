@@ -34,7 +34,7 @@ export const fields = [
 
 const basicInfoFields = ["gender", "nationality", "birthInfo", "nickname"];
 
-const locationFields = ["country", "region"];
+export const locationFields = ["country", "region"];
 
 const backgroundFields = ["education", "religion", "ethnicity"];
 

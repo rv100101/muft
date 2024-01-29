@@ -59,13 +59,10 @@ const BasicInformationForm = () => {
   const { data, editMode, isLoading, profileData } = profileAboutContentStore();
 
   const getGender: (value: string) => string = (value: string) => {
-    console.log(value);
     if (value == t('memberDetails.male') || value == 'M') {
-      console.log('return M');
       return 'M'
     }
     else if (value == t('memberDetails.female') || value == 'F') {
-      console.log('return F');
       return 'F'
     }
     else { return '' }

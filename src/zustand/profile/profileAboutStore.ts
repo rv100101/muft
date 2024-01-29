@@ -15,8 +15,8 @@ export const initialState: ProfileAbout = {
   employmentStatus: "",
   occupationTitle: "",
   income: "",
-  height: 0,
-  weight: 0,
+  height: "",
+  weight: "",
   bodyType: "",
   interest: [],
   favoriteFood: [],
@@ -35,7 +35,7 @@ export const initialState: ProfileAbout = {
   smoking: "",
   livingStatus: "",
   car: "",
-  age: 0,
+  age: "",
   member_uuid: null,
   member_id: null,
   gallery_uuid: null,
@@ -56,8 +56,8 @@ export type ProfileAbout = {
   employmentStatus: string;
   occupationTitle: string;
   income: string;
-  height: number;
-  weight: number;
+  height: number | string;
+  weight: number | string;
   bodyType: string;
   interest: Interest[];
   favoriteFood: FavoriteFood[];
@@ -76,7 +76,7 @@ export type ProfileAbout = {
   smoking: string;
   livingStatus: string;
   car: string;
-  age: number;
+  age: number | string;
   member_uuid: string | null;
   member_id: string | null;
   gallery_uuid: string | null;

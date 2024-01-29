@@ -10,7 +10,6 @@ const BasicInformationStep = () => {
   const {
     setNationalities
   } = selectOptions();
-
   useQuery({
     queryFn: () => profileContentQuery.editOptions.getNationality(i18n.language),
     refetchInterval: Infinity,
