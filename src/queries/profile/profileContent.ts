@@ -156,9 +156,18 @@ const getInterests = async () => {
   }
 };
 
-const getEmploymentStatus = async () => {
+const getEmploymentStatus = async (lang: string) => {
   try {
-    const response = await axiosQuery.post("/EmploymentStatus");
+    const formData = new FormData();
+    formData.append(
+      "auth",
+      "0DB31DEE22DC4C03AD7DAAA9C29518FF3C08D931992A4A5CB0A4FF4CF4707DC6"
+    );
+    formData.append("lang", lang);
+    const response = await axiosQuery.post(
+      "https://muffinapi.azurewebsites.net/employment_status.php",
+      formData
+    );
     return response.data;
   } catch (error) {
     return [];
@@ -420,18 +429,36 @@ const getEducation = async (lang: string) => {
   }
 };
 
-const getOccupations = async () => {
+const getOccupations = async (lang: string) => {
   try {
-    const response = await axiosQuery.post("/Occupation");
+    const formData = new FormData();
+    formData.append(
+      "auth",
+      "0DB31DEE22DC4C03AD7DAAA9C29518FF3C08D931992A4A5CB0A4FF4CF4707DC6"
+    );
+    formData.append("lang", lang);
+    const response = await axiosQuery.post(
+      "https://muffinapi.azurewebsites.net/occupation.php",
+      formData
+    );
     return response.data;
   } catch (error) {
     return [];
   }
 };
 
-const getIncomes = async () => {
+const getIncomes = async (lang: string) => {
   try {
-    const response = await axiosQuery.post("/Income");
+    const formData = new FormData();
+    formData.append(
+      "auth",
+      "0DB31DEE22DC4C03AD7DAAA9C29518FF3C08D931992A4A5CB0A4FF4CF4707DC6"
+    );
+    formData.append("lang", lang);
+    const response = await axiosQuery.post(
+      "https://muffinapi.azurewebsites.net/income.php",
+      formData
+    );
     return response.data;
   } catch (error) {
     return [];

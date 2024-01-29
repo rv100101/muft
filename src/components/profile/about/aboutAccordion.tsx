@@ -200,18 +200,18 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
   });
 
   useQuery({
-    queryFn: () => profileContentQuery.editOptions.getOccupations(),
+    queryFn: () => profileContentQuery.editOptions.getOccupations(i18n.language),
     refetchInterval: Infinity,
-    queryKey: ["occupations"],
+    queryKey: ["occupations", i18n.language],
     onSuccess: (data: Occupation[]) => {
       setOccupations(data);
     },
   });
 
   useQuery({
-    queryFn: () => profileContentQuery.editOptions.getIncomes(),
+    queryFn: () => profileContentQuery.editOptions.getIncomes(i18n.language),
     refetchInterval: Infinity,
-    queryKey: ["incomes"],
+    queryKey: ["incomes", i18n.language],
     onSuccess: (data: Income[]) => {
       setIncomes(data);
     },
@@ -385,8 +385,8 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
   });
 
   useQuery({
-    queryFn: () => profileContentQuery.editOptions.getEmploymentStatus(),
-    queryKey: ["employmentStatus"],
+    queryFn: () => profileContentQuery.editOptions.getEmploymentStatus(i18n.language),
+    queryKey: ["employmentStatus", i18n.language],
     onSuccess: (data: EmploymentStatus[]) => {
       setEmploymentStatus(data);
     },
