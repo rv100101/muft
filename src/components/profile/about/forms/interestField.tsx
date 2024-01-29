@@ -67,8 +67,11 @@ export default function InterestField() {
   );
 
   React.useEffect(() => {
-    setValue("interest", selected);
-  }, [selected]);
+    setValue("interest", selected, {
+      shouldDirty: true,
+      shouldTouch: true
+    });
+  }, [selected, setValue]);
 
   useEffectOnce(() => {
     setSelected(watch("interest"));

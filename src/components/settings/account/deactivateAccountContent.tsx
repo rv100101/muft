@@ -37,9 +37,14 @@ const DeactivateAccountContent = () => {
   const deactivateAccount = async () => {
     try {
       setIsLoading(true);
-      const res = await axiosQuery.post("/DeactivateAccount", {
-        member: user!.member_id,
-      });
+      const formData = new FormData();
+      formData.append(
+        "auth",
+        "0DB31DEE22DC4C03AD7DAAA9C29518FF3C08D931992A4A5CB0A4FF4CF4707DC6"
+      );
+      formData.append("lang", i18n.language);
+      formData.append("member", user!.member_id.toString());
+      const res = await axiosQuery.post("https://muffinapi.azurewebsites.net/deactivate_account.php", formData);
       if (res.data) {
         toast({
           title: t("alerts.accountDeactivated"),
@@ -81,9 +86,14 @@ const DeactivateAccountContent = () => {
     try {
       console.log("this is triggered");
       setDeleteLoading(true);
-      // const res = await axiosQuery.post("/DeleteAccount", {
-      //   member: user!.member_id,
-      // });
+      // const formData = new FormData();
+      // formData.append(
+      //   "auth",
+      //   "0DB31DEE22DC4C03AD7DAAA9C29518FF3C08D931992A4A5CB0A4FF4CF4707DC6"
+      // );
+      // formData.append("lang", i18n.language);
+      // formData.append("member", user!.member_id.toString());
+      // const res = await axiosQuery.post("https://muffinapi.azurewebsites.net/delete_account.php",formData);
       // if (res.data) {
       toast({
         title: t("alerts.accountDeleted"),

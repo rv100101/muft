@@ -64,12 +64,18 @@ export const ProfileFormSchema = (t: TFunction<"translation", undefined>) =>
       .array(
         z.object({
           language_name: z.string(),
-          language_code: z.string(),
+          language_code: z.string().or(z.number()),
         })
       )
-      .refine((data) => data.length > 0, {
-        message: t("validation.pickLanguage"),
-      }),
+      .refine(
+        (data) => {
+          console.log("LANGUAGE!!!", data);
+          return data.length > 0;
+        },
+        {
+          message: t("validation.pickLanguage"),
+        }
+      ),
     education: z
       .string({
         required_error: t("validation.educationInfoRequired"),

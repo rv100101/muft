@@ -69,8 +69,11 @@ export default function FavoriteFoodField() {
   );
 
   React.useEffect(() => {
-    setValue("favoriteFood", selected);
-  }, [selected]);
+    setValue("favoriteFood", selected, {
+      shouldDirty: true,
+      shouldTouch: true
+    });
+  }, [selected, setValue]);
 
   useEffectOnce(() => {
     setSelected(watch("favoriteFood"));

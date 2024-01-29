@@ -63,8 +63,11 @@ export default function PetsField() {
   );
 
   React.useEffect(() => {
-    setValue("pets", selected);
-  }, [selected]);
+    setValue("pets", selected, {
+      shouldDirty: true,
+      shouldTouch: true
+    });
+  }, [selected, setValue]);
 
   useEffectOnce(() => {
     setSelected(watch("pets"));

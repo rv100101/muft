@@ -79,6 +79,7 @@ const BackgroundForm = () => {
                       </FormControl>
                       <SelectContent
                         dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                        className="min-h-min max-h-44 w-min"
                       >
                         {educations &&
                           educations.map((data: Education, index) => {
@@ -145,6 +146,7 @@ const BackgroundForm = () => {
                       </FormControl>
                       <SelectContent
                         dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                        className="min-h-min max-h-44 w-min"
                       >
                         {religion.map((data: Religion, index: number) => {
                           const { religion_name } = data;
@@ -209,6 +211,7 @@ const BackgroundForm = () => {
                       </FormControl>
                       <SelectContent
                         dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                        className="min-h-min max-h-44 w-min"
                       >
                         {ethnicities.map((data: Ethnicity) => {
                           const { ethnicity_name, ethnicity_id } = data;

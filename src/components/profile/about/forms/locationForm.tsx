@@ -113,6 +113,7 @@ const LocationForm = () => {
                       </FormControl>
                       <SelectContent
                         dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                        className="h-44 w-min"
                       >
                         {countries &&
                           countries.map((data: Country, index: number) => {
@@ -177,6 +178,7 @@ const LocationForm = () => {
                       </FormControl>
                       <SelectContent
                         dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                        className="min-h-min max-h-44 w-min"
                       >
                         {states &&
                           states.map((data: State, index: number) => {

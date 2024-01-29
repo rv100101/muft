@@ -25,7 +25,7 @@ export default function LanguageField() {
     (state) => state.setLanguagesToDelete
   );
   const user = useUserStore(state => state.user);
-  const { control, watch, setValue } = useFormContext();
+  const { control, watch, setValue, } = useFormContext();
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [open, setOpen] = React.useState(false);
 
@@ -91,7 +91,10 @@ export default function LanguageField() {
   );
 
   React.useEffect(() => {
-    setValue("language", selected);
+    setValue("language", selected, {
+      shouldDirty: true,
+      shouldTouch: true,
+    });
   }, [selected, setValue]);
 
   useEffectOnce(() => {

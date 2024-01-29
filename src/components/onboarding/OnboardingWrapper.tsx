@@ -5,7 +5,7 @@ import BasicInformationStep from "./BasicInformationStep"
 import { cn } from "@/lib/utils"
 import { FieldErrors, FieldValues, useFormContext } from "react-hook-form"
 import { fieldNames } from "@/lib/formFieldKeys"
-import { useCallback } from "react"
+import { useCallback, } from "react"
 import LocationStep from "./LocationStep"
 import BackgroundStep from "./BackgroundStep"
 import LanguagesStep from "./LanguagesStep"
@@ -19,15 +19,15 @@ import EmploymentStatusStep from "./EmploymentStatusStep"
 import InterestsStep from "./InterestsStep"
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore"
 import { Loader2 } from "lucide-react"
+import { useUpdateEffect } from "usehooks-ts"
 
 const OnboardingWrapper = () => {
   const {
     isSaving
   } = profileAboutContentStore();
   const {
-    formState: { errors },
+    formState: { errors, dirtyFields }, trigger
   } = useFormContext();
-  console.log(errors);
 
   const step = onboardingStore(state => state.step);
   const setStep = onboardingStore(state => state.setStep);
@@ -43,27 +43,29 @@ const OnboardingWrapper = () => {
     return true;
   }
 
+  function checkDirtyFields(keys: string[], errorObj: Record<string, boolean>): boolean {
+    for (const key of keys) {
+      if (!(key in errorObj)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  useUpdateEffect(() => { }, [errors]);
 
   const handleNext = useCallback(() => {
     const getFields: () => string[] = () => {
       return fieldNames[step - 1]
     }
     const validateFields = getFields();
-    if (Object.keys(errors).length == 0) {
-      if (step == 1) {
-        return;
-      }
-      else {
-        setStep(step + 1);
-      }
-    }
+    trigger(validateFields);
     const pass = checkKeysInErrorObject(validateFields, errors);
-    if (pass) {
+    const isDirty = checkDirtyFields(validateFields, dirtyFields);
+    if (pass && isDirty) {
       setStep(step + 1);
     }
-  }, [errors, setStep, step]);
-
-  console.log(isSaving);
+  }, [dirtyFields, errors, setStep, step, trigger]);
 
   return (
     <>
@@ -85,7 +87,7 @@ const OnboardingWrapper = () => {
             }}>Back</Button>
         }
         {
-          step !== 12 ? <Button type="submit" className="hover:bg-[#FF599B]/90" onClick={handleNext} >Next</Button>
+          step !== 12 ? <Button type="button" className="hover:bg-[#FF599B]/90" onClick={handleNext} >Next</Button>
             : <Button className=" hover:bg-[#FF599B]/90"
               disabled={isSaving}
               onClick={() => {

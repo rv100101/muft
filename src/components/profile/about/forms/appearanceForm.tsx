@@ -73,7 +73,10 @@ const AppearanceForm = () => {
                           />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent>
+                      <SelectContent
+                        dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                        className="min-h-min max-h-44 w-min"
+                      >
                         {eyes &&
                           eyes.map((data: Eye, index: number) => {
                             const { eyes_name } = data;
@@ -137,7 +140,10 @@ const AppearanceForm = () => {
                           />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent>
+                      <SelectContent
+                        dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                        className="min-h-min max-h-44 w-min"
+                      >
                         {hair &&
                           hair.map((data: Hair, index: number) => {
                             const { hair_name } = data;
@@ -186,6 +192,7 @@ const AppearanceForm = () => {
             <FormField
               name="height"
               render={({ field }) => {
+                console.log(field.value);
                 return (
                   <FormItem>
                     <FormLabel className="text-primary" htmlFor="height">
@@ -202,8 +209,8 @@ const AppearanceForm = () => {
                         field.onChange(parseInt(e.target.value));
                         // }
                       }}
-                      value={field.value}
-                      defaultValue={field.value}
+                      value={field.value == 0 ? "" : field.value}
+                      defaultValue={field.value == 0 ? "" : field.value}
                       className="outline-0 border rounded-lg w-full py-3 px-5"
                       name="height"
                     />
@@ -258,7 +265,8 @@ const AppearanceForm = () => {
                         field.onChange(parseInt(e.target.value));
                         // }
                       }}
-                      defaultValue={field.value}
+                      value={field.value == 0 ? "" : field.value}
+                      defaultValue={field.value == 0 ? "" : field.value}
                       className="outline-0 border rounded-lg w-full py-3 px-5"
                       name="weight"
                     />
@@ -314,7 +322,10 @@ const AppearanceForm = () => {
                           />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent>
+                      <SelectContent
+                        dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                        className="min-h-min max-h-44 w-min"
+                      >
                         {bodyTypes &&
                           bodyTypes.map((data: BodyType) => {
                             const { body: bodyType, body_type_id } = data;
@@ -378,7 +389,10 @@ const AppearanceForm = () => {
                           />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent>
+                      <SelectContent
+                        dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                        className="min-h-min max-h-44 w-min"
+                      >
                         {bodyArts &&
                           bodyArts.map((data: BodyArt, index: number) => {
                             const { body } = data;
