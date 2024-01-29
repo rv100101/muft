@@ -276,21 +276,24 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
         religion: religion?.religion_id,
         employmentStatus: employmentStatus?.employment_status_id,
       };
-      await profileContentQuery.saveInformation(finalFormData, user!.member_id);
-      await authQuery.isProfileCompleted(user!.member_id);
-      console.log(formData);
-      const age = calculateAge(formData.birthInfo);
-      setHeaderValues({ ...headerValues!, nickname: formData.nickname, age });
-      setData({ ...data!, ...formData, age });
-      changeTab(1);
-      updateUser({ ...user, profile_completed: true } as User);
-      queryClient.invalidateQueries(["profileHeader"]);
-      queryClient.invalidateQueries(["profileContent"]);
-      queryClient.invalidateQueries(["home-members"]);
-      toast({
-        variant: "success",
-        title: t("alerts.profileSaved"),
-      });
+      // await profileContentQuery.saveInformation(finalFormData, user!.member_id);
+      // await authQuery.isProfileCompleted(user!.member_id);
+      // console.log(formData);
+      // const age = calculateAge(formData.birthInfo);
+      // setHeaderValues({ ...headerValues!, nickname: formData.nickname, age });
+      // setData({ ...data!, ...formData, age });
+      // changeTab(1);
+      // updateUser({ ...user, profile_completed: true } as User);
+      // queryClient.invalidateQueries(["profileHeader"]);
+      // queryClient.invalidateQueries(["profileContent"]);
+      // queryClient.invalidateQueries(["home-members"]);
+      // toast({
+      //   variant: "success",
+      //   title: t("alerts.profileSaved"),
+      // });
+      console.log(finalFormData);
+
+      alert("saved");
       setEditModeFalse();
     } catch (error) {
       console.log(error);

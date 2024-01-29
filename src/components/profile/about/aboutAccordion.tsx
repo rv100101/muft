@@ -182,9 +182,9 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
   });
 
   useQuery({
-    queryFn: () => profileContentQuery.editOptions.getMaritalStatus(),
+    queryFn: () => profileContentQuery.editOptions.getMaritalStatus(i18n.language),
     refetchInterval: Infinity,
-    queryKey: ["maritalStatus"],
+    queryKey: ["maritalStatus", i18n.language],
     onSuccess: (data: MaritalStatus[]) => {
       setMaritalStatus(data);
     },
@@ -277,18 +277,18 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
   });
 
   useQuery({
-    queryFn: () => profileContentQuery.editOptions.getHaveChildren(),
+    queryFn: () => profileContentQuery.editOptions.getHaveChildren(i18n.language),
     refetchInterval: Infinity,
-    queryKey: ["haveChildren"],
+    queryKey: ["haveChildren", i18n.language],
     onSuccess: (data: HaveChildren[]) => {
       setHaveChildren(data);
     },
   });
 
   useQuery({
-    queryFn: () => profileContentQuery.editOptions.getWantChildren(),
+    queryFn: () => profileContentQuery.editOptions.getWantChildren(i18n.language),
     refetchInterval: Infinity,
-    queryKey: ["wantChildren"],
+    queryKey: ["wantChildren", i18n.language],
     onSuccess: (data: WantChildren[]) => {
       setWantChildren(data);
     },

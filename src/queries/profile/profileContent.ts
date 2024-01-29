@@ -201,9 +201,18 @@ const getEthnicity = async (lang: string) => {
   }
 };
 
-const getMaritalStatus = async () => {
+const getMaritalStatus = async (lang: string) => {
   try {
-    const response = await axiosQuery.post("/MaritalStatus");
+    const formData = new FormData();
+    formData.append(
+      "auth",
+      "0DB31DEE22DC4C03AD7DAAA9C29518FF3C08D931992A4A5CB0A4FF4CF4707DC6"
+    );
+    formData.append("lang", lang);
+    const response = await axiosQuery.post(
+      "https://muffinapi.azurewebsites.net/marital_status.php",
+      formData
+    );
     return response.data;
   } catch (error) {
     return [];
@@ -247,18 +256,36 @@ const getHair = async (lang: string) => {
   }
 };
 
-const getHaveChildren = async () => {
+const getHaveChildren = async (lang: string) => {
   try {
-    const response = await axiosQuery.post("/HaveChildren");
+    const formData = new FormData();
+    formData.append(
+      "auth",
+      "0DB31DEE22DC4C03AD7DAAA9C29518FF3C08D931992A4A5CB0A4FF4CF4707DC6"
+    );
+    formData.append("lang", lang);
+    const response = await axiosQuery.post(
+      "https://muffinapi.azurewebsites.net/have_children.php",
+      formData
+    );
     return response.data;
   } catch (error) {
     return [];
   }
 };
 
-const getWantChildren = async () => {
+const getWantChildren = async (lang: string) => {
   try {
-    const response = await axiosQuery.post("/WantChildren");
+    const formData = new FormData();
+    formData.append(
+      "auth",
+      "0DB31DEE22DC4C03AD7DAAA9C29518FF3C08D931992A4A5CB0A4FF4CF4707DC6"
+    );
+    formData.append("lang", lang);
+    const response = await axiosQuery.post(
+      "https://muffinapi.azurewebsites.net/want_children.php",
+      formData
+    );
     return response.data;
   } catch (error) {
     return [];

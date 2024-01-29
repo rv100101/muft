@@ -74,7 +74,7 @@ const OnboardingWrapper = () => {
           step !== 1 && <Button type="button" className="hover:bg-[#FF599B]/90" onClick={() => setStep(step - 1)}>Back</Button>
         }
         {
-          step !== 12 ? <Button className="hover:bg-[#FF599B]/90" onClick={handleNext} >Next</Button>
+          step !== 12 ? <Button type="submit" className="hover:bg-[#FF599B]/90" onClick={handleNext} >Next</Button>
             : <Button className="hover:bg-[#FF599B]/90"
               disabled={isSaving}
               type="submit" >Finish

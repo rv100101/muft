@@ -195,16 +195,16 @@ const AppearanceForm = () => {
                       placeholder="Enter height (cm)"
                       type="number"
                       onChange={(e) => {
-                        if (
-                          e.target.value !== "" &&
-                          typeof parseInt(e.target.value) === "number"
-                        ) {
-                          field.onChange(parseInt(e.target.value));
-                        }
+                        // if (
+                        //   e.target.value !== "" &&
+                        //   typeof parseInt(e.target.value) === "number"
+                        // ) {
+                        field.onChange(parseInt(e.target.value));
+                        // }
                       }}
                       value={field.value}
                       defaultValue={field.value}
-                      className="outline-0 border border rounded-lg w-full py-3 px-5"
+                      className="outline-0 border rounded-lg w-full py-3 px-5"
                       name="height"
                     />
                     <FormMessage />
@@ -251,12 +251,12 @@ const AppearanceForm = () => {
                       placeholder="Enter weight (lbs)"
                       type="number"
                       onChange={(e) => {
-                        if (
-                          e.target.value !== "" &&
-                          typeof parseInt(e.target.value) === "number"
-                        ) {
-                          field.onChange(parseInt(e.target.value));
-                        }
+                        // if (
+                        //   e.target.value !== "" &&
+                        //   typeof parseInt(e.target.value) === "number"
+                        // ) {
+                        field.onChange(parseInt(e.target.value));
+                        // }
                       }}
                       defaultValue={field.value}
                       className="outline-0 border rounded-lg w-full py-3 px-5"
