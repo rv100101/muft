@@ -20,7 +20,7 @@ const BasicInformationStep = () => {
     },
   });
   return (
-    <div>
+    <div className="w-full sm:w-1/2">
       <BasicInformationForm />
     </div>
   )
