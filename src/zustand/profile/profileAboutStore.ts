@@ -56,8 +56,8 @@ export type ProfileAbout = {
   employmentStatus: string;
   occupationTitle: string;
   income: string;
-  height: number | string;
-  weight: number | string;
+  height: string;
+  weight: string;
   bodyType: string;
   interest: Interest[];
   favoriteFood: FavoriteFood[];
@@ -76,7 +76,7 @@ export type ProfileAbout = {
   smoking: string;
   livingStatus: string;
   car: string;
-  age: number | string;
+  age: string;
   member_uuid: string | null;
   member_id: string | null;
   gallery_uuid: string | null;
