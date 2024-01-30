@@ -5,7 +5,7 @@ import BasicInformationStep from "./BasicInformationStep"
 import { cn } from "@/lib/utils"
 import { FieldErrors, FieldValues, useFormContext } from "react-hook-form"
 import { fieldNames } from "@/lib/formFieldKeys"
-import { useCallback, } from "react"
+import { useCallback, useEffect, useState, } from "react"
 import LocationStep from "./LocationStep"
 import BackgroundStep from "./BackgroundStep"
 import LanguagesStep from "./LanguagesStep"
@@ -19,19 +19,25 @@ import EmploymentStatusStep from "./EmploymentStatusStep"
 import InterestsStep from "./InterestsStep"
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore"
 import { Loader2 } from "lucide-react"
-import { useUpdateEffect } from "usehooks-ts"
 
 const OnboardingWrapper = () => {
   const {
     isSaving
   } = profileAboutContentStore();
   const {
-    formState: { errors, dirtyFields }, trigger
+    formState: { errors, dirtyFields, isValidating, }, trigger
   } = useFormContext();
 
   const step = onboardingStore(state => state.step);
   const setStep = onboardingStore(state => state.setStep);
   const setIsFinished = onboardingStore(state => state.setIsFinished);
+  const [goNext, setGoNext] = useState(false);
+  const [submit, setSubmit] = useState(false);
+  useEffect(() => {
+    if (step > fieldNames.length) {
+      setStep(fieldNames.length);
+    }
+  }, [step, setStep]);
 
   function checkKeysInErrorObject(keys: string[], errorObj: FieldErrors<FieldValues>): boolean {
     for (const key of keys) {
@@ -52,20 +58,42 @@ const OnboardingWrapper = () => {
     return true;
   }
 
-  useUpdateEffect(() => { }, [errors]);
+  useEffect(() => {
+    const getFields: () => string[] = () => {
+      if (step >= fieldNames.length) {
+        return fieldNames[fieldNames.length - 1]
+      } else {
+        return fieldNames[step - 1]
+      }
+    }
+    const validateFields = getFields();
+    const pass = checkKeysInErrorObject(validateFields, errors);
+    const isDirty = checkDirtyFields(validateFields, dirtyFields);
+    if (!isValidating && pass && isDirty && goNext) {
+      setGoNext(false);
+      setStep(step + 1);
+    } else {
+      setGoNext(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dirtyFields, errors, goNext, isValidating, setStep, trigger])
+
 
   const handleNext = useCallback(() => {
     const getFields: () => string[] = () => {
-      return fieldNames[step - 1]
+      if (step >= fieldNames.length) {
+        return fieldNames[fieldNames.length - 1]
+      } else {
+        return fieldNames[step - 1]
+      }
     }
     const validateFields = getFields();
+    console.log("FIELDS TO VALIDATE: ", validateFields);
     trigger(validateFields);
-    const pass = checkKeysInErrorObject(validateFields, errors);
-    const isDirty = checkDirtyFields(validateFields, dirtyFields);
-    if (pass && isDirty) {
-      setStep(step + 1);
-    }
-  }, [dirtyFields, errors, setStep, step, trigger]);
+    setGoNext(true);
+  }, [step, trigger]);
+
+  console.log(step);
 
   return (
     <>
@@ -84,6 +112,7 @@ const OnboardingWrapper = () => {
             type="button" className="hover:bg-[#FF599B]/90" onClick={() => {
               setStep(step - 1)
               setIsFinished(false);
+              setGoNext(false);
             }}>Back</Button>
         }
         {
@@ -92,8 +121,10 @@ const OnboardingWrapper = () => {
               disabled={isSaving}
               onClick={() => {
                 setIsFinished(true);
+                setSubmit(true);
               }}
-              type="submit" >Finish
+              type={submit ? "submit" : "button"}
+            >Finish
               {isSaving && (
                 <span>
                   <Loader2 className="ml-2 h-4 w-4 animate-spin" />
@@ -112,7 +143,7 @@ const StepView = ({ step }: { step: number }) => {
     <FavoriteFoodStep />, <HealthStep />, <MaritalStatusStep />, <EmploymentStatusStep />, <InterestsStep />
   ];
   if (step > forms.length) {
-    return forms[-1];
+    return forms[forms.length - 1];
   }
   return forms[step - 1];
 }
@@ -133,7 +164,7 @@ const StepHeader = ({ step }: { step: number }) => {
     <h1 className="font-semibold">Interests 🎲</h1>,
   ];
   if (step > headers.length) {
-    return headers[-1];
+    return headers[headers.length - 1];
   }
   return headers[step - 1];
 }
