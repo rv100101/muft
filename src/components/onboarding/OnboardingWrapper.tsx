@@ -19,8 +19,10 @@ import EmploymentStatusStep from "./EmploymentStatusStep"
 import InterestsStep from "./InterestsStep"
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore"
 import { Loader2 } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
 const OnboardingWrapper = () => {
+  const [t, i18n] = useTranslation();
   const {
     isSaving
   } = profileAboutContentStore();
@@ -101,7 +103,7 @@ const OnboardingWrapper = () => {
         <StepHeader step={step} />
       </div>
       <div className="px-12 w-full flex justify-center">
-        <Progress value={(step / 12) * 100} className="sm:w-1/2 mb-8 h-2" />
+        <Progress value={(step / 12) * 100} className={cn("sm:w-1/2 mb-8 h-2", i18n.language == 'ar' && 'rotate-180')} />
       </div>
       <StepView step={step} />
       <hr className="h-4 w-full sm:w-1/2 mt-8" />
@@ -113,10 +115,10 @@ const OnboardingWrapper = () => {
               setStep(step - 1)
               setIsFinished(false);
               setGoNext(false);
-            }}>Back</Button>
+            }}>{t("onboarding.back")}</Button>
         }
         {
-          step !== 12 ? <Button type="button" className="hover:bg-[#FF599B]/90" onClick={handleNext} >Next</Button>
+          step !== 12 ? <Button type="button" className="hover:bg-[#FF599B]/90" onClick={handleNext} >{t("onboarding.next")}</Button>
             : <Button className=" hover:bg-[#FF599B]/90"
               disabled={isSaving}
               onClick={() => {

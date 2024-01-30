@@ -114,6 +114,7 @@
     "no": "لا"
   },
   "memberDetails": {
+    "enterNickname": "أدخل كنية",
     "male": "ذكر",
     "female": "أنثى",
     "birthDay": "تاريخ الميلاد",
@@ -197,6 +198,10 @@
     "enterPinNumber": "أدخل الرقم السري",
     "sentAPinToEmail": "إرسال رقم تعريف شخصي إلى بريدك الإلكتروني",
     "enterPin": "أدخل رقم التعريف الشخصي"
+  },
+  "onboarding": {
+    "next": "التالي",
+    "back": "رجع"
   },
   "alerts": {
     "reported": "تم إرسال البيانات",

@@ -113,7 +113,12 @@
     "yes": "Yes",
     "no": "No"
   },
+  "onboarding": {
+    "next": "Next",
+    "back": "Back"
+  },
   "memberDetails": {
+    "enterNickname": "Enter Nickname",
     "male": "Male",
     "haveChildrenLabel": "Have children?",
     "wantChildrenLabel": "Want children?",

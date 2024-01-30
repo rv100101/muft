@@ -129,7 +129,7 @@ const BasicInformationForm = () => {
                         }}
                         value={field.value}
                         type="text"
-                        placeholder="Enter Nickname"
+                        placeholder={t("memberDetails.enterNickname")}
                       />
                       <FormMessage />
                     </FormItem>

@@ -5,7 +5,7 @@ import { User, useUserStore } from "@/zustand/auth/user";
 import { Loader2, LogOutIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import * as Yup from "yup";
-import { Field, Form, Formik } from "formik";
+import { Form, Formik } from "formik";
 import "@/index.css";
 import {
   Dialog,
@@ -18,6 +18,8 @@ import {
 import { DialogClose } from "@radix-ui/react-dialog";
 import { useCountdown } from "usehooks-ts";
 import { useTranslation } from "react-i18next";
+import { cn } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
 const pinSchema = Yup.object().shape({
   pin: Yup.string()
     .required("PIN is required")
@@ -25,6 +27,7 @@ const pinSchema = Yup.object().shape({
 });
 
 const ActivateAccount = () => {
+  const [, i18n] = useTranslation();
   const [intervalValue, setIntervalValue] = useState<number>(1000);
   const [count, { startCountdown, stopCountdown, resetCountdown }] =
     useCountdown({
@@ -121,7 +124,7 @@ const ActivateAccount = () => {
         handleActivate(values);
       }}
     >
-      {({ errors, touched }) => (
+      {({ errors, touched, getFieldProps }) => (
         <Form className="py-5 px-3">
           {/* <div className="h-min w-96 border shadow-xl p-8 space-y-2"> */}
           <p className="w-full text-sm font-semibold pb-2">
@@ -135,10 +138,14 @@ const ActivateAccount = () => {
             className={`flex items-center justify-center w-full flex-row border rounded-full h-max py-1 px-5 ${touched.pin && errors.pin ? "border-rose-500 p-0" : ""
               }`}
           >
-            <Field
+            <Input
+              className={cn(
+                "appearance-none focus-visible:ring-offset-0 focus-visible:ring-0 border-0 rounded-full py-2 px-5 text-normal focus:outline-0 w-full",
+                i18n.language == "ar" && "text-right"
+              )}
+              {...getFieldProps("pin")}
               name="pin"
               type="number"
-              className="appearance-none decoration-none text-sm py-2  border-0 outline-0"
               placeholder="Activation PIN"
               autoComplete="off"
             />
