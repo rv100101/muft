@@ -116,7 +116,9 @@
   "onboarding": {
     "next": "Next",
     "back": "Back",
-    "startWithBasics": "Let's start with the basics"
+    "startWithBasics": "Let's start with the basics",
+    "whereAreYouFrom": "Where are you from?",
+    "tellBackground": "Tell us your background"
   },
   "memberDetails": {
     "enterNickname": "Enter Nickname",

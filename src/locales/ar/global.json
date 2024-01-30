@@ -202,7 +202,9 @@
   "onboarding": {
     "next": "التالي",
     "back": "رجع",
-    "startWithBasics": "هيا لنبدأ مع الأساسيات"
+    "startWithBasics": "هيا لنبدأ مع الأساسيات",
+    "whereAreYouFrom": "من أين أنت؟",
+    "tellBackground": "أخبرنا بخلفيتك"
   },
   "alerts": {
     "reported": "تم إرسال البيانات",

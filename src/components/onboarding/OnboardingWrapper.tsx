@@ -154,17 +154,17 @@ const StepHeader = ({ step }: { step: number }) => {
   const [t] = useTranslation();
   const headers = [
     <h1 className="font-semibold ">{t("onboarding.startWithBasics")} ✅</h1>,
-    <h1 className="font-semibold">Where are you from? 🗺️</h1>,
-    <h1 className="font-semibold">Tell us your background 🏫</h1>,
-    <h1 className="font-semibold">Language 🦜</h1>,
-    <h1 className="font-semibold">Appearance ✨</h1>,
-    <h1 className="font-semibold">Lifestyle ☀️</h1>,
-    <h1 className="font-semibold">Pets 🐹</h1>,
-    <h1 className="font-semibold">Favorite Foods 🍲</h1>,
-    <h1 className="font-semibold">Health 🌱</h1>,
-    <h1 className="font-semibold">Marital Status 💍</h1>,
-    <h1 className="font-semibold">Employment 💼</h1>,
-    <h1 className="font-semibold">Interests 🎲</h1>,
+    <h1 className="font-semibold">{t("onboarding.whereAreYouFrom")} 🗺️</h1>,
+    <h1 className="font-semibold">{t("onboarding.tellBackground")}🏫</h1>,
+    <h1 className="font-semibold">{t("memberDetails.languages")} 🦜</h1>,
+    <h1 className="font-semibold">{t("memberDetails.appearance")} ✨</h1>,
+    <h1 className="font-semibold">{t("memberDetails.lifestyle")} ☀️</h1>,
+    <h1 className="font-semibold">{t("memberDetails.pets")} 🐹</h1>,
+    <h1 className="font-semibold">{t("memberDetails.favoriteFood")} 🍲</h1>,
+    <h1 className="font-semibold">{t("memberDetails.health")} 🌱</h1>,
+    <h1 className="font-semibold">{t("memberDetails.maritalStatus")} 💍</h1>,
+    <h1 className="font-semibold">{t("memberDetails.employment")} 💼</h1>,
+    <h1 className="font-semibold">{t("memberDetails.interests")} 🎲</h1>,
   ];
   if (step > headers.length) {
     return headers[headers.length - 1];
