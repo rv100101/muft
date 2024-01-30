@@ -131,9 +131,11 @@ const SignUpPage = () => {
     },
   });
 
+  console.log(Object.keys(formik.errors).length, formik.errors);
+
   return (
     <>
-      <div className={cn("h-[calc(100vh-70px)] py-8 justify-center md:h-[calc(100vh-88px)] items-center flex lg:gap-4 w-full lg:px-32 border-t", Object.keys(formik.errors).length > 2 && "md:h-full")}>
+      <div className={cn("h-[calc(100vh-70px)] py-8 justify-center md:min-h-[calc(100vh-88px)] items-center flex lg:gap-4 w-full lg:px-32 border-t", "md:h-full")}>
         <Helmet>
           <title>Sign Up</title>
           <link
