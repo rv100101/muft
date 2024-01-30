@@ -17,8 +17,12 @@ import { useEffectOnce, useUpdateEffect } from "usehooks-ts";
 import removeExistingData from "@/lib/removeExistingData";
 import { useUserStore } from "@/zustand/auth/user";
 import { cn } from "@/lib/utils";
+import deleteMultiselectValuesStore from "@/zustand/profile/about/deleteMultiselectValues";
 
 export default function PetsField() {
+  const setDeleted = deleteMultiselectValuesStore(
+    (state) => state.setPetsToDelete
+  );
   const user = useUserStore(state => state.user);
   const { control, watch, setValue } = useFormContext();
   const inputRef = React.useRef<HTMLInputElement>(null);
@@ -38,29 +42,30 @@ export default function PetsField() {
     setSelected((prev) =>
       prev.filter((s) => s.pet_name !== framework.pet_name)
     );
-  }, []);
+    setDeleted(framework);
+  }, [setDeleted]);
 
-  const handleKeyDown = React.useCallback(
-    (e: React.KeyboardEvent<HTMLDivElement>) => {
-      const input = inputRef.current;
-      if (input) {
-        if (e.key === "Delete" || e.key === "Backspace") {
-          if (input.value === "") {
-            setSelected((prev) => {
-              const newSelected = [...prev];
-              newSelected.pop();
-              return newSelected;
-            });
-          }
-        }
-        // This is not a default behaviour of the <input /> field
-        if (e.key === "Escape") {
-          input.blur();
-        }
-      }
-    },
-    []
-  );
+  // const handleKeyDown = React.useCallback(
+  //   (e: React.KeyboardEvent<HTMLDivElement>) => {
+  //     const input = inputRef.current;
+  //     if (input) {
+  //       if (e.key === "Delete" || e.key === "Backspace") {
+  //         if (input.value === "") {
+  //           setSelected((prev) => {
+  //             const newSelected = [...prev];
+  //             newSelected.pop();
+  //             return newSelected;
+  //           });
+  //         }
+  //       }
+  //       // This is not a default behaviour of the <input /> field
+  //       if (e.key === "Escape") {
+  //         input.blur();
+  //       }
+  //     }
+  //   },
+  //   []
+  // );
 
   React.useEffect(() => {
     setValue("pets", selected, {
@@ -84,7 +89,7 @@ export default function PetsField() {
               Pets
             </FormLabel> */}
             <Command
-              onKeyDown={handleKeyDown}
+              // onKeyDown={handleKeyDown}
               className="overflow-visible bg-transparent"
             >
               <div className="group border border-input px-3 py-2 text-sm ring-offset-background rounded-md focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">
@@ -98,6 +103,7 @@ export default function PetsField() {
                       >
                         {framework.pet_name}
                         <button
+                          type="button"
                           className="ml-1 bg-white ring-offset-background rounded-full outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
                           onKeyDown={(e) => {
                             if (e.key === "Enter") {

@@ -22,12 +22,15 @@ import calculateAge from "@/lib/calculateAge";
 import { aboutAccordionTabView } from "@/zustand/profile/about/aboutAccordionTabView";
 import authQuery from "@/queries/auth";
 import { useTranslation } from "react-i18next";
-import onboardingStore from "@/zustand/profile/onboarding/onboardingStore";
+// import onboardingStore from "@/zustand/profile/onboarding/onboardingStore";
 import OnboardingWrapper from "@/components/onboarding/OnboardingWrapper";
 import { cn } from "@/lib/utils";
+import deleteMultiselectValuesStore from "@/zustand/profile/about/deleteMultiselectValues";
 // import getDeletedItems from "@/lib/getDeleted";
 
 const ProfilePageBody = ({ userId }: { userId: string }) => {
+  const { languages: deletedLanguages, favoriteFood: deletedFaveFoods, pets: deletedPets, interests: deletedInterests } = deleteMultiselectValuesStore();
+  console.log("DELETED ", deletedLanguages, deletedInterests);
   const [t] = useTranslation();
   const headerValues = profileHeaderStore((state) => state.headerValues);
   const setHeaderValues = profileHeaderStore((state) => state.setHeaderValues);
@@ -41,9 +44,6 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
     defaultValues: emptyDefault,
     resolver: zodResolver(ProfileFormSchema(t)),
   });
-
-  console.log(methods);
-
   const [open] = useState(true);
   useEffect(() => {
     if (data && headerValues) {
@@ -174,16 +174,13 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
   const getEmploymentStatus = (name: string) =>
     employmentStatus.find((s) => s.employment_status_name === name);
 
-  const isFinished = onboardingStore(state => state.isFinished);
-
-  console.log(isFinished);
-
+  // const isFinished = onboardingStore(state => state.isFinished);
   const onSubmit = async (formData: any) => {
     // for onboarding finish validation
-    if (!isFinished) {
-      console.log("stopped by saving");
-      return;
-    }
+    // if (!isFinished) {
+    //   console.log("stopped by saving");
+    //   return;
+    // }
     // if (data && !methods.formState.isDirty) {
     //   console.log(!methods.formState.isDirty);
     //   console.log("stopped by dirty");
@@ -251,22 +248,10 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
         favoriteFood: finalFavoriteFood,
         pets: finalPets,
         interest: finalInterests,
-        // deletedLanguages: getDeletedItems(
-        //   data?.language ?? [],
-        //   finalLanguages,
-        //   "language_code"
-        // ),
-        // deletedFaveFoods: getDeletedItems(
-        //   data?.favoriteFood ?? [],
-        //   finalFavoriteFood,
-        //   "favorite_food_id"
-        // ),
-        // deletedInterests: getDeletedItems(
-        //   data?.interest ?? [],
-        //   finalInterests,
-        //   "interest_id"
-        // ),
-        // deletedPets: getDeletedItems(data?.pets ?? [], finalPets, "pet_id"),
+        deletedLanguages: deletedLanguages.filter((lang) => lang.member_language_id !== undefined),
+        deletedFavoriteFoods: deletedFaveFoods.filter((ff) => ff.member_favorite_food_id !== undefined),
+        deletedInterests: deletedInterests.filter((interest) => interest.member_interest_id !== undefined),
+        deletedPets: deletedPets.filter((pets) => pets.member_pet_id !== undefined),
         ethnicity: ethnicity?.ethnicity_id,
         nationality: nationality?.country_code,
         maritalStatus: maritalStatus?.marital_status_id,

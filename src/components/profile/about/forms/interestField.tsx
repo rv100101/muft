@@ -17,8 +17,12 @@ import { useEffectOnce, useUpdateEffect } from "usehooks-ts";
 import removeExistingData from "@/lib/removeExistingData";
 import { useUserStore } from "@/zustand/auth/user";
 import { cn } from "@/lib/utils";
+import deleteMultiselectValuesStore from "@/zustand/profile/about/deleteMultiselectValues";
 
 export default function InterestField() {
+  const setDeleted = deleteMultiselectValuesStore(
+    (state) => state.setInterestsToDelete
+  );
   const user = useUserStore(state => state.user);
   const { control, watch, setValue } = useFormContext();
   const inputRef = React.useRef<HTMLInputElement>(null);
@@ -42,7 +46,8 @@ export default function InterestField() {
     setSelected((prev) =>
       prev.filter((s) => s.interest_name !== framework.interest_name)
     );
-  }, []);
+    setDeleted(framework);
+  }, [setDeleted]);
 
   const handleKeyDown = React.useCallback(
     (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -102,6 +107,7 @@ export default function InterestField() {
                       >
                         {framework.interest_name}
                         <button
+                          type="button"
                           className="ml-1 bg-white ring-offset-background rounded-full outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
                           onKeyDown={(e) => {
                             if (e.key === "Enter") {

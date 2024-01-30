@@ -35,9 +35,6 @@ export default function LanguageField() {
   const [selectables, setSelectables] = React.useState<Languages[]>([]);
   const [inputValue, setInputValue] = React.useState("");
   const { languages } = selectOptions();
-  console.log(selectables);
-  console.log(languages);
-  console.log(selected);
 
   useUpdateEffect(() => {
     const selectables = removeExistingData(
@@ -56,7 +53,7 @@ export default function LanguageField() {
     ) => {
       setSelected((prev) =>
         prev.filter(
-          (s) => s.member_language_id !== framework.member_language_id
+          (s) => s.language_name !== framework.language_name
         )
       );
       setLanguagesToDelete(framework);
@@ -64,31 +61,31 @@ export default function LanguageField() {
     [setLanguagesToDelete]
   );
 
-  const handleKeyDown = React.useCallback(
-    (e: React.KeyboardEvent<HTMLDivElement>) => {
-      const input = inputRef.current;
-      if (input) {
-        if (e.key === "Delete" || e.key === "Backspace") {
-          if (input.value === "") {
-            setSelected((prev) => {
-              const newSelected = [...prev];
-              newSelected.pop();
-              return newSelected;
-            });
-            const deleted = selected.pop();
-            if (deleted !== undefined) {
-              setLanguagesToDelete(deleted);
-            }
-          }
-        }
-        // This is not a default behaviour of the <input /> field
-        if (e.key === "Escape") {
-          input.blur();
-        }
-      }
-    },
-    [selected, setLanguagesToDelete]
-  );
+  // const handleKeyDown = React.useCallback(
+  //   (e: React.KeyboardEvent<HTMLDivElement>) => {
+  //     const input = inputRef.current;
+  //     if (input) {
+  //       if (e.key === "Delete" || e.key === "Backspace") {
+  //         let deleted = null;
+  //         if (input.value === "") {
+  //           setSelected((prev) => {
+  //             const newSelected = [...prev];
+  //             deleted = newSelected.pop();
+  //             return newSelected;
+  //           });
+  //           if (deleted !== null) {
+  //             setLanguagesToDelete(deleted);
+  //           }
+  //         }
+  //       }
+  //       // This is not a default behaviour of the <input /> field
+  //       if (e.key === "Escape") {
+  //         input.blur();
+  //       }
+  //     }
+  //   },
+  //   [selected, setLanguagesToDelete]
+  // );
 
   React.useEffect(() => {
     setValue("language", selected, {
@@ -110,7 +107,7 @@ export default function LanguageField() {
           <FormItem>
             <FormLabel className="text-primary" htmlFor="language" />
             <Command
-              onKeyDown={handleKeyDown}
+              // onKeyDown={handleKeyDown}
               className="overflow-visible bg-transparent"
             >
               <div className="group border border-input px-3 py-2 text-sm ring-offset-background rounded-md focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">
@@ -124,6 +121,7 @@ export default function LanguageField() {
                       >
                         {framework.language_name}
                         <button
+                          type="button"
                           className="ml-1 bg-white ring-offset-background rounded-full outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
                           onKeyDown={(e) => {
                             if (e.key === "Enter") {

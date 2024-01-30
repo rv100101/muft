@@ -49,6 +49,7 @@ export type Income = {
 export type FavoriteFood = {
   authorized: boolean;
   ip_address: string;
+  member_favorite_food_id: number;
   favorite_food_id: number;
   favorite_food_name: string;
 };
@@ -108,6 +109,7 @@ export type Disability = {
 export type Pets = {
   pet_id: string;
   pet_name: string;
+  member_pet_id: number;
 };
 
 export type Drink = {
@@ -133,6 +135,7 @@ export type Car = {
 export type Interest = {
   interest_id: string;
   interest_name: string;
+  member_interest_id: number;
 };
 
 export type Religion = {

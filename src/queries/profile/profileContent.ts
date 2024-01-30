@@ -1,6 +1,6 @@
 import { ProfileAbout } from "@/zustand/profile/profileAboutStore";
 import axiosQuery from "../axios";
-import { Languages } from "@/types/profile";
+import { FavoriteFood, Interest, Languages, Pets } from "@/types/profile";
 
 const removeNull = (
   obj: Record<string, string | []>
@@ -570,9 +570,14 @@ const getBodyArts = async (lang: string) => {
 type ProfileContent = ProfileAbout & {
   nickname: string;
   deletedLanguages: Languages[];
+  deletedFavoriteFoods: FavoriteFood[];
+  deletedPets: Pets[];
+  deletedInterests: Interest[];
 };
 
 const saveInformation = async (profile: ProfileContent, userId: number) => {
+  console.log("PROFILE: ", profile);
+
   try {
     // gender
     if (profile.gender) {
@@ -606,7 +611,37 @@ const saveInformation = async (profile: ProfileContent, userId: number) => {
     if (profile.deletedLanguages) {
       for (const lang of profile.deletedLanguages) {
         await axiosQuery.post("/DeleteLanguage", {
-          lang: lang.language_code,
+          lang: lang.member_language_id,
+          member: userId,
+        });
+      }
+    }
+
+    // delete language
+    if (profile.deletedFavoriteFoods) {
+      for (const ff of profile.deletedFavoriteFoods) {
+        await axiosQuery.post("/DeleteFavoriteFood", {
+          favorite_food: ff.member_favorite_food_id,
+          member: userId,
+        });
+      }
+    }
+
+    // delete language
+    if (profile.deletedPets) {
+      for (const pet of profile.deletedPets) {
+        await axiosQuery.post("/DeletePet", {
+          pet: pet.member_pet_id,
+          member: userId,
+        });
+      }
+    }
+
+    // delete language
+    if (profile.deletedInterests) {
+      for (const interest of profile.deletedInterests) {
+        await axiosQuery.post("/DeleteInterest", {
+          interest: interest.member_interest_id,
           member: userId,
         });
       }

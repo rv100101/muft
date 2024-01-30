@@ -6,9 +6,9 @@ function getDeletedItems<T extends ObjectWithKey<K, V>, K extends keyof T, V>(
   originalList: T[],
   newList: T[],
   keyToCheck: K
-): { deleted: T[]; remaining: T[] } {
+): T[] {
   const deletedItems: T[] = [];
-  const remainingItems = originalList.filter((originalObj) => {
+  originalList.filter((originalObj) => {
     const foundIndex = newList.findIndex(
       (newObj) => newObj[keyToCheck] === originalObj[keyToCheck]
     );
@@ -20,8 +20,7 @@ function getDeletedItems<T extends ObjectWithKey<K, V>, K extends keyof T, V>(
 
     return true;
   });
-
-  return { deleted: deletedItems, remaining: remainingItems };
+  return deletedItems;
 }
 
 export default getDeletedItems;

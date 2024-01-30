@@ -32,7 +32,6 @@ const OnboardingWrapper = () => {
 
   const step = onboardingStore(state => state.step);
   const setStep = onboardingStore(state => state.setStep);
-  const setIsFinished = onboardingStore(state => state.setIsFinished);
   const [goNext, setGoNext] = useState(false);
   const [submit, setSubmit] = useState(false);
   useEffect(() => {
@@ -113,7 +112,6 @@ const OnboardingWrapper = () => {
             disabled={isSaving}
             type="button" className="hover:bg-[#FF599B]/90" onClick={() => {
               setStep(step - 1)
-              setIsFinished(false);
               setGoNext(false);
             }}>{t("onboarding.back")}</Button>
         }
@@ -122,7 +120,6 @@ const OnboardingWrapper = () => {
             : <Button className=" hover:bg-[#FF599B]/90"
               disabled={isSaving}
               onClick={() => {
-                setIsFinished(true);
                 setSubmit(true);
               }}
               type={submit ? "submit" : "button"}
