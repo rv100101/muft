@@ -23,6 +23,7 @@ import { useTranslation } from "react-i18next";
 import authQuery from "@/queries/auth";
 import { usePreferredLanguageStore } from "@/zustand/auth/preferred_language";
 import profileAboutContentStore, { initialState } from "@/zustand/profile/profileAboutStore";
+import { Input } from "@/components/ui/input";
 
 
 export type SignUpDataType = {
@@ -132,7 +133,7 @@ const SignUpPage = () => {
 
   return (
     <>
-      <div className="h-[calc(100vh-70px)] md:h-[calc(100vh-88px)] justify-center items-center flex lg:gap-4 w-full lg:px-32 border-t">
+      <div className={cn("h-[calc(100vh-70px)] py-8 justify-center md:h-[calc(100vh-88px)] items-center flex lg:gap-4 w-full lg:px-32 border-t", Object.keys(formik.errors).length > 2 && "md:h-full")}>
         <Helmet>
           <title>Sign Up</title>
           <link
@@ -179,10 +180,9 @@ const SignUpPage = () => {
                   }`}
               >
                 <UserIcon color="#98A2B3" size={20} className="mt-1" />
-                <input
-                  type="text"
+                <Input
                   className={cn(
-                    "ml-2 border-0 rounded-full py-2 px-5 text-normal focus:outline-0 w-full",
+                    "appearance-none focus-visible:ring-offset-0 focus-visible:ring-0 border-0 rounded-full py-2 px-5 text-normal focus:outline-0 w-full",
                     i18n.language == "ar" && "text-right"
                   )}
                   placeholder={t("signUp.firstName")}
@@ -225,10 +225,10 @@ const SignUpPage = () => {
                   }`}
               >
                 <UserIcon color="#98A2B3" size={20} className="mt-1" />
-                <input
+                <Input
                   type="text"
                   className={cn(
-                    "ml-2 border-0 rounded-full py-2 px-5 text-normal focus:outline-0 w-full",
+                    "appearance-none focus-visible:ring-offset-0 focus-visible:ring-0 border-0 rounded-full py-2 px-5 text-normal focus:outline-0 w-full",
                     i18n.language == "ar" && "text-right"
                   )}
                   placeholder={t("signUp.lastName")}
@@ -269,11 +269,11 @@ const SignUpPage = () => {
                   }`}
               >
                 <MailIcon color="#98A2B3" size={20} className="mt-1" />
-                <input
+                <Input
                   type="text"
                   autoComplete="off"
                   className={cn(
-                    "ml-2 border-0 rounded-full py-2 px-5 text-normal focus:outline-0 w-full",
+                    "appearance-none focus-visible:ring-offset-0 focus-visible:ring-0 border-0 rounded-full py-2 px-5 text-normal focus:outline-0 w-full",
                     i18n.language == "ar" && "text-right"
                   )}
                   placeholder={t("signIn.emailAddress")}
@@ -315,9 +315,9 @@ const SignUpPage = () => {
                   }`}
               >
                 <LockIcon color="#98A2B3" size={20} className="mt-1" />
-                <input
+                <Input
                   className={cn(
-                    "ml-2 border-0 rounded-full py-2 px-5 text-normal focus:outline-0 w-full",
+                    "appearance-none focus-visible:ring-offset-0 focus-visible:ring-0 border-0 rounded-full py-2 px-5 text-normal focus:outline-0 w-full",
                     i18n.language == "ar" && "text-right"
                   )}
                   placeholder={t("signIn.password")}
@@ -383,7 +383,7 @@ const SignUpPage = () => {
                 type="submit"
                 disabled={isLoading}
                 className={cn(
-                  "text-white w-full rounded-full hover:bg-[#FF599B]/90",
+                  "text-white h-10 w-full text-sm rounded-full py-2 hover:bg-[#FF599B]/90  dark:bg-[#ae2e51]",
                   isLoading ? "bg-[#FF8AB3]" : "bg-primary"
                 )}
               >
