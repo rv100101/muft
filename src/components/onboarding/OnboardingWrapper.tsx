@@ -32,6 +32,12 @@ const OnboardingWrapper = () => {
   const setStep = onboardingStore(state => state.setStep);
   const setIsFinished = onboardingStore(state => state.setIsFinished);
   const [goNext, setGoNext] = useState(false);
+  const [submit, setSubmit] = useState(false);
+  useEffect(() => {
+    if (step > fieldNames.length) {
+      setStep(fieldNames.length);
+    }
+  }, [step, setStep]);
 
   function checkKeysInErrorObject(keys: string[], errorObj: FieldErrors<FieldValues>): boolean {
     for (const key of keys) {
@@ -54,26 +60,35 @@ const OnboardingWrapper = () => {
 
   useEffect(() => {
     const getFields: () => string[] = () => {
-      return fieldNames[step - 1]
+      if (step >= fieldNames.length) {
+        return fieldNames[fieldNames.length - 1]
+      } else {
+        return fieldNames[step - 1]
+      }
     }
     const validateFields = getFields();
     const pass = checkKeysInErrorObject(validateFields, errors);
     const isDirty = checkDirtyFields(validateFields, dirtyFields);
     if (!isValidating && pass && isDirty && goNext) {
-      console.log('adding next: ', step);
       setGoNext(false);
       setStep(step + 1);
     } else {
       setGoNext(false);
     }
-  }, [dirtyFields, errors, goNext, isValidating, setStep, step, trigger])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dirtyFields, errors, goNext, isValidating, setStep, trigger])
 
 
   const handleNext = useCallback(() => {
     const getFields: () => string[] = () => {
-      return fieldNames[step - 1]
+      if (step >= fieldNames.length) {
+        return fieldNames[fieldNames.length - 1]
+      } else {
+        return fieldNames[step - 1]
+      }
     }
     const validateFields = getFields();
+    console.log("FIELDS TO VALIDATE: ", validateFields);
     trigger(validateFields);
     setGoNext(true);
   }, [step, trigger]);
@@ -106,8 +121,10 @@ const OnboardingWrapper = () => {
               disabled={isSaving}
               onClick={() => {
                 setIsFinished(true);
+                setSubmit(true);
               }}
-              type="submit" >Finish
+              type={submit ? "submit" : "button"}
+            >Finish
               {isSaving && (
                 <span>
                   <Loader2 className="ml-2 h-4 w-4 animate-spin" />
@@ -126,7 +143,7 @@ const StepView = ({ step }: { step: number }) => {
     <FavoriteFoodStep />, <HealthStep />, <MaritalStatusStep />, <EmploymentStatusStep />, <InterestsStep />
   ];
   if (step > forms.length) {
-    return forms[-1];
+    return forms[forms.length - 1];
   }
   return forms[step - 1];
 }
@@ -147,7 +164,7 @@ const StepHeader = ({ step }: { step: number }) => {
     <h1 className="font-semibold">Interests 🎲</h1>,
   ];
   if (step > headers.length) {
-    return headers[-1];
+    return headers[headers.length - 1];
   }
   return headers[step - 1];
 }

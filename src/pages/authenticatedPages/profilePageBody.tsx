@@ -181,18 +181,22 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
   const onSubmit = async (formData: any) => {
     // for onboarding finish validation
     if (!isFinished) {
+      console.log("stopped by saving");
       return;
     }
-    if (data && !methods.formState.isDirty) {
-      toggleEditMode();
-      return;
-    }
+    // if (data && !methods.formState.isDirty) {
+    //   console.log(!methods.formState.isDirty);
+    //   console.log("stopped by dirty");
+    //   toggleEditMode();
+    //   return;
+    // }
     const region = getStateData(formData.region);
     if (typeof region != "object") {
       methods.setError("region", {
         type: "custom",
         message: "Invalid region",
       });
+      console.log("stopped by invalid region");
       return;
     }
     setIsSaving(true);
@@ -288,7 +292,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
       };
       await profileContentQuery.saveInformation(finalFormData, user!.member_id);
       await authQuery.isProfileCompleted(user!.member_id);
-      console.log(formData);
+      console.log(finalFormData);
       const age = calculateAge(formData.birthInfo);
       setHeaderValues({ ...headerValues!, nickname: formData.nickname, age });
       setData({ ...data!, ...formData, age });
