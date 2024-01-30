@@ -325,7 +325,7 @@ const BasicInformationForm = () => {
               render={({ field }) => {
                 return (
                   <FormItem>
-                    <FormLabel className="text-primary" htmlFor="birthInfo">
+                    <FormLabel className="text-primary " htmlFor="birthInfo">
                       {t("memberDetails.birthDay")}
                     </FormLabel>
                     <Input
@@ -341,7 +341,7 @@ const BasicInformationForm = () => {
                       }}
                       type="date"
                       placeholder="dd MMM yyyy"
-                      className="outline-0 border rounded-lg w-full py-3 px-5"
+                      className="outline-0 border rounded-lg w-full py-3 px-5 dark:[color-scheme:dark]"
                     />
                     <FormMessage />
                   </FormItem>
