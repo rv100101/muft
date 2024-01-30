@@ -31,7 +31,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
   const [t] = useTranslation();
   const headerValues = profileHeaderStore((state) => state.headerValues);
   const setHeaderValues = profileHeaderStore((state) => state.setHeaderValues);
-  const { data, setEditModeFalse, toggleEditMode, setData, setIsSaving } =
+  const { data, setEditModeFalse, setData, setIsSaving } =
     profileAboutContentStore();
   const updateUser = useUserStore((state) => state.updateUser);
   const changeTab = aboutAccordionTabView((state) => state.changeTab);
