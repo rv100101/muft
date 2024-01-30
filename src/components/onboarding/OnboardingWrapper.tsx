@@ -151,8 +151,9 @@ const StepView = ({ step }: { step: number }) => {
 }
 
 const StepHeader = ({ step }: { step: number }) => {
+  const [t] = useTranslation();
   const headers = [
-    <h1 className="font-semibold ">Let's start with the basics ✅</h1>,
+    <h1 className="font-semibold ">{t("onboarding.startWithBasics")} ✅</h1>,
     <h1 className="font-semibold">Where are you from? 🗺️</h1>,
     <h1 className="font-semibold">Tell us your background 🏫</h1>,
     <h1 className="font-semibold">Language 🦜</h1>,

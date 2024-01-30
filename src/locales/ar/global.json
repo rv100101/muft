@@ -201,7 +201,8 @@
   },
   "onboarding": {
     "next": "التالي",
-    "back": "رجع"
+    "back": "رجع",
+    "startWithBasics": "هيا لنبدأ مع الأساسيات"
   },
   "alerts": {
     "reported": "تم إرسال البيانات",

@@ -115,7 +115,8 @@
   },
   "onboarding": {
     "next": "Next",
-    "back": "Back"
+    "back": "Back",
+    "startWithBasics": "Let's start with the basics"
   },
   "memberDetails": {
     "enterNickname": "Enter Nickname",
