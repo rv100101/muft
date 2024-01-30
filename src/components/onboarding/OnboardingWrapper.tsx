@@ -5,7 +5,7 @@ import BasicInformationStep from "./BasicInformationStep"
 import { cn } from "@/lib/utils"
 import { FieldErrors, FieldValues, useFormContext } from "react-hook-form"
 import { fieldNames } from "@/lib/formFieldKeys"
-import { useCallback, } from "react"
+import { useCallback, useEffect, useState, } from "react"
 import LocationStep from "./LocationStep"
 import BackgroundStep from "./BackgroundStep"
 import LanguagesStep from "./LanguagesStep"
@@ -19,19 +19,19 @@ import EmploymentStatusStep from "./EmploymentStatusStep"
 import InterestsStep from "./InterestsStep"
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore"
 import { Loader2 } from "lucide-react"
-import { useUpdateEffect } from "usehooks-ts"
 
 const OnboardingWrapper = () => {
   const {
     isSaving
   } = profileAboutContentStore();
   const {
-    formState: { errors, dirtyFields }, trigger
+    formState: { errors, dirtyFields, isValidating, }, trigger
   } = useFormContext();
 
   const step = onboardingStore(state => state.step);
   const setStep = onboardingStore(state => state.setStep);
   const setIsFinished = onboardingStore(state => state.setIsFinished);
+  const [goNext, setGoNext] = useState(false);
 
   function checkKeysInErrorObject(keys: string[], errorObj: FieldErrors<FieldValues>): boolean {
     for (const key of keys) {
@@ -52,7 +52,22 @@ const OnboardingWrapper = () => {
     return true;
   }
 
-  useUpdateEffect(() => { }, [errors]);
+  useEffect(() => {
+    const getFields: () => string[] = () => {
+      return fieldNames[step - 1]
+    }
+    const validateFields = getFields();
+    const pass = checkKeysInErrorObject(validateFields, errors);
+    const isDirty = checkDirtyFields(validateFields, dirtyFields);
+    if (!isValidating && pass && isDirty && goNext) {
+      console.log('adding next: ', step);
+      setGoNext(false);
+      setStep(step + 1);
+    } else {
+      setGoNext(false);
+    }
+  }, [dirtyFields, errors, goNext, isValidating, setStep, step, trigger])
+
 
   const handleNext = useCallback(() => {
     const getFields: () => string[] = () => {
@@ -60,12 +75,10 @@ const OnboardingWrapper = () => {
     }
     const validateFields = getFields();
     trigger(validateFields);
-    const pass = checkKeysInErrorObject(validateFields, errors);
-    const isDirty = checkDirtyFields(validateFields, dirtyFields);
-    if (pass && isDirty) {
-      setStep(step + 1);
-    }
-  }, [dirtyFields, errors, setStep, step, trigger]);
+    setGoNext(true);
+  }, [step, trigger]);
+
+  console.log(step);
 
   return (
     <>
@@ -84,6 +97,7 @@ const OnboardingWrapper = () => {
             type="button" className="hover:bg-[#FF599B]/90" onClick={() => {
               setStep(step - 1)
               setIsFinished(false);
+              setGoNext(false);
             }}>Back</Button>
         }
         {

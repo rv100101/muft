@@ -176,6 +176,8 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
 
   const isFinished = onboardingStore(state => state.isFinished);
 
+  console.log(isFinished);
+
   const onSubmit = async (formData: any) => {
     // for onboarding finish validation
     if (!isFinished) {
