@@ -41,20 +41,6 @@ const LocationForm = () => {
 
   const countryCode = watch("country");
   console.log(countryCode);
-
-  // useUpdateEffect(() => {
-  //   const region = getStateData(selectedState);
-  //   console.log(region);
-  //   if (region == undefined) {
-  //     setError("region", {
-  //       type: "custom",
-  //       message: "Invalid State",
-  //     });
-  //   } else {
-  //     clearErrors("region");
-  //   }
-  // }, [selectedState, states]);
-
   useUpdateEffect(() => {
     setValue("region", "");
   }, [countryCode]);
@@ -170,6 +156,7 @@ const LocationForm = () => {
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
+                      value={field.value}
                     >
                       <FormControl>
                         <SelectTrigger>
