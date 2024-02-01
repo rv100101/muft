@@ -96,6 +96,17 @@
     "reTypePassword": "Re-Type Password",
     "update": "Update"
   },
+  "activation": {
+    "title": "You need to activate your account to unlock all app features.",
+    "sentAPin": "We have sent an Activation PIN to your email.",
+    "enterPin": "Please enter the PIN below:",
+    "activationPin": "Activation PIN",
+    "signOut": "Sign Out",
+    "resendPin": "Resend Pin",
+    "activate": "Activate",
+    "pinRequired": "Pin is required",
+    "pinLength": "PIN should be exactly 6 digits"
+  },
   "deactivateProfile": {
     "deactivateProfile": "Deactivate Profile",
     "deactivateMessage": "By choosing 'Deactivate your account', you'll temporarily make your profile invisible to other users on Muffin. While your account is deactivated, your profile, photos, and messages will be hidden, and you will not appear in any search results. But don't worry, your account information isn't going anywhere.",

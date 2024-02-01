@@ -20,14 +20,14 @@ import { useCountdown } from "usehooks-ts";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
-const pinSchema = Yup.object().shape({
-  pin: Yup.string()
-    .required("PIN is required")
-    .length(6, "PIN should be exactly 6 digits"),
-});
 
 const ActivateAccount = () => {
-  const [, i18n] = useTranslation();
+  const [t, i18n] = useTranslation();
+  const pinSchema = Yup.object().shape({
+    pin: Yup.string()
+      .required(t("activation.pinRequired"))
+      .length(6, t("activation.pinLength")),
+  });
   const [intervalValue, setIntervalValue] = useState<number>(1000);
   const [count, { startCountdown, stopCountdown, resetCountdown }] =
     useCountdown({
@@ -38,7 +38,6 @@ const ActivateAccount = () => {
   const [activateIsLoading, setActivateIsLoading] = useState(false);
   const [countDownComplete, setCountDownComplete] = useState(true);
   const { updateUser, user, reset } = useUserStore();
-  const [t] = useTranslation();
 
   type FormDataType = {
     pin: string;
@@ -51,7 +50,7 @@ const ActivateAccount = () => {
       setIntervalValue((prev) => prev * 2);
       setCountDownComplete(true);
     }
-  }, [count]);
+  }, [count, resetCountdown, stopCountdown]);
 
   const handleResendPin = async () => {
     setResendPinIsLoading(true);
@@ -116,7 +115,6 @@ const ActivateAccount = () => {
   };
 
   return (
-    // <div className="h-[calc(100vh-70px)] items-center justify-center flex md:h-[calc(100vh-104px)] w-full lg:px-32 border-t">
     <Formik
       initialValues={{ pin: "" }}
       validationSchema={pinSchema}
@@ -125,18 +123,20 @@ const ActivateAccount = () => {
       }}
     >
       {({ errors, touched, getFieldProps }) => (
-        <Form className="py-5 px-3">
+        <Form dir={i18n.language == 'ar' ? 'rtl' : 'ltr'} className="py-5 px-3" >
           {/* <div className="h-min w-96 border shadow-xl p-8 space-y-2"> */}
           <p className="w-full text-sm font-semibold pb-2">
-            You need to activate your account to unlock all app features.
+            {t("activation.title")}
           </p>
           <p className="w-full text-sm font-semibold pb-2">
-            We have sent an Activation PIN to your email.
+            {t("activation.sentAPin")}
           </p>
-          <p className="my-4 text-sm">Please enter the PIN below:</p>
+          <p className="my-4 text-sm">
+            {t("activation.enterPin")}
+          </p>
           <div
-            className={`flex items-center justify-center w-full flex-row border rounded-full h-max py-1 px-5 ${touched.pin && errors.pin ? "border-rose-500 p-0" : ""
-              }`}
+            className={cn(`flex items-center justify-center w-full flex-row border rounded-full h-max py-1 px-5 ${touched.pin && errors.pin ? "border-rose-500 p-0" : ""
+              }`)}
           >
             <Input
               className={cn(
@@ -146,31 +146,34 @@ const ActivateAccount = () => {
               {...getFieldProps("pin")}
               name="pin"
               type="number"
-              placeholder="Activation PIN"
+              placeholder=
+              {t("activation.activationPin")}
               autoComplete="off"
             />
           </div>
           {errors.pin ? (
             <p className="text-red-500 text-xs pl-2 pt-3">{errors.pin}</p>
           ) : null}
-          <div className="flex w-full justify-between items-center space-x-2 py-4">
+          <div className={cn("flex w-full justify-between items-center space-x-2 py-4", i18n.language == 'ar' && 'space-x-reverse')}>
             {!user?.profile_completed && (
               <Dialog>
                 <DialogTrigger>
-                  <div className="border p-3 rounded-lg flex space-x-2 my-4">
+                  <div className={cn("border p-3 rounded-lg flex space-x-2 my-4", i18n.language == 'ar' && 'space-x-reverse')}>
                     {<LogOutIcon size={20} className="text-primary" />}{" "}
-                    <p className="text-sm">Sign out</p>
+                    <p className="text-sm">
+                      {t("activation.signOut")}
+                    </p>
                   </div>
                 </DialogTrigger>
-                <DialogContent className="sm:max-w-md opacity-100">
-                  <DialogHeader>
-                    <DialogTitle>
-                      Are you sure you want to sign out?
+                <DialogContent dir={i18n.language == 'ar' ? "rtl" : "ltr"} className="sm:max-w-md opacity-100">
+                  <DialogHeader className={cn("w-full sm:justify-start")} dir={i18n.language == 'ar' ? "rtl" : "ltr"}>
+                    <DialogTitle className="flex justify-start">
+                      {t("signOut.confirmSignOut")}
                     </DialogTitle>
                   </DialogHeader>
-                  <DialogFooter className="sm:justify-start">
-                    <Button className="hover:bg-primary" onClick={reset}>
-                      Yes
+                  <DialogFooter className={cn("sm:justify-start",)}>
+                    <Button className={cn("hover:bg-primary", i18n.language == 'ar' && "mx-2")} onClick={reset}>
+                      {t("signOut.yes")}
                     </Button>
                     <DialogClose asChild>
                       <Button
@@ -178,15 +181,14 @@ const ActivateAccount = () => {
                         type="button"
                         variant="secondary"
                       >
-                        No
+                        {t("signOut.no")}
                       </Button>
                     </DialogClose>
                   </DialogFooter>
                 </DialogContent>
               </Dialog>
             )}
-
-            <div className="flex justify-center items-center space-x-2">
+            <div className={cn("flex justify-center items-center space-x-2", i18n.language == 'ar' && 'space-x-reverse')}>
               <Button
                 type="button"
                 disabled={resendPinIsLoading || !countDownComplete}
@@ -194,7 +196,7 @@ const ActivateAccount = () => {
                 className="text-xs w-full"
                 variant={"outline"}
               >
-                Resend PIN{" "}
+                {t("activation.resendPin")}
                 {resendPinIsLoading && (
                   <Loader2 className="ml-2 h-4 w-4 animate-spin" />
                 )}
@@ -205,7 +207,7 @@ const ActivateAccount = () => {
                 type="submit"
                 className="text-xs hover:bg-[#FF599B]/90"
               >
-                Activate{" "}
+                {t("activation.activate")}
                 {activateIsLoading && (
                   <Loader2 className="ml-2 h-4 w-4 animate-spin" />
                 )}
@@ -215,7 +217,6 @@ const ActivateAccount = () => {
         </Form>
       )}
     </Formik>
-    // </div>
   );
 };
 
