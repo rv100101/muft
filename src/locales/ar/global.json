@@ -314,6 +314,7 @@
     "religionRequired": "بيانات الديانة مطلوبة",
     "nicknameRequired": "الاسم المستعار مطلوب",
     "nicknameLength": "يجب أن لا يزيد عن 12 حرفا",
+    "invalidNickname": "الاسم المستعار غير صالح",
     "hairTypeRequired": "بيانات الشعر مطلوبة",
     "eyeTypeRequired": "بيانات لون العين مطلوبة",
     "bodyArtRequired": "بيانات فنون الجسم مطلوبة",

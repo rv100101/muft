@@ -314,6 +314,7 @@
     "religionRequired": "Religion is required",
     "nicknameRequired": "Nickname is required",
     "nicknameLength": "Value should not exceed 12 characters",
+    "invalidNickname": "Invalid nickname",
     "hairTypeRequired": "Hair type is required",
     "eyeTypeRequired": "Eye type is required",
     "bodyArtRequired": "Body art is required",

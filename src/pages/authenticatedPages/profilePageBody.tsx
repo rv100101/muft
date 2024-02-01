@@ -66,7 +66,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
         favoriteFood: removeDuplicates(data.favoriteFood, "favorite_food_name"),
         country: data.country,
         region: data.region,
-        nickname: data.nickname,
+        nickname: data?.nickname == '' ? user?.first_name : data.nickname,
         religion: data.religion,
         hair: data.hair,
         eyes: data.eyes,
