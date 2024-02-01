@@ -255,7 +255,7 @@ const AppearanceForm = () => {
                       {t("memberDetails.weight")}
                     </FormLabel>
                     <Input
-                      placeholder="Enter weight (lbs)"
+                      placeholder="Enter weight (kg)"
                       type="number"
                       onChange={(e) => {
                         // if (
