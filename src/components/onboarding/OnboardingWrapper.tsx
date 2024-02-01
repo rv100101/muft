@@ -20,11 +20,10 @@ import InterestsStep from "./InterestsStep"
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore"
 import { Loader2 } from "lucide-react"
 import { useTranslation } from "react-i18next"
+import PreferredLanguageDialog from "../preferredLanguageDialog"
 
 const OnboardingWrapper = () => {
-  const [t, i18n] = useTranslation();
-  const {
-    isSaving
+  const [t, i18n] = useTranslation(); const { isSaving
   } = profileAboutContentStore();
   const {
     formState: { errors, dirtyFields, isValidating, }, trigger
@@ -34,6 +33,7 @@ const OnboardingWrapper = () => {
   const setStep = onboardingStore(state => state.setStep);
   const [goNext, setGoNext] = useState(false);
   const [submit, setSubmit] = useState(false);
+
   useEffect(() => {
     if (step > fieldNames.length) {
       setStep(fieldNames.length);
@@ -70,6 +70,10 @@ const OnboardingWrapper = () => {
     const validateFields = getFields();
     const pass = checkKeysInErrorObject(validateFields, errors);
     const isDirty = checkDirtyFields(validateFields, dirtyFields);
+
+    console.log(dirtyFields);
+    console.log(!isValidating, pass, isDirty, goNext);
+
     if (!isValidating && pass && isDirty && goNext) {
       setGoNext(false);
       setStep(step + 1);
@@ -94,12 +98,15 @@ const OnboardingWrapper = () => {
     setGoNext(true);
   }, [step, trigger]);
 
-  console.log(step);
-
   return (
     <>
-      <div className="my-8 text-lg">
+      <div className={cn("my-8 text-lg flex px-8 sm:w-1/2 items-center justify-between")}>
         <StepHeader step={step} />
+        <PreferredLanguageDialog
+          showTrigger={true}
+          triggerTitle={i18n.language == "en" ? "العربية" : "English"}
+          triggerVariant="default"
+        />
       </div>
       <div className="px-12 w-full flex justify-center">
         <Progress value={(step / 12) * 100} className={cn("sm:w-1/2 mb-8 h-2", i18n.language == 'ar' && 'rotate-180')} />

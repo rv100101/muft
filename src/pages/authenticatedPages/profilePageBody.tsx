@@ -66,7 +66,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
         favoriteFood: removeDuplicates(data.favoriteFood, "favorite_food_name"),
         country: data.country,
         region: data.region,
-        nickname: data?.nickname == '' ? user?.first_name : data.nickname,
+        nickname: data?.nickname,
         religion: data.religion,
         hair: data.hair,
         eyes: data.eyes,
@@ -82,7 +82,15 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
         interest: removeDuplicates(data.interest, "interest_name"),
       });
     }
-  }, [data, headerValues, methods]);
+    console.log(data?.nickname);
+
+    if (data?.nickname == '') {
+      methods.setValue('nickname', user!.first_name, {
+        shouldDirty: true,
+        shouldTouch: true
+      });
+    }
+  }, [data, headerValues, methods, user]);
 
   const {
     educations,
