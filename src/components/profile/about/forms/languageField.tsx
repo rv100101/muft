@@ -19,8 +19,10 @@ import deleteMultiselectValuesStore from "@/zustand/profile/about/deleteMultisel
 import removeExistingData from "@/lib/removeExistingData";
 import { cn } from "@/lib/utils";
 import { useUserStore } from "@/zustand/auth/user";
+import { useTranslation } from "react-i18next";
 
 export default function LanguageField() {
+  const [t] = useTranslation();
   const setLanguagesToDelete = deleteMultiselectValuesStore(
     (state) => state.setLanguagesToDelete
   );
@@ -146,7 +148,7 @@ export default function LanguageField() {
                     onValueChange={setInputValue}
                     onBlur={() => setOpen(false)}
                     onFocus={() => setOpen(true)}
-                    placeholder="Select languages..."
+                    placeholder={t("memberDetails.selectLanguages")}
                     className="ml-2 bg-transparent outline-none placeholder:text-muted-foreground flex-1"
                   />
                 </div>

@@ -125,6 +125,7 @@
     "no": "لا"
   },
   "memberDetails": {
+    "selectLanguages": "يرجى الاختيار",
     "enterNickname": "أدخل كنية",
     "male": "ذكر",
     "female": "أنثى",

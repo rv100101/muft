@@ -132,6 +132,7 @@
     "tellBackground": "Tell us your background"
   },
   "memberDetails": {
+    "selectLanguages": "Select languages...",
     "enterNickname": "Enter Nickname",
     "male": "Male",
     "haveChildrenLabel": "Have children?",
