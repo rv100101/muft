@@ -64,7 +64,9 @@ const WorkEducationForm = () => {
                       defaultValue={field.value}
                     >
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger
+                          dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                        >
                           <SelectValue
                             placeholder={i18n.language == 'en' ? "Select employment status" : "يرجى الاختيار"}
                           />
@@ -140,7 +142,9 @@ const WorkEducationForm = () => {
                       defaultValue={field.value}
                     >
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger
+                          dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                        >
                           <SelectValue
                             placeholder={i18n.language == 'en' ? "Select occupation" : "يرجى الاختيار"}
                           />
@@ -213,7 +217,9 @@ const WorkEducationForm = () => {
                       defaultValue={field.value}
                     >
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger
+                          dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                        >
                           <SelectValue
                             placeholder={i18n.language == 'en' ? "Select income range" : "يرجى الاختيار"}
                           />
