@@ -18,8 +18,10 @@ import removeExistingData from "@/lib/removeExistingData";
 import { useUserStore } from "@/zustand/auth/user";
 import { cn } from "@/lib/utils";
 import deleteMultiselectValuesStore from "@/zustand/profile/about/deleteMultiselectValues";
+import { useTranslation } from "react-i18next";
 
 export default function InterestField() {
+  const [t] = useTranslation();
   const setDeleted = deleteMultiselectValuesStore(
     (state) => state.setInterestsToDelete
   );
@@ -132,7 +134,7 @@ export default function InterestField() {
                     onValueChange={setInputValue}
                     onBlur={() => setOpen(false)}
                     onFocus={() => setOpen(true)}
-                    placeholder="Select interests..."
+                    placeholder={t("memberDetails.interestsPlaceholder")}
                     className="ml-2 bg-transparent outline-none placeholder:text-muted-foreground flex-1"
                   />
                 </div>

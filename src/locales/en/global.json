@@ -132,6 +132,7 @@
     "tellBackground": "Tell us your background"
   },
   "memberDetails": {
+    "interestsPlaceholder": "Select interests...",
     "favoriteFoodsPlaceholder": "Select favorite foods...",
     "petsPlaceholder": "Select pets...",
     "heightPlaceholder": "Enter height (cm)",

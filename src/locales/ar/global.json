@@ -125,6 +125,7 @@
     "no": "لا"
   },
   "memberDetails": {
+    "interestsPlaceholder": "يرجى الاختيا",
     "favoriteFoodsPlaceholder": "يرجى الاختيا",
     "petsPlaceholder": "يرجى الاختيار",
     "heightPlaceholder": "الطول (سم)",
