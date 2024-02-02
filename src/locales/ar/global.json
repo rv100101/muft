@@ -125,6 +125,8 @@
     "no": "لا"
   },
   "memberDetails": {
+    "heightPlaceholder": "الطول (سم)",
+    "weightPlaceholder": "الوزن (كغ)",
     "selectLanguages": "يرجى الاختيار",
     "enterNickname": "أدخل كنية",
     "male": "ذكر",

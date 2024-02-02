@@ -132,6 +132,8 @@
     "tellBackground": "Tell us your background"
   },
   "memberDetails": {
+    "heightPlaceholder": "Enter height (cm)",
+    "weightPlaceholder": "Enter weight (kg)",
     "selectLanguages": "Select languages...",
     "enterNickname": "Enter Nickname",
     "male": "Male",
