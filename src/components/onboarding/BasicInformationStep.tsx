@@ -9,25 +9,24 @@ import { useEffect } from "react";
 import { fieldNames } from "@/lib/formFieldKeys";
 import onboardingStore from "@/zustand/profile/onboarding/onboardingStore";
 
-
 const BasicInformationStep = () => {
   const [, i18n] = useTranslation()
-  const {
-    trigger
-  } = useFormContext();
 
   const {
     setNationalities
   } = selectOptions();
 
-  const basicInfoValues = useWatch({ name: fieldNames[0] });
+  const {
+    trigger, formState: { dirtyFields }
+  } = useFormContext();
   const step = onboardingStore(state => state.step);
-
+  const fields = fieldNames[step - 1];
+  const values = useWatch({ name: fields });
   useEffect(() => {
     if (step == 1) {
-      trigger(fieldNames[0])
+      trigger(Object.keys(dirtyFields))
     }
-  }, [basicInfoValues, trigger, step]);
+  }, [values, trigger, step, fields, dirtyFields]);
 
   useQuery({
     queryFn: () => profileContentQuery.editOptions.getNationality(i18n.language),

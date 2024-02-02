@@ -4,12 +4,29 @@ import selectOptions from "@/zustand/profile/selectData/selectOptions";
 import profileContentQuery from "@/queries/profile/profileContent";
 import { Hair, Eye, BodyType, BodyArt } from "@/types/profile";
 import AppearanceForm from "../profile/about/forms/appearanceForm";
+import { useFormContext, useWatch } from "react-hook-form";
+import { useEffect } from "react";
+import { fieldNames } from "@/lib/formFieldKeys";
+import onboardingStore from "@/zustand/profile/onboarding/onboardingStore";
 
 const AppearanceStep = () => {
   const [, i18n] = useTranslation();
   const {
     setEyes, setHair, setBodyTypes, setBodyArts
   } = selectOptions();
+
+  const {
+    trigger, formState: { dirtyFields }
+  } = useFormContext();
+
+  const step = onboardingStore(state => state.step);
+  const values = useWatch({ name: fieldNames[step - 1] });
+
+  useEffect(() => {
+    if (step == 5) {
+      trigger(Object.keys(dirtyFields))
+    }
+  }, [values, step, trigger, dirtyFields]);
 
   useQuery({
     queryFn: () => profileContentQuery.editOptions.getHair(i18n.language),

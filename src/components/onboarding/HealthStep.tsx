@@ -4,12 +4,31 @@ import selectOptions from "@/zustand/profile/selectData/selectOptions";
 import profileContentQuery from "@/queries/profile/profileContent";
 import { Workout, Disability } from "@/types/profile";
 import HealthForm from "../profile/about/forms/healthForm";
+import { useFormContext, useWatch } from "react-hook-form";
+import { useEffect } from "react";
+import { fieldNames } from "@/lib/formFieldKeys";
+import onboardingStore from "@/zustand/profile/onboarding/onboardingStore";
+
 
 const HealthStep = () => {
   const [, i18n] = useTranslation();
   const {
     setWorkout, setDisability
   } = selectOptions();
+
+  const {
+    trigger, formState: { dirtyFields }
+  } = useFormContext();
+
+  const step = onboardingStore(state => state.step);
+  const values = useWatch({ name: fieldNames[step - 1] });
+
+  useEffect(() => {
+    if (step == 9) {
+      trigger(Object.keys(dirtyFields))
+    }
+  }, [values, step, trigger, dirtyFields]);
+
 
   useQuery({
     queryFn: () => profileContentQuery.editOptions.getWorkout(),

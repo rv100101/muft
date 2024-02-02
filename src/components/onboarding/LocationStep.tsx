@@ -7,6 +7,11 @@ import { useUpdateEffect } from "usehooks-ts";
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
 import useSelectedCountryStore from "@/zustand/profile/location/selectedCountry";
 import LocationForm from "../profile/about/forms/locationForm";
+import { useFormContext, useWatch } from "react-hook-form";
+import { useEffect } from "react";
+import { fieldNames } from "@/lib/formFieldKeys";
+import onboardingStore from "@/zustand/profile/onboarding/onboardingStore";
+
 const LocationStep = () => {
   const [, i18n] = useTranslation();
   const {
@@ -14,6 +19,19 @@ const LocationStep = () => {
   } = selectOptions();
   const { selectedCountry, setSelectedCountry } = useSelectedCountryStore();
   const { data: profileAboutContent } = profileAboutContentStore();
+
+  const {
+    trigger, formState: { dirtyFields }
+  } = useFormContext();
+
+  const step = onboardingStore(state => state.step);
+  const values = useWatch({ name: fieldNames[step - 1] });
+
+  useEffect(() => {
+    if (step == 2) {
+      trigger(Object.keys(dirtyFields))
+    }
+  }, [values, step, trigger, dirtyFields]);
 
   useQuery({
     queryFn: () => profileContentQuery.editOptions.getCountries(i18n.language),

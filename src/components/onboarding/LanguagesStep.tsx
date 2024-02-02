@@ -5,6 +5,10 @@ import selectOptions from "@/zustand/profile/selectData/selectOptions";
 import profileContentQuery from "@/queries/profile/profileContent";
 import { Languages } from "@/types/profile";
 import { useUserStore } from "@/zustand/auth/user";
+import { useFormContext, useWatch } from "react-hook-form";
+import { useEffect } from "react";
+import { fieldNames } from "@/lib/formFieldKeys";
+import onboardingStore from "@/zustand/profile/onboarding/onboardingStore";
 
 const LanguagesStep = () => {
   const [, i18n] = useTranslation();
@@ -13,6 +17,19 @@ const LanguagesStep = () => {
   } = selectOptions();
 
   const user = useUserStore(state => state.user);
+
+  const {
+    trigger, formState: { dirtyFields }
+  } = useFormContext();
+
+  const step = onboardingStore(state => state.step);
+  const values = useWatch({ name: fieldNames[step - 1] });
+
+  useEffect(() => {
+    if (step == 4) {
+      trigger(Object.keys(dirtyFields));
+    }
+  }, [values, step, trigger, dirtyFields]);
 
   useQuery({
     queryFn: () => profileContentQuery.editOptions.getLanguages(i18n.language, user!.member_id),
