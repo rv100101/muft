@@ -67,7 +67,9 @@ const AppearanceForm = () => {
                       defaultValue={field.value}
                     >
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger
+                          dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                        >
                           <SelectValue
                             placeholder={i18n.language == 'en' ? "Select eye type" : "يرجى الاختيار"}
                           />
@@ -134,7 +136,9 @@ const AppearanceForm = () => {
                       defaultValue={field.value}
                     >
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger
+                          dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                        >
                           <SelectValue
                             placeholder={i18n.language == 'en' ? "Select hair" : "يرجى الاختيار"}
                           />
@@ -316,7 +320,9 @@ const AppearanceForm = () => {
                       defaultValue={field.value}
                     >
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger
+                          dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                        >
                           <SelectValue
                             placeholder={i18n.language == 'en' ? "Select body type" : "يرجى الاختيار"}
                           />
@@ -383,7 +389,9 @@ const AppearanceForm = () => {
                       defaultValue={field.value}
                     >
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger
+                          dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                        >
                           <SelectValue
                             placeholder={i18n.language == 'en' ? "Select body art" : "يرجى الاختيار"}
                           />
