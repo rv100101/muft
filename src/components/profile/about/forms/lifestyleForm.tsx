@@ -65,7 +65,9 @@ const LifestyleForm = () => {
                       defaultValue={field.value}
                     >
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger
+                          dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                        >
                           <SelectValue
                             placeholder={i18n.language == 'en' ? "Do you drink?" : "يرجى الاختيار"}
                           />
@@ -131,7 +133,9 @@ const LifestyleForm = () => {
                       defaultValue={field.value}
                     >
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger
+                          dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                        >
                           <SelectValue
                             placeholder={i18n.language == 'en' ? "Do you smoke?" : "يرجى الاختيار"}
                           />
@@ -197,7 +201,9 @@ const LifestyleForm = () => {
                       defaultValue={field.value}
                     >
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger
+                          dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                        >
                           <SelectValue
                             placeholder={i18n.language == 'en' ? "Select living status" : "يرجى الاختيار"}
                           />
@@ -263,7 +269,9 @@ const LifestyleForm = () => {
                       defaultValue={field.value}
                     >
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger
+                          dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                        >
                           <SelectValue
                             placeholder={i18n.language == 'en' ? "Select car" : "يرجى الاختيار"}
                           />
