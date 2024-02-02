@@ -118,6 +118,7 @@ const BasicInformationForm = () => {
               <FormField
                 name="nickname"
                 render={({ field }) => {
+                  console.log(field);
                   return (
                     <FormItem>
                       <FormLabel className="text-primary" htmlFor="nickname">
@@ -167,6 +168,7 @@ const BasicInformationForm = () => {
             <FormField
               name="gender"
               render={({ field }) => {
+                console.log(field);
                 return (
                   <FormItem>
                     <FormLabel className="text-primary" htmlFor="gender">
@@ -179,7 +181,9 @@ const BasicInformationForm = () => {
                       }
                     >
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger
+                          dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                        >
                           <SelectValue placeholder={i18n.language == 'en' ? "Select gender" : "يرجى الاختيار"} />
                         </SelectTrigger>
                       </FormControl>
@@ -233,7 +237,8 @@ const BasicInformationForm = () => {
       </div>
       <div className="flex flex-row justify-between h-max w-full px-5">
         {editMode || !user?.profile_completed ? (
-          <div className="flex flex-col space-y-1 w-full">
+          <div
+            className="flex flex-col space-y-1 w-full">
             <FormField
               name="nationality"
               render={({ field }) => {
@@ -247,7 +252,9 @@ const BasicInformationForm = () => {
                       defaultValue={field.value}
                     >
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger
+                          dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                        >
                           <SelectValue placeholder={i18n.language == 'en' ? "Select nationality" : "يرجى الاختيار"} />
                         </SelectTrigger>
                       </FormControl>
@@ -319,7 +326,9 @@ const BasicInformationForm = () => {
       )}
       <div className="flex flex-row justify-between w-full px-5">
         {editMode || !user?.profile_completed ? (
-          <div className="space-y-1 hover:cursor-pointer w-full items-center">
+          <div
+            dir="rtl"
+            className="space-y-1 hover:cursor-pointer w-full items-center">
             <FormField
               name="birthInfo"
               render={({ field }) => {
@@ -341,7 +350,7 @@ const BasicInformationForm = () => {
                       }}
                       type="date"
                       placeholder="dd MMM yyyy"
-                      className="outline-0 border rounded-lg w-full py-3 px-5 dark:[color-scheme:dark]"
+                      className={cn("outline-0 border rounded-lg w-full py-3 px-5 dark:[color-scheme:dark]", i18n.language == 'ar' && "text-right")}
                     />
                     <FormMessage />
                   </FormItem>

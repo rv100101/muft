@@ -5,8 +5,10 @@ import selectOptions from "@/zustand/profile/selectData/selectOptions";
 import profileContentQuery from "@/queries/profile/profileContent";
 import { Nationality } from "@/types/profile";
 
+
 const BasicInformationStep = () => {
-  const [, i18n] = useTranslation();
+  const [, i18n] = useTranslation()
+  // const user = useUserStore(state => state.user);
   const {
     setNationalities
   } = selectOptions();
