@@ -125,6 +125,7 @@
     "no": "لا"
   },
   "memberDetails": {
+    "petsPlaceholder": "يرجى الاختيار",
     "heightPlaceholder": "الطول (سم)",
     "weightPlaceholder": "الوزن (كغ)",
     "selectLanguages": "يرجى الاختيار",

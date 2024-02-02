@@ -18,6 +18,7 @@ import removeExistingData from "@/lib/removeExistingData";
 import { useUserStore } from "@/zustand/auth/user";
 import { cn } from "@/lib/utils";
 import deleteMultiselectValuesStore from "@/zustand/profile/about/deleteMultiselectValues";
+import { useTranslation } from "react-i18next";
 
 export default function PetsField() {
   const setDeleted = deleteMultiselectValuesStore(
@@ -32,6 +33,7 @@ export default function PetsField() {
   const { pets } = selectOptions();
 
   const [selectables, setSelectables] = React.useState<Pets[]>([]);
+  const [t] = useTranslation();
 
   useUpdateEffect(() => {
     const selectables = removeExistingData(pets, selected, "pet_name");
@@ -128,7 +130,7 @@ export default function PetsField() {
                     onValueChange={setInputValue}
                     onBlur={() => setOpen(false)}
                     onFocus={() => setOpen(true)}
-                    placeholder="Select pets..."
+                    placeholder={t("memberDetails.petsPlaceholder")}
                     className="ml-2 bg-transparent outline-none placeholder:text-muted-foreground flex-1"
                   />
                 </div>
