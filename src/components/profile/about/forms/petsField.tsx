@@ -34,7 +34,7 @@ export default function PetsField() {
   const { pets } = selectOptions();
 
   const [selectables, setSelectables] = React.useState<Pets[]>([]);
-  const [t] = useTranslation();
+  const [t, i18n] = useTranslation();
 
   useUpdateEffect(() => {
     const selectables = removeExistingData(pets, selected, "pet_name");
@@ -97,7 +97,7 @@ export default function PetsField() {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center space-x-2">
+      <div className={cn("flex items-center space-x-2", i18n.language == 'ar' && 'space-x-reverse')}>
         <Checkbox checked={noPets} onCheckedChange={(checked) => {
           setNoPets(checked as boolean)
           setSelected([]);
@@ -106,7 +106,7 @@ export default function PetsField() {
           htmlFor="terms"
           className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
         >
-          No pets
+          {t("memberDetails.noPets")}
         </label>
       </div>
       <FormField

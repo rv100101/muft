@@ -125,6 +125,7 @@
     "no": "لا"
   },
   "memberDetails": {
+    "noPets": "ليست لدي حيوانات أليفة",
     "interestsPlaceholder": "يرجى الاختيا",
     "favoriteFoodsPlaceholder": "يرجى الاختيا",
     "petsPlaceholder": "يرجى الاختيار",
