@@ -71,7 +71,9 @@ const BackgroundForm = () => {
                       defaultValue={field.value}
                     >
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger
+                          dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                        >
                           <SelectValue
                             placeholder={i18n.language == 'en' ? "Select education" : "يرجى الاختيار"}
                           />
@@ -138,7 +140,9 @@ const BackgroundForm = () => {
                       defaultValue={field.value}
                     >
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger
+                          dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                        >
                           <SelectValue
                             placeholder={i18n.language == 'en' ? "Select religion" : "يرجى الاختيار"}
                           />
@@ -203,7 +207,9 @@ const BackgroundForm = () => {
                       defaultValue={field.value}
                     >
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger
+                          dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                        >
                           <SelectValue
                             placeholder={i18n.language == 'en' ? "Select ethnicity" : "يرجى الاختيار"}
                           />
