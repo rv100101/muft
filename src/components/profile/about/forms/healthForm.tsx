@@ -128,7 +128,9 @@ const HealthForm = () => {
                       defaultValue={field.value}
                     >
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger
+                          dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                        >
                           <SelectValue
                             placeholder={i18n.language == 'en' ? "Do you have a disability?" : "يرجى الاختيار"}
                           />
