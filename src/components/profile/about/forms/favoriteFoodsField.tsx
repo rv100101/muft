@@ -18,8 +18,10 @@ import removeExistingData from "@/lib/removeExistingData";
 import { useUserStore } from "@/zustand/auth/user";
 import { cn } from "@/lib/utils";
 import deleteMultiselectValuesStore from "@/zustand/profile/about/deleteMultiselectValues";
+import { useTranslation } from "react-i18next";
 
 export default function FavoriteFoodField() {
+  const [t] = useTranslation();
   const setFaveFoodsToDelete = deleteMultiselectValuesStore(
     (state) => state.setFavoriteFoodToDelete
   );
@@ -138,7 +140,7 @@ export default function FavoriteFoodField() {
                     onValueChange={setInputValue}
                     onBlur={() => setOpen(false)}
                     onFocus={() => setOpen(true)}
-                    placeholder="Select favorite foods..."
+                    placeholder={t("memberDetails.favoriteFoodsPlaceholder")}
                     className="ml-2 bg-transparent outline-none placeholder:text-muted-foreground flex-1"
                   />
                 </div>
