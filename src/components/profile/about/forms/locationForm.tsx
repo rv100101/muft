@@ -93,7 +93,9 @@ const LocationForm = () => {
                       defaultValue={field.value}
                     >
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger
+                          dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                        >
                           <SelectValue placeholder={i18n.language == 'en' ? "Select country" : "يرجى الاختيار"} />
                         </SelectTrigger>
                       </FormControl>
@@ -159,7 +161,9 @@ const LocationForm = () => {
                       value={field.value}
                     >
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger
+                          dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                        >
                           <SelectValue placeholder={i18n.language == 'en' ? "Select state" : "يرجى الاختيار"} />
                         </SelectTrigger>
                       </FormControl>
