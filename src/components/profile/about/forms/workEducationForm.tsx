@@ -1,5 +1,11 @@
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
-import { Briefcase, CircleDollarSign, User } from "lucide-react";
+import {
+  Briefcase,
+  CheckIcon,
+  ArrowUpDown,
+  CircleDollarSign,
+  User,
+} from "lucide-react";
 import FormSkeletonLoading from "./formSkeletonLoading";
 import { EmploymentStatus, Income } from "@/types/profile";
 import selectOptions from "@/zustand/profile/selectData/selectOptions";
@@ -20,12 +26,27 @@ import {
 } from "@/components/ui/form";
 import { useUserStore } from "@/zustand/auth/user";
 import { useTranslation } from "react-i18next";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "@/components/ui/command";
+import { useState } from "react";
 
 const WorkEducationForm = () => {
   const [t, i18n] = useTranslation();
-  const { control } = useFormContext();
+  const { control, setValue } = useFormContext();
   const { data, editMode, isLoading } = profileAboutContentStore();
+  const [occupationPopoverOpen, setOccupationPopoverOpen] = useState(false);
 
   const { incomes, occupations, employmentStatus } = selectOptions();
 
@@ -33,7 +54,10 @@ const WorkEducationForm = () => {
 
   const isSaving = profileAboutContentStore((state) => state.isSaving);
   const profileData = profileAboutContentStore((state) => state.profileData);
-  if ((isLoading && profileData == null && user?.profile_completed) || isSaving) {
+  if (
+    (isLoading && profileData == null && user?.profile_completed) ||
+    isSaving
+  ) {
     return (
       <div className="flex justify-start items-start space-x-4 w-full ml-5">
         <div className="space-y-2">
@@ -65,15 +89,19 @@ const WorkEducationForm = () => {
                     >
                       <FormControl>
                         <SelectTrigger
-                          dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                          dir={i18n.language == "ar" ? "rtl" : "ltr"}
                         >
                           <SelectValue
-                            placeholder={i18n.language == 'en' ? "Select employment status" : "يرجى الاختيار"}
+                            placeholder={
+                              i18n.language == "en"
+                                ? "Select employment status"
+                                : "يرجى الاختيار"
+                            }
                           />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent
-                        dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                        dir={i18n.language == "ar" ? "rtl" : "ltr"}
                         className="min-h-min max-h-44 w-min"
                       >
                         {employmentStatus &&
@@ -130,28 +158,102 @@ const WorkEducationForm = () => {
               name="occupationTitle"
               render={({ field }) => {
                 return (
-                  <FormItem>
+                  <FormItem className="flex flex-col w-full">
                     <FormLabel
                       className="text-primary"
                       htmlFor="occupationTitle"
                     >
                       {t("memberDetails.occupation")}
                     </FormLabel>
-                    <Select
+                    <Popover
+                      open={occupationPopoverOpen}
+                      onOpenChange={(open) => setOccupationPopoverOpen(open)}
+                    >
+                      <FormControl className="w-full">
+                        <PopoverTrigger className="w-full" asChild>
+                          <FormControl>
+                            <Button
+                              variant="outline"
+                              role="combobox"
+                              className={cn(
+                                "w-full font-normal justify-between",
+                                !field.value && "text-muted-foreground"
+                              )}
+                            >
+                              {field.value
+                                ? occupations.find(
+                                    (occupation) =>
+                                      occupation.occupation_title ===
+                                      field.value
+                                  )?.occupation_title
+                                : i18n.language == "en"
+                                ? "Select occupation"
+                                : "يرجى الاختيار"}
+                              <ArrowUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                            </Button>
+                          </FormControl>
+                        </PopoverTrigger>
+                      </FormControl>
+                      <PopoverContent className="w-full p-0 max-h-64">
+                        <Command className="sm:w-[662px] max-h-64">
+                          <CommandInput
+                            placeholder={
+                              i18n.language == "en"
+                                ? "Select occupation"
+                                : "يرجى الاختيار"
+                            }
+                            className="h-9 w-full"
+                          />
+                          <CommandEmpty>No framework found.</CommandEmpty>
+                          <CommandGroup className="w-full max-h-64 overflow-auto">
+                            {occupations.map((occupation, index: number) => (
+                              <CommandItem
+                                className="w-full"
+                                value={occupation.occupation_title}
+                                key={index}
+                                onSelect={() => {
+                                  setOccupationPopoverOpen(false);
+                                  setValue(
+                                    "occupationTitle",
+                                    occupation.occupation_title,
+                                    { shouldDirty: true, shouldTouch: true }
+                                  );
+                                }}
+                              >
+                                {occupation.occupation_title}
+                                <CheckIcon
+                                  className={cn(
+                                    "ml-auto h-4 w-4",
+                                    occupation.occupation_title === field.value
+                                      ? "opacity-100"
+                                      : "opacity-0"
+                                  )}
+                                />
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+                    {/* <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
                     >
                       <FormControl>
                         <SelectTrigger
-                          dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                          dir={i18n.language == "ar" ? "rtl" : "ltr"}
                         >
                           <SelectValue
-                            placeholder={i18n.language == 'en' ? "Select occupation" : "يرجى الاختيار"}
+                            placeholder={
+                              i18n.language == "en"
+                                ? "Select occupation"
+                                : "يرجى الاختيار"
+                            }
                           />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent
-                        dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                        dir={i18n.language == "ar" ? "rtl" : "ltr"}
                         className="min-h-min max-h-44 w-min"
                       >
                         {occupations &&
@@ -167,7 +269,7 @@ const WorkEducationForm = () => {
                             );
                           })}
                       </SelectContent>
-                    </Select>
+                    </Select> */}
                     <FormMessage />
                   </FormItem>
                 );
@@ -218,15 +320,19 @@ const WorkEducationForm = () => {
                     >
                       <FormControl>
                         <SelectTrigger
-                          dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                          dir={i18n.language == "ar" ? "rtl" : "ltr"}
                         >
                           <SelectValue
-                            placeholder={i18n.language == 'en' ? "Select income range" : "يرجى الاختيار"}
+                            placeholder={
+                              i18n.language == "en"
+                                ? "Select income range"
+                                : "يرجى الاختيار"
+                            }
                           />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent
-                        dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                        dir={i18n.language == "ar" ? "rtl" : "ltr"}
                         className="min-h-min max-h-44 w-min"
                       >
                         {incomes &&
