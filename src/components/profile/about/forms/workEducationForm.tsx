@@ -194,7 +194,10 @@ const WorkEducationForm = () => {
                           </FormControl>
                         </PopoverTrigger>
                       </FormControl>
-                      <PopoverContent className="w-full p-0 max-h-64">
+                      <PopoverContent
+                        dir={i18n.language == "ar" ? "rtl" : "ltr"}
+                        className="w-full p-0 max-h-64"
+                      >
                         <Command className="w-full max-h-64">
                           <CommandInput
                             placeholder={

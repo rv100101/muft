@@ -122,7 +122,10 @@ const LocationForm = () => {
                           </FormControl>
                         </PopoverTrigger>
                       </FormControl>
-                      <PopoverContent className="w-full p-0 max-h-64">
+                      <PopoverContent
+                        dir={i18n.language == "ar" ? "rtl" : "ltr"}
+                        className="w-full p-0 max-h-64"
+                      >
                         <Command className="w-full max-h-64">
                           <CommandInput
                             placeholder={
@@ -130,7 +133,6 @@ const LocationForm = () => {
                                 ? "Select country"
                                 : "يرجى الاختيار"
                             }
-                            className="h-9 w-full"
                           />
                           <CommandEmpty>No framework found.</CommandEmpty>
                           <CommandGroup className="w-full max-h-64 overflow-auto">
@@ -277,7 +279,10 @@ const LocationForm = () => {
                           </FormControl>
                         </PopoverTrigger>
                       </FormControl>
-                      <PopoverContent className="w-full p-0 max-h-64">
+                      <PopoverContent
+                        dir={i18n.language == "ar" ? "rtl" : "ltr"}
+                        className="w-full p-0 max-h-64"
+                      >
                         <Command className="w-full max-h-64">
                           <CommandInput
                             placeholder={
