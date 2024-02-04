@@ -195,7 +195,7 @@ const WorkEducationForm = () => {
                         </PopoverTrigger>
                       </FormControl>
                       <PopoverContent className="w-full p-0 max-h-64">
-                        <Command className="sm:w-[662px] max-h-64">
+                        <Command className="w-full max-h-64">
                           <CommandInput
                             placeholder={
                               i18n.language == "en"
