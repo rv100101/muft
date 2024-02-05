@@ -39,12 +39,14 @@ import profileContentQuery, {
 } from "@/queries/profile/profileContent";
 import { Skeleton } from "../ui/skeleton";
 import selectOptions from "@/zustand/profile/selectData/selectOptions";
+import removeExistingData from "@/lib/removeExistingData";
 
 const OnboardingWrapper = () => {
   const {
     isLoading,
     setIsLoading,
     setData: setAboutData,
+    data,
     setProfileData,
   } = profileAboutContentStore();
   const {
@@ -254,13 +256,33 @@ const OnboardingWrapper = () => {
     const disability = getDisabilityData(formData.disability);
     const employmentStatus = getEmploymentStatus(formData.employmentStatus);
     const region = getStateData(formData.region);
+    const finalLanguages = removeExistingData(
+      formData.language,
+      data?.language ?? [],
+      "language_name"
+    );
+    const finalFavoriteFood = removeExistingData(
+      formData.favoriteFood,
+      data?.favoriteFood ?? [],
+      "favorite_food_name"
+    );
+    const finalPets = removeExistingData(
+      formData.pets,
+      data?.pets ?? [],
+      "pet_name"
+    );
+    const finalInterests = removeExistingData(
+      formData.interest,
+      data?.interest ?? [],
+      "interest_name"
+    );
     finalFormData = {
       ...finalFormData,
       gender: formData.gender[0],
-      language: formData.language,
-      favoriteFood: formData.favoriteFood,
-      pets: formData.pets,
-      interest: formData.interest,
+      language: finalLanguages,
+      favoriteFood: finalFavoriteFood,
+      pets: finalPets,
+      interest: finalInterests,
       ethnicity: ethnicity?.ethnicity_id,
       nationality: nationality?.country_code,
       maritalStatus: maritalStatus?.marital_status_id,
