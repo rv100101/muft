@@ -181,6 +181,7 @@ const BasicInformationForm = () => {
                     </FormLabel>
                     <Select
                       onValueChange={field.onChange}
+                      value={getGender(field.value)}
                       defaultValue={getGender(field.value)}
                     >
                       <FormControl>
@@ -258,6 +259,7 @@ const BasicInformationForm = () => {
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
+                      value={field.value}
                     >
                       <FormControl>
                         <SelectTrigger

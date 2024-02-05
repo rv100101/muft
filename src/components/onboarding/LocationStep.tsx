@@ -14,22 +14,21 @@ import onboardingStore from "@/zustand/profile/onboarding/onboardingStore";
 
 const LocationStep = () => {
   const [, i18n] = useTranslation();
-  const {
-    setCountries, setStates, countries
-  } = selectOptions();
+  const { setCountries, setStates, countries } = selectOptions();
   const { selectedCountry, setSelectedCountry } = useSelectedCountryStore();
   const { data: profileAboutContent } = profileAboutContentStore();
 
   const {
-    trigger, formState: { dirtyFields }
+    trigger,
+    formState: { dirtyFields },
   } = useFormContext();
 
-  const step = onboardingStore(state => state.step);
+  const step = onboardingStore((state) => state.step);
   const values = useWatch({ name: fieldNames[step - 1] });
 
   useEffect(() => {
     if (step == 2) {
-      trigger(Object.keys(dirtyFields))
+      trigger(fieldNames[step - 1]);
     }
   }, [values, step, trigger, dirtyFields]);
 
@@ -45,7 +44,8 @@ const LocationStep = () => {
   useQuery({
     queryFn: () =>
       profileContentQuery.editOptions.getStates(
-        selectedCountry ?? "", i18n.language
+        selectedCountry ?? "",
+        i18n.language
       ),
     // enabled: selectedCountry.length !== 0,
     queryKey: ["states", selectedCountry, i18n.language],
@@ -66,8 +66,10 @@ const LocationStep = () => {
   }, [countries, profileAboutContent]);
 
   return (
-    <div className="w-full sm:w-1/2"><LocationForm /></div>
-  )
-}
+    <div className="w-full sm:w-1/2">
+      <LocationForm />
+    </div>
+  );
+};
 
-export default LocationStep
+export default LocationStep;

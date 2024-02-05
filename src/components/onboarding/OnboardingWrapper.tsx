@@ -2,7 +2,7 @@ import onboardingStore from "@/zustand/profile/onboarding/onboardingStore";
 import { Button } from "../ui/button";
 import { Progress } from "../ui/progress";
 import BasicInformationStep from "./BasicInformationStep";
-import { cn } from "@/lib/utils";
+import { cn, convertJsonToConvertedObject } from "@/lib/utils";
 import { FieldErrors, FieldValues, useFormContext } from "react-hook-form";
 import { fieldNames } from "@/lib/formFieldKeys";
 import { useCallback, useEffect, useState } from "react";
@@ -17,7 +17,9 @@ import HealthStep from "./HealthStep";
 import MaritalStatusStep from "./MaritalStatusStep";
 import EmploymentStatusStep from "./EmploymentStatusStep";
 import InterestsStep from "./InterestsStep";
-import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
+import profileAboutContentStore, {
+  ProfileAbout,
+} from "@/zustand/profile/profileAboutStore";
 import { Loader2, LogOutIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import PreferredLanguageDialog from "../preferredLanguageDialog";
@@ -30,10 +32,20 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { DialogClose, DialogTrigger } from "@radix-ui/react-dialog";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useUserStore } from "@/zustand/auth/user";
+import profileContentQuery, {
+  ProfileContent,
+} from "@/queries/profile/profileContent";
+import { Skeleton } from "../ui/skeleton";
 
 const OnboardingWrapper = () => {
+  const {
+    isLoading,
+    setIsLoading,
+    setData: setAboutData,
+    setProfileData,
+  } = profileAboutContentStore();
   const queryClient = useQueryClient();
   const signOut = useUserStore((state) => state.reset);
   const [t, i18n] = useTranslation();
@@ -41,16 +53,57 @@ const OnboardingWrapper = () => {
   const {
     formState: { errors, dirtyFields, isValidating },
     trigger,
+    getValues,
   } = useFormContext();
 
   const step = onboardingStore((state) => state.step);
   const setStep = onboardingStore((state) => state.setStep);
   const [goNext, setGoNext] = useState(false);
   const [submit, setSubmit] = useState(false);
+  const user = useUserStore((state) => state.user);
 
   // useEffect(() => {
   //   trigger(fieldNames[step - 1]);
   // }, [dirtyFields, i18n.language, step, trigger]);
+
+  const { isLoading: currentUserLoading, isRefetching } = useQuery({
+    queryKey: ["profileContent", user!.member_id, i18n.language],
+    queryFn: async () => {
+      const additionalInformation =
+        await profileContentQuery.fetchAdditionalInformation(
+          user!.member_id,
+          i18n.language
+        );
+      const memberDetails = await profileContentQuery.fetchMemberDetails(
+        user!.member_id,
+        i18n.language
+      );
+      let jsonArray: string | null = null;
+      if (typeof memberDetails == "string" && memberDetails.length !== 0) {
+        const jsonArrayString = `[${memberDetails.replace(/}\s*{/g, "},{")}]`;
+        jsonArray = JSON.parse(jsonArrayString);
+      }
+      const convertedDetails = convertJsonToConvertedObject(
+        jsonArray == null ? memberDetails : jsonArray![0]
+      );
+      const details = {
+        ...convertedDetails,
+        ...additionalInformation,
+      };
+
+      return details;
+    },
+    onSuccess: (data: ProfileAbout) => {
+      console.log(data);
+      setAboutData(data);
+      setProfileData(data);
+    },
+    refetchOnWindowFocus: false,
+  });
+
+  useEffect(() => {
+    setIsLoading(currentUserLoading || isRefetching || isSaving);
+  }, [currentUserLoading, isRefetching, isSaving, setIsLoading]);
 
   useEffect(() => {
     if (step > fieldNames.length) {
@@ -83,6 +136,15 @@ const OnboardingWrapper = () => {
     return true;
   }
 
+  const handleSaveOnNext = async () => {
+    const values = getValues();
+    await profileContentQuery.saveOnboarding(
+      values as ProfileContent,
+      user!.member_id,
+      step
+    );
+  };
+
   useEffect(() => {
     const getFields: () => string[] = () => {
       if (step >= fieldNames.length) {
@@ -97,6 +159,7 @@ const OnboardingWrapper = () => {
 
     if (!isValidating && pass && isDirty && goNext) {
       setGoNext(false);
+      handleSaveOnNext();
       setStep(step + 1);
     } else {
       setGoNext(false);
@@ -113,7 +176,6 @@ const OnboardingWrapper = () => {
       }
     };
     const validateFields = getFields();
-    console.log("FIELDS TO VALIDATE: ", validateFields);
     trigger(validateFields);
     setGoNext(true);
   }, [step, trigger]);
@@ -127,10 +189,10 @@ const OnboardingWrapper = () => {
     <>
       <div
         className={cn(
-          "my-2 text-lg flex-col px-8 sm:w-1/2 items-center justify-center flex"
+          "my-2 text-lg flex-col px-8 w-full sm:w-1/2 items-center justify-center flex"
         )}
       >
-        <div className="flex justify-between w-full mb-8">
+        <div className="flex justify-between w-full mb-6">
           <PreferredLanguageDialog
             showTrigger={true}
             triggerTitle={i18n.language == "en" ? "العربية" : "English"}
@@ -195,7 +257,16 @@ const OnboardingWrapper = () => {
           )}
         />
       </div>
-      <StepView step={step} />
+      {isLoading ? (
+        <div className="grid w-full sm:w-1/2 sm:grid-rows-2 grid-flow-row sm:grid-cols-2 gap-2">
+          <Skeleton className="h-8 w-full" />
+          <Skeleton className="h-8 w-full" />
+          <Skeleton className="h-8 w-full" />
+          <Skeleton className="h-8 w-full" />
+        </div>
+      ) : (
+        <StepView step={step} />
+      )}
       <hr className="h-4 w-full sm:w-1/2 mt-8" />
       <div
         className={cn(

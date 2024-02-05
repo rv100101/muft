@@ -29,7 +29,12 @@ import deleteMultiselectValuesStore from "@/zustand/profile/about/deleteMultisel
 // import getDeletedItems from "@/lib/getDeleted";
 
 const ProfilePageBody = ({ userId }: { userId: string }) => {
-  const { languages: deletedLanguages, favoriteFood: deletedFaveFoods, pets: deletedPets, interests: deletedInterests } = deleteMultiselectValuesStore();
+  const {
+    languages: deletedLanguages,
+    favoriteFood: deletedFaveFoods,
+    pets: deletedPets,
+    interests: deletedInterests,
+  } = deleteMultiselectValuesStore();
   console.log("DELETED ", deletedLanguages, deletedInterests);
   const [t] = useTranslation();
   const headerValues = profileHeaderStore((state) => state.headerValues);
@@ -83,13 +88,18 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
       });
     }
     console.log(data?.nickname);
-
-    if (data?.nickname == '') {
-      methods.setValue('nickname', user!.first_name, {
+    if (data?.nickname == "") {
+      methods.setValue("nickname", user!.first_name, {
         shouldDirty: true,
-        shouldTouch: true
+        shouldTouch: true,
       });
     }
+    // if (data?.nickname == "") {
+    //   methods.setValue("gender", "Male", {
+    //     shouldDirty: true,
+    //     shouldTouch: true,
+    //   });
+    // }
   }, [data, headerValues, methods, user]);
 
   const {
@@ -182,6 +192,8 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
   const getEmploymentStatus = (name: string) =>
     employmentStatus.find((s) => s.employment_status_name === name);
 
+  console.log(methods.formState);
+
   // const isFinished = onboardingStore(state => state.isFinished);
   const onSubmit = async (formData: any) => {
     // for onboarding finish validation
@@ -256,10 +268,18 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
         favoriteFood: finalFavoriteFood,
         pets: finalPets,
         interest: finalInterests,
-        deletedLanguages: deletedLanguages.filter((lang) => lang.member_language_id !== undefined),
-        deletedFavoriteFoods: deletedFaveFoods.filter((ff) => ff.member_favorite_food_id !== undefined),
-        deletedInterests: deletedInterests.filter((interest) => interest.member_interest_id !== undefined),
-        deletedPets: deletedPets.filter((pets) => pets.member_pet_id !== undefined),
+        deletedLanguages: deletedLanguages.filter(
+          (lang) => lang.member_language_id !== undefined
+        ),
+        deletedFavoriteFoods: deletedFaveFoods.filter(
+          (ff) => ff.member_favorite_food_id !== undefined
+        ),
+        deletedInterests: deletedInterests.filter(
+          (interest) => interest.member_interest_id !== undefined
+        ),
+        deletedPets: deletedPets.filter(
+          (pets) => pets.member_pet_id !== undefined
+        ),
         ethnicity: ethnicity?.ethnicity_id,
         nationality: nationality?.country_code,
         maritalStatus: maritalStatus?.marital_status_id,
@@ -305,7 +325,10 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
     setIsSaving(false);
   };
   useEffect(() => {
-    if (Object.getOwnPropertyNames(methods.formState.errors).length > 0 && user!.profile_completed) {
+    if (
+      Object.getOwnPropertyNames(methods.formState.errors).length > 0 &&
+      user!.profile_completed
+    ) {
       toast({
         variant: "destructive",
         title: t("alerts.allFieldsRequired"),
@@ -316,7 +339,12 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
   }, [methods.formState.errors, t, user]);
 
   return (
-    <div className={cn("flex h-screen flex-col justify-start w-full lg:w-3/4 mx-auto", user?.profile_completed && 'border')}>
+    <div
+      className={cn(
+        "flex h-screen flex-col justify-start w-full lg:w-3/4 mx-auto",
+        user?.profile_completed && "border"
+      )}
+    >
       {!user!.is_active && (
         <div className="h-full overflow-y-scroll flex flex-col">
           <Dialog open={open}>
@@ -331,19 +359,20 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
           className="flex flex-col h-full"
           onSubmit={methods.handleSubmit(onSubmit)}
         >
-          {
-            !user?.profile_completed ? <div className="w-full h-min flex justify-start my-8 items-center flex-col px-4">
+          {!user?.profile_completed ? (
+            <div className="w-full h-min flex justify-start my-8 items-center flex-col px-4">
               <OnboardingWrapper />
-            </div> :
-              <>
-                <ProfileTopNav />
-                <div className="lg:h-full h-screen overflow-y-scroll w-screen sm:w-full overflow-x-clip no-scrollbar flex flex-col">
-                  {user?.profile_completed && <ProfileHeader userId={userId} />}
-                  <AboutAccordion userId={parseInt(userId)} />
-                  {/* user?.profile_completed && <GallerySection userId={userId} /> */}
-                </div>
-              </>
-          }
+            </div>
+          ) : (
+            <>
+              <ProfileTopNav />
+              <div className="lg:h-full h-screen overflow-y-scroll w-screen sm:w-full overflow-x-clip no-scrollbar flex flex-col">
+                {user?.profile_completed && <ProfileHeader userId={userId} />}
+                <AboutAccordion userId={parseInt(userId)} />
+                {/* user?.profile_completed && <GallerySection userId={userId} /> */}
+              </div>
+            </>
+          )}
         </form>
       </FormProvider>
     </div>

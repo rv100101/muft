@@ -567,7 +567,7 @@ const getBodyArts = async (lang: string) => {
   }
 };
 
-type ProfileContent = ProfileAbout & {
+export type ProfileContent = ProfileAbout & {
   nickname: string;
   deletedLanguages: Languages[];
   deletedFavoriteFoods: FavoriteFood[];
@@ -887,6 +887,281 @@ const saveInformation = async (profile: ProfileContent, userId: number) => {
   }
 };
 
+const saveOnboarding = async (
+  profile: ProfileContent,
+  userId: number,
+  step: number
+) => {
+  console.log("PROFILE: ", profile);
+  try {
+    if (step == 1) {
+      // gender
+      if (profile.gender) {
+        await axiosQuery.post("/SaveGender", {
+          gender: profile.gender,
+          member: userId,
+        });
+      }
+      // nickname
+      if (profile.nickname) {
+        await axiosQuery.post("/SaveNickname", {
+          nickname: profile.nickname,
+          member: userId,
+        });
+      }
+      // nationality
+      if (profile.nationality) {
+        await axiosQuery.post("/SaveNationality", {
+          nationality: profile.nationality,
+          member: userId,
+        });
+      }
+      // birthInfo
+      if (profile.birthInfo) {
+        await axiosQuery.post("/SaveBirthday", {
+          birthday: profile.birthInfo,
+          member: userId,
+        });
+      }
+    } else if (step == 2) {
+      // country
+      if (profile.country) {
+        await axiosQuery.post("/SaveCountry", {
+          country: profile.country,
+          member: userId,
+        });
+      }
+
+      // city
+      await axiosQuery.post("/SaveCity", {
+        city: 2,
+        member: userId,
+      });
+
+      // region
+      if (profile.region) {
+        await axiosQuery.post("/SaveState", {
+          state: profile.region,
+          member: userId,
+        });
+      }
+    } else if (step == 3) {
+      // education
+      if (profile.education) {
+        await axiosQuery.post("/SaveEducation", {
+          education: profile.education,
+          member: userId,
+        });
+      }
+      // religion
+      if (profile.religion) {
+        await axiosQuery.post("/SaveReligion", {
+          religion: profile.religion,
+          member: userId,
+        });
+      }
+      // ethnicity
+      if (profile.ethnicity) {
+        await axiosQuery.post("/SaveEthnicity", {
+          ethnicity: profile.ethnicity,
+          member: userId,
+        });
+      }
+    } else if (step == 4) {
+      // language
+      if (profile.language) {
+        for (const lang of profile.language) {
+          await axiosQuery.post("/SaveLanguage", {
+            language: lang.language_code,
+            member: userId,
+          });
+        }
+      }
+    } else if (step == 5) {
+      // hair
+      if (profile.hair) {
+        await axiosQuery.post("/SaveHair", {
+          hair: profile.hair,
+          member: userId,
+        });
+      }
+
+      // eyes
+      if (profile.eyes) {
+        await axiosQuery.post("/SaveEyes", {
+          eyes: profile.eyes,
+          member: userId,
+        });
+      }
+
+      // bodyArt
+      if (profile.bodyArt) {
+        await axiosQuery.post("/SaveBodyArt", {
+          body_art: profile.bodyArt,
+          member: userId,
+        });
+      }
+
+      // height
+      if (profile.height) {
+        await axiosQuery.post("/SaveHeight", {
+          height: profile.height,
+          member: userId,
+        });
+      }
+
+      // weight
+      if (profile.weight) {
+        await axiosQuery.post("/SaveWeight", {
+          weight: profile.weight,
+          member: userId,
+        });
+      }
+
+      // bodyType
+      if (profile.bodyType) {
+        await axiosQuery.post("/SaveBodyType", {
+          body_type: profile.bodyType,
+          member: userId,
+        });
+      }
+    } else if (step == 6) {
+      // drink
+      if (profile.drinking) {
+        await axiosQuery.post("/SaveDrink", {
+          drink: profile.drinking,
+          member: userId,
+        });
+      }
+
+      // smoke
+      if (profile.smoking) {
+        await axiosQuery.post("/SaveSmoke", {
+          smoke: profile.smoking,
+          member: userId,
+        });
+      }
+
+      // car
+      if (profile.car) {
+        await axiosQuery.post("/SaveCar", {
+          car: profile.car,
+          member: userId,
+        });
+      }
+
+      // livingStatus
+      if (profile.livingStatus) {
+        await axiosQuery.post("/SaveLivingStatus", {
+          living_status: profile.livingStatus,
+          member: userId,
+        });
+      }
+    } else if (step == 7) {
+      // pets
+      if (profile.pets) {
+        for (const pet of profile.pets) {
+          await axiosQuery.post("/SavePet", {
+            pet: pet.pet_id,
+            member: userId,
+          });
+        }
+      }
+    } else if (step == 8) {
+      // favoriteFood
+      if (profile.favoriteFood) {
+        for (const food of profile.favoriteFood) {
+          await axiosQuery.post("/SaveFavoriteFood", {
+            favorite_food: food.favorite_food_id,
+            member: userId,
+          });
+        }
+      }
+    } else if (step == 9) {
+      // disability
+      if (profile.disability) {
+        await axiosQuery.post("/SaveDisability", {
+          disability: profile.disability,
+          member: userId,
+        });
+      }
+
+      // workout
+      if (profile.workout) {
+        await axiosQuery.post("/SaveWorkout", {
+          workout: profile.workout,
+          member: userId,
+        });
+      }
+    } else if (step == 10) {
+      // haveChildren
+      if (profile.haveChildren) {
+        await axiosQuery.post("/SaveHaveChildren", {
+          have_children: profile.haveChildren,
+          member: userId,
+        });
+      }
+
+      // wantChildren
+      if (profile.wantChildren) {
+        await axiosQuery.post("/SaveWantChildren", {
+          want_children: profile.wantChildren,
+          member: userId,
+        });
+      }
+
+      // maritalStatus
+      if (profile.maritalStatus) {
+        await axiosQuery.post("/SaveMaritalStatus", {
+          marital_status: profile.maritalStatus,
+          member: userId,
+        });
+      }
+    } else if (step == 11) {
+      // employmentStatus
+      if (profile.employmentStatus) {
+        await axiosQuery.post("/SaveEmploymentStatus", {
+          employment_status: profile.employmentStatus,
+          member: userId,
+        });
+      }
+
+      // occupation
+      if (profile.occupationTitle) {
+        await axiosQuery.post("/SaveOccupation", {
+          occupation: profile.occupationTitle,
+          member: userId,
+        });
+      }
+
+      // income_range
+      if (profile.income) {
+        await axiosQuery.post("/SaveIncome", {
+          income: profile.income,
+          member: userId,
+        });
+      }
+    } else if (step == 12) {
+      // interest
+      if (profile.interest) {
+        for (const interest of profile.interest) {
+          await axiosQuery.post("/SaveInterest", {
+            interest: interest.interest_id,
+            member: userId,
+          });
+        }
+      }
+    } else {
+      console.log("save failed");
+      return { failed: "saving failed" };
+    }
+
+    return { success: "Profile saved successfully!" };
+  } catch (error) {
+    console.error("Error saving information:", error);
+  }
+};
+
 const profileContentQuery = {
   fetchAdditionalInformation,
   editOptions: {
@@ -918,6 +1193,7 @@ const profileContentQuery = {
     getEmploymentStatus,
   },
   saveInformation,
+  saveOnboarding,
   fetchMemberDetails,
 };
 
