@@ -53,53 +53,49 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
   useEffect(() => {
     if (data && headerValues) {
       console.log(data);
-      methods.reset({
-        car: data.car ?? "",
-        gender: data.gender,
-        nationality: data.nationality,
-        birthInfo: data.birthInfo,
-        ethnicity: data.ethnicity,
-        maritalStatus: data.maritalStatus,
-        language: removeDuplicates(data.language, "language_name"),
-        education: data.education,
-        employmentStatus: data.employmentStatus,
-        occupationTitle: data.occupationTitle,
-        income: data.income,
-        height: parseInt(data.height),
-        weight: parseInt(data.weight),
-        bodyType: data.bodyType,
-        favoriteFood: removeDuplicates(data.favoriteFood, "favorite_food_name"),
-        country: data.country,
-        region: data.region,
-        nickname: data?.nickname,
-        religion: data.religion,
-        hair: data.hair,
-        eyes: data.eyes,
-        bodyArt: data.bodyArt,
-        haveChildren: data.haveChildren,
-        wantChildren: data.wantChildren,
-        workout: data.workout,
-        disability: data.disability,
-        pets: removeDuplicates(data.pets, "pet_name"),
-        drinking: data.drinking,
-        smoking: data.smoking,
-        livingStatus: data.livingStatus,
-        interest: removeDuplicates(data.interest, "interest_name"),
-      });
+      methods.reset(
+        {
+          car: data.car ?? "",
+          gender: data.gender,
+          nationality: data.nationality,
+          birthInfo: data.birthInfo,
+          ethnicity: data.ethnicity,
+          maritalStatus: data.maritalStatus,
+          language: removeDuplicates(data.language, "language_name"),
+          education: data.education,
+          employmentStatus: data.employmentStatus,
+          occupationTitle: data.occupationTitle,
+          income: data.income,
+          height: parseInt(data?.height ?? "0"),
+          weight: parseInt(data?.weight ?? "0"),
+          bodyType: data.bodyType,
+          favoriteFood: removeDuplicates(
+            data.favoriteFood,
+            "favorite_food_name"
+          ),
+          country: data.country,
+          region: data.region,
+          nickname: data?.nickname,
+          religion: data.religion,
+          hair: data.hair,
+          eyes: data.eyes,
+          bodyArt: data.bodyArt,
+          haveChildren: data.haveChildren,
+          wantChildren: data.wantChildren,
+          workout: data.workout,
+          disability: data.disability,
+          pets: removeDuplicates(data.pets, "pet_name"),
+          drinking: data.drinking,
+          smoking: data.smoking,
+          livingStatus: data.livingStatus,
+          interest: removeDuplicates(data.interest, "interest_name"),
+        },
+        {
+          keepDefaultValues: true,
+          keepDirty: true,
+        }
+      );
     }
-    console.log(data?.nickname);
-    if (data?.nickname == "") {
-      methods.setValue("nickname", user!.first_name, {
-        shouldDirty: true,
-        shouldTouch: true,
-      });
-    }
-    // if (data?.nickname == "") {
-    //   methods.setValue("gender", "Male", {
-    //     shouldDirty: true,
-    //     shouldTouch: true,
-    //   });
-    // }
   }, [data, headerValues, methods, user]);
 
   const {

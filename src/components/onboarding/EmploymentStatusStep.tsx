@@ -10,26 +10,30 @@ import { fieldNames } from "@/lib/formFieldKeys";
 import onboardingStore from "@/zustand/profile/onboarding/onboardingStore";
 
 const EmploymentStatusStep = () => {
-  const [, i18n] = useTranslation()
-  const {
-    setOccupations, setIncomes, setEmploymentStatus
-  } = selectOptions();
+  const [, i18n] = useTranslation();
+  const { setOccupations, setIncomes, setEmploymentStatus } = selectOptions();
 
   const {
-    trigger, formState: { dirtyFields }
+    trigger,
+    formState: { dirtyFields },
   } = useFormContext();
 
-  const step = onboardingStore(state => state.step);
+  const step = onboardingStore((state) => state.step);
   const values = useWatch({ name: fieldNames[step - 1] });
 
   useEffect(() => {
     if (step == 11) {
-      trigger(Object.keys(dirtyFields))
+      trigger(
+        Object.keys(dirtyFields).filter((key) => {
+          return dirtyFields[key] === true;
+        })
+      );
     }
   }, [values, step, trigger, dirtyFields]);
 
   useQuery({
-    queryFn: () => profileContentQuery.editOptions.getOccupations(i18n.language),
+    queryFn: () =>
+      profileContentQuery.editOptions.getOccupations(i18n.language),
     refetchInterval: Infinity,
     queryKey: ["occupations", i18n.language],
     onSuccess: (data: Occupation[]) => {
@@ -47,7 +51,8 @@ const EmploymentStatusStep = () => {
   });
 
   useQuery({
-    queryFn: () => profileContentQuery.editOptions.getEmploymentStatus(i18n.language),
+    queryFn: () =>
+      profileContentQuery.editOptions.getEmploymentStatus(i18n.language),
     queryKey: ["employmentStatus", i18n.language],
     onSuccess: (data: EmploymentStatus[]) => {
       setEmploymentStatus(data);
@@ -58,7 +63,7 @@ const EmploymentStatusStep = () => {
     <div className="w-full sm:w-1/2">
       <WorkEducationForm />
     </div>
-  )
-}
+  );
+};
 
-export default EmploymentStatusStep
+export default EmploymentStatusStep;

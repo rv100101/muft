@@ -9,20 +9,23 @@ import { fieldNames } from "@/lib/formFieldKeys";
 import onboardingStore from "@/zustand/profile/onboarding/onboardingStore";
 
 const FavoriteFoodStep = () => {
-  const {
-    setFavoriteFoods
-  } = selectOptions();
+  const { setFavoriteFoods } = selectOptions();
 
   const {
-    trigger, formState: { dirtyFields }
+    trigger,
+    formState: { dirtyFields },
   } = useFormContext();
 
-  const step = onboardingStore(state => state.step);
+  const step = onboardingStore((state) => state.step);
   const values = useWatch({ name: fieldNames[step - 1] });
 
   useEffect(() => {
     if (step == 8) {
-      trigger(Object.keys(dirtyFields))
+      trigger(
+        Object.keys(dirtyFields).filter((key) => {
+          return dirtyFields[key] === true;
+        })
+      );
     }
   }, [values, step, trigger, dirtyFields]);
 
@@ -39,7 +42,7 @@ const FavoriteFoodStep = () => {
     <div className="h-36 w-full sm:w-1/2">
       <FavoriteFoodForm />
     </div>
-  )
-}
+  );
+};
 
 export default FavoriteFoodStep;

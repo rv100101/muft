@@ -12,27 +12,34 @@ import onboardingStore from "@/zustand/profile/onboarding/onboardingStore";
 
 const LanguagesStep = () => {
   const [, i18n] = useTranslation();
-  const {
-    setLanguages
-  } = selectOptions();
+  const { setLanguages } = selectOptions();
 
-  const user = useUserStore(state => state.user);
+  const user = useUserStore((state) => state.user);
 
   const {
-    trigger, formState: { dirtyFields }
+    trigger,
+    formState: { dirtyFields },
   } = useFormContext();
 
-  const step = onboardingStore(state => state.step);
+  const step = onboardingStore((state) => state.step);
   const values = useWatch({ name: fieldNames[step - 1] });
 
   useEffect(() => {
     if (step == 4) {
-      trigger(Object.keys(dirtyFields));
+      trigger(
+        Object.keys(dirtyFields).filter((key) => {
+          return dirtyFields[key] === true;
+        })
+      );
     }
   }, [values, step, trigger, dirtyFields]);
 
   useQuery({
-    queryFn: () => profileContentQuery.editOptions.getLanguages(i18n.language, user!.member_id),
+    queryFn: () =>
+      profileContentQuery.editOptions.getLanguages(
+        i18n.language,
+        user!.member_id
+      ),
     queryKey: ["languages"],
     onSuccess: (data: Languages[]) => {
       console.log(data);
@@ -44,7 +51,7 @@ const LanguagesStep = () => {
     <div className="h-36 w-full sm:w-1/2">
       <LanguagesForm />
     </div>
-  )
-}
+  );
+};
 
-export default LanguagesStep
+export default LanguagesStep;

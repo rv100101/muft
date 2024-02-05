@@ -28,7 +28,11 @@ const LocationStep = () => {
 
   useEffect(() => {
     if (step == 2) {
-      trigger(fieldNames[step - 1]);
+      trigger(
+        Object.keys(dirtyFields).filter((key) => {
+          return dirtyFields[key] === true;
+        })
+      );
     }
   }, [values, step, trigger, dirtyFields]);
 

@@ -9,26 +9,27 @@ import { useEffect } from "react";
 import { fieldNames } from "@/lib/formFieldKeys";
 import onboardingStore from "@/zustand/profile/onboarding/onboardingStore";
 
-
 const HealthStep = () => {
   const [, i18n] = useTranslation();
-  const {
-    setWorkout, setDisability
-  } = selectOptions();
+  const { setWorkout, setDisability } = selectOptions();
 
   const {
-    trigger, formState: { dirtyFields }
+    trigger,
+    formState: { dirtyFields },
   } = useFormContext();
 
-  const step = onboardingStore(state => state.step);
+  const step = onboardingStore((state) => state.step);
   const values = useWatch({ name: fieldNames[step - 1] });
 
   useEffect(() => {
     if (step == 9) {
-      trigger(Object.keys(dirtyFields))
+      trigger(
+        Object.keys(dirtyFields).filter((key) => {
+          return dirtyFields[key] === true;
+        })
+      );
     }
   }, [values, step, trigger, dirtyFields]);
-
 
   useQuery({
     queryFn: () => profileContentQuery.editOptions.getWorkout(),
@@ -52,7 +53,7 @@ const HealthStep = () => {
     <div className="w-full sm:w-1/2">
       <HealthForm />
     </div>
-  )
-}
+  );
+};
 
-export default HealthStep
+export default HealthStep;

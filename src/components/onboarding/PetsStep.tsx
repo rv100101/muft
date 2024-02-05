@@ -9,20 +9,23 @@ import { fieldNames } from "@/lib/formFieldKeys";
 import onboardingStore from "@/zustand/profile/onboarding/onboardingStore";
 
 const PetsStep = () => {
-  const {
-    setPets
-  } = selectOptions();
+  const { setPets } = selectOptions();
 
   const {
-    trigger, formState: { dirtyFields }
+    trigger,
+    formState: { dirtyFields },
   } = useFormContext();
 
-  const step = onboardingStore(state => state.step);
+  const step = onboardingStore((state) => state.step);
   const values = useWatch({ name: fieldNames[step - 1] });
 
   useEffect(() => {
     if (step == 7) {
-      trigger(Object.keys(dirtyFields))
+      trigger(
+        Object.keys(dirtyFields).filter((key) => {
+          return dirtyFields[key] === true;
+        })
+      );
     }
   }, [values, step, trigger, dirtyFields]);
 
@@ -39,7 +42,7 @@ const PetsStep = () => {
     <div className="h-36 w-full sm:w-1/2">
       <PetsForm />
     </div>
-  )
-}
+  );
+};
 
 export default PetsStep;

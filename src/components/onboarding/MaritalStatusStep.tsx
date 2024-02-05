@@ -9,29 +9,32 @@ import { useEffect } from "react";
 import { fieldNames } from "@/lib/formFieldKeys";
 import onboardingStore from "@/zustand/profile/onboarding/onboardingStore";
 
-
 const MaritalStatusStep = () => {
   const [, i18n] = useTranslation();
-  const {
-    setMaritalStatus, setHaveChildren, setWantChildren
-  } = selectOptions();
+  const { setMaritalStatus, setHaveChildren, setWantChildren } =
+    selectOptions();
 
   const {
-    trigger, formState: { dirtyFields }
+    trigger,
+    formState: { dirtyFields },
   } = useFormContext();
 
-  const step = onboardingStore(state => state.step);
+  const step = onboardingStore((state) => state.step);
   const values = useWatch({ name: fieldNames[step - 1] });
 
   useEffect(() => {
     if (step == 10) {
-      trigger(Object.keys(dirtyFields))
+      trigger(
+        Object.keys(dirtyFields).filter((key) => {
+          return dirtyFields[key] === true;
+        })
+      );
     }
   }, [values, step, trigger, dirtyFields]);
 
-
   useQuery({
-    queryFn: () => profileContentQuery.editOptions.getMaritalStatus(i18n.language),
+    queryFn: () =>
+      profileContentQuery.editOptions.getMaritalStatus(i18n.language),
     refetchInterval: Infinity,
     queryKey: ["maritalStatus", i18n.language],
     onSuccess: (data: MaritalStatus[]) => {
@@ -40,7 +43,8 @@ const MaritalStatusStep = () => {
   });
 
   useQuery({
-    queryFn: () => profileContentQuery.editOptions.getHaveChildren(i18n.language),
+    queryFn: () =>
+      profileContentQuery.editOptions.getHaveChildren(i18n.language),
     refetchInterval: Infinity,
     queryKey: ["haveChildren", i18n.language],
     onSuccess: (data: HaveChildren[]) => {
@@ -49,7 +53,8 @@ const MaritalStatusStep = () => {
   });
 
   useQuery({
-    queryFn: () => profileContentQuery.editOptions.getWantChildren(i18n.language),
+    queryFn: () =>
+      profileContentQuery.editOptions.getWantChildren(i18n.language),
     refetchInterval: Infinity,
     queryKey: ["wantChildren", i18n.language],
     onSuccess: (data: WantChildren[]) => {
@@ -61,7 +66,7 @@ const MaritalStatusStep = () => {
     <div className="w-full sm:w-1/2">
       <MaritalStatusForm />
     </div>
-  )
-}
+  );
+};
 
-export default MaritalStatusStep
+export default MaritalStatusStep;

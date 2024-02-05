@@ -11,20 +11,23 @@ import onboardingStore from "@/zustand/profile/onboarding/onboardingStore";
 
 const LifestyleStep = () => {
   const [, i18n] = useTranslation();
-  const {
-    setDrinks, setSmoke, setLivingStatus, setCar
-  } = selectOptions();
+  const { setDrinks, setSmoke, setLivingStatus, setCar } = selectOptions();
 
   const {
-    trigger, formState: { dirtyFields }
+    trigger,
+    formState: { dirtyFields },
   } = useFormContext();
 
-  const step = onboardingStore(state => state.step);
+  const step = onboardingStore((state) => state.step);
   const values = useWatch({ name: fieldNames[step - 1] });
 
   useEffect(() => {
     if (step == 6) {
-      trigger(Object.keys(dirtyFields))
+      trigger(
+        Object.keys(dirtyFields).filter((key) => {
+          return dirtyFields[key] === true;
+        })
+      );
     }
   }, [values, step, trigger, dirtyFields]);
 
@@ -49,7 +52,8 @@ const LifestyleStep = () => {
   });
 
   useQuery({
-    queryFn: () => profileContentQuery.editOptions.getLivingStatus(i18n.language),
+    queryFn: () =>
+      profileContentQuery.editOptions.getLivingStatus(i18n.language),
     refetchInterval: Infinity,
     queryKey: ["livingStatus", i18n.language],
     onSuccess: (data: LivingStatus[]) => {
@@ -70,7 +74,7 @@ const LifestyleStep = () => {
     <div className="w-full sm:w-1/2">
       <LifestyleForm />
     </div>
-  )
-}
+  );
+};
 
-export default LifestyleStep
+export default LifestyleStep;

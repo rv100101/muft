@@ -23,7 +23,11 @@ const BasicInformationStep = () => {
   const values = useWatch({ name: fields });
   useEffect(() => {
     if (step == 1) {
-      trigger(fields);
+      trigger(
+        Object.keys(dirtyFields).filter((key) => {
+          return dirtyFields[key] === true;
+        })
+      );
     }
   }, [values, trigger, step, fields, dirtyFields]);
 

@@ -11,20 +11,23 @@ import onboardingStore from "@/zustand/profile/onboarding/onboardingStore";
 
 const BackgroundStep = () => {
   const [, i18n] = useTranslation();
-  const {
-    setEducations, setReligion, setEthnicities
-  } = selectOptions();
+  const { setEducations, setReligion, setEthnicities } = selectOptions();
 
   const {
-    trigger, formState: { dirtyFields }
+    trigger,
+    formState: { dirtyFields },
   } = useFormContext();
 
-  const step = onboardingStore(state => state.step);
+  const step = onboardingStore((state) => state.step);
   const values = useWatch({ name: fieldNames[step - 1] });
 
   useEffect(() => {
     if (step == 3) {
-      trigger(Object.keys(dirtyFields))
+      trigger(
+        Object.keys(dirtyFields).filter((key) => {
+          return dirtyFields[key] === true;
+        })
+      );
     }
   }, [values, step, trigger, dirtyFields]);
 
@@ -36,7 +39,6 @@ const BackgroundStep = () => {
       setEducations(data);
     },
   });
-
 
   useQuery({
     refetchInterval: Infinity,
@@ -60,7 +62,7 @@ const BackgroundStep = () => {
     <div className="w-full sm:w-1/2">
       <BackgroundForm />
     </div>
-  )
-}
+  );
+};
 
-export default BackgroundStep
+export default BackgroundStep;
