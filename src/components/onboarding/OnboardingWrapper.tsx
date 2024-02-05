@@ -18,12 +18,24 @@ import MaritalStatusStep from "./MaritalStatusStep";
 import EmploymentStatusStep from "./EmploymentStatusStep";
 import InterestsStep from "./InterestsStep";
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
-import { Loader2 } from "lucide-react";
+import { Loader2, LogOutIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import PreferredLanguageDialog from "../preferredLanguageDialog";
 import logo from "@/assets/single-logo.png";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { DialogClose, DialogTrigger } from "@radix-ui/react-dialog";
+import { useQueryClient } from "@tanstack/react-query";
+import { useUserStore } from "@/zustand/auth/user";
 
 const OnboardingWrapper = () => {
+  const queryClient = useQueryClient();
+  const signOut = useUserStore((state) => state.reset);
   const [t, i18n] = useTranslation();
   const { isSaving } = profileAboutContentStore();
   const {
@@ -35,6 +47,10 @@ const OnboardingWrapper = () => {
   const setStep = onboardingStore((state) => state.setStep);
   const [goNext, setGoNext] = useState(false);
   const [submit, setSubmit] = useState(false);
+
+  // useEffect(() => {
+  //   trigger(fieldNames[step - 1]);
+  // }, [dirtyFields, i18n.language, step, trigger]);
 
   useEffect(() => {
     if (step > fieldNames.length) {
@@ -111,15 +127,64 @@ const OnboardingWrapper = () => {
     <>
       <div
         className={cn(
-          "my-8 text-lg flex px-8 sm:w-1/2 items-center justify-between"
+          "my-2 text-lg flex-col px-8 sm:w-1/2 items-center justify-center flex"
         )}
       >
+        <div className="flex justify-between w-full mb-8">
+          <PreferredLanguageDialog
+            showTrigger={true}
+            triggerTitle={i18n.language == "en" ? "العربية" : "English"}
+            triggerVariant="default"
+          />
+          <Dialog>
+            <DialogTrigger>
+              <div
+                dir={i18n.language == "ar" ? "rtl" : "ltr"}
+                className={cn(
+                  "flex space-x-2 my-4 ml-3",
+                  i18n.language == "ar" && "space-x-reverse"
+                )}
+              >
+                {
+                  <LogOutIcon
+                    size={20}
+                    className={cn(
+                      "text-primary",
+                      i18n.language == "ar" && "rotate-180"
+                    )}
+                  />
+                }{" "}
+                <p className="text-sm">{t("menu.signOut")}</p>
+              </div>
+            </DialogTrigger>
+            <DialogContent className="w-72 sm:max-w-md opacity-100">
+              <DialogHeader>
+                <DialogTitle>{t("signOut.confirmSignOut")}</DialogTitle>
+              </DialogHeader>
+              <DialogFooter className="sm:justify-start flex flex-col space-y-2 sm:space-y-0 pt-5">
+                <Button
+                  className="hover:bg-primary"
+                  onClick={() => {
+                    queryClient.invalidateQueries();
+                    signOut();
+                  }}
+                >
+                  {t("signOut.yes")}
+                </Button>
+                <DialogClose asChild>
+                  <Button
+                    className="text-white hover:bg-secondary "
+                    type="button"
+                    variant="secondary"
+                  >
+                    {t("signOut.no")}
+                  </Button>
+                </DialogClose>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        </div>
         <StepHeader step={step} />
-        <PreferredLanguageDialog
-          showTrigger={true}
-          triggerTitle={i18n.language == "en" ? "العربية" : "English"}
-          triggerVariant="default"
-        />
       </div>
       <div className="px-12 w-full flex justify-center">
         <Progress

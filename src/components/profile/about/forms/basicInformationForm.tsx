@@ -33,7 +33,7 @@ const BasicInformationForm = () => {
   const userId = parts[parts.length - 1];
   const [minDate, setMinDate] = useState("");
   const [maxDate, setMaxDate] = useState("");
-  const user = useUserStore(state => state.user);
+  const user = useUserStore((state) => state.user);
   const isSaving = profileAboutContentStore((state) => state.isSaving);
   useEffectOnce(() => {
     const currentDate = new Date();
@@ -59,16 +59,19 @@ const BasicInformationForm = () => {
   const { data, editMode, isLoading, profileData } = profileAboutContentStore();
 
   const getGender: (value: string) => string = (value: string) => {
-    if (value == t('memberDetails.male') || value == 'M') {
-      return 'M'
+    if (value == t("memberDetails.male") || value == "M") {
+      return "M";
+    } else if (value == t("memberDetails.female") || value == "F") {
+      return "F";
+    } else {
+      return "";
     }
-    else if (value == t('memberDetails.female') || value == 'F') {
-      return 'F'
-    }
-    else { return '' }
-  }
+  };
 
-  if ((isLoading && profileData == null && user?.profile_completed) || isSaving) {
+  if (
+    (isLoading && profileData == null && user?.profile_completed) ||
+    isSaving
+  ) {
     return (
       <div className="flex justify-start items-start space-x-4 w-full ml-5">
         <div className="space-y-2">
@@ -83,7 +86,9 @@ const BasicInformationForm = () => {
       className={cn(
         "h-96 w-full",
         !user?.profile_completed && "h-full",
-        !user?.profile_completed ? "sm:grid sm:grid-flow-row sm:grid-cols-2 gap-2 sm:gap-4" : "flex flex-col space-y-4"
+        !user?.profile_completed
+          ? "sm:grid sm:grid-flow-row sm:grid-cols-2 gap-2 sm:gap-4"
+          : "flex flex-col space-y-4"
       )}
     >
       {" "}
@@ -176,18 +181,24 @@ const BasicInformationForm = () => {
                     </FormLabel>
                     <Select
                       onValueChange={field.onChange}
-                      defaultValue={
-                        getGender(field.value)
-                      }
+                      defaultValue={getGender(field.value)}
                     >
                       <FormControl>
                         <SelectTrigger
-                          dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                          dir={i18n.language == "ar" ? "rtl" : "ltr"}
                         >
-                          <SelectValue placeholder={i18n.language == 'en' ? "Select gender" : "يرجى الاختيار"} />
+                          <SelectValue
+                            placeholder={
+                              i18n.language == "en"
+                                ? "Select gender"
+                                : "يرجى الاختيار"
+                            }
+                          />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent dir={i18n.language == 'ar' ? "rtl" : "ltr"}>
+                      <SelectContent
+                        dir={i18n.language == "ar" ? "rtl" : "ltr"}
+                      >
                         <SelectItem value={"M"}>
                           {t("memberDetails.male")}
                         </SelectItem>
@@ -216,18 +227,16 @@ const BasicInformationForm = () => {
               className="hover:cursor-pointer mt-2 mr-3"
             />
             <div className="flex flex-col justify-start space-y-1">
-              {
-                i18n.language !== 'ar' &&
+              {i18n.language !== "ar" && (
                 <p className="font-bold text-base text-primary">
                   {data && data?.gender[0] == "M" ? "Male" : "Female"}
                 </p>
-              }
-              {
-                i18n.language === 'ar' &&
+              )}
+              {i18n.language === "ar" && (
                 <p className="font-bold text-base text-primary">
-                  {data && i18n.language === 'ar' ? data?.gender : "Male"}
+                  {data && i18n.language === "ar" ? data?.gender : "Male"}
                 </p>
-              }
+              )}
               <p className="text-[#727272] text-xs">
                 {t("memberDetails.gender")}
               </p>
@@ -237,8 +246,7 @@ const BasicInformationForm = () => {
       </div>
       <div className="flex flex-row justify-between h-max w-full px-5">
         {editMode || !user?.profile_completed ? (
-          <div
-            className="flex flex-col space-y-1 w-full">
+          <div className="flex flex-col space-y-1 w-full">
             <FormField
               name="nationality"
               render={({ field }) => {
@@ -253,13 +261,19 @@ const BasicInformationForm = () => {
                     >
                       <FormControl>
                         <SelectTrigger
-                          dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                          dir={i18n.language == "ar" ? "rtl" : "ltr"}
                         >
-                          <SelectValue placeholder={i18n.language == 'en' ? "Select nationality" : "يرجى الاختيار"} />
+                          <SelectValue
+                            placeholder={
+                              i18n.language == "en"
+                                ? "Select nationality"
+                                : "يرجى الاختيار"
+                            }
+                          />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent
-                        dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                        dir={i18n.language == "ar" ? "rtl" : "ltr"}
                         className="h-44 w-min"
                       >
                         {nationalities.map(
@@ -318,7 +332,9 @@ const BasicInformationForm = () => {
               className="hover:cursor-pointer mt-2 mr-3"
             />
             <div className="flex flex-col justify-start space-y-1">
-              <p className="font-bold text-base text-primary">{data?.age}{" "}{t("memberDetails.years")}</p>
+              <p className="font-bold text-base text-primary">
+                {data?.age} {t("memberDetails.years")}
+              </p>
               <p className="text-[#727272] text-xs">{t("memberDetails.age")}</p>
             </div>
           </div>
@@ -326,9 +342,7 @@ const BasicInformationForm = () => {
       )}
       <div className="flex flex-row justify-between w-full px-5">
         {editMode || !user?.profile_completed ? (
-          <div
-            dir="rtl"
-            className="space-y-1 hover:cursor-pointer w-full items-center">
+          <div className="space-y-1 hover:cursor-pointer w-full items-center">
             <FormField
               name="birthInfo"
               render={({ field }) => {
@@ -350,7 +364,10 @@ const BasicInformationForm = () => {
                       }}
                       type="date"
                       placeholder="dd MMM yyyy"
-                      className={cn("outline-0 border rounded-lg w-full py-3 px-5 dark:[color-scheme:dark]", i18n.language == 'ar' && "text-right")}
+                      className={cn(
+                        "outline-0 border rounded-lg w-full py-3 px-5 dark:[color-scheme:dark]",
+                        i18n.language == "ar" && "text-right"
+                      )}
                     />
                     <FormMessage />
                   </FormItem>
@@ -372,7 +389,9 @@ const BasicInformationForm = () => {
                     ? moment(data?.birthInfo).format("DD MMM yyyy")
                     : "Add Birthday"}
                 </p>
-                <p className="text-[#727272] text-xs">{t("memberDetails.birthDay")}</p>
+                <p className="text-[#727272] text-xs">
+                  {t("memberDetails.birthDay")}
+                </p>
               </div>
             </div>
           )

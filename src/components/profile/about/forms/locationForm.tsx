@@ -300,7 +300,7 @@ const LocationForm = () => {
                                 value={state.state_name}
                                 key={index}
                                 onSelect={() => {
-                                  setCountryPopoverOpen(false);
+                                  setStatePopoverOpen(false);
                                   setValue("region", state.state_name, {
                                     shouldDirty: true,
                                     shouldTouch: true,
