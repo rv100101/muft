@@ -192,7 +192,9 @@ const OnboardingWrapper = () => {
   });
 
   useEffect(() => {
-    setIsLoading(currentUserLoading || isSaving);
+    if (step == 1) {
+      setIsLoading(currentUserLoading || isSaving);
+    }
   }, [currentUserLoading, isSaving, setIsLoading, nationalities, step]);
 
   useEffect(() => {
@@ -325,7 +327,6 @@ const OnboardingWrapper = () => {
       setGoNext(false);
       handleSaveOnNext();
       setStep(step + 1);
-      setIsLoading(true);
     } else {
       setGoNext(false);
     }
