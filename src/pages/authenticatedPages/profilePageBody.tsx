@@ -207,7 +207,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
     if (typeof region != "object") {
       methods.setError("region", {
         type: "custom",
-        message: "Invalid region",
+        message: t("validation.regionRequired"),
       });
       console.log("stopped by invalid region");
       return;

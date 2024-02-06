@@ -161,7 +161,7 @@ export const ProfileFormSchema = (t: TFunction<"translation", undefined>) =>
       .string({
         required_error: t("validation.regionRequired"),
       })
-      .min(2, { message: t("validation.invalidRegion") }),
+      .min(2, { message: t("validation.regionRequired") }),
     religion: z
       .string({
         required_error: t("validation.religionRequired"),
