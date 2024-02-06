@@ -6,11 +6,7 @@ import { Command, CommandGroup, CommandItem } from "@/components/ui/command";
 import { Command as CommandPrimitive } from "cmdk";
 
 import selectOptions from "@/zustand/profile/selectData/selectOptions";
-import {
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/components/ui/form";
+import { FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { useFormContext } from "react-hook-form";
 import { FavoriteFood } from "@/types/profile";
 import { useEffectOnce, useUpdateEffect } from "usehooks-ts";
@@ -25,7 +21,7 @@ export default function FavoriteFoodField() {
   const setFaveFoodsToDelete = deleteMultiselectValuesStore(
     (state) => state.setFavoriteFoodToDelete
   );
-  const user = useUserStore(state => state.user);
+  const user = useUserStore((state) => state.user);
   const { control, watch, setValue } = useFormContext();
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [open, setOpen] = React.useState(false);
@@ -46,12 +42,17 @@ export default function FavoriteFoodField() {
     setSelectables(selectables);
   }, [selected, favoriteFoods]);
 
-  const handleUnselect = React.useCallback((framework: FavoriteFood) => {
-    setSelected((prev) =>
-      prev.filter((s) => s.favorite_food_name !== framework.favorite_food_name)
-    );
-    setFaveFoodsToDelete(framework);
-  }, [setFaveFoodsToDelete]);
+  const handleUnselect = React.useCallback(
+    (framework: FavoriteFood) => {
+      setSelected((prev) =>
+        prev.filter(
+          (s) => s.favorite_food_name !== framework.favorite_food_name
+        )
+      );
+      setFaveFoodsToDelete(framework);
+    },
+    [setFaveFoodsToDelete]
+  );
 
   // const handleKeyDown = React.useCallback(
   //   (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -79,12 +80,14 @@ export default function FavoriteFoodField() {
   //   []
   // );
 
+  const { trigger } = useFormContext();
   React.useEffect(() => {
     setValue("favoriteFood", selected, {
       shouldDirty: true,
-      shouldTouch: true
+      shouldTouch: true,
     });
-  }, [selected, setValue]);
+    trigger("favoriteFood");
+  }, [selected, setValue, trigger]);
 
   useEffectOnce(() => {
     setSelected(watch("favoriteFood"));
@@ -145,7 +148,12 @@ export default function FavoriteFoodField() {
                   />
                 </div>
               </div>
-              <div className={cn("relative mt-2 lg:h-full", !user?.profile_completed ? 'h-full' : 'h-screen')}>
+              <div
+                className={cn(
+                  "relative mt-2 lg:h-full",
+                  !user?.profile_completed ? "h-full" : "h-screen"
+                )}
+              >
                 {open && selectables.length > 0 ? (
                   <div className="absolute w-full z-10 top-0 rounded-md border bg-popover text-popover-foreground shadow-md outline-none animate-in">
                     <CommandGroup className="h-40 overflow-auto">

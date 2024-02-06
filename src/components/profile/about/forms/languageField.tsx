@@ -26,8 +26,8 @@ export default function LanguageField() {
   const setLanguagesToDelete = deleteMultiselectValuesStore(
     (state) => state.setLanguagesToDelete
   );
-  const user = useUserStore(state => state.user);
-  const { control, watch, setValue, } = useFormContext();
+  const user = useUserStore((state) => state.user);
+  const { control, watch, setValue } = useFormContext();
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [open, setOpen] = React.useState(false);
 
@@ -54,9 +54,7 @@ export default function LanguageField() {
       }
     ) => {
       setSelected((prev) =>
-        prev.filter(
-          (s) => s.language_name !== framework.language_name
-        )
+        prev.filter((s) => s.language_name !== framework.language_name)
       );
       setLanguagesToDelete(framework);
     },
@@ -89,12 +87,15 @@ export default function LanguageField() {
   //   [selected, setLanguagesToDelete]
   // );
 
+  const { trigger } = useFormContext();
+
   React.useEffect(() => {
     setValue("language", selected, {
       shouldDirty: true,
       shouldTouch: true,
     });
-  }, [selected, setValue]);
+    trigger("language");
+  }, [selected, setValue, trigger]);
 
   useEffectOnce(() => {
     setSelected(watch("language"));
@@ -153,7 +154,12 @@ export default function LanguageField() {
                   />
                 </div>
               </div>
-              <div className={cn("relative mt-2 lg:h-full", !user?.profile_completed ? 'h-full' : 'h-screen')}>
+              <div
+                className={cn(
+                  "relative mt-2 lg:h-full",
+                  !user?.profile_completed ? "h-full" : "h-screen"
+                )}
+              >
                 {open && selectables.length > 0 ? (
                   <div className="absolute w-full top-0 rounded-md border bg-popover text-popover-foreground shadow-md outline-none animate-in">
                     <CommandGroup className="h-40 sm:h-96 overflow-auto ">

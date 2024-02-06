@@ -6,11 +6,7 @@ import { Command, CommandGroup, CommandItem } from "@/components/ui/command";
 import { Command as CommandPrimitive } from "cmdk";
 
 import selectOptions from "@/zustand/profile/selectData/selectOptions";
-import {
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/components/ui/form";
+import { FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { useFormContext } from "react-hook-form";
 import { Pets } from "@/types/profile";
 import { useEffectOnce, useUpdateEffect } from "usehooks-ts";
@@ -25,14 +21,13 @@ export default function PetsField() {
   const setDeleted = deleteMultiselectValuesStore(
     (state) => state.setPetsToDelete
   );
-  const user = useUserStore(state => state.user);
+  const user = useUserStore((state) => state.user);
   const { control, watch, setValue } = useFormContext();
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [open, setOpen] = React.useState(false);
   const [selected, setSelected] = React.useState<Pets[]>(watch("pets"));
   const [inputValue, setInputValue] = React.useState("");
   const { pets } = selectOptions();
-
   const [selectables, setSelectables] = React.useState<Pets[]>([]);
   const [t, i18n] = useTranslation();
 
@@ -41,14 +36,19 @@ export default function PetsField() {
     setSelectables(selectables);
   }, [selected, pets]);
 
-  const [noPets, setNoPets] = React.useState(watch("pets").length !== 0 && watch("pets")[0].pet_id == '179');
+  const [noPets, setNoPets] = React.useState(
+    watch("pets").length !== 0 && watch("pets")[0].pet_id == "179"
+  );
 
-  const handleUnselect = React.useCallback((framework: Pets) => {
-    setSelected((prev) =>
-      prev.filter((s) => s.pet_name !== framework.pet_name)
-    );
-    setDeleted(framework);
-  }, [setDeleted]);
+  const handleUnselect = React.useCallback(
+    (framework: Pets) => {
+      setSelected((prev) =>
+        prev.filter((s) => s.pet_name !== framework.pet_name)
+      );
+      setDeleted(framework);
+    },
+    [setDeleted]
+  );
 
   // const handleKeyDown = React.useCallback(
   //   (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -72,12 +72,15 @@ export default function PetsField() {
   //   []
   // );
 
+  const { trigger } = useFormContext();
+
   React.useEffect(() => {
     setValue("pets", selected, {
       shouldDirty: true,
-      shouldTouch: true
+      shouldTouch: true,
     });
-  }, [selected, setValue]);
+    trigger("pets");
+  }, [selected, setValue, trigger]);
 
   useEffectOnce(() => {
     setSelected(watch("pets"));
@@ -86,22 +89,30 @@ export default function PetsField() {
   React.useEffect(() => {
     if (noPets) {
       const noPet: Pets = {
-        pet_id: '179',
-        pet_name: 'No pet',
-        member_pet_id: 179
-      }
+        pet_id: "179",
+        pet_name: "No pet",
+        member_pet_id: 179,
+      };
       setSelected([noPet]);
     }
-  }, [noPets, setValue, setSelected])
-
+  }, [noPets, setValue, setSelected]);
 
   return (
     <div className="space-y-4">
-      <div className={cn("flex items-center space-x-2", i18n.language == 'ar' && 'space-x-reverse')}>
-        <Checkbox checked={noPets} onCheckedChange={(checked) => {
-          setNoPets(checked as boolean)
-          setSelected([]);
-        }} id="pets" />
+      <div
+        className={cn(
+          "flex items-center space-x-2",
+          i18n.language == "ar" && "space-x-reverse"
+        )}
+      >
+        <Checkbox
+          checked={noPets}
+          onCheckedChange={(checked) => {
+            setNoPets(checked as boolean);
+            setSelected([]);
+          }}
+          id="pets"
+        />
         <label
           htmlFor="terms"
           className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -165,7 +176,12 @@ export default function PetsField() {
                     />
                   </div>
                 </div>
-                <div className={cn("relative mt-2 lg:h-full", !user?.profile_completed ? 'h-full' : 'h-screen')}>
+                <div
+                  className={cn(
+                    "relative mt-2 lg:h-full",
+                    !user?.profile_completed ? "h-full" : "h-screen"
+                  )}
+                >
                   {open && selectables.length > 0 ? (
                     <div className="absolute w-full z-10 top-0 rounded-md border bg-popover text-popover-foreground shadow-md outline-none animate-in">
                       <CommandGroup className="h-40 overflow-auto">
