@@ -321,7 +321,7 @@
     "invalidRegion": "بيانات المنطقة غير صحيحة",
     "religionRequired": "بيانات الديانة مطلوبة",
     "nicknameRequired": "الاسم المستعار مطلوب",
-    "nicknameLength": "يجب أن لا يزيد عن 12 حرفا",
+    "nicknameLength": "يجب أن لا يزيد عن 10 حرفا",
     "invalidNickname": "الاسم المستعار غير صالح",
     "hairTypeRequired": "بيانات الشعر مطلوبة",
     "eyeTypeRequired": "بيانات لون العين مطلوبة",

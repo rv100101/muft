@@ -321,7 +321,7 @@
     "invalidRegion": "Invalid region",
     "religionRequired": "Religion is required",
     "nicknameRequired": "Nickname is required",
-    "nicknameLength": "Value should not exceed 12 characters",
+    "nicknameLength": "Value should not exceed 10 characters",
     "invalidNickname": "Invalid nickname",
     "hairTypeRequired": "Hair type is required",
     "eyeTypeRequired": "Eye type is required",
