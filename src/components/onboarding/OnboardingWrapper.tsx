@@ -157,7 +157,7 @@ const OnboardingWrapper = () => {
   //   trigger(fieldNames[step - 1]);
   // }, [dirtyFields, i18n.language, step, trigger]);
 
-  const { isLoading: currentUserLoading, isRefetching } = useQuery({
+  const { isLoading: currentUserLoading } = useQuery({
     queryKey: ["profileContent", user!.member_id, i18n.language],
     queryFn: async () => {
       const additionalInformation =
@@ -192,16 +192,8 @@ const OnboardingWrapper = () => {
   });
 
   useEffect(() => {
-    console.log(currentUserLoading, isRefetching, isSaving);
-    setIsLoading(currentUserLoading || isRefetching || isSaving);
-  }, [
-    currentUserLoading,
-    isRefetching,
-    isSaving,
-    setIsLoading,
-    nationalities,
-    step,
-  ]);
+    setIsLoading(currentUserLoading || isSaving);
+  }, [currentUserLoading, isSaving, setIsLoading, nationalities, step]);
 
   useEffect(() => {
     if (step > fieldNames.length) {
