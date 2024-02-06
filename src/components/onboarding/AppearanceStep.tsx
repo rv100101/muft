@@ -8,10 +8,21 @@ import { useFormContext, useWatch } from "react-hook-form";
 import { useEffect } from "react";
 import { fieldNames } from "@/lib/formFieldKeys";
 import onboardingStore from "@/zustand/profile/onboarding/onboardingStore";
+import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
+import { Skeleton } from "../ui/skeleton";
 
 const AppearanceStep = () => {
   const [, i18n] = useTranslation();
-  const { setEyes, setHair, setBodyTypes, setBodyArts } = selectOptions();
+  const {
+    setEyes,
+    setHair,
+    setBodyTypes,
+    setBodyArts,
+    eyes,
+    hair,
+    bodyArts,
+    bodyTypes,
+  } = selectOptions();
 
   const {
     trigger,
@@ -67,7 +78,31 @@ const AppearanceStep = () => {
     },
   });
 
-  return (
+  const { setIsLoading, isLoading } = profileAboutContentStore();
+
+  useEffect(() => {
+    setIsLoading(
+      eyes.length == 0 ||
+        hair.length == 0 ||
+        bodyArts.length == 0 ||
+        bodyTypes.length == 0
+    );
+  }, [
+    bodyArts.length,
+    bodyTypes.length,
+    eyes.length,
+    hair.length,
+    setIsLoading,
+  ]);
+
+  return isLoading ? (
+    <div className="grid w-full sm:w-1/2 sm:grid-rows-2 grid-flow-row sm:grid-cols-2 gap-2">
+      <Skeleton className="h-8 w-full" />
+      <Skeleton className="h-8 w-full" />
+      <Skeleton className="h-8 w-full" />
+      <Skeleton className="h-8 w-full" />
+    </div>
+  ) : (
     <div className="w-full h-full sm:w-1/2">
       <AppearanceForm />
     </div>

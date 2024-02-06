@@ -7,9 +7,11 @@ import { useFormContext, useWatch } from "react-hook-form";
 import { useEffect } from "react";
 import { fieldNames } from "@/lib/formFieldKeys";
 import onboardingStore from "@/zustand/profile/onboarding/onboardingStore";
+import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
+import { Skeleton } from "../ui/skeleton";
 
 const PetsStep = () => {
-  const { setPets } = selectOptions();
+  const { setPets, pets } = selectOptions();
 
   const {
     trigger,
@@ -38,7 +40,20 @@ const PetsStep = () => {
     },
   });
 
-  return (
+  const { setIsLoading, isLoading } = profileAboutContentStore();
+
+  useEffect(() => {
+    setIsLoading(pets.length == 0);
+  }, [pets.length, setIsLoading]);
+
+  return isLoading ? (
+    <div className="grid w-full sm:w-1/2 sm:grid-rows-2 grid-flow-row sm:grid-cols-2 gap-2">
+      <Skeleton className="h-8 w-full" />
+      <Skeleton className="h-8 w-full" />
+      <Skeleton className="h-8 w-full" />
+      <Skeleton className="h-8 w-full" />
+    </div>
+  ) : (
     <div className="h-36 w-full sm:w-1/2">
       <PetsForm />
     </div>

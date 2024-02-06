@@ -11,16 +11,18 @@ import { useFormContext, useWatch } from "react-hook-form";
 import { useEffect } from "react";
 import { fieldNames } from "@/lib/formFieldKeys";
 import onboardingStore from "@/zustand/profile/onboarding/onboardingStore";
+import { Skeleton } from "../ui/skeleton";
 
 const LocationStep = () => {
   const [, i18n] = useTranslation();
-  const { setCountries, setStates, countries } = selectOptions();
+  const { setCountries, setStates, countries, states } = selectOptions();
   const { selectedCountry, setSelectedCountry } = useSelectedCountryStore();
   const { data: profileAboutContent } = profileAboutContentStore();
 
   const {
     trigger,
     formState: { dirtyFields },
+    getValues,
   } = useFormContext();
 
   const step = onboardingStore((state) => state.step);
@@ -28,13 +30,13 @@ const LocationStep = () => {
 
   useEffect(() => {
     if (step == 2) {
-      trigger(
-        Object.keys(dirtyFields).filter((key) => {
-          return dirtyFields[key] === true;
-        })
-      );
+      trigger("country");
+      const region = getValues("region");
+      if (region.length !== 0) {
+        trigger("region");
+      }
     }
-  }, [values, step, trigger, dirtyFields]);
+  }, [values, step, trigger, dirtyFields, getValues]);
 
   useQuery({
     queryFn: () => profileContentQuery.editOptions.getCountries(i18n.language),
@@ -69,7 +71,20 @@ const LocationStep = () => {
     }
   }, [countries, profileAboutContent]);
 
-  return (
+  const { setIsLoading, isLoading } = profileAboutContentStore();
+
+  useEffect(() => {
+    setIsLoading(countries.length == 0 || states.length == 0);
+  }, [states.length, setIsLoading, countries.length]);
+
+  return isLoading ? (
+    <div className="grid w-full sm:w-1/2 sm:grid-rows-2 grid-flow-row sm:grid-cols-2 gap-2">
+      <Skeleton className="h-8 w-full" />
+      <Skeleton className="h-8 w-full" />
+      <Skeleton className="h-8 w-full" />
+      <Skeleton className="h-8 w-full" />
+    </div>
+  ) : (
     <div className="w-full sm:w-1/2">
       <LocationForm />
     </div>

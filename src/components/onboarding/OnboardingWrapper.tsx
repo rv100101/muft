@@ -37,7 +37,6 @@ import { useUserStore } from "@/zustand/auth/user";
 import profileContentQuery, {
   ProfileContent,
 } from "@/queries/profile/profileContent";
-import { Skeleton } from "../ui/skeleton";
 import selectOptions from "@/zustand/profile/selectData/selectOptions";
 import removeExistingData from "@/lib/removeExistingData";
 
@@ -158,9 +157,6 @@ const OnboardingWrapper = () => {
   //   trigger(fieldNames[step - 1]);
   // }, [dirtyFields, i18n.language, step, trigger]);
 
-  console.log(getValues());
-  console.log(dirtyFields);
-
   const { isLoading: currentUserLoading, isRefetching } = useQuery({
     queryKey: ["profileContent", user!.member_id, i18n.language],
     queryFn: async () => {
@@ -189,7 +185,6 @@ const OnboardingWrapper = () => {
       return details;
     },
     onSuccess: (data: ProfileAbout) => {
-      console.log(data);
       setAboutData(data);
       setProfileData(data);
     },
@@ -197,8 +192,16 @@ const OnboardingWrapper = () => {
   });
 
   useEffect(() => {
+    console.log(currentUserLoading, isRefetching, isSaving);
     setIsLoading(currentUserLoading || isRefetching || isSaving);
-  }, [currentUserLoading, isRefetching, isSaving, setIsLoading]);
+  }, [
+    currentUserLoading,
+    isRefetching,
+    isSaving,
+    setIsLoading,
+    nationalities,
+    step,
+  ]);
 
   useEffect(() => {
     if (step > fieldNames.length) {
@@ -426,16 +429,7 @@ const OnboardingWrapper = () => {
           )}
         />
       </div>
-      {isLoading ? (
-        <div className="grid w-full sm:w-1/2 sm:grid-rows-2 grid-flow-row sm:grid-cols-2 gap-2">
-          <Skeleton className="h-8 w-full" />
-          <Skeleton className="h-8 w-full" />
-          <Skeleton className="h-8 w-full" />
-          <Skeleton className="h-8 w-full" />
-        </div>
-      ) : (
-        <StepView step={step} />
-      )}
+      <StepView step={step} />
       <hr className="h-4 w-full sm:w-1/2 mt-8" />
       <div
         className={cn(

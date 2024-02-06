@@ -8,10 +8,19 @@ import { useFormContext, useWatch } from "react-hook-form";
 import { useEffect } from "react";
 import { fieldNames } from "@/lib/formFieldKeys";
 import onboardingStore from "@/zustand/profile/onboarding/onboardingStore";
+import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
+import { Skeleton } from "../ui/skeleton";
 
 const BackgroundStep = () => {
   const [, i18n] = useTranslation();
-  const { setEducations, setReligion, setEthnicities } = selectOptions();
+  const {
+    setEducations,
+    setReligion,
+    setEthnicities,
+    educations,
+    religion,
+    ethnicities,
+  } = selectOptions();
 
   const {
     trigger,
@@ -58,7 +67,22 @@ const BackgroundStep = () => {
     },
   });
 
-  return (
+  const { setIsLoading, isLoading } = profileAboutContentStore();
+
+  useEffect(() => {
+    setIsLoading(
+      educations.length == 0 || religion.length == 0 || ethnicities.length == 0
+    );
+  }, [educations.length, ethnicities.length, religion.length, setIsLoading]);
+
+  return isLoading ? (
+    <div className="grid w-full sm:w-1/2 sm:grid-rows-2 grid-flow-row sm:grid-cols-2 gap-2">
+      <Skeleton className="h-8 w-full" />
+      <Skeleton className="h-8 w-full" />
+      <Skeleton className="h-8 w-full" />
+      <Skeleton className="h-8 w-full" />
+    </div>
+  ) : (
     <div className="w-full sm:w-1/2">
       <BackgroundForm />
     </div>

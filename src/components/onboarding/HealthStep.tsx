@@ -8,10 +8,12 @@ import { useFormContext, useWatch } from "react-hook-form";
 import { useEffect } from "react";
 import { fieldNames } from "@/lib/formFieldKeys";
 import onboardingStore from "@/zustand/profile/onboarding/onboardingStore";
+import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
+import { Skeleton } from "../ui/skeleton";
 
 const HealthStep = () => {
   const [, i18n] = useTranslation();
-  const { setWorkout, setDisability } = selectOptions();
+  const { setWorkout, setDisability, workout, disability } = selectOptions();
 
   const {
     trigger,
@@ -49,7 +51,20 @@ const HealthStep = () => {
     },
   });
 
-  return (
+  const { setIsLoading, isLoading } = profileAboutContentStore();
+
+  useEffect(() => {
+    setIsLoading(workout.length == 0 || disability.length == 0);
+  }, [disability.length, setIsLoading, workout.length]);
+
+  return isLoading ? (
+    <div className="grid w-full sm:w-1/2 sm:grid-rows-2 grid-flow-row sm:grid-cols-2 gap-2">
+      <Skeleton className="h-8 w-full" />
+      <Skeleton className="h-8 w-full" />
+      <Skeleton className="h-8 w-full" />
+      <Skeleton className="h-8 w-full" />
+    </div>
+  ) : (
     <div className="w-full sm:w-1/2">
       <HealthForm />
     </div>

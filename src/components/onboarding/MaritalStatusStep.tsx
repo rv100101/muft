@@ -8,11 +8,19 @@ import { useFormContext, useWatch } from "react-hook-form";
 import { useEffect } from "react";
 import { fieldNames } from "@/lib/formFieldKeys";
 import onboardingStore from "@/zustand/profile/onboarding/onboardingStore";
+import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
+import { Skeleton } from "../ui/skeleton";
 
 const MaritalStatusStep = () => {
   const [, i18n] = useTranslation();
-  const { setMaritalStatus, setHaveChildren, setWantChildren } =
-    selectOptions();
+  const {
+    setMaritalStatus,
+    setHaveChildren,
+    setWantChildren,
+    maritalStatus,
+    haveChildren,
+    wantChildren,
+  } = selectOptions();
 
   const {
     trigger,
@@ -62,7 +70,29 @@ const MaritalStatusStep = () => {
     },
   });
 
-  return (
+  const { setIsLoading, isLoading } = profileAboutContentStore();
+
+  useEffect(() => {
+    setIsLoading(
+      maritalStatus.length == 0 ||
+        haveChildren.length == 0 ||
+        wantChildren.length == 0
+    );
+  }, [
+    haveChildren.length,
+    maritalStatus.length,
+    setIsLoading,
+    wantChildren.length,
+  ]);
+
+  return isLoading ? (
+    <div className="grid w-full sm:w-1/2 sm:grid-rows-2 grid-flow-row sm:grid-cols-2 gap-2">
+      <Skeleton className="h-8 w-full" />
+      <Skeleton className="h-8 w-full" />
+      <Skeleton className="h-8 w-full" />
+      <Skeleton className="h-8 w-full" />
+    </div>
+  ) : (
     <div className="w-full sm:w-1/2">
       <MaritalStatusForm />
     </div>
