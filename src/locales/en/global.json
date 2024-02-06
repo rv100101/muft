@@ -269,6 +269,7 @@
     "profileSaved": "Profile saved!"
   },
   "validation": {
+    "invalidAge": "Invalid age",
     "firstNameRequired": "First name required",
     "invalidCredentials": "Invalid credentials",
     "lastNameRequired": "Last name required",

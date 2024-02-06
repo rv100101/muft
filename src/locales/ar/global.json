@@ -269,6 +269,7 @@
     "profileSaved": "تم حفظ البيانات"
   },
   "validation": {
+    "invalidAge": "عمر غير صالح",
     "selectGender": "الرجاء اختيار الجنس",
     "firstNameRequired": "الاسم الأول مطلوب",
     "lastNameRequired": "الاسم الأخير مطلوب",

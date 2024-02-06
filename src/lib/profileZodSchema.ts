@@ -49,7 +49,22 @@ export const ProfileFormSchema = (t: TFunction<"translation", undefined>) =>
       .string({
         required_error: t("validation.fieldRequired"),
       })
-      .min(2, { message: t("validation.enterBirthday") }),
+      .min(2, { message: t("validation.enterBirthday") })
+      .refine(
+        (value) => {
+          // Convert input string to a Date object
+          const dob = new Date(value);
+
+          // Calculate age based on current date
+          const age = new Date(Date.now() - dob.getTime()).getFullYear() - 1970;
+
+          // Validate age against conditions (18 <= age <= 80)
+          return age >= 18 && age <= 80;
+        },
+        {
+          message: t("validation.invalidAge"),
+        }
+      ),
     ethnicity: z
       .string({
         required_error: t("validation.fieldRequired"),
