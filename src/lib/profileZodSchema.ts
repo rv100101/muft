@@ -172,7 +172,7 @@ export const ProfileFormSchema = (t: TFunction<"translation", undefined>) =>
         required_error: t("validation.nicknameRequired"),
       })
       .min(3, { message: t("validation.nameIsTooShort") })
-      .max(12, { message: t("validation.nicknameLength") })
+      .max(10, { message: t("validation.nicknameLength") })
       .regex(/^[a-zA-Z]+$/, { message: t("validation.invalidNickname") }),
     hair: z
       .string({
