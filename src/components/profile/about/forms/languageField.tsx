@@ -94,7 +94,7 @@ export default function LanguageField() {
       shouldDirty: true,
       shouldTouch: true,
     });
-    trigger("language");
+    if (selected.length !== 0) trigger("language");
   }, [selected, setValue, trigger]);
 
   useEffectOnce(() => {

@@ -79,7 +79,7 @@ export default function PetsField() {
       shouldDirty: true,
       shouldTouch: true,
     });
-    trigger("pets");
+    if (selected.length !== 0) trigger("pets");
   }, [selected, setValue, trigger]);
 
   useEffectOnce(() => {

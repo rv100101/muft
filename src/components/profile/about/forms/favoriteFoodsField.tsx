@@ -86,7 +86,7 @@ export default function FavoriteFoodField() {
       shouldDirty: true,
       shouldTouch: true,
     });
-    trigger("favoriteFood");
+    if (selected.length !== 0) trigger("favoriteFood");
   }, [selected, setValue, trigger]);
 
   useEffectOnce(() => {

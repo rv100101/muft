@@ -78,7 +78,7 @@ export default function InterestField() {
       shouldDirty: true,
       shouldTouch: true,
     });
-    trigger("interest");
+    if (selected.length !== 0) trigger("interest");
   }, [selected, setValue, trigger]);
 
   useEffectOnce(() => {
