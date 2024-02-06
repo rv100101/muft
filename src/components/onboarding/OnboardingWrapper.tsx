@@ -325,6 +325,7 @@ const OnboardingWrapper = () => {
       setGoNext(false);
       handleSaveOnNext();
       setStep(step + 1);
+      setIsLoading(true);
     } else {
       setGoNext(false);
     }
