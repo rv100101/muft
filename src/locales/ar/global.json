@@ -222,7 +222,8 @@
     "back": "رجع",
     "startWithBasics": "هيا لنبدأ مع الأساسيات",
     "whereAreYouFrom": "من أين أنت؟",
-    "tellBackground": "أخبرنا بخلفيتك"
+    "tellBackground": "أخبرنا بخلفيتك",
+    "finish": "ينهي"
   },
   "alerts": {
     "reported": "تم إرسال البيانات",

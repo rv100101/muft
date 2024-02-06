@@ -129,7 +129,8 @@
     "back": "Back",
     "startWithBasics": "Let's start with the basics",
     "whereAreYouFrom": "Where are you from?",
-    "tellBackground": "Tell us your background"
+    "tellBackground": "Tell us your background",
+    "finish": "Finish"
   },
   "memberDetails": {
     "noPets": "I don't have Pets",

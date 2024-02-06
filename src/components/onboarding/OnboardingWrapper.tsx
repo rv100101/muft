@@ -462,7 +462,7 @@ const OnboardingWrapper = () => {
             }}
             type={submit ? "submit" : "button"}
           >
-            Finish
+            {t("onboarding.finish")}
             {isSaving && (
               <span>
                 <Loader2 className="ml-2 h-4 w-4 animate-spin" />
