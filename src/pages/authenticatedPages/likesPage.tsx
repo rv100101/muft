@@ -26,7 +26,7 @@ const LikesPage = () => {
   const [, setLocation] = useLocation();
   const [search, setSearch] = useState<string>("");
   const { user } = useUserStore();
-  const getMemberLikes = likesQuery.getLikes(user!.member_id);
+  const getMemberLikes = likesQuery.getLikes(user!.member_id, i18n.language);
 
   const likesQueryResults = useQuery({
     queryKey: ["member-likes"],
