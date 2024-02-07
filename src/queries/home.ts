@@ -26,28 +26,41 @@ const getMembers: (
   }
 };
 
-const getMemberLikes = async (memberId: number) => {
+const getMemberLikes = async (memberId: number, lang: string) => {
   try {
-    const res = await axiosQuery.post(
-      "https://muffinfunction.azurewebsites.net/api/MemberLikes",
-      { member: memberId }
+    const formData = new FormData();
+    formData.append(
+      "auth",
+      "0DB31DEE22DC4C03AD7DAAA9C29518FF3C08D931992A4A5CB0A4FF4CF4707DC6"
     );
-
-    return res.data;
+    formData.append("member", memberId.toString());
+    formData.append("lang", lang);
+    const response = await axiosQuery.post(
+      "https://muffinapi.azurewebsites.net/likes.php",
+      formData
+    );
+    return response.data;
   } catch (error) {
-    console.log(error);
+    return [];
   }
 };
 
-const getMemberFavorites = async (memberId: number) => {
+const getMemberFavorites = async (memberId: number, lang: string) => {
   try {
-    const res = await axiosQuery.post(
-      "https://muffinfunction.azurewebsites.net/api/MemberFavorites",
-      { member: memberId }
+    const formData = new FormData();
+    formData.append(
+      "auth",
+      "0DB31DEE22DC4C03AD7DAAA9C29518FF3C08D931992A4A5CB0A4FF4CF4707DC6"
     );
-    return res.data;
+    formData.append("member", memberId.toString());
+    formData.append("lang", lang);
+    const response = await axiosQuery.post(
+      "https://muffinapi.azurewebsites.net/favorites.php",
+      formData
+    );
+    return response.data;
   } catch (error) {
-    console.log(error);
+    return [];
   }
 };
 

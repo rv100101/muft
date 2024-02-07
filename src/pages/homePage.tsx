@@ -13,8 +13,10 @@ import { Helmet } from "react-helmet-async";
 import HomeFilters from "@/components/home/filters";
 import { useFilterStore } from "@/zustand/home/filter";
 import { usePreferredLanguageStore } from "@/zustand/auth/preferred_language";
+import { useTranslation } from "react-i18next";
 
 const HomePage = () => {
+  const [, i18n] = useTranslation();
   const setSelectedProfileId = useHomepageViewStore(
     (state) => state.setSelectedProfileId
   );
@@ -33,10 +35,16 @@ const HomePage = () => {
     user!.member_id,
     preferredLang ?? "en"
   );
-  const getMemberLikes = membersQuery.getMemberLikes(user!.member_id);
+  const getMemberLikes = membersQuery.getMemberLikes(
+    user!.member_id,
+    i18n.language
+  );
   const filters = useFilterStore((state) => state.filters);
 
-  const getMemberFavorites = membersQuery.getMemberFavorites(user!.member_id);
+  const getMemberFavorites = membersQuery.getMemberFavorites(
+    user!.member_id,
+    i18n.language
+  );
   const { data: members, isLoading: retrievingMemberData } = useQuery({
     refetchOnMount: false,
     refetchOnWindowFocus: false,
