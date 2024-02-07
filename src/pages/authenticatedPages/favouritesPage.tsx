@@ -28,8 +28,11 @@ const FavouritesPage = () => {
   const [filter] = useState<"ALL" | "CURRENT-COUNTRY">("ALL");
   const [search, setSearch] = useState<string>("");
   const { user } = useUserStore();
-  const getMemberLikes = likesQuery.getLikes(user!.member_id);
-  const getMemberFavourites = favouritesQuery.getFavourites(user!.member_id);
+  const getMemberLikes = likesQuery.getLikes(user!.member_id, i18n.language);
+  const getMemberFavourites = favouritesQuery.getFavourites(
+    user!.member_id,
+    i18n.language
+  );
   const userCountry = useUserCountry((state) => state.country);
 
   const likesQueryResults = useQuery({
