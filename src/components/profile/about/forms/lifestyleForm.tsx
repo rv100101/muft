@@ -33,7 +33,10 @@ const LifestyleForm = () => {
 
   const isSaving = profileAboutContentStore((state) => state.isSaving);
   const profileData = profileAboutContentStore((state) => state.profileData);
-  if ((isLoading && profileData == null && user?.profile_completed) || isSaving) {
+  if (
+    (isLoading && profileData == null && user?.profile_completed) ||
+    isSaving
+  ) {
     return (
       <div className="flex justify-start items-start space-x-4 w-full ml-5">
         <div className="space-y-2">
@@ -43,11 +46,14 @@ const LifestyleForm = () => {
     );
   }
   return (
-    <div className={cn(
-      "h-96 w-full",
-      !user?.profile_completed && "h-full",
-      !user?.profile_completed ? "grid grid-flow-row grid-cols-2 gap-1 sm:gap-4" : "flex flex-col space-y-4"
-    )}
+    <div
+      className={cn(
+        "h-96 w-full",
+        !user?.profile_completed && "h-full",
+        !user?.profile_completed
+          ? "grid grid-flow-row grid-cols-2 gap-1 sm:gap-4"
+          : "flex flex-col space-y-4"
+      )}
     >
       <div className="flex flex-row justify-between w-full px-5">
         {editMode || !user?.profile_completed ? (
@@ -66,14 +72,21 @@ const LifestyleForm = () => {
                     >
                       <FormControl>
                         <SelectTrigger
-                          dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                          dir={i18n.language == "ar" ? "rtl" : "ltr"}
                         >
                           <SelectValue
-                            placeholder={i18n.language == 'en' ? "Do you drink?" : "يرجى الاختيار"}
+                            placeholder={
+                              i18n.language == "en"
+                                ? "Do you drink?"
+                                : "يرجى الاختيار"
+                            }
                           />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent>
+                      <SelectContent
+                        dir={i18n.language == "ar" ? "rtl" : "ltr"}
+                        className="min-h-min max-h-44 w-min"
+                      >
                         {drink &&
                           drink.map((data: Drink) => {
                             return (
@@ -134,14 +147,21 @@ const LifestyleForm = () => {
                     >
                       <FormControl>
                         <SelectTrigger
-                          dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                          dir={i18n.language == "ar" ? "rtl" : "ltr"}
                         >
                           <SelectValue
-                            placeholder={i18n.language == 'en' ? "Do you smoke?" : "يرجى الاختيار"}
+                            placeholder={
+                              i18n.language == "en"
+                                ? "Do you smoke?"
+                                : "يرجى الاختيار"
+                            }
                           />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent>
+                      <SelectContent
+                        dir={i18n.language == "ar" ? "rtl" : "ltr"}
+                        className="min-h-min max-h-44 w-min"
+                      >
                         {smoke &&
                           smoke.map((data: Smoke) => {
                             return (
@@ -202,14 +222,21 @@ const LifestyleForm = () => {
                     >
                       <FormControl>
                         <SelectTrigger
-                          dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                          dir={i18n.language == "ar" ? "rtl" : "ltr"}
                         >
                           <SelectValue
-                            placeholder={i18n.language == 'en' ? "Select living status" : "يرجى الاختيار"}
+                            placeholder={
+                              i18n.language == "en"
+                                ? "Select living status"
+                                : "يرجى الاختيار"
+                            }
                           />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent>
+                      <SelectContent
+                        dir={i18n.language == "ar" ? "rtl" : "ltr"}
+                        className="min-h-min max-h-44 w-min"
+                      >
                         {livingStatus &&
                           livingStatus.map((data: LivingStatus) => {
                             return (
@@ -270,14 +297,21 @@ const LifestyleForm = () => {
                     >
                       <FormControl>
                         <SelectTrigger
-                          dir={i18n.language == 'ar' ? "rtl" : "ltr"}
+                          dir={i18n.language == "ar" ? "rtl" : "ltr"}
                         >
                           <SelectValue
-                            placeholder={i18n.language == 'en' ? "Select car" : "يرجى الاختيار"}
+                            placeholder={
+                              i18n.language == "en"
+                                ? "Select car"
+                                : "يرجى الاختيار"
+                            }
                           />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent>
+                      <SelectContent
+                        dir={i18n.language == "ar" ? "rtl" : "ltr"}
+                        className="min-h-min max-h-44 w-min"
+                      >
                         {car &&
                           car.map((data: Car) => {
                             return (
