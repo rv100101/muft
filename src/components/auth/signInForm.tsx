@@ -26,21 +26,25 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useUserNickname } from "@/zustand/auth/username";
 import { useTranslation } from "react-i18next";
 import { usePreferredLanguageStore } from "@/zustand/auth/preferred_language";
-import profileAboutContentStore, { initialState } from "@/zustand/profile/profileAboutStore";
+import profileAboutContentStore, {
+  initialState,
+} from "@/zustand/profile/profileAboutStore";
 
 type FormDataType = {
   email: string;
   password: string;
 };
 const SignInForm = () => {
-  const setData = profileAboutContentStore(state => state.setData);
+  const setData = profileAboutContentStore((state) => state.setData);
   const [t, i18n] = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
   const [blockedModal, showBlockedModal] = useState(false);
   const { toast } = useToast();
   const [, navigate] = useLocation();
   const [isLoading, setIsLoading] = useState(false);
-  const setPreferredLanguage = usePreferredLanguageStore(state => state.setPreferredLanguage);
+  const setPreferredLanguage = usePreferredLanguageStore(
+    (state) => state.setPreferredLanguage
+  );
   const updateUser = useUserStore((state) => state.updateUser);
   const updateUserAvatar = useUserAvatar((state) => state.setAvatar);
   const updateUserNickname = useUserNickname((state) => state.setNickname);
@@ -66,9 +70,7 @@ const SignInForm = () => {
         .required(t("validation.emailRequired")),
       password: Yup.string()
         .required(t("validation.passwordRequired"))
-        .min(10,
-          t("validation.passwordLength")
-        ),
+        .min(10, t("validation.passwordLength")),
     }),
     onSubmit: (values: FormDataType) => handleSignIn(values),
   });
@@ -189,10 +191,11 @@ const SignInForm = () => {
             Email
           </label> */}
           <div
-            className={`flex items-center flex-row border rounded-full h-max py-1 px-5 ${formik.touched.email && formik.errors.email
-              ? "border-rose-500 p-0"
-              : ""
-              }`}
+            className={`flex items-center flex-row border rounded-full h-max py-1 px-5 ${
+              formik.touched.email && formik.errors.email
+                ? "border-rose-500 p-0"
+                : ""
+            }`}
           >
             <MailIcon color="#98A2B3" size={20} className="mt-1" />
             <Input
@@ -211,16 +214,18 @@ const SignInForm = () => {
             <InfoIcon
               color="#D92D20"
               size={30}
-              className={`mt-1 ${formik.touched.email && formik.errors.email
-                ? "visible"
-                : "hidden"
-                }`}
+              className={`mt-1 ${
+                formik.touched.email && formik.errors.email
+                  ? "visible"
+                  : "hidden"
+              }`}
             />
           </div>
           {formik.touched.email && formik.errors.email ? (
             <div
-              dir={i18n.language == 'ar' ? 'rtl' : 'ltr'}
-              className="error text-xs text-red-500 ml-5 pt-2">
+              dir={i18n.language == "ar" ? "rtl" : "ltr"}
+              className="error text-xs text-red-500 ml-5 pt-2"
+            >
               {formik.errors.email}
             </div>
           ) : null}
@@ -231,10 +236,11 @@ const SignInForm = () => {
             Password
           </label> */}
           <div
-            className={`flex h-max flex-row border items-center rounded-full py-1 px-5 ${formik.touched.password && formik.errors.password
-              ? "border-rose-500"
-              : ""
-              }`}
+            className={`flex h-max flex-row border items-center rounded-full py-1 px-5 ${
+              formik.touched.password && formik.errors.password
+                ? "border-rose-500"
+                : ""
+            }`}
           >
             <LockIcon color="#98A2B3" size={20} className="mt-1" />
 
@@ -250,10 +256,11 @@ const SignInForm = () => {
               onBlur={formik.handleBlur}
             />
             <button
-              className={`mt-1 ${formik.touched.password &&
+              className={`mt-1 ${
+                formik.touched.password &&
                 formik.errors.password &&
                 "ml-2 text-[#D92D20]"
-                }`}
+              }`}
               onClick={() => setShowPassword((prev) => !prev)}
               type="button"
             >
@@ -262,8 +269,9 @@ const SignInForm = () => {
           </div>
           {formik.touched.password && formik.errors.password ? (
             <div
-              dir={i18n.language == 'ar' ? 'rtl' : 'ltr'}
-              className="error text-red-500 ml-5 text-xs pt-2">
+              dir={i18n.language == "ar" ? "rtl" : "ltr"}
+              className="error text-red-500 ml-5 text-xs pt-2"
+            >
               {formik.errors.password}
             </div>
           ) : null}
