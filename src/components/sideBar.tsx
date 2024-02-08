@@ -21,13 +21,13 @@ import useConversationHistoryStore from "@/zustand/messaging/showConversation";
 import { useOrientation } from "@uidotdev/usehooks";
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
 import profileHeaderStore from "@/zustand/profile/profileHeaderStore";
-import useReadConversationsStateStore from "@/zustand/messaging/readConversations";
+// import useReadConversationsStateStore from "@/zustand/messaging/readConversations";
 import { useTranslation } from "react-i18next";
 
 const SideBar = () => {
   const [t, i18n] = useTranslation();
   const orientation = useOrientation();
-  const { updateRead: setReadList } = useReadConversationsStateStore();
+  // const { updateRead: setReadList } = useReadConversationsStateStore();
   const reset = useConversationHistoryStore((state) => state.resetToNull);
   const signOut = useUserStore((state) => state.reset);
   const { setProfileData } = profileAboutContentStore();
@@ -88,8 +88,9 @@ const SideBar = () => {
       )}
     >
       <div
-        className={`h-full flex flex-col justify-between ${orientation.angle === 90 ? "overflow-scroll" : ""
-          }`}
+        className={`h-full flex flex-col justify-between ${
+          orientation.angle === 90 ? "overflow-scroll" : ""
+        }`}
       >
         <div className="flex flex-col w-[220px]">
           <Link href="/">
@@ -166,7 +167,7 @@ const SideBar = () => {
                     signOut();
                     setProfileData(null);
                     setProfileHeaderValues(null);
-                    setReadList({});
+                    // setReadList({});
                   }}
                 >
                   {t("signOut.yes")}

@@ -11,7 +11,7 @@ import { toast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
 import axiosQuery from "@/queries/axios";
 import { useUserStore } from "@/zustand/auth/user";
-import useReadConversationsStateStore from "@/zustand/messaging/readConversations";
+// import useReadConversationsStateStore from "@/zustand/messaging/readConversations";
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
 import profileHeaderStore from "@/zustand/profile/profileHeaderStore";
 import { CheckedState } from "@radix-ui/react-checkbox";
@@ -24,7 +24,7 @@ import { useTranslation } from "react-i18next";
 const DeactivateAccountContent = () => {
   const [t, i18n] = useTranslation();
   const signOut = useUserStore((state) => state.reset);
-  const { updateRead: setReadList } = useReadConversationsStateStore();
+  // const { updateRead: setReadList } = useReadConversationsStateStore();
   const [showDialog, setShowDialog] = useState(false);
   const { setProfileData } = profileAboutContentStore();
   const { setProfileHeaderValues } = profileHeaderStore();
@@ -44,7 +44,10 @@ const DeactivateAccountContent = () => {
       );
       formData.append("lang", i18n.language);
       formData.append("member", user!.member_id.toString());
-      const res = await axiosQuery.post("https://muffinapi.azurewebsites.net/deactivate_account.php", formData);
+      const res = await axiosQuery.post(
+        "https://muffinapi.azurewebsites.net/deactivate_account.php",
+        formData
+      );
       if (res.data) {
         toast({
           title: t("alerts.accountDeactivated"),
@@ -103,7 +106,7 @@ const DeactivateAccountContent = () => {
       setDeleteLoading(false);
       queryClient.clear();
       signOut();
-      setReadList({});
+      // setReadList({});
       setProfileData(null);
       setProfileHeaderValues(null);
       // }
@@ -142,7 +145,10 @@ const DeactivateAccountContent = () => {
             </Button>
           </DialogTrigger>
 
-          <DialogContent dir={i18n.language == 'ar' ? 'rtl' : "ltr"} className="sm:max-w-[425px]">
+          <DialogContent
+            dir={i18n.language == "ar" ? "rtl" : "ltr"}
+            className="sm:max-w-[425px]"
+          >
             <DialogHeader>
               <div className="flex flex-row justify-between items-start  pb-5">
                 <DialogTitle className="font-medium">
@@ -166,7 +172,12 @@ const DeactivateAccountContent = () => {
               )}
             </DialogHeader>
             {!user?.temporarily_deactivated && (
-              <div className={cn("flex items-center space-x-2", i18n.language == 'ar' && 'space-x-reverse')}>
+              <div
+                className={cn(
+                  "flex items-center space-x-2",
+                  i18n.language == "ar" && "space-x-reverse"
+                )}
+              >
                 <Checkbox
                   id="terms"
                   // checked={checked}
@@ -181,7 +192,12 @@ const DeactivateAccountContent = () => {
               </div>
             )}
             <div className="flex flex-row justify-center">
-              <div className={cn("flex flex-row space-x-4", i18n.language == 'ar' && 'space-x-reverse')}>
+              <div
+                className={cn(
+                  "flex flex-row space-x-4",
+                  i18n.language == "ar" && "space-x-reverse"
+                )}
+              >
                 <Button
                   disabled={
                     (!user!.temporarily_deactivated && (!checked as boolean)) ||
@@ -263,7 +279,7 @@ const DeactivateAccountContent = () => {
                 className={cn(
                   "text-white bg-slate-500 h-10 w-full text-sm rounded-lf py-3 hover:bg-slate-500/90 mt-5 "
                 )}
-              // onClick={() => deleteAccount}
+                // onClick={() => deleteAccount}
               >
                 {t("deactivateProfile.no")}
               </Button>

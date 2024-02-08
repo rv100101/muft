@@ -15,14 +15,14 @@ import { DialogClose } from "@radix-ui/react-dialog";
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
 import ProfileMobileNav from "./ProfileMobileNav";
 import { useQueryClient } from "@tanstack/react-query";
-import useReadConversationsStateStore from "@/zustand/messaging/readConversations";
+// import useReadConversationsStateStore from "@/zustand/messaging/readConversations";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
 import PreferredLanguageDialog from "../preferredLanguageDialog";
 const ProfileTopNav = () => {
   const [t, i18n] = useTranslation();
   const { isSaving } = profileAboutContentStore();
-  const { updateRead: setReadList } = useReadConversationsStateStore();
+  // const { updateRead: setReadList } = useReadConversationsStateStore();
   const signOut = useUserStore((state) => state.reset);
   const user = useUserStore((state) => state.user);
   // const setSelectedHistoryMemberId = useLatestConversationStore(
@@ -172,7 +172,7 @@ const ProfileTopNav = () => {
                           onClick={() => {
                             queryClient.clear();
                             signOut();
-                            setReadList({});
+                            // setReadList({});
                           }}
                         >
                           {t("signOut.yes")}

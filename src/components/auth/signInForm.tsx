@@ -29,12 +29,18 @@ import { usePreferredLanguageStore } from "@/zustand/auth/preferred_language";
 import profileAboutContentStore, {
   initialState,
 } from "@/zustand/profile/profileAboutStore";
+import useReadConversationsStateStore from "@/zustand/messaging/readConversations";
 
 type FormDataType = {
   email: string;
   password: string;
 };
 const SignInForm = () => {
+  const {
+    id,
+    setId,
+    updateRead: setReadList,
+  } = useReadConversationsStateStore();
   const setData = profileAboutContentStore((state) => state.setData);
   const [t, i18n] = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
@@ -93,6 +99,10 @@ const SignInForm = () => {
         return;
       }
       setPreferredLanguage(signInData.communication_language);
+      if (id == null) {
+        setId(signInData.member_id);
+        setReadList({});
+      }
       const profilePhotoData = await authQuery.getProfilePhoto(
         signInData.member_id
       );
