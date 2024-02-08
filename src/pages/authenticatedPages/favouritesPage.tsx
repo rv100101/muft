@@ -209,7 +209,7 @@ const FavouritesPage = () => {
             tab == "LIKES" && <p>No likes</p>}
           {!favouritesQueryResults.isLoading &&
             favourites.length == 0 &&
-            tab == "FAVOURITES" && <p>No favourites</p>}
+            tab == "FAVOURITES" && <p>No favorites</p>}
           {tab == "FAVOURITES" && favourites}
         </div>
       </div>

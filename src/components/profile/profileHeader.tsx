@@ -367,6 +367,16 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
 
   console.log(data);
 
+  const getGender: (value: string) => string = (value: string) => {
+    if (value == t("memberDetails.male") || value == "M") {
+      return "M";
+    } else if (value == t("memberDetails.female") || value == "F") {
+      return "F";
+    } else {
+      return "";
+    }
+  };
+
   return (
     <div className="items-start py-5 sm:p-5 border-b w-full">
       <div
@@ -389,7 +399,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                             ? selectedFile
                             : getImagePath(
                                 data?.gallery_uuid,
-                                data?.gender[0] ?? null,
+                                getGender(data!.gender) ?? null,
                                 data!.member_uuid?.toString()
                               )
                         }
