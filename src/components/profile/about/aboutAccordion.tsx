@@ -312,7 +312,11 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
   });
 
   useQuery({
-    queryFn: () => profileContentQuery.editOptions.getWorkout(),
+    queryFn: () =>
+      profileContentQuery.editOptions.getWorkout(
+        userId.toString(),
+        i18n.language
+      ),
     refetchInterval: Infinity,
     queryKey: ["workout"],
     onSuccess: (data: Workout[]) => {

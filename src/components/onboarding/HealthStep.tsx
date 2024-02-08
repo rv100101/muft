@@ -10,10 +10,12 @@ import { fieldNames } from "@/lib/formFieldKeys";
 import onboardingStore from "@/zustand/profile/onboarding/onboardingStore";
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
 import { Skeleton } from "../ui/skeleton";
+import { useUserStore } from "@/zustand/auth/user";
 
 const HealthStep = () => {
   const [, i18n] = useTranslation();
   const { setWorkout, setDisability, workout, disability } = selectOptions();
+  const user = useUserStore((state) => state.user);
 
   const {
     trigger,
@@ -34,7 +36,11 @@ const HealthStep = () => {
   }, [values, step, trigger, dirtyFields]);
 
   useQuery({
-    queryFn: () => profileContentQuery.editOptions.getWorkout(),
+    queryFn: () =>
+      profileContentQuery.editOptions.getWorkout(
+        user!.member_id.toString(),
+        i18n.language
+      ),
     refetchInterval: Infinity,
     queryKey: ["workout"],
     onSuccess: (data: Workout[]) => {
