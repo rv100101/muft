@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { HelpCircle, Menu } from "lucide-react";
 import { motion } from "framer-motion";
-import { useLocation } from "wouter";
+import { Link, useLocation } from "wouter";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
 import PreferredLanguageDialog from "./preferredLanguageDialog";
@@ -43,24 +43,28 @@ function TopNav() {
         location.startsWith("/auth") ? "my-2" : "my-4"
       )}
     >
-      <motion.a
-        initial={
-          location == "/" ? { opacity: 0, scale: 0 } : { opacity: 1, scale: 1 }
-        }
-        whileInView={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.5 }}
-        viewport={{ once: true }}
-        href="/"
-      >
-        <img
-          className={cn(
-            "w-24",
-            location.startsWith("/auth") ? "md:w-24" : "md:w-36"
-          )}
-          src={logo}
-          alt="muffin-logo"
-        />
-      </motion.a>
+      <Link to="/">
+        <motion.div
+          className="hover:cursor-pointer"
+          initial={
+            location == "/"
+              ? { opacity: 0, scale: 0 }
+              : { opacity: 1, scale: 1 }
+          }
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.5 }}
+          viewport={{ once: true }}
+        >
+          <img
+            className={cn(
+              "w-24",
+              location.startsWith("/auth") ? "md:w-24" : "md:w-36"
+            )}
+            src={logo}
+            alt="muffin-logo"
+          />
+        </motion.div>
+      </Link>
       <motion.ul
         variants={container}
         initial={location == "/" ? "hidden" : "none"}
@@ -175,7 +179,7 @@ function TopNav() {
           </Link>
         </motion.li> */}
         <motion.li>
-          <DropdownMenu dir={i18n.language == 'ar' ? "rtl" : 'ltr'} >
+          <DropdownMenu dir={i18n.language == "ar" ? "rtl" : "ltr"}>
             <DropdownMenuTrigger className="block md:hidden ml-2" asChild>
               <Button variant="outline">
                 <Menu />
@@ -223,7 +227,7 @@ function TopNav() {
           </DropdownMenu>
         </motion.li>
       </motion.ul>
-    </motion.nav >
+    </motion.nav>
   );
 }
 
