@@ -17,6 +17,7 @@ import SettingsPage from "@/pages/authenticatedPages/settingsPage";
 export const routesWithFooterAndTopNav = [
   "/",
   "/terms",
+  "/privacy",
   "/release-notes",
   "/auth/signup",
   "/auth/signin",
