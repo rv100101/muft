@@ -109,7 +109,10 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
     queryKey: ["profileContent", userId, i18n.language],
     queryFn: async () => {
       const additionalInformation =
-        await profileContentQuery.fetchAdditionalInformation(userId, i18n.language);
+        await profileContentQuery.fetchAdditionalInformation(
+          userId,
+          i18n.language
+        );
       const memberDetails = await profileContentQuery.fetchMemberDetails(
         userId,
         preferredLanguage ?? "en"
@@ -143,7 +146,8 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
     refetchOnWindowFocus: false,
   });
   useQuery({
-    queryFn: () => profileContentQuery.editOptions.getNationality(i18n.language),
+    queryFn: () =>
+      profileContentQuery.editOptions.getNationality(i18n.language),
     refetchInterval: Infinity,
     queryKey: ["nationalities", i18n.language],
     onSuccess: (data: Nationality[]) => {
@@ -152,7 +156,8 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
   });
 
   useQuery({
-    queryFn: () => profileContentQuery.editOptions.getLanguages(i18n.language, userId),
+    queryFn: () =>
+      profileContentQuery.editOptions.getLanguages(i18n.language, userId),
     refetchInterval: Infinity,
     queryKey: ["languages"],
     onSuccess: (data: Languages[]) => {
@@ -161,7 +166,11 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
   });
 
   useQuery({
-    queryFn: () => profileContentQuery.editOptions.getInterests(),
+    queryFn: () =>
+      profileContentQuery.editOptions.getInterests(
+        userId.toString(),
+        i18n.language
+      ),
     refetchInterval: Infinity,
     queryKey: ["interests"],
     onSuccess: (data: Interest[]) => {
@@ -182,7 +191,8 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
   });
 
   useQuery({
-    queryFn: () => profileContentQuery.editOptions.getMaritalStatus(i18n.language),
+    queryFn: () =>
+      profileContentQuery.editOptions.getMaritalStatus(i18n.language),
     refetchInterval: Infinity,
     queryKey: ["maritalStatus", i18n.language],
     onSuccess: (data: MaritalStatus[]) => {
@@ -200,7 +210,8 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
   });
 
   useQuery({
-    queryFn: () => profileContentQuery.editOptions.getOccupations(i18n.language),
+    queryFn: () =>
+      profileContentQuery.editOptions.getOccupations(i18n.language),
     refetchInterval: Infinity,
     queryKey: ["occupations", i18n.language],
     onSuccess: (data: Occupation[]) => {
@@ -277,7 +288,8 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
   });
 
   useQuery({
-    queryFn: () => profileContentQuery.editOptions.getHaveChildren(i18n.language),
+    queryFn: () =>
+      profileContentQuery.editOptions.getHaveChildren(i18n.language),
     refetchInterval: Infinity,
     queryKey: ["haveChildren", i18n.language],
     onSuccess: (data: HaveChildren[]) => {
@@ -286,7 +298,8 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
   });
 
   useQuery({
-    queryFn: () => profileContentQuery.editOptions.getWantChildren(i18n.language),
+    queryFn: () =>
+      profileContentQuery.editOptions.getWantChildren(i18n.language),
     refetchInterval: Infinity,
     queryKey: ["wantChildren", i18n.language],
     onSuccess: (data: WantChildren[]) => {
@@ -342,7 +355,8 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
   });
 
   useQuery({
-    queryFn: () => profileContentQuery.editOptions.getLivingStatus(i18n.language),
+    queryFn: () =>
+      profileContentQuery.editOptions.getLivingStatus(i18n.language),
     refetchInterval: Infinity,
     queryKey: ["livingStatus", i18n.language],
     onSuccess: (data: LivingStatus[]) => {
@@ -371,7 +385,8 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
   useQuery({
     queryFn: () =>
       profileContentQuery.editOptions.getStates(
-        selectedCountry ?? "", i18n.language
+        selectedCountry ?? "",
+        i18n.language
       ),
     // enabled: selectedCountry.length !== 0,
     queryKey: ["states", selectedCountry, i18n.language],
@@ -385,7 +400,8 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
   });
 
   useQuery({
-    queryFn: () => profileContentQuery.editOptions.getEmploymentStatus(i18n.language),
+    queryFn: () =>
+      profileContentQuery.editOptions.getEmploymentStatus(i18n.language),
     queryKey: ["employmentStatus", i18n.language],
     onSuccess: (data: EmploymentStatus[]) => {
       setEmploymentStatus(data);
