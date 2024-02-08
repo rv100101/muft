@@ -167,6 +167,7 @@ const OnboardingWrapper = () => {
         );
       const memberDetails = await profileContentQuery.fetchMemberDetails(
         user!.member_id,
+        user!.member_id,
         i18n.language
       );
       let jsonArray: string | null = null;

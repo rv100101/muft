@@ -48,7 +48,9 @@ import { convertJsonToConvertedObject } from "@/lib/utils";
 import { useEffectOnce, useUpdateEffect } from "usehooks-ts";
 import { useTranslation } from "react-i18next";
 import { usePreferredLanguageStore } from "@/zustand/auth/preferred_language";
+import { useUserStore } from "@/zustand/auth/user";
 const AboutAccordion = ({ userId }: { userId: number }) => {
+  const user = useUserStore((state) => state.user);
   const [t, i18n] = useTranslation();
   const [location] = useLocation();
   const preferredLanguage = usePreferredLanguageStore(
@@ -115,6 +117,7 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
         );
       const memberDetails = await profileContentQuery.fetchMemberDetails(
         userId,
+        user!.member_id,
         preferredLanguage ?? "en"
       );
       let jsonArray: string | null = null;

@@ -43,6 +43,9 @@ interface ProfileDetails {
   member_uuid: string;
   gallery_uuid: string | null;
   age: string;
+  is_liked: string;
+  is_favored: string;
+  is_blocked: string;
 }
 
 export function convertJsonToConvertedObject(
@@ -79,6 +82,9 @@ export function convertJsonToConvertedObject(
     car: jsonResponse.car || "",
     gallery_uuid: jsonResponse.gallery_uuid ?? null,
     age: jsonResponse.age ?? "",
+    is_liked: jsonResponse.is_liked ?? "0",
+    is_favored: jsonResponse.is_favored ?? "0",
+    is_blocked: jsonResponse.is_blocked ?? "0",
   };
 
   return converted;

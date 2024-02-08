@@ -41,6 +41,7 @@ export const initialState: ProfileAbout = {
   gallery_uuid: null,
   is_liked: null,
   is_favored: null,
+  is_blocked: "0",
 };
 
 export type ProfileAbout = {
@@ -80,8 +81,9 @@ export type ProfileAbout = {
   member_uuid: string | null;
   member_id: string | null;
   gallery_uuid: string | null;
-  is_liked: boolean | null;
-  is_favored: boolean | null;
+  is_liked: string | null;
+  is_favored: string | null;
+  is_blocked: string | null;
 };
 
 interface ProfileAboutState {

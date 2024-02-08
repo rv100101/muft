@@ -147,6 +147,22 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
   } = profileAboutContentStore();
   // const fetchInitialData = async () =>
 
+  const [isLiked, setIsLiked] = useState(
+    data?.is_liked == "0" ? "0" : data?.is_liked
+  );
+  const [isBlocked, setIsBlocked] = useState(
+    data?.is_blocked == "0" ? "0" : data?.is_blocked
+  );
+  const [isFavored, setIsFavored] = useState(
+    data?.is_favored == "0" ? "0" : data?.is_favored
+  );
+
+  useEffect(() => {
+    setIsLiked(data?.is_liked == "0" ? "0" : data?.is_liked);
+    setIsFavored(data?.is_favored == "0" ? "0" : data?.is_favored);
+    setIsBlocked(data?.is_blocked == "0" ? "0" : data?.is_blocked);
+  }, [data]);
+
   //   await profileQuery.getProfileHeader(parseInt(userId));
 
   const user = useUserStore((state) => state.user);
@@ -347,6 +363,8 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
       </div>
     );
   }
+
+  console.log(data);
 
   return (
     <div className="items-start py-5 sm:p-5 border-b w-full">
@@ -554,32 +572,42 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                           type="button"
                           className="hover:ring-2 px-2 py-1 sm:py-2 sm:px-4  transition-all ring-primary"
                           variant={"outline"}
-                          onClick={() =>
+                          onClick={() => {
                             toggleLike.mutate({
                               member: user!.member_id,
                               liked: parseInt(userId),
-                            })
-                          }
+                            });
+                            setIsLiked(isLiked == "0" ? "1" : "0");
+                            setData({
+                              ...data!,
+                              is_liked: isLiked == "0" ? "1" : "0",
+                            });
+                          }}
                         >
                           <Heart
                             color="#FF599B"
-                            fill={data?.is_liked ? "#FF599B" : "white"}
+                            fill={isLiked !== "0" ? "#FF599B" : "white"}
                           />
                         </Button>
                         <Button
                           type="button"
                           variant={"outline"}
                           className="hover:ring-2 px-2 py-1 sm:py-2 sm:px-4  transition-all ring-primary"
-                          onClick={() =>
+                          onClick={() => {
                             toggleFavorite.mutate({
                               member: user!.member_id,
                               favored: parseInt(userId),
-                            })
-                          }
+                            });
+                            setIsFavored(isFavored == "0" ? "1" : "0");
+                            setData({
+                              ...data!,
+                              is_favored: isFavored == "0" ? "1" : "0",
+                            });
+                          }}
                         >
                           <Star
                             color="#FF599B"
-                            fill={data?.is_favored ? "#FF599B" : "white"}
+                            fill={isFavored !== "0" ? "#FF599B" : "white"}
                           />
                         </Button>
                         {/* more  */}
@@ -596,11 +624,18 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                             <DropdownMenuContent className="w-24">
                               <DropdownMenuGroup>
                                 <DropdownMenuItem
-                                  onClick={() =>
-                                    handleBlockMember(parseInt(userId))
-                                  }
+                                  onClick={() => {
+                                    handleBlockMember(parseInt(userId));
+                                    setIsBlocked(isBlocked == "0" ? "1" : "0");
+                                    setData({
+                                      ...data!,
+                                      is_blocked: isBlocked == "0" ? "1" : "0",
+                                    });
+                                  }}
                                 >
-                                  {t("memberDetails.block")}
+                                  {isBlocked !== "0"
+                                    ? t("memberDetails.unblock")
+                                    : t("memberDetails.block")}
                                 </DropdownMenuItem>
                                 <DialogTrigger asChild>
                                   <DropdownMenuItem>

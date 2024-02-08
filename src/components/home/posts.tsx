@@ -24,7 +24,7 @@ const Posts = ({
       console.log("rerendering");
       containerRef.current.scrollTop = +scrollPosition;
     }
-  }, [isLoading]);
+  }, [isLoading, scrollPosition]);
 
   useEffect(() => {
     setScrollPosition(debouncedScrollPositionValue);

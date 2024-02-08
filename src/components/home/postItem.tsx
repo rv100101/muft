@@ -62,6 +62,7 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
   });
 
   const handlePostItemClick = () => {
+    queryClient.invalidateQueries(["profileContent"]);
     setLocation(`/members/${memberData.member_id}`);
   };
 

@@ -18,14 +18,18 @@ const removeNull = (
   return result;
 };
 
-const fetchMemberDetails = async (memberId: number, lang: string) => {
+const fetchMemberDetails = async (
+  memberId: number,
+  sender: number,
+  lang: string
+) => {
   const formData = new FormData();
   formData.append(
     "auth",
     "0DB31DEE22DC4C03AD7DAAA9C29518FF3C08D931992A4A5CB0A4FF4CF4707DC6"
   );
   formData.append("member", memberId.toString());
-  formData.append("sender", memberId.toString());
+  formData.append("sender", sender.toString());
   formData.append("lang", lang);
   try {
     const details = await axiosQuery.post(
