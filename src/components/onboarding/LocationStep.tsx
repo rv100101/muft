@@ -30,7 +30,11 @@ const LocationStep = () => {
 
   useEffect(() => {
     if (step == 2) {
-      trigger("country");
+      trigger(
+        Object.keys(dirtyFields).filter((key) => {
+          return dirtyFields[key] === true;
+        })
+      );
       const region = getValues("region");
       if (region.length !== 0) {
         trigger("region");
