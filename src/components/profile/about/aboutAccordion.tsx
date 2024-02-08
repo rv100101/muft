@@ -162,7 +162,7 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
     queryFn: () =>
       profileContentQuery.editOptions.getLanguages(i18n.language, userId),
     refetchInterval: Infinity,
-    queryKey: ["languages"],
+    queryKey: ["languages", i18n.language],
     onSuccess: (data: Languages[]) => {
       setLanguages(data);
     },
@@ -175,7 +175,7 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
         i18n.language
       ),
     refetchInterval: Infinity,
-    queryKey: ["interests"],
+    queryKey: ["interests", i18n.language],
     onSuccess: (data: Interest[]) => {
       setInterest(data);
     },
@@ -238,7 +238,7 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
         i18n.language
       ),
     refetchInterval: Infinity,
-    queryKey: ["favoriteFoods"],
+    queryKey: ["favoriteFoods", i18n.language],
     onSuccess: (data: FavoriteFood[]) => {
       setFavoriteFoods(data);
     },
@@ -321,7 +321,7 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
         i18n.language
       ),
     refetchInterval: Infinity,
-    queryKey: ["workout"],
+    queryKey: ["workout", i18n.language],
     onSuccess: (data: Workout[]) => {
       setWorkout(data);
     },
@@ -340,7 +340,7 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
     queryFn: () =>
       profileContentQuery.editOptions.getPets(userId.toString(), i18n.language),
     refetchInterval: Infinity,
-    queryKey: ["pets"],
+    queryKey: ["pets", i18n.language],
     onSuccess: (data: Pets[]) => {
       setPets(data);
     },

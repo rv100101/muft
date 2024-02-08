@@ -10,6 +10,7 @@ import languageQuery from "@/queries/language";
 
 import { usePreferredLanguageStore } from "@/zustand/auth/preferred_language";
 import { useUserStore } from "@/zustand/auth/user";
+import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
 import { DialogClose, DialogTrigger } from "@radix-ui/react-dialog";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
@@ -23,6 +24,7 @@ const PreferredLanguageDialog = ({
   triggerTitle?: null | string;
   triggerVariant: string;
 }) => {
+  const { setProfileData } = profileAboutContentStore();
   const [t, i18n] = useTranslation();
   const { preferred, setPreferredLanguage } = usePreferredLanguageStore();
   const [changePreferredLanguage, setChangePreferredLanguage] = useState(false);
@@ -44,14 +46,14 @@ const PreferredLanguageDialog = ({
               type="button"
               variant={
                 triggerVariant as
-                | "default"
-                | "destructive"
-                | "outline"
-                | "secondary"
-                | "ghost"
-                | "link"
-                | null
-                | undefined
+                  | "default"
+                  | "destructive"
+                  | "outline"
+                  | "secondary"
+                  | "ghost"
+                  | "link"
+                  | null
+                  | undefined
               }
               className={cn(
                 "text-white h-10 text-sm rounded-lf py-2 hover:bg-[#FF599B]/90 w-24 dark:bg-[#1b1d1e] dark:hover:bg-red-700/90"
@@ -64,12 +66,15 @@ const PreferredLanguageDialog = ({
         </div>
       )}
       <DialogContent className="w-72 sm:w-full">
-        <DialogHeader dir={i18n.language == 'ar' ? "rtl" : "ltr"} className="mb-2 w-full flex justify-end">
+        <DialogHeader
+          dir={i18n.language == "ar" ? "rtl" : "ltr"}
+          className="mb-2 w-full flex justify-end"
+        >
           <div className="flex">
-            <DialogTitle className="text-sm sm:text-base flex w-full items-center">{t("general.chooseYourPreferredLanguage")}
+            <DialogTitle className="text-sm sm:text-base flex w-full items-center">
+              {t("general.chooseYourPreferredLanguage")}
             </DialogTitle>
-            <DialogClose >
-            </DialogClose>
+            <DialogClose></DialogClose>
           </div>
         </DialogHeader>
         <div className="grid grid-cols-2 mt-2">
@@ -77,13 +82,16 @@ const PreferredLanguageDialog = ({
             onClick={async () => {
               setPreferredLanguage("en");
               setChangePreferredLanguage(false);
-              if (user !== null && i18n.language !== 'en') {
+              if (user !== null && i18n.language !== "en") {
                 await languageQuery.updateLanguagePreference(
                   "en",
                   user.member_id
                 );
-                queryClient.invalidateQueries({ queryKey: ["home-members"] });
+                // queryClient.invalidateQueries({ queryKey: ["home-members"] });
+                // queryClient.invalidateQueries({ queryKey: ["profileContent"] });
               }
+              queryClient.invalidateQueries();
+              setProfileData(null);
             }}
             className="text-center font-semibold cursor-pointer"
           >
@@ -100,13 +108,27 @@ const PreferredLanguageDialog = ({
             onClick={async () => {
               setPreferredLanguage("ar");
               setChangePreferredLanguage(false);
-              if (user !== null && i18n.language !== 'ar') {
+              if (user !== null && i18n.language !== "ar") {
                 await languageQuery.updateLanguagePreference(
                   "ar",
                   user.member_id
                 );
-                queryClient.invalidateQueries({ queryKey: ["home-members"] });
+                // queryClient.invalidateQueries({ queryKey: ["home-members"] });
+                // queryClient.invalidateQueries({ queryKey: ["profileContent"] });
+                // queryClient.invalidateQueries({ queryKey: ["nationalities"] });
+                // queryClient.invalidateQueries({ queryKey: ["languages"] });
+                // queryClient.invalidateQueries({ queryKey: ["interests"] });
+                // queryClient.invalidateQueries({ queryKey: ["ethnicities"] });
+                // queryClient.invalidateQueries({ queryKey: ["maritalStatus"] });
+                // queryClient.invalidateQueries({ queryKey: ["educations"] });
+                // queryClient.invalidateQueries({ queryKey: ["occupations"] });
+                // queryClient.invalidateQueries({ queryKey: ["incomes"] });
+                // queryClient.invalidateQueries({ queryKey: ["favoriteFoods"] });
+                // queryClient.invalidateQueries({ queryKey: ["bodyTypes"] });
+                // queryClient.invalidateQueries({ queryKey: ["bodyTypes"] });
               }
+              queryClient.invalidateQueries();
+              setProfileData(null);
             }}
             className="text-center font-semibold cursor-pointer"
           >
