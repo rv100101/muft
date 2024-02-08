@@ -481,11 +481,21 @@ const getIncomes = async (lang: string) => {
   }
 };
 
-const getFavoriteFoods = async () => {
+const getFavoriteFoods = async (memberId: string, lang: string) => {
   try {
-    const response = await axiosQuery.post("/FavoriteFoods", {
-      member: 9999,
-    });
+    const formData = new FormData();
+    formData.append(
+      "auth",
+      "0DB31DEE22DC4C03AD7DAAA9C29518FF3C08D931992A4A5CB0A4FF4CF4707DC6"
+    );
+
+    formData.append("member", memberId);
+    formData.append("lang", lang);
+
+    const response = await axiosQuery.post(
+      "https://muffinapi.azurewebsites.net/favorite_foods.php",
+      formData
+    );
     return response.data;
   } catch (error) {
     return [];

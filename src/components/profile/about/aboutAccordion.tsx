@@ -229,7 +229,11 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
   });
 
   useQuery({
-    queryFn: () => profileContentQuery.editOptions.getFavoriteFoods(),
+    queryFn: () =>
+      profileContentQuery.editOptions.getFavoriteFoods(
+        userId.toString(),
+        i18n.language
+      ),
     refetchInterval: Infinity,
     queryKey: ["favoriteFoods"],
     onSuccess: (data: FavoriteFood[]) => {

@@ -9,10 +9,13 @@ import { fieldNames } from "@/lib/formFieldKeys";
 import onboardingStore from "@/zustand/profile/onboarding/onboardingStore";
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
 import { Skeleton } from "../ui/skeleton";
+import { useUserStore } from "@/zustand/auth/user";
+import { useTranslation } from "react-i18next";
 
 const FavoriteFoodStep = () => {
   const { setFavoriteFoods, favoriteFoods } = selectOptions();
-
+  const user = useUserStore((state) => state.user);
+  const [, i18n] = useTranslation();
   const {
     trigger,
     formState: { dirtyFields },
@@ -32,7 +35,11 @@ const FavoriteFoodStep = () => {
   }, [values, step, trigger, dirtyFields]);
 
   useQuery({
-    queryFn: () => profileContentQuery.editOptions.getFavoriteFoods(),
+    queryFn: () =>
+      profileContentQuery.editOptions.getFavoriteFoods(
+        user!.member_id.toString(),
+        i18n.language
+      ),
     refetchInterval: Infinity,
     queryKey: ["favoriteFoods"],
     onSuccess: (data: FavoriteFood[]) => {
