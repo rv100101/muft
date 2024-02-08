@@ -74,7 +74,7 @@ const FavouritesPage = () => {
           <title>Favorite</title>
           <link
             rel="canonical"
-            href={`https://${window.location.hostname}/favourites`}
+            href={`https://${window.location.hostname}/favorites`}
           />
         </Helmet>
         <div

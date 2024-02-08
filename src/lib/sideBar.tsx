@@ -43,7 +43,7 @@ const useSidebarLinks = (userId: number | null): SidebarLink[] => {
         name: t("menu.likes"),
       },
       {
-        path: "/favourites",
+        path: "/favorites",
         icon: Star,
         name: t("menu.favorites"),
       },

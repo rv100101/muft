@@ -39,7 +39,7 @@ export const userOnlyRoutes = [
   "/profile",
   "/members",
   "/likes",
-  "/favourites",
+  "/favorites",
   "/settings",
   "/privacy",
   "/terms",
@@ -92,7 +92,7 @@ const pageRoutes = {
     component: LikesPage,
   },
   Favorites: {
-    path: "/favourites",
+    path: "/favorites",
     component: FavouritesPage,
   },
   about: {
