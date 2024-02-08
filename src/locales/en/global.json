@@ -164,6 +164,7 @@
     "favoriteFood": "Favorite Food",
     "health": "Health",
     "employment": "Employment",
+
     "interests": "Interests",
     "memberID": "Member ID",
     "nickname": "Nickname",
@@ -194,6 +195,7 @@
     "occupation": "Occupation",
     "monthlyIncome": "Monthly Income",
     "block": "Block",
+    "unblock": "Unblock",
     "reportAbuse": "Report Abuse",
     "heightCm": "cm",
     "weightKg": "kg"

@@ -84,7 +84,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
     (state) => state.toggleIsFavored
   );
   const toggleIsLiked = useHomepageViewStore((state) => state.toggleIsLiked);
-  const setIsFinished = onboardingStore(state => state.setIsFinished);
+  const setIsFinished = onboardingStore((state) => state.setIsFinished);
   // const [likeTriggered, toggleLikeIcon] = useState(false);
   const [favoriteTriggered, toggleFavoriteIcon] = useState(false);
   const toggleLike = useMutation({
@@ -369,10 +369,10 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                           selectedFile
                             ? selectedFile
                             : getImagePath(
-                              data?.gallery_uuid,
-                              data?.gender[0] ?? null,
-                              data!.member_uuid?.toString()
-                            )
+                                data?.gallery_uuid,
+                                data?.gender[0] ?? null,
+                                data!.member_uuid?.toString()
+                              )
                         }
                         alt="no image selected"
                       />
@@ -389,10 +389,10 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                           selectedFile
                             ? selectedFile
                             : getImagePath(
-                              data!.gallery_uuid,
-                              data?.gender[0] ?? null,
-                              data!.member_uuid?.toString()
-                            )
+                                data!.gallery_uuid,
+                                data?.gender[0] ?? null,
+                                data!.member_uuid?.toString()
+                              )
                         }
                         alt="no image selected"
                       />
@@ -430,10 +430,10 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                         selectedFile
                           ? selectedFile
                           : getImagePath(
-                            data!.gallery_uuid,
-                            data!.gender,
-                            data!.member_uuid?.toString()
-                          )
+                              data!.gallery_uuid,
+                              data!.gender,
+                              data!.member_uuid?.toString()
+                            )
                       }
                       alt="no image selected"
                     />
@@ -473,8 +473,9 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
             <div className="w-full">
               {
                 <div
-                  className={`flex lg:flex-row flex-col lg:space-x-5 space-x-0 ${!user!.is_active ? "pt-5 pl-3" : ""
-                    }`}
+                  className={`flex lg:flex-row flex-col lg:space-x-5 space-x-0 ${
+                    !user!.is_active ? "pt-5 pl-3" : ""
+                  }`}
                 >
                   <div className="flex lg:flex-col lg:justify-start flex-row space-x-4 lg:space-x-0">
                     <div className="flex flex-col space-x-1">
@@ -530,7 +531,12 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                             !user?.temporarily_deactivated ? "/messages" : ""
                           }
                         >
-                          <div className={cn("flex w-min", i18n.language == 'ar' && "flex-row-reverse")}>
+                          <div
+                            className={cn(
+                              "flex w-min",
+                              i18n.language == "ar" && "flex-row-reverse"
+                            )}
+                          >
                             <p>{t("memberDetails.chat")}</p>
                             <span>
                               <MessageCircleIcon className="h-4" />
@@ -538,7 +544,12 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                           </div>
                         </Link>
                       </Button>
-                      <div className={cn("flex space-x-2", i18n.language == 'ar' && 'space-x-reverse')}>
+                      <div
+                        className={cn(
+                          "flex space-x-2",
+                          i18n.language == "ar" && "space-x-reverse"
+                        )}
+                      >
                         <Button
                           type="button"
                           className="hover:ring-2 px-2 py-1 sm:py-2 sm:px-4  transition-all ring-primary"
@@ -647,14 +658,15 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                                   onChange={formik.handleChange}
                                   name="reason"
                                   placeholder="enter reason here"
-                                  className={`col-span-3 w-80 h-32 ring-0  ${formik.touched.reason &&
+                                  className={`col-span-3 w-80 h-32 ring-0  ${
+                                    formik.touched.reason &&
                                     formik.errors.reason
-                                    ? "border-rose-500"
-                                    : ""
-                                    }`}
+                                      ? "border-rose-500"
+                                      : ""
+                                  }`}
                                 />
                                 {formik.touched.reason &&
-                                  formik.errors.reason ? (
+                                formik.errors.reason ? (
                                   <div className="error text-sm text-red-500 ml-5">
                                     {formik.errors.reason}
                                   </div>
@@ -709,60 +721,63 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
               )} */}
             </div>
             {userId === user!.member_id.toString() && (
-              <> {isEditing && (<div
-                className={cn(
-                  "flex space-x-2",
-                  i18n.language == "ar" && "space-x-reverse"
-                )}
-              >
-                <Button
-                  onClick={
-                    !formState.isDirty
-                      ? () => { }
-                      : () => {
-                        // if (isEditing && !formState.isValid) {
-                        //   toast({
-                        //     variant: "destructive",
-                        //     title: "Cannot save your profile",
-                        //     description:
-                        //       "Please make sure all the required fields are satisfied.",
-                        //     duration: 4000,
-                        //   });
-                        // }
-                        setIsFinished(true);
-                      }
-                  }
-                  disabled={isSaving || isUploading}
-                  type={"submit"}
-                  className={cn(
-                    "text-xs rounded-2xl h-max",
-                    "hover:bg-green-400/80 bg-green-400"
-                  )}
-                >
-                  <p>{t("general.save")}</p>
-                  {isSaving && (
-                    <span>
-                      <Loader2 className="ml-2 h-4 w-4 animate-spin" />
-                    </span>
-                  )}
-                </Button>
-                {!isSaving && (
-                  <Button
-                    type={"button"}
-                    onClick={() => {
-                      toggleEditMode();
-                      resetMultiselectDeletedItems();
-                    }}
+              <>
+                {" "}
+                {isEditing && (
+                  <div
                     className={cn(
-                      "text-xs rounded-2xl h-max",
-                      "text-[#727272] bg-[#E8ECEF] hover:bg-[#E8ECEF]/80"
+                      "flex space-x-2",
+                      i18n.language == "ar" && "space-x-reverse"
                     )}
                   >
-                    <p>{t("forgotPassword.cancel")}</p>
-                  </Button>
+                    <Button
+                      onClick={
+                        !formState.isDirty
+                          ? () => {}
+                          : () => {
+                              // if (isEditing && !formState.isValid) {
+                              //   toast({
+                              //     variant: "destructive",
+                              //     title: "Cannot save your profile",
+                              //     description:
+                              //       "Please make sure all the required fields are satisfied.",
+                              //     duration: 4000,
+                              //   });
+                              // }
+                              setIsFinished(true);
+                            }
+                      }
+                      disabled={isSaving || isUploading}
+                      type={"submit"}
+                      className={cn(
+                        "text-xs rounded-2xl h-max",
+                        "hover:bg-green-400/80 bg-green-400"
+                      )}
+                    >
+                      <p>{t("general.save")}</p>
+                      {isSaving && (
+                        <span>
+                          <Loader2 className="ml-2 h-4 w-4 animate-spin" />
+                        </span>
+                      )}
+                    </Button>
+                    {!isSaving && (
+                      <Button
+                        type={"button"}
+                        onClick={() => {
+                          toggleEditMode();
+                          resetMultiselectDeletedItems();
+                        }}
+                        className={cn(
+                          "text-xs rounded-2xl h-max",
+                          "text-[#727272] bg-[#E8ECEF] hover:bg-[#E8ECEF]/80"
+                        )}
+                      >
+                        <p>{t("forgotPassword.cancel")}</p>
+                      </Button>
+                    )}
+                  </div>
                 )}
-              </div>
-              )}
                 {!isEditing && (
                   <Button
                     type={"button"}
@@ -777,7 +792,12 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                     )}
                   >
                     <>
-                      <FolderEdit className={cn("h-4 mr-2", i18n.language == 'ar' && "transform -scale-x-100")} />
+                      <FolderEdit
+                        className={cn(
+                          "h-4 mr-2",
+                          i18n.language == "ar" && "transform -scale-x-100"
+                        )}
+                      />
                       <span>{t("memberDetails.edit")}</span>
                     </>
                   </Button>
