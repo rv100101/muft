@@ -54,12 +54,12 @@ const Footer = () => {
       <hr />
       <div className="flex justify-between text-white">
         <p dir="ltr" className="hidden md:block text-xs">
-          &copy; 2023 Softnames. All Rights Reserved.
+          &copy; 2024 Softnames. All Rights Reserved.
         </p>
         <FooterLinks />
       </div>
       <p dir="ltr" className="text-white text-xs text-center md:hidden block">
-        &copy; 2023 Softnames. All Rights Reserved.
+        &copy; 2024 Softnames. All Rights Reserved.
       </p>
     </div>
   );

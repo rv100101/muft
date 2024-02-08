@@ -3,13 +3,20 @@ import FooterLinks from "./footerLinks";
 import { cn } from "@/lib/utils";
 
 const SmallFooter = () => {
-  const [, i18n] = useTranslation()
+  const [, i18n] = useTranslation();
   return (
-    <div className={cn("hidden sm:flex w-full px-8 lg:px-36 p-2 h-max items-center justify-between")}>
+    <div
+      className={cn(
+        "hidden sm:flex w-full px-8 lg:px-36 p-2 h-max items-center justify-between"
+      )}
+    >
       <p dir="ltr" className="text-white sm:text-xs text-center">
-        &copy; 2023 Softnames. All Rights Reserved.
+        &copy; 2024 Softnames. All Rights Reserved.
       </p>
-      <div dir={i18n.language == 'ar' ? "rtl" : "ltr"} className="flex justify-between text-white">
+      <div
+        dir={i18n.language == "ar" ? "rtl" : "ltr"}
+        className="flex justify-between text-white"
+      >
         <FooterLinks />
       </div>
     </div>
