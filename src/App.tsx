@@ -13,23 +13,25 @@ import { cn } from "./lib/utils";
 import ViewUser from "./components/profile/viewUser";
 import { ErrorBoundary } from "@sentry/react";
 import { useSettingsStore } from "./zustand/settings/displaySettingsStore";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 // import runOneSignal from "./lib/oneSignal";
 import * as Sentry from "@sentry/react";
 import { useUpdateEffect } from "usehooks-ts";
 import PreferredLanguageDialog from "./components/preferredLanguageDialog";
 import { usePreferredLanguageStore } from "./zustand/auth/preferred_language";
 import { useTranslation } from "react-i18next";
-import { isPm } from "./lib/isPm";
+import { is6Pm } from "./lib/isPm";
 function App() {
   const [, i18n] = useTranslation();
   const [location] = useLocation();
   const user = useUserStore((state) => state.user);
   const toggleSystemDark = useSettingsStore((state) => state.toggleSystemDark);
-
+  const toggleDarkMode = useSettingsStore(
+    (state) => state.toggleDarkModeSwitch
+  );
   const preffered = usePreferredLanguageStore((state) => state.preferred);
-
   const displaySettings = useSettingsStore((state) => state.settings);
+  const [currentTime, setCurrentTime] = useState(new Date());
 
   useEffect(() => {
     if (preffered) {
@@ -54,6 +56,14 @@ function App() {
   }, [user]);
 
   useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 30000); // Update every minute
+
+    return () => clearInterval(intervalId); // Clean up the interval on component unmount
+  }, []);
+
+  useEffect(() => {
     if (displaySettings?.darkModeSwitch) {
       document.documentElement.classList.add("dark");
       document.documentElement.classList.remove("light");
@@ -61,29 +71,17 @@ function App() {
       document.documentElement.classList.add("light");
       document.documentElement.classList.remove("dark");
     } else {
-      if (isPm()) {
-        toggleSystemDark(true);
+      if (is6Pm(currentTime)) {
+        console.log("go dark");
+        document.documentElement.classList.add("dark");
+        document.documentElement.classList.remove("light");
       } else {
-        toggleSystemDark(false);
+        console.log("go light");
+        document.documentElement.classList.add("light");
+        document.documentElement.classList.remove("dark");
       }
-      // if (
-      //   window.matchMedia &&
-      //   window.matchMedia("(prefers-color-scheme: dark)").matches
-      // ) {
-      //   // setSystemDark(true);
-      //   toggleSystemDark(true);
-      //   // User prefers dark mode
-      //   document.documentElement.classList.add("dark");
-      //   document.documentElement.classList.remove("light");
-      // } else {
-      //   // setSystemDark(false);
-      //   toggleSystemDark(false);
-      //   // User prefers light mode
-      //   document.documentElement.classList.add("light");
-      //   document.documentElement.classList.remove("dark");
-      // }
     }
-  }, [displaySettings, toggleSystemDark]);
+  }, [displaySettings, toggleSystemDark, currentTime, toggleDarkMode]);
 
   return (
     <ErrorBoundary>

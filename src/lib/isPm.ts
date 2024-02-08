@@ -7,3 +7,8 @@ export function isPm(): boolean {
 
   return isPm;
 }
+
+export function is6Pm(currentTime: Date): boolean {
+  const hours: number = currentTime.getHours();
+  return hours >= 18 || hours < 6;
+}
