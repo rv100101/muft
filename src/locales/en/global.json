@@ -124,6 +124,11 @@
     "yes": "Yes",
     "no": "No"
   },
+  "blockedModal": {
+    "title": "You were Blocked",
+    "description1": "Your account has been blocked due to violation of our terms and conditions.",
+    "description2": "We're sorry but this decision cannot be changed and your account will not be reinstated."
+  },
   "onboarding": {
     "next": "Next",
     "back": "Back",
@@ -164,7 +169,6 @@
     "favoriteFood": "Favorite Food",
     "health": "Health",
     "employment": "Employment",
-
     "interests": "Interests",
     "memberID": "Member ID",
     "nickname": "Nickname",

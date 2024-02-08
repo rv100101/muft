@@ -30,6 +30,7 @@ import profileAboutContentStore, {
   initialState,
 } from "@/zustand/profile/profileAboutStore";
 import useReadConversationsStateStore from "@/zustand/messaging/readConversations";
+import { DialogClose } from "@radix-ui/react-dialog";
 
 type FormDataType = {
   email: string;
@@ -148,18 +149,22 @@ const SignInForm = () => {
   return (
     <div className="flex h-max sm:w-96 flex-col items-center lg:shadow-xl rounded-lg p-8 lg:border space-y-2">
       <Dialog open={blockedModal}>
-        <DialogContent className="sm:max-w-[425px] flex flex-col items-center">
-          <DialogHeader className="flex flex-row justify-end space-x-3 w-full">
-            <DialogTitle className="mt-3 dark:text-white flex flex-row space-x-1 text-center w-full justify-center pl-10">
-              <p>You were</p>
-              <p className="text-primary dark:text-[#ae2e51] font-bold">
-                Blocked
-              </p>
+        <DialogContent
+          dir={i18n.language == "ar" ? "rtl" : "ltr"}
+          className="sm:max-w-[425px] flex flex-col items-center"
+        >
+          <div className="w-full flex justify-end">
+            <DialogClose className="flex justify-end">
+              <X
+                className="hover:cursor-pointer"
+                onClick={() => showBlockedModal(false)}
+              />
+            </DialogClose>
+          </div>
+          <DialogHeader className="flex flex-row space-x-3 w-full">
+            <DialogTitle className="mt-3 dark:text-white flex flex-row space-x-1 text-center w-full justify-center ">
+              {t("blockedModal.title")}
             </DialogTitle>
-            <X
-              className="hover:cursor-pointer"
-              onClick={() => showBlockedModal(false)}
-            />
           </DialogHeader>
           <div className="block">
             <Ban size={100} color="#ff77ae" />
@@ -168,14 +173,8 @@ const SignInForm = () => {
             <Ban size={100} color="#ae2e51" />
           </div>
           <div className="flex flex-col space-y-5 items-center text-center mt-3">
-            <p>
-              Your account has been blocked due to violation of our terms and
-              conditions.
-            </p>
-            <p>
-              We're sorry but this decision cannot be changed and your account
-              will not be reinstated.
-            </p>
+            <p>{t("blockedModal.description1")}</p>
+            <p>{t("blockedModal.description2")}</p>
           </div>
         </DialogContent>
       </Dialog>
