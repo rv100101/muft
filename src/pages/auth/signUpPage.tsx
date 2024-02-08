@@ -424,7 +424,7 @@ const SignUpPage = () => {
           <Link
             onClick={scrollToTop}
             href="/auth/signin"
-            className="mt-2 underline text-[#4635E2] text-sm"
+            className="mt-2 underline hover:text-[#4635E2]/80 text-[#4635E2] text-sm"
           >
             {t("signUp.alreadyHaveAccount")}
           </Link>
