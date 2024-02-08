@@ -126,8 +126,8 @@
   },
   "memberDetails": {
     "noPets": "ليست لدي حيوانات أليفة",
-    "interestsPlaceholder": "يرجى الاختيا",
-    "favoriteFoodsPlaceholder": "يرجى الاختيا",
+    "interestsPlaceholder": "يرجى الاختيار",
+    "favoriteFoodsPlaceholder": "يرجى الاختيار",
     "petsPlaceholder": "يرجى الاختيار",
     "heightPlaceholder": "الطول (سم)",
     "weightPlaceholder": "الوزن (كغ)",
