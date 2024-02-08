@@ -5,6 +5,7 @@ import Conversation from "./conversation";
 import { Button } from "./ui/button";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
+import { Link } from "wouter";
 
 const Hero = () => {
   const [t, i18n] = useTranslation();
@@ -80,14 +81,21 @@ const Hero = () => {
               delay: 2.5,
             }}
             viewport={{ once: true }}
-            className={cn("z-20 flex space-x-2 w-64 md:w-80", i18n.language == 'ar' && 'space-x-reverse')}
+            className={cn(
+              "z-20 flex space-x-2 w-64 md:w-80",
+              i18n.language == "ar" && "space-x-reverse"
+            )}
           >
-            <Button className="hover:bg-[#1B2950]/90 bg-[#1B2950] dark:bg-[#1B2950] dark:text-white">
-              <a href="/auth/signup">{t("landingPage.joinNow")}</a>
-            </Button>
-            <Button className="hover:bg-[#FF599B]/90 dark:bg-[#FF599B] dark:text-white">
-              <a href="/auth/signin">{t("landingPage.signIn")}</a>
-            </Button>
+            <Link to="/auth/signup">
+              <Button className="hover:bg-[#1B2950]/90 bg-[#1B2950] dark:bg-[#1B2950] dark:text-white">
+                {t("landingPage.joinNow")}
+              </Button>
+            </Link>
+            <Link to="/auth/signin">
+              <Button className="hover:bg-[#FF599B]/90 dark:bg-[#FF599B] dark:text-white">
+                {t("landingPage.signIn")}
+              </Button>
+            </Link>
           </motion.div>
 
           {/*
