@@ -122,6 +122,7 @@ const SignInForm = () => {
       const data: User | null = signInData;
       if (data && data!.is_blocked) {
         showBlockedModal(true);
+        formik.resetForm();
         return;
       }
       if (data && data!.authorized) {
