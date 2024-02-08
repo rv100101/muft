@@ -72,11 +72,9 @@ function App() {
       document.documentElement.classList.remove("dark");
     } else {
       if (is6Pm(currentTime)) {
-        console.log("go dark");
         document.documentElement.classList.add("dark");
         document.documentElement.classList.remove("light");
       } else {
-        console.log("go light");
         document.documentElement.classList.add("light");
         document.documentElement.classList.remove("dark");
       }
