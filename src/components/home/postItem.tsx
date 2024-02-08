@@ -110,8 +110,11 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
                 </div>
                 <TooltipProvider>
                   <div
-                    dir={i18n.language == 'ar' ? 'rtl' : 'ltr'}
-                    className={cn("flex items-center space-x-2 justify-center mb-5", i18n.language == 'ar' && 'space-x-reverse')}
+                    dir={i18n.language == "ar" ? "rtl" : "ltr"}
+                    className={cn(
+                      "flex items-center space-x-2 justify-center mb-5",
+                      i18n.language == "ar" && "space-x-reverse"
+                    )}
                   >
                     <Tooltip>
                       <TooltipTrigger>
@@ -190,7 +193,10 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
           <div className="flex flex-col justify-center items-center"></div>
           <div className="flex flex-row justify-start space-x-3 mt-5 pb-5 lg:px-0 px-2">
             <div
-              className={cn("rounded-full bg-[#FFF2F7] flex flex-row justify-center align-center space-x-2 py-2 px-4 dark:bg-[#3b0117] text=[#ff588e]", i18n.language == 'ar' && 'space-x-reverse')}
+              className={cn(
+                "rounded-full bg-[#FFF2F7] flex flex-row justify-center align-center space-x-2 py-2 px-4 dark:bg-[#3b0117] text=[#ff588e]",
+                i18n.language == "ar" && "space-x-reverse"
+              )}
             >
               <CalendarClock
                 color="#FF599B"
@@ -210,10 +216,11 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
                 className="mt-1 hover:cursor-pointer"
               />
               <p
-                className={`text-[#FF599B] mt-1 ${memberData.marital_status === "Prefer not to say"
-                  ? "text-sm"
-                  : ""
-                  }`}
+                className={`text-[#FF599B] mt-1 ${
+                  memberData.marital_status === "Prefer not to say"
+                    ? "text-sm"
+                    : ""
+                }`}
               >
                 {memberData.marital_status}
               </p>
@@ -225,9 +232,8 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
                     <LazyLoadImage
                       effect="opacity"
                       alt={"post country flag"}
-                      height={20}
                       width={30}
-                      src={`http://purecatamphetamine.github.io/country-flag-icons/3x2/${memberData.country_code}.svg`}
+                      src={`https://muffin0.blob.core.windows.net/flags/${memberData.country_code.toLocaleLowerCase()}.png`}
                     />
                     {/* <p className="text-[#FF599B] mt-1 text-sm ">
                       {nationalityCode}
