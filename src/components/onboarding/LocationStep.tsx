@@ -73,9 +73,19 @@ const LocationStep = () => {
 
   const { setIsLoading, isLoading } = profileAboutContentStore();
 
+  console.log(profileAboutContent);
+
   useEffect(() => {
-    setIsLoading(countries.length == 0 || states.length == 0);
-  }, [states.length, setIsLoading, countries.length]);
+    setIsLoading(
+      countries.length == 0 ||
+        (profileAboutContent?.region !== "" && states.length == 0)
+    );
+  }, [
+    states.length,
+    setIsLoading,
+    countries.length,
+    profileAboutContent?.region,
+  ]);
 
   return isLoading ? (
     <div className="grid w-full sm:w-1/2 sm:grid-rows-2 grid-flow-row sm:grid-cols-2 gap-2">
