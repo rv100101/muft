@@ -127,9 +127,7 @@ const SignInForm = () => {
       }
       setPreferredLanguage(signInData.communication_language);
       if (data && data!.authorized) {
-        queryClient.invalidateQueries({
-          queryKey: ["home-members"],
-        });
+        queryClient.invalidateQueries();
         updateUser(data);
         navigate("/", { replace: true });
       } else {
