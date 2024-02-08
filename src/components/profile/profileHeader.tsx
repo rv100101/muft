@@ -332,7 +332,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
 
       // setReportProcessing(false);
 
-      if (res.data) {
+      if (res.data[0].is_blocked) {
         toast({
           title: t("alerts.userBlocked"),
           description: t("alerts.changesTakeAwhile"),
