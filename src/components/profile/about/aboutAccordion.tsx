@@ -326,7 +326,8 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
   });
 
   useQuery({
-    queryFn: () => profileContentQuery.editOptions.getPets(),
+    queryFn: () =>
+      profileContentQuery.editOptions.getPets(userId.toString(), i18n.language),
     refetchInterval: Infinity,
     queryKey: ["pets"],
     onSuccess: (data: Pets[]) => {
