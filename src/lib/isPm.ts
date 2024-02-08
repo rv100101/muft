@@ -10,5 +10,5 @@ export function isPm(): boolean {
 
 export function is6Pm(currentTime: Date): boolean {
   const hours: number = currentTime.getHours();
-  return hours >= 18 || hours < 6;
+  return hours >= 15 || hours < 6;
 }

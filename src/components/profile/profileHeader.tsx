@@ -60,6 +60,7 @@ type FormDataType = {
 };
 
 const ProfileHeader = ({ userId }: { userId: string }) => {
+  const { likes, favorites, setFavorites, setLikes } = useHomepageViewStore();
   const [t, i18n] = useTranslation();
   const setView = useMobileMessagingViewStore((state) => state.setView);
   const [reportProcessing, setReportProcessing] = useState(false);
@@ -582,6 +583,10 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                               ...data!,
                               is_liked: isLiked == "0" ? "1" : "0",
                             });
+                            const updatedLikes = { ...likes };
+                            updatedLikes[userId.toString()] =
+                              !likes[userId.toString()];
+                            setLikes(updatedLikes);
                           }}
                         >
                           <Heart
@@ -603,6 +608,10 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                               ...data!,
                               is_favored: isFavored == "0" ? "1" : "0",
                             });
+                            const updatedFavorites = { ...favorites };
+                            updatedFavorites[userId.toString()] =
+                              !favorites[userId.toString()];
+                            setFavorites(updatedFavorites);
                           }}
                         >
                           <Star
