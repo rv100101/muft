@@ -99,7 +99,6 @@ const SignInForm = () => {
         });
         return;
       }
-      setPreferredLanguage(signInData.communication_language);
       if (id == null) {
         setId(signInData.member_id);
         setReadList({});
@@ -126,6 +125,7 @@ const SignInForm = () => {
         formik.resetForm();
         return;
       }
+      setPreferredLanguage(signInData.communication_language);
       if (data && data!.authorized) {
         queryClient.invalidateQueries({
           queryKey: ["home-members"],
