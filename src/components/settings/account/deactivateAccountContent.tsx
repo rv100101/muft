@@ -250,16 +250,33 @@ const DeactivateAccountContent = () => {
         }}
       >
         <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>{t("deactivateProfile.importantNotice")}</DialogTitle>
-            <DialogDescription>
+          <DialogHeader dir={i18n.language == "ar" ? "rtl" : "ltr"}>
+            <DialogTitle
+              className={cn(i18n.language == "ar" ? "text-right" : "text-left")}
+            >
+              {t("deactivateProfile.importantNotice")}
+            </DialogTitle>
+            <DialogDescription
+              className={cn(i18n.language == "ar" ? "text-right" : "text-left")}
+            >
               {t("deactivateProfile.noticeDescription")}
             </DialogDescription>
-            <DialogDescription className="pt-5">
+            <DialogDescription
+              className={cn(
+                i18n.language == "ar" ? "text-right" : "text-left",
+                "pt-5"
+              )}
+            >
               {t("deactivateProfile.cannotBeUndone")}
             </DialogDescription>
           </DialogHeader>
-          <div className="flex flex-row space-x-4">
+          <div
+            dir={i18n.language == "ar" ? "rtl" : "ltr"}
+            className={cn(
+              "flex flex-row space-x-4",
+              i18n.language == "ar" && "space-x-reverse"
+            )}
+          >
             <Button
               // disabled={(!checked as boolean) || deleteLoading}
               className={cn(
