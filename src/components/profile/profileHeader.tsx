@@ -339,6 +339,12 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
           description: t("alerts.changesTakeAwhile"),
           variant: "success",
         });
+      } else {
+        toast({
+          title: t("alerts.userUnblocked"),
+          description: t("alerts.changesTakeAwhile"),
+          variant: "success",
+        });
       }
     } catch (error) {
       console.log("error: ", error);
