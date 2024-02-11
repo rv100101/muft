@@ -425,7 +425,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                             ? selectedFile
                             : getImagePath(
                                 data!.gallery_uuid,
-                                data?.gender[0] ?? null,
+                                getGender(data!.gender) ?? null,
                                 data!.member_uuid?.toString()
                               )
                         }
@@ -466,7 +466,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                           ? selectedFile
                           : getImagePath(
                               data!.gallery_uuid,
-                              data!.gender,
+                              getGender(data!.gender) ?? null,
                               data!.member_uuid?.toString()
                             )
                       }
