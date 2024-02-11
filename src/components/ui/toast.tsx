@@ -4,6 +4,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { X } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
 
 const ToastProvider = ToastPrimitives.Provider;
 
@@ -42,12 +43,18 @@ const toastVariants = cva(
 const Toast = React.forwardRef<
   React.ElementRef<typeof ToastPrimitives.Root>,
   React.ComponentPropsWithoutRef<typeof ToastPrimitives.Root> &
-  VariantProps<typeof toastVariants>
+    VariantProps<typeof toastVariants>
 >(({ className, variant, ...props }, ref) => {
+  const [, i18n] = useTranslation();
   return (
     <ToastPrimitives.Root
+      dir={i18n.language == "ar" ? "rtl" : "ltr"}
       ref={ref}
-      className={cn(toastVariants({ variant }), className)}
+      className={cn(
+        toastVariants({ variant }),
+        className,
+        i18n.language == "ar" ? "text-right" : "text-left"
+      )}
       {...props}
     />
   );

@@ -26,9 +26,13 @@ import { useTranslation } from "react-i18next";
 import OnboardingWrapper from "@/components/onboarding/OnboardingWrapper";
 import { cn } from "@/lib/utils";
 import deleteMultiselectValuesStore from "@/zustand/profile/about/deleteMultiselectValues";
+import { useUserAvatar } from "@/zustand/auth/avatar";
+import { useUserNickname } from "@/zustand/auth/username";
 // import getDeletedItems from "@/lib/getDeleted";
 
 const ProfilePageBody = ({ userId }: { userId: string }) => {
+  const updateUserAvatar = useUserAvatar((state) => state.setAvatar);
+  const updateUserNickname = useUserNickname((state) => state.setNickname);
   const {
     languages: deletedLanguages,
     favoriteFood: deletedFaveFoods,
@@ -315,6 +319,8 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
       await authQuery.isProfileCompleted(user!.member_id);
       console.log(finalFormData);
       const age = calculateAge(formData.birthInfo);
+      updateUserAvatar(null);
+      updateUserNickname(finalFormData.nickname);
       setHeaderValues({ ...headerValues!, nickname: formData.nickname, age });
       setData({
         ...data!,

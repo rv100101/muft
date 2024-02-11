@@ -3,7 +3,7 @@ import { createJSONStorage, persist } from "zustand/middleware";
 
 interface UserAvatar {
   gallery_uuid: string | null;
-  setAvatar: (val: string) => void;
+  setAvatar: (val: string | null) => void;
 }
 export const useUserAvatar = create(
   persist<UserAvatar>(
@@ -14,6 +14,6 @@ export const useUserAvatar = create(
     {
       name: "user-avatar-storage", // name of the item in the storage (must be unique)
       storage: createJSONStorage(() => localStorage), // (optional) by default, 'localStorage' is used
-    },
-  ),
+    }
+  )
 );
