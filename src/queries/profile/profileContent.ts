@@ -131,6 +131,24 @@ const fetchAdditionalInformation = async (userId: number, lang: string) => {
   }
 };
 
+const getGender = async (lang: string) => {
+  try {
+    const formData = new FormData();
+    formData.append(
+      "auth",
+      "0DB31DEE22DC4C03AD7DAAA9C29518FF3C08D931992A4A5CB0A4FF4CF4707DC6"
+    );
+    formData.append("lang", lang);
+    const response = await axiosQuery.post(
+      "https://muffinapi.azurewebsites.net/gender.php",
+      formData
+    );
+    return response.data;
+  } catch (error) {
+    return [];
+  }
+};
+
 const getNationality = async (lang: string) => {
   try {
     const formData = new FormData();
@@ -1231,6 +1249,7 @@ const profileContentQuery = {
     getInterests,
     getReligion,
     getEmploymentStatus,
+    getGender,
   },
   saveInformation,
   saveOnboarding,

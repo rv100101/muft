@@ -260,6 +260,7 @@
     "cannotUploadPhoto": "لم نتمكن من رفع الصورة",
     "accountDeactivated": "تم إيقاف الحساب",
     "accountReactivated": "تمت إعادة تفعيل الحساب",
+    "reactivateDescription": "باختيار إعادة تنشيط حسابك، ستجعل ملفك الشخصي مرئيًا للمستخدمين الآخرين.",
     "accountDeleted": "تم حذف الحساب",
     "passwordUpdated": "تم تحديث كلمة السر",
     "somethingWentWrongUhOh": "نأسف! هناك خطأ في العملية",

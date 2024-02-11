@@ -1,3 +1,10 @@
+export type Gender = {
+  authorized: boolean;
+  ip_address: string;
+  gender_code: string;
+  gender_title: string;
+};
+
 export type Nationality = {
   authorized: boolean;
   ip_address: string;

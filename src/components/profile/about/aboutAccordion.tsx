@@ -24,6 +24,7 @@ import {
   Ethnicity,
   Eye,
   FavoriteFood,
+  Gender,
   Hair,
   HaveChildren,
   Income,
@@ -70,6 +71,7 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
   const {
     setEyes,
     setBodyArts,
+    setGender,
     setNationalities,
     setEthnicities,
     setMaritalStatus,
@@ -148,6 +150,7 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
     },
     refetchOnWindowFocus: false,
   });
+
   useQuery({
     queryFn: () =>
       profileContentQuery.editOptions.getNationality(i18n.language),
@@ -155,6 +158,15 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
     queryKey: ["nationalities", i18n.language],
     onSuccess: (data: Nationality[]) => {
       setNationalities(data);
+    },
+  });
+
+  useQuery({
+    queryFn: () => profileContentQuery.editOptions.getGender(i18n.language),
+    refetchInterval: Infinity,
+    queryKey: ["genders", i18n.language],
+    onSuccess: (data: Gender[]) => {
+      setGender(data);
     },
   });
 

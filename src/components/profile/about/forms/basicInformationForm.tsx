@@ -5,7 +5,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Nationality } from "@/types/profile";
+import { Gender, Nationality } from "@/types/profile";
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
 import { Cake, Flag, Ghost, Hash, Hourglass, User2 } from "lucide-react";
 import FormSkeletonLoading from "./formSkeletonLoading";
@@ -55,8 +55,18 @@ const BasicInformationForm = () => {
   });
 
   const { control } = useFormContext();
-  const { nationalities } = selectOptions();
+  const { nationalities, gender } = selectOptions();
   const { data, editMode, isLoading, profileData } = profileAboutContentStore();
+
+  const getGenderTitle: (value: string) => string = (value: string) => {
+    if (value == "M") {
+      return t("memberDetails.male");
+    } else if (value == "F") {
+      return t("memberDetails.female");
+    } else {
+      return "M";
+    }
+  };
 
   const getGender: (value: string) => string = (value: string) => {
     if (value == t("memberDetails.male") || value == "M") {
@@ -80,6 +90,8 @@ const BasicInformationForm = () => {
       </div>
     );
   }
+
+  console.log(data?.gender);
 
   return (
     <div
@@ -200,12 +212,13 @@ const BasicInformationForm = () => {
                       <SelectContent
                         dir={i18n.language == "ar" ? "rtl" : "ltr"}
                       >
-                        <SelectItem value={"M"}>
-                          {t("memberDetails.male")}
-                        </SelectItem>
-                        <SelectItem value={"F"}>
-                          {t("memberDetails.female")}
-                        </SelectItem>
+                        {gender.map((gender: Gender, index: number) => {
+                          return (
+                            <SelectItem key={index} value={gender.gender_code}>
+                              {gender.gender_title}
+                            </SelectItem>
+                          );
+                        })}
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -228,16 +241,9 @@ const BasicInformationForm = () => {
               className="hover:cursor-pointer mt-2 mr-3"
             />
             <div className="flex flex-col justify-start space-y-1">
-              {i18n.language !== "ar" && (
-                <p className="font-bold text-base text-primary">
-                  {data && data?.gender[0] == "M" ? "Male" : "Female"}
-                </p>
-              )}
-              {i18n.language === "ar" && (
-                <p className="font-bold text-base text-primary">
-                  {data && i18n.language === "ar" ? data?.gender : "Male"}
-                </p>
-              )}
+              <p className="font-bold text-base text-primary">
+                {getGenderTitle(getGender(data!.gender))}
+              </p>
               <p className="text-[#727272] text-xs">
                 {t("memberDetails.gender")}
               </p>

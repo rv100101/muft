@@ -165,9 +165,13 @@ const DeactivateAccountContent = () => {
                   {t("deactivateProfile.deactivateMessage")}
                 </DialogDescription>
               ) : (
-                <DialogDescription className="pb-5">
-                  By choosing reactivating your account, you'll make your
-                  profile visible to other users on Muffin.{" "}
+                <DialogDescription
+                  className={cn(
+                    "pb-5",
+                    i18n.language == "ar" ? "text-right" : "text-left"
+                  )}
+                >
+                  {t("alerts.reactivateDescription")}
                 </DialogDescription>
               )}
             </DialogHeader>

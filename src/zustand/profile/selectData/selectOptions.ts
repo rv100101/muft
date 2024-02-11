@@ -24,7 +24,8 @@ import {
   WantChildren,
   Workout,
   Religion,
-  EmploymentStatus
+  EmploymentStatus,
+  Gender,
 } from "@/types/profile";
 import { create } from "zustand";
 
@@ -83,6 +84,8 @@ interface SelectOptions {
   setCar: (val: Car[]) => void;
   interests: Interest[];
   setInterest: (val: Interest[]) => void;
+  gender: Gender[];
+  setGender: (val: Gender[]) => void;
 }
 
 const selectOptions = create<SelectOptions>((set) => ({
@@ -113,6 +116,7 @@ const selectOptions = create<SelectOptions>((set) => ({
   interests: [],
   selectedCountryCode: "",
   religion: [],
+  gender: [],
   setEmploymentStatus: (val) =>
     set(() => ({
       employmentStatus: val,
@@ -220,6 +224,10 @@ const selectOptions = create<SelectOptions>((set) => ({
   setInterest: (val) =>
     set(() => ({
       interests: val,
+    })),
+  setGender: (val) =>
+    set(() => ({
+      gender: val,
     })),
 }));
 

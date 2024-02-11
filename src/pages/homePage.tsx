@@ -20,11 +20,11 @@ const HomePage = () => {
   const setSelectedProfileId = useHomepageViewStore(
     (state) => state.setSelectedProfileId
   );
+  const user = useUserStore((state) => state.user);
   const setMemberList = useHomepageViewStore(
     (state) => state.setModifiedMemberList
   );
   const setIsLoading = useHomepageViewStore((state) => state.setIsLoading);
-  const { user } = useUserStore();
   const likes = useHomepageViewStore((state) => state.likes);
   const favorites = useHomepageViewStore((state) => state.favorites);
   const preferredLang = usePreferredLanguageStore((state) => state.preferred);
@@ -48,7 +48,7 @@ const HomePage = () => {
   const { data: members, isLoading: retrievingMemberData } = useQuery({
     refetchOnMount: false,
     refetchOnWindowFocus: false,
-    queryKey: ["home-members", preferredLang],
+    queryKey: ["home-members", preferredLang, user?.gender],
     queryFn: () => getMembers,
   });
 

@@ -190,6 +190,16 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
 
   console.log(methods.formState);
 
+  const getGender: (value: string) => string = (value: string) => {
+    if (value == t("memberDetails.male") || value == "M") {
+      return "M";
+    } else if (value == t("memberDetails.female") || value == "F") {
+      return "F";
+    } else {
+      return "M";
+    }
+  };
+
   // const isFinished = onboardingStore(state => state.isFinished);
   const onSubmit = async (formData: any) => {
     // for onboarding finish validation
@@ -236,6 +246,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
       const religion = getReligion(formData.religion);
       const disability = getDisabilityData(formData.disability);
       const employmentStatus = getEmploymentStatus(formData.employmentStatus);
+      const gender = getGender(formData.gender);
       console.log(formData);
       console.log(data);
       const finalLanguages = removeExistingData(
@@ -260,6 +271,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
       );
       finalFormData = {
         ...finalFormData,
+        gender: gender,
         language: finalLanguages,
         favoriteFood: finalFavoriteFood,
         pets: finalPets,
@@ -304,7 +316,11 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
       console.log(finalFormData);
       const age = calculateAge(formData.birthInfo);
       setHeaderValues({ ...headerValues!, nickname: formData.nickname, age });
-      setData({ ...data!, ...formData, age });
+      setData({
+        ...data!,
+        ...formData,
+        age,
+      });
       changeTab(1);
       updateUser({ ...user, profile_completed: true } as User);
       queryClient.invalidateQueries(["profileHeader"]);
