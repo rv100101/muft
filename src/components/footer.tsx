@@ -57,10 +57,10 @@ const Footer = () => {
           &copy; 2024 Softnames. All Rights Reserved.
         </p>
         <FooterLinks />
+        <p dir="ltr" className="text-white text-xs text-center md:hidden block">
+          &copy; 2024 Softnames. All Rights Reserved.
+        </p>
       </div>
-      <p dir="ltr" className="text-white text-xs text-center md:hidden block">
-        &copy; 2024 Softnames. All Rights Reserved.
-      </p>
     </div>
   );
 };
