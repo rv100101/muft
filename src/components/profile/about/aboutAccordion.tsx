@@ -61,6 +61,7 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
   const { data: profileAboutContent, isSaving } = profileAboutContentStore();
   // const user = useUserStore((state) => state.user);
   const {
+    isLoading,
     setIsLoading,
     setData: setAboutData,
     setEditModeFalse,
@@ -455,9 +456,12 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
       >
         <AccordionItem value="item-1" className="px-5 py-1 border-0">
           <AccordionTrigger className="hover:no-underline">
-            <p className="uppercase font-[500] text-[#727272] no-underline">
-              {t("memberDetails.about")}
-            </p>
+            {
+              !isLoading &&
+              <p className="uppercase font-[500] text-[#727272] no-underline">
+                {t("memberDetails.about")}
+              </p>
+            }
           </AccordionTrigger>
           <AccordionContent>
             <AboutAccordionContent />
