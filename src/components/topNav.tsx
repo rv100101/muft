@@ -6,8 +6,8 @@ import {
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
+  // DropdownMenuLabel,
+  // DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { HelpCircle, Menu } from "lucide-react";
@@ -186,8 +186,8 @@ function TopNav() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-48">
-              <DropdownMenuLabel>Muffin</DropdownMenuLabel>
-              <DropdownMenuSeparator />
+              {/* <DropdownMenuLabel>Muffin</DropdownMenuLabel>
+              <DropdownMenuSeparator /> */}
               <DropdownMenuGroup>
                 {/* <DropdownMenuItem>
               <a href="/about">{t("landingPage.aboutUs")}</a>
