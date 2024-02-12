@@ -161,7 +161,7 @@ const DeactivateAccountContent = () => {
                 </DialogClose>
               </div>
               {!user?.temporarily_deactivated ? (
-                <DialogDescription className="pb-5">
+                <DialogDescription className={cn("pb-5", i18n.language == 'ar' ? "text-right" : "text-left")}>
                   {t("deactivateProfile.deactivateMessage")}
                 </DialogDescription>
               ) : (
@@ -300,7 +300,7 @@ const DeactivateAccountContent = () => {
                 className={cn(
                   "text-white bg-slate-500 h-10 w-full text-sm rounded-lf py-3 hover:bg-slate-500/90 mt-5 "
                 )}
-                // onClick={() => deleteAccount}
+              // onClick={() => deleteAccount}
               >
                 {t("deactivateProfile.no")}
               </Button>

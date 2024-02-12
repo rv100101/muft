@@ -6,7 +6,6 @@ export default async function runOneSignal() {
     notifyButton: {
       enable: true,
     },
-    allowLocalhostAsSecureOrigin: true,
     serviceWorkerPath: "/public/OneSignalSDKWorker.js",
   });
   OneSignal.Slidedown.promptPush();
