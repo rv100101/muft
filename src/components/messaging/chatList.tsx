@@ -112,7 +112,7 @@ const ChatList = () => {
           <Button
             variant={"ghost"}
             className={cn(
-              "hover:bg-slate-50 w-full h-max items-start text-left dark:bg-slate-700 md:rounded-lg",
+              "hover:bg-slate-50 w-full h-max items-center text-left dark:bg-slate-700 md:rounded-lg",
               // !openedConversations.includes(conversation.listed_id) &&
               readList !== null &&
               !readList[conversation.conversation_uuid] &&
