@@ -97,7 +97,7 @@ const ChatMessages = () => {
               : "items-end bg-primary text-white"
           )}
         >
-          <p className="text-sm">{message.conversation_text}</p>
+          <p dir="ltr" className="text-sm">{message.conversation_text}</p>
         </div>
         {date === "isLoading" && (
           <p className={cn("text-xs text-gray-500")}>Sending...</p>
@@ -116,7 +116,7 @@ const ChatMessages = () => {
     <div
       ref={scrollableDivRef}
       className={cn(
-        "h-full w-full space-y-4 overflow-y-auto p-4 bg-[#F7F8FA] dark:text-white dark:bg-[#020817]",
+        "h-full w-full space-y-4 overflow-y-auto no-scrollbar p-4 bg-[#F7F8FA] dark:text-white dark:bg-[#020817]",
         isLoading && "bg-white",
         !latestConversation && "bg-[#F7F8FA] overflow-y-auto"
       )}

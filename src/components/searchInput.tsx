@@ -7,7 +7,7 @@ const SearchInput = () => {
   );
   const searchValue = useSearchFilterStore((state) => state.value);
   return (
-    <div className="hover:cursor-pointer border border-2 p-2 space-x-2 rounded-xl flex items-center px-5 mx-2 ">
+    <div className="hover:cursor-pointer h-full border-2 p-2 space-x-2 rounded-xl flex items-center px-5 mx-2 ">
       <input
         value={searchValue}
         onChange={(e) => {

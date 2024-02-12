@@ -15,13 +15,13 @@ const ChatHistory = () => {
   const userPhoto = useUserAvatar((state) => state.gallery_uuid);
   const nickname = useUserNickname((state) => state.nickname);
   return (
-    <>
+    <div className="h-screen">
       <ChatMobileNav />
-      <div className=" w-full h-full ">
-        <div className="p-4 space-y-4">
+      <div className="w-full h-full flex flex-col">
+        <div className="h-min p-4 space-y-4">
           <div
             className={cn(
-              "items-center space-x-2 lg:flex hidden pl-2",
+              "items-center h-min space-x-2 lg:flex hidden pl-2",
               i18n.language == "ar" && "space-x-reverse"
             )}
           >
@@ -32,11 +32,15 @@ const ChatHistory = () => {
             />
             <p className="font-semibold">{nickname}</p>
           </div>
-          <SearchInput />
+          <div className="h-min">
+            <SearchInput />
+          </div>
         </div>
-        <ChatList />
+        <div className="h-full">
+          <ChatList />
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 
