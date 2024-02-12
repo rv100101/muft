@@ -9,11 +9,16 @@ const PushNotifcationContent = () => {
   const [notificationEnabled, setNotificationEnabled] = useState(
     OneSignal.User.PushSubscription.optedIn
   );
-  useEffect(() => {
+
+  function pushSubscriptionChangeListener(event: any) {
     setNotificationEnabled(
-      OneSignal.User.PushSubscription.optedIn
+      event?.current?.optedIn
     )
+  }
+  useEffect(() => {
+    OneSignal.User.PushSubscription.addEventListener("change", pushSubscriptionChangeListener);
   }, []);
+
   return (
     <div className="flex flex-col border-b w-full justify-center text-[#727272] space-y-5 px-5 py-10">
       <p className="font-semibold text-lg">{t("settings.notifications")}</p>
