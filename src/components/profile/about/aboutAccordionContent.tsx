@@ -84,7 +84,7 @@ const AboutAccordionContent = () => {
       <div className="grid grid-cols-6 h-full grid-rows-2 sm:flex sm:flex-row justify-around text-sm lg:justify-start lg:w-1/3 w-full lg:block">
         <div
           className={cn(
-            "flex justify-center items-center sm:block",
+            "flex justify-center items-center sm:block hover:font-semibold",
             tabs[1]
               ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B] dark:bg-[#3b0117]"
               : "text-[#727272] py-2 px-2 my-2"
@@ -108,7 +108,7 @@ const AboutAccordionContent = () => {
         </div>
         <div
           className={cn(
-            "flex justify-center items-center sm:block",
+            "flex justify-center items-center sm:block hover:font-semibold",
             tabs[2]
               ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B] dark:bg-[#3b0117]"
               : "text-[#727272] py-2 px-2 my-2"
@@ -136,7 +136,7 @@ const AboutAccordionContent = () => {
         </div>
         <div
           className={cn(
-            "flex justify-center items-center sm:block",
+            "flex justify-center items-center sm:block hover:font-semibold",
             tabs[3]
               ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B] dark:bg-[#3b0117]"
               : "text-[#727272] py-2 px-2 my-2"
@@ -164,7 +164,7 @@ const AboutAccordionContent = () => {
         </div>
         <div
           className={cn(
-            "flex justify-center items-center sm:block",
+            "flex justify-center items-center sm:block hover:font-semibold",
             tabs[4]
               ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B] dark:bg-[#3b0117]"
               : "text-[#727272] py-2 px-2 my-2"
@@ -192,7 +192,7 @@ const AboutAccordionContent = () => {
         </div>
         <div
           className={cn(
-            "flex justify-center items-center sm:block",
+            "flex justify-center items-center sm:block hover:font-semibold",
             tabs[5]
               ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B] dark:bg-[#3b0117]"
               : "text-[#727272] py-2 px-2 my-2"
@@ -220,7 +220,7 @@ const AboutAccordionContent = () => {
         </div>
         <div
           className={cn(
-            "flex justify-center items-center sm:block",
+            "flex justify-center items-center sm:block hover:font-semibold",
             tabs[6]
               ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B] dark:bg-[#3b0117]"
               : "text-[#727272] py-2 px-2 my-2"
@@ -248,7 +248,7 @@ const AboutAccordionContent = () => {
         </div>
         <div
           className={cn(
-            "flex justify-center items-center sm:block",
+            "flex justify-center items-center sm:block hover:font-semibold",
             tabs[7]
               ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B] dark:bg-[#3b0117]"
               : "text-[#727272] py-2 px-2 my-2"
@@ -276,7 +276,7 @@ const AboutAccordionContent = () => {
         </div>
         <div
           className={cn(
-            "flex justify-center items-center sm:block",
+            "flex justify-center items-center sm:block hover:font-semibold",
             tabs[8]
               ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B] dark:bg-[#3b0117]"
               : "text-[#727272] py-2 px-2 my-2"
@@ -304,7 +304,7 @@ const AboutAccordionContent = () => {
         </div>
         <div
           className={cn(
-            "flex justify-center items-center sm:block",
+            "flex justify-center items-center sm:block hover:font-semibold",
             tabs[9]
               ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B] dark:bg-[#3b0117]"
               : "text-[#727272] py-2 px-2 my-2"
@@ -332,7 +332,7 @@ const AboutAccordionContent = () => {
         </div>
         <div
           className={cn(
-            "flex justify-center items-center sm:block",
+            "flex justify-center items-center sm:block hover:font-semibold",
             tabs[10]
               ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B] dark:bg-[#3b0117]"
               : "text-[#727272] py-2 px-2 my-2"
@@ -360,7 +360,7 @@ const AboutAccordionContent = () => {
         </div>
         <div
           className={cn(
-            "flex justify-center items-center sm:block",
+            "flex justify-center items-center sm:block hover:font-semibold",
             tabs[11]
               ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B] dark:bg-[#3b0117]"
               : "text-[#727272] py-2 px-2 my-2"
@@ -388,7 +388,7 @@ const AboutAccordionContent = () => {
         </div>
         <div
           className={cn(
-            "flex justify-center items-center sm:block",
+            "flex justify-center items-center sm:block hover:font-semibold",
             tabs[12]
               ? "rounded-md bg-[#FFDEEB]  py-2 px-2 my-2 text-[#FF599B] dark:bg-[#3b0117]"
               : "text-[#727272] py-2 px-2 my-2"
