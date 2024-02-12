@@ -636,7 +636,9 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                         </Button>
                         {/* more  */}
                         <Dialog>
-                          <DropdownMenu modal={false}>
+                          <DropdownMenu
+                            dir={i18n.language == 'ar' ? 'rtl' : 'ltr'}
+                            modal={false}>
                             <DropdownMenuTrigger className="rounded-md h-10 px-2 sm:px-4 py-1 sm:py-2 border border-input bg-background hover:bg-accent hover:text-accent-foreground hover:ring-2 transition-all ring-primary">
                               <span>
                                 <MoreHorizontal
@@ -645,7 +647,9 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                                 />
                               </span>
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent className="w-24">
+                            <DropdownMenuContent
+
+                              className="w-24">
                               <DropdownMenuGroup>
                                 <DropdownMenuItem
                                   onClick={() => {
