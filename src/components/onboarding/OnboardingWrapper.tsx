@@ -229,6 +229,16 @@ const OnboardingWrapper = () => {
     return true;
   }
 
+  const getGender: (value: string) => string = (value: string) => {
+    if (value == t("memberDetails.male") || value == "M") {
+      return "M";
+    } else if (value == t("memberDetails.female") || value == "F") {
+      return "F";
+    } else {
+      return "M";
+    }
+  };
+
   const handleSaveOnNext = async () => {
     const formData = getValues();
     let finalFormData = { ...formData };
@@ -274,9 +284,10 @@ const OnboardingWrapper = () => {
       data?.interest ?? [],
       "interest_name"
     );
+    const gender = getGender(formData.gender);
     finalFormData = {
       ...finalFormData,
-      gender: formData.gender[0],
+      gender: gender,
       language: finalLanguages,
       favoriteFood: finalFavoriteFood,
       pets: finalPets,
