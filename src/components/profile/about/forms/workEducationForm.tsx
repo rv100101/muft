@@ -182,13 +182,13 @@ const WorkEducationForm = () => {
                             >
                               {field.value
                                 ? occupations.find(
-                                    (occupation) =>
-                                      occupation.occupation_title ===
-                                      field.value
-                                  )?.occupation_title
+                                  (occupation) =>
+                                    occupation.occupation_title ===
+                                    field.value
+                                )?.occupation_title
                                 : i18n.language == "en"
-                                ? "Select occupation"
-                                : "يرجى الاختيار"}
+                                  ? "Select occupation"
+                                  : "يرجى الاختيار"}
                               <ArrowUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                             </Button>
                           </FormControl>
@@ -196,7 +196,7 @@ const WorkEducationForm = () => {
                       </FormControl>
                       <PopoverContent
                         dir={i18n.language == "ar" ? "rtl" : "ltr"}
-                        className="w-full p-0 max-h-64"
+                        className="p-0 max-h-64"
                       >
                         <Command className="w-full max-h-64">
                           <CommandInput
@@ -238,41 +238,6 @@ const WorkEducationForm = () => {
                         </Command>
                       </PopoverContent>
                     </Popover>
-                    {/* <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger
-                          dir={i18n.language == "ar" ? "rtl" : "ltr"}
-                        >
-                          <SelectValue
-                            placeholder={
-                              i18n.language == "en"
-                                ? "Select occupation"
-                                : "يرجى الاختيار"
-                            }
-                          />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent
-                        dir={i18n.language == "ar" ? "rtl" : "ltr"}
-                        className="min-h-min max-h-44 w-min"
-                      >
-                        {occupations &&
-                          [
-                            ...new Set(
-                              occupations.map((o) => o.occupation_title)
-                            ),
-                          ].map((title, index) => {
-                            return (
-                              <SelectItem value={title} key={index}>
-                                {title}
-                              </SelectItem>
-                            );
-                          })}
-                      </SelectContent>
-                    </Select> */}
                     <FormMessage />
                   </FormItem>
                 );

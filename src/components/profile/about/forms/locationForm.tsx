@@ -90,7 +90,7 @@ const LocationForm = () => {
               name="country"
               render={({ field }) => {
                 return (
-                  <FormItem>
+                  <FormItem className="w-full">
                     <FormLabel className="text-primary" htmlFor="country">
                       {t("memberDetails.country")}
                     </FormLabel>
@@ -99,7 +99,7 @@ const LocationForm = () => {
                       onOpenChange={(open) => setCountryPopoverOpen(open)}
                     >
                       <FormControl className="w-full">
-                        <PopoverTrigger className="w-full" asChild>
+                        <PopoverTrigger asChild>
                           <FormControl>
                             <Button
                               variant="outline"
@@ -111,12 +111,12 @@ const LocationForm = () => {
                             >
                               {field.value
                                 ? countries.find(
-                                    (country) =>
-                                      country.country_name === field.value
-                                  )?.country_name
+                                  (country) =>
+                                    country.country_name === field.value
+                                )?.country_name
                                 : i18n.language == "en"
-                                ? "Select country"
-                                : "يرجى الاختيار"}
+                                  ? "Select country"
+                                  : "يرجى الاختيار"}
                               <ArrowUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                             </Button>
                           </FormControl>
@@ -124,9 +124,9 @@ const LocationForm = () => {
                       </FormControl>
                       <PopoverContent
                         dir={i18n.language == "ar" ? "rtl" : "ltr"}
-                        className="w-full p-0 max-h-64"
+                        className="p-0 h-52"
                       >
-                        <Command className="w-full max-h-64">
+                        <Command>
                           <CommandInput
                             placeholder={
                               i18n.language == "en"
@@ -135,10 +135,9 @@ const LocationForm = () => {
                             }
                           />
                           <CommandEmpty>No framework found.</CommandEmpty>
-                          <CommandGroup className="w-full max-h-64 overflow-auto">
+                          <CommandGroup className="overflow-auto">
                             {countries.map((country, index: number) => (
                               <CommandItem
-                                className="w-full"
                                 value={country.country_name}
                                 key={index}
                                 onSelect={() => {
@@ -172,44 +171,6 @@ const LocationForm = () => {
                         </Command>
                       </PopoverContent>
                     </Popover>
-                    {/* <Select
-                      onValueChange={(e) => {
-                        field.onChange(e);
-                        const country = getCountryData(e);
-                        console.log(country?.country_code);
-                        setSelectedCountryCode(country!.country_code);
-                        setSelectedCountry(country!.country_code);
-                        setValue("region", "");
-                      }}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger
-                          dir={i18n.language == "ar" ? "rtl" : "ltr"}
-                        >
-                          <SelectValue
-                            placeholder={
-                              i18n.language == "en"
-                                ? "Select country"
-                                : "يرجى الاختيار"
-                            }
-                          />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent
-                        dir={i18n.language == "ar" ? "rtl" : "ltr"}
-                        className="h-44 w-min"
-                      >
-                        {countries &&
-                          countries.map((data: Country, index: number) => {
-                            return (
-                              <SelectItem value={data.country_name} key={index}>
-                                {data.country_name}
-                              </SelectItem>
-                            );
-                          })}
-                      </SelectContent>
-                    </Select> */}
                     <FormMessage />
                   </FormItem>
                 );
@@ -269,11 +230,11 @@ const LocationForm = () => {
                             >
                               {field.value
                                 ? states.find(
-                                    (state) => state.state_name === field.value
-                                  )?.state_name
+                                  (state) => state.state_name === field.value
+                                )?.state_name
                                 : i18n.language == "en"
-                                ? "Select state"
-                                : "يرجى الاختيار"}
+                                  ? "Select state"
+                                  : "يرجى الاختيار"}
                               <ArrowUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                             </Button>
                           </FormControl>
@@ -281,7 +242,7 @@ const LocationForm = () => {
                       </FormControl>
                       <PopoverContent
                         dir={i18n.language == "ar" ? "rtl" : "ltr"}
-                        className="w-full p-0 max-h-64"
+                        className="p-0 h-52"
                       >
                         <Command className="w-full max-h-64">
                           <CommandInput
@@ -322,38 +283,7 @@ const LocationForm = () => {
                         </Command>
                       </PopoverContent>
                     </Popover>
-                    {/* <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                      value={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger
-                          dir={i18n.language == "ar" ? "rtl" : "ltr"}
-                        >
-                          <SelectValue
-                            placeholder={
-                              i18n.language == "en"
-                                ? "Select state"
-                                : "يرجى الاختيار"
-                            }
-                          />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent
-                        dir={i18n.language == "ar" ? "rtl" : "ltr"}
-                        className="min-h-min max-h-44 w-min"
-                      >
-                        {states &&
-                          states.map((data: State, index: number) => {
-                            return (
-                              <SelectItem value={data.state_name} key={index}>
-                                {data.state_name}
-                              </SelectItem>
-                            );
-                          })}
-                      </SelectContent>
-                    </Select> */}
+
                     <FormMessage />
                   </FormItem>
                 );
