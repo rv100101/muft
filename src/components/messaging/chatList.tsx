@@ -97,10 +97,6 @@ const ChatList = () => {
       return conversation.recipient_id !== conversation.initiator_id;
     })
     .map((conversation, index) => {
-      console.log(conversation);
-
-      console.log(readList !== null, readList![conversation.conversation_uuid]);
-
       return (
         <li
           onClick={() => {

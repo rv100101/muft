@@ -140,22 +140,15 @@ const ChatInput = () => {
 
   const handleMessageSend = async () => {
     console.log(senderInfo, inputMessageValue);
-
     if (inputMessageValue.length !== 0) {
-      console.log("here");
-
-      // if (senderInfo === null) {
-      //
-      // }
-
       if (senderInfo) {
         appendNewMessage({
           ...senderInfo,
+          created_user: user!.member_id,
           conversation_text: inputMessageValue,
           created_date: "isLoading",
         });
       }
-
       setfinalInputMessage(inputMessageValue);
       setInputMessage("");
       mutateConversation.mutate();

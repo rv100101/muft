@@ -67,6 +67,8 @@ const ChatMessages = () => {
     }
   }, [conversationMessages, user]);
 
+  console.log(conversationMessages);
+
   const messages = conversationMessages?.map((message, index) => {
     const gray = message.created_user == user!.member_id;
     let date = moment(message.created_date, moment.ISO_8601, true).isValid()
@@ -100,7 +102,7 @@ const ChatMessages = () => {
           <p dir="ltr" className="text-sm">{message.conversation_text}</p>
         </div>
         {date === "isLoading" && (
-          <p className={cn("text-xs text-gray-500")}>Sending...</p>
+          <p dir="ltr" className={cn("text-xs text-gray-500")}>Sending...</p>
         )}
         {date === "failed" && (
           <p className={cn("text-xs text-red-500")}>Failed to send message</p>
