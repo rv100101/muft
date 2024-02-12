@@ -50,8 +50,6 @@ const ChatList = () => {
     },
   });
 
-  console.log(readList);
-
   const searchFilterValue = useSearchFilterStore((state) => state.value);
 
   // This is used for page view switching in mobile view
@@ -168,8 +166,9 @@ const ChatList = () => {
                 <p
                   className={cn(
                     !openedConversations.includes(conversation.listed_id) &&
-                    !conversation.is_read &&
-                    "font-semibold"
+                    readList !== null &&
+                    !readList[conversation.conversation_uuid] &&
+                    "font-semibold",
                   )}
                 >
                   {conversation.listed_nickname}
