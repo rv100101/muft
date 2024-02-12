@@ -394,7 +394,7 @@ const OnboardingWrapper = () => {
                     )}
                   />
                 }{" "}
-                <p className="text-sm">{t("menu.signOut")}</p>
+                <p className="text-sm hover:underline hover:text-[#FF599B]/90 transition-colors">{t("menu.signOut")}</p>
               </div>
             </DialogTrigger>
             <DialogContent className="w-72 sm:max-w-md opacity-100">
