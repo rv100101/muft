@@ -36,9 +36,7 @@ const ChatHistory = () => {
             <SearchInput />
           </div>
         </div>
-        <div className="h-full">
-          <ChatList />
-        </div>
+        <ChatList />
       </div>
     </div>
   );
