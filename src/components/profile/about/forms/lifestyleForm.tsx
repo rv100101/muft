@@ -57,7 +57,7 @@ const LifestyleForm = () => {
     >
       <div className="flex flex-row justify-between w-full px-5">
         {editMode || !user?.profile_completed ? (
-          <div className="space-y-1 hover:cursor-pointer w-full items-center">
+          <div className="space-y-1  w-full items-center">
             <FormField
               name="drinking"
               render={({ field }) => {
@@ -110,14 +110,14 @@ const LifestyleForm = () => {
         ) : (
           <div
             className={cn(
-              "flex flex-row space-x-2 hover:cursor-pointer",
+              "flex flex-row space-x-2 ",
               i18n.language == "ar" && "space-x-reverse"
             )}
           >
             <Beer
               color="#ff5c9d"
               size={30}
-              className="hover:cursor-pointer mt-2 mr-3"
+              className=" mt-2 mr-3"
             />
             <div className="flex flex-col justify-start space-y-1">
               <p className="font-bold text-base text-primary">
@@ -132,7 +132,7 @@ const LifestyleForm = () => {
       </div>
       <div className="flex flex-row justify-between w-full px-5">
         {editMode || !user?.profile_completed ? (
-          <div className="space-y-1 hover:cursor-pointer w-full items-center">
+          <div className="space-y-1  w-full items-center">
             <FormField
               name="smoking"
               render={({ field }) => {
@@ -185,14 +185,14 @@ const LifestyleForm = () => {
         ) : (
           <div
             className={cn(
-              "flex flex-row space-x-2 hover:cursor-pointer",
+              "flex flex-row space-x-2 ",
               i18n.language == "ar" && "space-x-reverse"
             )}
           >
             <Cigarette
               color="#ff5c9d"
               size={30}
-              className="hover:cursor-pointer mt-2 mr-3"
+              className=" mt-2 mr-3"
             />
             <div className="flex flex-col justify-start space-y-1">
               <p className="font-bold text-base text-primary">
@@ -207,7 +207,7 @@ const LifestyleForm = () => {
       </div>
       <div className="flex flex-row justify-between w-full px-5">
         {editMode || !user?.profile_completed ? (
-          <div className="space-y-1 hover:cursor-pointer w-full items-center">
+          <div className="space-y-1  w-full items-center">
             <FormField
               name="livingStatus"
               render={({ field }) => {
@@ -260,14 +260,14 @@ const LifestyleForm = () => {
         ) : (
           <div
             className={cn(
-              "flex flex-row space-x-2 hover:cursor-pointer",
+              "flex flex-row space-x-2 ",
               i18n.language == "ar" && "space-x-reverse"
             )}
           >
             <Home
               color="#ff5c9d"
               size={30}
-              className="hover:cursor-pointer mt-2 mr-3"
+              className=" mt-2 mr-3"
             />
             <div className="flex flex-col justify-start space-y-1">
               <p className="font-bold text-base text-primary">
@@ -282,7 +282,7 @@ const LifestyleForm = () => {
       </div>
       <div className="flex flex-row justify-between w-full px-5">
         {editMode || !user?.profile_completed ? (
-          <div className="space-y-1 hover:cursor-pointer w-full items-center">
+          <div className="space-y-1  w-full items-center">
             <FormField
               name="car"
               render={({ field }) => {
@@ -335,14 +335,14 @@ const LifestyleForm = () => {
         ) : (
           <div
             className={cn(
-              "flex flex-row space-x-2 hover:cursor-pointer",
+              "flex flex-row space-x-2 ",
               i18n.language == "ar" && "space-x-reverse"
             )}
           >
             <CarTaxiFront
               color="#ff5c9d"
               size={30}
-              className="hover:cursor-pointer mt-2 mr-3"
+              className=" mt-2 mr-3"
             />
             <div className="flex flex-col justify-start space-y-1">
               <p className="font-bold text-base text-primary">

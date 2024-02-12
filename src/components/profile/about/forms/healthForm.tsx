@@ -48,7 +48,7 @@ const HealthForm = () => {
     <div className="flex flex-col w-full space-y-4">
       <div className="flex flex-row justify-between w-full px-5">
         {editMode || !user?.profile_completed ? (
-          <div className="space-y-1 hover:cursor-pointer w-full items-center">
+          <div className="space-y-1  w-full items-center">
             <FormField
               name="workout"
               render={({ field }) => {
@@ -93,14 +93,14 @@ const HealthForm = () => {
         ) : (
           <div
             className={cn(
-              "flex flex-row space-x-2 hover:cursor-pointer",
+              "flex flex-row space-x-2 ",
               i18n.language == "ar" && "space-x-reverse"
             )}
           >
             <Dumbbell
               color="#ff5c9d"
               size={30}
-              className="hover:cursor-pointer mt-2 mr-3"
+              className=" mt-2 mr-3"
             />
             <div className="flex flex-col justify-start space-y-1">
               <p className="font-bold text-base text-primary">
@@ -116,7 +116,7 @@ const HealthForm = () => {
       {/* add new */}
       <div className="flex flex-row justify-between w-full px-5">
         {editMode || !user?.profile_completed ? (
-          <div className="space-y-1 hover:cursor-pointer w-full items-center">
+          <div className="space-y-1  w-full items-center">
             <FormField
               name="disability"
               render={({ field }) => {
@@ -165,14 +165,14 @@ const HealthForm = () => {
         ) : (
           <div
             className={cn(
-              "flex flex-row space-x-2 hover:cursor-pointer",
+              "flex flex-row space-x-2 ",
               i18n.language == "ar" && "space-x-reverse"
             )}
           >
             <Accessibility
               color="#ff5c9d"
               size={30}
-              className="hover:cursor-pointer mt-2 mr-3"
+              className=" mt-2 mr-3"
             />
             <div className="flex flex-col justify-start space-y-1">
               <p className="font-bold text-base text-primary">

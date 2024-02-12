@@ -31,20 +31,20 @@ const LanguagesForm = () => {
     >
       <div className="flex h-full flex-row justify-between w-full px-5">
         {editMode || !user?.profile_completed ? (
-          <div className="space-y-1 h-full hover:cursor-pointer w-full items-center">
+          <div className="space-y-1 h-full  w-full items-center">
             <LanguageField />
           </div>
         ) : (
           <div
             className={cn(
-              "flex flex-row space-x-2 hover:cursor-pointer",
+              "flex flex-row space-x-2 ",
               i18n.language == "ar" && "space-x-reverse"
             )}
           >
             <LanguagesIcon
               color="#ff569a"
               size={30}
-              className="hover:cursor-pointer mt-2 mr-3"
+              className=" mt-2 mr-3"
             />
             <div className="flex  flex-col justify-start space-y-1">
               <p

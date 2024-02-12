@@ -53,7 +53,7 @@ const AppearanceForm = () => {
     >
       <div className="flex flex-row justify-between w-full px-5">
         {editMode || !user?.profile_completed ? (
-          <div className="space-y-1 hover:cursor-pointer w-full items-center">
+          <div className="space-y-1  w-full items-center">
             <FormField
               name="eyes"
               render={({ field }) => {
@@ -100,14 +100,14 @@ const AppearanceForm = () => {
         ) : (
           <div
             className={cn(
-              "flex flex-row space-x-2 hover:cursor-pointer",
+              "flex flex-row space-x-2 ",
               i18n.language == "ar" && "space-x-reverse"
             )}
           >
             <EyeIcon
               color="#ff5c9d"
               size={30}
-              className="hover:cursor-pointer mt-2 mr-3"
+              className=" mt-2 mr-3"
             />
             <div className="flex flex-col justify-start space-y-1">
               <p className="font-bold text-base text-primary">
@@ -122,7 +122,7 @@ const AppearanceForm = () => {
       </div>
       <div className="flex flex-row justify-between w-full px-5">
         {editMode || !user?.profile_completed ? (
-          <div className="space-y-1 hover:cursor-pointer w-full items-center">
+          <div className="space-y-1  w-full items-center">
             <FormField
               name="hair"
               render={({ field }) => {
@@ -169,14 +169,14 @@ const AppearanceForm = () => {
         ) : (
           <div
             className={cn(
-              "flex flex-row space-x-2 hover:cursor-pointer",
+              "flex flex-row space-x-2 ",
               i18n.language == "ar" && "space-x-reverse"
             )}
           >
             <Scissors
               color="#ff5c9d"
               size={30}
-              className="hover:cursor-pointer mt-2 mr-3"
+              className=" mt-2 mr-3"
             />
             <div className="flex flex-col justify-start space-y-1">
               <p className="font-bold text-base text-primary">
@@ -189,10 +189,9 @@ const AppearanceForm = () => {
           </div>
         )}
       </div>
-
       <div className="flex flex-row justify-between w-full px-5">
         {editMode || !user?.profile_completed ? (
-          <div className="space-y-1 hover:cursor-pointer w-full items-center">
+          <div className="space-y-1  w-full items-center">
             <FormField
               name="height"
               render={({ field }) => {
@@ -227,14 +226,14 @@ const AppearanceForm = () => {
         ) : (
           <div
             className={cn(
-              "flex flex-row space-x-2 hover:cursor-pointer",
+              "flex flex-row space-x-2 ",
               i18n.language == "ar" && "space-x-reverse"
             )}
           >
             <Ruler
               color="#ff5c9d"
               size={30}
-              className="hover:cursor-pointer mt-2 mr-3"
+              className=" mt-2 mr-3"
             />
             <div className="flex flex-col justify-start space-y-1">
               <p className="font-bold text-base text-primary">
@@ -249,7 +248,7 @@ const AppearanceForm = () => {
       </div>
       <div className="flex flex-row justify-between w-full px-5">
         {editMode || !user?.profile_completed ? (
-          <div className="space-y-1 hover:cursor-pointer w-full items-center">
+          <div className="space-y-1  w-full items-center">
             <FormField
               name="weight"
               render={({ field }) => {
@@ -283,14 +282,14 @@ const AppearanceForm = () => {
         ) : (
           <div
             className={cn(
-              "flex flex-row space-x-2 hover:cursor-pointer",
+              "flex flex-row space-x-2 ",
               i18n.language == "ar" && "space-x-reverse"
             )}
           >
             <Dumbbell
               color="#ff5c9d"
               size={30}
-              className="hover:cursor-pointer mt-2 mr-3"
+              className=" mt-2 mr-3"
             />
             <div className="flex flex-col justify-start space-y-1">
               <p className="font-bold text-base text-primary">
@@ -306,7 +305,7 @@ const AppearanceForm = () => {
       {/* add new */}
       <div className="flex flex-row justify-between w-full px-5">
         {editMode || !user?.profile_completed ? (
-          <div className="space-y-1 hover:cursor-pointer w-full items-center">
+          <div className="space-y-1  w-full items-center">
             <FormField
               name="bodyType"
               render={({ field }) => {
@@ -353,14 +352,14 @@ const AppearanceForm = () => {
         ) : (
           <div
             className={cn(
-              "flex flex-row space-x-2 hover:cursor-pointer",
+              "flex flex-row space-x-2 ",
               i18n.language == "ar" && "space-x-reverse"
             )}
           >
             <User2
               color="#ff5c9d"
               size={30}
-              className="hover:cursor-pointer mt-2 mr-3"
+              className=" mt-2 mr-3"
             />
             <div className="flex flex-col justify-start space-y-1">
               <p className="font-bold text-base text-primary">
@@ -375,7 +374,7 @@ const AppearanceForm = () => {
       </div>
       <div className="flex flex-row justify-between w-full px-5">
         {editMode || !user?.profile_completed ? (
-          <div className="space-y-1 hover:cursor-pointer w-full items-center">
+          <div className="space-y-1  w-full items-center">
             <FormField
               name="bodyArt"
               render={({ field }) => {
@@ -423,14 +422,14 @@ const AppearanceForm = () => {
         ) : (
           <div
             className={cn(
-              "flex flex-row space-x-2 hover:cursor-pointer",
+              "flex flex-row space-x-2 ",
               i18n.language == "ar" && "space-x-reverse"
             )}
           >
             <Brush
               color="#ff5c9d"
               size={30}
-              className="hover:cursor-pointer mt-2 mr-3"
+              className=" mt-2 mr-3"
             />
             <div className="flex flex-col justify-start space-y-1">
               <p className="font-bold text-base text-primary">

@@ -71,7 +71,7 @@ const WorkEducationForm = () => {
     <div className="flex flex-col w-full space-y-4">
       <div className="flex flex-row justify-between w-full px-5">
         {editMode || !user?.profile_completed ? (
-          <div className="space-y-1 hover:cursor-pointer w-full items-center">
+          <div className="space-y-1  w-full items-center">
             <FormField
               name="employmentStatus"
               render={({ field }) => {
@@ -129,14 +129,14 @@ const WorkEducationForm = () => {
         ) : (
           <div
             className={cn(
-              "flex flex-row space-x-2 hover:cursor-pointer",
+              "flex flex-row space-x-2 ",
               i18n.language == "ar" && "space-x-reverse"
             )}
           >
             <Briefcase
               color="#ff5c9d"
               size={30}
-              className="hover:cursor-pointer mt-2 mr-3"
+              className=" mt-2 mr-3"
             />
             <div className="flex flex-col justify-start space-y-1">
               <p className="font-bold text-base text-primary">
@@ -153,7 +153,7 @@ const WorkEducationForm = () => {
       </div>
       <div className="flex flex-row justify-between w-full px-5">
         {editMode || !user?.profile_completed ? (
-          <div className="space-y-1 hover:cursor-pointer w-full items-center">
+          <div className="space-y-1  w-full items-center">
             <FormField
               name="occupationTitle"
               render={({ field }) => {
@@ -248,14 +248,14 @@ const WorkEducationForm = () => {
         ) : (
           <div
             className={cn(
-              "flex flex-row space-x-2 hover:cursor-pointer",
+              "flex flex-row space-x-2 ",
               i18n.language == "ar" && "space-x-reverse"
             )}
           >
             <User
               color="#ff5c9d"
               size={30}
-              className="hover:cursor-pointer mt-2 mr-3"
+              className=" mt-2 mr-3"
             />
             <div className="flex flex-col justify-start space-y-1">
               <p className="font-bold text-base text-primary">
@@ -273,7 +273,7 @@ const WorkEducationForm = () => {
 
       <div className="flex flex-row justify-between w-full px-5">
         {editMode || !user?.profile_completed ? (
-          <div className="space-y-1 hover:cursor-pointer w-full items-center">
+          <div className="space-y-1  w-full items-center">
             <FormField
               name="income"
               render={({ field }) => {
@@ -324,14 +324,14 @@ const WorkEducationForm = () => {
         ) : (
           <div
             className={cn(
-              "flex flex-row space-x-2 hover:cursor-pointer",
+              "flex flex-row space-x-2 ",
               i18n.language == "ar" && "space-x-reverse"
             )}
           >
             <CircleDollarSign
               color="#ff5c9d"
               size={30}
-              className="hover:cursor-pointer mt-2 mr-3"
+              className=" mt-2 mr-3"
             />
             <div className="flex flex-col justify-start space-y-1">
               <p className="font-bold text-base text-primary">
