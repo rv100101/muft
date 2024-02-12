@@ -21,7 +21,11 @@ import PreferredLanguageDialog from "./components/preferredLanguageDialog";
 import { usePreferredLanguageStore } from "./zustand/auth/preferred_language";
 import { useTranslation } from "react-i18next";
 import { is6Pm } from "./lib/isPm";
+import runOneSignal from "./lib/oneSignal";
 function App() {
+  useEffect(() => {
+    runOneSignal();
+  }, [])
   const [, i18n] = useTranslation();
   const [location] = useLocation();
   const user = useUserStore((state) => state.user);
