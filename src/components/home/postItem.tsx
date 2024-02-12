@@ -96,7 +96,9 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
               className="rounded-t-xl lg:w-[460px] w-[350px] h-[554px] xl:h-[454px] xl:w-[400px] object-cover"
             /> */}
             <div className="absolute bottom-0 w-full">
-              <div dir="ltr" className="flex flex-row w-full justify-between ">
+              <div
+                dir={i18n.language == "ar" ? "rtl" : "ltr"}
+                className="flex flex-row w-full justify-between ">
                 <div
                   onClick={() => handlePostItemClick()}
                   className="flex flex-col p-8 hover:cursor-pointer"
@@ -176,7 +178,7 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
                               !favorites[memberData.member_id.toString()];
                             setFavorites(updatedFavorites);
                           }}
-                          className="mt-1 hover:cursor-pointer transition duration-300 ease-in-out mr-4"
+                          className={cn("mt-1 hover:cursor-pointer transition duration-300 ease-in-out", i18n.language != 'ar' ? "mr-4" : "ml-4")}
                         />
                       </TooltipTrigger>
                       <TooltipContent className="mr-8">
@@ -217,11 +219,10 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
                 className="mt-1 hover:cursor-pointer"
               />
               <p
-                className={`text-[#FF599B] mt-1 ${
-                  memberData.marital_status === "Prefer not to say"
-                    ? "text-sm"
-                    : ""
-                }`}
+                className={`text-[#FF599B] mt-1 ${memberData.marital_status === "Prefer not to say"
+                  ? "text-sm"
+                  : ""
+                  }`}
               >
                 {memberData.marital_status}
               </p>
