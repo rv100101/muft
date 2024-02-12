@@ -52,8 +52,12 @@ const HomepageSearchInput = () => {
 
   return (
     <div className="lg:w-[330px] flex flex-col justify-center items-center">
-      <div className={cn("hover:cursor-pointer w-full border-2 p-2 space-x-2 rounded-xl flex items-center px-5 mx-2",
-        i18n.language == 'ar' && 'space-x-reverse')}>
+      <div
+        className={cn(
+          "hover:cursor-pointer w-full border-2 p-2 space-x-2 rounded-xl flex items-center px-5 mx-2",
+          i18n.language == "ar" && "space-x-reverse"
+        )}
+      >
         <input
           value={searchValue}
           onChange={(e) => {
@@ -65,7 +69,7 @@ const HomepageSearchInput = () => {
               setSearchValue("");
             }, 200);
           }}
-          className="h-4 border-0 focus:outline-0 w-full placeholder-[#E0E0E0] text-sm dark:text-white dark:bg-[#020817]"
+          className="h-4 border-0 focus:outline-none w-full placeholder-[#E0E0E0] text-sm dark:text-white dark:bg-[#020817]"
           placeholder={t("search.search")}
         />
         <SearchIcon />
