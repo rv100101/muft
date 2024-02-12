@@ -60,7 +60,7 @@ const ChatMessages = () => {
       conversationMessages.length !== 0 &&
       conversationMessages![conversationMessages!.length - 1] &&
       conversationMessages![conversationMessages!.length - 1].created_user !==
-        user!.member_id
+      user!.member_id
     ) {
       console.log("running chist");
       conversationHistory();
@@ -106,7 +106,7 @@ const ChatMessages = () => {
           <p className={cn("text-xs text-red-500")}>Failed to send message</p>
         )}
         {date !== "isLoading" && date !== "failed" && (
-          <p className={cn("text-xs text-gray-500")}>{date}</p>
+          <p dir="ltr" className={cn("text-xs text-gray-500")}>{date}</p>
         )}
       </div>
     );
