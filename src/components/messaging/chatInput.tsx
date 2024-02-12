@@ -170,57 +170,58 @@ const ChatInput = () => {
           You must Reactivate your account To continue chatting with
           <span className="ml-1 text-primary">{selectedMemberName}.</span>
         </p>
-      ) : (
-        <>
-          <div className="h-max w-full flex items-end justify-start sm:mb-4 mt-1">
-            <div className="flex flex-col items-center justify-center mx-2">
-              {currentSelectedConversation ? (
-                <Popover>
-                  <PopoverTrigger disabled={!currentSelectedConversation}>
-                    <SmileIcon className="text-primary" />
-                  </PopoverTrigger>
-                  <PopoverContent>
-                    <EmojiPicker
-                      onEmojiClick={(emoji: EmojiClickData) => {
-                        setInputMessage(inputMessageValue + emoji.emoji);
-                      }}
-                      height={300}
-                      width={"100%"}
-                    />
-                  </PopoverContent>
-                </Popover>
-              ) : (
-                <SmileIcon className="text-gray-500" />
-              )}
-            </div>
-
-            <textarea
-              className="focus:outline-none p-2 w-full border-2 rounded-lg max-h-full overflow-y-auto caret-primary resize-none dark:text-white dark:bg-[#020817]"
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  handleMessageSend();
-                }
-              }}
-              disabled={!currentSelectedConversation}
-              data-emojiable={true}
-              value={inputMessageValue}
-              name="text"
-              rows={3}
-              onChange={(e) => {
-                setInputMessage(e.target.value);
-              }}
-              placeholder={t("messages.typeAMessage")}
-            />
-          </div>
-          <Button
-            disabled={!currentSelectedConversation}
-            onClick={handleMessageSend}
-            className="rounded-full h-max w-max hover:bg-transparen ml-4 px-2 mr-4 mb-4"
-          >
-            <SendHorizonalIcon height={16} />
-          </Button>
-        </>
-      )}
+      ) :
+        !currentSelectedConversation ? <></> :
+          (
+            <>
+              <div className="h-max w-full flex items-end justify-start sm:mb-4 mt-1">
+                <div className="flex flex-col items-center justify-center mx-2">
+                  {currentSelectedConversation ? (
+                    <Popover>
+                      <PopoverTrigger disabled={!currentSelectedConversation}>
+                        <SmileIcon className="text-primary" />
+                      </PopoverTrigger>
+                      <PopoverContent>
+                        <EmojiPicker
+                          onEmojiClick={(emoji: EmojiClickData) => {
+                            setInputMessage(inputMessageValue + emoji.emoji);
+                          }}
+                          height={300}
+                          width={"100%"}
+                        />
+                      </PopoverContent>
+                    </Popover>
+                  ) : (
+                    <SmileIcon className="text-gray-500" />
+                  )}
+                </div>
+                <textarea
+                  className="focus:outline-none p-2 w-full border-2 rounded-lg max-h-full overflow-y-auto caret-primary resize-none dark:text-white dark:bg-[#020817]"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      handleMessageSend();
+                    }
+                  }}
+                  disabled={!currentSelectedConversation}
+                  data-emojiable={true}
+                  value={inputMessageValue}
+                  name="text"
+                  rows={3}
+                  onChange={(e) => {
+                    setInputMessage(e.target.value);
+                  }}
+                  placeholder={t("messages.typeAMessage")}
+                />
+              </div>
+              <Button
+                disabled={!currentSelectedConversation}
+                onClick={handleMessageSend}
+                className="rounded-full h-max w-max hover:bg-transparen ml-4 px-2 mr-4 mb-4"
+              >
+                <SendHorizonalIcon height={16} />
+              </Button>
+            </>
+          )}
     </div>
   );
 };
