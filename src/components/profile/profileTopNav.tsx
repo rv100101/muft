@@ -164,11 +164,11 @@ const ProfileTopNav = () => {
                         className={cn(
                           "sm:justify-start items-center w-full",
                           i18n.language == "ar" &&
-                            "w-full justify-end items-end"
+                          "w-full justify-end items-end"
                         )}
                       >
                         <Button
-                          className="hover:bg-primary"
+                          className="hover:bg-[#FF599B]/90"
                           onClick={() => {
                             queryClient.clear();
                             signOut();
@@ -179,7 +179,7 @@ const ProfileTopNav = () => {
                         </Button>
                         <DialogClose>
                           <Button
-                            className="text-white hover:bg-secondary"
+                            className="text-white hover:bg-[#1b2950]/90"
                             type="button"
                             variant="secondary"
                           >

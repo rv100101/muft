@@ -59,8 +59,8 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
             location.startsWith("/profile") && link.path.startsWith("/profile")
               ? "font-semibold bg-accent"
               : location.endsWith(link.path)
-              ? "font-semibold bg-accent"
-              : "font-normal",
+                ? "font-semibold bg-accent"
+                : "font-normal",
             i18n.language == "ar" && "space-x-reverse"
           )}
           href={
@@ -84,11 +84,11 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
             <link.icon
               fill={
                 location.startsWith("/profile") &&
-                link.path.startsWith("/profile")
+                  link.path.startsWith("/profile")
                   ? "black"
                   : location.endsWith(link.path)
-                  ? "black"
-                  : "white"
+                    ? "black"
+                    : "white"
               }
               stroke={
                 link.name == "Home" && location.endsWith(link.path)
@@ -238,7 +238,7 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
                 </DialogHeader>
                 <DialogFooter className="sm:justify-start flex flex-col space-y-2 sm:space-y-0 pt-5">
                   <Button
-                    className="hover:bg-primary"
+                    className="hover:bg-[#FF599B]/90"
                     onClick={() => {
                       queryClient.invalidateQueries();
                       signOut();
@@ -249,7 +249,7 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
                   </Button>
                   <DialogClose asChild>
                     <Button
-                      className="text-white hover:bg-secondary "
+                      className="text-white hover:bg-[#1b2950]/90"
                       type="button"
                       variant="secondary"
                     >

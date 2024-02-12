@@ -88,9 +88,8 @@ const SideBar = () => {
       )}
     >
       <div
-        className={`h-full flex flex-col justify-between ${
-          orientation.angle === 90 ? "overflow-scroll" : ""
-        }`}
+        className={`h-full flex flex-col justify-between ${orientation.angle === 90 ? "overflow-scroll" : ""
+          }`}
       >
         <div className="flex flex-col w-[220px]">
           <Link href="/">
@@ -161,7 +160,7 @@ const SideBar = () => {
                 )}
               >
                 <Button
-                  className="hover:bg-primary"
+                  className="hover:bg-[#FF599B]/90"
                   onClick={() => {
                     queryClient.clear();
                     signOut();
@@ -174,7 +173,7 @@ const SideBar = () => {
                 </Button>
                 <DialogClose>
                   <Button
-                    className="text-white hover:bg-secondary"
+                    className="text-white hover:bg-[#1b2950]/90"
                     type="button"
                     variant="secondary"
                   >

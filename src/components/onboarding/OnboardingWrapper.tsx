@@ -394,7 +394,7 @@ const OnboardingWrapper = () => {
                     )}
                   />
                 }{" "}
-                <p className="text-sm hover:underline hover:text-[#FF599B]/90 transition-colors">{t("menu.signOut")}</p>
+                <p className="text-sm hover:underline hover:text-[#1b2950]/90 transition-colors">{t("menu.signOut")}</p>
               </div>
             </DialogTrigger>
             <DialogContent className="w-72 sm:max-w-md opacity-100">
@@ -403,7 +403,7 @@ const OnboardingWrapper = () => {
               </DialogHeader>
               <DialogFooter className="sm:justify-start flex flex-col space-y-2 sm:space-y-0 pt-5">
                 <Button
-                  className="hover:bg-primary"
+                  className="hover:bg-[#FF599B]/90"
                   onClick={() => {
                     queryClient.invalidateQueries();
                     signOut();
@@ -413,7 +413,7 @@ const OnboardingWrapper = () => {
                 </Button>
                 <DialogClose asChild>
                   <Button
-                    className="text-white hover:bg-secondary "
+                    className="text-white hover:bg-[#1b2950]/90"
                     type="button"
                     variant="secondary"
                   >
