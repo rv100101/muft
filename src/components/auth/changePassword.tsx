@@ -17,6 +17,9 @@ const ChangePassword = () => {
   const [t, i18n] = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const changePasswordResetState = usePasswordResetState(
+    (state) => state.changeState
+  );
   const email = usePasswordResetState((state) => state.email);
   const setIsModalOpen = usePasswordResetState((state) => state.setIsModalOpen);
   const formik = useFormik({
@@ -47,6 +50,7 @@ const ChangePassword = () => {
           description: t("alerts.passwordSuccessfullyChanged"),
           variant: "success",
         });
+        changePasswordResetState("SEND");
       } catch (error) {
         toast({
           title: t("alerts.somethingWentWrong"),
@@ -100,7 +104,7 @@ const ChangePassword = () => {
             </button>
           </div>
           {formik.touched.password && formik.errors.password ? (
-            <div className="error text-red-500 text-xs ml-5 text-sm pt-2">
+            <div className="error text-red-500 ml-5 text-sm pt-2">
               {formik.errors.password}
             </div>
           ) : null}
