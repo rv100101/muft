@@ -84,14 +84,15 @@ const ChatList = () => {
   //       const dateB: Date = new Date(b.created_date);
   //       return dateA.getTime() - dateB.getTime();
   //     })
-
+  console.log(data);
   const conversations = data
-    ?.filter((conversation) =>
-      searchFilterValue.length === 0
+    ?.filter((conversation) => {
+      return searchFilterValue.length === 0
         ? true
-        : conversation.recipient_nickname
+        : conversation.listed_nickname
           .toLowerCase()
           .includes(searchFilterValue.toLowerCase())
+    }
     )
     .filter((conversation) => {
       return conversation.recipient_id !== conversation.initiator_id;
