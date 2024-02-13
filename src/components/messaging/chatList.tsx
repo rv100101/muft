@@ -113,13 +113,13 @@ const ChatList = () => {
           <Button
             variant={"ghost"}
             className={cn(
-              "hover:bg-slate-50 w-full h-max items-center text-left dark:bg-slate-700 md:rounded-lg",
+              "hover:bg-slate-50 w-full dark:hover:bg-gray-600 h-max items-center text-left dark:bg-transparent md:rounded-lg",
               // !openedConversations.includes(conversation.listed_id) &&
               readList !== null &&
               !readList[conversation.conversation_uuid] &&
-              "bg-accent",
+              "dark:bg-gray-700 bg-accent",
               selectedHistoryMemberId === conversation.listed_id &&
-              "bg-slate-50"
+              "bg-slate-50 dark:bg-gray-900"
             )}
             onClick={() => {
               if (!matches) {
