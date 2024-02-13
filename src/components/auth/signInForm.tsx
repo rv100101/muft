@@ -199,11 +199,10 @@ const SignInForm = () => {
             Email
           </label> */}
           <div
-            className={`flex items-center flex-row border rounded-full h-max py-1 px-5 ${
-              formik.touched.email && formik.errors.email
-                ? "border-rose-500 p-0"
-                : ""
-            }`}
+            className={`flex items-center flex-row border rounded-full h-max py-1 px-5 ${formik.touched.email && formik.errors.email
+              ? "border-rose-500 p-0"
+              : ""
+              }`}
           >
             <MailIcon color="#98A2B3" size={20} className="mt-1" />
             <Input
@@ -222,11 +221,10 @@ const SignInForm = () => {
             <InfoIcon
               color="#D92D20"
               size={30}
-              className={`mt-1 ${
-                formik.touched.email && formik.errors.email
-                  ? "visible"
-                  : "hidden"
-              }`}
+              className={`mt-1 ${formik.touched.email && formik.errors.email
+                ? "visible"
+                : "hidden"
+                }`}
             />
           </div>
           {formik.touched.email && formik.errors.email ? (
@@ -244,11 +242,10 @@ const SignInForm = () => {
             Password
           </label> */}
           <div
-            className={`flex h-max flex-row border items-center rounded-full py-1 px-5 ${
-              formik.touched.password && formik.errors.password
-                ? "border-rose-500"
-                : ""
-            }`}
+            className={`flex h-max flex-row border items-center rounded-full py-1 px-5 ${formik.touched.password && formik.errors.password
+              ? "border-rose-500"
+              : ""
+              }`}
           >
             <LockIcon color="#98A2B3" size={20} className="mt-1" />
 
@@ -264,11 +261,10 @@ const SignInForm = () => {
               onBlur={formik.handleBlur}
             />
             <button
-              className={`mt-1 ${
-                formik.touched.password &&
+              className={`mt-1 ${formik.touched.password &&
                 formik.errors.password &&
                 "ml-2 text-[#D92D20]"
-              }`}
+                }`}
               onClick={() => setShowPassword((prev) => !prev)}
               type="button"
             >
@@ -316,7 +312,7 @@ const SignInForm = () => {
               onClick={() => {
                 setIsModalOpen(true);
               }}
-              className="float-right underline text-[#4635E2] hover:text-[#FF8AB3] text-xs mt-2"
+              className="dark:text-white dark:hover:text-white/80 float-right underline text-[#4635E2] hover:text-[#FF8AB3] text-xs mt-2"
             >
               {t("signIn.forgotPassword")}
             </DialogTrigger>
@@ -336,7 +332,7 @@ const SignInForm = () => {
         <Link
           href="/auth/signup"
           onClick={scrollToTop}
-          className="text-xs underline text-[#4635E2] mt-4 hover:text-[#FF8AB3]"
+          className="dark:text-white dark:hover:text-white/80 text-xs underline text-[#4635E2] mt-4 hover:text-[#FF8AB3]"
         >
           {t("signIn.signUpHere")}
         </Link>

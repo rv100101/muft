@@ -185,11 +185,10 @@ const SignUpPage = () => {
                 First name
               </label> */}
               <div
-                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${
-                  formik.touched.first_name && formik.errors.first_name
+                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${formik.touched.first_name && formik.errors.first_name
                     ? "border-rose-500"
                     : ""
-                }`}
+                  }`}
               >
                 <UserIcon color="#98A2B3" size={20} className="mt-1" />
                 <Input
@@ -207,11 +206,10 @@ const SignUpPage = () => {
                 <InfoIcon
                   color="#D92D20"
                   size={20}
-                  className={`mt-1 ${
-                    formik.touched.first_name && formik.errors.first_name
+                  className={`mt-1 ${formik.touched.first_name && formik.errors.first_name
                       ? "visible"
                       : "hidden"
-                  }`}
+                    }`}
                 />
               </div>
               {formik.touched.first_name && formik.errors.first_name ? (
@@ -234,11 +232,10 @@ const SignUpPage = () => {
               </label> */}
 
               <div
-                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${
-                  formik.touched.last_name && formik.errors.last_name
+                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${formik.touched.last_name && formik.errors.last_name
                     ? "border-rose-500"
                     : ""
-                }`}
+                  }`}
               >
                 <UserIcon color="#98A2B3" size={20} className="mt-1" />
                 <Input
@@ -257,11 +254,10 @@ const SignUpPage = () => {
                 <InfoIcon
                   color="#D92D20"
                   size={20}
-                  className={`mt-1 ${
-                    formik.touched.last_name && formik.errors.last_name
+                  className={`mt-1 ${formik.touched.last_name && formik.errors.last_name
                       ? "visible"
                       : "hidden"
-                  }`}
+                    }`}
                 />
               </div>
               {formik.touched.last_name && formik.errors.last_name ? (
@@ -282,11 +278,10 @@ const SignUpPage = () => {
                 Email
               </label> */}
               <div
-                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${
-                  formik.touched.email && formik.errors.email
+                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${formik.touched.email && formik.errors.email
                     ? "border-rose-500"
                     : ""
-                }`}
+                  }`}
               >
                 <MailIcon color="#98A2B3" size={20} className="mt-1" />
                 <Input
@@ -305,11 +300,10 @@ const SignUpPage = () => {
                 <InfoIcon
                   color="#D92D20"
                   size={20}
-                  className={`mt-1 ${
-                    formik.touched.email && formik.errors.email
+                  className={`mt-1 ${formik.touched.email && formik.errors.email
                       ? "visible"
                       : "hidden"
-                  }`}
+                    }`}
                 />
               </div>
               {formik.touched.email && formik.errors.email ? (
@@ -331,11 +325,10 @@ const SignUpPage = () => {
                 Password
               </label> */}
               <div
-                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${
-                  formik.touched.password && formik.errors.password
+                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${formik.touched.password && formik.errors.password
                     ? "border-rose-500"
                     : ""
-                }`}
+                  }`}
               >
                 <LockIcon color="#98A2B3" size={20} className="mt-1" />
                 <Input
@@ -350,11 +343,10 @@ const SignUpPage = () => {
                   onBlur={formik.handleBlur}
                 />
                 <button
-                  className={`mt-1 ${
-                    formik.touched.password &&
+                  className={`mt-1 ${formik.touched.password &&
                     formik.errors.password &&
                     "ml-2 text-[#D92D20]"
-                  }`}
+                    }`}
                   onClick={() => setShowPassword((prev) => !prev)}
                   type="button"
                 >
@@ -380,11 +372,10 @@ const SignUpPage = () => {
                 <SelectTrigger
                   name="lang"
                   onBlur={formik.handleBlur}
-                  className={` rounded-full ${
-                    formik.touched.lang && formik.errors.lang
+                  className={` rounded-full ${formik.touched.lang && formik.errors.lang
                       ? "border-rose-500"
                       : ""
-                  }
+                    }
                 `}
                 >
                   <SelectValue placeholder={t("general.preferredLanguage")} />
@@ -424,7 +415,7 @@ const SignUpPage = () => {
           <Link
             onClick={scrollToTop}
             href="/auth/signin"
-            className="mt-2 underline hover:text-[#4635E2]/80 text-[#4635E2] text-sm"
+            className="mt-2 underline hover:text-[#4635E2]/80 text-[#4635E2] text-sm dark:text-white dark:hover:text-white/80"
           >
             {t("signUp.alreadyHaveAccount")}
           </Link>
