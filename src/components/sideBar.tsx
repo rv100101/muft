@@ -23,10 +23,14 @@ import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
 import profileHeaderStore from "@/zustand/profile/profileHeaderStore";
 // import useReadConversationsStateStore from "@/zustand/messaging/readConversations";
 import { useTranslation } from "react-i18next";
+import { useSettingsStore } from "@/zustand/settings/displaySettingsStore";
 
 const SideBar = () => {
   const [t, i18n] = useTranslation();
   const orientation = useOrientation();
+  const isDark = useSettingsStore(
+    (state) => state.settings?.darkModeSwitch
+  );
   // const { updateRead: setReadList } = useReadConversationsStateStore();
   const reset = useConversationHistoryStore((state) => state.resetToNull);
   const signOut = useUserStore((state) => state.reset);
@@ -63,10 +67,10 @@ const SideBar = () => {
         >
           {
             <link.icon
-              fill={location.endsWith(link.path) ? "black" : "white"}
+              fill={location.endsWith(link.path) ? isDark ? "white" : "black" : "white"}
               stroke={
                 link.name == "Home" && location.endsWith(link.path)
-                  ? "white"
+                  ? isDark ? "black" : "white"
                   : "black"
               }
               strokeWidth={location.endsWith(link.path) ? 0.8 : 2}
