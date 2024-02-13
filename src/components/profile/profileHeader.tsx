@@ -541,7 +541,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                     }
                   </div>
                   {userId !== user!.member_id.toString() && (
-                    <div className="flex w-full lg:flex-row flex-col lg:justify-between lg:items-start lg:space-y-0 space-y-4 lg:pt-0 pt-1 sm:pt-5 lg:px-2">
+                    <div className="flex flex-1 w-min mx-2 lg:flex-row flex-col lg:justify-between lg:items-start lg:space-y-0 space-y-4 lg:pt-0 pt-1 sm:pt-5 lg:px-2">
                       <Button
                         disabled={!selectedConversation}
                         onClick={() => {
@@ -554,7 +554,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                           }
                         }}
                         type="button"
-                        className="text-xs border-primary hover:bg-primary px-2 py-1 lg:w-24 w-min sm:w-3/4 dark:bg-[#ae2e51] dark:text-white"
+                        className="text-xs w-max-32 border-primary hover:bg-primary px-2 py-1 lg:w-24 w-min sm:w-3/4 dark:bg-[#ae2e51] dark:text-white"
                       >
                         <Link
                           onClick={() => {
