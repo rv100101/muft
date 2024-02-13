@@ -868,7 +868,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
             )}
           </div>
           {!isEditing && user!.is_active && (
-            <div className="h-full hidden lg:block mt-3">
+            <div className="h-full md:mt-3">
               <div
                 className={cn(
                   "pt-5 flex w-full justify-start items-start flex-wrap text-xs space-x-2",
