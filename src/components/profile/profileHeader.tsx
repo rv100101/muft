@@ -580,7 +580,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                       </Button>
                       <div
                         className={cn(
-                          "flex space-x-2",
+                          "flex space-x-2 mx-2",
                           i18n.language == "ar" && "space-x-reverse"
                         )}
                       >
