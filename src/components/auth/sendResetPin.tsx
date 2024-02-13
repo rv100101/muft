@@ -93,7 +93,7 @@ const SendResetPin = () => {
           </DialogClose>
           <Button
             disabled={sendResetPinMutation.isLoading}
-            className={cn("text-white w-max rounded-md hover:bg-[#FF599B]/90")}
+            className={cn("text-white dark:text-white dark:bg-primary w-max rounded-md dark:hover:bg-[#FF599B]/70 hover:bg-[#FF599B]/90")}
             type="submit"
           >
             {t("forgotPassword.reset")}

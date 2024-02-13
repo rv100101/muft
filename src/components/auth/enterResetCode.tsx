@@ -8,6 +8,7 @@ import { useMutation } from "@tanstack/react-query";
 import passwordResetQuery from "@/queries/password_reset";
 import { toast } from "../ui/use-toast";
 import { useTranslation } from "react-i18next";
+import { Input } from "../ui/input";
 
 const EnterResetCode = () => {
   const [t, i18n] = useTranslation();
@@ -53,14 +54,14 @@ const EnterResetCode = () => {
 
   return (
     <div dir={i18n.language == 'ar' ? 'rtl' : "ltr"}>
-      <p className="font-bold text-lg text-[#1B2950] w-full border-b-2 border-[#E0E0E0] pb-5">
+      <p className="dark:text-white font-bold text-lg text-[#1B2950] w-full border-b-2 border-[#E0E0E0] pb-5">
         {t("forgotPassword.enterPinNumber")}
       </p>
 
       <div>
         <form action="post" onSubmit={pinForm.handleSubmit}>
           <div className="flex flex-col space-y-1">
-            <label htmlFor="pin" className="text-sm text-bold mb-1 ml-5">
+            <label htmlFor="pin" className="text-sm text-bold my-4 ml-5">
               {t("forgotPassword.sentAPinToEmail")}
             </label>
             <div
@@ -70,9 +71,12 @@ const EnterResetCode = () => {
                 }`}
             >
               <ShieldCheck color="#98A2B3" size={20} className="mt-1" />
-              <input
+              <Input
                 type="text"
-                className="border-0 rounded-full py-1 px-5 text-normal focus:outline-0 w-full"
+                className={cn(
+                  "border-none focus-visible:ring-offset-0 focus-visible:ring-0",
+                  i18n.language == "ar" && "text-right"
+                )}
                 placeholder={t("forgotPassword.enterPin")}
                 {...pinForm.getFieldProps("pin")}
                 name="pin"
@@ -98,7 +102,7 @@ const EnterResetCode = () => {
             <Button
               type="submit"
               className={cn(
-                "text-white w-max rounded-md hover:bg-[#FF599B]/90"
+                "text-white w-max rounded-md dark:hover:bg-[#FF599B]/70 hover:bg-[#FF599B]/90"
               )}
             >
               {t("general.verify")}
