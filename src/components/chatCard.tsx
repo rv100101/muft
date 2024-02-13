@@ -40,7 +40,7 @@ const ChatCard = ({
       {avatarFirst && <img width={36} src={img} alt="chat avatar" />}
       <div
         className={cn(
-          "space-y-2 w-48 md:w-96 bg-white p-4 font-normal md:h-max md:whitespace-normal",
+          "space-y-2 w-48 md:w-56 bg-white p-4 font-normal md:h-max md:whitespace-normal",
           borderRadius,
           i18n.language == "ar" ? "text-right" : "text-left"
         )}
