@@ -7,7 +7,7 @@ const FooterLinks = () => {
   return (
     <ul
       className={cn(
-        "flex justify-center list-none space-x-4 text-xs md:text-md",
+        "flex justify-center list-none space-x-4 text-[8px] sm:text-xs md:text-md",
         i18n.language == "ar" && "space-x-reverse"
       )}
     >

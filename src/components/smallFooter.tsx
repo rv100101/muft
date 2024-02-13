@@ -7,10 +7,10 @@ const SmallFooter = () => {
   return (
     <div
       className={cn(
-        "hidden sm:flex w-full px-8 lg:px-36 p-2 h-max items-center justify-between"
+        "flex w-full px-8 lg:px-36 p-2 h-max items-center justify-between"
       )}
     >
-      <p dir="ltr" className="text-white sm:text-xs text-center">
+      <p dir="ltr" className="text-white text-[8px] sm:text-xs text-center">
         &copy; 2024 Softnames. All Rights Reserved.
       </p>
       <div
