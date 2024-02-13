@@ -312,7 +312,7 @@ const SignInForm = () => {
               onClick={() => {
                 setIsModalOpen(true);
               }}
-              className="dark:text-white dark:hover:text-white/80 float-right underline text-[#4635E2] hover:text-[#FF8AB3] text-xs mt-2"
+              className="dark:text-white dark:hover:text-white/80 flex w-full justify-center underline text-[#4635E2] hover:text-[#FF8AB3] text-xs mt-2"
             >
               {t("signIn.forgotPassword")}
             </DialogTrigger>
