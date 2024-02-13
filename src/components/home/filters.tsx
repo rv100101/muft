@@ -239,7 +239,6 @@ const HomeFilters = ({
             min={18}
             max={80}
             step={1}
-            className=" ml-10 pr-5"
             onValueChange={handleStartSliderChange}
             name="age"
           />
@@ -260,7 +259,6 @@ const HomeFilters = ({
             min={18}
             max={80}
             step={1}
-            className="w-full ml-10 pr-5"
             onValueChange={handleEndSliderChange}
             name="age"
           />
