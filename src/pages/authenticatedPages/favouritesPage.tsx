@@ -130,7 +130,7 @@ const FavouritesPage = () => {
 
   return (
     <AuthenticatedLayout>
-      <div className="flex flex-col w-full h-full space-y-4">
+      <div className="flex flex-col w-full h-full space-y-2 md:space-y-4">
         <FavoritesMobileNav />
         <div className="lg:pt-4">
           <div className="w-full h-full lg:items-center px-10 justify-between hidden lg:flex">

@@ -106,17 +106,17 @@ const LikesPage = () => {
 
   return (
     <AuthenticatedLayout>
-      <div className="flex flex-col w-full h-full space-y-4">
+      <div className="flex flex-col w-full h-full space-y-2 md:space-y-4">
         <LikesMobileNav />
         <div className="lg:pt-4">
           <div className="w-full h-full items-center justify-between px-10 hidden lg:flex">
             <h1 className="font-semibold  text-lg">{t("likes.likes")}</h1>
           </div>
         </div>{" "}
-        <div className="w-full flex h-max"></div>
+        <div className="w-full md:flex h-max hidden"></div>
         {
-          <div className="flex lg:justify-end justify-center h-max items-center px-8">
-            <div className="w-max border py-4 px-6  space-x-2 rounded-xl flex items-center">
+          <div className="flex lg:justify-end justify-center md:h-max items-center px-8">
+            <div className="w-max border py-4 px-6 space-x-2 rounded-xl flex items-center">
               <input
                 value={search}
                 onChange={(e) => {
