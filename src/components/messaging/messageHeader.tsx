@@ -8,7 +8,7 @@ import { Link } from "wouter";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
 const MessageHeader = () => {
-  const [, i18n] = useTranslation();
+  const [t, i18n] = useTranslation();
   const selectedHistoryMemberId = useLatestConversationStore(
     (state) => state.selectedHistoryMemberId
   );
@@ -55,9 +55,9 @@ const MessageHeader = () => {
           <Link href={`/members/${selectedHistoryMemberId}`}>
             <Button
               disabled={!selectedHistoryMemberId}
-              className="w-max text-xs hover:bg-[#FF8AB3]"
+              className="dark:text-white w-max text-xs hover:bg-[#FF8AB3]"
             >
-              View Profile
+              {t("likes.viewProfile")}
             </Button>
           </Link>
         </>
