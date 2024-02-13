@@ -495,10 +495,10 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
             {
               <p
                 className={
-                  "sm:hidden text-[#f0f9ff] border-[#075985] text-xs py-1 px-2 w-min rounded-md bg-[#38bdf8] hover:bg-[#38bdf8]/80"
+                  "hidden text-[#f0f9ff] border-[#075985] text-xs py-1 px-2 w-min rounded-md bg-[#38bdf8] hover:bg-[#38bdf8]/80"
                 }
               >
-                Standard
+                {t("memberDetails.standard")}
               </p>
             }
           </div>
@@ -533,7 +533,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                     {
                       <p
                         className={
-                          "hidden sm:block mt-1 text-[#f0f9ff] border-[#075985] text-xs py-1 px-2 w-min rounded-md bg-[#38bdf8] hover:bg-[#38bdf8]/80"
+                          "mt-1 text-[#f0f9ff] border-[#075985] text-xs py-1 px-2 w-min rounded-md bg-[#38bdf8] hover:bg-[#38bdf8]/80"
                         }
                       >
                         {t("memberDetails.standard")}
