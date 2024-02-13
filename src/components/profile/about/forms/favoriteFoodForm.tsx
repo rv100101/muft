@@ -49,13 +49,13 @@ const FavoriteFoodForm = () => {
             <div className="flex  flex-col justify-start space-y-1">
               <p
                 className={cn(
-                  "font-bold flex-wrap text-base text-primary flex flex-row space-x-3",
+                  "font-bold flex-wrap text-base text-primary flex flex-row",
                   i18n.language == "ar" && "space-x-reverse"
                 )}
               >
                 {removeDuplicates(data!.favoriteFood, "favorite_food_name").map(
                   (fave) => (
-                    <p className="border font-normal rounded-lg px-5 py-1 bg-[#ffdeeb] text-[#fe68a0] border-[#fe68a0] hover:bg-[#ffdeeb]/60 mb-5 flex flex-row space-x-2">
+                    <p className="border font-normal rounded-lg px-5 py-1 bg-[#ffdeeb] text-[#fe68a0] border-[#fe68a0] hover:bg-[#ffdeeb]/60 mb-5 flex flex-row mx-3 space-x-2">
                       <p> {fave.favorite_food_name}</p>
                     </p>
                   )
