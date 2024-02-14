@@ -17,7 +17,9 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Skeleton } from "../ui/skeleton";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
 const PostItem = ({ memberData }: { memberData: MemberData }) => {
+  const [imageLoaded, setImageLoaded] = useState(true);
   const [t, i18n] = useTranslation();
   const [, setLocation] = useLocation();
   const { likes, favorites, setFavorites, setLikes } = useHomepageViewStore();
@@ -227,26 +229,33 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
                 {memberData.marital_status}
               </p>
             </div>
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <div className="rounded-full bg-[#FFF2F7] flex flex-row justify-center items-center align-center space-x-2 py-2 px-4 dark:bg-[#3b0117] text=[#ff588e]">
-                    <LazyLoadImage
-                      effect="opacity"
-                      alt={"post country flag"}
-                      width={30}
-                      src={`https://muffin0.blob.core.windows.net/flags/${memberData.country_code.toLocaleLowerCase()}.png`}
-                    />
-                    {/* <p className="text-[#FF599B] mt-1 text-sm ">
+            {
+              imageLoaded &&
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <div className="rounded-full bg-[#FFF2F7] flex flex-row justify-center items-center align-center space-x-2 py-2 px-4 dark:bg-[#3b0117] text=[#ff588e]">
+                      <LazyLoadImage
+                        onError={() => {
+                          setImageLoaded(false);
+                        }}
+                        effect="opacity"
+                        alt={"post country flag"}
+                        width={imageLoaded ? 30 : 0}
+                        height={imageLoaded ? 30 : 0}
+                        src={`https://muffin0.blob.core.windows.net/flags/${memberData.country_code.toLocaleLowerCase()}.png`}
+                      />
+                      {/* <p className="text-[#FF599B] mt-1 text-sm ">
                       {nationalityCode}
                     </p> */}
-                  </div>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>{memberData.nationality}</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>{memberData.nationality}</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            }
           </div>
         </div>
         {/* <div className="h-[500px]"></div> */}
