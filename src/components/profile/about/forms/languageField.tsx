@@ -20,6 +20,7 @@ import removeExistingData from "@/lib/removeExistingData";
 import { cn } from "@/lib/utils";
 import { useUserStore } from "@/zustand/auth/user";
 import { useTranslation } from "react-i18next";
+import removeDuplicates from "@/lib/removeDulpicates";
 
 export default function LanguageField() {
   const [t] = useTranslation();
@@ -98,7 +99,8 @@ export default function LanguageField() {
   }, [selected, setValue, trigger]);
 
   useEffectOnce(() => {
-    setSelected(watch("language"));
+    const languages = watch("language");
+    setSelected(removeDuplicates(languages, 'language_name'));
   });
 
   return (
@@ -174,7 +176,7 @@ export default function LanguageField() {
                             }}
                             onSelect={() => {
                               setInputValue("");
-                              setSelected((prev) => [...prev, framework]);
+                              setSelected((prev) => removeDuplicates([...prev, framework], 'language_name'));
                             }}
                           >
                             {framework.language_name}
