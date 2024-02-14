@@ -39,7 +39,6 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
     pets: deletedPets,
     interests: deletedInterests,
   } = deleteMultiselectValuesStore();
-  console.log("DELETED ", deletedLanguages, deletedInterests);
   const [t] = useTranslation();
   const headerValues = profileHeaderStore((state) => state.headerValues);
   const setHeaderValues = profileHeaderStore((state) => state.setHeaderValues);
@@ -56,7 +55,6 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
   const [open] = useState(true);
   useEffect(() => {
     if (data && headerValues) {
-      console.log(data);
       methods.reset(
         {
           car: data.car ?? "",
@@ -192,8 +190,6 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
   const getEmploymentStatus = (name: string) =>
     employmentStatus.find((s) => s.employment_status_name === name);
 
-  console.log(methods.formState);
-
   const getGender: (value: string) => string = (value: string) => {
     if (value == t("memberDetails.male") || value == "M") {
       return "M";
@@ -208,12 +204,9 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
   const onSubmit = async (formData: any) => {
     // for onboarding finish validation
     // if (!isFinished) {
-    //   console.log("stopped by saving");
     //   return;
     // }
     // if (data && !methods.formState.isDirty) {
-    //   console.log(!methods.formState.isDirty);
-    //   console.log("stopped by dirty");
     //   toggleEditMode();
     //   return;
     // }
@@ -223,7 +216,6 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
         type: "custom",
         message: t("validation.regionRequired"),
       });
-      console.log("stopped by invalid region");
       return;
     }
     setIsSaving(true);
@@ -251,8 +243,6 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
       const disability = getDisabilityData(formData.disability);
       const employmentStatus = getEmploymentStatus(formData.employmentStatus);
       const gender = getGender(formData.gender);
-      console.log(formData);
-      console.log(data);
       const finalLanguages = removeExistingData(
         formData.language,
         data?.language ?? [],
@@ -317,7 +307,6 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
       };
       await profileContentQuery.saveInformation(finalFormData, user!.member_id);
       await authQuery.isProfileCompleted(user!.member_id);
-      console.log(finalFormData);
       const age = calculateAge(formData.birthInfo);
       updateUserAvatar(null);
       updateUserNickname(finalFormData.nickname);
@@ -338,7 +327,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
       });
       setEditModeFalse();
     } catch (error) {
-      console.log(error);
+      return;
     }
     setIsSaving(false);
   };

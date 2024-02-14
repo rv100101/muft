@@ -72,7 +72,7 @@ const MyAccountContent = () => {
         setIsLoading(false);
       }
     } catch (err: unknown) {
-      console.log("err", err);
+      return;
     }
   };
 

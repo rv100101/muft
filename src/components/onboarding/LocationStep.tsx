@@ -67,9 +67,7 @@ const LocationStep = () => {
 
   useUpdateEffect(() => {
     if (countries.length !== 0 && profileAboutContent) {
-      console.log(countries, profileAboutContent);
       if (profileAboutContent.country.length !== 0) {
-        console.log(profileAboutContent);
         setSelectedCountry(profileAboutContent.country_code);
       }
     }
@@ -77,12 +75,10 @@ const LocationStep = () => {
 
   const { setIsLoading, isLoading } = profileAboutContentStore();
 
-  console.log(profileAboutContent);
-
   useEffect(() => {
     setIsLoading(
       countries.length == 0 ||
-        (profileAboutContent?.region !== "" && states.length == 0)
+      (profileAboutContent?.region !== "" && states.length == 0)
     );
   }, [
     states.length,

@@ -39,7 +39,7 @@ const fetchMemberDetails = async (
     const { data } = details;
     return data[0];
   } catch (error) {
-    console.log(error);
+    return;
   }
 };
 
@@ -84,21 +84,15 @@ const fetchAdditionalInformation = async (userId: number, lang: string) => {
       petsFormData
     );
 
-    console.log(pets);
-
     const interests = await axiosQuery.post(
       "https://muffinapi.azurewebsites.net/member_interests.php",
       interestFormData
     );
 
-    console.log(interests);
-
     const languages = await axiosQuery.post(
       "https://muffinapi.azurewebsites.net/member_languages.php",
       languagesFormData
     );
-
-    console.log(languages);
 
     const appearance = await axiosQuery.post("/GetAppearance", {
       member: userId,
@@ -108,8 +102,6 @@ const fetchAdditionalInformation = async (userId: number, lang: string) => {
       "https://muffinapi.azurewebsites.net/member_favorite_food.php",
       favoriteFoodFormData
     );
-
-    console.log(languages);
 
     let additionalInformation: Record<string, string | []> = {
       pets: pets.data ?? [],
@@ -124,7 +116,6 @@ const fetchAdditionalInformation = async (userId: number, lang: string) => {
 
     return additionalInformation;
   } catch (error) {
-    console.log(error);
     return {
       error: error,
     };
@@ -634,8 +625,6 @@ export type ProfileContent = ProfileAbout & {
 };
 
 const saveInformation = async (profile: ProfileContent, userId: number) => {
-  console.log("PROFILE: ", profile);
-
   try {
     // gender
     if (profile.gender) {
@@ -950,7 +939,6 @@ const saveOnboarding = async (
   userId: number,
   step: number
 ) => {
-  console.log("PROFILE: ", profile);
   try {
     if (step == 1) {
       // gender
@@ -1210,7 +1198,6 @@ const saveOnboarding = async (
         }
       }
     } else {
-      console.log("save failed");
       return { failed: "saving failed" };
     }
 

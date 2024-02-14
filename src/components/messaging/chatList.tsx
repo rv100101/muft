@@ -66,8 +66,6 @@ const ChatList = () => {
 
   useEffect(() => {
     if (!selectedConversation && data && data.length !== 0) {
-      console.log(data);
-
       setSenderUserInfo({
         conversation_history_id: data[0].conversation_id,
         conversation_text: "",
@@ -84,7 +82,6 @@ const ChatList = () => {
   //       const dateB: Date = new Date(b.created_date);
   //       return dateA.getTime() - dateB.getTime();
   //     })
-  console.log(data);
   const conversations = data
     ?.filter((conversation) => {
       return searchFilterValue.length === 0
@@ -134,14 +131,11 @@ const ChatList = () => {
                 conversation.listed_nickname,
                 conversation.conversation_uuid
               );
-              console.log(conversation.listed_id);
-
               setSelectedHistoryMemberId(conversation.listed_id);
               setSelectedHistoryMemberName(conversation.recipient_nickname);
               if (readList !== null) {
                 const newReadList = readList;
                 newReadList[conversation.conversation_uuid] = true;
-                console.log("new readlist: ", newReadList);
                 setReadList({ ...newReadList });
               }
             }}

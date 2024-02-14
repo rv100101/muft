@@ -210,7 +210,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
       );
       return res.data.conversation_uuid;
     } catch (error) {
-      console.log(error);
+      return;
     }
   }, [data, location, setSelectedConversation, user, userId]);
 
@@ -290,7 +290,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
       setEditModeFalse();
       setSelectedFile(null);
     } catch (error) {
-      console.log(error);
+      return;
     } finally {
       setIsUploading(false);
     }
@@ -304,11 +304,6 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
         reported: userId,
         reason: reason,
       });
-      console.log(
-        "🚀 ~ file: profileHeader.tsx:292 ~ handleReportSubmit ~ res:",
-        res
-      );
-
       // setReportProcessing(false);
       toast({
         title: t("alerts.reported"),
@@ -320,7 +315,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
         setReportProcessing(false);
       }
     } catch (error) {
-      console.log("error: ", error);
+      return;
     }
   };
 
@@ -347,7 +342,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
         });
       }
     } catch (error) {
-      console.log("error: ", error);
+      return;
     }
   };
 
@@ -370,8 +365,6 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
       </div>
     );
   }
-
-  console.log(data);
 
   const getGender: (value: string) => string = (value: string) => {
     if (value == t("memberDetails.male") || value == "M") {

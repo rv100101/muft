@@ -132,7 +132,6 @@ const HomePage = () => {
       });
 
       if (filters == null) {
-        console.log("updating");
         setMemberList(updatedMemberList);
       }
 

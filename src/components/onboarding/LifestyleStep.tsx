@@ -47,7 +47,6 @@ const LifestyleStep = () => {
     refetchInterval: Infinity,
     queryKey: ["drinks", i18n.language],
     onSuccess: (data: Drink[]) => {
-      console.log("drink", data);
       setDrinks(data);
     },
   });
@@ -57,7 +56,6 @@ const LifestyleStep = () => {
     refetchInterval: Infinity,
     queryKey: ["smokes", i18n.language],
     onSuccess: (data: Smoke[]) => {
-      console.log("smoke", data);
       setSmoke(data);
     },
   });
@@ -86,9 +84,9 @@ const LifestyleStep = () => {
   useEffect(() => {
     setIsLoading(
       drink.length == 0 ||
-        livingStatus.length == 0 ||
-        car.length == 0 ||
-        smoke.length == 0
+      livingStatus.length == 0 ||
+      car.length == 0 ||
+      smoke.length == 0
     );
   }, [
     car.length,

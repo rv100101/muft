@@ -139,8 +139,6 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
       return details;
     },
     onSuccess: (data: ProfileAbout) => {
-      console.log(data);
-
       setAboutData(data);
       if (location.startsWith("/profile")) {
         setProfileData(data);
@@ -277,9 +275,7 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
 
   useUpdateEffect(() => {
     if (countries.length !== 0 && profileAboutContent) {
-      console.log(countries, profileAboutContent);
       if (profileAboutContent.country.length !== 0) {
-        console.log(profileAboutContent);
         setSelectedCountry(profileAboutContent.country_code);
         // countries.filter(
 
@@ -364,7 +360,6 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
     refetchInterval: Infinity,
     queryKey: ["drinks", i18n.language],
     onSuccess: (data: Drink[]) => {
-      console.log("drink", data);
       setDrinks(data);
     },
   });
@@ -374,7 +369,6 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
     refetchInterval: Infinity,
     queryKey: ["smokes", i18n.language],
     onSuccess: (data: Smoke[]) => {
-      console.log("smoke", data);
       setSmoke(data);
     },
   });

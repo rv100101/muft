@@ -11,10 +11,6 @@ const PushNotifcationContent = () => {
   );
 
   function pushSubscriptionChangeListener(event: any) {
-    console.log('listening to pub changes');
-    console.log(
-      event?.current?.optedIn
-    );
     setNotificationEnabled(
       event?.current?.optedIn
     )

@@ -105,7 +105,6 @@ const ActivateAccount = () => {
         });
       }
     } catch (error) {
-      console.log(error);
       toast({
         title: t("alerts.pinIsIncorrect"),
         description: t("alerts.tryAgainLater"),

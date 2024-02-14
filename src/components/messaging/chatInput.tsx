@@ -18,10 +18,6 @@ import { useUserStore } from "@/zustand/auth/user";
 import { useTranslation } from "react-i18next";
 const ChatInput = () => {
   const [t] = useTranslation();
-  const conversationMessages = useSelectedConversationData(
-    (state) => state.messages
-  );
-  console.log(conversationMessages);
 
   const currentSelectedConversation = useLatestConversationStore(
     (state) => state.conversation
@@ -51,15 +47,11 @@ const ChatInput = () => {
   }, [currentSelectedConversation]);
 
   const getConversationUuid = async () => {
-    console.log(currentSelectedConversation);
-
     if (!currentSelectedConversation) {
       return;
     }
 
     try {
-      console.log(user!.member_id, currentSelectedConversation!.memberId);
-
       const res: {
         data: {
           recipient_id: number;
@@ -107,10 +99,7 @@ const ChatInput = () => {
   }, []);
 
   const sendMessage = async () => {
-    console.log(currentSelectedConversation);
     const newChatUuid = null;
-    console.log(newChatUuid);
-
     await messagingQuery.sendMessage(
       newChatUuid ?? uuid!,
       finalInputMessage,
@@ -129,7 +118,6 @@ const ChatInput = () => {
       });
     },
     onError: () => {
-      console.log("failed to send message");
       updateLastSentMessageStatus("failed");
     },
   });
@@ -139,7 +127,6 @@ const ChatInput = () => {
   }, [currentSelectedConversation, setInputMessage]);
 
   const handleMessageSend = async () => {
-    console.log(senderInfo, inputMessageValue);
     if (inputMessageValue.length !== 0) {
       if (senderInfo) {
         appendNewMessage({

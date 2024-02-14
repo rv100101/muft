@@ -38,7 +38,6 @@ const ChatMessages = () => {
   useEffect(() => {
     if (data) {
       setConversationMessages(data);
-      console.log(data);
     }
   }, [data, setConversationMessages]);
 
@@ -62,12 +61,9 @@ const ChatMessages = () => {
       conversationMessages![conversationMessages!.length - 1].created_user !==
       user!.member_id
     ) {
-      console.log("running chist");
       conversationHistory();
     }
   }, [conversationMessages, user]);
-
-  console.log(conversationMessages);
 
   const messages = conversationMessages?.map((message, index) => {
     const gray = message.created_user == user!.member_id;
@@ -79,9 +75,8 @@ const ChatMessages = () => {
       date = moment(date).fromNow();
     }
 
-    if (date == "failed") {
-      console.log(date);
-    }
+    // if (date == "failed") {
+    // }
 
     return (
       <div

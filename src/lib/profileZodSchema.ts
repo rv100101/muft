@@ -84,7 +84,6 @@ export const ProfileFormSchema = (t: TFunction<"translation", undefined>) =>
       )
       .refine(
         (data) => {
-          console.log("LANGUAGE!!!", data);
           return data.length > 0;
         },
         {

@@ -59,7 +59,7 @@ const DeactivateAccountContent = () => {
         setChecked(false);
       }
     } catch (error) {
-      console.log(error);
+      return;
     }
     setShowDialog(false);
   };
@@ -80,14 +80,13 @@ const DeactivateAccountContent = () => {
         setIsLoading(false);
       }
     } catch (error) {
-      console.log(error);
+      return;
     }
     setShowDialog(false);
   };
 
   const deleteAccount = async () => {
     try {
-      console.log("this is triggered");
       setDeleteLoading(true);
       // const formData = new FormData();
       // formData.append(
@@ -111,7 +110,7 @@ const DeactivateAccountContent = () => {
       setProfileHeaderValues(null);
       // }
     } catch (error) {
-      console.log(error);
+      return;
     }
   };
 

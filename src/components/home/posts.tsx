@@ -21,7 +21,6 @@ const Posts = ({
   // Set the initial scroll position when the component mounts
   useEffect(() => {
     if (!isLoading && scrollPosition && containerRef.current) {
-      console.log("rerendering");
       containerRef.current.scrollTop = +scrollPosition;
     }
   }, [isLoading, scrollPosition]);

@@ -48,7 +48,6 @@ const LocationForm = () => {
   );
 
   const countryCode = watch("country");
-  console.log(countryCode);
   useUpdateEffect(() => {
     setValue("region", "");
   }, [countryCode]);
@@ -207,7 +206,6 @@ const LocationForm = () => {
             <FormField
               name="region"
               render={({ field }) => {
-                console.log(field);
                 return (
                   <FormItem>
                     <FormLabel className="text-primary" htmlFor="region">

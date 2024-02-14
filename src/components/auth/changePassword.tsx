@@ -57,7 +57,6 @@ const ChangePassword = () => {
           description: t("alerts.tryAgainLater"),
           variant: "destructive",
         });
-        console.log(error);
       }
       setIsLoading(false);
     },

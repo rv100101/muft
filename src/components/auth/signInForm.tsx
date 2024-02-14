@@ -140,7 +140,7 @@ const SignInForm = () => {
       }
     } catch (err: unknown) {
       // throw new Error(err);
-      console.log("err", err);
+      return;
     }
   };
 

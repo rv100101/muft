@@ -6,7 +6,6 @@ const getMembers: (
   lang: string
 ) => Promise<MemberData[] | null> = async (memberId: number, lang: string) => {
   try {
-    // console.log("member: ", memberId);
     const formData = new FormData();
     formData.append(
       "auth",

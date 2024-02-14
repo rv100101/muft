@@ -210,7 +210,6 @@ const OnboardingWrapper = () => {
   ): boolean {
     for (const key of keys) {
       if (key in errorObj) {
-        console.log(key);
         return false;
       }
     }
@@ -315,7 +314,6 @@ const OnboardingWrapper = () => {
       religion: religion?.religion_id,
       employmentStatus: employmentStatus?.employment_status_id,
     };
-    console.log(finalFormData);
     await profileContentQuery.saveOnboarding(
       finalFormData as ProfileContent,
       user!.member_id,
@@ -334,7 +332,6 @@ const OnboardingWrapper = () => {
     const validateFields = getFields();
     const pass = checkKeysInErrorObject(validateFields, errors);
     const isDirty = checkDirtyFields(validateFields, dirtyFields);
-    console.log(!isValidating, pass, isDirty, goNext);
     if (!isValidating && pass && isDirty && goNext) {
       setGoNext(false);
       handleSaveOnNext();

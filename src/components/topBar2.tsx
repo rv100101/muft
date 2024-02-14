@@ -69,7 +69,6 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
               : link.path
           }
           onClick={() => {
-            console.log("this here is triggered");
             if (link.name == "My Profile") {
               setSelectedProfileId(null);
               queryClient.invalidateQueries({ queryKey: ["profileHeader"] });

@@ -1,8 +1,6 @@
 import axiosQuery from "./axios";
 function removePrefix(base64: string) {
   const index = base64.indexOf("base64,");
-  console.log(index);
-
   return base64.substring(index + 7);
 }
 

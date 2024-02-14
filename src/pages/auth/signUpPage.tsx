@@ -102,7 +102,6 @@ const SignUpPage = () => {
       }
     } catch (err: unknown) {
       setIsLoading(false);
-      console.log("err", err);
     }
   };
 
@@ -129,13 +128,7 @@ const SignUpPage = () => {
         navigate("/", { replace: true });
       }
     },
-    onError: (e) => {
-      console.log("failed to sign up");
-      console.log(e);
-    },
   });
-
-  console.log(Object.keys(formik.errors).length, formik.errors);
 
   return (
     <>
@@ -186,8 +179,8 @@ const SignUpPage = () => {
               </label> */}
               <div
                 className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${formik.touched.first_name && formik.errors.first_name
-                    ? "border-rose-500"
-                    : ""
+                  ? "border-rose-500"
+                  : ""
                   }`}
               >
                 <UserIcon color="#98A2B3" size={20} className="mt-1" />
@@ -207,8 +200,8 @@ const SignUpPage = () => {
                   color="#D92D20"
                   size={20}
                   className={`mt-1 ${formik.touched.first_name && formik.errors.first_name
-                      ? "visible"
-                      : "hidden"
+                    ? "visible"
+                    : "hidden"
                     }`}
                 />
               </div>
@@ -233,8 +226,8 @@ const SignUpPage = () => {
 
               <div
                 className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${formik.touched.last_name && formik.errors.last_name
-                    ? "border-rose-500"
-                    : ""
+                  ? "border-rose-500"
+                  : ""
                   }`}
               >
                 <UserIcon color="#98A2B3" size={20} className="mt-1" />
@@ -255,8 +248,8 @@ const SignUpPage = () => {
                   color="#D92D20"
                   size={20}
                   className={`mt-1 ${formik.touched.last_name && formik.errors.last_name
-                      ? "visible"
-                      : "hidden"
+                    ? "visible"
+                    : "hidden"
                     }`}
                 />
               </div>
@@ -279,8 +272,8 @@ const SignUpPage = () => {
               </label> */}
               <div
                 className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${formik.touched.email && formik.errors.email
-                    ? "border-rose-500"
-                    : ""
+                  ? "border-rose-500"
+                  : ""
                   }`}
               >
                 <MailIcon color="#98A2B3" size={20} className="mt-1" />
@@ -301,8 +294,8 @@ const SignUpPage = () => {
                   color="#D92D20"
                   size={20}
                   className={`mt-1 ${formik.touched.email && formik.errors.email
-                      ? "visible"
-                      : "hidden"
+                    ? "visible"
+                    : "hidden"
                     }`}
                 />
               </div>
@@ -326,8 +319,8 @@ const SignUpPage = () => {
               </label> */}
               <div
                 className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${formik.touched.password && formik.errors.password
-                    ? "border-rose-500"
-                    : ""
+                  ? "border-rose-500"
+                  : ""
                   }`}
               >
                 <LockIcon color="#98A2B3" size={20} className="mt-1" />
@@ -373,8 +366,8 @@ const SignUpPage = () => {
                   name="lang"
                   onBlur={formik.handleBlur}
                   className={` rounded-full ${formik.touched.lang && formik.errors.lang
-                      ? "border-rose-500"
-                      : ""
+                    ? "border-rose-500"
+                    : ""
                     }
                 `}
                 >

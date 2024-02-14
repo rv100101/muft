@@ -91,8 +91,6 @@ const BasicInformationForm = () => {
     );
   }
 
-  console.log(data?.gender);
-
   return (
     <div
       className={cn(
@@ -135,7 +133,6 @@ const BasicInformationForm = () => {
               <FormField
                 name="nickname"
                 render={({ field }) => {
-                  console.log(field);
                   return (
                     <FormItem>
                       <FormLabel className="text-primary" htmlFor="nickname">
@@ -185,7 +182,6 @@ const BasicInformationForm = () => {
             <FormField
               name="gender"
               render={({ field }) => {
-                console.log(field);
                 return (
                   <FormItem>
                     <FormLabel className="text-primary" htmlFor="gender">

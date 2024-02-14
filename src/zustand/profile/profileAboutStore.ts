@@ -127,7 +127,6 @@ const profileAboutContentStore = create(
         })),
       editMode: false,
       toggleEditMode: () => {
-        console.log("this is triggered");
         set((state) => ({
           editMode: !state.editMode,
         }));

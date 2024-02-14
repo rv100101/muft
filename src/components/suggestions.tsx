@@ -129,7 +129,6 @@ const Suggestions = ({ members }: { members: Member[] }) => {
   // report ⛳
   const handleReportSubmit = async (reported: number) => {
     try {
-      console.log(reported);
       setReportProcessing(true);
       // const res = await axiosQuery.post("/ReportAbuse", {
       //   member: user!.member_id,
@@ -148,7 +147,7 @@ const Suggestions = ({ members }: { members: Member[] }) => {
       //   setReportProcessing(false);
       // }
     } catch (error) {
-      console.log("error: ", error);
+      return
     }
   };
 
@@ -168,8 +167,6 @@ const Suggestions = ({ members }: { members: Member[] }) => {
         user!.member_id,
         userId,
       );
-
-      console.log(res);
 
       setSelectedConversation(
         user!.member_id,
@@ -194,14 +191,11 @@ const Suggestions = ({ members }: { members: Member[] }) => {
   const suggestions = members
     ?.slice(0, 3)
     .map((suggestion: Member, index: number) => {
-      // console.log(suggestion);
-
       const imagePath = getImagePath(
         suggestion.gallery_uuid,
         suggestion.gender,
         suggestion.member_uuid,
       );
-      console.log(suggestion);
 
       return (
         <li

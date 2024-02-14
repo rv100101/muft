@@ -108,7 +108,6 @@ const GallerySection = ({ userId }: { userId: string }) => {
       });
     },
     onError: () => {
-      console.log("Failed");
       toast({
         title: t("alerts.somethingWentWrong"),
         description: "Cannot delete photo",

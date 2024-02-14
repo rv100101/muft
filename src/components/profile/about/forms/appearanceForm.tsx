@@ -195,7 +195,6 @@ const AppearanceForm = () => {
             <FormField
               name="height"
               render={({ field }) => {
-                console.log(field.value);
                 return (
                   <FormItem>
                     <FormLabel className="text-primary" htmlFor="height">

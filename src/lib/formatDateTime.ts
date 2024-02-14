@@ -9,8 +9,3 @@ export function formatDateTime(date: Date): string {
 
   return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}`;
 }
-
-// Example: Format the current date and time
-const currentDate = new Date();
-const formattedDate = formatDateTime(currentDate);
-console.log(formattedDate);
