@@ -364,7 +364,7 @@ const OnboardingWrapper = () => {
     <>
       <div
         className={cn(
-          "my-2 text-lg flex-col px-8 w-full sm:w-1/2 items-center justify-center flex"
+          "my-2 text-lg flex-col px-8 w-full sm:w-3/4 items-center justify-center flex"
         )}
       >
         <div className="flex justify-between w-full mb-6">
@@ -427,16 +427,16 @@ const OnboardingWrapper = () => {
         <Progress
           value={(step / 12) * 100}
           className={cn(
-            "sm:w-1/2 mb-8 h-2",
+            "sm:w-3/4 mb-8 h-2",
             i18n.language == "ar" && "rotate-180"
           )}
         />
       </div>
       <StepView step={step} />
-      <hr className="h-4 w-full sm:w-1/2 mt-8" />
+      <hr className="h-4 w-full sm:w-3/4 mt-8" />
       <div
         className={cn(
-          "w-full px-8 sm:w-1/2 flex justify-end",
+          "w-full px-8 sm:w-3/4 flex justify-end",
           step !== 1 && "justify-between"
         )}
       >

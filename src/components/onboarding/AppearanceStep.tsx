@@ -83,9 +83,9 @@ const AppearanceStep = () => {
   useEffect(() => {
     setIsLoading(
       eyes.length == 0 ||
-        hair.length == 0 ||
-        bodyArts.length == 0 ||
-        bodyTypes.length == 0
+      hair.length == 0 ||
+      bodyArts.length == 0 ||
+      bodyTypes.length == 0
     );
   }, [
     bodyArts.length,
@@ -96,14 +96,14 @@ const AppearanceStep = () => {
   ]);
 
   return isLoading ? (
-    <div className="grid w-full sm:w-1/2 sm:grid-rows-2 grid-flow-row sm:grid-cols-2 gap-2">
+    <div className="grid w-full sm:w-3/4 sm:grid-rows-2 grid-flow-row sm:grid-cols-2 gap-2">
       <Skeleton className="h-8 w-full" />
       <Skeleton className="h-8 w-full" />
       <Skeleton className="h-8 w-full" />
       <Skeleton className="h-8 w-full" />
     </div>
   ) : (
-    <div className="w-full h-full sm:w-1/2">
+    <div className="w-full h-full sm:w-3/4">
       <AppearanceForm />
     </div>
   );
