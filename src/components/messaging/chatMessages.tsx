@@ -90,7 +90,7 @@ const ChatMessages = () => {
           className={cn(
             "p-4 rounded-lg",
             gray
-              ? "items-start bg-[#E8ECEF] dark:bg-red-500"
+              ? "items-start bg-[#E8ECEF] dark:bg-slate-800"
               : "items-end bg-primary text-white"
           )}
         >
