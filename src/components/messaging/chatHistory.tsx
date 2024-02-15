@@ -15,7 +15,7 @@ const ChatHistory = () => {
   const userPhoto = useUserAvatar((state) => state.gallery_uuid);
   const nickname = useUserNickname((state) => state.nickname);
   return (
-    <div className=" mx-12 md:mx-0 h-screen">
+    <div className="h-screen">
       <ChatMobileNav />
       <div className="w-full h-full flex flex-col">
         <div className="h-min p-4 space-y-4">
