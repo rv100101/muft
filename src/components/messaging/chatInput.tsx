@@ -191,15 +191,15 @@ const ChatInput = () => {
                     setInputMessage(e.target.value);
                   }}
                   placeholder={t("messages.typeAMessage")}
-                />
+                />  <Button
+                  disabled={!currentSelectedConversation}
+                  onClick={handleMessageSend}
+                  className="rounded-full flex h-max w-max hover:bg-transparen ml-4 px-2 mr-4"
+                >
+                  <SendHorizonalIcon height={16} />
+                </Button>
               </div>
-              <Button
-                disabled={!currentSelectedConversation}
-                onClick={handleMessageSend}
-                className="rounded-full h-max w-max hover:bg-transparen ml-4 px-2 mr-4 mb-4"
-              >
-                <SendHorizonalIcon height={16} />
-              </Button>
+
             </>
           )}
     </div>
