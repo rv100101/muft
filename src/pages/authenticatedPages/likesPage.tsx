@@ -122,7 +122,7 @@ const LikesPage = () => {
                 onChange={(e) => {
                   setSearch(e.target.value);
                 }}
-                className="h-4 border-0 focus:outline-0 w-full dark:text-white dark:bg-[#020817]"
+                className="h-4 border-0 focus:outline-none focus:outline-0 w-full dark:text-white dark:bg-[#020817]"
                 placeholder={t("search.search")}
               />
               <SearchIcon color="gray" />
