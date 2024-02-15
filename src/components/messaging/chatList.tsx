@@ -175,7 +175,7 @@ const ChatList = () => {
     });
 
   return (
-    <ul className="no-scrollbar space-y-1 overflow-y-scroll h-full p-1 mx-2 md:mx-0">
+    <ul className="no-scrollbar space-y-1 overflow-y-scroll h-full p-1 mx-4 md:mx-0">
       {isSuccess && conversations}
       {isLoading && <ChatListLoadingSkeleton />}
       {!isLoading && conversations?.length == 0 && (
