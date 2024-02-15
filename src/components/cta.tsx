@@ -4,6 +4,7 @@ import CtaPhone from "@/assets/cta-phone.png";
 import { motion } from "framer-motion";
 import { Button } from "./ui/button";
 import { useTranslation } from "react-i18next";
+import { Link } from "wouter";
 const staggerMotion = {
   hidden: { opacity: 0 },
   whileInView: {
@@ -56,9 +57,11 @@ const Cta = () => {
           </p>
 
           <motion.div variants={child} className="flex space-x-2">
-            <Button className="hover:bg-[#FF599B]/90">
-              <a href="/auth/signin">{t("landingPage.signIn")}</a>
-            </Button>
+            <Link to="/auth/signin">
+              <Button className="dark:hover:bg-[#FF599B]/80 hover:bg-[#FF599B]/90 dark:bg-[#FF599B] dark:text-white">
+                {t("landingPage.signIn")}
+              </Button>
+            </Link>
           </motion.div>
         </motion.div>
       </motion.div>

@@ -87,12 +87,12 @@ const Hero = () => {
             )}
           >
             <Link to="/auth/signup">
-              <Button className="hover:bg-[#1B2950]/90 bg-[#1B2950] dark:bg-[#1B2950] dark:text-white">
+              <Button className="dark:hover:bg-[#1B2950]/90 hover:bg-[#1B2950]/90 bg-[#1B2950] dark:bg-[#1B2950] dark:text-white">
                 {t("landingPage.joinNow")}
               </Button>
             </Link>
             <Link to="/auth/signin">
-              <Button className="hover:bg-[#FF599B]/90 dark:bg-[#FF599B] dark:text-white">
+              <Button className="dark:hover:bg-[#FF599B]/90 hover:bg-[#FF599B]/90 dark:bg-[#FF599B] dark:text-white">
                 {t("landingPage.signIn")}
               </Button>
             </Link>
