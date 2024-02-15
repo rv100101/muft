@@ -175,7 +175,7 @@ const HomePage = () => {
             isLoading={retrievingMemberData || likesLoading || favoritesLoading}
             memberList={memberList}
           />
-          <div className="md:col-span-3 col-span-0 hidden lg:flex sm:flex-col overflow-auto no-scrollbar ml-10">
+          <div className="xl:col-span-3 col-span-0 hidden xl:flex sm:flex-col overflow-auto no-scrollbar ml-10">
             <div className="w-[380px] h-5/6 pt-4 px-5 lg:p-4 sm:flex flex-col hidden ">
               <HomepageSearchInput />
               {/* filter */}
