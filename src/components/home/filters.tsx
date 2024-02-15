@@ -134,8 +134,8 @@ const HomeFilters = ({
         </p>
         <div
           className={cn(
-            "flex flex-row justify-between items-center p-4 space-x-5",
-            i18n.language == "ar" ? "space-x-reverse space-x-5" : "space-x-5"
+            "flex flex-row justify-between items-center pt-4 space-x-5",
+            i18n.language == "ar" ? "space-x-reverse" : "space-x-5"
           )}
         >
           <p
@@ -177,8 +177,8 @@ const HomeFilters = ({
         </div>
         <div
           className={cn(
-            "flex flex-row justify-between items-center p-4 space-x-5",
-            i18n.language == "ar" ? "space-x-reverse space-x-5" : "space-x-5"
+            "flex flex-row justify-between items-center pt-4 space-x-5",
+            i18n.language == "ar" ? "space-x-reverse" : "space-x-5"
           )}
         >
           <p
@@ -219,15 +219,15 @@ const HomeFilters = ({
           </p>
         </div>
         <div className="flex flex-row justify-between items-center mt-5">
-          <p className={cn("px-5 text-sm")}>{t("filter.age")}</p>
+          <p className={cn("text-sm")}>{t("filter.age")}</p>
           {/* <p className="px-5 text-sm">{`${startAgeSliderVal}-${endAgeSliderVal}`}</p> */}
-          <p className="px-5 text-sm">{`${filters?.min_age}-${filters?.max_age}`}</p>
+          <p className="text-sm">{`${filters?.min_age}-${filters?.max_age}`}</p>
         </div>
         {/* <form action="post" onSubmit={formik.handleSubmit}> */}
         <div
           className={cn(
-            "flex flex-row justify-center align-center py-5 px-5",
-            i18n.language == "ar" ? "space-x-reverse space-x-4" : "space-x-2"
+            "flex flex-row justify-center align-center py-5",
+            i18n.language == "ar" ? "space-x-reverse" : "space-x-2"
           )}
         >
           <p className="text-slate-500 text-sm">{t("filter.from")}</p>
@@ -245,8 +245,8 @@ const HomeFilters = ({
         </div>
         <div
           className={cn(
-            "flex flex-row justify-center align-center py-5 px-5",
-            i18n.language == "ar" ? "space-x-reverse space-x-4" : "space-x-2"
+            "flex flex-row justify-center align-center py-5",
+            i18n.language == "ar" ? "space-x-reverse" : "space-x-2"
           )}
         >
           <p className="text-slate-500 text-sm">{t("filter.to")}</p>

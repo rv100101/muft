@@ -76,7 +76,7 @@ const HomepageSearchInput = () => {
       </div>
       {debouncedSearchValue.length > 0 ? (
         searchResults.length !== 0 ? (
-          <div className="mt-1 sticky z-40 h-min max-h-[200px] border rounded-b-md lg:w-[330px] bg-white overflow-y-auto">
+          <div className="mt-1 sticky z-40 w-full h-min max-h-[200px] border rounded-b-md lg:w-[330px] bg-white overflow-y-auto">
             {searchResults.map((result: SearchResultItem, index: number) => {
               return (
                 <Button
