@@ -117,7 +117,7 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
                   <div
                     dir={i18n.language == "ar" ? "rtl" : "ltr"}
                     className={cn(
-                      "flex items-center space-x-2 justify-center mb-5",
+                      "flex items-center space-x-2 px-2 justify-center mb-5",
                       i18n.language == "ar" && "space-x-reverse"
                     )}
                   >
