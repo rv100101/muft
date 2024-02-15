@@ -1,4 +1,4 @@
-import { CalendarClock, Heart, Ribbon, Star } from "lucide-react";
+import { CalendarClock, Heart, MapPin, Ribbon, Star } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -230,25 +230,41 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
               </p>
             </div>
             {
-              imageLoaded &&
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <div className="rounded-full bg-[#FFF2F7] flex flex-row justify-center items-center align-center space-x-2 py-2 px-4 dark:bg-[#3b0117] text=[#ff588e]">
-                      <LazyLoadImage
-                        onError={() => {
-                          setImageLoaded(false);
-                        }}
-                        effect="opacity"
-                        alt={"post country flag"}
-                        width={imageLoaded ? 30 : 0}
-                        height={imageLoaded ? 30 : 0}
-                        src={`https://muffin0.blob.core.windows.net/flags/${memberData.country_code.toLocaleLowerCase()}.png`}
-                      />
-                      {/* <p className="text-[#FF599B] mt-1 text-sm ">
-                      {nationalityCode}
-                    </p> */}
-                    </div>
+                    {
+                      imageLoaded ?
+                        <div className="rounded-full bg-[#FFF2F7] flex flex-row justify-center items-center align-center space-x-2 py-2 px-4 dark:bg-[#3b0117] text=[#ff588e]">
+                          <LazyLoadImage
+                            onError={() => {
+                              setImageLoaded(false);
+                            }}
+                            effect="opacity"
+                            alt={"post country flag"}
+                            width={imageLoaded ? 30 : 0}
+                            height={imageLoaded ? 30 : 0}
+                            src={`https://muffin0.blob.core.windows.net/flags/${memberData.country_code.toLocaleLowerCase()}.png`}
+                          />
+                        </div>
+                        :
+                        <div className="rounded-full bg-[#FFF2F7] flex flex-row justify-center align-center space-x-2 py-2 px-4 dark:bg-[#3b0117] text=[#ff588e]">
+                          <MapPin
+                            color="#FF599B"
+                            fill="white"
+                            size={25}
+                            className="mt-1 hover:cursor-pointer"
+                          />
+                          <p
+                            className={`text-[#FF599B] mt-1 ${memberData.marital_status === "Prefer not to say"
+                              ? "text-sm"
+                              : ""
+                              }`}
+                          >
+                            {memberData.country_code}
+                          </p>
+                        </div>
+                    }
                   </TooltipTrigger>
                   <TooltipContent>
                     <p>{memberData.nationality}</p>
