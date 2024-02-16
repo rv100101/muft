@@ -20,6 +20,7 @@ import { useCountdown } from "usehooks-ts";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
+import OneSignal from "react-onesignal";
 
 const ActivateAccount = () => {
   const [t, i18n] = useTranslation();
@@ -171,7 +172,10 @@ const ActivateAccount = () => {
                     </DialogTitle>
                   </DialogHeader>
                   <DialogFooter className={cn("sm:justify-start",)}>
-                    <Button className={cn("hover:bg-primary", i18n.language == 'ar' && "mx-2")} onClick={reset}>
+                    <Button className={cn("hover:bg-primary", i18n.language == 'ar' && "mx-2")} onClick={() => {
+                      reset();
+                      OneSignal.logout();
+                    }}>
                       {t("signOut.yes")}
                     </Button>
                     <DialogClose asChild>

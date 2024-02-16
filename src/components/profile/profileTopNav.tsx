@@ -19,6 +19,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
 import PreferredLanguageDialog from "../preferredLanguageDialog";
+import OneSignal from "react-onesignal";
 const ProfileTopNav = () => {
   const [t, i18n] = useTranslation();
   const { isSaving } = profileAboutContentStore();
@@ -172,6 +173,7 @@ const ProfileTopNav = () => {
                           onClick={() => {
                             queryClient.clear();
                             signOut();
+                            OneSignal.logout();
                             // setReadList({});
                           }}
                         >

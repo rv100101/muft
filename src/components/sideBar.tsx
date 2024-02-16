@@ -24,6 +24,7 @@ import profileHeaderStore from "@/zustand/profile/profileHeaderStore";
 // import useReadConversationsStateStore from "@/zustand/messaging/readConversations";
 import { useTranslation } from "react-i18next";
 import { useSettingsStore } from "@/zustand/settings/displaySettingsStore";
+import OneSignal from "react-onesignal";
 
 const SideBar = () => {
   const [t, i18n] = useTranslation();
@@ -168,6 +169,7 @@ const SideBar = () => {
                   onClick={() => {
                     queryClient.clear();
                     signOut();
+                    OneSignal.logout();
                     setProfileData(null);
                     setProfileHeaderValues(null);
                     // setReadList({});

@@ -31,6 +31,7 @@ import profileAboutContentStore, {
 } from "@/zustand/profile/profileAboutStore";
 import useReadConversationsStateStore from "@/zustand/messaging/readConversations";
 import { DialogClose } from "@radix-ui/react-dialog";
+import OneSignal from "react-onesignal";
 
 type FormDataType = {
   email: string;
@@ -129,6 +130,7 @@ const SignInForm = () => {
       if (data && data!.authorized) {
         queryClient.invalidateQueries();
         updateUser(data);
+        OneSignal.login(data.member_id.toString());
         navigate("/", { replace: true });
       } else {
         return toast({

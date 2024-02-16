@@ -30,6 +30,7 @@ import NotificationsListFiters from "./notifications/notificationListFilters";
 import HomeFilters from "./home/filters";
 // import useReadConversationsStateStore from "@/zustand/messaging/readConversations";
 import { useTranslation } from "react-i18next";
+import OneSignal from "react-onesignal";
 
 const TopBar2 = ({ children }: { children: ReactNode }) => {
   const [t, i18n] = useTranslation();
@@ -241,6 +242,7 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
                     onClick={() => {
                       queryClient.invalidateQueries();
                       signOut();
+                      OneSignal.logout();
                       // setReadList({});
                     }}
                   >

@@ -39,6 +39,7 @@ import profileContentQuery, {
 } from "@/queries/profile/profileContent";
 import selectOptions from "@/zustand/profile/selectData/selectOptions";
 import removeExistingData from "@/lib/removeExistingData";
+import OneSignal from "react-onesignal";
 
 const OnboardingWrapper = () => {
   const {
@@ -404,6 +405,7 @@ const OnboardingWrapper = () => {
                   onClick={() => {
                     queryClient.invalidateQueries();
                     signOut();
+                    OneSignal.logout();
                   }}
                 >
                   {t("signOut.yes")}

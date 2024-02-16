@@ -20,6 +20,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { Loader2, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import OneSignal from "react-onesignal";
 
 const DeactivateAccountContent = () => {
   const [t, i18n] = useTranslation();
@@ -108,6 +109,7 @@ const DeactivateAccountContent = () => {
       // setReadList({});
       setProfileData(null);
       setProfileHeaderValues(null);
+      OneSignal.logout();
       // }
     } catch (error) {
       return;
