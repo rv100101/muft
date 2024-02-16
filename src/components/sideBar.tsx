@@ -166,10 +166,10 @@ const SideBar = () => {
               >
                 <Button
                   className="hover:bg-[#FF599B]/90"
-                  onClick={() => {
+                  onClick={async () => {
                     queryClient.clear();
                     signOut();
-                    OneSignal.logout();
+                    await OneSignal.logout();
                     setProfileData(null);
                     setProfileHeaderValues(null);
                     // setReadList({});

@@ -109,7 +109,7 @@ const DeactivateAccountContent = () => {
       // setReadList({});
       setProfileData(null);
       setProfileHeaderValues(null);
-      OneSignal.logout();
+      await OneSignal.logout();
       // }
     } catch (error) {
       return;

@@ -172,9 +172,9 @@ const ActivateAccount = () => {
                     </DialogTitle>
                   </DialogHeader>
                   <DialogFooter className={cn("sm:justify-start",)}>
-                    <Button className={cn("hover:bg-primary", i18n.language == 'ar' && "mx-2")} onClick={() => {
+                    <Button className={cn("hover:bg-primary", i18n.language == 'ar' && "mx-2")} onClick={async () => {
                       reset();
-                      OneSignal.logout();
+                      await OneSignal.logout();
                     }}>
                       {t("signOut.yes")}
                     </Button>

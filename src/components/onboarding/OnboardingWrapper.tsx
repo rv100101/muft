@@ -402,10 +402,10 @@ const OnboardingWrapper = () => {
               <DialogFooter className="sm:justify-start flex flex-col space-y-2 sm:space-y-0 pt-5">
                 <Button
                   className="hover:bg-[#FF599B]/90"
-                  onClick={() => {
+                  onClick={async () => {
                     queryClient.invalidateQueries();
                     signOut();
-                    OneSignal.logout();
+                    await OneSignal.logout();
                   }}
                 >
                   {t("signOut.yes")}
