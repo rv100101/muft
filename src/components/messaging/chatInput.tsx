@@ -11,7 +11,7 @@ import messagingQuery from "@/queries/messaging";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSelectedConversationData } from "@/zustand/messaging/selectedConversationData";
 import { useSenderInfo } from "@/zustand/messaging/senderData";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useLatestConversationStore from "@/zustand/messaging/showConversation";
 import { toast } from "../ui/use-toast";
 import { useUserStore } from "@/zustand/auth/user";
@@ -28,6 +28,8 @@ const ChatInput = () => {
   const [uuid, setUuid] = useState(
     currentSelectedConversation?.conversation_uuid
   );
+  const [openEmoji, setOpenEmoji] = useState(false);
+  const messageInput = useRef<HTMLTextAreaElement>(null);
   const user = useUserStore((state) => state.user);
   const queryClient = useQueryClient();
   const setInputMessage = useMessageInputStore((state) => state.setInputValue);
@@ -150,58 +152,70 @@ const ChatInput = () => {
           You must Reactivate your account To continue chatting with
           <span className="ml-1 text-primary">{selectedMemberName}.</span>
         </p>
-      ) :
-        !currentSelectedConversation ? <></> :
-          (
-            <>
-              <div className="h-max w-full flex items-end justify-start sm:mb-4 mt-1">
-                <div className="flex flex-col items-center justify-center mx-2">
-                  {currentSelectedConversation ? (
-                    <Popover>
-                      <PopoverTrigger disabled={!currentSelectedConversation}>
-                        <SmileIcon className="text-primary" />
-                      </PopoverTrigger>
-                      <PopoverContent>
-                        <EmojiPicker
-                          onEmojiClick={(emoji: EmojiClickData) => {
-                            setInputMessage(inputMessageValue + emoji.emoji);
-                          }}
-                          height={300}
-                          width={"100%"}
-                        />
-                      </PopoverContent>
-                    </Popover>
-                  ) : (
-                    <SmileIcon className="text-gray-500" />
-                  )}
-                </div>
-                <textarea
-                  className="focus:outline-none p-2 w-full border-2 rounded-lg max-h-full overflow-y-auto caret-primary resize-none dark:text-white dark:bg-[#020817]"
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      handleMessageSend();
-                    }
+      ) : !currentSelectedConversation ? (
+        <></>
+      ) : (
+        <>
+          <div className="h-max w-full flex items-end justify-start sm:mb-4 mt-1">
+            <div className="flex flex-col items-center justify-center mx-2">
+              {currentSelectedConversation ? (
+                <Popover
+                  open={openEmoji}
+                  onOpenChange={(val) => {
+                    setOpenEmoji(val);
                   }}
-                  disabled={!currentSelectedConversation}
-                  data-emojiable={true}
-                  value={inputMessageValue}
-                  name="text"
-                  rows={3}
-                  onChange={(e) => {
-                    setInputMessage(e.target.value);
-                  }}
-                  placeholder={t("messages.typeAMessage")}
-                />  <Button
-                  disabled={!currentSelectedConversation}
-                  onClick={handleMessageSend}
-                  className="rounded-full flex h-max w-max hover:bg-transparen ml-4 px-2 mr-4"
                 >
-                  <SendHorizonalIcon height={16} />
-                </Button>
-              </div>
-
-            </>
-          )}
+                  <PopoverTrigger
+                    className="hover:cursor-pointer"
+                    asChild
+                    disabled={!currentSelectedConversation}
+                  >
+                    <SmileIcon className="text-primary" />
+                  </PopoverTrigger>
+                  <PopoverContent>
+                    <EmojiPicker
+                      onEmojiClick={(emoji: EmojiClickData) => {
+                        setOpenEmoji(false);
+                        setInputMessage(inputMessageValue + emoji.emoji);
+                        messageInput.current?.focus();
+                      }}
+                      height={300}
+                      width={"100%"}
+                    />
+                  </PopoverContent>
+                </Popover>
+              ) : (
+                <SmileIcon className="text-gray-500" />
+              )}
+            </div>
+            <textarea
+              ref={messageInput}
+              className="focus:outline-none p-2 w-full border-2 rounded-lg max-h-full overflow-y-auto caret-primary resize-none dark:text-white dark:bg-[#020817]"
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleMessageSend();
+                }
+              }}
+              disabled={!currentSelectedConversation}
+              data-emojiable={true}
+              value={inputMessageValue}
+              name="text"
+              rows={3}
+              onChange={(e) => {
+                setInputMessage(e.target.value);
+              }}
+              placeholder={t("messages.typeAMessage")}
+            />{" "}
+            <Button
+              disabled={!currentSelectedConversation}
+              onClick={handleMessageSend}
+              className="rounded-full flex h-max w-max hover:bg-transparen ml-4 px-2 mr-4"
+            >
+              <SendHorizonalIcon height={16} />
+            </Button>
+          </div>
+        </>
+      )}
     </div>
   );
 };
