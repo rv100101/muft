@@ -356,6 +356,20 @@ const OnboardingWrapper = () => {
     setGoNext(true);
   }, [step, trigger]);
 
+  useEffect(() => {
+    if (Object.keys(errors).length !== 0) {
+      const getFields: () => string[] = () => {
+        if (step >= fieldNames.length) {
+          return fieldNames[fieldNames.length - 1];
+        } else {
+          return fieldNames[step - 1];
+        }
+      };
+      const validateFields = getFields();
+      trigger(validateFields);
+    }
+  }, [i18n.language, handleNext, errors, trigger, step]);
+
   return isSaving ? (
     <div className="h-screen w-full flex flex-col justify-center items-center">
       <img src={logo} className="animate-bounce" alt="muffin-logo" />
@@ -392,7 +406,14 @@ const OnboardingWrapper = () => {
                     )}
                   />
                 }{" "}
-                <p className={cn("text-sm hover:text-[#1b2950]/90 transition-colors", i18n.language != 'ar' && "hover:underline")}>{t("menu.signOut")}</p>
+                <p
+                  className={cn(
+                    "text-sm hover:text-[#1b2950]/90 transition-colors",
+                    i18n.language != "ar" && "hover:underline"
+                  )}
+                >
+                  {t("menu.signOut")}
+                </p>
               </div>
             </DialogTrigger>
             <DialogContent className="w-72 sm:max-w-md opacity-100">
