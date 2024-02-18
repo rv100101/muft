@@ -367,7 +367,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
           onSubmit={methods.handleSubmit(onSubmit)}
         >
           {!user?.profile_completed ? (
-            <div className="w-full h-min flex justify-start my-8 items-center flex-col px-4">
+            <div className="w-full h-min overflow-y-auto flex justify-start my-8 items-center flex-col px-4">
               <OnboardingWrapper />
             </div>
           ) : (
