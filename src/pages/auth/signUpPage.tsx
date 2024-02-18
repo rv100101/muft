@@ -26,6 +26,7 @@ import profileAboutContentStore, {
   initialState,
 } from "@/zustand/profile/profileAboutStore";
 import { Input } from "@/components/ui/input";
+import SmallFooter from "@/components/smallFooter";
 
 export type SignUpDataType = {
   first_name: string;
@@ -134,8 +135,8 @@ const SignUpPage = () => {
     <>
       <div
         className={cn(
-          "h-[calc(100vh-70px)] py-8 justify-center md:min-h-[calc(100vh-88px)] items-center flex lg:gap-4 w-full lg:px-32 border-t",
-          "md:h-full"
+          "h-[calc(100vh-88px)] py-8 justify-center sm:min-h-[calc(100vh-88px)] items-center flex lg:gap-4 w-full lg:px-32 border-t",
+          "sm:h-full"
         )}
       >
         <Helmet>
@@ -178,10 +179,11 @@ const SignUpPage = () => {
                 First name
               </label> */}
               <div
-                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${formik.touched.first_name && formik.errors.first_name
-                  ? "border-rose-500"
-                  : ""
-                  }`}
+                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${
+                  formik.touched.first_name && formik.errors.first_name
+                    ? "border-rose-500"
+                    : ""
+                }`}
               >
                 <UserIcon color="#98A2B3" size={20} className="mt-1" />
                 <Input
@@ -199,10 +201,11 @@ const SignUpPage = () => {
                 <InfoIcon
                   color="#D92D20"
                   size={20}
-                  className={`mt-1 ${formik.touched.first_name && formik.errors.first_name
-                    ? "visible"
-                    : "hidden"
-                    }`}
+                  className={`mt-1 ${
+                    formik.touched.first_name && formik.errors.first_name
+                      ? "visible"
+                      : "hidden"
+                  }`}
                 />
               </div>
               {formik.touched.first_name && formik.errors.first_name ? (
@@ -225,10 +228,11 @@ const SignUpPage = () => {
               </label> */}
 
               <div
-                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${formik.touched.last_name && formik.errors.last_name
-                  ? "border-rose-500"
-                  : ""
-                  }`}
+                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${
+                  formik.touched.last_name && formik.errors.last_name
+                    ? "border-rose-500"
+                    : ""
+                }`}
               >
                 <UserIcon color="#98A2B3" size={20} className="mt-1" />
                 <Input
@@ -247,10 +251,11 @@ const SignUpPage = () => {
                 <InfoIcon
                   color="#D92D20"
                   size={20}
-                  className={`mt-1 ${formik.touched.last_name && formik.errors.last_name
-                    ? "visible"
-                    : "hidden"
-                    }`}
+                  className={`mt-1 ${
+                    formik.touched.last_name && formik.errors.last_name
+                      ? "visible"
+                      : "hidden"
+                  }`}
                 />
               </div>
               {formik.touched.last_name && formik.errors.last_name ? (
@@ -271,10 +276,11 @@ const SignUpPage = () => {
                 Email
               </label> */}
               <div
-                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${formik.touched.email && formik.errors.email
-                  ? "border-rose-500"
-                  : ""
-                  }`}
+                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${
+                  formik.touched.email && formik.errors.email
+                    ? "border-rose-500"
+                    : ""
+                }`}
               >
                 <MailIcon color="#98A2B3" size={20} className="mt-1" />
                 <Input
@@ -293,10 +299,11 @@ const SignUpPage = () => {
                 <InfoIcon
                   color="#D92D20"
                   size={20}
-                  className={`mt-1 ${formik.touched.email && formik.errors.email
-                    ? "visible"
-                    : "hidden"
-                    }`}
+                  className={`mt-1 ${
+                    formik.touched.email && formik.errors.email
+                      ? "visible"
+                      : "hidden"
+                  }`}
                 />
               </div>
               {formik.touched.email && formik.errors.email ? (
@@ -318,10 +325,11 @@ const SignUpPage = () => {
                 Password
               </label> */}
               <div
-                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${formik.touched.password && formik.errors.password
-                  ? "border-rose-500"
-                  : ""
-                  }`}
+                className={`flex items-center h-max flex-row border rounded-full px-5 mx-3 ${
+                  formik.touched.password && formik.errors.password
+                    ? "border-rose-500"
+                    : ""
+                }`}
               >
                 <LockIcon color="#98A2B3" size={20} className="mt-1" />
                 <Input
@@ -336,10 +344,11 @@ const SignUpPage = () => {
                   onBlur={formik.handleBlur}
                 />
                 <button
-                  className={`mt-1 ${formik.touched.password &&
+                  className={`mt-1 ${
+                    formik.touched.password &&
                     formik.errors.password &&
                     "ml-2 text-[#D92D20]"
-                    }`}
+                  }`}
                   onClick={() => setShowPassword((prev) => !prev)}
                   type="button"
                 >
@@ -365,10 +374,11 @@ const SignUpPage = () => {
                 <SelectTrigger
                   name="lang"
                   onBlur={formik.handleBlur}
-                  className={` rounded-full ${formik.touched.lang && formik.errors.lang
-                    ? "border-rose-500"
-                    : ""
-                    }
+                  className={` rounded-full ${
+                    formik.touched.lang && formik.errors.lang
+                      ? "border-rose-500"
+                      : ""
+                  }
                 `}
                 >
                   <SelectValue placeholder={t("general.preferredLanguage")} />
@@ -413,6 +423,9 @@ const SignUpPage = () => {
             {t("signUp.alreadyHaveAccount")}
           </Link>
         </div>
+      </div>
+      <div className="flex bg-[#0C1223] md:hidden h-min dark:bg-[#0C1223] w-full">
+        <SmallFooter />
       </div>
     </>
   );
