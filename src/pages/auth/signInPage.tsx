@@ -18,7 +18,7 @@ const SignInPage = () => {
         <div className="flex-1 h-full items-center justify-center w-full flex">
           <SignInForm />
         </div>
-        <div className="flex md:hidden h-min dark:bg-[#0C1223] w-full">
+        <div className="flex bg-[#0C1223] md:hidden h-min dark:bg-[#0C1223] w-full">
           <SmallFooter />
         </div>
       </div>
