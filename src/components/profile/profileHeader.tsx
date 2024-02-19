@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { getImagePath } from "@/lib/images";
 import ProfileHeaderSkeleton from "./profileHeaderSkeleton";
 import { Button } from "../ui/button";
@@ -53,6 +53,7 @@ import useMobileMessagingViewStore from "@/zustand/messaging/mobileStateView";
 import { Skeleton } from "../ui/skeleton";
 import { useTranslation } from "react-i18next";
 import onboardingStore from "@/zustand/profile/onboarding/onboardingStore";
+import likesQuery from "@/queries/likes";
 
 type FormDataType = {
   reason: string;
@@ -88,24 +89,23 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
   const setIsFinished = onboardingStore((state) => state.setIsFinished);
   // const [likeTriggered, toggleLikeIcon] = useState(false);
   const [favoriteTriggered, toggleFavoriteIcon] = useState(false);
+  const queryClient = useQueryClient();
   const toggleLike = useMutation({
     mutationFn: async ({
-      member,
+      liker,
       liked,
     }: {
-      member: number;
+      liker: number;
       liked: number;
     }) => {
-      // toggleLikeIcon((prev) => !prev);
       toggleIsLiked();
-
-      const res = await axiosQuery.post("/Like", {
-        member: member,
-        liked: liked,
-      });
-      return res.data;
+      return likesQuery.likeUser(liker, liked, i18n.language);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["home-members-likes"]);
     },
   });
+
 
   const toggleFavorite = useMutation({
     mutationFn: async ({
@@ -583,7 +583,7 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
                           variant={"outline"}
                           onClick={() => {
                             toggleLike.mutate({
-                              member: user!.member_id,
+                              liker: user!.member_id,
                               liked: parseInt(userId),
                             });
                             setIsLiked(isLiked == "0" ? "1" : "0");

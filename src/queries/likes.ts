@@ -19,8 +19,29 @@ const getLikes = async (memberId: number, lang: string) => {
   }
 };
 
+const likeUser = async (liker: number, memberId: number, lang: string) => {
+  try {
+    const formData = new FormData();
+    formData.append(
+      "auth",
+      "0DB31DEE22DC4C03AD7DAAA9C29518FF3C08D931992A4A5CB0A4FF4CF4707DC6"
+    );
+    formData.append("liked", memberId.toString());
+    formData.append("liker", liker.toString());
+    formData.append("lang", lang);
+    const response = await axiosQuery.post(
+      "https://muffinapi.azurewebsites.net/like.php",
+      formData
+    );
+    return response.data;
+  } catch (error) {
+    return [];
+  }
+};
+
 const likesQuery = {
   getLikes,
+  likeUser,
 };
 
 export default likesQuery;

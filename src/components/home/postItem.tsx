@@ -18,6 +18,7 @@ import { Skeleton } from "../ui/skeleton";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
+import likesQuery from "@/queries/likes";
 const PostItem = ({ memberData }: { memberData: MemberData }) => {
   const [imageLoaded, setImageLoaded] = useState(true);
   const [t, i18n] = useTranslation();
@@ -27,17 +28,13 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
   const queryClient = useQueryClient();
   const toggleLike = useMutation({
     mutationFn: async ({
-      member,
+      liker,
       liked,
     }: {
-      member: number;
+      liker: number;
       liked: number;
     }) => {
-      const res = await axiosQuery.post("/Like", {
-        member: member,
-        liked: liked,
-      });
-      return res.data;
+      return likesQuery.likeUser(liker, liked, i18n.language);
     },
     onSuccess: () => {
       queryClient.invalidateQueries(["home-members-likes"]);
@@ -139,7 +136,7 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
                           size={50}
                           onClick={() => {
                             toggleLike.mutate({
-                              member: user!.member_id,
+                              liker: user!.member_id,
                               liked: memberData.member_id,
                             });
                             const updatedLikes = { ...likes };
