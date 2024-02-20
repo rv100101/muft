@@ -239,7 +239,7 @@ const SignInForm = () => {
           ) : null}
         </div>
 
-        <div className="flex flex-col justify-center space-y-1 pt-3">
+        <div className="flex flex-col justify-center space-y-1 ">
           {/* <label htmlFor="password" className="text-xs text-semibold mb-2">
             Password
           </label> */}
