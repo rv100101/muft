@@ -127,7 +127,6 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
           <HomepageSearchInput />
         </DialogContent>
       </Dialog>
-
       {/* filters */}
       <Dialog
         open={filtersTriggered}
@@ -147,7 +146,7 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
         )}
       </Dialog>
       <Sheet>
-        <div className="flex justify-between w-full">
+        <div className="flex  w-full items-center">
           <SheetTrigger
             className={cn(
               "flex flex-row lg:hidden w-full space-x-5",
@@ -157,11 +156,14 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
             <MenuIcon />
             {children}
           </SheetTrigger>
-
+          {location === "/" || location === "/notifications" ?
+            <div className="w-full h-min inline-flex justify-center items-center">
+              <img src={logo} className="w-full h-min m-2" />
+            </div> : <></>}
           {location === "/" || location === "/notifications" ? (
             <div
               className={cn(
-                "flex flex-row space-x-3 justify-end",
+                "flex flex-row space-x-3 w-full justify-end items-center",
                 i18n.language == "ar" && "space-x-reverse"
               )}
             >
@@ -170,14 +172,14 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
                 onClick={() => {
                   setFiltersTriggered(true);
                 }}
-                className="block lg:hidden w-full"
+                className="block lg:hidden w-min"
               />
               <Search
                 size={20}
                 onClick={() => {
                   setSearchTriggered(true);
                 }}
-                className="block lg:hidden w-full"
+                className="block lg:hidden w-min"
               />
             </div>
           ) : (
