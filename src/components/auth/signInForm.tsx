@@ -128,9 +128,9 @@ const SignInForm = () => {
       }
       setPreferredLanguage(signInData.communication_language);
       if (data && data!.authorized) {
+        updateUser(data);
         queryClient.invalidateQueries();
         OneSignal.login(data.member_id.toString());
-        updateUser(data);
         navigate("/", { replace: true });
       } else {
         return toast({
