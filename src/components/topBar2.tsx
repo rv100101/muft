@@ -158,7 +158,7 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
           </SheetTrigger>
           {location === "/" || location === "/notifications" ?
             <div className="w-full h-min inline-flex justify-center items-center">
-              <img src={logo} className="w-full h-min m-2" />
+              <img src={logo} className="w-full h-10 m-2" />
             </div> : <></>}
           {location === "/" || location === "/notifications" ? (
             <div
