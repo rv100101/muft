@@ -20,7 +20,7 @@ import { Search, SlidersHorizontal } from "lucide-react";
 import { useLocation } from "wouter";
 
 const HomePage = () => {
-  const [, i18n] = useTranslation();
+  const [t, i18n] = useTranslation();
   const [location] = useLocation();
   const [searchTriggered, setSearchTriggered] = useState(false);
   const [filtersTriggered, setFiltersTriggered] = useState(false);
@@ -185,7 +185,7 @@ const HomePage = () => {
             />
           </div>
           <div className="xl:col-span-3 col-span-0 hidden xl:flex sm:flex-col overflow-auto no-scrollbar ml-10">
-            <div className=" xl:w-[380px] h-5/6 pt-4 px-5 lg:p-4 sm:flex flex-col hidden ">
+            <div className="justify-center items-center xl:w-[380px] h-5/6 pt-4 px-5 lg:p-4 sm:flex flex-col hidden ">
               <HomepageSearchInput />
               {/* filter */}
               <HomeFilters isLoading={retrievingMemberData} members={members} />
@@ -207,9 +207,6 @@ const HomePage = () => {
               open={filtersTriggered}
               onOpenChange={(val) => setFiltersTriggered(val)}
             >
-              <DialogContent className="flex flex-col sm:max-w-md opacity-100 w-4/5">
-                <HomeFilters isLoading={false} members={null} />
-              </DialogContent>
               {location === "/" && (
                 <DialogContent className="flex flex-col sm:max-w-md opacity-100 w-4/5">
                   <HomeFilters isLoading={false} members={null} />
@@ -217,30 +214,36 @@ const HomePage = () => {
               )}
             </Dialog>
             <div
-              onClick={() => {
-                setFiltersTriggered(true);
-              }}
               className={cn(
                 "hidden md:flex md:flex-col xl:hidden lg:items-center space-y-2 w-full h-full md:items-start lg:justify-center xl:justify-center",
                 i18n.language == "ar" && "space-x-reverse"
               )}
             >
-              <div className="flex space-x-2 w-min bg-primary py-2 px-4 cursor-pointer rounded-lg text-white hover:bg-[#FF599B]/90 dark:bg-[#ae2e51]">
+              <div
+                onClick={() => {
+                  setFiltersTriggered(true);
+                }}
+                className={cn("flex items-center space-x-2 w-min bg-primary py-2 px-4 cursor-pointer rounded-lg text-white hover:bg-[#FF599B]/90 dark:bg-[#ae2e51]",
+                  i18n.language == "ar" && "space-x-reverse"
+                )}>
                 <SlidersHorizontal
                   size={20}
                   className="w-min h-min"
                 />
                 <p>
-                  Filter
+                  {t("filter.filter")}
                 </p>
               </div>
-              <div onClick={() => { setSearchTriggered(true); }} className="flex w-min space-x-2 bg-primary py-2 px-4 cursor-pointer rounded-lg text-white hover:bg-[#FF599B]/90 dark:bg-[#ae2e51]">
+              <div onClick={() => { setSearchTriggered(true); }}
+                className={cn("flex items-center space-x-2 w-min bg-primary py-2 px-4 cursor-pointer rounded-lg text-white hover:bg-[#FF599B]/90 dark:bg-[#ae2e51]",
+                  i18n.language == "ar" && "space-x-reverse")}
+              >
                 <Search
                   size={20}
                   className="w-min h-min"
                 />
                 <p>
-                  Search
+                  {t("search.search")}
                 </p>
               </div>
             </div>

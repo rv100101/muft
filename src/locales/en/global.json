@@ -53,6 +53,7 @@
     "search": "Search"
   },
   "filter": {
+    "filter": "Filter",
     "filterBy": "Filter By",
     "age": "Age",
     "from": "From",
