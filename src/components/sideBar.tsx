@@ -18,7 +18,6 @@ import { Button } from "./ui/button";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { scrollToTop } from "@/lib/utils";
 import useConversationHistoryStore from "@/zustand/messaging/showConversation";
-import { useOrientation } from "@uidotdev/usehooks";
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
 import profileHeaderStore from "@/zustand/profile/profileHeaderStore";
 // import useReadConversationsStateStore from "@/zustand/messaging/readConversations";
@@ -28,7 +27,6 @@ import OneSignal from "react-onesignal";
 
 const SideBar = () => {
   const [t, i18n] = useTranslation();
-  const orientation = useOrientation();
   const isDark = useSettingsStore(
     (state) => state.settings?.darkModeSwitch
   );
@@ -88,13 +86,12 @@ const SideBar = () => {
     <div
       dir={i18n.language == "ar" ? "rtl" : "ltr"}
       className={cn(
-        "h-full lg:flex sm:flex-col justify-between hidden",
+        "h-screen overflow-y-auto overflow-x-hidden lg:flex sm:flex-col justify-between hidden",
         i18n.language == "ar" ? "border-l" : "boder-r"
       )}
     >
       <div
-        className={`h-full flex flex-col justify-between ${orientation.angle === 90 ? "overflow-scroll" : ""
-          }`}
+        className={"h-full flex flex-col justify-between"}
       >
         <div className="flex flex-col w-[220px]">
           <Link href="/">

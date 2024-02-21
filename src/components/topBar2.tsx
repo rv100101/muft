@@ -186,7 +186,7 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
             <></>
           )}
         </div>
-        <SheetContent side={i18n.language == "en" ? "left" : "right"}>
+        <SheetContent className="overflow-y-auto" side={i18n.language == "en" ? "left" : "right"}>
           <SheetHeader>
             <SheetTitle>
               <Link href="/">
