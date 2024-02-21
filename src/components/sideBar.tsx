@@ -86,7 +86,7 @@ const SideBar = () => {
     <div
       dir={i18n.language == "ar" ? "rtl" : "ltr"}
       className={cn(
-        "h-screen overflow-y-auto overflow-x-hidden lg:flex sm:flex-col justify-between hidden",
+        "h-screen overflow-y-auto overflow-x-hidden no-scrollbar lg:flex sm:flex-col justify-between hidden",
         i18n.language == "ar" ? "border-l" : "boder-r"
       )}
     >

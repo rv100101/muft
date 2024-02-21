@@ -51,7 +51,7 @@ const HomepageSearchInput = () => {
   });
 
   return (
-    <div className="lg:w-[330px] flex flex-col justify-center items-center">
+    <div className="lg:w-[330px] relative flex flex-col justify-center items-center">
       <div
         className={cn(
           "hover:cursor-pointer w-full border-2 p-2 space-x-2 rounded-xl flex items-center px-5 mx-2",
@@ -76,7 +76,7 @@ const HomepageSearchInput = () => {
       </div>
       {debouncedSearchValue.length > 0 ? (
         searchResults.length !== 0 ? (
-          <div className="mt-1 sticky z-40 w-full h-min max-h-[200px] border rounded-b-md lg:w-[330px] bg-white overflow-y-auto">
+          <div className="mt-1 z-40 w-full h-min max-h-[200px] lg:max-h-[300px] sm:max-h-[100px] border rounded-b-md lg:w-[330px] bg-white overflow-y-auto">
             {searchResults.map((result: SearchResultItem, index: number) => {
               return (
                 <Button
@@ -93,7 +93,7 @@ const HomepageSearchInput = () => {
                         result.gender,
                         result.member_uuid
                       )}
-                      className="h-12 rounded-full"
+                      className="h-12 w-12 object-cover rounded-full"
                     />
                     <div className="w-full text-start">
                       <p>
@@ -107,25 +107,15 @@ const HomepageSearchInput = () => {
             })}
           </div>
         ) : isLoading ? (
-          <Button
-            disabled
-            className="bg-white border-b h-max w-full hover:bg-slate-100"
-          >
-            <div className="flex text-black space-x-2 w-full items-center justify-center">
-              <Loader2 className="ml-2 animate-spin" />
-            </div>
-          </Button>
+          <div className="flex p-2 justify-center mt-1 rounded-b-md bg-white text-black no-scrollbarspace-x-2 w-full items-center border">
+            <Loader2 className="ml-2 animate-spin" />
+          </div>
         ) : (
-          <Button
-            disabled
-            className="bg-white border-b h-max w-full hover:bg-slate-100"
-          >
-            <div className="flex text-black space-x-2 w-full items-center justify-start">
-              <div className="w-full text-start">
-                <p>No Records Found</p>
-              </div>
+          <div className="flex p-2 mt-1 rounded-b-md bg-white text-black no-scrollbarspace-x-2 w-full items-center justify-start border">
+            <div className="w-full text-start">
+              <p className="text-sm text-center">No Records Found</p>
             </div>
-          </Button>
+          </div>
         )
       ) : null}
     </div>

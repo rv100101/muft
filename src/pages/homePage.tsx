@@ -178,15 +178,17 @@ const HomePage = () => {
       <div className="flex 2xl:justify-center w-full">
         <div className="flex 2xl:justify-center w-full lg:w-full justify-start lg:grid-cols-9 grid-cols-1 gap-4">
           <div className="hidden lg:block w-32"></div>
-          <div className="w-full lg:w-min">
+          <div className="w-full lg:w-max">
             <Posts
               isLoading={retrievingMemberData || likesLoading || favoritesLoading}
               memberList={memberList}
             />
           </div>
           <div className="xl:col-span-3 col-span-0 hidden xl:flex sm:flex-col overflow-auto no-scrollbar ml-10">
-            <div className="justify-center items-center xl:w-[380px] h-5/6 pt-4 px-5 lg:p-4 sm:flex flex-col hidden ">
-              <HomepageSearchInput />
+            <div className="relative justify-center items-center xl:w-[380px] h-5/6 pt-4 px-5 lg:p-4 sm:flex flex-col hidden ">
+              <div className="absolute top-4 h-full">
+                <HomepageSearchInput />
+              </div>
               {/* filter */}
               <HomeFilters isLoading={retrievingMemberData} members={members} />
             </div>

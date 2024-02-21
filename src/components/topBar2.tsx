@@ -122,7 +122,7 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
         open={searchTriggered}
         onOpenChange={(val) => setSearchTriggered(val)}
       >
-        <DialogContent className="sm:max-w-md opacity-100 w-4/5 left-[50%] top-[18%]">
+        <DialogContent className="sm:max-w-md opacity-100 w-4/5 left-[50%] top-[30%] sm:top-[40%]">
           <p>Search user</p>
           <HomepageSearchInput />
         </DialogContent>
