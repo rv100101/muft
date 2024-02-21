@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import AuthenticatedLayout from "./authenticatedPages/layout";
 import { useQuery } from "@tanstack/react-query";
 import membersQuery from "@/queries/home";
@@ -14,9 +14,16 @@ import HomeFilters from "@/components/home/filters";
 import { useFilterStore } from "@/zustand/home/filter";
 import { usePreferredLanguageStore } from "@/zustand/auth/preferred_language";
 import { useTranslation } from "react-i18next";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { cn } from "@/lib/utils";
+import { Search, SlidersHorizontal } from "lucide-react";
+import { useLocation } from "wouter";
 
 const HomePage = () => {
   const [, i18n] = useTranslation();
+  const [location] = useLocation();
+  const [searchTriggered, setSearchTriggered] = useState(false);
+  const [filtersTriggered, setFiltersTriggered] = useState(false);
   const setSelectedProfileId = useHomepageViewStore(
     (state) => state.setSelectedProfileId
   );
@@ -182,9 +189,63 @@ const HomePage = () => {
               <HomeFilters isLoading={retrievingMemberData} members={members} />
             </div>
           </div>
+          <div className="lg:flex hidden xl:hidden">
+            {/* search */}
+            <Dialog
+              open={searchTriggered}
+              onOpenChange={(val) => setSearchTriggered(val)}
+            >
+              <DialogContent className="sm:max-w-md opacity-100 w-4/5 left-[50%] top-[18%]">
+                <p>Search user</p>
+                <HomepageSearchInput />
+              </DialogContent>
+            </Dialog>
+            {/* filters */}
+            <Dialog
+              open={filtersTriggered}
+              onOpenChange={(val) => setFiltersTriggered(val)}
+            >
+              <DialogContent className="flex flex-col sm:max-w-md opacity-100 w-4/5">
+                <HomeFilters isLoading={false} members={null} />
+              </DialogContent>
+              {location === "/" && (
+                <DialogContent className="flex flex-col sm:max-w-md opacity-100 w-4/5">
+                  <HomeFilters isLoading={false} members={null} />
+                </DialogContent>
+              )}
+            </Dialog>
+            <div
+              onClick={() => {
+                setFiltersTriggered(true);
+              }}
+              className={cn(
+                "hidden md:flex md:flex-col xl:hidden lg:items-center md:items-start space-y-2 w-full h-full justify-center",
+                i18n.language == "ar" && "space-x-reverse"
+              )}
+            >
+              <div className="flex space-x-2 w-full bg-primary py-2 px-4 cursor-pointer rounded-lg text-white hover:bg-[#FF599B]/90 dark:bg-[#ae2e51]">
+                <SlidersHorizontal
+                  size={20}
+                  className="w-min h-min"
+                />
+                <p>
+                  Filter
+                </p>
+              </div>
+              <div onClick={() => { setSearchTriggered(true); }} className="flex w-full space-x-2 bg-primary py-2 px-4 cursor-pointer rounded-lg text-white hover:bg-[#FF599B]/90 dark:bg-[#ae2e51]">
+                <Search
+                  size={20}
+                  className="w-min h-min"
+                />
+                <p>
+                  Search
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </AuthenticatedLayout>
+    </AuthenticatedLayout >
   );
 };
 
