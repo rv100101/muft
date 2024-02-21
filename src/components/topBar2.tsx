@@ -153,7 +153,7 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
               i18n.language == "ar" && "space-x-reverse"
             )}
           >
-            <MenuIcon />
+            <MenuIcon className="flex-shrink-0" />
             {children}
           </SheetTrigger>
           {location === "/" || location === "/notifications" ?
