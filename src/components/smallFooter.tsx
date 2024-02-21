@@ -7,7 +7,7 @@ const SmallFooter = () => {
   return (
     <div
       className={cn(
-        "flex w-full px-8 lg:px-36 p-2 h-max items-center justify-between"
+        "flex flex-col sm:flex-row w-full px-8 lg:px-36 p-2 h-max items-center justify-between"
       )}
     >
       <p dir="ltr" className="text-white text-xs sm:text-xs md:text-center">
