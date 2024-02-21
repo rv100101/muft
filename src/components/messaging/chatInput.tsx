@@ -167,7 +167,6 @@ const ChatInput = () => {
                 >
                   <PopoverTrigger
                     className="hover:cursor-pointer"
-                    asChild
                     disabled={!currentSelectedConversation}
                   >
                     <SmileIcon className="text-primary" height={28} width={28} />
