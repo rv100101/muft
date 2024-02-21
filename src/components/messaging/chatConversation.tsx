@@ -9,7 +9,7 @@ const ChatConversation = () => {
       <div className="min-h-min flex-shrink-0">
         <MessageHeader />
       </div>
-      <div className="h-[calc(100vh-164px)] md:flex-1 md:h-full overflow-y-auto">
+      <div className=" flex-grow h-max md:flex-1 md:h-full overflow-y-auto">
         <ChatMessages />
       </div>
       <div className="fixed w-full flex-shrink-0 sm:static bottom-0">
