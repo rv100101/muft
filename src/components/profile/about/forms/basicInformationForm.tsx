@@ -369,7 +369,7 @@ const BasicInformationForm = () => {
                       type="date"
                       placeholder="dd MMM yyyy"
                       className={cn(
-                        "outline-0 border rounded-lg w-full py-3 px-5 dark:[color-scheme:dark]",
+                        "outline-0 border rounded-lg w-full py-3 px-5 dark:[color-scheme:dark] appearance-none",
                         i18n.language == "ar" && "text-right"
                       )}
                     />
