@@ -185,7 +185,7 @@ const ChatInput = () => {
                   </PopoverContent>
                 </Popover>
               ) : (
-                <SmileIcon className="text-gray-500" />
+                <SmileIcon className="text-gray-500 flex-shrink-0" />
               )}
             </div>
             <textarea
@@ -211,7 +211,7 @@ const ChatInput = () => {
               onClick={handleMessageSend}
               className="rounded-full flex h-max w-max hover:bg-transparen ml-4 px-2 mr-4"
             >
-              <SendHorizonalIcon height={16} />
+              <SendHorizonalIcon className="flex-shrink-0" height={16} />
             </Button>
           </div>
         </>
