@@ -176,20 +176,22 @@ const HomePage = () => {
         <link rel="canonical" href={`https://${window.location.hostname}/`} />
       </Helmet>
       <div className="flex 2xl:justify-center w-full">
-        <div className="flex 2xl:justify-center w-full lg:w-min justify-start lg:grid-cols-9 grid-cols-1 gap-4">
+        <div className="flex 2xl:justify-center w-full lg:w-full justify-start lg:grid-cols-9 grid-cols-1 gap-4">
           <div className="hidden lg:block w-32"></div>
-          <Posts
-            isLoading={retrievingMemberData || likesLoading || favoritesLoading}
-            memberList={memberList}
-          />
+          <div className="w-full lg:w-min">
+            <Posts
+              isLoading={retrievingMemberData || likesLoading || favoritesLoading}
+              memberList={memberList}
+            />
+          </div>
           <div className="xl:col-span-3 col-span-0 hidden xl:flex sm:flex-col overflow-auto no-scrollbar ml-10">
-            <div className="w-[380px] h-5/6 pt-4 px-5 lg:p-4 sm:flex flex-col hidden ">
+            <div className=" xl:w-[380px] h-5/6 pt-4 px-5 lg:p-4 sm:flex flex-col hidden ">
               <HomepageSearchInput />
               {/* filter */}
               <HomeFilters isLoading={retrievingMemberData} members={members} />
             </div>
           </div>
-          <div className="lg:flex hidden xl:hidden">
+          <div className="lg:flex hidden xl:hidden w-full">
             {/* search */}
             <Dialog
               open={searchTriggered}
@@ -219,11 +221,11 @@ const HomePage = () => {
                 setFiltersTriggered(true);
               }}
               className={cn(
-                "hidden md:flex md:flex-col xl:hidden lg:items-center md:items-start space-y-2 w-full h-full justify-center",
+                "hidden md:flex md:flex-col xl:hidden lg:items-center space-y-2 w-full h-full md:items-start lg:justify-center xl:justify-center",
                 i18n.language == "ar" && "space-x-reverse"
               )}
             >
-              <div className="flex space-x-2 w-full bg-primary py-2 px-4 cursor-pointer rounded-lg text-white hover:bg-[#FF599B]/90 dark:bg-[#ae2e51]">
+              <div className="flex space-x-2 w-min bg-primary py-2 px-4 cursor-pointer rounded-lg text-white hover:bg-[#FF599B]/90 dark:bg-[#ae2e51]">
                 <SlidersHorizontal
                   size={20}
                   className="w-min h-min"
@@ -232,7 +234,7 @@ const HomePage = () => {
                   Filter
                 </p>
               </div>
-              <div onClick={() => { setSearchTriggered(true); }} className="flex w-full space-x-2 bg-primary py-2 px-4 cursor-pointer rounded-lg text-white hover:bg-[#FF599B]/90 dark:bg-[#ae2e51]">
+              <div onClick={() => { setSearchTriggered(true); }} className="flex w-min space-x-2 bg-primary py-2 px-4 cursor-pointer rounded-lg text-white hover:bg-[#FF599B]/90 dark:bg-[#ae2e51]">
                 <Search
                   size={20}
                   className="w-min h-min"
