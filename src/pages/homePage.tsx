@@ -230,7 +230,7 @@ const HomePage = () => {
                 )}>
                 <SlidersHorizontal
                   size={20}
-                  className="w-min h-min"
+                  className="w-4 h-4"
                 />
                 <p>
                   {t("filter.filter")}
@@ -242,7 +242,7 @@ const HomePage = () => {
               >
                 <Search
                   size={20}
-                  className="w-min h-min"
+                  className="w-4 h-4"
                 />
                 <p>
                   {t("search.search")}
