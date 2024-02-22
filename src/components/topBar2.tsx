@@ -172,14 +172,14 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
                 onClick={() => {
                   setFiltersTriggered(true);
                 }}
-                className="block lg:hidden w-min"
+                className="block lg:hidden w-max"
               />
               <Search
                 size={20}
                 onClick={() => {
                   setSearchTriggered(true);
                 }}
-                className="block lg:hidden w-min"
+                className="block lg:hidden w-max"
               />
             </div>
           ) : (
