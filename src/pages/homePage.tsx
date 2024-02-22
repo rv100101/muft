@@ -217,7 +217,7 @@ const HomePage = () => {
             </Dialog>
             <div
               className={cn(
-                "hidden md:flex md:flex-col xl:hidden lg:items-center space-y-2 w-full h-full md:items-start lg:justify-center xl:justify-center",
+                "hidden md:flex xl:hidden m-2 space-x-2 w-full h-full md:items-start justify-start mt-4",
                 i18n.language == "ar" && "space-x-reverse"
               )}
             >
