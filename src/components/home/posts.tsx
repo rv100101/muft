@@ -35,7 +35,7 @@ const Posts = ({
         setValue(e.currentTarget.scrollTop);
       }}
       ref={containerRef}
-      className="col-span-4 overflow-y-auto w-full lg:w-min no-scrollbar 2xl:w-1/2"
+      className="col-span-4 overflow-y-auto w-full h-full lg:w-full no-scrollbar 2xl:w-1/2"
     >
       {isLoading ? (
         <div className="no-scrollbar flex flex-col items-center lg:p-5 px-0 lg:w-[468px] w-screen h-screen sm:w-full rounded-b-xl space-y-4 border-x border-[#E0E0E0] dark:border-[#131d2d] lg:h-min overflow-y-auto">
