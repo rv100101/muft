@@ -18,6 +18,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { Search, SlidersHorizontal } from "lucide-react";
 import { useLocation } from "wouter";
+import useHomepageSearchStore from "@/zustand/home/searchValue";
 
 const HomePage = () => {
   const [t, i18n] = useTranslation();
@@ -30,6 +31,9 @@ const HomePage = () => {
   const user = useUserStore((state) => state.user);
   const setMemberList = useHomepageViewStore(
     (state) => state.setModifiedMemberList
+  );
+  const searchValue = useHomepageSearchStore(
+    (state) => state.value
   );
   const setIsLoading = useHomepageViewStore((state) => state.setIsLoading);
   const likes = useHomepageViewStore((state) => state.likes);
@@ -186,11 +190,13 @@ const HomePage = () => {
           </div>
           <div className="xl:col-span-3 col-span-0 hidden xl:flex sm:flex-col overflow-auto no-scrollbar ml-10">
             <div className="relative justify-center items-center xl:w-[380px] h-5/6 pt-4 px-5 lg:p-4 sm:flex flex-col hidden ">
-              <div className="absolute top-4 h-full">
+              <div className={cn("absolute top-4 h-full")}>
                 <HomepageSearchInput />
               </div>
               {/* filter */}
-              <HomeFilters isLoading={retrievingMemberData} members={members} />
+              <div className={cn(searchValue.length == 0 && "z-20")}>
+                <HomeFilters isLoading={retrievingMemberData} members={members} />
+              </div>
             </div>
           </div>
           <div className="lg:flex hidden xl:hidden w-full">
