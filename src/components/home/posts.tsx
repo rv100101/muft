@@ -1,10 +1,10 @@
-import PostItem from "./postItem";
 import PostHeader from "./postHeader";
 import { Skeleton } from "../ui/skeleton";
-import useHomePageScrollPosition from "@/zustand/home/scrollPosition";
-import { useEffect, useRef, useState } from "react";
-import { useDebounce } from "@uidotdev/usehooks";
 import { MemberData } from "@/types/home";
+import MemberList from "./list";
+import { useEffect, useRef, useState } from "react";
+import useHomePageScrollPosition from "@/zustand/home/scrollPosition";
+import { useDebounce } from "@uidotdev/usehooks";
 
 const Posts = ({
   isLoading,
@@ -18,7 +18,6 @@ const Posts = ({
     useHomePageScrollPosition();
   const [value, setValue] = useState<number>(scrollPosition);
   const debouncedScrollPositionValue = useDebounce<number>(value, 500);
-  // Set the initial scroll position when the component mounts
   useEffect(() => {
     if (!isLoading && scrollPosition && containerRef.current) {
       containerRef.current.scrollTop = +scrollPosition;
@@ -35,8 +34,9 @@ const Posts = ({
         setValue(e.currentTarget.scrollTop);
       }}
       ref={containerRef}
-      className="col-span-4 overflow-y-auto w-full h-full lg:w-full no-scrollbar"
+      className="col-span-4 overflow-y-scroll w-full h-full no-scrollbar"
     >
+      <PostHeader />
       {isLoading ? (
         <div className="no-scrollbar flex flex-col items-center lg:p-5 px-0 lg:w-[468px] w-screen h-screen sm:w-full rounded-b-xl space-y-4 border-x border-[#E0E0E0] dark:border-[#131d2d] lg:h-min overflow-y-auto">
           {/* <div className="flex flex-col justify-center space-x-4 w-full ml-5 mt-10 border w-full"> */}
@@ -52,24 +52,8 @@ const Posts = ({
           {/* </div> */}
         </div>
       ) : (
-        <div className="w-full">
-          <PostHeader />
-          <div className="w-full lg:block hidden">
-            <div className="flex flex-row w-full justify-between lg:p-5 lg:border-l lg:border-r">
-              <p className="uppercase font-semibold"></p>
-            </div>
-          </div>
-          <div className="no-scrollbar py-4 lg:py-0 border-x flex flex-col items-center lg:p-8 px-0 md:w-full w-screen h-screen sm:w-full rounded-b-xl space-y-4 border-[#E0E0E0] dark:border-[#131d2d] lg:h-min overflow-y-auto scroll-smooth">
-            {memberList.length > 0 ? (
-              memberList.map((post, index: number) => (
-                <PostItem key={index} memberData={post} />
-              ))
-            ) : (
-              <div className="rounded-t-md lg:w-[460px] w-[350px] object-cover h-screen">
-                No Members Found
-              </div>
-            )}
-          </div>
+        <div className="w-full lg:pt-8 border-x">
+          <MemberList isLoading={isLoading} memberList={memberList} />
         </div>
       )}
     </div>
