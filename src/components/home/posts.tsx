@@ -30,7 +30,7 @@ const Posts = ({
           {/* </div> */}
         </div>
       ) : (
-        <div className="w-full h-max lg:pt-8 border-x">
+        <div className="w-full h-max">
           <MemberList isLoading={isLoading} memberList={memberList} />
         </div>
       )}

@@ -182,7 +182,7 @@ const HomePage = () => {
       <div className="flex 2xl:justify-center w-full">
         <div className="flex xl:justify-center w-full lg:w-full justify-start lg:grid-cols-9 grid-cols-1 gap-4">
           <div className="hidden lg:block w-32"></div>
-          <div className="w-full lg:w-min h-screen">
+          <div className="w-full lg:w-min h-screen border-x">
             <Posts
               isLoading={retrievingMemberData || likesLoading || favoritesLoading}
               memberList={memberList}
