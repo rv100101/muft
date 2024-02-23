@@ -2,9 +2,6 @@ import PostHeader from "./postHeader";
 import { Skeleton } from "../ui/skeleton";
 import { MemberData } from "@/types/home";
 import MemberList from "./list";
-import { useEffect, useRef, useState } from "react";
-import useHomePageScrollPosition from "@/zustand/home/scrollPosition";
-import { useDebounce } from "@uidotdev/usehooks";
 
 const Posts = ({
   isLoading,
@@ -13,28 +10,9 @@ const Posts = ({
   isLoading: boolean;
   memberList: MemberData[];
 }) => {
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const { setScrollPosition, value: scrollPosition } =
-    useHomePageScrollPosition();
-  const [value, setValue] = useState<number>(scrollPosition);
-  const debouncedScrollPositionValue = useDebounce<number>(value, 500);
-  useEffect(() => {
-    if (!isLoading && scrollPosition && containerRef.current) {
-      containerRef.current.scrollTop = +scrollPosition;
-    }
-  }, [isLoading, scrollPosition]);
-
-  useEffect(() => {
-    setScrollPosition(debouncedScrollPositionValue);
-  }, [debouncedScrollPositionValue, setScrollPosition]);
-
   return (
     <div
-      onScroll={(e) => {
-        setValue(e.currentTarget.scrollTop);
-      }}
-      ref={containerRef}
-      className="col-span-4 overflow-y-scroll w-full h-full no-scrollbar"
+      className="col-span-4 w-full h-max"
     >
       <PostHeader />
       {isLoading ? (
@@ -52,7 +30,7 @@ const Posts = ({
           {/* </div> */}
         </div>
       ) : (
-        <div className="w-full lg:pt-8 border-x">
+        <div className="w-full h-max lg:pt-8 border-x">
           <MemberList isLoading={isLoading} memberList={memberList} />
         </div>
       )}

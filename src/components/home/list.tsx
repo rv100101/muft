@@ -22,7 +22,7 @@ const MemberList = ({
     if (!isLoading && scrollPosition && containerRef.current) {
       containerRef.current.scrollTop = +scrollPosition;
     }
-  }, [isLoading, scrollPosition]);
+  }, [isLoading, scrollPosition,]);
 
   useEffect(() => {
     setScrollPosition(debouncedScrollPositionValue);
@@ -34,7 +34,7 @@ const MemberList = ({
         setValue(e.currentTarget.scrollTop);
       }}
       ref={containerRef}
-      className="no-scrollbar py-4 lg:py-0  flex flex-col items-center lg:p-8 px-0 md:w-full w-screen h-screen sm:w-full rounded-b-xl space-y-4 border-[#E0E0E0] dark:border-[#131d2d] lg:h-min overflow-y-scroll scroll-smooth">
+      className="no-scrollbar py-4 lg:py-0  flex flex-col items-center lg:p-8 px-0 md:w-full w-screen h-screen sm:w-full rounded-b-xl space-y-4 border-[#E0E0E0] dark:border-[#131d2d] overflow-y-scroll scroll-smooth">
       {memberList.length > 0 ? (
         memberList.map((post, index: number) => (
           <PostItem key={index} memberData={post} />
