@@ -402,7 +402,7 @@ const SignUpPage = () => {
           </Link>
         </div>
       </div>
-      <div className="flex bg-[#0C1223] md:hidden h-min dark:bg-[#0C1223] w-full">
+      <div className="flex bg-[#0C1223] px-8 lg:hidden h-min dark:bg-[#0C1223] w-full">
         <SmallFooter />
       </div>
     </>

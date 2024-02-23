@@ -13,7 +13,7 @@ const Footer = () => {
 
   if (location.includes("/auth/")) {
     return (
-      <div className="w-full hidden md:flex h-max">
+      <div className="w-full hidden lg:flex h-max">
         <SmallFooter />
       </div>
     );
