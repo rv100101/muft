@@ -38,6 +38,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
     favoriteFood: deletedFaveFoods,
     pets: deletedPets,
     interests: deletedInterests,
+    reset: resetDeletedListOfMultiSelect
   } = deleteMultiselectValuesStore();
   const [t, i18n] = useTranslation();
   const headerValues = profileHeaderStore((state) => state.headerValues);
@@ -317,6 +318,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
         age,
       });
       changeTab(1);
+      resetDeletedListOfMultiSelect();
       updateUser({ ...user, profile_completed: true } as User);
       queryClient.invalidateQueries(["profileHeader"]);
       queryClient.invalidateQueries(["profileContent"]);

@@ -657,10 +657,10 @@ const saveInformation = async (
           "0DB31DEE22DC4C03AD7DAAA9C29518FF3C08D931992A4A5CB0A4FF4CF4707DC6"
         );
         formData.append("lang", lang);
-        formData.append("member_language", language.language_code);
-        formData.append("member", profile.member_id!.toString());
+        formData.append("member_lang", language.language_code);
+        formData.append("member", userId.toString());
         await axiosQuery.post(
-          "https://muffinapi.azurewebsites.net/living_status.php",
+          "https://muffinapi.azurewebsites.net/save_language.php",
           formData
         );
       }

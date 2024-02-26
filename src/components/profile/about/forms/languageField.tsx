@@ -117,10 +117,10 @@ export default function LanguageField() {
             >
               <div className="group border border-input px-3 py-2 text-sm ring-offset-background rounded-md focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2">
                 <div className="flex gap-1 flex-wrap">
-                  {selected.map((framework) => {
+                  {selected.map((framework, index: number) => {
                     return (
                       <Badge
-                        key={framework.member_language_id}
+                        key={index}
                         className="bg-white dark:bg-[#3b0117] dark:text-white dark:border-[#df4798] border-primary border"
                         variant="secondary"
                       >

@@ -47,7 +47,7 @@ const LanguagesForm = () => {
               className=" mt-2 mr-3"
             />
             <div className="flex  flex-col justify-start space-y-1">
-              <p
+              <div
                 className={cn(
                   "font-bold flex-wrap text-base text-primary flex flex-row",
                   i18n.language == "ar" && "space-x-reverse"
@@ -56,13 +56,13 @@ const LanguagesForm = () => {
                 {[
                   ...new Set(
                     data?.language.map((lang, index: number) => (
-                      <p key={index} className="border font-normal rounded-lg mx-3 px-5 py-1 bg-[#ffdeeb] text-[#fe68a0] border-[#fe68a0] hover:bg-[#ffdeeb]/60 mb-5 flex flex-row space-x-2">
+                      <div key={index} className="border font-normal rounded-lg mx-3 px-5 py-1 bg-[#ffdeeb] text-[#fe68a0] border-[#fe68a0] hover:bg-[#ffdeeb]/60 mb-5 flex flex-row space-x-2">
                         <p> {lang.language_name}</p>
-                      </p>
+                      </div>
                     ))
                   ),
                 ] ?? "Add languages"}
-              </p>
+              </div>
               {/* <p className="text-[#727272] text-xs">Language</p> */}
             </div>
           </div>
