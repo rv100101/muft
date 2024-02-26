@@ -164,7 +164,7 @@ export default function LanguageField() {
               >
                 {open && selectables.length > 0 ? (
                   <div className="absolute w-full top-0 rounded-md border bg-popover text-popover-foreground shadow-md outline-none animate-in">
-                    <CommandGroup className="h-40 sm:h-96 overflow-auto ">
+                    <CommandGroup className="h-40 overflow-auto ">
                       {selectables.map((framework, index) => {
                         return (
                           <CommandItem
