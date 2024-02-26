@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 
 import LanguageField from "./languageField";
 import { useTranslation } from "react-i18next";
+import removeDuplicates from "@/lib/removeDulpicates";
 const LanguagesForm = () => {
   const [, i18n] = useTranslation();
   const { data, editMode, isLoading, profileData } = profileAboutContentStore();
@@ -53,15 +54,14 @@ const LanguagesForm = () => {
                   i18n.language == "ar" && "space-x-reverse"
                 )}
               >
-                {[
-                  ...new Set(
-                    data?.language.map((lang, index: number) => (
+                {
+                  removeDuplicates(data?.language ?? [], "language_name")
+                    .map((lang, index: number) => (
                       <div key={index} className="border font-normal rounded-lg mx-3 px-5 py-1 bg-[#ffdeeb] text-[#fe68a0] border-[#fe68a0] hover:bg-[#ffdeeb]/60 mb-5 flex flex-row space-x-2">
                         <p> {lang.language_name}</p>
                       </div>
                     ))
-                  ),
-                ] ?? "Add languages"}
+                  ?? "Add languages"}
               </div>
               {/* <p className="text-[#727272] text-xs">Language</p> */}
             </div>

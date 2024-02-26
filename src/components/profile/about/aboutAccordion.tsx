@@ -451,7 +451,7 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
         <AccordionItem value="item-1" className="px-5 py-1 border-0">
           <AccordionTrigger className="hover:no-underline">
             {
-              !isLoading &&
+              (!isLoading || profileAboutContent) &&
               <p className="uppercase font-[500] text-[#727272] no-underline">
                 {t("memberDetails.about")}
               </p>
