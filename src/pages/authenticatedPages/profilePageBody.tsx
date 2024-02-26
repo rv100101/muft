@@ -39,7 +39,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
     pets: deletedPets,
     interests: deletedInterests,
   } = deleteMultiselectValuesStore();
-  const [t] = useTranslation();
+  const [t, i18n] = useTranslation();
   const headerValues = profileHeaderStore((state) => state.headerValues);
   const setHeaderValues = profileHeaderStore((state) => state.setHeaderValues);
   const { data, setEditModeFalse, setData, setIsSaving } =
@@ -305,7 +305,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
         religion: religion?.religion_id,
         employmentStatus: employmentStatus?.employment_status_id,
       };
-      await profileContentQuery.saveInformation(finalFormData, user!.member_id);
+      await profileContentQuery.saveInformation(finalFormData, user!.member_id, i18n.language);
       await authQuery.isProfileCompleted(user!.member_id);
       const age = calculateAge(formData.birthInfo);
       updateUserAvatar(null);

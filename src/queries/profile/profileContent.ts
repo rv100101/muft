@@ -624,7 +624,11 @@ export type ProfileContent = ProfileAbout & {
   deletedInterests: Interest[];
 };
 
-const saveInformation = async (profile: ProfileContent, userId: number) => {
+const saveInformation = async (
+  profile: ProfileContent,
+  userId: number,
+  lang: string
+) => {
   try {
     // gender
     if (profile.gender) {
@@ -646,14 +650,21 @@ const saveInformation = async (profile: ProfileContent, userId: number) => {
 
     // language
     if (profile.language) {
-      for (const lang of profile.language) {
-        await axiosQuery.post("/SaveLanguage", {
-          language: lang.language_code,
-          member: userId,
-        });
+      for (const language of profile.language) {
+        const formData = new FormData();
+        formData.append(
+          "auth",
+          "0DB31DEE22DC4C03AD7DAAA9C29518FF3C08D931992A4A5CB0A4FF4CF4707DC6"
+        );
+        formData.append("lang", lang);
+        formData.append("member_language", language.language_code);
+        formData.append("member", profile.member_id!.toString());
+        await axiosQuery.post(
+          "https://muffinapi.azurewebsites.net/living_status.php",
+          formData
+        );
       }
     }
-
     // delete language
     if (profile.deletedLanguages) {
       for (const lang of profile.deletedLanguages) {
