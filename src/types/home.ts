@@ -19,6 +19,7 @@ export type Member = {
   nationality_code: string;
 };
 export type MemberData = {
+  nationality_flag: string;
   authorized: boolean;
   ip_address: string;
   member_id: number;

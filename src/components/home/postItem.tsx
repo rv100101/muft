@@ -241,7 +241,7 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
                             alt={"post country flag"}
                             width={imageLoaded ? 30 : 0}
                             height={imageLoaded ? 30 : 0}
-                            src={`https://muffin0.blob.core.windows.net/flags/${memberData.country_code.toLocaleLowerCase()}.png`}
+                            src={`https://muffin0.blob.core.windows.net/flags/${memberData.nationality_flag.toLocaleLowerCase()}.png`}
                           />
                         </div>
                         :
