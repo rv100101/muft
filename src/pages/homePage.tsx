@@ -59,6 +59,7 @@ const HomePage = () => {
   const { data: members, isLoading: retrievingMemberData } = useQuery({
     refetchOnMount: false,
     refetchOnWindowFocus: false,
+    refetchInterval: Infinity,
     queryKey: ["home-members", preferredLang, user?.gender],
     queryFn: () => getMembers,
   });

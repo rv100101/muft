@@ -1,8 +1,8 @@
 import useHomePageScrollPosition from "@/zustand/home/scrollPosition";
 import { useEffect, useRef, useState } from "react";
-import { useDebounce } from "@uidotdev/usehooks";
 import PostItem from "./postItem";
 import { MemberData } from "@/types/home";
+import { useDebounceValue } from "usehooks-ts";
 
 const MemberList = ({
   isLoading,
@@ -12,27 +12,31 @@ const MemberList = ({
   memberList: MemberData[];
 }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const { setScrollPosition, value: scrollPosition } =
-    useHomePageScrollPosition();
-  const [value, setValue] = useState<number>(scrollPosition);
-  const debouncedScrollPositionValue = useDebounce<number>(value, 500);
+  const { setScrollPosition, value: scrollPosition } = useHomePageScrollPosition();
+  const [isScrollPosUpdated, setIsScrollPosUpdated] = useState(false);
+  const [debouncedValue, setValue] = useDebounceValue(scrollPosition, 1000);
 
-  // Set the initial scroll position when the component mounts
   useEffect(() => {
-    if (!isLoading && scrollPosition && containerRef.current) {
+    if (!isLoading && scrollPosition && containerRef.current && !isScrollPosUpdated) {
       containerRef.current.scrollTop = +scrollPosition;
+      setIsScrollPosUpdated(true);
     }
-  }, [isLoading, scrollPosition,]);
+  }, [isLoading, scrollPosition, isScrollPosUpdated]);
 
   useEffect(() => {
-    setScrollPosition(debouncedScrollPositionValue);
-  }, [debouncedScrollPositionValue, setScrollPosition]);
+    setScrollPosition(debouncedValue);
+  }, [debouncedValue, setScrollPosition])
+
+
+  const handleScroll = () => {
+    if (containerRef.current) {
+      setValue(containerRef!.current!.scrollTop);
+    }
+  };
 
   return (
     <div
-      onScroll={(e) => {
-        setValue(e.currentTarget.scrollTop);
-      }}
+      onScroll={handleScroll}
       ref={containerRef}
       className="no-scrollbar pt-8 py-4 flex flex-col items-center lg:p-8 px-0 md:w-full w-screen h-screen sm:w-full rounded-b-xl space-y-4 border-[#E0E0E0] dark:border-[#131d2d] overflow-y-scroll">
       {memberList.length > 0 ? (
@@ -45,7 +49,7 @@ const MemberList = ({
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default MemberList
+export default MemberList;
