@@ -19,7 +19,7 @@ const TopBar = ({ children }: { children: ReactNode }) => {
       <li key={index} className="w-full">
         <Link
           className="h-10 px-4 py-2 hover:bg-accent hover:text-accent-foreground flex justify-start items-center space-x-2"
-          href={link.path}
+          to={link.path}
         >
           {<link.icon />} <p>{link.name}</p>
         </Link>
@@ -32,7 +32,7 @@ const TopBar = ({ children }: { children: ReactNode }) => {
     <li key={navLinks.length + 1} className="w-full">
       <Link
         className="h-10 px-4 py-2 hover:bg-accent hover:text-accent-foreground flex justify-start items-center space-x-2"
-        href={"/settings"}
+        to={"/settings"}
       >
         <Settings2Icon /> <p>Settings</p>
       </Link>
@@ -48,7 +48,7 @@ const TopBar = ({ children }: { children: ReactNode }) => {
         <SheetContent side={"left"}>
           <SheetHeader>
             <SheetTitle>
-              <Link href="/">
+              <Link to="/">
                 <img
                   className="hover:cursor-pointer my-8 mx-4"
                   src={logo}
