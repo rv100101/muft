@@ -1,11 +1,18 @@
 import logo from "@/assets/logo.svg";
-import links from "@/lib/sideBar";
 import { LogOutIcon } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import { useUserStore } from "@/zustand/auth/user";
 import { cn } from "@/lib/utils";
 import useHomepageViewStore from "@/zustand/home/homepageView";
 import { useQueryClient } from "@tanstack/react-query";
+import {
+  HeartIcon,
+  HomeIcon,
+  MessageSquareIcon,
+  Settings,
+  Star,
+  UserIcon,
+} from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -24,6 +31,7 @@ import profileHeaderStore from "@/zustand/profile/profileHeaderStore";
 import { useTranslation } from "react-i18next";
 import { useSettingsStore } from "@/zustand/settings/displaySettingsStore";
 import OneSignal from "react-onesignal";
+import { SideBarLinks } from "@/types/sideBar";
 
 const SideBar = () => {
   const [t, i18n] = useTranslation();
@@ -41,7 +49,39 @@ const SideBar = () => {
   const [location] = useLocation();
   const queryClient = useQueryClient();
   const user = useUserStore((state) => state.user);
-  const navLinks = links(user!.member_id).map((link, index) => {
+  const updatedLinks: SideBarLinks = [
+    {
+      name: t("menu.home"),
+      path: "/",
+      icon: HomeIcon,
+    },
+    {
+      path: "/messages",
+      icon: MessageSquareIcon,
+      name: t("menu.messages"),
+    },
+    {
+      path: user?.member_id ? `/profile/${user!.member_id}` : "",
+      icon: UserIcon,
+      name: t("menu.myProfile"),
+    },
+    {
+      path: "/likes",
+      icon: HeartIcon,
+      name: t("menu.likes"),
+    },
+    {
+      path: "/favorites",
+      icon: Star,
+      name: t("menu.favorites"),
+    },
+    {
+      path: "/settings",
+      icon: Settings,
+      name: t("menu.settings"),
+    },
+  ];
+  const navLinks = updatedLinks.map((link, index) => {
     return (
       <li key={index} className={cn("w-full")}>
         <Link
@@ -52,7 +92,7 @@ const SideBar = () => {
               : "font-normal",
             i18n.language == "ar" ? "space-x-reverse space-x-2" : "space-x-2"
           )}
-          href={link.path}
+          to={link.path}
           onClick={() => {
             if (link.name == "My Profile") {
               setSelectedProfileId(null);
