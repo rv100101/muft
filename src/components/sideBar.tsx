@@ -134,7 +134,7 @@ const SideBar = () => {
         className={"h-full flex flex-col justify-between"}
       >
         <div className="flex flex-col w-[220px]">
-          <Link href="/">
+          <Link to="/">
             <img
               className="hover:cursor-pointer w-1/2 my-8 mx-4"
               src={logo}
@@ -152,12 +152,12 @@ const SideBar = () => {
           >
             {t("menu.helpCenter")}
           </a>
-          <Link onClick={scrollToTop} href={"/privacy"}>
+          <Link onClick={scrollToTop} to={"/privacy"}>
             <a className="hover:text-slate-700 text-xs text-black dark:text-white">
               {t("menu.privacyPolicy")}
             </a>
           </Link>
-          <Link onClick={scrollToTop} href="/terms">
+          <Link onClick={scrollToTop} to="/terms">
             <a className="hover:text-slate-700 text-xs text-black dark:text-white">
               {t("menu.termsAndConditions")}
             </a>
