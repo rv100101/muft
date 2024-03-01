@@ -2,7 +2,6 @@ import useHomePageScrollPosition from "@/zustand/home/scrollPosition";
 import { useEffect, useRef, useState } from "react";
 import PostItem from "./postItem";
 import { MemberData } from "@/types/home";
-import { useDebounceValue } from "usehooks-ts";
 
 const MemberList = ({
   isLoading,
@@ -14,19 +13,24 @@ const MemberList = ({
   const containerRef = useRef<HTMLDivElement | null>(null);
   const { setScrollPosition, value: scrollPosition } = useHomePageScrollPosition();
   const [isScrollPosUpdated, setIsScrollPosUpdated] = useState(false);
-  const [debouncedValue, setValue] = useDebounceValue(scrollPosition, 1000);
+  const [debouncedValue, setValue] = useState(scrollPosition);
 
   useEffect(() => {
     if (!isLoading && scrollPosition && containerRef.current && !isScrollPosUpdated) {
       containerRef.current.scrollTop = +scrollPosition;
+      console.log('updated the scrolltop to ', containerRef.current.scrollTop);
       setIsScrollPosUpdated(true);
     }
-  }, [isLoading, scrollPosition, isScrollPosUpdated]);
+    // return () => {
+    //   console.log(debouncedValue);
+    //   setScrollPosition(debouncedValue);
+    // }
+  }, [isLoading, scrollPosition, isScrollPosUpdated, setScrollPosition, debouncedValue]);
 
   useEffect(() => {
+    console.log(debouncedValue);
     setScrollPosition(debouncedValue);
   }, [debouncedValue, setScrollPosition])
-
 
   const handleScroll = () => {
     if (containerRef.current) {

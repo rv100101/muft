@@ -5,7 +5,6 @@ import membersQuery from "@/queries/home";
 import useHomepageViewStore from "@/zustand/home/homepageView";
 import { useUserStore } from "@/zustand/auth/user";
 import HomepageSearchInput from "@/components/homeSearchUsersInput";
-import { useUpdateEffect } from "usehooks-ts";
 import Posts from "@/components/home/posts";
 import { Member, MemberData } from "@/types/home";
 import createMap from "@/lib/likesAndFavoritesHomeMap";
@@ -72,7 +71,7 @@ const HomePage = () => {
     queryFn: () => getMemberLikes,
   });
 
-  useUpdateEffect(() => {
+  useEffect(() => {
     if (Object.keys(likes).length !== 0) {
       return;
     }
@@ -80,7 +79,7 @@ const HomePage = () => {
       const likes = createMap(memberList, memberLikes);
       setLikes(likes);
     }
-  }, [memberLikes, memberList]);
+  }, [likes, memberLikes, memberList, setLikes]);
 
   // favorites
   const { data: memberFavorites, isLoading: favoritesLoading } = useQuery({
@@ -90,7 +89,7 @@ const HomePage = () => {
     queryFn: () => getMemberFavorites,
   });
 
-  useUpdateEffect(() => {
+  useEffect(() => {
     if (Object.keys(favorites).length !== 0) {
       return;
     }
@@ -98,11 +97,11 @@ const HomePage = () => {
       const favorites = createMap(memberList, memberFavorites);
       setFavorites(favorites);
     }
-  }, [memberFavorites, memberList, likes]);
+  }, [memberFavorites, memberList, likes, favorites, setFavorites]);
 
-  useUpdateEffect(() => {
+  useEffect(() => {
     setIsLoading(retrievingMemberData);
-  }, [retrievingMemberData]);
+  }, [retrievingMemberData, setIsLoading]);
 
   useEffect(() => {
     if (!retrievingMemberData && memberLikes && memberFavorites && members) {
