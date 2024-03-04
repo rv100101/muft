@@ -69,6 +69,7 @@ const Hero = ({ headerTitle = null, headerDescription = null }: {
             }}
             viewport={{ once: true }}
             className="z-20 dark:text-black"
+            dir="ltr"
           >
             {headerDescription ?? t("landingPage.unlockTrueRomance")}
           </motion.p>
