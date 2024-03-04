@@ -48,7 +48,7 @@ const LandingPage = ({ uuid = null }: { uuid: string | null }) => {
 
   if (showLoading) {
     return <div className="h-screen w-full flex flex-col justify-center items-center">
-      <img src={logo} className="animate-bounce h-96" alt="muffin-logo" />
+      <img src={logo} className="animate-bounce h-64" alt="muffin-logo" />
     </div>
   }
 
