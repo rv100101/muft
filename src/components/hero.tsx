@@ -52,6 +52,7 @@ const Hero = ({ headerTitle = null, headerDescription = null }: {
               delay: 2,
             }}
             viewport={{ once: true }}
+            dir="ltr"
             className="z-20 text-3xl md:text-4xl font-semibold text-secondary"
           >
             {headerTitle ?? t("landingPage.loveFromFirstMuffin")}
