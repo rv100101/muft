@@ -22,6 +22,8 @@ import { usePreferredLanguageStore } from "./zustand/auth/preferred_language";
 import { useTranslation } from "react-i18next";
 import { is6Pm } from "./lib/isPm";
 import runOneSignal from "./lib/oneSignal";
+import HomePage from "./pages/homePage";
+import LandingPage from "./pages/landingPage";
 function App() {
   useEffect(() => {
     runOneSignal();
@@ -97,16 +99,23 @@ function App() {
           triggerVariant={"default"}
         />
         <div className="h-max">
-          {routesWithFooterAndTopNav.includes(location) && !user && <TopNav />}
+          {(routesWithFooterAndTopNav.includes(location) || location.startsWith('/places/')) && !user && <TopNav />}
         </div>
         <Route
-          path="/"
-          component={
-            user
-              ? pageRoutes.homePage.component
-              : pageRoutes.landingPage.component
+          path="/places/:uuid">
+          {({ uuid }) => user
+            ? <Redirect to="/" />
+            : <LandingPage uuid={uuid} />
           }
-        />
+        </Route>
+        <Route
+          path="/">
+          {
+            user
+              ? <HomePage />
+              : <LandingPage uuid={null} />
+          }
+        </Route>
         <div className="flex-auto h-full">
           <Route
             path={pageRoutes.signUp.path}
@@ -184,7 +193,7 @@ function App() {
           </>
         )}
 
-        {!user && !noUserOnlyRoutes.includes(location) && location !== "/" && (
+        {!user && !noUserOnlyRoutes.includes(location) && location !== "/" && !location.startsWith('/places/') && (
           <Redirect to="/auth/signin" />
         )}
 
@@ -197,7 +206,7 @@ function App() {
           <Redirect to={`/profile/${user.member_id}`} />
         )}
 
-        {routesWithFooterAndTopNav.includes(location) && !user && (
+        {(routesWithFooterAndTopNav.includes(location) || location.startsWith('/places/')) && !user && (
           <div className="bg-[#0C1223] h-max">
             <Footer />
           </div>

@@ -3,10 +3,51 @@ import Benefits from "@/components/benefits";
 import Features from "@/components/features";
 import Cta from "@/components/cta";
 // import GetApp from "@/components/getApp";
+import logo from "@/assets/single-logo.png";
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useLocation } from "wouter";
 
-const LandingPage = () => {
+const LandingPage = ({ uuid = null }: { uuid: string | null }) => {
+  const [, setLocation] = useLocation();
+  const [showLoading, setShowLoading] = useState(uuid !== null);
+  useEffect(() => {
+    if (uuid) {
+      const formData = new FormData();
+      formData.append(
+        "auth",
+        "0DB31DEE22DC4C03AD7DAAA9C29518FF3C08D931992A4A5CB0A4FF4CF4707DC6"
+      );
+      formData.append("landing_uuid", uuid);
+      const fetchPlaces = async () => {
+        try {
+          const res = await axios.post('https://muffinapi.azurewebsites.net/landing.php', formData);
+          console.log(res);
+          if (res?.data?.length == 0) {
+            setLocation('/');
+          } else {
+            console.log(
+              'SUCCESS: ', res.data
+            );
+          }
+        } catch (error) {
+          console.log(error);
+        }
+        setShowLoading(false);
+      }
+      fetchPlaces();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  if (showLoading) {
+    return <div className="h-screen w-full flex flex-col justify-center items-center">
+      <img src={logo} className="animate-bounce h-96" alt="muffin-logo" />
+    </div>
+  }
+
   return (
     <>
       <Helmet>
@@ -37,6 +78,5 @@ const LandingPage = () => {
       </motion.div>
     </>
   );
-};
-
+}
 export default LandingPage;
