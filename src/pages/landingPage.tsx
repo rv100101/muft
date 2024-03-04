@@ -13,6 +13,8 @@ import { useLocation } from "wouter";
 const LandingPage = ({ uuid = null }: { uuid: string | null }) => {
   const [, setLocation] = useLocation();
   const [showLoading, setShowLoading] = useState(uuid !== null);
+  const [headerTitle, setHeaderTitle] = useState(null)
+  const [headerDescription, setHeaderDecription] = useState(null)
   useEffect(() => {
     if (uuid) {
       const formData = new FormData();
@@ -31,6 +33,8 @@ const LandingPage = ({ uuid = null }: { uuid: string | null }) => {
             console.log(
               'SUCCESS: ', res.data
             );
+            setHeaderTitle(res.data[0].landing_title)
+            setHeaderDecription(res.data[0].landing_description)
           }
         } catch (error) {
           console.log(error);
@@ -56,7 +60,7 @@ const LandingPage = ({ uuid = null }: { uuid: string | null }) => {
       </Helmet>
       {/*<GetApp /> */}
       <div className="mx-8 md:mx-12 lg:mx-36">
-        <Hero />
+        <Hero headerTitle={headerTitle} headerDescription={headerDescription} />
         <Benefits />
         <Features />
         {/* <Testimonials /> */}

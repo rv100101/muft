@@ -7,7 +7,9 @@ import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
 import { Link } from "wouter";
 
-const Hero = () => {
+const Hero = ({ headerTitle = null, headerDescription = null }: {
+  headerTitle: null | string; headerDescription: null | string
+}) => {
   const [t, i18n] = useTranslation();
   return (
     <motion.div
@@ -52,7 +54,7 @@ const Hero = () => {
             viewport={{ once: true }}
             className="z-20 text-3xl md:text-4xl font-semibold text-secondary"
           >
-            {t("landingPage.loveFromFirstMuffin")}
+            {headerTitle ?? t("landingPage.loveFromFirstMuffin")}
           </motion.h1>
           <motion.p
             initial={{
@@ -67,7 +69,7 @@ const Hero = () => {
             viewport={{ once: true }}
             className="z-20 dark:text-black"
           >
-            {t("landingPage.unlockTrueRomance")}
+            {headerDescription ?? t("landingPage.unlockTrueRomance")}
           </motion.p>
 
           <motion.div
