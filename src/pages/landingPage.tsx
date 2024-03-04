@@ -46,9 +46,10 @@ const LandingPage = ({ uuid = null }: { uuid: string | null }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  if (showLoading) {
+  if (!showLoading) {
     return <div className="h-screen w-full flex flex-col justify-center items-center">
       <img src={logo} className="animate-bounce h-64" alt="muffin-logo" />
+      <p className="font-semibold text-xl">Getting ready for you...</p>
     </div>
   }
 
