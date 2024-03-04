@@ -68,7 +68,7 @@ const Hero = ({ headerTitle = null, headerDescription = null }: {
               delay: 2.5,
             }}
             viewport={{ once: true }}
-            className="z-20 dark:text-black"
+            className={cn("z-20 dark:text-black", headerDescription && i18n.language == 'ar' && 'text-right')}
             dir="ltr"
           >
             {headerDescription ?? t("landingPage.unlockTrueRomance")}
