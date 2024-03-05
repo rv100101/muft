@@ -9,12 +9,14 @@ import { Helmet } from "react-helmet-async";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useLocation } from "wouter";
+import { usePreferredLanguageStore } from "@/zustand/auth/preferred_language";
 
 const LandingPage = ({ uuid = null }: { uuid: string | null }) => {
   const [, setLocation] = useLocation();
   const [showLoading, setShowLoading] = useState(uuid !== null);
   const [headerTitle, setHeaderTitle] = useState(null)
   const [headerDescription, setHeaderDecription] = useState(null)
+  const setPrefferedLanguage = usePreferredLanguageStore(state => state.setPreferredLanguage);
   useEffect(() => {
     if (uuid) {
       const formData = new FormData();
@@ -35,6 +37,7 @@ const LandingPage = ({ uuid = null }: { uuid: string | null }) => {
             );
             setHeaderTitle(res.data[0].landing_title)
             setHeaderDecription(res.data[0].landing_description)
+            setPrefferedLanguage(res.data[0].landing_language)
           }
         } catch (error) {
           console.log(error);
