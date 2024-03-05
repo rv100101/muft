@@ -61,6 +61,9 @@ function App() {
     }
   }, [user]);
 
+  console.log(location);
+
+
   useEffect(() => {
     const intervalId = setInterval(() => {
       setCurrentTime(new Date());
@@ -101,11 +104,17 @@ function App() {
         <div className="h-max">
           {(routesWithFooterAndTopNav.includes(location) || location.startsWith('/places/')) && !user && <TopNav />}
         </div>
+        {
+          location == '/places/' && <Redirect to="/" />
+        }
         <Route
           path="/places/:uuid">
-          {({ uuid }) => user
-            ? <Redirect to="/" />
-            : <LandingPage uuid={uuid} />
+          {({ uuid }) => {
+            return user
+              ? <Redirect to="/" />
+              : <LandingPage uuid={uuid} />
+
+          }
           }
         </Route>
         <Route
