@@ -61,8 +61,6 @@ function App() {
     }
   }, [user]);
 
-  console.log(location);
-
 
   useEffect(() => {
     const intervalId = setInterval(() => {
