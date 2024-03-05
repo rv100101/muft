@@ -42,7 +42,7 @@ const MemberList = ({
     <div
       onScroll={handleScroll}
       ref={containerRef}
-      className="no-scrollbar pt-8 py-4 flex flex-col items-center lg:p-8 px-0  w-screen h-screen rounded-b-xl space-y-4 border-[#E0E0E0] dark:border-[#131d2d] overflow-y-scroll overflow-x-clip">
+      className="no-scrollbar pt-8 py-4 flex flex-col items-center lg:p-8 px-0  w-full h-screen rounded-b-xl space-y-4 border-[#E0E0E0] dark:border-[#131d2d] overflow-y-scroll overflow-x-clip">
       {memberList.length > 0 ? (
         memberList.map((post, index: number) => (
           <PostItem key={index} memberData={post} />

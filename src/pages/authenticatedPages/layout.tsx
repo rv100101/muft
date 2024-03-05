@@ -9,7 +9,7 @@ const AuthenticatedLayout = ({ children }: { children: ReactNode }) => {
   return (
     <div
       dir={i18n.language == "ar" ? "rtl" : "ltr"}
-      className="h-screen overflow-hidden flex w-full"
+      className="h-screen overflow-hidden flex w-screen"
     >
       {user?.profile_completed && <SideBar />}
       {children}
