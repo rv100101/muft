@@ -11,6 +11,7 @@ const Hero = ({ headerTitle = null, headerDescription = null }: {
   headerTitle: null | string; headerDescription: null | string
 }) => {
   const [t, i18n] = useTranslation();
+  console.log(!headerTitle && !headerDescription);
   return (
     <motion.div
       dir={i18n.language == "ar" ? "rtl" : "ltr"}
@@ -52,7 +53,7 @@ const Hero = ({ headerTitle = null, headerDescription = null }: {
               delay: 2,
             }}
             viewport={{ once: true }}
-            dir="ltr"
+            dir={headerDescription && i18n.language == 'ar' ? "rtl" : "ltr"}
             className="z-20 text-3xl md:text-4xl font-semibold text-secondary"
           >
             {headerTitle ?? t("landingPage.loveFromFirstMuffin")}
@@ -68,8 +69,8 @@ const Hero = ({ headerTitle = null, headerDescription = null }: {
               delay: 2.5,
             }}
             viewport={{ once: true }}
-            className={cn("z-20 dark:text-black", headerDescription && i18n.language == 'ar' && 'text-right')}
-            dir="ltr"
+            className={cn("z-20 dark:text-black")}
+            dir={headerDescription && i18n.language == 'ar' ? "rtl" : "ltr"}
           >
             {headerDescription ?? t("landingPage.unlockTrueRomance")}
           </motion.p>
@@ -101,35 +102,6 @@ const Hero = ({ headerTitle = null, headerDescription = null }: {
               </Button>
             </Link>
           </motion.div>
-
-          {/*
-          <motion.div
-            initial={{
-              scale: 0,
-            }}
-            whileInView={{
-              scale: 1,
-            }}
-            transition={{
-              delay: 2.5,
-            }}
-            viewport={{ once: true }}
-            className="z-20 flex space-x-2 w-64 md:w-80"
-          >
-            <a
-              href="https://apps.apple.com/us/app/muffin/id1658172035"
-              target="_blank"
-            >
-              <img className="w-full" src={AppStore} alt="app store" />
-            </a>
-            <a
-              href="https://play.google.com/store/apps/details?id=com.muffin.app"
-              target="_blank"
-            >
-              <img className="w-full" src={GooglePlay} alt="google play" />
-            </a>
-          </motion.div>
-            */}
         </div>
         <Conversation />
       </div>

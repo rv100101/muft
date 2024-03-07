@@ -76,9 +76,6 @@ const MyAccountContent = () => {
     }
   };
 
-  // if (retrievingMemberData) {
-  //   return <>Loading...</>;
-  // }
   return (
     <div className="flex flex-col  w-full  border-b justify-center text-[#727272] space-y-2 p-5">
       <p className="font-semibold text-lg">{t("settings.myAccount")}</p>

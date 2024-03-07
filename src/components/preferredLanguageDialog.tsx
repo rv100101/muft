@@ -15,6 +15,7 @@ import { DialogClose, DialogTrigger } from "@radix-ui/react-dialog";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useLocation } from "wouter";
 const PreferredLanguageDialog = ({
   showTrigger = false,
   triggerTitle,
@@ -30,8 +31,9 @@ const PreferredLanguageDialog = ({
   const [changePreferredLanguage, setChangePreferredLanguage] = useState(false);
   const user = useUserStore((state) => state.user);
   const queryClient = useQueryClient();
+  const [location] = useLocation()
   return (
-    <Dialog open={preferred == null || changePreferredLanguage}>
+    <Dialog open={preferred == null && !location.startsWith('/places/') || changePreferredLanguage}>
       {showTrigger && (
         <div className="flex justify-between items-center">
           {user && user.profile_completed && (
@@ -46,14 +48,14 @@ const PreferredLanguageDialog = ({
               type="button"
               variant={
                 triggerVariant as
-                  | "default"
-                  | "destructive"
-                  | "outline"
-                  | "secondary"
-                  | "ghost"
-                  | "link"
-                  | null
-                  | undefined
+                | "default"
+                | "destructive"
+                | "outline"
+                | "secondary"
+                | "ghost"
+                | "link"
+                | null
+                | undefined
               }
               className={cn(
                 "text-white h-10 text-sm rounded-lf py-2 hover:bg-[#FF599B]/90 w-24 dark:bg-[#1b1d1e] dark:hover:bg-red-700/90"

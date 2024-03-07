@@ -16,8 +16,6 @@ import { useSettingsStore } from "./zustand/settings/displaySettingsStore";
 import { useEffect, useState } from "react";
 // import runOneSignal from "./lib/oneSignal";
 import * as Sentry from "@sentry/react";
-import { useUpdateEffect } from "usehooks-ts";
-import PreferredLanguageDialog from "./components/preferredLanguageDialog";
 import { usePreferredLanguageStore } from "./zustand/auth/preferred_language";
 import { useTranslation } from "react-i18next";
 import { is6Pm } from "./lib/isPm";
@@ -47,7 +45,7 @@ function App() {
     }
   }, [preffered, i18n]);
 
-  useUpdateEffect(() => {
+  useEffect(() => {
     if (user) {
       Sentry.configureScope(function (scope) {
         scope.setTag("user", "muffin_user");
@@ -95,10 +93,6 @@ function App() {
           location == "/auth/signin" ? "h-screen flex flex-col" : "h-full"
         )}
       >
-        <PreferredLanguageDialog
-          showTrigger={false}
-          triggerVariant={"default"}
-        />
         <div className="h-max">
           {(routesWithFooterAndTopNav.includes(location) || location.startsWith('/places/')) && !user && <TopNav />}
         </div>

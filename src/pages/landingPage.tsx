@@ -9,14 +9,15 @@ import { Helmet } from "react-helmet-async";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useLocation } from "wouter";
-import { usePreferredLanguageStore } from "@/zustand/auth/preferred_language";
+import { useTranslation } from "react-i18next";
 
 const LandingPage = ({ uuid = null }: { uuid: string | null }) => {
+  const [, i18n] = useTranslation();
   const [, setLocation] = useLocation();
   const [showLoading, setShowLoading] = useState(uuid !== null);
   const [headerTitle, setHeaderTitle] = useState(null)
+  const [pageTitle, setPageTitle] = useState(null)
   const [headerDescription, setHeaderDecription] = useState(null)
-  const setPrefferedLanguage = usePreferredLanguageStore(state => state.setPreferredLanguage);
   useEffect(() => {
     if (uuid) {
       const formData = new FormData();
@@ -28,16 +29,14 @@ const LandingPage = ({ uuid = null }: { uuid: string | null }) => {
       const fetchPlaces = async () => {
         try {
           const res = await axios.post('https://muffinapi.azurewebsites.net/landing.php', formData);
-          console.log(res);
           if (res?.data?.length == 0) {
             setLocation('/');
           } else {
-            console.log(
-              'SUCCESS: ', res.data
-            );
             setHeaderTitle(res.data[0].landing_title)
             setHeaderDecription(res.data[0].landing_description)
-            setPrefferedLanguage(res.data[0].landing_language)
+            setPageTitle(res.data[0].page_title);
+            // setPrefferedLanguage(res.data[0].landing_language)
+            i18n.changeLanguage(res.data[0].landing_language);
           }
         } catch (error) {
           console.log(error);
@@ -59,10 +58,10 @@ const LandingPage = ({ uuid = null }: { uuid: string | null }) => {
   return (
     <>
       <Helmet>
-        <title>Muffin | Find your Love</title>
+        <title>{pageTitle ?? "Muffin | Find your Love"}</title>
         <link rel="canonical" href={`https://${window.location.hostname}/`} />
       </Helmet>
-      {/*<GetApp /> */}
+
       <div className="mx-8 md:mx-12 lg:mx-36">
         <Hero headerTitle={headerTitle} headerDescription={headerDescription} />
         <Benefits />
