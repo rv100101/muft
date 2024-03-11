@@ -258,7 +258,7 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
                               : ""
                               }`}
                           >
-                            {memberData.country_code}
+                            {memberData.nationality_flag}
                           </p>
                         </div>
                     }

@@ -53,7 +53,6 @@ const Hero = ({ headerTitle = null, headerDescription = null }: {
               delay: 2,
             }}
             viewport={{ once: true }}
-            dir={headerDescription && i18n.language == 'ar' ? "rtl" : "ltr"}
             className="z-20 text-3xl md:text-4xl font-semibold text-secondary"
           >
             {headerTitle ?? t("landingPage.loveFromFirstMuffin")}
@@ -70,7 +69,6 @@ const Hero = ({ headerTitle = null, headerDescription = null }: {
             }}
             viewport={{ once: true }}
             className={cn("z-20 dark:text-black")}
-            dir={headerDescription && i18n.language == 'ar' ? "rtl" : "ltr"}
           >
             {headerDescription ?? t("landingPage.unlockTrueRomance")}
           </motion.p>
