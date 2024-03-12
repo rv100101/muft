@@ -177,7 +177,7 @@ const HomePage = () => {
           data-react-helmet="true"
         />
         <title>Muffin | Home Page</title>
-        <link rel="canonical" href={`https://${window.location.hostname}/`} />
+        <link rel="canonical" href={`https://${window.location.hostname}${location}`} />
       </Helmet>
       <div className="flex 2xl:justify-center w-full">
         <div className="flex xl:justify-center w-full lg:w-full justify-center lg:grid-cols-9 grid-cols-1 gap-4">

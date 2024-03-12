@@ -13,7 +13,7 @@ import { useTranslation } from "react-i18next";
 
 const LandingPage = ({ uuid = null }: { uuid: string | null }) => {
   const [, i18n] = useTranslation();
-  const [, setLocation] = useLocation();
+  const [location, setLocation] = useLocation();
   const [showLoading, setShowLoading] = useState(uuid !== null);
   const [headerTitle, setHeaderTitle] = useState(null)
   const [pageTitle, setPageTitle] = useState(null)
@@ -59,7 +59,7 @@ const LandingPage = ({ uuid = null }: { uuid: string | null }) => {
     <>
       <Helmet>
         <title>{pageTitle ?? "Muffin | Find your Love"}</title>
-        <link rel="canonical" href={`https://${window.location.hostname}/`} />
+        <link rel="canonical" href={`https://${window.location.hostname}${location}`} />
       </Helmet>
 
       <div className="mx-8 md:mx-12 lg:mx-36">

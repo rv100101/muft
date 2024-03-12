@@ -17,7 +17,7 @@ const ViewUser = ({ id }: { id: string }) => {
             <title>{data?.nickname ?? "muffin"} | Muffin</title>
             <link
               rel="canonical"
-              href={`https://${window.location.hostname}/members/${id}`}
+              href={`https://${window.location.hostname}${location}`}
             />
           </>
         ) : (
@@ -25,7 +25,7 @@ const ViewUser = ({ id }: { id: string }) => {
             <title>My Profile</title>
             <link
               rel="canonical"
-              href={`https://${window.location.hostname}/profile/${id}`}
+              href={`https://${window.location.hostname}${location}`}
             />
           </>
         )}
@@ -43,10 +43,10 @@ const ViewUser = ({ id }: { id: string }) => {
           content={
             profileData !== null
               ? getImagePath(
-                  profileData!.gallery_uuid,
-                  profileData!.gender,
-                  profileData!.member_uuid
-                )
+                profileData!.gallery_uuid,
+                profileData!.gender,
+                profileData!.member_uuid
+              )
               : "https://muffin.ph/public/logo.png"
           }
         />
