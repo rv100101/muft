@@ -18,17 +18,11 @@ const MemberList = ({
   useEffect(() => {
     if (!isLoading && scrollPosition && containerRef.current && !isScrollPosUpdated) {
       containerRef.current.scrollTop = +scrollPosition;
-      console.log('updated the scrolltop to ', containerRef.current.scrollTop);
       setIsScrollPosUpdated(true);
     }
-    // return () => {
-    //   console.log(debouncedValue);
-    //   setScrollPosition(debouncedValue);
-    // }
   }, [isLoading, scrollPosition, isScrollPosUpdated, setScrollPosition, debouncedValue]);
 
   useEffect(() => {
-    console.log(debouncedValue);
     setScrollPosition(debouncedValue);
   }, [debouncedValue, setScrollPosition])
 

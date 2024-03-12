@@ -60,6 +60,15 @@ const LandingPage = ({ uuid = null }: { uuid: string | null }) => {
       <Helmet>
         <title>{pageTitle ?? "Muffin | Find your Love"}</title>
         <link rel="canonical" href={`https://${window.location.hostname}${location}`} />
+        <meta property="og:site_name" content="Muffin" />
+        <meta property="og:title" content={pageTitle ?? "Muffin | Find your Love"} />
+        <meta
+          property="og:description"
+          content="Unlock true romance with Muffin. Transform swipes into meaningful connections. Join us and make every moment count in your journey to love."
+        />
+        <meta property="og:url" content="http://www.muffin.ae/" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://muffin.ae/public/logo.png" />
       </Helmet>
 
       <div className="mx-8 md:mx-12 lg:mx-36">

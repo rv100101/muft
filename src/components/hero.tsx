@@ -11,7 +11,6 @@ const Hero = ({ headerTitle = null, headerDescription = null }: {
   headerTitle: null | string; headerDescription: null | string
 }) => {
   const [t, i18n] = useTranslation();
-  console.log(!headerTitle && !headerDescription);
   return (
     <motion.div
       dir={i18n.language == "ar" ? "rtl" : "ltr"}
