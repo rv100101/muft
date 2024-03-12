@@ -1,4 +1,5 @@
 User-agent: *
+
 Disallow:
 
-Sitemap: https://muffin.ph/sitemap.xml
+Sitemap: https://www.muffin.ae/sitemap.xml
