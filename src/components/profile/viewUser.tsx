@@ -47,12 +47,12 @@ const ViewUser = ({ id }: { id: string }) => {
                 profileData!.gender,
                 profileData!.member_uuid
               )
-              : "https://muffin.ph/public/logo.png"
+              : "https://muffin.ae/public/logo.png"
           }
         />
         <meta
           property="og:image:secure_url"
-          content={"https://muffin.ph/public/logo.png"}
+          content={"https://muffin.ae/public/logo.png"}
         />
         <meta property="og:image:alt" content="User's profile image" />
       </Helmet>
