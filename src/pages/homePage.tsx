@@ -58,13 +58,11 @@ const HomePage = () => {
   const { data: members, isLoading: retrievingMemberData } = useQuery({
     refetchOnMount: false,
     refetchOnWindowFocus: false,
-    refetchInterval: Infinity,
     queryKey: ["home-members", preferredLang, user?.gender],
     queryFn: () => getMembers,
   });
 
   const { data: memberLikes, isLoading: likesLoading } = useQuery({
-    enabled: memberList.length === 0,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     queryKey: ["home-members-likes"],
@@ -84,7 +82,7 @@ const HomePage = () => {
   // favorites
   const { data: memberFavorites, isLoading: favoritesLoading } = useQuery({
     refetchOnMount: false,
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false,
     queryKey: ["home-members-favs"],
     queryFn: () => getMemberFavorites,
   });
@@ -165,6 +163,8 @@ const HomePage = () => {
       setSelectedProfileId(null);
     };
   }, [setSelectedProfileId]);
+
+  // console.log(retrievingMemberData, likesLoading, favoritesLoading);
 
   return (
     <AuthenticatedLayout>
