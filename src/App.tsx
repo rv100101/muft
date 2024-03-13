@@ -22,6 +22,7 @@ import { is6Pm } from "./lib/isPm";
 import runOneSignal from "./lib/oneSignal";
 import HomePage from "./pages/homePage";
 import LandingPage from "./pages/landingPage";
+import axios from "axios";
 function App() {
   useEffect(() => {
     runOneSignal();
@@ -34,8 +35,30 @@ function App() {
     (state) => state.toggleDarkModeSwitch
   );
   const preffered = usePreferredLanguageStore((state) => state.preferred);
+  const setPreferred = usePreferredLanguageStore((state) => state.setPreferredLanguage);
   const displaySettings = useSettingsStore((state) => state.settings);
   const [currentTime, setCurrentTime] = useState(new Date());
+
+  useEffect(() => {
+    const getLanguage = async () => {
+      const formData = new FormData();
+      formData.append(
+        "auth",
+        "0DB31DEE22DC4C03AD7DAAA9C29518FF3C08D931992A4A5CB0A4FF4CF4707DC6"
+      );
+      formData.append("lang", preffered ?? 'en');
+      formData.append("member", user!.member_id.toString());
+      await axios.post('https://muffinapi.azurewebsites.net/get_communication_language.php', formData).then((res) => {
+        console.log(res);
+        const language = res.data.communication_language;
+        setPreferred(language);
+      });
+    }
+    if (user) {
+      getLanguage();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user])
 
   useEffect(() => {
     if (preffered) {
