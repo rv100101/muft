@@ -164,8 +164,6 @@ const HomePage = () => {
     };
   }, [setSelectedProfileId]);
 
-  // console.log(retrievingMemberData, likesLoading, favoritesLoading);
-
   return (
     <AuthenticatedLayout>
       <Helmet>
