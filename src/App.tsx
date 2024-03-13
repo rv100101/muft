@@ -50,7 +50,7 @@ function App() {
       formData.append("member", user!.member_id.toString());
       await axios.post('https://muffinapi.azurewebsites.net/get_communication_language.php', formData).then((res) => {
         console.log(res);
-        const language = res.data.communication_language;
+        const language = res.data[0].communication_language;
         setPreferred(language);
       });
     }
