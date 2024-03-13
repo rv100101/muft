@@ -31,6 +31,7 @@ i18n
     },
   });
 
+
 Sentry.init({
   dsn: "https://fd6a643efc57d33d656c0a08f965cbbf@o1300880.ingest.sentry.io/4506415538765824",
   integrations: [
@@ -42,8 +43,8 @@ Sentry.init({
       blockAllMedia: false,
     }),],
   tracesSampleRate: 1.0,
-  replaysSessionSampleRate: 0.07,
-  replaysOnErrorSampleRate: 0.07,
+  replaysSessionSampleRate: 0,
+  replaysOnErrorSampleRate: 1
 });
 
 
