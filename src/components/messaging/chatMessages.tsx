@@ -7,6 +7,9 @@ import { useEffect, useRef } from "react";
 import ChatMessagesLoadingSkeleton from "./chatMessagesLoadingSkeleton";
 import { useSelectedConversationData } from "@/zustand/messaging/selectedConversationData";
 import { useUserStore } from "@/zustand/auth/user";
+import { useUserAvatar } from "@/zustand/auth/avatar";
+import { getImagePath } from "@/lib/images";
+import useConversationHistoryStore from "@/zustand/messaging/showConversation";
 const ChatMessages = () => {
   const scrollableDivRef = useRef<HTMLDivElement | null>(null);
   const user = useUserStore((state) => state.user);
@@ -59,11 +62,16 @@ const ChatMessages = () => {
       conversationMessages.length !== 0 &&
       conversationMessages![conversationMessages!.length - 1] &&
       conversationMessages![conversationMessages!.length - 1].created_user !==
-      user!.member_id
+        user!.member_id
     ) {
       conversationHistory();
     }
   }, [conversationMessages, user]);
+
+  const userPhoto = useUserAvatar((state) => state.gallery_uuid);
+  const currentConversationData = useConversationHistoryStore(
+    (state) => state.conversation
+  );
 
   const messages = conversationMessages?.map((message, index) => {
     const gray = message.created_user == user!.member_id;
@@ -75,36 +83,66 @@ const ChatMessages = () => {
       date = moment(date).fromNow();
     }
 
-    // if (date == "failed") {
-    // }
-
     return (
-      <div
-        className={cn(
-          "flex flex-col w-full space-y-1 ",
-          gray ? "items-end" : "items-start"
-        )}
-        key={index}
-      >
+      <div className={cn("w-full space-y-1 ")} key={index}>
         <div
           className={cn(
-            "p-4 rounded-lg",
-            gray
-              ? "items-start bg-[#E8ECEF] dark:bg-slate-800"
-              : "items-end bg-primary text-white"
+            "flex space-x-2 w-full",
+            !gray ? "justify-start " : "justify-end"
           )}
         >
-          <p dir="ltr" className="text-sm">{message.conversation_text}</p>
+          {!gray && (
+            <img
+              className="hover:cursor-pointer rounded-full w-8 max-h-8 object-cover"
+              src={getImagePath(
+                currentConversationData?.gallery_uuid,
+                currentConversationData?.gender,
+                currentConversationData?.recipient_uuid
+              )}
+              alt="avatar"
+            />
+          )}
+          <div
+            className={cn(
+              "flex flex-col space-y-1",
+              gray ? "items-end" : "items-start"
+            )}
+          >
+            <p
+              dir="ltr"
+              className={cn(
+                "p-4 rounded-lg text-sm",
+                gray
+                  ? "bg-[#E8ECEF] dark:bg-slate-800"
+                  : "bg-primary text-white"
+              )}
+            >
+              {message.conversation_text}
+            </p>
+            {date === "isLoading" && (
+              <p dir="ltr" className={cn("text-xs text-gray-500")}>
+                Sending...
+              </p>
+            )}
+            {date === "failed" && (
+              <p className={cn("text-xs text-red-500")}>
+                Failed to send message
+              </p>
+            )}
+            {date !== "isLoading" && date !== "failed" && (
+              <p dir="ltr" className={cn("text-xs text-gray-500")}>
+                {date}
+              </p>
+            )}
+          </div>
+          {gray && (
+            <img
+              alt="avatar"
+              className="object-fit h-8 w-8"
+              src={getImagePath(userPhoto, user?.gender, user?.member_uuid)}
+            />
+          )}
         </div>
-        {date === "isLoading" && (
-          <p dir="ltr" className={cn("text-xs text-gray-500")}>Sending...</p>
-        )}
-        {date === "failed" && (
-          <p className={cn("text-xs text-red-500")}>Failed to send message</p>
-        )}
-        {date !== "isLoading" && date !== "failed" && (
-          <p dir="ltr" className={cn("text-xs text-gray-500")}>{date}</p>
-        )}
       </div>
     );
   });
