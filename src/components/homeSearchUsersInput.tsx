@@ -37,7 +37,7 @@ const HomepageSearchInput = () => {
   const debouncedSearchValue = useDebounce(searchValue, 300);
 
   const searchUsers = async () =>
-    await searchQuery.search(debouncedSearchValue, user!.member_id);
+    await searchQuery.search(debouncedSearchValue, user!.member_id, i18n.language);
 
   const { isLoading } = useQuery({
     queryFn: searchUsers,
