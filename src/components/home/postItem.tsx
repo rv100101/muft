@@ -94,6 +94,14 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
               alt="post-img"
               className="rounded-t-xl lg:w-[460px] w-[350px] h-[554px] xl:h-[454px] xl:w-[400px] object-cover"
             /> */}
+            {
+              memberData.is_new == "1" ?
+                <div className="absolute left-3 top-3">
+                  <p className="text-[#FF599B]/90 border border-[#FF599B]/90 max-w-max px-2 py-1 rounded-lg bg-white text-xs mb-3 select-none">{memberData.is_new == "1" ? "New Member" : ""}</p>
+                </div>
+                :
+                <></>
+            }
             <div className="absolute bottom-0 w-full">
               <div
                 dir={i18n.language == "ar" ? "rtl" : "ltr"}
