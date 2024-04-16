@@ -115,7 +115,7 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
                   </p>
                   {/* <p className="text-white text-sm">{countryName}</p> */}
                   <p className="drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] text-white text-sm lg:text-lg 2xl:text-lg">
-                    {`${memberData.state_name}, ${memberData.country_name}`}
+                    {`${memberData.state_name ?? 'Unknown'}, ${memberData.country_name}`}
                   </p>
                 </div>
                 <TooltipProvider>
