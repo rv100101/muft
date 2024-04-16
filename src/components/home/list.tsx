@@ -2,6 +2,8 @@ import useHomePageScrollPosition from "@/zustand/home/scrollPosition";
 import { useEffect, useRef, useState } from "react";
 import PostItem from "./postItem";
 import { MemberData } from "@/types/home";
+import { LazyLoadComponent } from "react-lazy-load-image-component";
+import { cn } from "@/lib/utils";
 
 const MemberList = ({
   isLoading,
@@ -36,10 +38,14 @@ const MemberList = ({
     <div
       onScroll={handleScroll}
       ref={containerRef}
-      className="no-scrollbar pt-8 py-4 flex flex-col items-center lg:p-8 px-0  w-full h-screen rounded-b-xl space-y-4 border-[#E0E0E0] dark:border-[#131d2d] overflow-y-scroll overflow-x-clip">
+      className={cn("no-scrollbar pt-8 py-4 flex flex-col items-center lg:p-8 px-0 h-screen w-full lg:w-[528px] xl:w-[460px] rounded-b-xl space-y-4 border-[#E0E0E0] dark:border-[#131d2d] overflow-y-scroll overflow-x-clip",
+        // memberList.length > 0 ? "w-full" : "w-[460px]"
+      )}>
       {memberList.length > 0 ? (
         memberList.map((post, index: number) => (
-          <PostItem key={index} memberData={post} />
+          <LazyLoadComponent>
+            <PostItem key={index} memberData={post} />
+          </LazyLoadComponent>
         ))
       ) : (
         <div className="rounded-t-md lg:w-[460px] w-[350px] object-cover h-screen">
