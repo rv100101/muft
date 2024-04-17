@@ -2,7 +2,6 @@ import useHomePageScrollPosition from "@/zustand/home/scrollPosition";
 import { useEffect, useRef, useState } from "react";
 import PostItem from "./postItem";
 import { MemberData } from "@/types/home";
-import { LazyLoadComponent } from "react-lazy-load-image-component";
 import { cn } from "@/lib/utils";
 
 const MemberList = ({
@@ -43,9 +42,7 @@ const MemberList = ({
       )}>
       {memberList.length > 0 ? (
         memberList.map((post, index: number) => (
-          <LazyLoadComponent>
-            <PostItem key={index} memberData={post} />
-          </LazyLoadComponent>
+          <PostItem key={index} memberData={post} />
         ))
       ) : (
         <div className="rounded-t-md lg:w-[460px] w-[350px] object-cover h-screen">
