@@ -37,7 +37,7 @@ const MemberList = ({
     <div
       onScroll={handleScroll}
       ref={containerRef}
-      className={cn("no-scrollbar pt-8 py-4 flex flex-col items-center lg:p-8 px-0 h-screen w-full lg:w-[528px] xl:w-[460px] rounded-b-xl space-y-4 border-[#E0E0E0] dark:border-[#131d2d] overflow-y-scroll overflow-x-clip",
+      className={cn("no-scrollbar pt-8 py-4 flex flex-col items-center lg:p-8 px-0 h-screen w-full rounded-b-xl space-y-4 border-[#E0E0E0] dark:border-[#131d2d] overflow-y-scroll overflow-x-clip",
         // memberList.length > 0 ? "w-full" : "w-[460px]"
       )}>
       {memberList.length > 0 ? (
