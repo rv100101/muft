@@ -13,8 +13,9 @@ const getMembers: (
     );
     formData.append("member", memberId.toString());
     formData.append("lang", lang);
+    formData.append("page_number", "1");
     const res = await axiosQuery.post(
-      "https://muffinapi.azurewebsites.net/home.php",
+      "https://muffinapi.azurewebsites.net/home_pagination.php",
       formData
     );
 
