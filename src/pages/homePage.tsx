@@ -31,6 +31,7 @@ const HomePage = () => {
   const setMemberList = useHomepageViewStore(
     (state) => state.setModifiedMemberList
   );
+
   const searchValue = useHomepageSearchStore(
     (state) => state.value
   );
@@ -43,7 +44,8 @@ const HomePage = () => {
   const memberList = useHomepageViewStore((state) => state.modifiedMemberList);
   const getMembers = membersQuery.getMembers(
     user!.member_id,
-    preferredLang ?? "en"
+    preferredLang ?? "en",
+    1
   );
   const getMemberLikes = membersQuery.getMemberLikes(
     user!.member_id,
@@ -56,6 +58,8 @@ const HomePage = () => {
     i18n.language
   );
   const { data: members, isLoading: retrievingMemberData } = useQuery({
+    enabled: memberList.length == 0,
+    refetchInterval: Infinity,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     queryKey: ["home-members", preferredLang, user?.gender],
@@ -102,6 +106,9 @@ const HomePage = () => {
   }, [retrievingMemberData, setIsLoading]);
 
   useEffect(() => {
+    if (memberList.length !== 0) {
+      return;
+    }
     if (!retrievingMemberData && memberLikes && memberFavorites && members) {
       const updatedMemberList = members.map((member: MemberData) => {
         const memberHasLikes = memberLikes.find(
@@ -140,23 +147,16 @@ const HomePage = () => {
         }
       });
 
-      if (filters == null) {
-        setMemberList(updatedMemberList);
-      }
+      // if (filters == null) {
+      setMemberList(updatedMemberList);
+      // }
 
       // filteredMemberList.sort((a, b) => a.age - b.age);
       // setMemberList(
       //   debouncedStartFilterVal > 0 ? filteredMemberList : updatedMemberList
       // );
     }
-  }, [
-    memberLikes,
-    memberFavorites,
-    members,
-    setMemberList,
-    filters,
-    retrievingMemberData,
-  ]);
+  }, [memberLikes, memberFavorites, members, setMemberList, filters, retrievingMemberData, memberList.length]);
 
   useEffect(() => {
     return () => {
@@ -193,7 +193,7 @@ const HomePage = () => {
               </div>
               {/* filter */}
               <div className={cn(searchValue.length == 0 && "z-20")}>
-                <HomeFilters isLoading={retrievingMemberData} members={members} />
+                <HomeFilters />
               </div>
             </div>
           </div>
@@ -215,7 +215,7 @@ const HomePage = () => {
             >
               {location === "/" && (
                 <DialogContent className="flex flex-col sm:max-w-md opacity-100 w-4/5">
-                  <HomeFilters isLoading={false} members={null} />
+                  <HomeFilters />
                 </DialogContent>
               )}
             </Dialog>

@@ -3,8 +3,13 @@ import axiosQuery from "./axios";
 
 const getMembers: (
   memberId: number,
-  lang: string
-) => Promise<MemberData[] | null> = async (memberId: number, lang: string) => {
+  lang: string,
+  pageNumber: number
+) => Promise<MemberData[] | null> = async (
+  memberId: number,
+  lang: string,
+  pageNumber: number
+) => {
   try {
     const formData = new FormData();
     formData.append(
@@ -13,7 +18,7 @@ const getMembers: (
     );
     formData.append("member", memberId.toString());
     formData.append("lang", lang);
-    formData.append("page_number", "1");
+    formData.append("page_number", pageNumber.toString());
     const res = await axiosQuery.post(
       "https://muffinapi.azurewebsites.net/home_pagination.php",
       formData

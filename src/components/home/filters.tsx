@@ -1,31 +1,15 @@
 import { Slider } from "@/components/ui/slider";
 import { cn } from "@/lib/utils";
-import { MemberData } from "@/types/home";
 import { useFilterStore } from "@/zustand/home/filter";
-import useHomepageViewStore from "@/zustand/home/homepageView";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useDebounce } from "usehooks-ts";
-const HomeFilters = ({
-  isLoading,
-  members,
-}: {
-  isLoading: boolean;
-  members: MemberData[] | null | undefined;
-}) => {
+const HomeFilters = () => {
   const [t, i18n] = useTranslation();
-  const setMemberList = useHomepageViewStore(
-    (state) => state.setModifiedMemberList
-  );
   const filters = useFilterStore((state) => state.filters);
   const [startAgeSliderVal, setStartAgeSliderVal] = useState(18);
   const [endAgeSliderVal, setEndAgeSliderVal] = useState(80);
-  const debouncedStartFilterVal = useDebounce(filters!.min_age, 300);
-  const debouncedEndFilterVal = useDebounce(
-    filters!.max_age < startAgeSliderVal ? startAgeSliderVal : filters!.max_age,
-    300
-  );
   const updateFilters = useFilterStore((state) => state.updateFilters);
+
   const generateRandomNumbers = () => {
     const min = 18;
     const max = 75;
@@ -46,23 +30,23 @@ const HomeFilters = ({
     setRandomNumbers(selectedNumbers);
   };
 
-  useEffect(() => {
-    if (members) {
-      const filteredMemberList = members.filter(
-        (member: MemberData) =>
-          member.age >= debouncedStartFilterVal &&
-          member.age <= debouncedEndFilterVal
-      );
+  // useEffect(() => {
+  //   if (members && members.length !== 0) {
+  //     const filteredMemberList = members.filter(
+  //       (member: MemberData) =>
+  //         member.age >= debouncedStartFilterVal &&
+  //         member.age <= debouncedEndFilterVal
+  //     );
 
-      setMemberList(filteredMemberList);
-    }
-  }, [
-    isLoading,
-    members,
-    setMemberList,
-    debouncedEndFilterVal,
-    debouncedStartFilterVal,
-  ]);
+  //     setMemberList(filteredMemberList);
+  //   }
+  // }, [
+  //   isLoading,
+  //   members,
+  //   setMemberList,
+  //   debouncedEndFilterVal,
+  //   debouncedStartFilterVal,
+  // ]);
 
   useEffect(() => {
     generateRandomNumbers();
