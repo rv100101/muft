@@ -134,7 +134,7 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
       >
         {location === "/" && (
           <DialogContent className="flex flex-col sm:max-w-md opacity-100 w-4/5">
-            <HomeFilters isLoading={false} members={null} />
+            <HomeFilters />
           </DialogContent>
         )}
 
