@@ -48,7 +48,9 @@ const MemberList = ({
           .map((post, index: number) => (
             <PostItem key={index} memberData={post} />
           )),
-        <NextLoadingIndicator key={'loading-skel'} />
+        <div className="h-96">
+          <NextLoadingIndicator key={'loading-skel'} />
+        </div>
         ]
       ) : (
         <div className="rounded-t-md lg:w-[460px] w-[350px] object-cover h-screen">

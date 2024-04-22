@@ -1,5 +1,4 @@
 import membersQuery from "@/queries/home";
-import { Skeleton } from "../ui/skeleton";
 import useHomePageNumber from "@/zustand/home/pageNumber";
 import { useTranslation } from "react-i18next";
 import { useUserStore } from "@/zustand/auth/user";
@@ -7,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useIntersectionObserver } from "usehooks-ts";
 import useHomepageViewStore from "@/zustand/home/homepageView";
 import { useFilterStore } from "@/zustand/home/filter";
+import logo from "@/assets/single-logo.png";
 
 const NextLoadingIndicator = () => {
   const setMemberList = useHomepageViewStore(
@@ -62,8 +62,10 @@ const NextLoadingIndicator = () => {
   }, [currentMemberList, entry, filterValues?.max_age, filterValues?.min_age, getMembers, hasEntered, isFetchingNewMembers, pageNumber, setMemberList, setPageNumber])
 
   return (
-    <div ref={ref} className="flex flex-col items-center space-y-2 py-4 px-10 bg-white m-5 lg:w-[500px] w-[350px] dark:bg-[#334155]">
-      <Skeleton className="h-[500px] w-full" />
+    <div ref={ref} className="flex flex-col items-center bg-white m-5 lg:w-[500px] w-[350px] dark:bg-[#334155]">
+      {/* <Skeleton className="h-[500px] w-full" /> */}
+      <img src={logo} className="animate-bounce h-16 md:h-24 md:mt-4" alt="muffin-logo" />
+      <div className="h-8" />
     </div>
   )
 }
