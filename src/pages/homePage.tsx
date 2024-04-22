@@ -59,7 +59,6 @@ const HomePage = () => {
   );
   const { data: members, isLoading: retrievingMemberData } = useQuery({
     enabled: memberList.length == 0,
-    refetchInterval: Infinity,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     queryKey: ["home-members", preferredLang, user?.gender],
@@ -102,8 +101,8 @@ const HomePage = () => {
   }, [memberFavorites, memberList, likes, favorites, setFavorites]);
 
   useEffect(() => {
-    setIsLoading(retrievingMemberData);
-  }, [retrievingMemberData, setIsLoading]);
+    setIsLoading(retrievingMemberData && memberList.length == 0);
+  }, [memberList, retrievingMemberData, setIsLoading]);
 
   useEffect(() => {
     if (memberList.length !== 0) {
@@ -182,7 +181,7 @@ const HomePage = () => {
           <div className="hidden lg:block w-32"></div>
           <div className="w-full flex justify-center lg:w-min h-screen border-x">
             <Posts
-              isLoading={retrievingMemberData || likesLoading || favoritesLoading}
+              isLoading={(retrievingMemberData && memberList.length == 0) || likesLoading || favoritesLoading}
               memberList={memberList}
             />
           </div>
