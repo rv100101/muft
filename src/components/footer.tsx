@@ -43,7 +43,7 @@ const Footer = () => {
               "flex space-x-2 hover:bg-transparent hover:text-slate-400 p-0 font-light text-white",
               i18n.language == "ar" && "space-x-reverse"
             )}
-            href="https://support.softnames.com/"
+            href="https://support.muffin.ae"
             target="_blank"
           >
             <p>{t("landingPage.contactUs")}</p>

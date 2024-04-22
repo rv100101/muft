@@ -23,7 +23,6 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "./ui/button";
 import { DialogClose } from "@radix-ui/react-dialog";
-import { scrollToTop } from "@/lib/utils";
 import useConversationHistoryStore from "@/zustand/messaging/showConversation";
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
 import profileHeaderStore from "@/zustand/profile/profileHeaderStore";
@@ -147,21 +146,17 @@ const SideBar = () => {
         <div className={cn("flex flex-col space-y-4 px-4")}>
           <a
             className="hover:text-slate-700 text-xs text-black dark:text-white"
-            href="https://softnames.bolddesk.com/"
-            target="__blank"
+            href="https://support.muffin.ae"
+            target="_blank"
           >
             {t("menu.helpCenter")}
           </a>
-          <Link onClick={scrollToTop} to={"/privacy"}>
-            <a className="hover:text-slate-700 text-xs text-black dark:text-white">
-              {t("menu.privacyPolicy")}
-            </a>
-          </Link>
-          <Link onClick={scrollToTop} to="/terms">
-            <a className="hover:text-slate-700 text-xs text-black dark:text-white">
-              {t("menu.termsAndConditions")}
-            </a>
-          </Link>
+          <a target="_blank" href="https://support.muffin.ae/en-US/kb/article/12/privacy-policy" className="hover:text-slate-700 text-xs text-black dark:text-white">
+            {t("menu.privacyPolicy")}
+          </a>
+          <a target="_blank" href="https://support.muffin.ae/en-US/kb/article/13/terms-and-conditions" className="hover:text-slate-700 text-xs text-black dark:text-white">
+            {t("menu.termsAndConditions")}
+          </a>
           {/* <Link onClick={scrollToTop} href="/release-notes">
             <a className="hover:text-slate-700 text-xs text-black dark:text-white">
               Release Notes

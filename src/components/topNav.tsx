@@ -127,7 +127,7 @@ function TopNav() {
                 <Button variant={"ghost"} className="font-light">
                   <a
                     className={cn("text-md")}
-                    href="https://support.softnames.com/"
+                    href="https://support.muffin.ae"
                     target="_blank"
                   >
                     {t("landingPage.faq")}
@@ -138,7 +138,7 @@ function TopNav() {
                 <Button variant={"ghost"} className="font-light">
                   <a
                     className={cn("text-md")}
-                    href="https://support.softnames.com/"
+                    href="https://support.muffin.ae"
                     target="_blank"
                   >
                     {t("landingPage.contact")}
@@ -149,7 +149,7 @@ function TopNav() {
                 <Button variant={"ghost"} className="font-light">
                   <a
                     className={cn("text-md")}
-                    href="https://support.softnames.com/"
+                    href="https://support.muffin.ae"
                     target="_blank"
                   >
                     {t("landingPage.support")}

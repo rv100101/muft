@@ -10,7 +10,7 @@ import {
 import { Link, useLocation } from "wouter";
 import logo from "@/assets/logo.svg";
 import links from "@/lib/sideBar";
-import { cn, scrollToTop } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 
 import { useUserStore } from "@/zustand/auth/user";
 import { useQueryClient } from "@tanstack/react-query";
@@ -204,22 +204,18 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
               className="flex items-start justify-end flex-col space-y-4 px-4 h-full mt-10 pt-5 "
             >
               <a
-                className="hover:text-slate-700 text-sm text-black dark:text-white"
-                href="https://softnames.bolddesk.com/"
-                target="__blank"
+                className="hover:text-slate-700 text-xs text-black dark:text-white"
+                href="https://support.muffin.ae"
+                target="_blank"
               >
                 {t("menu.helpCenter")}
               </a>
-              <Link onClick={scrollToTop} href="/privacy">
-                <a className="hover:text-slate-700 text-sm text-black dark:text-white">
-                  {t("menu.privacyPolicy")}
-                </a>
-              </Link>
-              <Link onClick={scrollToTop} href="/terms">
-                <a className="hover:text-slate-700 text-sm text-black dark:text-white">
-                  {t("menu.termsAndConditions")}
-                </a>
-              </Link>
+              <a target="_blank" href="https://support.muffin.ae/en-US/kb/article/12/privacy-policy" className="hover:text-slate-700 text-xs text-black dark:text-white">
+                {t("menu.privacyPolicy")}
+              </a>
+              <a target="_blank" href="https://support.muffin.ae/en-US/kb/article/13/terms-and-conditions" className="hover:text-slate-700 text-xs text-black dark:text-white">
+                {t("menu.termsAndConditions")}
+              </a>
             </div>
             <Dialog>
               <DialogTrigger>
