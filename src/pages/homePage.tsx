@@ -7,7 +7,7 @@ import { useUserStore } from "@/zustand/auth/user";
 import HomepageSearchInput from "@/components/homeSearchUsersInput";
 import Posts from "@/components/home/posts";
 import { Member, MemberData } from "@/types/home";
-import createMap from "@/lib/likesAndFavoritesHomeMap";
+// import createMap from "@/lib/likesAndFavoritesHomeMap";
 import { Helmet } from "react-helmet-async";
 import HomeFilters from "@/components/home/filters";
 import { useFilterStore } from "@/zustand/home/filter";
@@ -36,11 +36,11 @@ const HomePage = () => {
     (state) => state.value
   );
   const setIsLoading = useHomepageViewStore((state) => state.setIsLoading);
-  const likes = useHomepageViewStore((state) => state.likes);
-  const favorites = useHomepageViewStore((state) => state.favorites);
+  // const likes = useHomepageViewStore((state) => state.likes);
+  // const favorites = useHomepageViewStore((state) => state.favorites);
   const preferredLang = usePreferredLanguageStore((state) => state.preferred);
-  const setLikes = useHomepageViewStore((state) => state.setLikes);
-  const setFavorites = useHomepageViewStore((state) => state.setFavorites);
+  // const setLikes = useHomepageViewStore((state) => state.setLikes);
+  // const setFavorites = useHomepageViewStore((state) => state.setFavorites);
   const memberList = useHomepageViewStore((state) => state.modifiedMemberList);
   const getMembers = membersQuery.getMembers(
     user!.member_id,
@@ -72,15 +72,15 @@ const HomePage = () => {
     queryFn: () => getMemberLikes,
   });
 
-  useEffect(() => {
-    if (Object.keys(likes).length !== 0) {
-      return;
-    }
-    if (memberList && memberLikes) {
-      const likes = createMap(memberList, memberLikes);
-      setLikes(likes);
-    }
-  }, [likes, memberLikes, memberList, setLikes]);
+  // useEffect(() => {
+  //   if (Object.keys(likes).length !== 0) {
+  //     return;
+  //   }
+  //   if (memberList && memberLikes) {
+  //     const likes = createMap(memberList, memberLikes);
+  //     setLikes(likes);
+  //   }
+  // }, [likes, memberLikes, memberList, setLikes]);
 
   // favorites
   const { data: memberFavorites, isLoading: favoritesLoading } = useQuery({
@@ -90,15 +90,15 @@ const HomePage = () => {
     queryFn: () => getMemberFavorites,
   });
 
-  useEffect(() => {
-    if (Object.keys(favorites).length !== 0) {
-      return;
-    }
-    if (memberList && memberFavorites) {
-      const favorites = createMap(memberList, memberFavorites);
-      setFavorites(favorites);
-    }
-  }, [memberFavorites, memberList, likes, favorites, setFavorites]);
+  // useEffect(() => {
+  //   if (Object.keys(favorites).length !== 0) {
+  //     return;
+  //   }
+  //   if (memberList && memberFavorites) {
+  //     const favorites = createMap(memberList, memberFavorites);
+  //     setFavorites(favorites);
+  //   }
+  // }, [memberFavorites, memberList, likes, favorites, setFavorites]);
 
   useEffect(() => {
     setIsLoading(retrievingMemberData && memberList.length == 0);
