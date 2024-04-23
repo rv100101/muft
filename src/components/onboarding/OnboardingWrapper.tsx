@@ -40,8 +40,11 @@ import profileContentQuery, {
 import selectOptions from "@/zustand/profile/selectData/selectOptions";
 import removeExistingData from "@/lib/removeExistingData";
 import OneSignal from "react-onesignal";
+import UploadPhotoStep from "./UploadPhotoStep";
+import { useUserAvatar } from "@/zustand/auth/avatar";
 
 const OnboardingWrapper = () => {
+  const avatar = useUserAvatar((state) => state.gallery_uuid);
   const {
     isLoading,
     setIsLoading,
@@ -151,7 +154,7 @@ const OnboardingWrapper = () => {
   const step = onboardingStore((state) => state.step);
   const setStep = onboardingStore((state) => state.setStep);
   const [goNext, setGoNext] = useState(false);
-  const [submit, setSubmit] = useState(false);
+  // const [submit, setSubmit] = useState(false);
   const user = useUserStore((state) => state.user);
 
   // useEffect(() => {
@@ -200,7 +203,8 @@ const OnboardingWrapper = () => {
   }, [currentUserLoading, isSaving, setIsLoading, nationalities, step]);
 
   useEffect(() => {
-    if (step > fieldNames.length) {
+    // plus one for the option upload photo
+    if (step > fieldNames.length + 1) {
       setStep(fieldNames.length);
     }
   }, [step, setStep]);
@@ -446,15 +450,18 @@ const OnboardingWrapper = () => {
         </div>
         <StepHeader step={step} />
       </div>
-      <div className="px-12 w-full flex justify-center">
-        <Progress
-          value={(step / 12) * 100}
-          className={cn(
-            "sm:w-3/4 mb-8 h-2",
-            i18n.language == "ar" && "rotate-180"
-          )}
-        />
-      </div>
+      {
+        step < 14 &&
+        <div className="px-12 w-full flex justify-center">
+          <Progress
+            value={(step / 13) * 100}
+            className={cn(
+              "sm:w-3/4 mb-8 h-2",
+              i18n.language == "ar" && "rotate-180"
+            )}
+          />
+        </div>
+      }
       <StepView step={step} />
       <hr className="h-4 w-full sm:w-3/4 mt-8" />
       <div
@@ -476,7 +483,7 @@ const OnboardingWrapper = () => {
             {t("onboarding.back")}
           </Button>
         )}
-        {step !== 12 ? (
+        {step < 13 &&
           <Button
             disabled={isLoading}
             type="button"
@@ -485,14 +492,17 @@ const OnboardingWrapper = () => {
           >
             {t("onboarding.next")}
           </Button>
-        ) : (
+        }
+        {step == 13 && avatar !== null && (
           <Button
             className=" hover:bg-[#FF599B]/90"
             disabled={isSaving}
-            onClick={() => {
-              setSubmit(true);
-            }}
-            type={submit ? "submit" : "button"}
+            // onClick={() => {
+            // setSubmit(true);
+            // handleNext();
+            // }}
+            // type={submit ? "submit" : "button"}
+            type={"submit"}
           >
             {t("onboarding.finish")}
             {isSaving && (
@@ -502,6 +512,12 @@ const OnboardingWrapper = () => {
             )}
           </Button>
         )}
+        {
+          step == 13 && avatar == null &&
+          <Button type="submit" variant={"ghost"}>
+            <p className='text-xs font-medium'>{t("onboarding.skip")}</p>
+          </Button>
+        }
       </div>
     </>
   );
@@ -521,6 +537,7 @@ const StepView = ({ step }: { step: number }) => {
     <MaritalStatusStep />,
     <EmploymentStatusStep />,
     <InterestsStep />,
+    <UploadPhotoStep />,
   ];
   if (step > forms.length) {
     return forms[forms.length - 1];
@@ -543,6 +560,7 @@ const StepHeader = ({ step }: { step: number }) => {
     <h1 className="font-semibold">{t("memberDetails.maritalStatus")} 💍</h1>,
     <h1 className="font-semibold">{t("memberDetails.employment")} 💼</h1>,
     <h1 className="font-semibold">{t("memberDetails.interests")} 🎲</h1>,
+    <h1 className="font-semibold text-center">{t("onboarding.uploadPhotoHeader")} 🥰</h1>,
   ];
   if (step > headers.length) {
     return headers[headers.length - 1];

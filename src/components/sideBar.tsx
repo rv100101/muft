@@ -33,6 +33,9 @@ import OneSignal from "react-onesignal";
 import { SideBarLinks } from "@/types/sideBar";
 
 const SideBar = () => {
+  const setMemberList = useHomepageViewStore(
+    (state) => state.setModifiedMemberList
+  );
   const [t, i18n] = useTranslation();
   const isDark = useSettingsStore(
     (state) => state.settings?.darkModeSwitch
@@ -204,6 +207,7 @@ const SideBar = () => {
                     await OneSignal.logout();
                     setProfileData(null);
                     setProfileHeaderValues(null);
+                    setMemberList([]);
                     // setReadList({});
                   }}
                 >

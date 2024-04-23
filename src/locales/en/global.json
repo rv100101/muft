@@ -136,7 +136,9 @@
     "startWithBasics": "Let's start with the basics",
     "whereAreYouFrom": "Where are you from?",
     "tellBackground": "Tell us your background",
-    "finish": "Finish"
+    "finish": "Finish",
+    "uploadPhotoHeader": "Did you know that profiles with photos have better chances of finding their soulmates?",
+    "skip": "I'll do it later"
   },
   "memberDetails": {
     "noPets": "I don't have Pets",
