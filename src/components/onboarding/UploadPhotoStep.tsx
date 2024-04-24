@@ -44,6 +44,34 @@ const UploadPhotoStep = () => {
     }
   };
 
+  const handleDragOver = (e: DragEvent) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (e: DragEvent) => {
+    e.preventDefault();
+    const file = e.dataTransfer?.files?.[0];
+    // Check if the selected file is an image (you can enhance this check)
+    const allowedImageTypes = ["image/jpeg", "image/png"];
+    if (file) {
+      const reader = new FileReader();
+      if (!allowedImageTypes.includes(file?.type)) {
+        toast({
+          title: t("alert.selectValidImageFile"),
+          variant: "destructive",
+        });
+        setIsUploading(false);
+        return;
+      }
+      reader.onloadend = () => {
+        const base64String = reader.result as string; // Result is a data URL
+        setSelectedFile(base64String);
+      };
+      reader.readAsDataURL(file); // Read file as data URL
+    }
+  };
+
+
   useEffect(() => {
     const handleProfilePhotoUpload = async () => {
       try {
@@ -100,7 +128,10 @@ const UploadPhotoStep = () => {
   };
 
   return <>
-    <div className="border-2 border-dashed border-gray-300 p-4 text-center h-64 w-48 flex flex-col overflow-clip justify-center items-center">
+    <div
+      onDragOver={(e: unknown) => handleDragOver(e as DragEvent)}
+      onDrop={(e: unknown) => handleDrop(e as DragEvent)}
+      className="border-2 border-dashed border-gray-300 p-4 text-center h-64 w-48 flex flex-col overflow-clip justify-center items-center">
       <label htmlFor="profile-photo-upload" className="block cursor-pointer">
         {selectedFile || avatar ? (
           <div className='flex flex-col items-center justify-center relative'>
