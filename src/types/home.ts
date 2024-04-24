@@ -19,6 +19,7 @@ export type Member = {
   nationality_code: string;
 };
 export type MemberData = {
+  match_percentage: string;
   is_new: string;
   nationality_flag: string;
   authorized: boolean;

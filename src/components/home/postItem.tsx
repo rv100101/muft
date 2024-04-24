@@ -66,10 +66,10 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
   };
 
   return (
-    <div className="transition ease-in duration-300 transform border rounded-xl">
-      <div className="flex flex-col items-center justify-end h-full">
-        <div className="flex flex-col h-full justify-center items-center">
-          <div className="relative w-max rounded-t-md hover:cursor-pointer">
+    <div className="transition w-max ease-in duration-300 transform border rounded-xl">
+      <div className="flex flex-col w-full items-center justify-end h-full">
+        <div className="flex flex-col w-max h-full justify-center items-center">
+          <div className="relative lg:w-[460px] w-[350px] h-[554px] xl:h-[454px] xl:w-[400px] rounded-t-md hover:cursor-pointer">
             {/* vignette */}
             <LazyLoadImage
               onClick={() => handlePostItemClick()}
@@ -202,38 +202,6 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
           {/* bio */}
           <div className="flex flex-col justify-center items-center"></div>
           <div className="flex flex-row justify-start space-x-3 mt-5 pb-5 lg:px-0 px-2">
-            <div
-              className={cn(
-                "rounded-full bg-[#FFF2F7] flex flex-row justify-center align-center space-x-2 py-2 px-4 dark:bg-[#3b0117] text=[#ff588e]",
-                i18n.language == "ar" && "space-x-reverse"
-              )}
-            >
-              <CalendarClock
-                color="#FF599B"
-                fill="white"
-                size={25}
-                className="mt-1 hover:cursor-pointer"
-              />
-              <p className="text-[#FF599B] mt-1 text-sm ">
-                {memberData.age} {t("memberDetails.years")}
-              </p>
-            </div>
-            <div className="rounded-full bg-[#FFF2F7] flex flex-row justify-center align-center space-x-2 py-2 px-4 dark:bg-[#3b0117] text=[#ff588e]">
-              <Ribbon
-                color="#FF599B"
-                fill="white"
-                size={25}
-                className="mt-1 hover:cursor-pointer"
-              />
-              <p
-                className={`text-[#FF599B] mt-1 ${memberData.marital_status === "Prefer not to say"
-                  ? "text-sm"
-                  : ""
-                  }`}
-              >
-                {memberData.marital_status}
-              </p>
-            </div>
             {
               <TooltipProvider>
                 <Tooltip>
@@ -277,11 +245,64 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
                 </Tooltip>
               </TooltipProvider>
             }
+            <div
+              className={cn(
+                "rounded-full bg-[#FFF2F7] flex flex-row justify-center align-center space-x-2 py-2 px-4 dark:bg-[#3b0117] text=[#ff588e]",
+                i18n.language == "ar" && "space-x-reverse"
+              )}
+            >
+              <CalendarClock
+                color="#FF599B"
+                fill="white"
+                size={25}
+                className="mt-1 hover:cursor-pointer hidden sm:block"
+              />
+              <p className="text-[#FF599B] mt-1 text-sm ">
+                {memberData.age} {t("memberDetails.years")}
+              </p>
+            </div>
+            <div className="rounded-full bg-[#FFF2F7] flex flex-row justify-center align-center space-x-2 py-2 px-4 dark:bg-[#3b0117] text=[#ff588e]">
+              <Ribbon
+                color="#FF599B"
+                fill="white"
+                size={25}
+                className="mt-1 hover:cursor-pointer"
+              />
+              <p
+                className={`text-[#FF599B] mt-1 ${memberData.marital_status === "Prefer not to say"
+                  ? "text-sm"
+                  : ""
+                  }`}
+              >
+                {memberData.marital_status}
+              </p>
+            </div>
+            {parseInt(memberData.match_percentage) > 10 &&
+              < TooltipProvider >
+                <Tooltip>
+                  <TooltipTrigger className="hover:cursor-default">
+                    <div className="rounded-full bg-[#FFF2F7] flex justify-center align-center space-x-2 py-2 px-4 dark:bg-[#3b0117] text=[#ff588e]">
+                      <p
+                        className={`text-[#FF599B] mt-1 ${memberData.marital_status === "Prefer not to say"
+                          ? "text-sm"
+                          : ""
+                          }`}
+                      >
+                        {memberData.match_percentage}%
+                      </p>
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent className="mr-4">
+                    <p>Matched</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            }
           </div>
         </div>
         {/* <div className="h-[500px]"></div> */}
       </div>
-    </div>
+    </div >
   );
 };
 
