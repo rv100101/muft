@@ -131,7 +131,7 @@ const UploadPhotoStep = () => {
     <div
       onDragOver={(e: unknown) => handleDragOver(e as DragEvent)}
       onDrop={(e: unknown) => handleDrop(e as DragEvent)}
-      className="border-2 border-dashed border-gray-300 p-4 text-center h-64 w-48 flex flex-col overflow-clip justify-center items-center">
+      className="border-2 border-dashed border-gray-300 text-center h-64 w-48 flex flex-col overflow-clip justify-center items-center">
       <label htmlFor="profile-photo-upload" className="block cursor-pointer">
         {selectedFile || avatar ? (
           <div className='flex flex-col items-center justify-center relative'>
@@ -165,8 +165,8 @@ const UploadPhotoStep = () => {
             <div className="flex justify-center w-full">
               <img src={logo} className="w-12 h-12 z-30 mb-8" alt="muffin-logo" />
             </div>
-            <span className="block mb-2 text-sm">Select or drag & drop your photo here</span>
-            <span className="block text-sm">(PNG or JPG)</span>
+            <span className="block mb-2 text-sm mx-4">Select or drag & drop your photo here</span>
+            <span className="block text-sm mx-4">(PNG or JPG)</span>
           </>
         )}
       </label>
