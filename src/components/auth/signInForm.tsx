@@ -32,6 +32,8 @@ import profileAboutContentStore, {
 import useReadConversationsStateStore from "@/zustand/messaging/readConversations";
 import { DialogClose } from "@radix-ui/react-dialog";
 import OneSignal from "react-onesignal";
+import useHomePageNumber from "@/zustand/home/pageNumber";
+import useHomepageViewStore from "@/zustand/home/homepageView";
 
 type FormDataType = {
   email: string;
@@ -50,6 +52,8 @@ const SignInForm = () => {
   const { toast } = useToast();
   const [, navigate] = useLocation();
   const [isLoading, setIsLoading] = useState(false);
+  const setPageNumber = useHomePageNumber(state => state.setPageNumber);
+  const setMemberList = useHomepageViewStore((state) => state.setModifiedMemberList);
   const setPreferredLanguage = usePreferredLanguageStore(
     (state) => state.setPreferredLanguage
   );
@@ -127,6 +131,8 @@ const SignInForm = () => {
         return;
       }
       setPreferredLanguage(signInData.communication_language);
+      setPageNumber(1);
+      setMemberList([]);
       if (data && data!.authorized) {
         updateUser(data);
         queryClient.invalidateQueries();

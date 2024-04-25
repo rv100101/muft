@@ -27,6 +27,8 @@ import profileAboutContentStore, {
 } from "@/zustand/profile/profileAboutStore";
 import { Input } from "@/components/ui/input";
 import SmallFooter from "@/components/smallFooter";
+import useHomePageNumber from "@/zustand/home/pageNumber";
+import useHomepageViewStore from "@/zustand/home/homepageView";
 
 export type SignUpDataType = {
   first_name: string;
@@ -46,6 +48,8 @@ const SignUpPage = () => {
   );
   const [, navigate] = useLocation();
   const updateUser = useUserStore((state) => state.updateUser);
+  const setPageNumber = useHomePageNumber(state => state.setPageNumber);
+  const setMemberList = useHomepageViewStore((state) => state.setModifiedMemberList);
   const formik = useFormik({
     initialValues: {
       first_name: "",
@@ -126,6 +130,8 @@ const SignUpPage = () => {
           profile_completed: false,
           first_time: true,
         });
+        setPageNumber(1);
+        setMemberList([]);
         navigate("/", { replace: true });
       }
     },
