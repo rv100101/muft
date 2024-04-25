@@ -12,6 +12,44 @@ import global_ar from "@/locales/ar/global.json";
 import i18n from "i18next";
 import { I18nextProvider, initReactI18next } from "react-i18next";
 
+// const userAgent = navigator.userAgent;
+
+// Getting screen dimensions
+// const screenWidth = window.screen.width;
+// const screenHeight = window.screen.height;
+
+// Getting viewport dimensions
+// const viewportWidth = document.documentElement.clientWidth;
+// const viewportHeight = document.documentElement.clientHeight;
+
+// Getting device type based on width (simple example)
+// const deviceType = screenWidth < 768 ? 'Mobile' : screenWidth < 1024 ? 'Tablet' : 'Desktop';
+
+// Getting network information (modern browsers)
+// const connectionType = navigator?.connection.effectiveType;
+// console.log(connectionType);
+
+
+// Getting browser language
+// const browserLanguage = navigator.language;
+
+// Getting number of processor cores
+// const processorCores = navigator.hardwareConcurrency;
+
+// Create an object with the gathered data
+// const deviceInfo = {
+//   userAgent: userAgent,
+//   screen: screenWidth + 'x' + screenHeight,
+//   viewport: viewportWidth + 'x' + viewportHeight,
+//   deviceType: deviceType,
+//   connectionType: connectionType,
+//   browserLanguage: browserLanguage,
+//   processorCores: processorCores
+// };
+
+// Convert the object to JSON and log it
+// console.log(JSON.stringify(deviceInfo, null, 2));
+
 i18n
   .use(initReactI18next) // passes i18n down to react-i18next
   .init({
