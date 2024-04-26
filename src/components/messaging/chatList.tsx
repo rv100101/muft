@@ -114,7 +114,7 @@ const ChatList = () => {
               // !openedConversations.includes(conversation.listed_id) &&
               readList !== null &&
               !readList[conversation.conversation_uuid] &&
-              "dark:bg-gray-700 bg-accent",
+              "dark:bg-gray-700 bg-primary hover:bg-[#FF599B]/90 text-white hover:text-white/90",
               selectedHistoryMemberId === conversation.listed_id &&
               "bg-slate-50 dark:bg-gray-900"
             )}
