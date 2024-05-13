@@ -161,6 +161,7 @@ function TopNav() {
               <PreferredLanguageDialog
                 showTrigger={true}
                 triggerTitle={i18n.language == "en" ? "العربية" : "English"}
+                isLandingPage={true}
                 triggerVariant="default"
               />
             </motion.li>

@@ -18,12 +18,14 @@ import { useTranslation } from "react-i18next";
 import { useLocation } from "wouter";
 const PreferredLanguageDialog = ({
   showTrigger = false,
-  triggerTitle,
+  triggerTitle = null,
   triggerVariant = "default",
+  isLandingPage = false
 }: {
   showTrigger: boolean;
   triggerTitle?: null | string;
   triggerVariant: string;
+  isLandingPage: boolean;
 }) => {
   const { setProfileData } = profileAboutContentStore();
   const [t, i18n] = useTranslation();
@@ -39,9 +41,7 @@ const PreferredLanguageDialog = ({
           {user && user.profile_completed && (
             <div className="flex flex-col space-y-2">
               <p className="font-medium pt-5">
-                {triggerTitle
-                  ? triggerTitle
-                  : t("settings.changePreferredLanguage")}
+                {t("settings.changePreferredLanguage")}
               </p>
               <p className="text-xs">
                 Choose your language to be used
@@ -63,14 +63,30 @@ const PreferredLanguageDialog = ({
                 | undefined
               }
               className={cn(
-                "hover:text-[#727272] rounded-full text-[#727272] h-10 text-sm border-[#DDDDDD] bg-white py-2 w-max dark:bg-[#1b1d1e] "
+                "hover:text-[#727272] rounded-full text-[#727272] h-10 text-sm border-[#DDDDDD] bg-white py-2 w-max dark:bg-[#1b1d1e] ", isLandingPage && "bg-primary text-white hover:bg-[#ff599b]/90 hover:text-white"
               )}
               onClick={() => setChangePreferredLanguage(true)}
             >
               <span
-                className={cn("w-4", i18n.language == "en" ? 'mr-1' : "ml-1")}>
+                className={cn("w-4", i18n.language == "en" && isLandingPage ? 'mr-1' : "mx-1")}>
                 {
-                  i18n.language == 'en' ?
+                  isLandingPage && triggerTitle &&
+                    i18n.language == 'en' ?
+                    <img
+                      className="object-fit rounded-full"
+                      src="https://muffin0.blob.core.windows.net/flags/ae.png"
+                      alt="ae-flag"
+                    />
+                    :
+                    <img
+                      className="object-fit rounded-full"
+                      src="https://muffin0.blob.core.windows.net/flags/us.png"
+                      alt="english-flag"
+                    />
+                }
+                {/* {
+                  !isLandingPage &&
+                    i18n.language == 'en' ?
                     <img
                       className="object-fit rounded-full"
                       src="https://muffin0.blob.core.windows.net/flags/us.png"
@@ -79,9 +95,9 @@ const PreferredLanguageDialog = ({
                     <img
                       className="object-fit rounded-full"
                       src="https://muffin0.blob.core.windows.net/flags/ae.png"
-                      alt="english-flag"
+                      alt="ae-flag"
                     />
-                }
+                } */}
               </span> {triggerTitle ? triggerTitle : i18n.language == 'en' ? 'English' : "العربية"}
             </Button>
           </DialogTrigger>

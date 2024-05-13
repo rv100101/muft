@@ -12,7 +12,7 @@ const MyAccountContent = () => {
         <p className="text-lg py-[12px] pl-4 text-white">{t("settings.myAccount")}</p>
       </div>
       <div className="px-4 pb-8">
-        <PreferredLanguageDialog showTrigger={true} triggerVariant={"outline"} />
+        <PreferredLanguageDialog isLandingPage={false} showTrigger={true} triggerVariant={"outline"} />
         {/* <ChangeEmail /> */}
         <SettingsChangePassword />
       </div>
