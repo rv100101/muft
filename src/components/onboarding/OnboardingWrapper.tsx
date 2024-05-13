@@ -391,6 +391,7 @@ const OnboardingWrapper = () => {
             showTrigger={true}
             triggerTitle={i18n.language == "en" ? "العربية" : "English"}
             triggerVariant="default"
+            isLandingPage={false}
           />
           <Dialog>
             <DialogTrigger>
