@@ -23,13 +23,18 @@ const PushNotifcationContent = () => {
   }, []);
 
   return (
-    <div className="flex flex-col border-b w-full justify-center text-[#727272] space-y-5 px-5 py-10">
-      <p className="font-semibold text-lg">{t("settings.notifications")}</p>
+    <div className="flex overflow-clip flex-col border border-primary w-full rounded-[16px] border-b justify-center items-center text-[#727272] space-y-2">
+      <div className="flex w-full p-4 bg-primary">
+        <p className="text-white text-lg">{t("settings.notifications")}</p>
+      </div>
       {/* <p className="font-medium text-md">Push Notifications</p> */}
-      <div className="flex flex-row w-full  justify-between items-center">
-        <p className="font-normal text-md">
-          {t("settings.enablePushNotifications")}
-        </p>
+      <div className="flex flex-row w-full  p-4 justify-between items-center">
+        <div className="flex flex-col justify-start">
+          <p className="font-medium self-start">Push Notifications</p>
+          <p className="font-normal text-md">
+            {t("settings.enablePushNotifications")}
+          </p>
+        </div>
         <Switch
           dir="ltr"
           className={cn(i18n.language == "ar" && "rotate-180")}

@@ -120,24 +120,37 @@ const DeactivateAccountContent = () => {
     setChecked(false);
   }, []);
   return (
-    <div className="flex flex-col  w-full justify-center text-[#727272] space-y-2 px-5 py-10">
-      <p className="font-semibold pb-1 text-lg">
-        {user?.temporarily_deactivated
-          ? t("settings.reactivateAccount")
-          : t("settings.deactivateAccount")}
-      </p>
+    <div className="flex overflow-clip flex-col border border-primary w-full rounded-[16px] border-b justify-center items-center text-[#727272] space-y-2">
+      <div className="flex w-full p-4 bg-primary">
+        <p className="text-white text-lg">
+          {user?.temporarily_deactivated
+            ? t("settings.reactivateAccount")
+            : t("settings.deactivateAccount")}
+        </p>
+      </div>
       {/* <p className="font-medium">Deactivate</p> */}
       <Dialog open={showDialog} onOpenChange={(val) => setShowDialog(val)}>
-        <div className="flex flex-row w-full justify-between items-center">
-          <p>
-            {user?.temporarily_deactivated
-              ? t("settings.reactivate")
-              : t("settings.deactivate")}
-          </p>
+        <div className="flex p-4 flex-row w-full justify-between items-center">
+          <div className="flex flex-col justify-start">
+            <p className="font-semibold">
+              {user?.temporarily_deactivated
+                ? t("settings.reactivate")
+                : t("settings.deactivate")}
+
+            </p>
+            {
+              !user?.temporarily_deactivated
+              &&
+              <p className="mr-8">
+                Your profile, photos, and messages will be hidden, and you will not appear in any search results.
+              </p>
+            }
+          </div>
           <DialogTrigger asChild>
             <Button
+              variant={"outline"}
               className={cn(
-                "text-white  h-10  text-sm rounded-lf py-2 hover:bg-[#FF599B]/90 w-24 dark:bg-[#1b1d1e] dark:hover:bg-red-700/90"
+                "hover:text-[#727272] rounded-full text-[#727272] h-10 text-sm border-[#DDDDDD] bg-white py-2 w-24 dark:bg-[#1b1d1e] "
               )}
             >
               {user?.temporarily_deactivated
@@ -148,38 +161,38 @@ const DeactivateAccountContent = () => {
 
           <DialogContent
             dir={i18n.language == "ar" ? "rtl" : "ltr"}
-            className="sm:max-w-[425px]"
+            className="sm:max-w-[425px] p-0 left-[50%] top-[50%] sm:top-[50%]  w-80 sm:w-full"
           >
-            <DialogHeader>
-              <div className="flex flex-row justify-between items-start  pb-5">
-                <DialogTitle className="font-medium">
+            <DialogHeader className="m-0 bg-primary p-0 rounded-t-lg">
+              <div className="flex flex-row p-4 justify-between items-start ">
+                <DialogTitle className="rounded-t-lg text-white font-medium m-0 p-0">
                   {user?.temporarily_deactivated
                     ? t("settings.reactivate")
                     : t("settings.deactivate")}
                 </DialogTitle>
                 <DialogClose>
-                  <X className="hover:cursor-pointer" size={20} />
+                  <X className="hover:cursor-pointer text-white" size={20} />
                 </DialogClose>
               </div>
-              {!user?.temporarily_deactivated ? (
-                <DialogDescription className={cn("pb-5", i18n.language == 'ar' ? "text-right" : "text-left")}>
-                  {t("deactivateProfile.deactivateMessage")}
-                </DialogDescription>
-              ) : (
-                <DialogDescription
-                  className={cn(
-                    "pb-5",
-                    i18n.language == "ar" ? "text-right" : "text-left"
-                  )}
-                >
-                  {t("alerts.reactivateDescription")}
-                </DialogDescription>
-              )}
             </DialogHeader>
+            {!user?.temporarily_deactivated ? (
+              <DialogDescription className={cn("px-4 pb-5", i18n.language == 'ar' ? "text-right" : "text-left")}>
+                {t("deactivateProfile.deactivateMessage")}
+              </DialogDescription>
+            ) : (
+              <DialogDescription
+                className={cn(
+                  "px-4 pb-5",
+                  i18n.language == "ar" ? "text-right" : "text-left"
+                )}
+              >
+                {t("alerts.reactivateDescription")}
+              </DialogDescription>
+            )}
             {!user?.temporarily_deactivated && (
               <div
                 className={cn(
-                  "flex items-center space-x-2",
+                  "flex items-center space-x-2 mx-4",
                   i18n.language == "ar" && "space-x-reverse"
                 )}
               >
@@ -196,7 +209,7 @@ const DeactivateAccountContent = () => {
                 </label>
               </div>
             )}
-            <div className="flex flex-row justify-center">
+            <div className="flex flex-row justify-center px-4 pb-4">
               <div
                 className={cn(
                   "flex flex-row space-x-4",

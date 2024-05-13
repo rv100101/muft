@@ -26,12 +26,13 @@ const SettingsPage = () => {
             {t("settings.settings")}
           </p>
         </div>
-        <div className="flex overflow-y-auto items-start lg:w-3/4 w-full h-full border">
-          <div className="w-full lg:mt-0 mt-5 h-full">
+        <div className="flex overflow-y-auto items-start lg:w-3/4 w-full h-full border border-t-0 p-8">
+          <div className="w-full lg:mt-0 space-y-4 h-full">
             <MyAccountContent />
             <DisplayContent />
             <PushNotifcationContent />
             <DeactivateAccountContent />
+            <div className="h-8" />
           </div>
         </div>
       </div>

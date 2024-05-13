@@ -1,8 +1,10 @@
-import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
 import { useSettingsStore } from "@/zustand/settings/displaySettingsStore";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import neutral from "@/assets/profile/ellipse.svg"
+import light from "@/assets/profile/light.svg"
+import dark from "@/assets/profile/dark.svg";
 
 const DisplayContent = () => {
   const [t, i18n] = useTranslation();
@@ -17,7 +19,6 @@ const DisplayContent = () => {
   );
   const toggleSystemDark = useSettingsStore((state) => state.toggleSystemDark);
   const displaySettings = useSettingsStore((state) => state.settings);
-  const systemDark = useSettingsStore((state) => state.systemDark);
 
   useEffect(() => {
     if (displaySettings?.darkModeSwitch) {
@@ -31,58 +32,64 @@ const DisplayContent = () => {
   }, [displaySettings, toggleSystemDark]);
 
   return (
-    <div className="flex flex-col  w-full border-b justify-center text-[#727272] space-y-2 px-5 py-10">
-      <p className="font-semibold text-lg">{t("settings.displaySettings")}</p>
-      <p className="font-medium pt-5">{t("settings.theme")}</p>
-      <div className="flex flex-row justify-around sm:justify-center border-none sm:border rounded-lg py-5 space-x-2 ">
-        <div
-          className={cn(
-            "flex flex-row w-full justify-center ",
-            i18n.language == "ar"
-              ? "space-x-reverse space-x-3"
-              : "lg:space-x-3 space-x-3"
-          )}
-        >
-          <p>{t("settings.light")}</p>
-          <Switch
-            className={cn(i18n.language == "ar" && "rotate-180")}
-            dir="ltr"
-            id="airplane-mode2"
-            checked={displaySettings?.lightModeSwitch}
-            onCheckedChange={(state) =>
+    <div className="flex overflow-clip flex-col border border-primary w-full h-max rounded-[16px] border-b justify-center items-center text-[#727272] space-y-2">
+      <div className="flex w-full bg-primary">
+        <p className="text-lg py-[12px] pl-4 text-white">{t("settings.displaySettings")}</p>
+      </div>
+      <p className="font-medium pt-5 px-4 self-start">{t("settings.theme")}</p>
+      <div className="flex justify-center items-center flex-wrap gap-4 w-full h-full p-8 sm:p-16">
+        <button onClick={
+          () =>
+            toggleAutoMode({
+              darkModeSwitch: false,
+              lightModeSwitch: false,
+              autoModeSwitch: true,
+            })
+        }>
+          <div className={cn("rounded-sm border space-y-2 p-8 h-24 w-24 sm:h-[120px] sm:w-[120px] flex flex-col items-center justify-center",
+            displaySettings?.autoModeSwitch && "border-primary border-2 bg-[#FFF0F6]"
+          )}>
+            <img className="sm:w-[40px] sm:h-[40px]" src={neutral} />
+            <p className="text-sm">Default</p>
+          </div>
+        </button>
+        <button
+          onClick={
+            () =>
               toggleLightMode({
-                darkModeSwitch: !state,
-                lightModeSwitch: state,
+                darkModeSwitch: false,
+                lightModeSwitch: true,
                 autoModeSwitch: false,
               })
-            }
-          />
-          {/* <Label htmlFor="airplane-mode">Airplane Mode</Label> */}
-        </div>
-        <div
-          className={cn(
-            "flex flex-row w-full justify-center ",
-            i18n.language == "ar"
-              ? "space-x-reverse space-x-3"
-              : "lg:space-x-3 space-x-3"
-          )}
+
+          }
         >
-          <p>{t("settings.dark")}</p>
-          <Switch
-            dir="ltr"
-            id="dark-switch"
-            className={cn(i18n.language == "ar" && "rotate-180")}
-            checked={displaySettings?.darkModeSwitch}
-            onCheckedChange={(state) =>
+          <div className={cn("rounded-sm space-y-2 border p-8 h-24 w-24 sm:h-[120px] sm:w-[120px] flex flex-col items-center justify-center",
+            displaySettings?.lightModeSwitch && "border-primary border-2 bg-[#FFF0F6]"
+          )}>
+            <img className="sm:w-[40px] sm:h-[40px]" src={light} />
+            <p className="text-sm">Light</p>
+          </div>
+        </button>
+        <button
+          onClick={
+            () =>
               toggleDarkMode({
-                darkModeSwitch: state,
-                lightModeSwitch: !state,
+                darkModeSwitch: true,
+                lightModeSwitch: false,
                 autoModeSwitch: false,
               })
-            }
-          />
-          {/* <Label htmlFor="airplane-mode">Airplane Mode</Label> */}
-        </div>
+
+          }
+
+        >
+          <div className={cn("rounded-sm  space-y-2 border p-8 h-24 w-24 sm:h-[120px] sm:w-[120px] flex flex-col items-center justify-center",
+            displaySettings?.darkModeSwitch && "border-primary border-2 bg-transparent"
+          )}>
+            <img className="w-[40px] h-[40px]" height={40} src={dark} />
+            <p className="text-sm">Dark</p>
+          </div>
+        </button>
         <div
           className={cn(
             "flex flex-row w-full justify-center ",
@@ -91,20 +98,6 @@ const DisplayContent = () => {
               : "lg:space-x-3 space-x-3"
           )}
         >
-          <p>{t("settings.auto")}</p>
-          <Switch
-            className={cn(i18n.language == "ar" && "rotate-180")}
-            dir="ltr"
-            id="auto-switch"
-            checked={displaySettings?.autoModeSwitch}
-            onCheckedChange={(state) =>
-              toggleAutoMode({
-                darkModeSwitch: systemDark ? !state : false,
-                lightModeSwitch: !systemDark ? !state : false,
-                autoModeSwitch: state,
-              })
-            }
-          />
         </div>
       </div>
     </div>

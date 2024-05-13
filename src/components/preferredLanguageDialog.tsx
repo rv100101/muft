@@ -35,13 +35,18 @@ const PreferredLanguageDialog = ({
   return (
     <Dialog open={preferred == null && !location.startsWith('/places/') || changePreferredLanguage}>
       {showTrigger && (
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center h-max">
           {user && user.profile_completed && (
-            <p className="font-medium pt-5">
-              {triggerTitle
-                ? triggerTitle
-                : t("settings.changePreferredLanguage")}
-            </p>
+            <div className="flex flex-col space-y-2">
+              <p className="font-medium pt-5">
+                {triggerTitle
+                  ? triggerTitle
+                  : t("settings.changePreferredLanguage")}
+              </p>
+              <p className="text-xs">
+                Choose your language to be used
+              </p>
+            </div>
           )}
           <DialogTrigger className="flex">
             <Button
@@ -58,29 +63,46 @@ const PreferredLanguageDialog = ({
                 | undefined
               }
               className={cn(
-                "text-white h-10 text-sm rounded-lf py-2 hover:bg-[#FF599B]/90 w-24 dark:bg-[#1b1d1e] dark:hover:bg-red-700/90"
+                "hover:text-[#727272] rounded-full text-[#727272] h-10 text-sm border-[#DDDDDD] bg-white py-2 w-max dark:bg-[#1b1d1e] "
               )}
               onClick={() => setChangePreferredLanguage(true)}
             >
-              {triggerTitle ? triggerTitle : t("settings.change")}
+              <span
+                className={cn("w-4", i18n.language == "en" ? 'mr-1' : "ml-1")}>
+                {
+                  i18n.language == 'en' ?
+                    <img
+                      className="object-fit rounded-full"
+                      src="https://muffin0.blob.core.windows.net/flags/us.png"
+                      alt="english-flag"
+                    /> :
+                    <img
+                      className="object-fit rounded-full"
+                      src="https://muffin0.blob.core.windows.net/flags/ae.png"
+                      alt="english-flag"
+                    />
+                }
+              </span> {triggerTitle ? triggerTitle : i18n.language == 'en' ? 'English' : "العربية"}
             </Button>
           </DialogTrigger>
         </div>
       )}
-      <DialogContent className="w-72 sm:w-full">
+      <DialogContent
+        dir={i18n.language == "ar" ? "rtl" : "ltr"}
+        className="p-0 m-0 gap-0 w-72 sm:w-full">
         <DialogHeader
           dir={i18n.language == "ar" ? "rtl" : "ltr"}
-          className="mb-2 w-full flex justify-end"
+          className="w-full bg-primary p-2 m-0 text-white rounded-t-lg flex justify-end"
         >
           <div className="flex">
-            <DialogTitle className="text-sm sm:text-base flex w-full items-center">
+            <DialogTitle className="text-sm m-0 font-medium sm:text-base flex w-full items-center">
               {t("general.chooseYourPreferredLanguage")}
             </DialogTitle>
             <DialogClose></DialogClose>
           </div>
         </DialogHeader>
-        <div className="grid grid-cols-2 mt-2">
-          <p
+        <div className="flex flex-col justify-start m-0 w-full">
+          <div
             onClick={async () => {
               setPreferredLanguage("en");
               setChangePreferredLanguage(false);
@@ -95,18 +117,19 @@ const PreferredLanguageDialog = ({
               queryClient.invalidateQueries();
               setProfileData(null);
             }}
-            className="text-center font-semibold cursor-pointer"
-          >
-            <span className="flex w-full justify-center mb-1">
-              <img
-                className="mr-2 h-24"
-                src="https://muffin0.blob.core.windows.net/flags/us.png"
-                alt="english-flag"
-              />
-            </span>
-            English
-          </p>
-          <p
+            className={cn("hover:cursor-pointer flex space-x-2 items-center border-b p-4", i18n.language == "ar" ? "space-x-reverse" : "bg-[#F6F6F6]")}>
+            <img
+              className="h-8 rounded-full"
+              src="https://muffin0.blob.core.windows.net/flags/us.png"
+              alt="english-flag"
+            />
+            <p
+              className="text-center font-semibold cursor-pointer"
+            >
+              English
+            </p>
+          </div>
+          <div
             onClick={async () => {
               setPreferredLanguage("ar");
               setChangePreferredLanguage(false);
@@ -115,34 +138,30 @@ const PreferredLanguageDialog = ({
                   "ar",
                   user.member_id
                 );
-                // queryClient.invalidateQueries({ queryKey: ["home-members"] });
-                // queryClient.invalidateQueries({ queryKey: ["profileContent"] });
-                // queryClient.invalidateQueries({ queryKey: ["nationalities"] });
-                // queryClient.invalidateQueries({ queryKey: ["languages"] });
-                // queryClient.invalidateQueries({ queryKey: ["interests"] });
-                // queryClient.invalidateQueries({ queryKey: ["ethnicities"] });
-                // queryClient.invalidateQueries({ queryKey: ["maritalStatus"] });
-                // queryClient.invalidateQueries({ queryKey: ["educations"] });
-                // queryClient.invalidateQueries({ queryKey: ["occupations"] });
-                // queryClient.invalidateQueries({ queryKey: ["incomes"] });
-                // queryClient.invalidateQueries({ queryKey: ["favoriteFoods"] });
-                // queryClient.invalidateQueries({ queryKey: ["bodyTypes"] });
-                // queryClient.invalidateQueries({ queryKey: ["bodyTypes"] });
               }
               queryClient.invalidateQueries();
               setProfileData(null);
             }}
-            className="text-center font-semibold cursor-pointer"
-          >
-            <span className="flex w-full justify-center mb-1">
-              <img
-                className="mr-2 h-24"
-                src="https://muffin0.blob.core.windows.net/flags/ae.png"
-                alt="arabic-flag"
-              />
-            </span>
-            العربية
-          </p>
+            className={cn("flex hover:cursor-pointer space-x-2 items-center border-b p-4", i18n.language == "ar" && "space-x-reverse bg-[#F6F6F6]")}>
+            <img
+              className="h-8 rounded-full"
+              src="https://muffin0.blob.core.windows.net/flags/ae.png"
+              alt="arabic-flag"
+            />
+            <p
+              className="text-center font-semibold cursor-pointer"
+            >
+              العربية
+            </p>
+          </div>
+        </div>
+        <div className="flex mt-3 mb-2 justify-end w-full px-3">
+          <Button onClick={() => {
+            setChangePreferredLanguage(false);
+          }
+          } variant={"outline"} className="rounded-full  text-[#727272]">
+            {t("onboarding.back")}
+          </Button>
         </div>
       </DialogContent>
     </Dialog>
