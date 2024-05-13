@@ -94,7 +94,7 @@ const SettingsChangePassword = () => {
             }}
             variant={"outline"}
             className={cn(
-              "hover:text-[#727272] rounded-full text-[#727272] h-10 text-sm border-[#DDDDDD] bg-white py-2 w-24 dark:bg-[#1b1d1e] "
+              "hover:text-[#727272] rounded-full text-[#727272] h-10 text-sm border-[#DDDDDD] bg-white py-2 w-24 dark:bg-[#1b1d1e] dark:hover:text-white"
             )}
           >
             {t("settings.change")}

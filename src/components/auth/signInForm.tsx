@@ -293,7 +293,7 @@ const SignInForm = () => {
             disabled={isLoading}
             type="submit"
             className={cn(
-              "text-white h-10 w-full text-sm rounded-full py-2 hover:bg-[#FF599B]/90 mt-5 dark:bg-[#ae2e51]",
+              "text-white h-10 w-full text-sm rounded-full py-2 hover:bg-[#ff599b]/90 mt-5 dark:bg-[#ae2e51]",
               isLoading ? "bg-[#FF8AB3]" : "bg-primary"
             )}
           >

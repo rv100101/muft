@@ -150,7 +150,7 @@ const DeactivateAccountContent = () => {
             <Button
               variant={"outline"}
               className={cn(
-                "hover:text-[#727272] rounded-full text-[#727272] h-10 text-sm border-[#DDDDDD] bg-white py-2 w-24 dark:bg-[#1b1d1e] "
+                "dark:hover:text-white hover:text-[#727272] rounded-full text-[#727272] h-10 text-sm border-[#DDDDDD] bg-white py-2 w-24 dark:bg-[#1b1d1e] "
               )}
             >
               {user?.temporarily_deactivated
@@ -222,7 +222,7 @@ const DeactivateAccountContent = () => {
                     isLoading
                   }
                   className={cn(
-                    "text-white h-10 text-sm rounded-lf py-2  mt-5 w-24",
+                    "text-white h-10 text-sm rounded-lf py-2  mt-5 w-24 ",
                     user?.temporarily_deactivated
                       ? "bg-primary hover:bg-[#FF599B]/90"
                       : "bg-orange-400 hover:bg-orange-400/90"

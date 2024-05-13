@@ -63,7 +63,7 @@ const PreferredLanguageDialog = ({
                 | undefined
               }
               className={cn(
-                "hover:text-[#727272] rounded-full text-[#727272] h-10 text-sm border-[#DDDDDD] bg-white py-2 w-max dark:bg-[#1b1d1e] ", isLandingPage && "bg-primary text-white hover:bg-[#ff599b]/90 hover:text-white"
+                "hover:text-[#727272] rounded-full text-[#727272] h-10 text-sm border-[#DDDDDD] bg-white py-2 w-max dark:bg-[#1b1d1e] dark:hover:text-white", isLandingPage && "bg-primary text-white hover:bg-[#ff599b]/90 hover:text-white "
               )}
               onClick={() => setChangePreferredLanguage(true)}
             >

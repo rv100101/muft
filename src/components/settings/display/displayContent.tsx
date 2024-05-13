@@ -46,7 +46,7 @@ const DisplayContent = () => {
               autoModeSwitch: true,
             })
         }>
-          <div className={cn("rounded-sm border space-y-2 p-8 h-24 w-24 sm:h-[120px] sm:w-[120px] flex flex-col items-center justify-center",
+          <div className={cn("dark:hover:border-primary dark:border  rounded-sm border space-y-2 p-8 h-24 w-24 dark:hover:text-white sm:h-[120px] sm:w-[120px] flex flex-col items-center justify-center",
             displaySettings?.autoModeSwitch && "border-primary border-2 bg-[#FFF0F6]"
           )}>
             <img className="sm:w-[40px] sm:h-[40px]" src={neutral} />
@@ -64,7 +64,7 @@ const DisplayContent = () => {
 
           }
         >
-          <div className={cn("rounded-sm space-y-2 border p-8 h-24 w-24 sm:h-[120px] sm:w-[120px] flex flex-col items-center justify-center",
+          <div className={cn("dark:hover:border-primary dark:border dark:hover:text-white rounded-sm space-y-2 border p-8 h-24 w-24 sm:h-[120px] sm:w-[120px] flex flex-col items-center justify-center",
             displaySettings?.lightModeSwitch && "border-primary border-2 bg-[#FFF0F6]"
           )}>
             <img className="sm:w-[40px] sm:h-[40px]" src={light} />
@@ -83,7 +83,7 @@ const DisplayContent = () => {
           }
 
         >
-          <div className={cn("rounded-sm  space-y-2 border p-8 h-24 w-24 sm:h-[120px] sm:w-[120px] flex flex-col items-center justify-center",
+          <div className={cn("rounded-sm  space-y-2 border p-8 h-24 w-24 sm:h-[120px] dark:hover:border-primary dark:border sm:w-[120px] flex flex-col items-center justify-center",
             displaySettings?.darkModeSwitch && "border-primary border-2 bg-transparent"
           )}>
             <img className="w-[40px] h-[40px]" height={40} src={dark} />

@@ -15,6 +15,7 @@ const PushNotifcationContent = () => {
       event?.current?.optedIn
     )
   }
+
   useEffect(() => {
     setNotificationEnabled(
       OneSignal.User.PushSubscription.optedIn
@@ -37,7 +38,7 @@ const PushNotifcationContent = () => {
         </div>
         <Switch
           dir="ltr"
-          className={cn(i18n.language == "ar" && "rotate-180")}
+          className={cn(" dark:hover:border-primary", i18n.language == "ar" && "rotate-180")}
           id="airplane-mode"
           checked={notificationEnabled}
           onCheckedChange={(checked) => {
