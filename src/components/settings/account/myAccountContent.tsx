@@ -11,7 +11,7 @@ const MyAccountContent = () => {
       <div className="flex w-full bg-primary ">
         <p className="text-lg py-[12px] pl-4 text-white">{t("settings.myAccount")}</p>
       </div>
-      <div className="px-4 pb-8">
+      <div className="px-4 pb-4 space-y-4">
         <PreferredLanguageDialog isLandingPage={false} showTrigger={true} triggerVariant={"outline"} />
         {/* <ChangeEmail /> */}
         <SettingsChangePassword />

@@ -36,8 +36,7 @@ const DisplayContent = () => {
       <div className="flex w-full bg-primary">
         <p className="text-lg py-[12px] pl-4 text-white">{t("settings.displaySettings")}</p>
       </div>
-      <p className="font-medium pt-5 px-4 self-start">{t("settings.theme")}</p>
-      <div className="flex justify-center items-center flex-wrap gap-4 w-full h-full p-8 sm:p-16">
+      <div className="flex justify-center items-center flex-wrap gap-2 sm:gap-4 w-full h-full pb-2 sm:p-16">
         <button onClick={
           () =>
             toggleAutoMode({
@@ -50,7 +49,7 @@ const DisplayContent = () => {
             displaySettings?.autoModeSwitch && "border-primary border-2 bg-[#FFF0F6]"
           )}>
             <img className="sm:w-[40px] sm:h-[40px]" src={neutral} />
-            <p className="text-sm">Default</p>
+            <p className="text-sm">Auto</p>
           </div>
         </button>
         <button

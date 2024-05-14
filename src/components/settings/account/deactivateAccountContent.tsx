@@ -124,20 +124,20 @@ const DeactivateAccountContent = () => {
       <div className="flex w-full p-4 bg-primary">
         <p className="text-white text-lg">
           {user?.temporarily_deactivated
-            ? t("settings.reactivateAccount")
-            : t("settings.deactivateAccount")}
+            ? t("settings.reactivate")
+            : t("settings.deactivate")}
         </p>
       </div>
       {/* <p className="font-medium">Deactivate</p> */}
       <Dialog open={showDialog} onOpenChange={(val) => setShowDialog(val)}>
         <div className="flex p-4 flex-row w-full justify-between items-center">
           <div className="flex flex-col justify-start">
-            <p className="font-semibold">
+            {/* <p className="font-semibold">
               {user?.temporarily_deactivated
                 ? t("settings.reactivate")
                 : t("settings.deactivate")}
 
-            </p>
+            </p> */}
             {
               !user?.temporarily_deactivated
               &&

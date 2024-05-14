@@ -39,13 +39,13 @@ const PreferredLanguageDialog = ({
       {showTrigger && (
         <div className="flex justify-between items-center h-max">
           {user && user.profile_completed && (
-            <div className="flex flex-col space-y-2">
-              <p className="font-medium pt-5">
+            <div className="flex flex-col justify-center h-full items-center">
+              <p className="font-medium">
                 {t("settings.changePreferredLanguage")}
               </p>
-              <p className="text-xs">
+              {/* <p className="text-xs">
                 Choose your language to be used
-              </p>
+              </p> */}
             </div>
           )}
           <DialogTrigger className="flex">

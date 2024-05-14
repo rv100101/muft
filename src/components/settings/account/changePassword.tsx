@@ -82,10 +82,7 @@ const SettingsChangePassword = () => {
     <Dialog open={showChangePassDialog} onOpenChange={(val) => setShowChangePassDialog(val)} >
       <div className="flex flex-row w-full justify-between items-center">
         <div className="flex flex-col space-y-2">
-          <p className="font-medium pt-5">{t("settings.changePassword")}</p>
-          <p className="text-xs">
-            Choose a unique password to protect your account
-          </p>
+          <p className="font-medium">{t("settings.changePassword")}</p>
         </div>
         <DialogTrigger asChild>
           <Button
