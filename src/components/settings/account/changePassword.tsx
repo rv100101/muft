@@ -59,16 +59,30 @@ const SettingsChangePassword = () => {
       //   nickname: values.username,
       //   member: user!.member_id,
       // });
-      const res = await axiosQuery.post("/ChangePassword", {
-        password: values.newPassword,
-        email: user!.email_address,
-      });
+      const formData = new FormData();
+      formData.append(
+        "auth",
+        "0DB31DEE22DC4C03AD7DAAA9C29518FF3C08D931992A4A5CB0A4FF4CF4707DC6"
+      );
+      formData.append("lang", i18n.language);
+      formData.append("email", user!.email_address);
+      formData.append("password", values.newPassword);
+      const res = await axiosQuery.post("https://muffinapi.azurewebsites.net/change_password.php",
+        formData
+      );
       if (res.data) {
-        toast({
-          title: t("alerts.passwordUpdated"),
-          description: t("alerts.changesTakeAwhile"),
-          variant: "success",
-        });
+        if (res.data[0].password_changed) {
+          toast({
+            title: t("alerts.passwordUpdated"),
+            description: t("alerts.changesTakeAwhile"),
+            variant: "success",
+          });
+        } else {
+          toast({
+            title: "Sorry we are Unable to change your Password.",
+            variant: "destructive",
+          });
+        }
         setShowChangePassDialog(false);
         setIsLoading(false);
         formik.resetForm()
