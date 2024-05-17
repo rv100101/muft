@@ -139,10 +139,17 @@ const DeactivateAccountContent = () => {
 
             </p> */}
             {
+              user?.temporarily_deactivated
+              &&
+              <p className="mr-8">
+                Reactivate your Account
+              </p>
+            }
+            {
               !user?.temporarily_deactivated
               &&
               <p className="mr-8">
-                Your profile, photos, and messages will be hidden, and you will not appear in any search results.
+                Deactivate your Account
               </p>
             }
           </div>
