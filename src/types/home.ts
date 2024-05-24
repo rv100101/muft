@@ -36,6 +36,7 @@ export type MemberData = {
   state_name: string;
   last_active: string;
   gallery_uuid: string | null;
+  last_active_date: string;
 };
 export type LikedMemberData = {
   authorized: boolean;
