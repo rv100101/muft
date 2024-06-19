@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useLocation } from "wouter";
 import { useTranslation } from "react-i18next";
+import LandingPosts, { Post } from "./landingPosts";
 
 const LandingPage = ({ uuid = null }: { uuid: string | null }) => {
   const [, i18n] = useTranslation();
@@ -18,6 +19,7 @@ const LandingPage = ({ uuid = null }: { uuid: string | null }) => {
   const [headerTitle, setHeaderTitle] = useState(null)
   const [pageTitle, setPageTitle] = useState(null)
   const [headerDescription, setHeaderDecription] = useState(null)
+  const [posts, setPosts] = useState([]);
   useEffect(() => {
     if (uuid) {
       const formData = new FormData();
@@ -29,6 +31,8 @@ const LandingPage = ({ uuid = null }: { uuid: string | null }) => {
       const fetchPlaces = async () => {
         try {
           const res = await axios.post('https://muffinapi.azurewebsites.net/landing.php', formData);
+          const places = await axios.post('https://muffinapi.azurewebsites.net/landing_posts.php', formData);
+          setPosts(places.data);
           if (res?.data?.length == 0) {
             setLocation('/');
           } else {
@@ -73,6 +77,12 @@ const LandingPage = ({ uuid = null }: { uuid: string | null }) => {
 
       <div className="mx-8 md:mx-12 lg:mx-36">
         <Hero headerTitle={headerTitle} headerDescription={headerDescription} />
+        {
+          location.includes('/places') && <>
+            <LandingPosts posts={posts as Post[]} />
+            <hr className="hidden sm:block" />
+          </>
+        }
         <Benefits />
         <Features />
         {/* <Testimonials /> */}
