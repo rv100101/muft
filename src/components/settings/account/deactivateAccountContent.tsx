@@ -149,7 +149,7 @@ const DeactivateAccountContent = () => {
               !user?.temporarily_deactivated
               &&
               <p className="mr-8">
-                Deactivate your Account
+                {t('deactivateProfile.deactivateYourAccount')}
               </p>
             }
           </div>

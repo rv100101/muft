@@ -78,7 +78,7 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
   };
 
   return (
-    <div className="transition w-max ease-in duration-300 transform border rounded-xl">
+    <div className="transition w-max ease-in duration-300 transform border-2 rounded-xl border-primary">
       <div className="flex flex-col w-full items-center justify-end h-full">
         <div className="flex flex-col w-max h-full justify-center items-center">
           <div className="relative lg:w-[460px] w-[350px] h-[554px] xl:h-[454px] xl:w-[400px] hover:cursor-pointer">

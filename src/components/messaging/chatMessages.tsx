@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import messagingQuery from "@/queries/messaging";
 import useLatestConversationStore from "@/zustand/messaging/showConversation";
+import { Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import moment from "moment-with-locales-es6";
 import { useEffect, useRef } from "react";
@@ -13,6 +14,9 @@ import useConversationHistoryStore from "@/zustand/messaging/showConversation";
 const ChatMessages = () => {
   const scrollableDivRef = useRef<HTMLDivElement | null>(null);
   const user = useUserStore((state) => state.user);
+  const selectedHistoryMemberId = useLatestConversationStore(
+    (state) => state.selectedHistoryMemberId
+  );
   const latestConversation = useLatestConversationStore(
     (state) => state.conversation
   );
@@ -62,7 +66,7 @@ const ChatMessages = () => {
       conversationMessages.length !== 0 &&
       conversationMessages![conversationMessages!.length - 1] &&
       conversationMessages![conversationMessages!.length - 1].created_user !==
-        user!.member_id
+      user!.member_id
     ) {
       conversationHistory();
     }
@@ -92,15 +96,23 @@ const ChatMessages = () => {
           )}
         >
           {!gray && (
-            <img
-              className="hover:cursor-pointer rounded-full w-8 max-h-8 object-cover"
-              src={getImagePath(
-                currentConversationData?.gallery_uuid,
-                currentConversationData?.gender,
-                currentConversationData?.recipient_uuid
-              )}
-              alt="avatar"
-            />
+            <Link
+              href={
+                selectedHistoryMemberId
+                  ? `/members/${selectedHistoryMemberId}`
+                  : ""
+              }
+            >
+              <img
+                className="hover:cursor-pointer rounded-full w-8 max-h-8 object-cover"
+                src={getImagePath(
+                  currentConversationData?.gallery_uuid,
+                  currentConversationData?.gender,
+                  currentConversationData?.recipient_uuid
+                )}
+                alt="avatar"
+              />
+            </Link>
           )}
           <div
             className={cn(
@@ -143,7 +155,7 @@ const ChatMessages = () => {
             />
           )}
         </div>
-      </div>
+      </div >
     );
   });
 
