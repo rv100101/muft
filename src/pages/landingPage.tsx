@@ -79,8 +79,9 @@ const LandingPage = ({ uuid = null }: { uuid: string | null }) => {
         <Hero headerTitle={headerTitle} headerDescription={headerDescription} />
         {
           location.includes('/places') && <>
+            <hr className="mt-4 block" />
             <LandingPosts posts={posts as Post[]} />
-            <hr className="hidden sm:block" />
+            <hr className="mt-4 sm:mt-4 block" />
           </>
         }
         <Benefits />
