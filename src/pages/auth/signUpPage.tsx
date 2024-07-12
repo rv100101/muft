@@ -5,7 +5,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useState } from "react";
+import { useSearch } from "wouter";
+import { useEffect, useState } from "react";
 import { Eye, EyeOff, Loader2, UserIcon } from "lucide-react";
 import { MailIcon } from "lucide-react";
 import { LockIcon } from "lucide-react";
@@ -29,6 +30,7 @@ import { Input } from "@/components/ui/input";
 import SmallFooter from "@/components/smallFooter";
 import useHomePageNumber from "@/zustand/home/pageNumber";
 import useHomepageViewStore from "@/zustand/home/homepageView";
+import { useReferralInvitedCodeStore } from "@/zustand/settings/referralCodeInviteStore";
 
 export type SignUpDataType = {
   first_name: string;
@@ -47,6 +49,7 @@ const SignUpPage = () => {
     (state) => state.setPreferredLanguage
   );
   const [, navigate] = useLocation();
+  const searchString = useSearch();
   const updateUser = useUserStore((state) => state.updateUser);
   const setPageNumber = useHomePageNumber(state => state.setPageNumber);
   const setMemberList = useHomepageViewStore((state) => state.setModifiedMemberList);
@@ -89,6 +92,18 @@ const SignUpPage = () => {
     }),
     onSubmit: (values: SignUpDataType) => signUp.mutate(values),
   });
+
+  const setInvitedReferralCode = useReferralInvitedCodeStore(state => state.updateReferralCode);
+
+  useEffect(() => {
+    if (searchString.length !== 0) {
+      const params = searchString.split("=");
+      if (params.length === 2 && params[0] === "referral_code") {
+        setInvitedReferralCode(params[1]);
+      }
+    }
+  }, [searchString, setInvitedReferralCode]);
+
 
   const handleSignUp = async (values: SignUpDataType) => {
     try {

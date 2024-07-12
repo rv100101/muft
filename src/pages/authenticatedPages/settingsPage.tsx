@@ -7,6 +7,7 @@ import MyAccountContent from "@/components/settings/account/myAccountContent";
 import MobileTopbar from "@/components/settings/mobileTopbar";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
+import ReferralProgram from "@/components/settings/referral/refferalProgram";
 
 const SettingsPage = () => {
   const [t] = useTranslation();
@@ -32,6 +33,7 @@ const SettingsPage = () => {
             <DisplayContent />
             <PushNotifcationContent />
             <DeactivateAccountContent />
+            <ReferralProgram />
             <div className="h-8" />
           </div>
         </div>
