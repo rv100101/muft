@@ -17,8 +17,8 @@ export const useReferralCodeStore = create<ReferralCodeStore>()(
       updateReferralUrl: (url: string) => set({ referralUrl: url }),
     }),
     {
-      name: "referral-code-storage", // name of the item in the storage (must be unique)
-      storage: createJSONStorage(() => sessionStorage), // (optional) by default, 'localStorage' is used
+      name: "referral-code-storage",
+      storage: createJSONStorage(() => localStorage),
     }
   )
 );

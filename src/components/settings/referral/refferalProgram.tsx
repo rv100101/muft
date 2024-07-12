@@ -37,7 +37,7 @@ const ReferralProgram = () => {
       const res = await getReferralCode(i18n.language, user!.member_id.toString(), isFirstTime);
       if (res !== null) {
         referralCodeInfo.updateReferralCode(res.referrer_code);
-        referralCodeInfo.updateReferralUrl(res.referrer_uuid);
+        referralCodeInfo.updateReferralUrl(`https://www.muffin.ae/auth/signup?referral_code=${res.referrer_code}`);
       }
     } catch (error) {
       console.log(error);
@@ -72,6 +72,7 @@ const ReferralProgram = () => {
                         toast({
                           title: 'Code copied to clipboard ✅',
                           variant: "success",
+                          duration: 1000
                         });
                       }} className="hover:cursor-pointer" />
                     </div>
@@ -89,6 +90,7 @@ const ReferralProgram = () => {
                       toast({
                         title: 'Link copied to clipboard ✅',
                         variant: "success",
+                        duration: 1000
                       });
                     }} className="hover:cursor-pointer" />
                   }
