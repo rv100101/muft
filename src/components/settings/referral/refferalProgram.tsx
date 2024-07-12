@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { getImagePath } from "@/lib/images";
-import { Loader2, MoreHorizontal, RotateCwIcon, ClipboardCopyIcon } from "lucide-react";
+import { Loader2, RotateCwIcon, ClipboardCopyIcon, X } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { getReferralCode, getReferrals } from "@/queries/referral";
 import { useTranslation } from "react-i18next";
@@ -17,6 +17,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import ViewAllReferred from "./viewAllReferred";
+import { DialogClose } from "@radix-ui/react-dialog";
 
 const ReferralProgram = () => {
   const [, i18n] = useTranslation();
@@ -114,14 +115,22 @@ const ReferralProgram = () => {
         <div className="border p-4 rounded-lg space-y-4">
           <div className="flex justify-between items-center">
             <p className="font-medium text-sm">Referred recently</p>
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button className="rounded-full hover:bg-[#ff599b]/90">View all</Button>
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-[425px]">
-                <ViewAllReferred referrals={referralsData} />
-              </DialogContent>
-            </Dialog>
+            {
+              !referralsIsLoading && referralsData?.length !== 0 &&
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button className="rounded-full hover:bg-[#ff599b]/90">View all</Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[425px]">
+                  <div className="flex justify-end">
+                    <DialogClose>
+                      <X />
+                    </DialogClose>
+                  </div>
+                  <ViewAllReferred referrals={referralsData} />
+                </DialogContent>
+              </Dialog>
+            }
           </div>
           <div className="space-y-2">
             {
@@ -132,20 +141,25 @@ const ReferralProgram = () => {
                   <Skeleton className="h-8 w-full" />
                 </>
                 :
-                referralsData?.map((referral, index) => {
-                  return <div key={index} className="border p-2 pr-4 rounded-lg flex justify-between items-center">
-                    <div className="flex space-x-2">
-                      <img src={getImagePath(referral.gallery_uuid, referral.gender, referral.member_uuid)} alt="Referred User" className="w-12 rounded-full" />
-                      <div>
-                        <p className="font-medium">{referral.nickname}</p>
-                        <p className="text-xs">{referral.country_name}</p>
-                      </div>
-                    </div>
-                    <button>
-                      <MoreHorizontal />
-                    </button>
+                referralsData?.length == 0 ?
+                  <div className="flex h-24 w-full items-center justify-center space-x-2">
+                    No Referrals Available
                   </div>
-                })
+                  :
+                  referralsData?.map((referral, index) => {
+                    return <a target="_blank" href={`/members/${referral.member_id}`} key={index} className="border p-2 pr-4 rounded-lg flex justify-between items-center">
+                      <div className="flex space-x-2">
+                        <img src={getImagePath(referral.gallery_uuid, referral.gender, referral.member_uuid)} alt="Referred User" className="w-12 rounded-full" />
+                        <div>
+                          <p className="font-medium">{referral.nickname}</p>
+                          <p className="text-xs">{referral.country_name}</p>
+                        </div>
+                      </div>
+                      {/* <Button>
+                        <MoreHorizontal />
+                      </Button> */}
+                    </a>
+                  })
             }
           </div>
         </div>

@@ -5,7 +5,7 @@ const ViewAllReferred = ({ referrals }: { referrals: UserReferralInfo[] | undefi
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
       {referrals && referrals.map((referral, index) => (
-        <div
+        <a target="_blank" href={`/members/${referral.member_id}`}
           key={index}
           className="border p-2 w-25 h-25 rounded-lg flex flex-col justify-between items-center"
         >
@@ -20,7 +20,7 @@ const ViewAllReferred = ({ referrals }: { referrals: UserReferralInfo[] | undefi
               <p className="text-xs">{referral.country_name}</p>
             </div>
           </div>
-        </div>
+        </a>
       ))}
     </div>
   )
