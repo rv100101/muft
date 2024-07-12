@@ -4,14 +4,12 @@ import * as Yup from "yup";
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
-  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import ForgotPassword from "@/components/auth/forgotPassword";
 import { Link, useLocation } from "wouter";
 import { cn, scrollToTop } from "@/lib/utils";
-import { Ban, Eye, EyeOff, Loader2, MailIcon, X } from "lucide-react";
+import { Eye, EyeOff, Loader2, MailIcon } from "lucide-react";
 import { LockIcon } from "lucide-react";
 import { InfoIcon } from "lucide-react";
 import authQuery from "@/queries/auth";
@@ -30,10 +28,10 @@ import profileAboutContentStore, {
   initialState,
 } from "@/zustand/profile/profileAboutStore";
 import useReadConversationsStateStore from "@/zustand/messaging/readConversations";
-import { DialogClose } from "@radix-ui/react-dialog";
 import OneSignal from "react-onesignal";
 import useHomePageNumber from "@/zustand/home/pageNumber";
 import useHomepageViewStore from "@/zustand/home/homepageView";
+import BlockedMessage from "../blockedMessage";
 
 type FormDataType = {
   email: string;
@@ -125,11 +123,11 @@ const SignInForm = () => {
       updateUserNickname(username.data[0].nickname);
       setIsLoading(false);
       const data: User | null = signInData;
-      if (data && data!.is_blocked) {
-        showBlockedModal(true);
-        formik.resetForm();
-        return;
-      }
+      // if (data && data!.is_blocked) {
+      //   showBlockedModal(true);
+      //   formik.resetForm();
+      //   return;
+      // }
       setPreferredLanguage(signInData.communication_language);
       setPageNumber(1);
       setMemberList([]);
@@ -154,36 +152,7 @@ const SignInForm = () => {
 
   return (
     <div className="flex h-max sm:w-96 flex-col items-center lg:shadow-xl rounded-lg p-8 lg:border space-y-2">
-      <Dialog open={blockedModal}>
-        <DialogContent
-          dir={i18n.language == "ar" ? "rtl" : "ltr"}
-          className="sm:max-w-[425px] flex flex-col items-center"
-        >
-          <div className="w-full flex justify-end">
-            <DialogClose className="flex justify-end">
-              <X
-                className="hover:cursor-pointer"
-                onClick={() => showBlockedModal(false)}
-              />
-            </DialogClose>
-          </div>
-          <DialogHeader className="flex flex-row space-x-3 w-full">
-            <DialogTitle className="mt-3 dark:text-white flex flex-row space-x-1 text-center w-full justify-center ">
-              {t("blockedModal.title")}
-            </DialogTitle>
-          </DialogHeader>
-          <div className="block">
-            <Ban size={100} color="#ff77ae" />
-          </div>
-          <div className="dark:block hidden">
-            <Ban size={100} color="#ae2e51" />
-          </div>
-          <div className="flex flex-col space-y-5 items-center text-center mt-3">
-            <p>{t("blockedModal.description1")}</p>
-            <p>{t("blockedModal.description2")}</p>
-          </div>
-        </DialogContent>
-      </Dialog>
+      <BlockedMessage blockedModal={blockedModal} setBlockedModal={showBlockedModal} />
       {/* <div className="flex w-full justify-end">
         <img
           src={helpIcon}

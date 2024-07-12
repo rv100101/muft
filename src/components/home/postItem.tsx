@@ -29,8 +29,6 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
 
   // Calculate the difference in minutes
   const minutesDifference = currentMoment.diff(lastActiveMoment, 'minutes');
-  console.log(minutesDifference);
-
 
   const [imageLoaded, setImageLoaded] = useState(true);
   const [t, i18n] = useTranslation();

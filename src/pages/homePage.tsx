@@ -18,6 +18,7 @@ import { cn } from "@/lib/utils";
 import { Search, SlidersHorizontal } from "lucide-react";
 import { useLocation } from "wouter";
 import useHomepageSearchStore from "@/zustand/home/searchValue";
+import { useToast } from "@/components/ui/use-toast";
 
 const HomePage = () => {
   const [t, i18n] = useTranslation();
@@ -32,6 +33,7 @@ const HomePage = () => {
     (state) => state.setModifiedMemberList
   );
 
+  const { toast } = useToast();
   const searchValue = useHomepageSearchStore(
     (state) => state.value
   );
@@ -42,15 +44,23 @@ const HomePage = () => {
   // const setLikes = useHomepageViewStore((state) => state.setLikes);
   // const setFavorites = useHomepageViewStore((state) => state.setFavorites);
   const memberList = useHomepageViewStore((state) => state.modifiedMemberList);
-  const getMembers = membersQuery.getMembers(
+  // const getMembers = membersQuery.getMembers(
+  //   user!.member_id,
+  //   preferredLang ?? "en",
+  //   1
+  // );
+
+  const getMembers = membersQuery.getMembersAndIsBlocked(
     user!.member_id,
     preferredLang ?? "en",
     1
   );
+
   const getMemberLikes = membersQuery.getMemberLikes(
     user!.member_id,
     i18n.language
   );
+
   const filters = useFilterStore((state) => state.filters);
 
   const getMemberFavorites = membersQuery.getMemberFavorites(
@@ -64,6 +74,20 @@ const HomePage = () => {
     queryKey: ["home-members", preferredLang, user?.gender],
     queryFn: () => getMembers,
   });
+
+  const signOut = useUserStore(state => state.reset);
+
+  useEffect(() => {
+    if (members?.MyProfile.blocked) {
+      signOut();
+      toast({
+        variant: "destructive",
+        title: t("blockedModal.title"),
+        description: t("blockedModal.description1")
+      });
+    }
+  }, [members, signOut, t, toast])
+
 
   const { data: memberLikes, isLoading: likesLoading } = useQuery({
     refetchOnMount: false,
@@ -109,7 +133,7 @@ const HomePage = () => {
       return;
     }
     if (!retrievingMemberData && memberLikes && memberFavorites && members) {
-      const updatedMemberList = members.map((member: MemberData) => {
+      const updatedMemberList = members.HomePage.map((member: MemberData) => {
         const memberHasLikes = memberLikes.find(
           (likes: Member) => member.member_id === likes.member_id
         );
