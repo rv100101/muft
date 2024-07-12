@@ -30,7 +30,7 @@ const NextLoadingIndicator = () => {
   const [isFetchingNewMembers, setIsFetchingNewMembers] = useState(false);
   const [hasEntered, setHasEntered] = useState(false);
 
-  const getMembers = membersQuery.getMembers(
+  const getMembers = membersQuery.getMembersAndIsBlocked(
     user!.member_id,
     i18n.language,
     pageNumber + 1
@@ -44,7 +44,7 @@ const NextLoadingIndicator = () => {
         setPageNumber(pageNumber + 1);
         if (res) {
           setMemberList(
-            [...currentMemberList, ...res]
+            [...currentMemberList, ...res.HomePage]
           );
         }
       } catch (error) {

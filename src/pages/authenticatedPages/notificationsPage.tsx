@@ -8,12 +8,6 @@ import HomepageSearchInput from "@/components/homeSearchUsersInput";
 import NotificationsListFiters from "@/components/notifications/notificationListFilters";
 
 const NotificationsPage = () => {
-  // const { user } = useUserStore();
-  // const getMembers = membersQuery.getMembers(user!.member_id);
-  // const { data: members, isLoading } = useQuery({
-  //   queryKey: ["home-members"],
-  //   queryFn: () => getMembers,
-  // });
   return (
     <AuthenticatedLayout>
       <div className="w-full h-full grid grid-cols-9 grid-rows-1">
