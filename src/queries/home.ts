@@ -57,8 +57,6 @@ const getMembersAndIsBlocked: (
 ) => {
   try {
     const device = await getDeviceInfo();
-    console.log(device);
-
     const formData = new FormData();
     formData.append(
       "auth",
