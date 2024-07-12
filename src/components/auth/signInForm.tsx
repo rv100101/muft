@@ -123,11 +123,11 @@ const SignInForm = () => {
       updateUserNickname(username.data[0].nickname);
       setIsLoading(false);
       const data: User | null = signInData;
-      // if (data && data!.is_blocked) {
-      //   showBlockedModal(true);
-      //   formik.resetForm();
-      //   return;
-      // }
+      if (data && data!.is_blocked) {
+        showBlockedModal(true);
+        formik.resetForm();
+        return;
+      }
       setPreferredLanguage(signInData.communication_language);
       setPageNumber(1);
       setMemberList([]);
