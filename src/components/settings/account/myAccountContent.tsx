@@ -1,7 +1,7 @@
 import PreferredLanguageDialog from "@/components/preferredLanguageDialog";
 import { useTranslation } from "react-i18next";
-// import ChangeEmail from "./changeEmail";
 import SettingsChangePassword from "./changePassword";
+import ChangeEmail from "@/components/settings/account/changeEmail";
 
 const MyAccountContent = () => {
   const [t] = useTranslation();
@@ -13,7 +13,7 @@ const MyAccountContent = () => {
       </div>
       <div className="px-4 pb-4 space-y-4">
         <PreferredLanguageDialog isLandingPage={false} showTrigger={true} triggerVariant={"outline"} />
-        {/* <ChangeEmail /> */}
+        <ChangeEmail />
         <SettingsChangePassword />
       </div>
     </div>
