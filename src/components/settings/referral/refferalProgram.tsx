@@ -66,7 +66,7 @@ const ReferralProgram = () => {
                       <button className="h-min" disabled={referralCodeIsLoading} onClick={() => {
                         handleFetchReferralCode(true);
                       }}>
-                        <RotateCwIcon className="hover:cursor-pointer" />
+                        <RotateCwIcon className="hover:cursor-pointer hover:text-[#727272]/90" />
                       </button>
                       <ClipboardCopyIcon onClick={() => {
                         copy(referralCodeInfo.referralCode ?? "");
@@ -75,7 +75,7 @@ const ReferralProgram = () => {
                           variant: "success",
                           duration: 1000
                         });
-                      }} className="hover:cursor-pointer" />
+                      }} className="hover:cursor-pointer hover:text-[#727272]/90" />
                     </div>
                   }
                 </div>
@@ -93,7 +93,7 @@ const ReferralProgram = () => {
                         variant: "success",
                         duration: 1000
                       });
-                    }} className="hover:cursor-pointer" />
+                    }} className="hover:cursor-pointer hover:text-[#727272]/90" />
                   }
                 </div>
                 <Input disabled={referralCodeIsLoading} value={referralCodeInfo.referralUrl ?? ""} className="rounded-lg" readOnly />
@@ -115,22 +115,19 @@ const ReferralProgram = () => {
         <div className="border p-4 rounded-lg space-y-4">
           <div className="flex justify-between items-center">
             <p className="font-medium text-sm">Referred recently</p>
-            {
-              !referralsIsLoading && referralsData?.length !== 0 &&
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button className="rounded-full hover:bg-[#ff599b]/90">View all</Button>
-                </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px]">
-                  <div className="flex justify-end">
-                    <DialogClose>
-                      <X />
-                    </DialogClose>
-                  </div>
-                  <ViewAllReferred referrals={referralsData} />
-                </DialogContent>
-              </Dialog>
-            }
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button className="rounded-full hover:bg-[#ff599b]/90">View all</Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[425px]">
+                <div className="flex justify-end">
+                  <DialogClose>
+                    <X />
+                  </DialogClose>
+                </div>
+                <ViewAllReferred referrals={referralsData} />
+              </DialogContent>
+            </Dialog>
           </div>
           <div className="space-y-2">
             {

@@ -2,6 +2,11 @@ import { getImagePath } from "@/lib/images";
 import { UserReferralInfo } from "@/queries/referral";
 
 const ViewAllReferred = ({ referrals }: { referrals: UserReferralInfo[] | undefined }) => {
+  if (referrals?.length == 0) {
+    return <div className="w-full py-16 h-full flex justify-center items-center">
+      No referrals yet
+    </div>
+  }
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
       {referrals && referrals.map((referral, index) => (
