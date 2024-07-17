@@ -22,6 +22,7 @@ export const routesWithFooterAndTopNav = [
   "/auth/signup",
   "/auth/signin",
   "/about",
+  "/academy",
   // "/subscription",
 ];
 
@@ -30,6 +31,7 @@ export const noUserOnlyRoutes = [
   "/auth/signup",
   "/about",
   // "/subscription",
+  "/academy",
   "/privacy",
   "/terms",
   "/release-notes",
@@ -45,6 +47,7 @@ export const userOnlyRoutes = [
   "/privacy",
   "/terms",
   "/release-notes",
+  "/academy",
 ];
 
 const pageRoutes = {

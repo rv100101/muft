@@ -23,6 +23,7 @@ import runOneSignal from "./lib/oneSignal";
 import HomePage from "./pages/homePage";
 import LandingPage from "./pages/landingPage";
 import axios from "axios";
+import MuffinAcademy from "./components/muffinAcademy/muffinAcademy";
 function App() {
   useEffect(() => {
     runOneSignal();
@@ -121,6 +122,10 @@ function App() {
         {
           location == '/places/' && <Redirect to="/" />
         }
+        <Route
+          path="/academy/">
+          <MuffinAcademy />
+        </Route>
         <Route
           path="/places/:uuid">
           {({ uuid }) => {
