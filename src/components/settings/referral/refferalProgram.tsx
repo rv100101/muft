@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { getImagePath } from "@/lib/images";
-import { Loader2, RotateCwIcon, ClipboardCopyIcon, X } from "lucide-react";
+import { Loader2, RotateCwIcon, X, Copy } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { getReferralCode, getReferrals } from "@/queries/referral";
 import { useTranslation } from "react-i18next";
@@ -18,9 +18,10 @@ import {
 } from "@/components/ui/dialog"
 import ViewAllReferred from "./viewAllReferred";
 import { DialogClose } from "@radix-ui/react-dialog";
+import { cn } from "@/lib/utils";
 
 const ReferralProgram = () => {
-  const [, i18n] = useTranslation();
+  const [t, i18n] = useTranslation();
   const [, copy] = useCopyToClipboard();
   const { toast } = useToast()
   const user = useUserStore(state => state.user);
@@ -50,32 +51,36 @@ const ReferralProgram = () => {
     <div className="flex overflow-clip flex-col border border-primary w-full rounded-[16px] border-b text-[#727272] space-y-2">
       <div className="flex w-full p-4 bg-primary">
         <p className="text-white text-lg">
-          Rewards Program
+          {t("rewards.rewardsProgram")}
         </p>
       </div>
       <div className="p-4 w-full space-y-4">
         {
           referralCodeInfo.referralCode ?
-            <div className="flex w-full space-x-8">
-              <div className="w-72 space-y-2">
-                <div className="flex space-x-4">
-                  <p className="w-full font-medium">My Referral Code</p>
+            <div className={cn("flex w-full",
+            )}>
+              <div className={cn("w-72 space-y-2", i18n.language == "en" ? " mr-8" : "ml-8")}>
+                <div className={cn("flex", i18n.language == 'en' ? "space-x-4" : "-space-x-4"
+                )}>
+                  <p className="w-full text-xs sm:text-base   font-medium">
+                    {t("rewards.referralCode")}
+                  </p>
                   {
                     !referralCodeIsLoading &&
-                    <div className="flex space-x-2">
-                      <button className="h-min" disabled={referralCodeIsLoading} onClick={() => {
+                    <div className="flex w-full space-x-2 justify-end">
+                      <button className={cn("h-min", i18n.language == "en" ? "w-min" : "w-8")} disabled={referralCodeIsLoading} onClick={() => {
                         handleFetchReferralCode(true);
                       }}>
-                        <RotateCwIcon className="hover:cursor-pointer" />
+                        <RotateCwIcon className={cn("hover:cursor-pointer hover:text-[#727272]/90")} />
                       </button>
-                      <ClipboardCopyIcon onClick={() => {
+                      <Copy className={cn("hover:cursor-pointer hover:text-[#727272]/90")} onClick={() => {
                         copy(referralCodeInfo.referralCode ?? "");
                         toast({
                           title: 'Code copied to clipboard ✅',
                           variant: "success",
                           duration: 1000
                         });
-                      }} className="hover:cursor-pointer" />
+                      }} />
                     </div>
                   }
                 </div>
@@ -83,20 +88,22 @@ const ReferralProgram = () => {
               </div>
               <div className="w-72 space-y-2">
                 <div className="flex space-x-4">
-                  <p className="w-full font-medium">My Referral Link</p>
+                  <p className="w-full text-sm sm:text-base font-medium">
+                    {t("rewards.referralLink")}
+                  </p>
                   {
                     !referralCodeIsLoading &&
-                    <ClipboardCopyIcon onClick={() => {
+                    <Copy onClick={() => {
                       copy(referralCodeInfo.referralUrl ?? "");
                       toast({
                         title: 'Link copied to clipboard ✅',
                         variant: "success",
                         duration: 1000
                       });
-                    }} className="hover:cursor-pointer" />
+                    }} className="hover:cursor-pointer hover:text-[#727272]/90" />
                   }
                 </div>
-                <Input disabled={referralCodeIsLoading} value={referralCodeInfo.referralUrl ?? ""} className="rounded-lg" readOnly />
+                <Input dir="ltr" disabled={referralCodeIsLoading} value={referralCodeInfo.referralUrl ?? ""} className="rounded-lg" readOnly />
               </div>
             </div>
             :
@@ -111,26 +118,24 @@ const ReferralProgram = () => {
         }
         <hr />
         <p className="font-medium">Invite Friends Over</p>
-        <p className="text-sm">Share the love and invite your friends to join Muffin. They’ll thank you for it, and you might just help them find their perfect match!</p>
+        <p className="text-sm">{t("rewards.shareTheLove")}</p>
         <div className="border p-4 rounded-lg space-y-4">
           <div className="flex justify-between items-center">
-            <p className="font-medium text-sm">Referred recently</p>
-            {
-              !referralsIsLoading && referralsData?.length !== 0 &&
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button className="rounded-full hover:bg-[#ff599b]/90">View all</Button>
-                </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px]">
-                  <div className="flex justify-end">
-                    <DialogClose>
-                      <X />
-                    </DialogClose>
-                  </div>
-                  <ViewAllReferred referrals={referralsData} />
-                </DialogContent>
-              </Dialog>
-            }
+            <p className="font-medium text-sm">{t("rewards.referredRecently")}</p>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button className="rounded-full hover:bg-[#ff599b]/90">{t("rewards.viewAll")}</Button>
+              </DialogTrigger>
+              <DialogContent dir={i18n.language == "en" ? 'ltr' : "rtl"} className="sm:max-w-[425px] w-72">
+                <div className="flex justify-between">
+                  <p>Referrals</p>
+                  <DialogClose>
+                    <X className="hover:text-black/70" />
+                  </DialogClose>
+                </div>
+                <ViewAllReferred referrals={referralsData} />
+              </DialogContent>
+            </Dialog>
           </div>
           <div className="space-y-2">
             {
@@ -146,18 +151,15 @@ const ReferralProgram = () => {
                     No Referrals Available
                   </div>
                   :
-                  referralsData?.map((referral, index) => {
-                    return <a target="_blank" href={`/members/${referral.member_id}`} key={index} className="border p-2 pr-4 rounded-lg flex justify-between items-center">
-                      <div className="flex space-x-2">
+                  referralsData?.slice(0, referralsData.length > 5 ? 5 : undefined).map((referral, index) => {
+                    return <a target="_blank" href={`/members/${referral.member_id}`} key={index} className="border p-2 pr-4 rounded-lg flex justify-between items-center w-full hover:border-primary">
+                      <div className={cn("flex w-full", i18n.language == "en" ? "space-x-2" : "")}>
                         <img src={getImagePath(referral.gallery_uuid, referral.gender, referral.member_uuid)} alt="Referred User" className="w-12 rounded-full" />
-                        <div>
+                        <div className={cn("w-full", i18n.language == "ar" ? "mr-2" : "")}>
                           <p className="font-medium">{referral.nickname}</p>
                           <p className="text-xs">{referral.country_name}</p>
                         </div>
                       </div>
-                      {/* <Button>
-                        <MoreHorizontal />
-                      </Button> */}
                     </a>
                   })
             }

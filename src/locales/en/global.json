@@ -347,5 +347,13 @@
     "pickPet": "Pick at least one pet",
     "drinkingRequired": "Drinking is required",
     "livingStatusRequired": "Living status is required"
+  },
+  "rewards": {
+    "referralLink": "Referral Link",
+    "rewardsProgram": "Rewards Program",
+    "referralCode": "Referral Code",
+    "shareTheLove": "Share the love and invite your friends to join Muffin. They’ll thank you for it, and you might just help them find their perfect match!",
+    "viewAll": "View All",
+    "referredRecently": "Referred Recently"
   }
 }

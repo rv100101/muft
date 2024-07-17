@@ -1,21 +1,22 @@
 import { getImagePath } from "@/lib/images";
+import { cn } from "@/lib/utils";
 import { UserReferralInfo } from "@/queries/referral";
+import { useTranslation } from "react-i18next";
 
 const ViewAllReferred = ({ referrals }: { referrals: UserReferralInfo[] | undefined }) => {
+  const [, i18n] = useTranslation();
+  if (referrals?.length == 0) {
+    return <div className="w-full py-16 h-full flex justify-center items-center">
+      No referrals yet
+    </div>
+  }
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
+    <div dir={i18n.language == "en" ? 'ltr' : "rtl"} className="space-y-2 max-h-96 overflow-auto">
       {referrals && referrals.map((referral, index) => (
-        <a target="_blank" href={`/members/${referral.member_id}`}
-          key={index}
-          className="border p-2 w-25 h-25 rounded-lg flex flex-col justify-between items-center"
-        >
-          <div className="flex w-full h-full flex-col items-center space-y-2">
-            <img
-              src={getImagePath(referral.gallery_uuid, referral.gender, referral.member_uuid)}
-              alt="Referred User"
-              className="w-24 h-24 rounded-full"
-            />
-            <div className="text-center">
+        <a target="_blank" href={`/members/${referral.member_id}`} key={index} className="border p-2 pr-4 rounded-lg flex justify-between items-center w-full hover:border-primary">
+          <div className={cn("flex w-full", i18n.language == "en" ? "space-x-2" : "")}>
+            <img src={getImagePath(referral.gallery_uuid, referral.gender, referral.member_uuid)} alt="Referred User" className="w-12 rounded-full" />
+            <div className={cn("w-full", i18n.language == "ar" ? "mr-2" : "")}>
               <p className="font-medium">{referral.nickname}</p>
               <p className="text-xs">{referral.country_name}</p>
             </div>
