@@ -32,8 +32,8 @@ const SettingsPage = () => {
             <MyAccountContent />
             <DisplayContent />
             <PushNotifcationContent />
-            <DeactivateAccountContent />
             <ReferralProgram />
+            <DeactivateAccountContent />
             <div className="h-8" />
           </div>
         </div>
