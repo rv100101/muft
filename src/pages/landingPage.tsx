@@ -21,18 +21,16 @@ const LandingPage = ({ uuid = null }: { uuid: string | null }) => {
   const [headerDescription, setHeaderDecription] = useState(null)
   const [posts, setPosts] = useState([]);
   useEffect(() => {
-    if (uuid) {
-      const formData = new FormData();
-      formData.append(
-        "auth",
-        "0DB31DEE22DC4C03AD7DAAA9C29518FF3C08D931992A4A5CB0A4FF4CF4707DC6"
-      );
-      formData.append("landing_uuid", uuid);
-      const fetchPlaces = async () => {
-        try {
+    const formData = new FormData();
+    formData.append(
+      "auth",
+      "0DB31DEE22DC4C03AD7DAAA9C29518FF3C08D931992A4A5CB0A4FF4CF4707DC6"
+    );
+    formData.append("landing_uuid", uuid ?? i18n.language == "ar" ? "81CDBADD-4EC1-4C28-A2DA-149D51A11A66" : "583CB433-1EFA-470A-9DD5-17EC63EBADF7");
+    const fetchPlaces = async () => {
+      try {
+        if (uuid) {
           const res = await axios.post('https://muffinapi.azurewebsites.net/landing.php', formData);
-          const places = await axios.post('https://muffinapi.azurewebsites.net/landing_posts.php', formData);
-          setPosts(places.data);
           if (res?.data?.length == 0) {
             setLocation('/');
           } else {
@@ -42,15 +40,17 @@ const LandingPage = ({ uuid = null }: { uuid: string | null }) => {
             // setPrefferedLanguage(res.data[0].landing_language)
             i18n.changeLanguage(res.data[0].landing_language);
           }
-        } catch (error) {
-          console.log(error);
         }
-        setShowLoading(false);
+        const places = await axios.post('https://muffinapi.azurewebsites.net/landing_posts.php', formData);
+        setPosts(places.data);
+      } catch (error) {
+        console.log(error);
       }
-      fetchPlaces();
+      setShowLoading(false);
     }
+    fetchPlaces();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [i18n.language])
 
   if (showLoading) {
     return <div className="h-screen w-full flex flex-col justify-center items-center">
@@ -78,7 +78,7 @@ const LandingPage = ({ uuid = null }: { uuid: string | null }) => {
       <div className="mx-8 md:mx-12 lg:mx-36">
         <Hero headerTitle={headerTitle} headerDescription={headerDescription} />
         {
-          location.includes('/places') && <>
+          posts.length !== 0 && <>
             <hr className="mt-4 block" />
             <LandingPosts posts={posts as Post[]} />
             <hr className="mt-4 sm:mt-4 block" />
