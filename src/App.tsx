@@ -24,6 +24,7 @@ import HomePage from "./pages/homePage";
 import LandingPage from "./pages/landingPage";
 import axios from "axios";
 import MuffinAcademy from "./components/muffinAcademy/muffinAcademy";
+import MuffinAcademyPost from "./components/muffinAcademy/muffinAcademyPost";
 function App() {
   useEffect(() => {
     runOneSignal();
@@ -117,14 +118,28 @@ function App() {
         )}
       >
         <div className="h-max">
-          {(routesWithFooterAndTopNav.includes(location) || location.startsWith('/places/')) && !user && <TopNav />}
+          {(routesWithFooterAndTopNav.includes(location) || location.startsWith('/places/') || location.startsWith('/academy/')) && !user && <TopNav />}
         </div>
         {
           location == '/places/' && <Redirect to="/" />
         }
         <Route
+          path="/academy/:countryCode">
+          {({ countryCode }) => {
+            return <MuffinAcademy countryCode={countryCode} />
+          }
+          }
+        </Route>
+        <Route
           path="/academy/">
-          <MuffinAcademy />
+          <MuffinAcademy countryCode={null} />
+        </Route>
+        <Route
+          path="/academy/posts/:uuid">
+          {({ uuid }) => {
+            return <MuffinAcademyPost uuid={uuid} />
+          }
+          }
         </Route>
         <Route
           path="/places/:uuid">
@@ -221,7 +236,7 @@ function App() {
           </>
         )}
 
-        {!user && !noUserOnlyRoutes.includes(location) && location !== "/" && !location.startsWith('/places/') && (
+        {!user && !noUserOnlyRoutes.includes(location) && location !== "/" && !location.startsWith('/places/') && !location.startsWith('/academy/') && (
           <Redirect to="/auth/signin" />
         )}
 
@@ -234,7 +249,7 @@ function App() {
           <Redirect to={`/profile/${user.member_id}`} />
         )}
 
-        {(routesWithFooterAndTopNav.includes(location) || location.startsWith('/places/')) && !user && (
+        {(routesWithFooterAndTopNav.includes(location) || location.startsWith('/places/') || location.startsWith('/academy/')) && !user && (
           <div className="bg-[#0C1223] h-max">
             <Footer />
           </div>

@@ -37,6 +37,7 @@
     "clsx": "^2.0.0",
     "cmdk": "^0.2.0",
     "country-flag-icons": "^1.5.9",
+    "dompurify": "^3.1.6",
     "emoji-picker-react": "^4.7.18",
     "formik": "^2.4.5",
     "framer-motion": "^10.16.3",
@@ -66,6 +67,7 @@
   },
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "^4.36.0",
+    "@types/dompurify": "^3.0.5",
     "@types/luxon": "^3.3.4",
     "@types/node": "^20.5.9",
     "@types/react": "^18.2.15",
