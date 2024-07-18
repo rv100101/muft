@@ -1,4 +1,5 @@
 import { useRef, useEffect } from 'react';
+import { Link } from 'wouter';
 
 export interface Post {
   authorized: boolean;
@@ -38,7 +39,9 @@ const LandingPosts = ({ posts }: { posts: Post[] }) => {
       <div ref={scrollRef} className="overflow-x-auto no-scrollbar scroll-smooth">
         <div className="flex space-x-2">
           {posts.map((post) => (
-            <a href='/' key={post.post_id} className="flex-none w-48 sm:w-[300px]">
+            <Link
+              href={`/academy/posts/${post.post_uuid}`}
+              key={post.post_id} className="flex-none w-48 sm:w-[300px]">
               <img
                 src={`https://muffin0.blob.core.windows.net/posts/${post.post_id}.png`}
                 alt={post.post_title}
@@ -47,7 +50,7 @@ const LandingPosts = ({ posts }: { posts: Post[] }) => {
               <h3 className="mt-2 sm:mt-4 w-48 sm:w-full text-center text-xs sm:text-md font-semibold whitespace-normal break-words">
                 {post.post_title}
               </h3>
-            </a>
+            </Link>
           ))}
         </div>
       </div>
