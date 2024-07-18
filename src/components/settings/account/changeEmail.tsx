@@ -75,8 +75,8 @@ const ChangeEmail = () => {
 
       if (res.data && res.data[0].authorized) {
         toast({
-          title: t("alerts.pinGenerated"),
-          description: `${t("alerts.pinSent")} ${res.data[0].email_address}`,
+          title: "Pin sent",
+          description: `${t("Please check your email")} ${res.data[0].email_address}`,
           variant: "success",
         });
         setStepIndex(1);
@@ -192,6 +192,7 @@ const ChangeEmail = () => {
                     placeholder={t("signIn.emailAddress")}
                     {...formik.getFieldProps("newEmail")}
                     onBlur={formik.handleBlur}
+                    readOnly={stepIndex == 1}
                   />
                   {formik.touched.newEmail && formik.errors.newEmail && (
                     <div className="error text-xs text-red-500 pt-2">
@@ -204,13 +205,13 @@ const ChangeEmail = () => {
               {stepIndex === 1 && (
                 <div className="flex flex-col w-full space-y-2 pt-5">
                   <label htmlFor="pin" className="font-medium text-sm text-[#727272]">
-                    {t("settings.pin")}
+                    Pin
                   </label>
                   <div>
                     <Input
                       type="text"
                       className="rounded-lg"
-                      placeholder={t("settings.pin")}
+                      placeholder={"Pin"}
                       {...formik.getFieldProps("pin")}
                       onBlur={formik.handleBlur}
                     />
