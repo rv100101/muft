@@ -75,14 +75,14 @@ const MuffinAcademy = ({ countryCode }: { countryCode: string | null }) => {
     <div dir={i18n.language == 'ar' ? "rtl" : "ltr"} className="min-h-screen w-full">
       <div className="w-full h-full relative">
         <div className="w-full h-full absolute flex justify-center items-center text-white flex-col">
-          <h1 className="text-6xl font-semibold">Muffin Academy</h1>
+          <h1 className="text-3xl sm:text-6xl font-semibold">Muffin Academy</h1>
           <p className="mt-4">
             <span className="font-light">Home</span> / Muffin Academy
           </p>
         </div>
-        <img src={academyHeader} alt="academy-header" />
+        <img className="h-48 object-cover sm:h-full" src={academyHeader} alt="academy-header" />
       </div>
-      <div className="w-full h-full p-8 sm:px-36 sm:py-12">
+      <div className="w-full h-full px-8 sm:px-36 sm:py-12">
         <div className="hidden sm:flex w-full justify-between p-4 rounded-lg bg-[#F5F5F5]">
           <div className={cn("flex items-center text-[#1B2950]")}>
             <Button
