@@ -132,12 +132,20 @@ function App() {
         </Route>
         <Route
           path="/academy/">
-          <MuffinAcademy countryCode={null} />
+          <Redirect to={`/academy/${i18n.language}`} />
         </Route>
         <Route
-          path="/academy/posts/:uuid">
-          {({ uuid }) => {
-            return <MuffinAcademyPost uuid={uuid} />
+          path="/academy/:lang/:uuid">
+          <Redirect to={`/`} />
+        </Route>
+        <Route
+          path="/academy/:lang/post">
+          <Redirect to={`/academy/${i18n.language}`} />
+        </Route>
+        <Route
+          path="/academy/:lang/post/:uuid">
+          {({ lang, uuid }) => {
+            return <MuffinAcademyPost lang={lang} uuid={uuid} />
           }
           }
         </Route>

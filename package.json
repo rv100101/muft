@@ -36,6 +36,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "cmdk": "^0.2.0",
+    "country-codes-list": "^1.6.11",
     "country-flag-icons": "^1.5.9",
     "dompurify": "^3.1.6",
     "emoji-picker-react": "^4.7.18",
