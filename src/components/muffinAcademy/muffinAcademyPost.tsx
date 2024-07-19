@@ -6,22 +6,21 @@ import DOMPurify from "dompurify";
 import { Helmet } from "react-helmet-async";
 import { useLocation } from "wouter";
 import { Skeleton } from "../ui/skeleton";
-
-const langs = ['en', 'ar'];
+// import countryCodes from "country-codes-list";
 
 const MuffinAcademyPost = ({ lang, uuid }: { lang: string, uuid: string }) => {
   const [, i18n] = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   const [post, setPost] = useState<Post | null>(null);
   const [location, navigate] = useLocation();
+  // const cc = countryCodes.customArray();
 
   useEffect(() => {
-    if (!langs.includes(lang)) {
-      navigate('/');
-    }
+    // const isFound = cc.filter((code) => { return code.value == lang.toUpperCase() }).length !== 0;
     if (lang != i18n.language) {
       const urlSplit = location.split('/');
-      urlSplit[2] = lang == 'ar' ? 'en' : 'ar';
+      // urlSplit[2] = lang !== 'en' ? i18n.language : 'en';
+      urlSplit[2] = i18n.language;
       const link = urlSplit.join('/');
       navigate(link);
     }
@@ -31,7 +30,7 @@ const MuffinAcademyPost = ({ lang, uuid }: { lang: string, uuid: string }) => {
       "auth",
       "0DB31DEE22DC4C03AD7DAAA9C29518FF3C08D931992A4A5CB0A4FF4CF4707DC6"
     );
-    formData.append("lang", i18n.language);
+    formData.append("lang", lang);
     formData.append("uuid", uuid);
 
     const fetchPost = async () => {
@@ -58,7 +57,7 @@ const MuffinAcademyPost = ({ lang, uuid }: { lang: string, uuid: string }) => {
 
   if (isLoading || post == null) {
     return (
-      <div dir={i18n.language == "ar" ? 'rtl' : 'ltr'} className="min-h-screen w-full px-8 sm:px-36 py-12">
+      <div dir={(i18n.language == "ar" || lang == "ar") ? 'rtl' : 'ltr'} className="min-h-screen w-full px-8 sm:px-36 py-12">
         <Skeleton className="h-10 w-3/4 mb-4" />
         <Skeleton className="h-40 sm:w-3/4 mb-4" />
         <Skeleton className="h-6 w-1/2 mb-2" />
@@ -77,7 +76,7 @@ const MuffinAcademyPost = ({ lang, uuid }: { lang: string, uuid: string }) => {
   }
 
   return (
-    <div dir={i18n.language == "ar" ? 'rtl' : 'ltr'} className="px-8 sm:px-36 py-8">
+    <div dir={(i18n.language == "ar" || lang == "ar") ? 'rtl' : 'ltr'} className="px-8 sm:px-36 py-8">
       <Helmet>
         <title>{post!.post_title}</title>
         <link rel="canonical" href={`https://${window.location.hostname}${location}`} />

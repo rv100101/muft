@@ -42,18 +42,17 @@ const MuffinAcademy = ({ countryCode }: { countryCode: string | null }) => {
       const cc = countryCodes.customArray();
       const isFound = cc.filter((code) => { return code.value == countryCode.toUpperCase() }).length !== 0;
       // const isFound = langs.includes(countryCode);
-      console.log(isFound);
       if (!isFound) {
         const link = `/academy/${i18n.language}`
         navigate(link);
       }
     }
-    // if (countryCode != i18n.language) {
-    //   const urlSplit = location.split('/');
-    //   urlSplit[2] = countryCode == 'ar' ? 'en' : 'ar';
-    //   const link = urlSplit.join('/');
-    //   navigate(link);
-    // }
+    if (countryCode != i18n.language) {
+      const urlSplit = location.split('/');
+      urlSplit[2] = i18n.language;
+      const link = urlSplit.join('/');
+      navigate(link);
+    }
     const formData = new FormData();
     formData.append(
       "auth",
