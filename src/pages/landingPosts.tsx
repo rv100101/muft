@@ -1,4 +1,5 @@
 import { useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'wouter';
 
 export interface Post {
@@ -13,6 +14,7 @@ export interface Post {
 
 const LandingPosts = ({ posts }: { posts: Post[] }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [, i18n] = useTranslation()
 
   useEffect(() => {
     const handleWheel = (event: WheelEvent) => {
@@ -40,10 +42,10 @@ const LandingPosts = ({ posts }: { posts: Post[] }) => {
         <div className="flex space-x-2">
           {posts.map((post) => (
             <Link
-              href={`/academy/posts/${post.post_uuid}`}
+              href={`/academy/${i18n.language}/post/${post.post_uuid}`}
               key={post.post_id} className="flex-none w-48 sm:w-[300px]">
               <img
-                src={`https://muffin0.blob.core.windows.net/posts/${post.post_id}.png`}
+                src={`https://muffin0.blob.core.windows.net/post/${post.post_id}.png`}
                 alt={post.post_title}
                 className="w-48 sm:w-[600px] h-32 sm:h-[200px] rounded-2xl object-fit"
               />

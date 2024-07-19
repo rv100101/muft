@@ -14,8 +14,9 @@ import { Button } from "../ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { useToast } from "../ui/use-toast";
+import countryCodes from "country-codes-list";
 
 export interface Post {
   authorized: boolean;
@@ -28,6 +29,7 @@ export interface Post {
 }
 
 const MuffinAcademy = ({ countryCode }: { countryCode: string | null }) => {
+  const [location, navigate] = useLocation();
   const [, i18n] = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   const [posts, setPosts] = useState<Post[]>([]);
@@ -36,12 +38,28 @@ const MuffinAcademy = ({ countryCode }: { countryCode: string | null }) => {
   const { toast } = useToast();
 
   useEffect(() => {
+    if (countryCode !== null) {
+      const cc = countryCodes.customArray();
+      const isFound = cc.filter((code) => { return code.value == countryCode.toUpperCase() }).length !== 0;
+      // const isFound = langs.includes(countryCode);
+      console.log(isFound);
+      if (!isFound) {
+        const link = `/academy/${i18n.language}`
+        navigate(link);
+      }
+    }
+    // if (countryCode != i18n.language) {
+    //   const urlSplit = location.split('/');
+    //   urlSplit[2] = countryCode == 'ar' ? 'en' : 'ar';
+    //   const link = urlSplit.join('/');
+    //   navigate(link);
+    // }
     const formData = new FormData();
     formData.append(
       "auth",
       "0DB31DEE22DC4C03AD7DAAA9C29518FF3C08D931992A4A5CB0A4FF4CF4707DC6"
     );
-    formData.append("lang", i18n.language);
+    formData.append("lang", countryCode ?? i18n.language);
     formData.append("country", countryCode ?? "");
     const fetchPosts = async () => {
       setIsLoading(true);
@@ -57,11 +75,11 @@ const MuffinAcademy = ({ countryCode }: { countryCode: string | null }) => {
       setIsLoading(false);
     };
     fetchPosts();
-  }, [countryCode, i18n.language]);
+  }, [countryCode, i18n.language, location, navigate]);
 
   const handleShare = (e: React.MouseEvent, postUuid: string) => {
     e.preventDefault();
-    const url = `${window.location.origin}/academy/posts/${postUuid}`;
+    const url = `${window.location.origin}/academy/post/${postUuid}`;
     navigator.clipboard.writeText(url);
     toast({
       title: "Link copied",
@@ -145,7 +163,7 @@ const MuffinAcademy = ({ countryCode }: { countryCode: string | null }) => {
           ) : (
             posts.map((post) => (
               <Link
-                href={`/academy/posts/${post.post_uuid}`}
+                href={`/academy/${i18n.language}/post/${post.post_uuid}`}
                 key={post.post_id}
                 className={cn(
                   "text-[#1B2950] p-4 rounded-lg w-full bg-white",
@@ -153,7 +171,7 @@ const MuffinAcademy = ({ countryCode }: { countryCode: string | null }) => {
                 )}
               >
                 <img
-                  src={`https://muffin0.blob.core.windows.net/posts/${post.post_id}.png`}
+                  src={`https://muffin0.blob.core.windows.net/post/${post.post_id}.png`}
                   alt={post.post_title}
                   className="w-full h-52 rounded-2xl object-cover"
                 />

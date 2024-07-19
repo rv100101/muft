@@ -7,13 +7,25 @@ import { Helmet } from "react-helmet-async";
 import { useLocation } from "wouter";
 import { Skeleton } from "../ui/skeleton";
 
-const MuffinAcademyPost = ({ uuid }: { uuid: string }) => {
+const langs = ['en', 'ar'];
+
+const MuffinAcademyPost = ({ lang, uuid }: { lang: string, uuid: string }) => {
   const [, i18n] = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   const [post, setPost] = useState<Post | null>(null);
   const [location, navigate] = useLocation();
 
   useEffect(() => {
+    if (!langs.includes(lang)) {
+      navigate('/');
+    }
+    if (lang != i18n.language) {
+      const urlSplit = location.split('/');
+      urlSplit[2] = lang == 'ar' ? 'en' : 'ar';
+      const link = urlSplit.join('/');
+      navigate(link);
+    }
+    // i18n.changeLanguage(lang);
     const formData = new FormData();
     formData.append(
       "auth",
@@ -42,7 +54,7 @@ const MuffinAcademyPost = ({ uuid }: { uuid: string }) => {
     };
 
     fetchPost();
-  }, [i18n.language, navigate, uuid]);
+  }, [i18n.language, lang, location, navigate, uuid]);
 
   if (isLoading || post == null) {
     return (
