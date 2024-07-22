@@ -29,21 +29,22 @@ const SidePanel = () => {
         </Link>
       </div>
       <div className="space-y-4 flex flex-col w-full justify-start items-center">
-        <Link href="/help-center" className={"w-full"}>
+        <a
+          href="https://support.muffin.ae" target="_blank" className={"w-full"}>
           <Button variant="ghost" className="w-full">
             {t("menu.helpCenter")}
           </Button>
-        </Link>
-        <Link href="/privacy-policy" className={"w-full"}>
+        </a>
+        <a target="_blank" href="https://support.muffin.ae/en-US/kb/article/12/privacy-policy">
           <Button variant="ghost" className="w-full">
             {t("menu.privacyPolicy")}
           </Button>
-        </Link>
-        <Link href="/terms-and-conditions" className={"w-full"}>
+        </a>
+        <a target="_blank" href="https://support.muffin.ae/en-US/kb/article/13/terms-and-conditions">
           <Button variant="ghost" className="w-full">
             {t("menu.termsAndConditions")}
           </Button>
-        </Link>
+        </a>
         {
           !isAuthenticated &&
           <Link href="/auth/signin" className={"w-full"}>
