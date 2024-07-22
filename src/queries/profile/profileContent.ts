@@ -37,7 +37,7 @@ const fetchMemberDetails = async (
       formData
     );
     const { data } = details;
-    return data[0];
+    return data.length == 0 ? null : data[0];
   } catch (error) {
     return;
   }

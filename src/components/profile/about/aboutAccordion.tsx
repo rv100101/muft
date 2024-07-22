@@ -50,10 +50,11 @@ import { useEffectOnce, useUpdateEffect } from "usehooks-ts";
 import { useTranslation } from "react-i18next";
 import { usePreferredLanguageStore } from "@/zustand/auth/preferred_language";
 import { useUserStore } from "@/zustand/auth/user";
+import { useToast } from "@/components/ui/use-toast";
 const AboutAccordion = ({ userId }: { userId: number }) => {
   const user = useUserStore((state) => state.user);
   const [t, i18n] = useTranslation();
-  const [location] = useLocation();
+  const [location, navigate] = useLocation();
   const preferredLanguage = usePreferredLanguageStore(
     (state) => state.preferred
   );
@@ -110,19 +111,28 @@ const AboutAccordion = ({ userId }: { userId: number }) => {
     }
   });
 
+  const { toast } = useToast();
+
   const { isLoading: currentUserLoading, isRefetching } = useQuery({
     queryKey: ["profileContent", userId, i18n.language],
     queryFn: async () => {
-      const additionalInformation =
-        await profileContentQuery.fetchAdditionalInformation(
-          userId,
-          i18n.language
-        );
       const memberDetails = await profileContentQuery.fetchMemberDetails(
         userId,
         user!.member_id,
         preferredLanguage ?? "en"
       );
+      if (memberDetails == null) {
+        navigate('/');
+        toast(
+          { variant: "destructive", title: "Member not found", duration: 2000 }
+        );
+      }
+      const additionalInformation =
+        await profileContentQuery.fetchAdditionalInformation(
+          userId,
+          i18n.language
+        );
+
       let jsonArray: string | null = null;
       if (typeof memberDetails == "string" && memberDetails.length !== 0) {
         const jsonArrayString = `[${memberDetails.replace(/}\s*{/g, "},{")}]`;
