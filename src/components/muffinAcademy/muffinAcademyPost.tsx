@@ -6,6 +6,10 @@ import DOMPurify from "dompurify";
 import { Helmet } from "react-helmet-async";
 import { useLocation } from "wouter";
 import { Skeleton } from "../ui/skeleton";
+import MuffinAcademyHeader from "./muffinAcademyHeader";
+import { Share2 } from "lucide-react";
+import { useToast } from "../ui/use-toast";
+import SidePanel from "./sidePanel";
 // import countryCodes from "country-codes-list";
 
 const MuffinAcademyPost = ({ lang, uuid }: { lang: string, uuid: string }) => {
@@ -14,6 +18,19 @@ const MuffinAcademyPost = ({ lang, uuid }: { lang: string, uuid: string }) => {
   const [post, setPost] = useState<Post | null>(null);
   const [location, navigate] = useLocation();
   // const cc = countryCodes.customArray();
+  const { toast } = useToast();
+
+  const handleShare = (e: React.MouseEvent, postUuid: string) => {
+    e.preventDefault();
+    const url = `${window.location.origin}/academy/post/${postUuid}`;
+    navigator.clipboard.writeText(url);
+    toast({
+      title: "Link copied",
+      description: "Share the link with your friends!",
+      variant: "success",
+      duration: 1000
+    });
+  };
 
   useEffect(() => {
     // const isFound = cc.filter((code) => { return code.value == lang.toUpperCase() }).length !== 0;
@@ -57,37 +74,56 @@ const MuffinAcademyPost = ({ lang, uuid }: { lang: string, uuid: string }) => {
 
   if (isLoading || post == null) {
     return (
-      <div dir={(i18n.language == "ar" || lang == "ar") ? 'rtl' : 'ltr'} className="min-h-screen w-full px-8 sm:px-36 py-12">
-        <Skeleton className="h-10 w-3/4 mb-4" />
-        <Skeleton className="h-40 sm:w-3/4 mb-4" />
-        <Skeleton className="h-6 w-1/2 mb-2" />
-        <Skeleton className="h-6 w-full mb-2" />
-        <Skeleton className="h-6 w-full mb-2" />
-        <Skeleton className="h-6 w-full mb-2" />
-        <Skeleton className="h-6 w-full mb-2" />
-        <Skeleton className="h-6 w-full mb-2" />
-        <Skeleton className="h-10 w-3/4 mb-4" />
-        <Skeleton className="h-6 w-1/2 mb-2" />
-        <Skeleton className="h-6 w-full mb-2" />
-        <Skeleton className="h-6 w-full mb-2" />
-        <Skeleton className="h-6 w-full mb-2" />
+      <div className="w-full h-full">
+        <MuffinAcademyHeader />
+        <div dir={(i18n.language == "ar" || lang == "ar") ? 'rtl' : 'ltr'} className="min-h-screen w-full px-8 sm:px-36 py-12">
+          <Skeleton className="h-10 w-3/4 mb-4" />
+          <Skeleton className="h-40 sm:w-3/4 mb-4" />
+          <Skeleton className="h-6 w-1/2 mb-2" />
+          <Skeleton className="h-6 w-full mb-2" />
+          <Skeleton className="h-6 w-full mb-2" />
+          <Skeleton className="h-6 w-full mb-2" />
+          <Skeleton className="h-6 w-full mb-2" />
+          <Skeleton className="h-6 w-full mb-2" />
+          <Skeleton className="h-10 w-3/4 mb-4" />
+          <Skeleton className="h-6 w-1/2 mb-2" />
+          <Skeleton className="h-6 w-full mb-2" />
+          <Skeleton className="h-6 w-full mb-2" />
+          <Skeleton className="h-6 w-full mb-2" />
+        </div>
       </div>
     );
   }
 
   return (
-    <div dir={(i18n.language == "ar" || lang == "ar") ? 'rtl' : 'ltr'} className="px-8 sm:px-36 py-8">
+    <div className="h-full w-full flex flex-col">
       <Helmet>
         <title>{post!.post_title}</title>
         <link rel="canonical" href={`https://${window.location.hostname}${location}`} />
       </Helmet>
-      <h1 className="mb-3 text-3xl font-semibold">{post!.post_title}</h1>
-      <img
-        src={`https://muffin0.blob.core.windows.net/posts/${post!.post_id}.png`}
-        alt={post!.post_title}
-        className="sm:w-1/2 mb-8 rounded-2xl object-cover"
-      />
-      <div dangerouslySetInnerHTML={{ __html: post!.post_text }} />
+      <MuffinAcademyHeader />
+      <div className="w-full h-full flex">
+        <div className="h-full w-full flex sticky top-0">
+          <SidePanel />
+        </div>
+        <div dir={(i18n.language == "ar" || lang == "ar") ? 'rtl' : 'ltr'} className="px-8 sm:px-16 py-12">
+          <h1 className="mb-3 text-3xl font-semibold">{post!.post_title} <span>
+            <button
+              className="h-6 w-1/4 mx-2"
+              onClick={(e) => handleShare(e, post.post_uuid)}
+            >
+              <Share2 className="text-primary hover:text-[#ff599b]/90" />
+            </button>
+          </span>
+          </h1>
+          <img
+            src={`https://muffin0.blob.core.windows.net/posts/${post!.post_id}.png`}
+            alt={post!.post_title}
+            className="sm:w-1/2 mb-8 rounded-2xl object-cover"
+          />
+          <div dangerouslySetInnerHTML={{ __html: post!.post_text }} />
+        </div>
+      </div>
     </div>
   );
 };

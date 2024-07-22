@@ -352,5 +352,10 @@
     "shareTheLove": "Share the love and invite your friends to join Muffin. They’ll thank you for it, and you might just help them find their perfect match!",
     "viewAll": "View All",
     "referredRecently": "Referred Recently"
+  },
+  "academy": {
+    "headerTitle": "Muffin Academy",
+    "home": "Home",
+    "back": "Back"
   }
 }
