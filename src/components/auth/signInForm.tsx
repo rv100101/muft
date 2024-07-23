@@ -7,7 +7,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import ForgotPassword from "@/components/auth/forgotPassword";
-import { Link, useLocation } from "wouter";
+import { Link, useLocation, useSearch } from "wouter";
 import { cn, scrollToTop } from "@/lib/utils";
 import { Eye, EyeOff, Loader2, MailIcon } from "lucide-react";
 import { LockIcon } from "lucide-react";
@@ -38,6 +38,7 @@ type FormDataType = {
   password: string;
 };
 const SignInForm = () => {
+  const search = useSearch();
   const {
     id,
     setId,
@@ -135,7 +136,11 @@ const SignInForm = () => {
         updateUser(data);
         queryClient.invalidateQueries();
         OneSignal.login(data.member_id.toString());
-        navigate("/", { replace: true });
+        if (search && search.length != 0) {
+          navigate(search.split("=")[1], { replace: true });
+        } else {
+          navigate("/", { replace: true });
+        }
       } else {
         return toast({
           variant: "destructive",
