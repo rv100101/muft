@@ -62,12 +62,12 @@ function App() {
   }, [user])
 
   useEffect(() => {
-    if (preffered) {
+    if (preffered && !location.startsWith('/academy')) {
       if (i18n.language !== "preferred") {
         i18n.changeLanguage(preffered);
       }
     }
-  }, [preffered, i18n]);
+  }, [preffered, i18n, location]);
 
   useEffect(() => {
     if (user) {
@@ -250,6 +250,7 @@ function App() {
 
         {user &&
           !userOnlyRoutes.includes(location) &&
+          !location.startsWith("/academy") &&
           !location.startsWith("/profile") &&
           !location.startsWith("/members") && <Redirect to="/" />}
 
