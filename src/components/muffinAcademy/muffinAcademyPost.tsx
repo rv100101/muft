@@ -10,7 +10,7 @@ import MuffinAcademyHeader from "./muffinAcademyHeader";
 import { Share2 } from "lucide-react";
 import { useToast } from "../ui/use-toast";
 import SidePanel from "./sidePanel";
-// import countryCodes from "country-codes-list";
+import languages from "./libs/languages";
 
 const MuffinAcademyPost = ({ lang, uuid }: { lang: string, uuid: string }) => {
   const [, i18n] = useTranslation();
@@ -33,15 +33,18 @@ const MuffinAcademyPost = ({ lang, uuid }: { lang: string, uuid: string }) => {
   };
 
   useEffect(() => {
-    // const isFound = cc.filter((code) => { return code.value == lang.toUpperCase() }).length !== 0;
-    if (lang != i18n.language) {
-      const urlSplit = location.split('/');
-      // urlSplit[2] = lang !== 'en' ? i18n.language : 'en';
-      urlSplit[2] = i18n.language;
-      const link = urlSplit.join('/');
+    console.log(lang);
+    const isFound = languages.filter((e) => { return e.code == lang.toLowerCase() }).length !== 0;
+    if (!isFound) {
+      const link = `/academy/${i18n.language}`
       navigate(link);
     }
-    // i18n.changeLanguage(lang);
+    // if (lang != null) {
+    //   console.log("triggered");
+    //   i18n.changeLanguage(
+    //     lang
+    //     ?? 'en');
+    // }
     const formData = new FormData();
     formData.append(
       "auth",
@@ -70,13 +73,13 @@ const MuffinAcademyPost = ({ lang, uuid }: { lang: string, uuid: string }) => {
     };
 
     fetchPost();
-  }, [i18n.language, lang, location, navigate, uuid]);
+  }, [i18n, i18n.language, lang, location, navigate, uuid]);
 
   if (isLoading || post == null) {
     return (
       <div className="w-full h-full">
-        <MuffinAcademyHeader />
-        <div dir={(i18n.language == "ar" || lang == "ar") ? 'rtl' : 'ltr'} className="min-h-screen w-full px-8 sm:px-36 py-12">
+        <MuffinAcademyHeader lang={lang} />
+        <div dir={(lang == "ar") ? 'rtl' : 'ltr'} className="min-h-screen w-full px-8 sm:px-36 py-12">
           <Skeleton className="h-10 w-3/4 mb-4" />
           <Skeleton className="h-40 sm:w-3/4 mb-4" />
           <Skeleton className="h-6 w-1/2 mb-2" />
@@ -101,7 +104,7 @@ const MuffinAcademyPost = ({ lang, uuid }: { lang: string, uuid: string }) => {
         <title>{post!.post_title}</title>
         <link rel="canonical" href={`https://${window.location.hostname}${location}`} />
       </Helmet>
-      <MuffinAcademyHeader />
+      <MuffinAcademyHeader lang={lang} />
       <div className="w-full h-full flex">
         <div className="h-full w-full flex sticky top-0">
           <SidePanel />

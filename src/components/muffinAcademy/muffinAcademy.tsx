@@ -7,9 +7,9 @@ import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "wouter";
 import { useToast } from "../ui/use-toast";
-import countryCodes from "country-codes-list";
 import MuffinAcademyHeader from "./muffinAcademyHeader";
 import SidePanel from "./sidePanel";
+import languages from "./libs/languages";
 
 export interface Post {
   authorized: boolean;
@@ -32,19 +32,13 @@ const MuffinAcademy = ({ countryCode }: { countryCode: string | null }) => {
 
   useEffect(() => {
     if (countryCode !== null) {
-      const cc = countryCodes.customArray();
-      const isFound = cc.filter((code) => { return code.value == countryCode.toUpperCase() }).length !== 0;
+      const isFound = languages.filter((e) => { return e.code == countryCode.toLowerCase() }).length !== 0;
       if (!isFound) {
         const link = `/academy/${i18n.language}`
         navigate(link);
       }
     }
-    if (countryCode != i18n.language) {
-      const urlSplit = location.split('/');
-      urlSplit[2] = i18n.language;
-      const link = urlSplit.join('/');
-      navigate(link);
-    }
+
     const formData = new FormData();
     formData.append(
       "auth",
@@ -66,7 +60,7 @@ const MuffinAcademy = ({ countryCode }: { countryCode: string | null }) => {
       setIsLoading(false);
     };
     fetchPosts();
-  }, [countryCode, i18n.language, location, navigate]);
+  }, [countryCode, i18n, i18n.language, location, navigate]);
 
   const handleShare = (e: React.MouseEvent, postUuid: string) => {
     e.preventDefault();
@@ -80,12 +74,14 @@ const MuffinAcademy = ({ countryCode }: { countryCode: string | null }) => {
     });
   };
 
+  console.log(countryCode);
+
   return (
     <div className="min-h-screen w-full">
-      <MuffinAcademyHeader />
+      <MuffinAcademyHeader lang={countryCode ?? "en"} />
       <div className="flex w-full h-full">
         <SidePanel />
-        <div dir={i18n.language == 'ar' ? "rtl" : "ltr"} className="w-full h-full px-8 sm:px-12 sm:py-12">
+        <div dir={countryCode !== null && countryCode == 'ar' ? "rtl" : "ltr"} className="w-full h-full px-8 sm:px-12 sm:py-12">
           <div className="hidden sm:flex w-full justify-between p-4 rounded-lg bg-[#F5F5F5]">
             <div className={cn("flex items-center text-[#1B2950]")}>
               <Button

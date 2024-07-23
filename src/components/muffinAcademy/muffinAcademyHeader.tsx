@@ -5,9 +5,14 @@ import { Link, useLocation } from "wouter";
 import { ArrowLeft, ArrowRight, } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
-const MuffinAcademyHeader = () => {
+import { useEffect } from "react";
+const MuffinAcademyHeader = ({ lang }: { lang: string }) => {
   const [t, i18n] = useTranslation();
   const [location] = useLocation();
+
+  useEffect(() => {
+    i18n.changeLanguage(lang);
+  }, [lang, i18n])
 
   return (
     <>
