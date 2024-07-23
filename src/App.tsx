@@ -245,7 +245,7 @@ function App() {
         )}
 
         {!user && !noUserOnlyRoutes.includes(location) && location !== "/" && !location.startsWith('/places/') && !location.startsWith('/academy/') && (
-          <Redirect to="/auth/signin" />
+          <Redirect to={`/auth/signin?redirect=${location}`} />
         )}
 
         {user &&
