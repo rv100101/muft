@@ -10,6 +10,7 @@ import { useToast } from "../ui/use-toast";
 import MuffinAcademyHeader from "./muffinAcademyHeader";
 import SidePanel from "./sidePanel";
 import languages from "./libs/languages";
+// import PreferredLanguageDialog from "../preferredLanguageDialog";
 
 export interface Post {
   authorized: boolean;
@@ -74,8 +75,6 @@ const MuffinAcademy = ({ countryCode }: { countryCode: string | null }) => {
     });
   };
 
-  console.log(countryCode);
-
   return (
     <div className="min-h-screen w-full">
       <MuffinAcademyHeader lang={countryCode ?? "en"} />
@@ -103,16 +102,19 @@ const MuffinAcademy = ({ countryCode }: { countryCode: string | null }) => {
               </Button>
               <div className="w-[1px] mx-2 h-full bg-[#CACACA]/50" />
             </div>
-            {!isLoading && showFlag && (
-              <img
-                className="w-14 h-10 bg-white p-2 rounded-sm"
-                alt={"post country flag"}
-                src={`https://muffin0.blob.core.windows.net/flags/${countryCode}.png`}
-                onError={() => {
-                  setShowFlag(false);
-                }}
-              />
-            )}
+            <div className="flex w-full items-center justify-between">
+              {!isLoading && showFlag && (
+                <img
+                  className="w-14 h-10 bg-white p-2 rounded-sm"
+                  alt={"post country flag"}
+                  src={`https://muffin0.blob.core.windows.net/flags/${countryCode}.png`}
+                  onError={() => {
+                    setShowFlag(false);
+                  }}
+                />
+              )}
+              {/* <PreferredLanguageDialog showTrigger={true} triggerTitle={""} triggerVariant="default" isLandingPage={true} /> */}
+            </div>
           </div>
           <div className={`sm:grid w-full ${view === "grid" ? "sm:grid-cols-3 gap-4" : "sm:grid-cols-1"} mt-8`}>
             {isLoading ? (
@@ -138,11 +140,11 @@ const MuffinAcademy = ({ countryCode }: { countryCode: string | null }) => {
                     alt={post.post_title}
                     className="w-full h-52 rounded-2xl object-cover"
                   />
-                  <div className={cn("p-4 w-full", view == "list" ? "flex-grow" : "")}>
+                  <div className={cn("pt-2 sm:p-4 w-full", view == "list" ? "flex-grow" : "")}>
                     <div className="flex items-start justify-between w-full">
-                      <h3 className="text-xl font-bold w-3/4">{post.post_title}</h3>
+                      <h3 className="text-lg sm:text-xl font-bold sm:w-3/4">{post.post_title}</h3>
                       <button
-                        className="h-6 w-1/4"
+                        className="h-6 sm:w-1/4"
                         onClick={(e) => handleShare(e, post.post_uuid)}
                       >
                         <Share2 />

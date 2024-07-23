@@ -250,6 +250,7 @@ function App() {
 
         {user &&
           !userOnlyRoutes.includes(location) &&
+          !location.startsWith("/academy") &&
           !location.startsWith("/profile") &&
           !location.startsWith("/members") && <Redirect to="/" />}
 

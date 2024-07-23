@@ -29,7 +29,6 @@ const MuffinAcademyHeader = ({ lang }: { lang: string }) => {
         )}
       </Helmet>
       <div dir={i18n.language == "ar" ? "rtl" : "ltr"} className="w-full h-full relative">
-
         <div className="w-full h-full z-30 absolute flex justify-center items-center text-white flex-col">
           <h1 className="text-3xl sm:text-6xl font-semibold">{t("academy.headerTitle")}</h1>
           {/* <p className="mt-4">
@@ -38,18 +37,18 @@ const MuffinAcademyHeader = ({ lang }: { lang: string }) => {
           {location.includes("/post") && (
             <Link
               href="/academy"
-              className={cn("absolute z-100 top-4 flex text-sm items-center px-2 py-2 ",
-                i18n.language == "ar" ? "right-12" : "left-12"
+              className={cn("hidden absolute z-100 top-4 sm:flex text-sm items-center sm:px-2 py-2 ",
+                i18n.language == "ar" ? "right-4 sm:right-12" : "left-4 sm:left-12"
               )
               }
             >
               <Button variant={"ghost"} className="hover:bg-transparent hover:text-white/80">
-                {i18n.language == "ar" ? <ArrowRight className="ml-1 h-4" /> : <ArrowLeft className="mr-1 h-4" />} <span>{t("academy.back")}</span>
+                {i18n.language == "ar" ? <ArrowRight className="sm:ml-1 h-4" /> : <ArrowLeft className="sm:mr-1 h-4" />} <span>{t("academy.back")}</span>
               </Button>
             </Link>
           )}
         </div>
-        <img className="h-48 z-20 object-cover sm:h-full" src={academyHeader} alt="academy-header" />
+        <img className="h-24 z-20 object-cover sm:h-full" src={academyHeader} alt="academy-header" />
       </div>
     </>
   );

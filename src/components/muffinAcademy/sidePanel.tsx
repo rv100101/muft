@@ -3,6 +3,7 @@ import logo from "@/assets/logo.svg";
 import { Button } from "../ui/button";
 import { useTranslation } from "react-i18next";
 import { Link } from "wouter";
+import { cn } from "@/lib/utils";
 
 export interface Post {
   authorized: boolean;
@@ -15,10 +16,10 @@ export interface Post {
 }
 
 const SidePanel = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const isAuthenticated = useUserStore(state => state.user)
   return (
-    <div className="sticky ml-8 mt-12 top-8 h-full w-64 bg-white shadow-md p-4 flex flex-col justify-between">
+    <div className="hidden sm:flex sticky ml-8 mt-12 top-8 h-full w-64 bg-white shadow-md p-4 flex-col justify-between">
       <div>
         <Link href={"/"}>
           <img
@@ -31,17 +32,17 @@ const SidePanel = () => {
       <div className="space-y-4 flex flex-col w-full justify-start items-center">
         <a
           href="https://support.muffin.ae" target="_blank" className={"w-full"}>
-          <Button variant="ghost" className="w-full">
+          <Button variant="ghost" className={cn("w-full text-right flex", i18n.language == "ar" ? "justify-end" : "justify-start")}>
             {t("menu.helpCenter")}
           </Button>
         </a>
-        <a target="_blank" href="https://support.muffin.ae/en-US/kb/article/12/privacy-policy">
-          <Button variant="ghost" className="w-full">
+        <a target="_blank" href="https://support.muffin.ae/en-US/kb/article/12/privacy-policy" className="w-full">
+          <Button variant="ghost" className={cn("w-full text-right flex", i18n.language == "ar" ? "justify-end" : "justify-start")}>
             {t("menu.privacyPolicy")}
           </Button>
         </a>
-        <a target="_blank" href="https://support.muffin.ae/en-US/kb/article/13/terms-and-conditions">
-          <Button variant="ghost" className="w-full">
+        <a target="_blank" href="https://support.muffin.ae/en-US/kb/article/13/terms-and-conditions" className="w-full">
+          <Button variant="ghost" className={cn("w-full text-right flex", i18n.language == "ar" ? "justify-end" : "justify-start")}>
             {t("menu.termsAndConditions")}
           </Button>
         </a>

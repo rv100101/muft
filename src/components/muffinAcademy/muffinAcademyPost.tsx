@@ -4,16 +4,19 @@ import { useTranslation } from "react-i18next";
 import { Post } from "./muffinAcademy";
 import DOMPurify from "dompurify";
 import { Helmet } from "react-helmet-async";
-import { useLocation } from "wouter";
+import { Link, useLocation } from "wouter";
 import { Skeleton } from "../ui/skeleton";
 import MuffinAcademyHeader from "./muffinAcademyHeader";
-import { Share2 } from "lucide-react";
+import { ArrowLeft, ArrowRight, Share2 } from "lucide-react";
 import { useToast } from "../ui/use-toast";
 import SidePanel from "./sidePanel";
 import languages from "./libs/languages";
+import AcademyMobileMenu from "./mobileMenu";
+import { Button } from "../ui/button";
+import { cn } from "@/lib/utils";
 
 const MuffinAcademyPost = ({ lang, uuid }: { lang: string, uuid: string }) => {
-  const [, i18n] = useTranslation();
+  const [t, i18n] = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   const [post, setPost] = useState<Post | null>(null);
   const [location, navigate] = useLocation();
@@ -33,7 +36,6 @@ const MuffinAcademyPost = ({ lang, uuid }: { lang: string, uuid: string }) => {
   };
 
   useEffect(() => {
-    console.log(lang);
     const isFound = languages.filter((e) => { return e.code == lang.toLowerCase() }).length !== 0;
     if (!isFound) {
       const link = `/academy/${i18n.language}`
@@ -105,20 +107,41 @@ const MuffinAcademyPost = ({ lang, uuid }: { lang: string, uuid: string }) => {
         <link rel="canonical" href={`https://${window.location.hostname}${location}`} />
       </Helmet>
       <MuffinAcademyHeader lang={lang} />
+      <div dir={lang == 'ar' ? "rtl" : "ltr"} className="w-full py-4 px-8 sm:hidden flex justify-between items-center">
+        {location.includes("/post") && (
+          <Link
+            href="/academy"
+            className={cn("flex w-full text-sm items-center sm:hidden py-2 ",
+              i18n.language == "ar" ? "right-4 sm:right-12" : "left-4 sm:left-12"
+            )
+            }
+          >
+            <Button variant={"ghost"} className="hover:bg-transparent hover:text-white/80 p-0">
+              {i18n.language == "ar" ? <ArrowRight className="sm:ml-1 h-4" /> : <ArrowLeft className="sm:mr-1 h-4" />} <span>{t("academy.back")}</span>
+            </Button>
+          </Link>
+        )}
+        <div className="w-min">
+          <AcademyMobileMenu lang={lang} />
+        </div>
+      </div>
       <div className="w-full h-full flex">
-        <div className="h-full w-full flex sticky top-0">
+        <div className="h-full w-full hidden sm:flex sticky top-0">
           <SidePanel />
         </div>
-        <div dir={(i18n.language == "ar" || lang == "ar") ? 'rtl' : 'ltr'} className="px-8 sm:px-16 py-12">
-          <h1 className="mb-3 text-3xl font-semibold">{post!.post_title} <span>
-            <button
-              className="h-6 w-1/4 mx-2"
-              onClick={(e) => handleShare(e, post.post_uuid)}
-            >
-              <Share2 className="text-primary hover:text-[#ff599b]/90" />
-            </button>
-          </span>
-          </h1>
+        <div dir={(i18n.language == "ar" || lang == "ar") ? 'rtl' : 'ltr'} className="px-8 sm:px-16 sm:py-12">
+          <div className="w-full items-start flex justify-between">
+            <h1 className="mb-3 flex text-md sm:text-3xl font-semibold w-72 sm:w-full">{post!.post_title} <span>
+              <button
+                className="h-6 w-min sm:w-1/4 sm:mx-2 flex"
+                onClick={(e) => handleShare(e, post.post_uuid)}
+              >
+                <Share2 className="text-primary w-min sm:w-32 sm:mt-2 hover:text-[#ff599b]/90" />
+              </button>
+            </span>
+            </h1>
+
+          </div>
           <img
             src={`https://muffin0.blob.core.windows.net/posts/${post!.post_id}.png`}
             alt={post!.post_title}
