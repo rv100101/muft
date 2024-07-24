@@ -48,7 +48,7 @@ const MuffinAcademyHeader = ({ lang }: { lang: string }) => {
             </Link>
           )}
         </div>
-        <img className="h-24 z-20 object-cover sm:h-full" src={academyHeader} alt="academy-header" />
+        <img className="h-28 z-20 object-cover sm:h-full" src={academyHeader} alt="academy-header" />
       </div>
     </>
   );

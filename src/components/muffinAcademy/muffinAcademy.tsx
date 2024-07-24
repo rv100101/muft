@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Grid2x2, List, Share2 } from "lucide-react";
+import { ArrowLeft, ArrowRight, Grid2x2, List, Share2 } from "lucide-react";
 import { Button } from "../ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
@@ -11,6 +11,8 @@ import MuffinAcademyHeader from "./muffinAcademyHeader";
 import SidePanel from "./sidePanel";
 import languages from "./libs/languages";
 import AcademyChangeLanguage from "./changeLanguage";
+import AcademyMobileMenu from "./mobileMenu";
+import { useUserStore } from "@/zustand/auth/user";
 
 export interface Post {
   authorized: boolean;
@@ -24,7 +26,7 @@ export interface Post {
 
 const MuffinAcademy = ({ countryCode }: { countryCode: string | null }) => {
   const [location, navigate] = useLocation();
-  const [, i18n] = useTranslation();
+  const [t, i18n] = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   const [posts, setPosts] = useState<Post[]>([]);
   const [view, setView] = useState<"grid" | "list">("grid");
@@ -63,6 +65,8 @@ const MuffinAcademy = ({ countryCode }: { countryCode: string | null }) => {
     fetchPosts();
   }, [countryCode, i18n, i18n.language, location, navigate]);
 
+  const user = useUserStore(state => state.user);
+
   const handleShare = (e: React.MouseEvent, postUuid: string) => {
     e.preventDefault();
     const url = `${window.location.origin}/academy/post/${postUuid}`;
@@ -84,6 +88,27 @@ const MuffinAcademy = ({ countryCode }: { countryCode: string | null }) => {
         </div>
       }
       <MuffinAcademyHeader lang={countryCode ?? "en"} />
+      {
+        user &&
+        <div dir={countryCode == 'ar' ? "rtl" : "ltr"} className="w-full pt-4 px-8 sm:hidden flex justify-between items-center">
+          {location.startsWith("/academy") && (
+            <Link
+              href="/academy"
+              className={cn("flex w-full text-sm items-center sm:hidden py-2 ",
+                i18n.language == "ar" ? "right-4 sm:right-12" : "left-4 sm:left-12"
+              )
+              }
+            >
+              <Button variant={"ghost"} className="hover:text-black/80 p-0">
+                {countryCode == "ar" ? <ArrowRight className="sm:ml-1 h-4" /> : <ArrowLeft className="sm:mr-1 h-4" />} <span>{t("academy.home")}</span>
+              </Button>
+            </Link>
+          )}
+          <div className="w-min">
+            <AcademyMobileMenu lang={countryCode!} />
+          </div>
+        </div>
+      }
       <div className="flex w-full h-full">
         <SidePanel lang={countryCode ?? 'en'} />
         <div dir={countryCode !== null && countryCode == 'ar' ? "rtl" : "ltr"} className="w-full h-full px-8 sm:px-12 sm:py-12">
@@ -122,7 +147,7 @@ const MuffinAcademy = ({ countryCode }: { countryCode: string | null }) => {
               ) : <div />}
             </div>
           </div>
-          <div className={`sm:grid w-full ${view === "grid" ? "sm:grid-cols-3 gap-4" : "sm:grid-cols-1"} mt-8`}>
+          <div className={`sm:grid w-full ${view === "grid" ? "sm:grid-cols-3 gap-4" : "sm:grid-cols-1"} mt-0 sm:mt-8`}>
             {isLoading ? (
               Array.from({ length: 6 }).map((_, index) => (
                 <div key={index} className="p-4 border overflow-clip rounded-lg gap-2 bg-white">
