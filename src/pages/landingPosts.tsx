@@ -45,7 +45,7 @@ const LandingPosts = ({ posts }: { posts: Post[] }) => {
               href={`/academy/${i18n.language}/post/${post.post_uuid}`}
               key={post.post_id} className="flex-none w-48 sm:w-[300px]">
               <img
-                src={`https://muffin0.blob.core.windows.net/post/${post.post_id}.png`}
+                src={`https://muffin0.blob.core.windows.net/posts/${post.post_id}.png`}
                 alt={post.post_title}
                 className="w-48 sm:w-[600px] h-32 sm:h-[200px] rounded-2xl object-fit"
               />
