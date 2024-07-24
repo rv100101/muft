@@ -10,7 +10,7 @@ import { useToast } from "../ui/use-toast";
 import MuffinAcademyHeader from "./muffinAcademyHeader";
 import SidePanel from "./sidePanel";
 import languages from "./libs/languages";
-// import PreferredLanguageDialog from "../preferredLanguageDialog";
+import AcademyChangeLanguage from "./changeLanguage";
 
 export interface Post {
   authorized: boolean;
@@ -77,9 +77,15 @@ const MuffinAcademy = ({ countryCode }: { countryCode: string | null }) => {
 
   return (
     <div className="min-h-screen w-full">
+      {
+        !isLoading &&
+        <div className="sm:hidden">
+          <AcademyChangeLanguage lang={countryCode!} buttonSize="w-min" />
+        </div>
+      }
       <MuffinAcademyHeader lang={countryCode ?? "en"} />
       <div className="flex w-full h-full">
-        <SidePanel />
+        <SidePanel lang={countryCode ?? 'en'} />
         <div dir={countryCode !== null && countryCode == 'ar' ? "rtl" : "ltr"} className="w-full h-full px-8 sm:px-12 sm:py-12">
           <div className="hidden sm:flex w-full justify-between p-4 rounded-lg bg-[#F5F5F5]">
             <div className={cn("flex items-center text-[#1B2950]")}>
@@ -100,20 +106,20 @@ const MuffinAcademy = ({ countryCode }: { countryCode: string | null }) => {
                 <List className={cn(i18n.language == "ar" ? "ml-2" : "mr-2")} />
                 List
               </Button>
-              <div className="w-[1px] mx-2 h-full bg-[#CACACA]/50" />
+              <div className="w-[1px] mx-2 h-full bg-[#CACACA]/50">
+              </div>
             </div>
-            <div className="flex w-full items-center justify-between">
-              {!isLoading && showFlag && (
+            <div className="flex w-full items-center justify-end">
+              {(!isLoading && showFlag) ? (
                 <img
                   className="w-14 h-10 bg-white p-2 rounded-sm"
                   alt={"post country flag"}
-                  src={`https://muffin0.blob.core.windows.net/flags/${countryCode}.png`}
+                  src={`https://muffin0.blob.core.windows.net/flags/${countryCode == "en" ? "us" : countryCode}.png`}
                   onError={() => {
                     setShowFlag(false);
                   }}
                 />
-              )}
-              {/* <PreferredLanguageDialog showTrigger={true} triggerTitle={""} triggerVariant="default" isLandingPage={true} /> */}
+              ) : <div />}
             </div>
           </div>
           <div className={`sm:grid w-full ${view === "grid" ? "sm:grid-cols-3 gap-4" : "sm:grid-cols-1"} mt-8`}>

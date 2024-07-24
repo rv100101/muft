@@ -14,6 +14,7 @@ import languages from "./libs/languages";
 import AcademyMobileMenu from "./mobileMenu";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
+import AcademyChangeLanguage from "./changeLanguage";
 
 const MuffinAcademyPost = ({ lang, uuid }: { lang: string, uuid: string }) => {
   const [t, i18n] = useTranslation();
@@ -41,12 +42,7 @@ const MuffinAcademyPost = ({ lang, uuid }: { lang: string, uuid: string }) => {
       const link = `/academy/${i18n.language}`
       navigate(link);
     }
-    // if (lang != null) {
-    //   console.log("triggered");
-    //   i18n.changeLanguage(
-    //     lang
-    //     ?? 'en');
-    // }
+
     const formData = new FormData();
     formData.append(
       "auth",
@@ -79,7 +75,7 @@ const MuffinAcademyPost = ({ lang, uuid }: { lang: string, uuid: string }) => {
 
   if (isLoading || post == null) {
     return (
-      <div className="w-full h-full">
+      <div className="w-full h-full z-10">
         <MuffinAcademyHeader lang={lang} />
         <div dir={(lang == "ar") ? 'rtl' : 'ltr'} className="min-h-screen w-full px-8 sm:px-36 py-12">
           <Skeleton className="h-10 w-3/4 mb-4" />
@@ -116,7 +112,7 @@ const MuffinAcademyPost = ({ lang, uuid }: { lang: string, uuid: string }) => {
             )
             }
           >
-            <Button variant={"ghost"} className="hover:bg-transparent hover:text-white/80 p-0">
+            <Button variant={"ghost"} className="hover:text-black/80 p-0">
               {i18n.language == "ar" ? <ArrowRight className="sm:ml-1 h-4" /> : <ArrowLeft className="sm:mr-1 h-4" />} <span>{t("academy.back")}</span>
             </Button>
           </Link>
@@ -127,7 +123,10 @@ const MuffinAcademyPost = ({ lang, uuid }: { lang: string, uuid: string }) => {
       </div>
       <div className="w-full h-full flex">
         <div className="h-full w-full hidden sm:flex sticky top-0">
-          <SidePanel />
+          <SidePanel lang={lang} />
+        </div>
+        <div className="sm:hidden z-90">
+          <AcademyChangeLanguage lang={lang} buttonSize="w-min" />
         </div>
         <div dir={(i18n.language == "ar" || lang == "ar") ? 'rtl' : 'ltr'} className="px-8 sm:px-16 sm:py-12">
           <div className="w-full items-start flex justify-between">
