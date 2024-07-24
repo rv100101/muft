@@ -10,7 +10,7 @@ import { useToast } from "../ui/use-toast";
 import MuffinAcademyHeader from "./muffinAcademyHeader";
 import SidePanel from "./sidePanel";
 import languages from "./libs/languages";
-// import PreferredLanguageDialog from "../preferredLanguageDialog";
+import AcademyChangeLanguage from "./changeLanguage";
 
 export interface Post {
   authorized: boolean;
@@ -100,20 +100,21 @@ const MuffinAcademy = ({ countryCode }: { countryCode: string | null }) => {
                 <List className={cn(i18n.language == "ar" ? "ml-2" : "mr-2")} />
                 List
               </Button>
-              <div className="w-[1px] mx-2 h-full bg-[#CACACA]/50" />
+              <div className="w-[1px] mx-2 h-full bg-[#CACACA]/50">
+              </div>
             </div>
             <div className="flex w-full items-center justify-between">
-              {!isLoading && showFlag && (
+              {(!isLoading && showFlag) ? (
                 <img
                   className="w-14 h-10 bg-white p-2 rounded-sm"
                   alt={"post country flag"}
-                  src={`https://muffin0.blob.core.windows.net/flags/${countryCode}.png`}
+                  src={`https://muffin0.blob.core.windows.net/flags/${countryCode == "en" ? "us" : countryCode}.png`}
                   onError={() => {
                     setShowFlag(false);
                   }}
                 />
-              )}
-              {/* <PreferredLanguageDialog showTrigger={true} triggerTitle={""} triggerVariant="default" isLandingPage={true} /> */}
+              ) : <div />}
+              <AcademyChangeLanguage lang={countryCode!} />
             </div>
           </div>
           <div className={`sm:grid w-full ${view === "grid" ? "sm:grid-cols-3 gap-4" : "sm:grid-cols-1"} mt-8`}>
