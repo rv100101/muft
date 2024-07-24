@@ -4,6 +4,7 @@ import { Button } from "../ui/button";
 import { useTranslation } from "react-i18next";
 import { Link } from "wouter";
 import { cn } from "@/lib/utils";
+import AcademyChangeLanguage from "./changeLanguage";
 
 export interface Post {
   authorized: boolean;
@@ -15,7 +16,7 @@ export interface Post {
   post_language: string;
 }
 
-const SidePanel = () => {
+const SidePanel = ({ lang }: { lang: string }) => {
   const { t, i18n } = useTranslation();
   const isAuthenticated = useUserStore(state => state.user)
   return (
@@ -38,22 +39,25 @@ const SidePanel = () => {
         </a>
         <a target="_blank" href="https://support.muffin.ae/en-US/kb/article/12/privacy-policy" className="w-full">
           <Button variant="ghost" className={cn("w-full text-right flex", i18n.language == "ar" ? "justify-end" : "justify-start")}>
-            {t("menu.privacyPolicy")}
-          </Button>
-        </a>
+            {t("menu.privacyPolicy")} </Button> </a>
         <a target="_blank" href="https://support.muffin.ae/en-US/kb/article/13/terms-and-conditions" className="w-full">
           <Button variant="ghost" className={cn("w-full text-right flex", i18n.language == "ar" ? "justify-end" : "justify-start")}>
             {t("menu.termsAndConditions")}
           </Button>
         </a>
-        {
-          !isAuthenticated &&
-          <Link href="/auth/signin" className={"w-full"}>
-            <Button className="w-full text-left hover:bg-[#ff599b]/90">
-              {t("landingPage.signIn")}
-            </Button>
-          </Link>
-        }
+        <div className="w-full h-full flex flex-col">
+          <div className="w-full">
+            <AcademyChangeLanguage lang={lang} buttonSize="w-full" />
+          </div>
+          {
+            !isAuthenticated &&
+            <Link href="/auth/signin" className={"w-full mt-2"}>
+              <Button className="w-full text-left rounded-full hover:bg-[#ff599b]/90">
+                {t("landingPage.signIn")}
+              </Button>
+            </Link>
+          }
+        </div>
       </div>
     </div>
   );
