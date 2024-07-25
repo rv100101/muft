@@ -134,18 +134,6 @@ const MuffinAcademy = ({ countryCode }: { countryCode: string | null }) => {
               <div className="w-[1px] mx-2 h-full bg-[#CACACA]/50">
               </div>
             </div>
-            <div className="flex w-full items-center justify-end">
-              {(!isLoading && showFlag) ? (
-                <img
-                  className="w-14 h-10 bg-white p-2 rounded-sm"
-                  alt={"post country flag"}
-                  src={`https://muffin0.blob.core.windows.net/flags/${countryCode == "en" ? "us" : countryCode}.png`}
-                  onError={() => {
-                    setShowFlag(false);
-                  }}
-                />
-              ) : <div />}
-            </div>
           </div>
           <div className={`sm:grid w-full ${view === "grid" ? "sm:grid-cols-3 gap-4" : "sm:grid-cols-1"} mt-0 sm:mt-8`}>
             {isLoading ? (
@@ -162,7 +150,7 @@ const MuffinAcademy = ({ countryCode }: { countryCode: string | null }) => {
                   href={`/academy/${i18n.language}/post/${post.post_uuid}`}
                   key={post.post_id}
                   className={cn(
-                    "text-[#1B2950] p-4 rounded-lg w-full bg-white",
+                    "text-[#1B2950] p-4 rounded-lg w-full bg-white relative",
                     view == "list" ? "sm:flex justify-start items-center" : "block"
                   )}
                 >
@@ -171,6 +159,18 @@ const MuffinAcademy = ({ countryCode }: { countryCode: string | null }) => {
                     alt={post.post_title}
                     className="w-full h-52 rounded-2xl object-cover"
                   />
+                  <div dir="ltr" className="absolute right-5 top-4  flex w-full items-center justify-end rounded-lg">
+                    {(!isLoading && showFlag) ? (
+                      <img
+                        className="w-12 p-2 h-10 rounded-xl"
+                        alt={"post country flag"}
+                        src={`https://muffin0.blob.core.windows.net/flags/${countryCode == "en" ? "us" : countryCode}.png`}
+                        onError={() => {
+                          setShowFlag(false);
+                        }}
+                      />
+                    ) : <div />}
+                  </div>
                   <div className={cn("pt-2 sm:p-4 w-full", view == "list" ? "flex-grow" : "")}>
                     <div className="flex items-start justify-between w-full">
                       <h3 className="text-lg sm:text-xl font-bold sm:w-3/4">{post.post_title}</h3>

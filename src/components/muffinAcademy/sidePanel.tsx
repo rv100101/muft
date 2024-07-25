@@ -22,15 +22,21 @@ const SidePanel = ({ lang }: { lang: string }) => {
   return (
     <div className="hidden sm:flex sticky ml-8 mt-12 top-8 h-full w-64 bg-white shadow-md p-4 flex-col justify-between">
       <div>
-        <Link href={"/"}>
+        <a target="_blank" href={"/"}>
           <img
             src={logo}
             alt={"logo"}
             className="mb-6"
           />
-        </Link>
+        </a>
       </div>
       <div className="space-y-4 flex flex-col w-full justify-start items-center">
+        <Link
+          href={`/academy/${lang}`} className={"w-full"}>
+          <Button variant="ghost" className={cn("w-full text-left flex", i18n.language == "ar" ? "justify-end" : "justify-start")}>
+            {t("academy.headerTitle")}
+          </Button>
+        </Link>
         <a
           href="https://support.muffin.ae" target="_blank" className={"w-full"}>
           <Button variant="ghost" className={cn("w-full text-left flex", i18n.language == "ar" ? "justify-end" : "justify-start")}>
