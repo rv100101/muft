@@ -6,7 +6,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
-import { usePreferredLanguageStore } from "@/zustand/auth/preferred_language";
 import { DialogClose, DialogTrigger } from "@radix-ui/react-dialog";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -14,7 +13,6 @@ import { useLocation } from "wouter";
 
 const AcademyChangeLanguage = ({ lang, buttonSize }: { lang: string, buttonSize: string }) => {
   const [t] = useTranslation();
-  const { preferred } = usePreferredLanguageStore();
   const [changePreferredLanguage, setChangePreferredLanguage] = useState(false);
   const [location, navigate] = useLocation();
 
@@ -32,7 +30,7 @@ const AcademyChangeLanguage = ({ lang, buttonSize }: { lang: string, buttonSize:
 
   return (
     <Dialog
-      open={(preferred == null && !location.startsWith('/places/')) || changePreferredLanguage}
+      open={changePreferredLanguage}
     >
       <div className="flex justify-between items-center h-max">
         <DialogTrigger className={cn("flex", buttonSize)} >
