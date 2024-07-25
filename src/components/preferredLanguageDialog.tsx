@@ -39,9 +39,9 @@ const PreferredLanguageDialog = ({
   const [hasSetPermission, setHasSetPermission] = useState<boolean | undefined>(OneSignal.User.PushSubscription.optedIn);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  function pushSubscriptionChangeListener(event: any) {
+  function pushSubscriptionChangeListener() {
     setHasSetPermission(
-      event?.current?.optedIn
+      true
     )
   }
 
