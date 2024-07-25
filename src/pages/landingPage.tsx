@@ -2,7 +2,6 @@ import Hero from "@/components/hero";
 import Benefits from "@/components/benefits";
 import Features from "@/components/features";
 import Cta from "@/components/cta";
-// import GetApp from "@/components/getApp";
 import logo from "@/assets/single-logo.png";
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
@@ -86,7 +85,6 @@ const LandingPage = ({ uuid = null }: { uuid: string | null }) => {
         }
         <Benefits />
         <Features />
-        {/* <Testimonials /> */}
       </div>
       <motion.div
         initial={{

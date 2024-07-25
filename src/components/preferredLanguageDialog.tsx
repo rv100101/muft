@@ -15,6 +15,7 @@ import { DialogClose, DialogTrigger } from "@radix-ui/react-dialog";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import OneSignal from "react-onesignal";
 import { useLocation } from "wouter";
 const PreferredLanguageDialog = ({
   showTrigger = false,
@@ -35,7 +36,7 @@ const PreferredLanguageDialog = ({
   const queryClient = useQueryClient();
   const [location] = useLocation()
   return (
-    <Dialog open={preferred == null && !location.startsWith('/places/') || changePreferredLanguage}>
+    <Dialog open={OneSignal.User.PushSubscription.optedIn != undefined && preferred == null && !location.startsWith('/places/') || changePreferredLanguage}>
       {showTrigger && (
         <div className="flex justify-between items-center h-max">
           {user && user.profile_completed && (
@@ -43,9 +44,6 @@ const PreferredLanguageDialog = ({
               <p className="font-medium">
                 {t("settings.changePreferredLanguage")}
               </p>
-              {/* <p className="text-xs">
-                Choose your language to be used
-              </p> */}
             </div>
           )}
           <DialogTrigger className="flex">
@@ -84,20 +82,6 @@ const PreferredLanguageDialog = ({
                       alt="english-flag"
                     />
                 }
-                {/* {
-                  !isLandingPage &&
-                    i18n.language == 'en' ?
-                    <img
-                      className="object-fit rounded-full"
-                      src="https://muffin0.blob.core.windows.net/flags/us.png"
-                      alt="english-flag"
-                    /> :
-                    <img
-                      className="object-fit rounded-full"
-                      src="https://muffin0.blob.core.windows.net/flags/ae.png"
-                      alt="ae-flag"
-                    />
-                } */}
               </span> {triggerTitle ? triggerTitle : i18n.language == 'en' ? 'English' : "العربية"}
             </Button>
           </DialogTrigger>
