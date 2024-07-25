@@ -15,7 +15,6 @@ import { DialogClose, DialogTrigger } from "@radix-ui/react-dialog";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import OneSignal from "react-onesignal";
 import { useLocation } from "wouter";
 const PreferredLanguageDialog = ({
   showTrigger = false,
@@ -36,22 +35,30 @@ const PreferredLanguageDialog = ({
   const queryClient = useQueryClient();
   const [location] = useLocation()
 
-  const [hasSetPermission, setHasSetPermission] = useState<boolean | undefined>(OneSignal.User.PushSubscription.optedIn);
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  function pushSubscriptionChangeListener() {
-    setHasSetPermission(
-      true
-    )
-  }
+  const [isDialogVisible, setIsDialogVisible] = useState(false);
 
   useEffect(() => {
-    OneSignal.User.PushSubscription.addEventListener("change", pushSubscriptionChangeListener);
+    // Function to check if the dialog exists
+    const checkDialogExistence = () => {
+      const dialogElement = document.getElementById('onesignal-slidedown-dialog');
+      setIsDialogVisible(!!dialogElement);
+    };
+
+    // Check for the dialog on component mount
+    checkDialogExistence();
+
+    // Optional: Add a MutationObserver to watch for changes in the DOM
+    const observer = new MutationObserver(() => checkDialogExistence());
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    // Cleanup observer on component unmount
+    return () => observer.disconnect();
   }, []);
 
 
+
   return (
-    <Dialog open={hasSetPermission != undefined && preferred == null && !location.startsWith('/places/') || changePreferredLanguage}>
+    <Dialog open={!isDialogVisible && preferred == null && !location.startsWith('/places/') || changePreferredLanguage}>
       {showTrigger && (
         <div className="flex justify-between items-center h-max">
           {user && user.profile_completed && (
