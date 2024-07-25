@@ -177,14 +177,17 @@ const PreferredLanguageDialog = ({
             </p>
           </div>
         </div>
-        <div className="flex mt-3 mb-2 justify-end w-full px-3">
-          <Button onClick={() => {
-            setChangePreferredLanguage(false);
-          }
-          } variant={"outline"} className="rounded-full  text-[#727272]">
-            {t("onboarding.back")}
-          </Button>
-        </div>
+        {
+          preferred &&
+          <div className="flex mt-3 mb-2 justify-end w-full px-3">
+            <Button onClick={() => {
+              setChangePreferredLanguage(false);
+            }
+            } variant={"outline"} className="rounded-full  text-[#727272]">
+              {t("onboarding.back")}
+            </Button>
+          </div>
+        }
       </DialogContent>
     </Dialog>
   );
