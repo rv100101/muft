@@ -13,7 +13,7 @@ import { useUserStore } from "@/zustand/auth/user";
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
 import { DialogClose, DialogTrigger } from "@radix-ui/react-dialog";
 import { useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import OneSignal from "react-onesignal";
 import { useLocation } from "wouter";
@@ -35,8 +35,23 @@ const PreferredLanguageDialog = ({
   const user = useUserStore((state) => state.user);
   const queryClient = useQueryClient();
   const [location] = useLocation()
+
+  const [hasSetPermission, setHasSetPermission] = useState<boolean | undefined>(OneSignal.User.PushSubscription.optedIn);
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  function pushSubscriptionChangeListener(event: any) {
+    setHasSetPermission(
+      event?.current?.optedIn
+    )
+  }
+
+  useEffect(() => {
+    OneSignal.User.PushSubscription.addEventListener("change", pushSubscriptionChangeListener);
+  }, []);
+
+
   return (
-    <Dialog open={OneSignal.User.PushSubscription.optedIn != undefined && preferred == null && !location.startsWith('/places/') || changePreferredLanguage}>
+    <Dialog open={hasSetPermission != undefined && preferred == null && !location.startsWith('/places/') || changePreferredLanguage}>
       {showTrigger && (
         <div className="flex justify-between items-center h-max">
           {user && user.profile_completed && (
