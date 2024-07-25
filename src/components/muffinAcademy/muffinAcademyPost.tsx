@@ -14,7 +14,7 @@ import languages from "./libs/languages";
 import AcademyMobileMenu from "./mobileMenu";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
-import AcademyChangeLanguage from "./changeLanguage";
+// import AcademyChangeLanguage from "./changeLanguage";
 
 const MuffinAcademyPost = ({ lang, uuid }: { lang: string, uuid: string }) => {
   const [t, i18n] = useTranslation();
@@ -75,7 +75,7 @@ const MuffinAcademyPost = ({ lang, uuid }: { lang: string, uuid: string }) => {
 
   if (isLoading || post == null) {
     return (
-      <div className="w-full h-full z-10">
+      <div className="w-full h-full">
         <MuffinAcademyHeader lang={lang} />
         <div dir={(lang == "ar") ? 'rtl' : 'ltr'} className="min-h-screen w-full px-8 sm:px-36 py-12">
           <Skeleton className="h-10 w-3/4 mb-4" />
@@ -125,9 +125,9 @@ const MuffinAcademyPost = ({ lang, uuid }: { lang: string, uuid: string }) => {
         <div className="h-full w-full hidden sm:flex sticky top-0">
           <SidePanel lang={lang} />
         </div>
-        <div className="sm:hidden z-90">
+        {/* <div className="sm:hidden z-90">
           <AcademyChangeLanguage lang={lang} buttonSize="w-min" />
-        </div>
+        </div> */}
         <div dir={(i18n.language == "ar" || lang == "ar") ? 'rtl' : 'ltr'} className="px-8 sm:px-16 sm:py-12">
           <div className="w-full items-start flex justify-between">
             <h1 className="mb-3 flex text-md sm:text-3xl font-semibold w-72 sm:w-full">{post!.post_title} <span>

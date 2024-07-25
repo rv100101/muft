@@ -10,7 +10,7 @@ import { useToast } from "../ui/use-toast";
 import MuffinAcademyHeader from "./muffinAcademyHeader";
 import SidePanel from "./sidePanel";
 import languages from "./libs/languages";
-import AcademyChangeLanguage from "./changeLanguage";
+// import AcademyChangeLanguage from "./changeLanguage";
 import AcademyMobileMenu from "./mobileMenu";
 import { useUserStore } from "@/zustand/auth/user";
 
@@ -81,12 +81,12 @@ const MuffinAcademy = ({ countryCode }: { countryCode: string | null }) => {
 
   return (
     <div className="min-h-screen w-full">
-      {
+      {/* {
         !isLoading &&
         <div className="sm:hidden">
           <AcademyChangeLanguage lang={countryCode!} buttonSize="w-min" />
         </div>
-      }
+      } */}
       <MuffinAcademyHeader lang={countryCode ?? "en"} />
       {
         user &&

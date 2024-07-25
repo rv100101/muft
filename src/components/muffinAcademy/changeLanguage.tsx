@@ -33,13 +33,13 @@ const AcademyChangeLanguage = ({ lang, buttonSize }: { lang: string, buttonSize:
       open={changePreferredLanguage}
     >
       <div className="flex justify-between items-center h-max">
-        <DialogTrigger className={cn("flex", buttonSize)} >
+        <DialogTrigger asChild className={cn("flex", buttonSize)} >
           <Button
             type="button"
             variant="default"
             className={cn(
-              "hover:text-white/80 rounded-full h-10 text-sm border-[#DDDDDD] bg-white py-2 w-full dark:bg-[#1b1d1e] dark:hover:text-white bg-primary text-white hover:bg-[#ff599b]/90",
-              "fixed bottom-4 right-4 sm:relative sm:bottom-auto sm:right-auto",
+              "hover:text-white/80 mt-2 sm:mt-0 sm:rounded-full h-10 text-sm border-[#DDDDDD] bg-white py-2 w-full dark:bg-[#1b1d1e] dark:hover:text-white bg-primary text-white hover:bg-[#ff599b]/90",
+              "sm:relative sm:bottom-auto sm:right-auto",
               buttonSize
             )}
             onClick={() => setChangePreferredLanguage(true)}
@@ -59,7 +59,7 @@ const AcademyChangeLanguage = ({ lang, buttonSize }: { lang: string, buttonSize:
                 />
               )}
             </span>
-            <span className="hidden sm:inline">{lang === 'en' ? 'English' : "العربية"}</span>
+            <span className="flex w-full sm:w-min text-right sm:text-center">{lang === 'en' ? 'English' : "العربية"}</span>
           </Button>
         </DialogTrigger>
       </div>

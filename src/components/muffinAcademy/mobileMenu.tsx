@@ -11,6 +11,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import AcademyChangeLanguage from "./changeLanguage";
 
 const AcademyMobileMenu = ({ lang }: { lang: string }) => {
   const [t, i18n] = useTranslation();
@@ -21,7 +22,7 @@ const AcademyMobileMenu = ({ lang }: { lang: string }) => {
   }, [lang, i18n]);
 
   return (
-    <>
+    <div>
       <Helmet>
         <title>Muffin Academy</title>
         {i18n.language === 'en' ? (
@@ -34,35 +35,36 @@ const AcademyMobileMenu = ({ lang }: { lang: string }) => {
           </>
         )}
       </Helmet>
-      <div className="w-full h-full relative">
-        <DropdownMenu dir={lang == "ar" ? "rtl" : "ltr"}>
-          <DropdownMenuTrigger>
-            <Button variant="ghost" className="m-0 p-0"><Menu /></Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            {/* <DropdownMenuLabel>{t("menu.navigation")}</DropdownMenuLabel>
+      <DropdownMenu dir={lang == "ar" ? "rtl" : "ltr"}>
+        <DropdownMenuTrigger>
+          <Button variant="ghost" className="m-0 p-0"><Menu /></Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          {/* <DropdownMenuLabel>{t("menu.navigation")}</DropdownMenuLabel>
               <DropdownMenuSeparator /> */}
+          <DropdownMenuItem asChild>
+            <Link href="/">{t("menu.home")}</Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <a href="https://support.muffin.ae" target="_blank">{t("menu.helpCenter")}</a>
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <a href="https://support.muffin.ae/en-US/kb/article/12/privacy-policy" target="_blank">{t("menu.privacyPolicy")}</a>
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <a href="https://support.muffin.ae/en-US/kb/article/13/terms-and-conditions" target="_blank">{t("menu.termsAndConditions")}</a>
+          </DropdownMenuItem>
+          {!isAuthenticated && (
             <DropdownMenuItem asChild>
-              <Link href="/">{t("menu.home")}</Link>
+              <Link href="/auth/signin">{t("landingPage.signIn")}</Link>
             </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <a href="https://support.muffin.ae" target="_blank">{t("menu.helpCenter")}</a>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <a href="https://support.muffin.ae/en-US/kb/article/12/privacy-policy" target="_blank">{t("menu.privacyPolicy")}</a>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <a href="https://support.muffin.ae/en-US/kb/article/13/terms-and-conditions" target="_blank">{t("menu.termsAndConditions")}</a>
-            </DropdownMenuItem>
-            {!isAuthenticated && (
-              <DropdownMenuItem asChild>
-                <Link href="/auth/signin">{t("landingPage.signIn")}</Link>
-              </DropdownMenuItem>
-            )}
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
-    </>
+          )}
+          <DropdownMenuItem asChild>
+            <AcademyChangeLanguage lang={lang} buttonSize="w-full" />
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div >
   );
 }
 
