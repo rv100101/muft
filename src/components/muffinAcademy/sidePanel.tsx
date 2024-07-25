@@ -33,15 +33,15 @@ const SidePanel = ({ lang }: { lang: string }) => {
       <div className="space-y-4 flex flex-col w-full justify-start items-center">
         <a
           href="https://support.muffin.ae" target="_blank" className={"w-full"}>
-          <Button variant="ghost" className={cn("w-full text-right flex", i18n.language == "ar" ? "justify-end" : "justify-start")}>
+          <Button variant="ghost" className={cn("w-full text-left flex", i18n.language == "ar" ? "justify-end" : "justify-start")}>
             {t("menu.helpCenter")}
           </Button>
         </a>
         <a target="_blank" href="https://support.muffin.ae/en-US/kb/article/12/privacy-policy" className="w-full">
-          <Button variant="ghost" className={cn("w-full text-right flex", i18n.language == "ar" ? "justify-end" : "justify-start")}>
+          <Button variant="ghost" className={cn("w-full text-left flex", i18n.language == "ar" ? "justify-end" : "justify-start")}>
             {t("menu.privacyPolicy")} </Button> </a>
         <a target="_blank" href="https://support.muffin.ae/en-US/kb/article/13/terms-and-conditions" className="w-full">
-          <Button variant="ghost" className={cn("w-full text-right flex", i18n.language == "ar" ? "justify-end" : "justify-start")}>
+          <Button variant="ghost" className={cn("w-full text-left flex", i18n.language == "ar" ? "justify-end" : "justify-start")}>
             {t("menu.termsAndConditions")}
           </Button>
         </a>
