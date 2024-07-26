@@ -117,9 +117,7 @@ const MuffinAcademyPost = ({ lang, uuid }: { lang: string, uuid: string }) => {
             </Button>
           </Link>
         )}
-        <div className="w-min">
-          <AcademyMobileMenu lang={lang} />
-        </div>
+        <AcademyMobileMenu lang={lang} />
       </div>
       <div dir={lang == 'ar' ? "rtl" : 'ltr'} className="w-full h-full flex">
         <div className="h-full w-min hidden sm:flex sticky top-0">

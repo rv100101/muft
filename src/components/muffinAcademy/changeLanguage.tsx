@@ -32,37 +32,35 @@ const AcademyChangeLanguage = ({ lang, buttonSize }: { lang: string, buttonSize:
     <Dialog
       open={changePreferredLanguage}
     >
-      <div className="flex justify-between items-center h-max">
-        <DialogTrigger asChild className={cn("flex", buttonSize)} >
-          <Button
-            type="button"
-            variant="default"
-            className={cn(
-              "hover:text-white/80 mt-2 sm:mt-0 sm:rounded-full h-10 text-sm border-[#DDDDDD] bg-white py-2 w-full dark:bg-[#1b1d1e] dark:hover:text-white bg-primary text-white hover:bg-[#ff599b]/90",
-              "sm:relative sm:bottom-auto sm:right-auto",
-              buttonSize
+      <DialogTrigger asChild className={cn("flex justify-between items-center h-max", buttonSize)} >
+        <Button
+          type="button"
+          variant="default"
+          className={cn(
+            "hover:text-white/80 mt-2 sm:mt-0 sm:rounded-full h-10 text-sm border-[#DDDDDD] bg-white py-2 w-full dark:bg-[#1b1d1e] dark:hover:text-white bg-primary text-white hover:bg-[#ff599b]/90",
+            "sm:relative sm:bottom-auto sm:right-auto",
+            buttonSize
+          )}
+          onClick={() => setChangePreferredLanguage(true)}
+        >
+          <span className={cn("w-4", lang === "en" ? 'mr-1' : "mx-1")}>
+            {lang !== 'en' ? (
+              <img
+                className="object-fit rounded-full"
+                src="https://muffin0.blob.core.windows.net/flags/ae.png"
+                alt="ae-flag"
+              />
+            ) : (
+              <img
+                className="object-fit rounded-full"
+                src="https://muffin0.blob.core.windows.net/flags/us.png"
+                alt="english-flag"
+              />
             )}
-            onClick={() => setChangePreferredLanguage(true)}
-          >
-            <span className={cn("w-4", lang === "en" ? 'mr-1' : "mx-1")}>
-              {lang !== 'en' ? (
-                <img
-                  className="object-fit rounded-full"
-                  src="https://muffin0.blob.core.windows.net/flags/ae.png"
-                  alt="ae-flag"
-                />
-              ) : (
-                <img
-                  className="object-fit rounded-full"
-                  src="https://muffin0.blob.core.windows.net/flags/us.png"
-                  alt="english-flag"
-                />
-              )}
-            </span>
-            <span className="flex w-full sm:w-min text-right sm:text-center">{lang === 'en' ? 'English' : "العربية"}</span>
-          </Button>
-        </DialogTrigger>
-      </div>
+          </span>
+          <span className="flex w-full sm:w-min text-right sm:text-center">{lang === 'en' ? 'English' : "العربية"}</span>
+        </Button>
+      </DialogTrigger>
       <DialogContent
         dir={lang === "ar" ? "rtl" : "ltr"}
         className="p-0 m-0 gap-0 w-72 sm:w-full"
