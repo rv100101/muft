@@ -93,7 +93,7 @@ const MuffinAcademy = ({ countryCode }: { countryCode: string | null }) => {
         <div dir={countryCode == 'ar' ? "rtl" : "ltr"} className="w-full pt-4 px-8 sm:hidden flex justify-between items-center">
           {location.startsWith("/academy") && (
             <Link
-              href="/academy"
+              href="/"
               className={cn("flex w-full text-sm items-center sm:hidden py-2 ",
                 i18n.language == "ar" ? "right-4 sm:right-12" : "left-4 sm:left-12"
               )
