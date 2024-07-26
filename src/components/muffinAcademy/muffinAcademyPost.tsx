@@ -98,9 +98,20 @@ const MuffinAcademyPost = ({ lang, uuid }: { lang: string, uuid: string }) => {
 
   return (
     <div className="h-full w-full flex flex-col">
-      <Helmet>
+      <Helmet prioritizeSeoTags>
         <title>{post!.post_title}</title>
         <link rel="canonical" href={`https://${window.location.hostname}${location}`} />
+        <meta property="og:url" content={`https://www.muffin.ae${location}`} />
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content={post.post_title} />
+        <meta property="og:description" content="Discover expert dating advice and tips at Muffin Academy. Navigate relationships and find love with our insightful articles." />
+        <meta property="og:image" content={`https://muffin0.blob.core.windows.net/posts/${post!.post_id}.png`} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta property="twitter:domain" content="muffin.ae" />
+        <meta property="twitter:url" content={`https://www.muffin.ae${location}`} />
+        <meta name="twitter:title" content={post.post_title} />
+        <meta name="twitter:description" content="Discover expert dating advice and tips at Muffin Academy. Navigate relationships and find love with our insightful articles." />
+        <meta name="twitter:image" content={`https://muffin0.blob.core.windows.net/posts/${post!.post_id}.png`} />
       </Helmet>
       <MuffinAcademyHeader lang={lang} />
       <div dir={lang == 'ar' ? "rtl" : "ltr"} className="w-full py-4 px-8 sm:hidden flex justify-between items-center">
