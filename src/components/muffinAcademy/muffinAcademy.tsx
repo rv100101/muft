@@ -109,7 +109,7 @@ const MuffinAcademy = ({ countryCode }: { countryCode: string | null }) => {
           </div>
         </div>
       }
-      <div className="flex w-full h-full">
+      <div dir={countryCode == "ar" ? "rtl" : "ltr"} className="flex w-full h-full">
         <SidePanel lang={countryCode ?? 'en'} />
         <div dir={countryCode !== null && countryCode == 'ar' ? "rtl" : "ltr"} className="w-full h-full px-8 sm:px-12 sm:py-12">
           <div className="hidden sm:flex w-full justify-between p-4 rounded-lg bg-[#F5F5F5]">

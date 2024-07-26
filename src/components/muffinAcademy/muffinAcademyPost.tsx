@@ -121,8 +121,8 @@ const MuffinAcademyPost = ({ lang, uuid }: { lang: string, uuid: string }) => {
           <AcademyMobileMenu lang={lang} />
         </div>
       </div>
-      <div className="w-full h-full flex">
-        <div className="h-full w-full hidden sm:flex sticky top-0">
+      <div dir={lang == 'ar' ? "rtl" : 'ltr'} className="w-full h-full flex">
+        <div className="h-full w-min hidden sm:flex sticky top-0">
           <SidePanel lang={lang} />
         </div>
         {/* <div className="sm:hidden z-90">
