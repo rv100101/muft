@@ -157,14 +157,17 @@ function TopNav() {
                 </Button>
               </motion.li>
             </div>
-            <motion.li variants={motionTop80}>
-              <PreferredLanguageDialog
-                showTrigger={true}
-                triggerTitle={i18n.language == "en" ? "العربية" : "English"}
-                isLandingPage={true}
-                triggerVariant="default"
-              />
-            </motion.li>
+            {
+              !location.includes('/academy') &&
+              <motion.li variants={motionTop80}>
+                <PreferredLanguageDialog
+                  showTrigger={true}
+                  triggerTitle={i18n.language == "en" ? "العربية" : "English"}
+                  isLandingPage={true}
+                  triggerVariant="default"
+                />
+              </motion.li>
+            }
           </>
         )}
         {/* <motion.li variants={motionTop80}>
