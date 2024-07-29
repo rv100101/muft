@@ -155,6 +155,8 @@ const SignInForm = () => {
     }
   };
 
+  console.log(search);
+
   return (
     <div className="flex h-max sm:w-96 flex-col items-center lg:shadow-xl rounded-lg p-8 lg:border space-y-2">
       <BlockedMessage blockedModal={blockedModal} setBlockedModal={showBlockedModal} />
@@ -312,14 +314,14 @@ const SignInForm = () => {
       >
         <p className="text-xs mt-4">{t("signIn.dontHaveAccount")}</p>
         <Link
-          href="/auth/signup"
+          href={search.length == 0 ? "/auth/signup" : `/auth/signup?${search}`}
           onClick={scrollToTop}
           className="dark:text-white dark:hover:text-white/80 text-xs underline text-[#4635E2] mt-4 hover:text-[#FF8AB3]"
         >
           {t("signIn.signUpHere")}
         </Link>
       </div>
-    </div>
+    </div >
   );
 };
 

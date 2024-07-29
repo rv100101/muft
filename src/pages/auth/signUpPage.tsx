@@ -41,6 +41,7 @@ export type SignUpDataType = {
 };
 
 const SignUpPage = () => {
+  const search = useSearch();
   const setData = profileAboutContentStore((state) => state.setData);
   const [t, i18n] = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
@@ -124,6 +125,8 @@ const SignUpPage = () => {
       setIsLoading(false);
     }
   };
+
+  console.log(search);
 
   const signUp = useMutation({
     mutationFn: handleSignUp,
@@ -416,7 +419,7 @@ const SignUpPage = () => {
           </form>
           <Link
             onClick={scrollToTop}
-            href="/auth/signin"
+            href={search.length == 0 ? "/auth/signin" : `/auth/signin?${search}`}
             className="mt-2 underline hover:text-[#4635E2]/80 text-[#4635E2] text-sm dark:text-white dark:hover:text-white/80"
           >
             {t("signUp.alreadyHaveAccount")}
