@@ -137,7 +137,13 @@ const SignInForm = () => {
         queryClient.invalidateQueries();
         OneSignal.login(data.member_id.toString());
         if (search && search.length != 0) {
-          navigate(search.split("=")[1], { replace: true });
+          const path = search.split("=")[1].trim();
+          console.log(path);
+          if (path == '/myprofile') {
+            navigate(`/profile/${data.member_id}`);
+          } else {
+            navigate(path, { replace: true });
+          }
         } else {
           navigate("/", { replace: true });
         }
