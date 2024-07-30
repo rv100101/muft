@@ -21,7 +21,7 @@ const ViewAllReferred = ({ referrals }: { referrals: UserReferralInfo[] | undefi
               <p className="text-xs">{referral.country_name}</p>
             </div>
           </div>
-          <div className="w-full text-right">
+          <div className={cn("w-full", i18n.language == "ar" ? "text-left" : "text-right")}>
             <p className="text-xs sm:text-sm">Earned amount: ${referral.earned_amount}</p>
             {referral.paid_amount != 0 && <p className=" text-xs sm:text-sm">Paid amount: ${referral.paid_amount}</p>}
           </div>

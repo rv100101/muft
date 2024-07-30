@@ -161,7 +161,7 @@ const ReferralProgram = () => {
                           <p className="text-xs">{referral.country_name}</p>
                         </div>
                       </div>
-                      <p className="w-full text-right text-xs sm:text-base">Earned amount: ${referral.earned_amount}</p>
+                      <p className={cn("w-full text-xs sm:text-base", i18n.language == "ar" ? "text-left" : "text-right")}>Earned amount: ${referral.earned_amount}</p>
                     </a>
                   })
             }
