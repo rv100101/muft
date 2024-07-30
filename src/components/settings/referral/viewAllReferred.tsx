@@ -7,7 +7,7 @@ const ViewAllReferred = ({ referrals }: { referrals: UserReferralInfo[] | undefi
   const [, i18n] = useTranslation();
   if (referrals?.length == 0) {
     return <div className="w-full py-16 h-full flex justify-center items-center">
-      No referrals yet
+      You don’t have any referrals
     </div>
   }
   return (
@@ -20,6 +20,10 @@ const ViewAllReferred = ({ referrals }: { referrals: UserReferralInfo[] | undefi
               <p className="font-medium">{referral.nickname}</p>
               <p className="text-xs">{referral.country_name}</p>
             </div>
+          </div>
+          <div className="w-full text-right">
+            <p className="text-xs sm:text-sm">Earned amount: ${referral.earned_amount}</p>
+            {referral.paid_amount != 0 && <p className=" text-xs sm:text-sm">Paid amount: ${referral.paid_amount}</p>}
           </div>
         </a>
       ))}

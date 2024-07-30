@@ -126,7 +126,7 @@ const ReferralProgram = () => {
               <DialogTrigger asChild>
                 <Button className="rounded-full hover:bg-[#ff599b]/90">{t("rewards.viewAll")}</Button>
               </DialogTrigger>
-              <DialogContent dir={i18n.language == "en" ? 'ltr' : "rtl"} className="sm:max-w-[425px] w-72">
+              <DialogContent dir={i18n.language == "en" ? 'ltr' : "rtl"} className="sm:max-w-[600px] w-72">
                 <div className="flex justify-between">
                   <p>Referrals</p>
                   <DialogClose>
@@ -160,6 +160,7 @@ const ReferralProgram = () => {
                           <p className="text-xs">{referral.country_name}</p>
                         </div>
                       </div>
+                      <p className="w-full text-right text-xs sm:text-base">Earned amount: ${referral.earned_amount}</p>
                     </a>
                   })
             }

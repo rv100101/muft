@@ -13,6 +13,7 @@ import languages from "./libs/languages";
 // import AcademyChangeLanguage from "./changeLanguage";
 import AcademyMobileMenu from "./mobileMenu";
 import { useUserStore } from "@/zustand/auth/user";
+import { Helmet } from "react-helmet-async";
 
 export interface Post {
   authorized: boolean;
@@ -80,115 +81,120 @@ const MuffinAcademy = ({ countryCode }: { countryCode: string | null }) => {
   };
 
   return (
-    <div className="min-h-screen w-full">
-      {/* {
+    <>
+      <Helmet>
+        <link rel="canonical" href={`https://${window.location.hostname}${location}`} />
+      </Helmet>
+      <div className="min-h-screen w-full">
+        {/* {
         !isLoading &&
         <div className="sm:hidden">
           <AcademyChangeLanguage lang={countryCode!} buttonSize="w-min" />
         </div>
       } */}
-      <MuffinAcademyHeader lang={countryCode ?? "en"} />
-      {
-        user &&
-        <div dir={countryCode == 'ar' ? "rtl" : "ltr"} className="w-full pt-4 px-8 sm:hidden flex justify-between items-center">
-          {location.startsWith("/academy") && (
-            <Link
-              href="/"
-              className={cn("flex w-full text-sm items-center sm:hidden py-2 ",
-                i18n.language == "ar" ? "right-4 sm:right-12" : "left-4 sm:left-12"
-              )
-              }
-            >
-              <Button variant={"ghost"} className="hover:text-black/80 p-0">
-                {countryCode == "ar" ? <ArrowRight className="sm:ml-1 h-4" /> : <ArrowLeft className="sm:mr-1 h-4" />} <span>{t("academy.home")}</span>
-              </Button>
-            </Link>
-          )}
-          <div className="w-min">
-            <AcademyMobileMenu lang={countryCode!} />
-          </div>
-        </div>
-      }
-      <div dir={countryCode == "ar" ? "rtl" : "ltr"} className="flex w-full h-full">
-        <SidePanel lang={countryCode ?? 'en'} />
-        <div dir={countryCode !== null && countryCode == 'ar' ? "rtl" : "ltr"} className="w-full h-full px-8 sm:px-12 sm:py-12">
-          <div className="hidden sm:flex w-full justify-between p-4 rounded-lg bg-[#F5F5F5]">
-            <div className={cn("flex items-center text-[#1B2950]")}>
-              <Button
-                variant={"ghost"}
-                className="font-semibold w-min p-0"
-                onClick={() => setView("grid")}
+        <MuffinAcademyHeader lang={countryCode ?? "en"} />
+        {
+          user &&
+          <div dir={countryCode == 'ar' ? "rtl" : "ltr"} className="w-full pt-4 px-8 sm:hidden flex justify-between items-center">
+            {location.startsWith("/academy") && (
+              <Link
+                href="/"
+                className={cn("flex w-full text-sm items-center sm:hidden py-2 ",
+                  i18n.language == "ar" ? "right-4 sm:right-12" : "left-4 sm:left-12"
+                )
+                }
               >
-                <Grid2x2 className={cn(i18n.language == "ar" ? "ml-2" : "mr-2")} />
-                Grid
-              </Button>
-              <div className="w-[1px] h-full bg-[#CACACA]/50 mx-2" />
-              <Button
-                variant={"ghost"}
-                className="font-semibold w-min p-0"
-                onClick={() => setView("list")}
-              >
-                <List className={cn(i18n.language == "ar" ? "ml-2" : "mr-2")} />
-                List
-              </Button>
-              <div className="w-[1px] mx-2 h-full bg-[#CACACA]/50">
-              </div>
+                <Button variant={"ghost"} className="hover:text-black/80 p-0">
+                  {countryCode == "ar" ? <ArrowRight className="sm:ml-1 h-4" /> : <ArrowLeft className="sm:mr-1 h-4" />} <span>{t("academy.home")}</span>
+                </Button>
+              </Link>
+            )}
+            <div className="w-min">
+              <AcademyMobileMenu lang={countryCode!} />
             </div>
           </div>
-          <div className={`sm:grid w-full ${view === "grid" ? "sm:grid-cols-3 gap-4" : "sm:grid-cols-1"} mt-0 sm:mt-8`}>
-            {isLoading ? (
-              Array.from({ length: 6 }).map((_, index) => (
-                <div key={index} className="p-4 border overflow-clip rounded-lg gap-2 bg-white">
-                  <Skeleton className="w-full h-52 rounded-2xl object-cover" />
-                  <Skeleton className="mt-4 h-6 w-3/4" />
-                  <Skeleton className="mt-2 h-4 w-1/2" />
-                </div>
-              ))
-            ) : (
-              posts.map((post) => (
-                <Link
-                  href={`/academy/${i18n.language}/post/${post.post_uuid}`}
-                  key={post.post_id}
-                  className={cn(
-                    "text-[#1B2950] p-4 rounded-lg w-full bg-white relative",
-                    view == "list" ? "sm:flex justify-start items-center" : "block"
-                  )}
+        }
+        <div dir={countryCode == "ar" ? "rtl" : "ltr"} className="flex w-full h-full">
+          <SidePanel lang={countryCode ?? 'en'} />
+          <div dir={countryCode !== null && countryCode == 'ar' ? "rtl" : "ltr"} className="w-full h-full px-8 sm:px-12 sm:py-12">
+            <div className="hidden sm:flex w-full justify-between p-4 rounded-lg bg-[#F5F5F5]">
+              <div className={cn("flex items-center text-[#1B2950]")}>
+                <Button
+                  variant={"ghost"}
+                  className="font-semibold w-min p-0"
+                  onClick={() => setView("grid")}
                 >
-                  <img
-                    src={`https://muffin0.blob.core.windows.net/posts/${post.post_id}.png`}
-                    alt={post.post_title}
-                    className="w-full h-52 rounded-2xl object-cover"
-                  />
-                  <div dir="ltr" className="absolute right-5 top-4  flex w-full items-center justify-end rounded-lg">
-                    {(!isLoading && showFlag) ? (
-                      <img
-                        className="w-12 p-2 h-10 rounded-xl"
-                        alt={"post country flag"}
-                        src={`https://muffin0.blob.core.windows.net/flags/${countryCode == "en" ? "us" : countryCode}.png`}
-                        onError={() => {
-                          setShowFlag(false);
-                        }}
-                      />
-                    ) : <div />}
+                  <Grid2x2 className={cn(i18n.language == "ar" ? "ml-2" : "mr-2")} />
+                  Grid
+                </Button>
+                <div className="w-[1px] h-full bg-[#CACACA]/50 mx-2" />
+                <Button
+                  variant={"ghost"}
+                  className="font-semibold w-min p-0"
+                  onClick={() => setView("list")}
+                >
+                  <List className={cn(i18n.language == "ar" ? "ml-2" : "mr-2")} />
+                  List
+                </Button>
+                <div className="w-[1px] mx-2 h-full bg-[#CACACA]/50">
+                </div>
+              </div>
+            </div>
+            <div className={`sm:grid w-full ${view === "grid" ? "sm:grid-cols-3 gap-4" : "sm:grid-cols-1"} mt-0 sm:mt-8`}>
+              {isLoading ? (
+                Array.from({ length: 6 }).map((_, index) => (
+                  <div key={index} className="p-4 border overflow-clip rounded-lg gap-2 bg-white">
+                    <Skeleton className="w-full h-52 rounded-2xl object-cover" />
+                    <Skeleton className="mt-4 h-6 w-3/4" />
+                    <Skeleton className="mt-2 h-4 w-1/2" />
                   </div>
-                  <div className={cn("pt-2 sm:p-4 w-full", view == "list" ? "flex-grow" : "")}>
-                    <div className="flex items-start justify-between w-full">
-                      <h3 className="text-lg sm:text-xl font-bold sm:w-3/4">{post.post_title}</h3>
-                      <button
-                        className="h-6 sm:w-1/4"
-                        onClick={(e) => handleShare(e, post.post_uuid)}
-                      >
-                        <Share2 />
-                      </button>
+                ))
+              ) : (
+                posts.map((post) => (
+                  <Link
+                    href={`/academy/${i18n.language}/post/${post.post_uuid}`}
+                    key={post.post_id}
+                    className={cn(
+                      "text-[#1B2950] p-4 rounded-lg w-full bg-white relative",
+                      view == "list" ? "sm:flex justify-start items-center" : "block"
+                    )}
+                  >
+                    <img
+                      src={`https://muffin0.blob.core.windows.net/posts/${post.post_id}.png`}
+                      alt={post.post_title}
+                      className="w-full h-52 rounded-2xl object-cover"
+                    />
+                    <div dir="ltr" className="absolute right-5 top-4  flex w-full items-center justify-end rounded-lg">
+                      {(!isLoading && showFlag) ? (
+                        <img
+                          className="w-12 p-2 h-10 rounded-xl"
+                          alt={"post country flag"}
+                          src={`https://muffin0.blob.core.windows.net/flags/${countryCode == "en" ? "us" : countryCode}.png`}
+                          onError={() => {
+                            setShowFlag(false);
+                          }}
+                        />
+                      ) : <div />}
                     </div>
-                  </div>
-                </Link>
-              ))
-            )}
+                    <div className={cn("pt-2 sm:p-4 w-full", view == "list" ? "flex-grow" : "")}>
+                      <div className="flex items-start justify-between w-full">
+                        <h3 className="text-lg sm:text-xl font-bold sm:w-3/4">{post.post_title}</h3>
+                        <button
+                          className="h-6 sm:w-1/4"
+                          onClick={(e) => handleShare(e, post.post_uuid)}
+                        >
+                          <Share2 />
+                        </button>
+                      </div>
+                    </div>
+                  </Link>
+                ))
+              )}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

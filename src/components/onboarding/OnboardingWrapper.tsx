@@ -498,11 +498,6 @@ const OnboardingWrapper = () => {
           <Button
             className=" hover:bg-[#FF599B]/90"
             disabled={isSaving}
-            // onClick={() => {
-            // setSubmit(true);
-            // handleNext();
-            // }}
-            // type={submit ? "submit" : "button"}
             type={"submit"}
           >
             {t("onboarding.finish")}

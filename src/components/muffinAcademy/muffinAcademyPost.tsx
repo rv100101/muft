@@ -76,6 +76,9 @@ const MuffinAcademyPost = ({ lang, uuid }: { lang: string, uuid: string }) => {
   if (isLoading || post == null) {
     return (
       <div className="w-full h-full">
+        <Helmet>
+          <link rel="canonical" href={`https://${window.location.hostname}${location}`} />
+        </Helmet>
         <MuffinAcademyHeader lang={lang} />
         <div dir={(lang == "ar") ? 'rtl' : 'ltr'} className="min-h-screen w-full px-8 sm:px-36 py-12">
           <Skeleton className="h-10 w-3/4 mb-4" />
