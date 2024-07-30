@@ -148,10 +148,11 @@ const ReferralProgram = () => {
                 :
                 referralsData?.length == 0 ?
                   <div className="flex h-24 w-full items-center justify-center space-x-2">
-                    No Referrals Available
+                    No referrals yet.
+                    Invite friends to join!
                   </div>
                   :
-                  referralsData?.slice(0, referralsData.length > 5 ? 5 : undefined).map((referral, index) => {
+                  referralsData?.slice(0, 1).map((referral, index) => {
                     return <a target="_blank" href={`/members/${referral.member_id}`} key={index} className="border p-2 pr-4 rounded-lg flex justify-between items-center w-full hover:border-primary">
                       <div className={cn("flex w-full", i18n.language == "en" ? "space-x-2" : "")}>
                         <img src={getImagePath(referral.gallery_uuid, referral.gender, referral.member_uuid)} alt="Referred User" className="w-12 rounded-full" />
