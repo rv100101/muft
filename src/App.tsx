@@ -25,6 +25,7 @@ import LandingPage from "./pages/landingPage";
 import axios from "axios";
 import MuffinAcademy from "./components/muffinAcademy/muffinAcademy";
 import MuffinAcademyPost from "./components/muffinAcademy/muffinAcademyPost";
+import { useRedirectStore } from "./zustand/auth/redirect";
 function App() {
   useEffect(() => {
     runOneSignal();
@@ -36,6 +37,7 @@ function App() {
   const toggleDarkMode = useSettingsStore(
     (state) => state.toggleDarkModeSwitch
   );
+  const urlRedirect = useRedirectStore(state => state.url);
   const preffered = usePreferredLanguageStore((state) => state.preferred);
   const setPreferred = usePreferredLanguageStore((state) => state.setPreferredLanguage);
   const displaySettings = useSettingsStore((state) => state.settings);
@@ -227,6 +229,9 @@ function App() {
               path={pageRoutes.likes.path}
               component={pageRoutes.likes.component}
             />
+            {(location == "/myprofile") && (
+              <Redirect to={urlRedirect ? `/profile/${user.member_id}?redirect=${urlRedirect}` : `/profile/${user.member_id}`} />
+            )}
             <Route
               path={pageRoutes.Favorites.path}
               component={pageRoutes.Favorites.component}

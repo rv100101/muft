@@ -48,6 +48,7 @@ export const userOnlyRoutes = [
   "/terms",
   "/release-notes",
   "/academy",
+  "/myprofile",
 ];
 
 const pageRoutes = {

@@ -32,6 +32,7 @@ import OneSignal from "react-onesignal";
 import useHomePageNumber from "@/zustand/home/pageNumber";
 import useHomepageViewStore from "@/zustand/home/homepageView";
 import BlockedMessage from "../blockedMessage";
+import { useRedirectStore } from "@/zustand/auth/redirect";
 
 type FormDataType = {
   email: string;
@@ -44,6 +45,7 @@ const SignInForm = () => {
     setId,
     updateRead: setReadList,
   } = useReadConversationsStateStore();
+  const setRedirecUrl = useRedirectStore(state => state.setURl);
   const setData = profileAboutContentStore((state) => state.setData);
   const [t, i18n] = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
@@ -138,7 +140,7 @@ const SignInForm = () => {
         OneSignal.login(data.member_id.toString());
         if (search && search.length != 0) {
           const path = search.split("=")[1].trim();
-          console.log(path);
+          setRedirecUrl(path);
           if (path == '/myprofile') {
             navigate(`/profile/${data.member_id}`);
           } else {
@@ -160,8 +162,6 @@ const SignInForm = () => {
       return;
     }
   };
-
-  console.log(search);
 
   return (
     <div className="flex h-max sm:w-96 flex-col items-center lg:shadow-xl rounded-lg p-8 lg:border space-y-2">

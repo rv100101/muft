@@ -28,9 +28,12 @@ import { cn } from "@/lib/utils";
 import deleteMultiselectValuesStore from "@/zustand/profile/about/deleteMultiselectValues";
 import { useUserAvatar } from "@/zustand/auth/avatar";
 import { useUserNickname } from "@/zustand/auth/username";
+import { useRedirectStore } from "@/zustand/auth/redirect";
+import { navigate } from "wouter/use-browser-location";
 // import getDeletedItems from "@/lib/getDeleted";
 
 const ProfilePageBody = ({ userId }: { userId: string }) => {
+  const { url: redirectUrl, setURl: setRedirecUrl } = useRedirectStore();
   const updateUserAvatar = useUserAvatar((state) => state.setAvatar);
   const updateUserNickname = useUserNickname((state) => state.setNickname);
   const {
@@ -328,6 +331,10 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
         title: t("alerts.profileSaved"),
       });
       setEditModeFalse();
+      if (redirectUrl != null) {
+        navigate(redirectUrl);
+        setRedirecUrl(null);
+      }
     } catch (error) {
       return;
     }

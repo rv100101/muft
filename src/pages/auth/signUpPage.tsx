@@ -31,6 +31,7 @@ import SmallFooter from "@/components/smallFooter";
 import useHomePageNumber from "@/zustand/home/pageNumber";
 import useHomepageViewStore from "@/zustand/home/homepageView";
 import { useReferralInvitedCodeStore } from "@/zustand/settings/referralCodeInviteStore";
+import { useRedirectStore } from "@/zustand/auth/redirect";
 
 export type SignUpDataType = {
   first_name: string;
@@ -54,6 +55,7 @@ const SignUpPage = () => {
   const updateUser = useUserStore((state) => state.updateUser);
   const setPageNumber = useHomePageNumber(state => state.setPageNumber);
   const setMemberList = useHomepageViewStore((state) => state.setModifiedMemberList);
+  const setRedirecUrl = useRedirectStore(state => state.setURl);
   const formik = useFormik({
     initialValues: {
       first_name: "",
@@ -150,6 +152,10 @@ const SignUpPage = () => {
         });
         setPageNumber(1);
         setMemberList([]);
+        if (search && search.length != 0) {
+          const path = search.split("=")[1].trim();
+          setRedirecUrl(path);
+        }
         navigate("/", { replace: true });
       }
     },
