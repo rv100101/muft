@@ -1,6 +1,12 @@
 import { MemberData } from "@/types/home";
 import axiosQuery from "./axios";
-import { isMobile, isTablet, osName, browserName } from "react-device-detect";
+import {
+  isMobile,
+  isTablet,
+  osName,
+  browserName,
+  isDesktop,
+} from "react-device-detect";
 import axios from "axios";
 
 export interface HomePosts {
@@ -11,10 +17,11 @@ export interface HomePosts {
 }
 
 const getDeviceInfo = async () => {
-  // Determine device type
+  // Determine device type using react-device-detect
   let deviceType = "Desktop";
   if (isMobile) deviceType = "Mobile";
   if (isTablet) deviceType = "Tablet";
+  if (isDesktop) deviceType = "Desktop";
 
   // Get screen resolution
   const screenResolution = `${window.screen.width}x${window.screen.height}`;
@@ -34,15 +41,33 @@ const getDeviceInfo = async () => {
     console.error("Error fetching IP address:", error);
   }
 
+  // Placeholder values for data that cannot be obtained directly
+  const osVersion = ""; // Not directly accessible
+  const deviceModel = ""; // Not directly accessible
+  const macAddress = ""; // Not accessible due to privacy concerns
+  const orientation = window.screen.orientation?.type || ""; // Using the screen orientation API
+  const batteryStatus = "";
+  const networkType = ""; // Using the Network Information API
+  const carrier = ""; // Not accessible via web APIs
+  const biometricsSupport = ""; // Not directly accessible, check WebAuthn support
+
   // Return device information object
   return {
     device_type: deviceType,
     operating_system: osName,
+    os_version: osVersion,
+    device_model: deviceModel,
+    mac_address: macAddress,
     screen_resolution: screenResolution,
+    orientation: orientation,
+    battery_status: batteryStatus,
+    network_type: networkType,
     browser_version: browserName,
     ip_address: ipAddress,
     language: language,
     timezone: timezone,
+    carrier: carrier,
+    biometrics_support: biometricsSupport,
   };
 };
 
