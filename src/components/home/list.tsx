@@ -46,7 +46,7 @@ const MemberList = ({
               member.age <= filterValues!.max_age
           )
           .map((post, index: number) => (
-            <PostItem key={index} memberData={post} />
+            <PostItem key={index} memberData={post} position={index} />
           )),
         <div key={"loading"} className="h-96">
           <NextLoadingIndicator key={'loading-skel'} />

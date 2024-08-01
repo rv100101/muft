@@ -23,7 +23,7 @@ import uploadQueries from "@/queries/uploading";
 import { toast } from "../ui/use-toast";
 import messagingQuery from "@/queries/messaging";
 import useLatestConversationStore from "@/zustand/messaging/showConversation";
-import { Link, useLocation } from "wouter";
+import { Link, useLocation, useSearch } from "wouter";
 import { useUserAvatar } from "@/zustand/auth/avatar";
 import {
   Dialog,
@@ -54,6 +54,7 @@ import { Skeleton } from "../ui/skeleton";
 import { useTranslation } from "react-i18next";
 import onboardingStore from "@/zustand/profile/onboarding/onboardingStore";
 import likesQuery from "@/queries/likes";
+import { MemberData } from "@/types/home";
 
 type FormDataType = {
   reason: string;
@@ -62,12 +63,15 @@ type FormDataType = {
 
 const ProfileHeader = ({ userId }: { userId: string }) => {
   const { likes, favorites, setFavorites, setLikes } = useHomepageViewStore();
+  const updateMemberList = useHomepageViewStore((state) => state.setModifiedMemberList);
+  const memberList = useHomepageViewStore((state) => state.modifiedMemberList);
   const [t, i18n] = useTranslation();
   const setView = useMobileMessagingViewStore((state) => state.setView);
   const [reportProcessing, setReportProcessing] = useState(false);
   const setEditModeFalse = profileAboutContentStore(
     (state) => state.setEditModeFalse
   );
+  const search = useSearch();
   const formik = useFormik({
     initialValues: {
       reason: "",
@@ -345,6 +349,30 @@ const ProfileHeader = ({ userId }: { userId: string }) => {
       return;
     }
   };
+
+  useEffect(() => {
+    const updateMembers = () => {
+      const currentMembers = memberList;
+      if (search.length !== 0 && search.includes("index")) {
+        const param = search.split("=");
+        const index = parseInt(param[1]);
+        const memberData = memberList[index];
+        const currentPost: MemberData = { ...memberData, is_liked: isLiked !== "0", is_favored: isFavored !== "0" };
+        currentMembers[index] = currentPost;
+        updateMemberList(currentMembers);
+      } else {
+        let position = 0;
+        const memberData = currentMembers.filter((member, index) => {
+          position = index;
+          return member.member_id?.toString() == userId;
+        });
+        const currentPost: MemberData = { ...memberData[0], is_liked: isLiked !== "0", is_favored: isFavored !== "0" };
+        currentMembers[position] = currentPost;
+        updateMemberList(currentMembers);
+      }
+    }
+    updateMembers()
+  }, [isLiked, isFavored, memberList, updateMemberList, search, userId])
 
   if (isLoading && location.startsWith("/members")) {
     return (

@@ -9,7 +9,7 @@ import "react-lazy-load-image-component/src/effects/opacity.css";
 import { useLocation } from "wouter";
 import { getImagePath } from "@/lib/images";
 import { MemberData } from "@/types/home";
-// import useHomepageViewStore from "@/zustand/home/homepageView";
+import useHomepageViewStore from "@/zustand/home/homepageView";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axiosQuery from "@/queries/axios";
 import { useUserStore } from "@/zustand/auth/user";
@@ -17,17 +17,18 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Skeleton } from "../ui/skeleton";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import likesQuery from "@/queries/likes";
 import moment from "moment-with-locales-es6";
-const PostItem = ({ memberData }: { memberData: MemberData }) => {
-
+const PostItem = ({ memberData, position }: { memberData: MemberData, position: number }) => {
+  const updatedMemberList = useHomepageViewStore((state) => state.setModifiedMemberList);
+  const memberList = useHomepageViewStore((state) => state.modifiedMemberList);
   const lastActiveMoment = moment(memberData.last_active_date, "YYYY-MM-DD HH:mm:ss.SSSSSSS");
 
   // Get the current time
   const currentMoment = moment();
 
-  // Calculate the difference in minutes
+  // Calculate the difference in minutejus
   const minutesDifference = currentMoment.diff(lastActiveMoment, 'minutes');
 
   const [imageLoaded, setImageLoaded] = useState(true);
@@ -74,8 +75,23 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
 
   const handlePostItemClick = () => {
     queryClient.invalidateQueries(["profileContent"]);
-    setLocation(`/members/${memberData.member_id}`);
+    setLocation(`/members/${memberData.member_id}?index=${position}`);
   };
+
+
+
+  useEffect(() => {
+    const updateMembers = () => {
+      const currentMembers = memberList;
+      const currentPost = { ...memberData, is_liked: isLiked, is_favored: isFavored };
+      currentMembers[position] = currentPost;
+      updatedMemberList(currentMembers);
+    }
+    if (memberList.length !== 0) {
+      updateMembers()
+    }
+  }, [isLiked, isFavored, memberList, memberData, position, updatedMemberList])
+
 
   return (
     <div className="transition w-max ease-in duration-300 transform border-2 rounded-xl border-primary">

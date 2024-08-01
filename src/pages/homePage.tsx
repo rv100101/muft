@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import AuthenticatedLayout from "./authenticatedPages/layout";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import membersQuery from "@/queries/home";
 import useHomepageViewStore from "@/zustand/home/homepageView";
 import { useUserStore } from "@/zustand/auth/user";
@@ -25,6 +25,7 @@ const HomePage = () => {
   const [location] = useLocation();
   const [searchTriggered, setSearchTriggered] = useState(false);
   const [filtersTriggered, setFiltersTriggered] = useState(false);
+  const queryClient = useQueryClient();
   const setSelectedProfileId = useHomepageViewStore(
     (state) => state.setSelectedProfileId
   );
@@ -76,6 +77,15 @@ const HomePage = () => {
   });
 
   const signOut = useUserStore(state => state.reset);
+
+  useEffect(() => {
+    queryClient.refetchQueries(
+      {
+        queryKey: ['home-members'],
+      }
+    )
+  }, [queryClient]);
+
 
   useEffect(() => {
     if (members?.MyProfile.blocked) {
