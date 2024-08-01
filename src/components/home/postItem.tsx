@@ -9,7 +9,7 @@ import "react-lazy-load-image-component/src/effects/opacity.css";
 import { useLocation } from "wouter";
 import { getImagePath } from "@/lib/images";
 import { MemberData } from "@/types/home";
-import useHomepageViewStore from "@/zustand/home/homepageView";
+// import useHomepageViewStore from "@/zustand/home/homepageView";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axiosQuery from "@/queries/axios";
 import { useUserStore } from "@/zustand/auth/user";
@@ -33,7 +33,9 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
   const [imageLoaded, setImageLoaded] = useState(true);
   const [t, i18n] = useTranslation();
   const [, setLocation] = useLocation();
-  const { likes, favorites, setFavorites, setLikes } = useHomepageViewStore();
+  const [isLiked, setIsLiked] = useState(memberData.is_liked);
+  const [isFavored, setIsFavored] = useState(memberData.is_favored);
+  // const { likes, favorites, setFavorites, setLikes } = useHomepageViewStore();
   const user = useUserStore((state) => state.user);
   const queryClient = useQueryClient();
   const toggleLike = useMutation({
@@ -165,24 +167,30 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
                           color="#FF599B"
                           strokeWidth={1.5}
                           stroke={
-                            !likes[memberData.member_id.toString()]
+                            // !likes[memberData.member_id.toString()]
+                            // memberData.is_liked
+                            isLiked
                               ? "#FF599B"
                               : "white"
                           }
                           size={42}
                           onClick={() => {
+                            setIsLiked(!isLiked);
                             toggleLike.mutate({
                               liker: user!.member_id,
                               liked: memberData.member_id,
                             });
-                            const updatedLikes = { ...likes };
-                            updatedLikes[memberData.member_id.toString()] =
-                              !likes[memberData.member_id.toString()];
-                            setLikes(updatedLikes);
+                            // const updatedLikes = { ...likes };
+                            // updatedLikes[memberData.member_id.toString()] =
+                            //   !likes[memberData.member_id.toString()];
+                            // setLikes(updatedLikes);
                           }}
-                          className={cn("mt-1 hover:cursor-pointer transition duration-300 ease-in-out fill-white/70", likes[memberData.member_id.toString()]
-                            ? "fill-[#FF599B]"
-                            : "fill-white/70")}
+                          className={cn("mt-1 hover:cursor-pointer transition duration-300 ease-in-out fill-white/70",
+                            // likes[memberData.member_id.toString()]
+                            // memberData.is_liked
+                            isLiked
+                              ? "fill-[#FF599B]"
+                              : "fill-white/70")}
                         />
                       </TooltipTrigger>
                       <TooltipContent >
@@ -194,25 +202,31 @@ const PostItem = ({ memberData }: { memberData: MemberData }) => {
                         <Star
                           color="#FF599B"
                           stroke={
-                            !favorites[memberData.member_id.toString()]
+                            // !favorites[memberData.member_id.toString()]
+                            // memberData.is_favored
+                            isFavored
                               ? "#FF599B"
                               : "white"
                           }
                           size={42}
                           strokeWidth={1.5}
                           onClick={() => {
+                            setIsFavored(!isFavored);
                             toggleFavorite.mutate({
                               member: user!.member_id,
                               favored: memberData.member_id,
                             });
-                            const updatedFavorites = { ...favorites };
-                            updatedFavorites[memberData.member_id.toString()] =
-                              !favorites[memberData.member_id.toString()];
-                            setFavorites(updatedFavorites);
+                            // const updatedFavorites = { ...favorites };
+                            // updatedFavorites[memberData.member_id.toString()] =
+                            //   !favorites[memberData.member_id.toString()];
+                            // setFavorites(updatedFavorites);
                           }}
-                          className={cn("mt-1 hover:cursor-pointer transition duration-300 ease-in-out fill-white/70", favorites[memberData.member_id.toString()]
-                            ? "fill-[#FF599B]"
-                            : "fill-white/70")}
+                          className={cn("mt-1 hover:cursor-pointer transition duration-300 ease-in-out fill-white/70",
+                            // favorites[memberData.member_id.toString()]
+                            // memberData.is_favored
+                            isFavored
+                              ? "fill-[#FF599B]"
+                              : "fill-white/70")}
                         />
                       </TooltipTrigger>
                       <TooltipContent>
