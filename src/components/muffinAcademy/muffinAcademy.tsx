@@ -23,6 +23,7 @@ export interface Post {
   post_title: string;
   post_text: string;
   post_language: string;
+  country_code: string | null;
 }
 
 const MuffinAcademy = ({ countryCode }: { countryCode: string | null }) => {
@@ -50,6 +51,7 @@ const MuffinAcademy = ({ countryCode }: { countryCode: string | null }) => {
     );
     formData.append("lang", countryCode ?? i18n.language);
     formData.append("country", countryCode ?? "");
+    formData.append("page_number", "1");
     const fetchPosts = async () => {
       setIsLoading(true);
       try {
@@ -83,6 +85,18 @@ const MuffinAcademy = ({ countryCode }: { countryCode: string | null }) => {
   return (
     <>
       <Helmet>
+        <script>
+          {`(function(c,l,a,r,i,t,y){
+                c[a]=c[a]||function(){
+                  (c[a].q=c[a].q||[]).push(arguments)
+                };
+                t=l.createElement(r);
+                t.async=1;
+                t.src='https://www.clarity.ms/tag/'+i+'?ref=bwt';
+                y=l.getElementsByTagName(r)[0];
+                y.parentNode.insertBefore(t,y);
+              })(window, document, "clarity", "script", "nfxbfg8uhz");`}
+        </script>
         <link rel="canonical" href={`https://${window.location.hostname}${location}`} />
       </Helmet>
       <div className="min-h-screen w-full">
@@ -165,11 +179,11 @@ const MuffinAcademy = ({ countryCode }: { countryCode: string | null }) => {
                       className="w-full h-52 rounded-2xl object-cover"
                     />
                     <div dir="ltr" className="absolute right-5 top-4  flex w-full items-center justify-end rounded-lg">
-                      {(!isLoading && showFlag) ? (
+                      {(!isLoading && showFlag && post.country_code !== null) ? (
                         <img
-                          className="w-12 p-2 h-10 rounded-xl"
+                          className="w-14 p-2 h-12 rounded-xl"
                           alt={"post country flag"}
-                          src={`https://muffin0.blob.core.windows.net/flags/${countryCode == "en" ? "us" : countryCode}.png`}
+                          src={`https://muffin0.blob.core.windows.net/flags/${post.country_code == "en" ? "us" : post.country_code.toLocaleLowerCase()}.png`}
                           onError={() => {
                             setShowFlag(false);
                           }}
