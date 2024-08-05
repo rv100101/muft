@@ -35,6 +35,8 @@ const signUp = async (values: SignUpDataType) => {
   formData.append("last_name", values.last_name);
   formData.append("email", values.email);
   formData.append("password", values.password);
+  formData.append("email_service", "0");
+  formData.append("referral_code", "");
   return await axiosQuery.post(
     "https://muffinapi.azurewebsites.net/signup.php",
     formData

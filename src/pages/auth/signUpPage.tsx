@@ -111,11 +111,6 @@ const SignUpPage = () => {
   const handleSignUp = async (values: SignUpDataType) => {
     try {
       setIsLoading(true);
-      // const response = await axiosQuery.post("/Signup", {
-      //   ...values,
-      //   communication_language: preferred ?? "en",
-      // });
-      // const data = await response.data;
       const response = await authQuery.signUp(values);
       if (response.data.length !== 0) {
         const data = response.data[0];
