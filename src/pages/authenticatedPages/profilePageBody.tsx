@@ -1,6 +1,7 @@
 import AboutAccordion from "@/components/profile/about/aboutAccordion";
 import ProfileHeader from "@/components/profile/profileHeader";
 import ProfileTopNav from "@/components/profile/profileTopNav";
+
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import profileAboutContentStore from "@/zustand/profile/profileAboutStore";
@@ -41,7 +42,7 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
     favoriteFood: deletedFaveFoods,
     pets: deletedPets,
     interests: deletedInterests,
-    reset: resetDeletedListOfMultiSelect
+    reset: resetDeletedListOfMultiSelect,
   } = deleteMultiselectValuesStore();
   const [t, i18n] = useTranslation();
   const headerValues = profileHeaderStore((state) => state.headerValues);
@@ -205,6 +206,8 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
   };
 
   // const isFinished = onboardingStore(state => state.isFinished);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   const onSubmit = async (formData: any) => {
     // for onboarding finish validation
     // if (!isFinished) {
@@ -309,7 +312,11 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
         religion: religion?.religion_id,
         employmentStatus: employmentStatus?.employment_status_id,
       };
-      await profileContentQuery.saveInformation(finalFormData, user!.member_id, i18n.language);
+      await profileContentQuery.saveInformation(
+        finalFormData,
+        user!.member_id,
+        i18n.language
+      );
       await authQuery.isProfileCompleted(user!.member_id);
       const age = calculateAge(formData.birthInfo);
       updateUserAvatar(null);
@@ -382,6 +389,8 @@ const ProfilePageBody = ({ userId }: { userId: string }) => {
           ) : (
             <>
               <ProfileTopNav />
+              {/* <AboutSelf /> */}
+              {/* <ProfileShare userId={"userId"} /> */}
               <div className="lg:h-full h-screen overflow-y-scroll w-screen sm:w-full overflow-x-clip no-scrollbar flex flex-col">
                 {user?.profile_completed && <ProfileHeader userId={userId} />}
                 <AboutAccordion userId={parseInt(userId)} />

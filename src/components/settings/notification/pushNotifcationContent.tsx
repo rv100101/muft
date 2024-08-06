@@ -4,23 +4,35 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import OneSignal from "react-onesignal";
 
+type PushSubscriptionChangeEvent = {
+  current: {
+    optedIn: boolean;
+  };
+};
+
 const PushNotifcationContent = () => {
   const [, i18n] = useTranslation();
   const [notificationEnabled, setNotificationEnabled] = useState(
     OneSignal.User.PushSubscription.optedIn
   );
 
-  function pushSubscriptionChangeListener(event: any) {
-    setNotificationEnabled(
-      event?.current?.optedIn
-    )
+  function pushSubscriptionChangeListener(event: PushSubscriptionChangeEvent) {
+    setNotificationEnabled(event?.current?.optedIn);
   }
 
   useEffect(() => {
-    setNotificationEnabled(
-      OneSignal.User.PushSubscription.optedIn
-    )
-    OneSignal.User.PushSubscription.addEventListener("change", pushSubscriptionChangeListener);
+    setNotificationEnabled(OneSignal.User.PushSubscription.optedIn);
+    OneSignal.User.PushSubscription.addEventListener(
+      "change",
+      pushSubscriptionChangeListener
+    );
+
+    return () => {
+      OneSignal.User.PushSubscription.removeEventListener(
+        "change",
+        pushSubscriptionChangeListener
+      );
+    };
   }, []);
 
   return (
@@ -38,7 +50,10 @@ const PushNotifcationContent = () => {
         </div>
         <Switch
           dir="ltr"
-          className={cn(" dark:hover:border-primary", i18n.language == "ar" && "rotate-180")}
+          className={cn(
+            " dark:hover:border-primary",
+            i18n.language == "ar" && "rotate-180"
+          )}
           id="airplane-mode"
           checked={notificationEnabled}
           onCheckedChange={(checked) => {
