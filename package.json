@@ -73,6 +73,7 @@
     "zustand": "^4.4.2"
   },
   "devDependencies": {
+    "@svgr/webpack": "^8.1.0",
     "@tanstack/eslint-plugin-query": "^4.36.0",
     "@types/dompurify": "^3.0.5",
     "@types/luxon": "^3.3.4",
