@@ -6,7 +6,7 @@ import { Loader2, LogOutIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
-import "@/index.css";
+
 import {
   Dialog,
   DialogContent,
