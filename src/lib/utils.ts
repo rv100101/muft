@@ -12,6 +12,41 @@ export const scrollToTop = () => {
   });
 };
 
+interface JsonResponse {
+  country_code?: string;
+  member_uuid?: string;
+  religion_name?: string;
+  gender?: string;
+  nationality?: string;
+  date_of_birth?: string;
+  ethnicity_name?: string;
+  marital_status?: string;
+  education_name?: string;
+  employment_status?: string;
+  occupation?: string;
+  monthly_income?: string;
+  body_type?: string;
+  country_name?: string;
+  state_name?: string;
+  nickname?: string;
+  gallery_uuid?: string;
+  hair?: string;
+  eyes?: string;
+  body_art?: string;
+  have_children?: string;
+  want_children?: string;
+  workout?: string;
+  disability?: string;
+  drinking?: string;
+  smoking?: string;
+  living_status?: string;
+  car?: string;
+  age?: string;
+  is_liked?: string;
+  is_favored?: string;
+  is_blocked?: string;
+}
+
 interface ProfileDetails {
   country_code: string;
   religion: string;
@@ -49,7 +84,7 @@ interface ProfileDetails {
 }
 
 export function convertJsonToConvertedObject(
-  jsonResponse: any
+  jsonResponse: JsonResponse
 ): ProfileDetails {
   const converted: ProfileDetails = {
     country_code: jsonResponse.country_code || "",
