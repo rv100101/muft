@@ -1,0 +1,17 @@
+{
+  "rewrites": [
+    {
+      "source": "/place/:path*",
+      "destination": "/place/:path*" 
+    },
+    
+    {
+      "source": "/_next/static/:path*",
+      "destination": "/_next/static/:path*"
+    },
+    {
+      "source": "/api/:path*",
+      "destination": "https://muffun-test.vercel.app/api/:path*"
+    }
+  ]
+}
