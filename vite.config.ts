@@ -10,23 +10,23 @@ export default defineConfig({
   },
   
   server: {
-    host: '127.0.0.1',
+    host: 'https://muffun-test.vercel.app',
     port: 2930,
     proxy: {
       '/places': {
-        target: 'http://127.0.0.1:3000/places',
+        target: 'https://muffun-test.vercel.app:3000/places',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/places/, ''),
       },
       // Proxy all Next.js assets
       '/_next': {
-        target: 'http://localhost:3000',
+        target: 'https://muffun-test.vercel.app:3000',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/_next/, '/_next'),
       },
       // Proxy API requests (if needed)
       '/api': {
-        target: 'http://localhost:3000/api',
+        target: 'https://muffun-test.vercel.app/api',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '/api'),
       },
