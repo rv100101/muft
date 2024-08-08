@@ -2,11 +2,11 @@
   "rewrites": [
     {
       "source": "/places/:path*",
-      "destination": "/places/:path*"  
+      "destination": "/places/:path*" 
     },
     {
       "source": "/_next/static/:path*",
-      "destination": "/_next/static/:path*"  
+      "destination": "/_next/static/:path*"
     },
     {
       "source": "/api/:path*",
