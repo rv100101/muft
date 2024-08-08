@@ -7,17 +7,17 @@ import apppleLogo from "@/assets/auth/appleLogov2.png";
 // import GoogleLoginButton from "./googleLogin";
 
 const SocialLogin = () => {
-  const handleFacebookLogin = (accessToken: string) => {
-    // Handle the Facebook login process
-    console.log("Facebook Access Token:", accessToken);
-    // You can send the access token to your backend server for further processing
-  };
+  // const handleFacebookLogin = (accessToken: string) => {
+  //   // Handle the Facebook login process
+  //   console.log("Facebook Access Token:", accessToken);
+  //   // You can send the access token to your backend server for further processing
+  // };
 
-  const handleGoogleLogin = (token: string) => {
-    // Handle the Google login process
-    console.log("Google Token:", token);
-    // You can send the token to your backend server for further processing
-  };
+  // const handleGoogleLogin = (token: string) => {
+  //   // Handle the Google login process
+  //   console.log("Google Token:", token);
+  //   // You can send the token to your backend server for further processing
+  // };
 
   return (
     <div className="flex flex-col items-center w-full">

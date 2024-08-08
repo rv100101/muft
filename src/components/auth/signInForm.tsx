@@ -33,7 +33,7 @@ import useHomePageNumber from "@/zustand/home/pageNumber";
 import useHomepageViewStore from "@/zustand/home/homepageView";
 import BlockedMessage from "../blockedMessage";
 import { useRedirectStore } from "@/zustand/auth/redirect";
-import SocialLogin from "../auth/socialLogin";
+
 type FormDataType = {
   email: string;
   password: string;
