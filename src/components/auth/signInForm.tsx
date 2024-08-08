@@ -33,7 +33,7 @@ import useHomePageNumber from "@/zustand/home/pageNumber";
 import useHomepageViewStore from "@/zustand/home/homepageView";
 import BlockedMessage from "../blockedMessage";
 import { useRedirectStore } from "@/zustand/auth/redirect";
-
+import SocialLogin from "../auth/socialLogin";
 type FormDataType = {
   email: string;
   password: string;
@@ -165,7 +165,10 @@ const SignInForm = () => {
 
   return (
     <div className="flex h-max sm:w-96 flex-col items-center lg:shadow-xl rounded-lg p-8 lg:border space-y-2">
-      <BlockedMessage blockedModal={blockedModal} setBlockedModal={showBlockedModal} />
+      <BlockedMessage
+        blockedModal={blockedModal}
+        setBlockedModal={showBlockedModal}
+      />
       {/* <div className="flex w-full justify-end">
         <img
           src={helpIcon}
@@ -189,10 +192,11 @@ const SignInForm = () => {
             Email
           </label> */}
           <div
-            className={`flex items-center flex-row border rounded-full h-max py-1 px-5 ${formik.touched.email && formik.errors.email
-              ? "border-rose-500 p-0"
-              : ""
-              }`}
+            className={`flex items-center flex-row border rounded-full h-max py-1 px-5 ${
+              formik.touched.email && formik.errors.email
+                ? "border-rose-500 p-0"
+                : ""
+            }`}
           >
             <MailIcon color="#98A2B3" size={20} className="mt-1" />
             <Input
@@ -211,10 +215,11 @@ const SignInForm = () => {
             <InfoIcon
               color="#D92D20"
               size={30}
-              className={`mt-1 ${formik.touched.email && formik.errors.email
-                ? "visible"
-                : "hidden"
-                }`}
+              className={`mt-1 ${
+                formik.touched.email && formik.errors.email
+                  ? "visible"
+                  : "hidden"
+              }`}
             />
           </div>
           {formik.touched.email && formik.errors.email ? (
@@ -232,10 +237,11 @@ const SignInForm = () => {
             Password
           </label> */}
           <div
-            className={`flex h-max flex-row border items-center rounded-full py-1 px-5 ${formik.touched.password && formik.errors.password
-              ? "border-rose-500"
-              : ""
-              }`}
+            className={`flex h-max flex-row border items-center rounded-full py-1 px-5 ${
+              formik.touched.password && formik.errors.password
+                ? "border-rose-500"
+                : ""
+            }`}
           >
             <LockIcon color="#98A2B3" size={20} className="mt-1" />
 
@@ -251,10 +257,11 @@ const SignInForm = () => {
               onBlur={formik.handleBlur}
             />
             <button
-              className={`mt-1 ${formik.touched.password &&
+              className={`mt-1 ${
+                formik.touched.password &&
                 formik.errors.password &&
                 "ml-2 text-[#D92D20]"
-                }`}
+              }`}
               onClick={() => setShowPassword((prev) => !prev)}
               type="button"
             >
@@ -286,6 +293,7 @@ const SignInForm = () => {
             )}
           </Button>
         </div>
+        <SocialLogin />
         <div className="w-full">
           <Dialog
             open={isModalOpen}
@@ -327,7 +335,7 @@ const SignInForm = () => {
           {t("signIn.signUpHere")}
         </Link>
       </div>
-    </div >
+    </div>
   );
 };
 

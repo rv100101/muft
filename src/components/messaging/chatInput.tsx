@@ -1,11 +1,11 @@
-import { SendHorizonalIcon, SmileIcon } from "lucide-react";
+import { SendHorizonalIcon } from "lucide-react";
 import { Button } from "../ui/button";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@radix-ui/react-popover";
-import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
+// import {
+//   Popover,
+//   PopoverContent,
+//   PopoverTrigger,
+// } from "@radix-ui/react-popover";
+// import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
 import { useMessageInputStore } from "@/zustand/messaging/messageInput";
 import messagingQuery from "@/queries/messaging";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -16,6 +16,9 @@ import useLatestConversationStore from "@/zustand/messaging/showConversation";
 import { toast } from "../ui/use-toast";
 import { useUserStore } from "@/zustand/auth/user";
 import { useTranslation } from "react-i18next";
+// import MessageColasible from "../ui/messageColasible";
+import CollapsibleIcons from "../ui/messageColasible";
+// import animationDog from "@/assets/messages/animation/happydog.json";
 const ChatInput = () => {
   const [t] = useTranslation();
 
@@ -28,7 +31,7 @@ const ChatInput = () => {
   const [uuid, setUuid] = useState(
     currentSelectedConversation?.conversation_uuid
   );
-  const [openEmoji, setOpenEmoji] = useState(false);
+  // const [openEmoji, setOpenEmoji] = useState(false);
   const messageInput = useRef<HTMLTextAreaElement>(null);
   const user = useUserStore((state) => state.user);
   const queryClient = useQueryClient();
@@ -68,7 +71,6 @@ const ChatInput = () => {
         user!.member_id,
         currentSelectedConversation!.memberId
       );
-      // setUuid(res.data.conversation_uuid);
 
       setSelectedConversation(
         user!.member_id,
@@ -161,42 +163,12 @@ const ChatInput = () => {
         <>
           <div className="h-max w-full flex items-end justify-start sm:mb-4 mt-1">
             <div className="flex flex-col items-center justify-center mx-2">
-              {currentSelectedConversation ? (
-                <Popover
-                  open={openEmoji}
-                  onOpenChange={(val) => {
-                    setOpenEmoji(val);
-                  }}
-                >
-                  <PopoverTrigger
-                    className="hover:cursor-pointer"
-                    disabled={!currentSelectedConversation}
-                  >
-                    <SmileIcon
-                      className="text-primary"
-                      height={28}
-                      width={28}
-                    />
-                  </PopoverTrigger>
-                  <PopoverContent>
-                    <EmojiPicker
-                      onEmojiClick={(emoji: EmojiClickData) => {
-                        setOpenEmoji(false);
-                        setInputMessage(inputMessageValue + emoji.emoji);
-                        messageInput.current?.focus();
-                      }}
-                      height={300}
-                      width={"100%"}
-                    />
-                  </PopoverContent>
-                </Popover>
-              ) : (
-                <SmileIcon
-                  className="text-gray-500 flex-shrink-0"
-                  height={28}
-                  width={28}
-                />
-              )}
+              <CollapsibleIcons
+                inputMessageValue={inputMessageValue}
+                setInputMessage={setInputMessage}
+                currentSelectedConversation={currentSelectedConversation}
+                messageInput={messageInput}
+              />
             </div>
             <textarea
               ref={messageInput}

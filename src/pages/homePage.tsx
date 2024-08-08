@@ -10,6 +10,7 @@ import { Member, MemberData } from "@/types/home";
 // import createMap from "@/lib/likesAndFavoritesHomeMap";
 import { Helmet } from "react-helmet-async";
 import HomeFilters from "@/components/home/filters";
+import AdvanceFilter from "@/components/home/advanceFilter";
 import { useFilterStore } from "@/zustand/home/filter";
 import { usePreferredLanguageStore } from "@/zustand/auth/preferred_language";
 import { useTranslation } from "react-i18next";
@@ -35,9 +36,7 @@ const HomePage = () => {
   );
 
   const { toast } = useToast();
-  const searchValue = useHomepageSearchStore(
-    (state) => state.value
-  );
+  const searchValue = useHomepageSearchStore((state) => state.value);
   const setIsLoading = useHomepageViewStore((state) => state.setIsLoading);
   // const likes = useHomepageViewStore((state) => state.likes);
   // const favorites = useHomepageViewStore((state) => state.favorites);
@@ -76,16 +75,13 @@ const HomePage = () => {
     queryFn: () => getMembers,
   });
 
-  const signOut = useUserStore(state => state.reset);
+  const signOut = useUserStore((state) => state.reset);
 
   useEffect(() => {
-    queryClient.refetchQueries(
-      {
-        queryKey: ['home-members'],
-      }
-    )
+    queryClient.refetchQueries({
+      queryKey: ["home-members"],
+    });
   }, [queryClient]);
-
 
   useEffect(() => {
     if (members?.MyProfile.blocked) {
@@ -93,11 +89,10 @@ const HomePage = () => {
       toast({
         variant: "destructive",
         title: t("blockedModal.title"),
-        description: t("blockedModal.description1")
+        description: t("blockedModal.description1"),
       });
     }
-  }, [members, signOut, t, toast])
-
+  }, [members, signOut, t, toast]);
 
   const { data: memberLikes, isLoading: likesLoading } = useQuery({
     refetchOnMount: false,
@@ -189,7 +184,15 @@ const HomePage = () => {
       //   debouncedStartFilterVal > 0 ? filteredMemberList : updatedMemberList
       // );
     }
-  }, [memberLikes, memberFavorites, members, setMemberList, filters, retrievingMemberData, memberList.length]);
+  }, [
+    memberLikes,
+    memberFavorites,
+    members,
+    setMemberList,
+    filters,
+    retrievingMemberData,
+    memberList.length,
+  ]);
 
   useEffect(() => {
     return () => {
@@ -208,25 +211,35 @@ const HomePage = () => {
           data-react-helmet="true"
         />
         <title>Muffin | Home Page</title>
-        <link rel="canonical" href={`https://${window.location.hostname}${location}`} />
+        <link
+          rel="canonical"
+          href={`https://${window.location.hostname}${location}`}
+        />
       </Helmet>
       <div className="flex 2xl:justify-center w-full">
         <div className="flex xl:justify-center w-full lg:w-full justify-center lg:grid-cols-9 grid-cols-1 gap-4">
           <div className="hidden lg:block w-32"></div>
           <div className="w-full flex justify-center lg:w-min h-screen border-x">
             <Posts
-              isLoading={(retrievingMemberData && memberList.length == 0) || likesLoading || favoritesLoading}
+              isLoading={
+                (retrievingMemberData && memberList.length == 0) ||
+                likesLoading ||
+                favoritesLoading
+              }
               memberList={memberList}
             />
           </div>
           <div className="xl:col-span-3 col-span-0 hidden xl:flex sm:flex-col overflow-auto no-scrollbar ml-10">
-            <div className="relative justify-center items-center xl:w-[380px] h-5/6 pt-4 px-5 lg:p-4 sm:flex flex-col hidden ">
-              <div className={cn("absolute top-4 h-full")}>
+            <div className="relative flex flex-col xl:w-[380px] h-5/6 pt-4 px-5 lg:p-4 sm:flex">
+              <div className="w-full mb-4">
                 <HomepageSearchInput />
               </div>
               {/* filter */}
-              <div className={cn(searchValue.length == 0 && "z-20")}>
+              <div
+                className={`relative ${searchValue.length === 0 ? "z-20" : ""}`}
+              >
                 <HomeFilters />
+                <AdvanceFilter />
               </div>
             </div>
           </div>
@@ -262,34 +275,31 @@ const HomePage = () => {
                 onClick={() => {
                   setFiltersTriggered(true);
                 }}
-                className={cn("flex items-center space-x-2 w-min bg-primary py-2 px-4 cursor-pointer rounded-lg text-white hover:bg-[#FF599B]/90 dark:bg-[#ae2e51]",
+                className={cn(
+                  "flex items-center space-x-2 w-min bg-primary py-2 px-4 cursor-pointer rounded-lg text-white hover:bg-[#FF599B]/90 dark:bg-[#ae2e51]",
                   i18n.language == "ar" && "space-x-reverse"
-                )}>
-                <SlidersHorizontal
-                  size={20}
-                  className="w-4 h-4"
-                />
-                <p>
-                  {t("filter.filter")}
-                </p>
-              </div>
-              <div onClick={() => { setSearchTriggered(true); }}
-                className={cn("flex items-center space-x-2 w-min bg-primary py-2 px-4 cursor-pointer rounded-lg text-white hover:bg-[#FF599B]/90 dark:bg-[#ae2e51]",
-                  i18n.language == "ar" && "space-x-reverse")}
+                )}
               >
-                <Search
-                  size={20}
-                  className="w-4 h-4"
-                />
-                <p>
-                  {t("search.search")}
-                </p>
+                <SlidersHorizontal size={20} className="w-4 h-4" />
+                <p>{t("filter.filter")}</p>
+              </div>
+              <div
+                onClick={() => {
+                  setSearchTriggered(true);
+                }}
+                className={cn(
+                  "flex items-center space-x-2 w-min bg-primary py-2 px-4 cursor-pointer rounded-lg text-white hover:bg-[#FF599B]/90 dark:bg-[#ae2e51]",
+                  i18n.language == "ar" && "space-x-reverse"
+                )}
+              >
+                <Search size={20} className="w-4 h-4" />
+                <p>{t("search.search")}</p>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </AuthenticatedLayout >
+    </AuthenticatedLayout>
   );
 };
 

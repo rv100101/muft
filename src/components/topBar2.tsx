@@ -1,4 +1,10 @@
-import { LogOutIcon, MenuIcon, Search, SlidersHorizontal } from "lucide-react";
+import {
+  Filter,
+  LogOutIcon,
+  MenuIcon,
+  Search,
+  SlidersHorizontal,
+} from "lucide-react";
 import { ReactNode, useState } from "react";
 import {
   Sheet,
@@ -28,6 +34,7 @@ import { Button } from "./ui/button";
 import HomepageSearchInput from "./homeSearchUsersInput";
 import NotificationsListFiters from "./notifications/notificationListFilters";
 import HomeFilters from "./home/filters";
+import AdvanceFilter from "./home/advanceFilter";
 // import useReadConversationsStateStore from "@/zustand/messaging/readConversations";
 import { useTranslation } from "react-i18next";
 import OneSignal from "react-onesignal";
@@ -40,6 +47,7 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
   // const { updateRead: setReadList } = useReadConversationsStateStore();
   const [searchTriggered, setSearchTriggered] = useState(false);
   const [filtersTriggered, setFiltersTriggered] = useState(false);
+  const [advanceFiltersTriggered, setAdvanceFiltersTriggered] = useState(false);
   const setSelectedProfileId = useHomepageViewStore(
     (state) => state.setSelectedProfileId
   );
@@ -84,7 +92,7 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
             <link.icon
               fill={
                 location.startsWith("/profile") &&
-                  link.path.startsWith("/profile")
+                link.path.startsWith("/profile")
                   ? "black"
                   : location.endsWith(link.path)
                     ? "black"
@@ -145,6 +153,24 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
           </DialogContent>
         )}
       </Dialog>
+
+      <Dialog
+        open={advanceFiltersTriggered}
+        onOpenChange={(val) => setAdvanceFiltersTriggered(val)}
+      >
+        {location === "/" && (
+          <DialogContent className="flex flex-col sm:max-w-md opacity-100 w-4/5">
+            <AdvanceFilter />
+          </DialogContent>
+        )}
+
+        {location === "/notifications" && (
+          <DialogContent className="sm:max-w-md opacity-100 w-4/5">
+            <p className="px-5 text-[#cfd8e4]">Filters</p>
+            <NotificationsListFiters />
+          </DialogContent>
+        )}
+      </Dialog>
       <Sheet>
         <div className="flex  w-full items-center">
           <SheetTrigger
@@ -156,10 +182,13 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
             <MenuIcon className="flex-shrink-0" />
             {children}
           </SheetTrigger>
-          {location === "/" || location === "/notifications" ?
+          {location === "/" || location === "/notifications" ? (
             <div className="w-full h-min inline-flex justify-center items-center">
               <img src={logo} className="w-full h-10 m-2" />
-            </div> : <></>}
+            </div>
+          ) : (
+            <></>
+          )}
           {location === "/" || location === "/notifications" ? (
             <div
               className={cn(
@@ -171,6 +200,14 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
                 size={20}
                 onClick={() => {
                   setFiltersTriggered(true);
+                }}
+                className="block lg:hidden w-max"
+              />
+
+              <Filter
+                size={20}
+                onClick={() => {
+                  setAdvanceFiltersTriggered(true);
                 }}
                 className="block lg:hidden w-max"
               />
@@ -186,7 +223,10 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
             <></>
           )}
         </div>
-        <SheetContent className="overflow-y-auto" side={i18n.language == "en" ? "left" : "right"}>
+        <SheetContent
+          className="overflow-y-auto"
+          side={i18n.language == "en" ? "left" : "right"}
+        >
           <SheetHeader>
             <SheetTitle>
               <Link href="/">
@@ -210,10 +250,18 @@ const TopBar2 = ({ children }: { children: ReactNode }) => {
               >
                 {t("menu.helpCenter")}
               </a>
-              <a target="_blank" href="https://support.muffin.ae/en-US/kb/article/12/privacy-policy" className="hover:text-slate-700 text-xs text-black dark:text-white">
+              <a
+                target="_blank"
+                href="https://support.muffin.ae/en-US/kb/article/12/privacy-policy"
+                className="hover:text-slate-700 text-xs text-black dark:text-white"
+              >
                 {t("menu.privacyPolicy")}
               </a>
-              <a target="_blank" href="https://support.muffin.ae/en-US/kb/article/13/terms-and-conditions" className="hover:text-slate-700 text-xs text-black dark:text-white">
+              <a
+                target="_blank"
+                href="https://support.muffin.ae/en-US/kb/article/13/terms-and-conditions"
+                className="hover:text-slate-700 text-xs text-black dark:text-white"
+              >
                 {t("menu.termsAndConditions")}
               </a>
             </div>

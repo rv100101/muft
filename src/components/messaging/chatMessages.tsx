@@ -11,6 +11,9 @@ import { useUserStore } from "@/zustand/auth/user";
 import { useUserAvatar } from "@/zustand/auth/avatar";
 import { getImagePath } from "@/lib/images";
 import useConversationHistoryStore from "@/zustand/messaging/showConversation";
+import animationDog from "@/assets/messages/animation/happydog.json";
+import Lottie from "lottie-react";
+
 const ChatMessages = () => {
   const scrollableDivRef = useRef<HTMLDivElement | null>(null);
   const user = useUserStore((state) => state.user);
@@ -66,7 +69,7 @@ const ChatMessages = () => {
       conversationMessages.length !== 0 &&
       conversationMessages![conversationMessages!.length - 1] &&
       conversationMessages![conversationMessages!.length - 1].created_user !==
-      user!.member_id
+        user!.member_id
     ) {
       conversationHistory();
     }
@@ -86,6 +89,22 @@ const ChatMessages = () => {
     if (date !== "isLoading" && date !== "failed") {
       date = moment(date).fromNow();
     }
+
+    const content = message.conversation_text.includes(
+      "[sticker:happy-dog]"
+    ) ? (
+      <Lottie animationData={animationDog} className="w-16 h-16" />
+    ) : (
+      <p
+        dir="ltr"
+        className={cn(
+          "p-4 rounded-lg text-sm",
+          gray ? "bg-[#E8ECEF] dark:bg-slate-800" : "bg-primary text-white"
+        )}
+      >
+        {message.conversation_text}
+      </p>
+    );
 
     return (
       <div className={cn("w-full space-y-1 ")} key={index}>
@@ -120,17 +139,7 @@ const ChatMessages = () => {
               gray ? "items-end" : "items-start"
             )}
           >
-            <p
-              dir="ltr"
-              className={cn(
-                "p-4 rounded-lg text-sm",
-                gray
-                  ? "bg-[#E8ECEF] dark:bg-slate-800"
-                  : "bg-primary text-white"
-              )}
-            >
-              {message.conversation_text}
-            </p>
+            {content}
             {date === "isLoading" && (
               <p dir="ltr" className={cn("text-xs text-gray-500")}>
                 Sending...
@@ -155,7 +164,7 @@ const ChatMessages = () => {
             />
           )}
         </div>
-      </div >
+      </div>
     );
   });
 
