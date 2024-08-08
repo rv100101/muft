@@ -11,7 +11,7 @@ import {
   DialogClose,
 } from "@radix-ui/react-dialog";
 import Lottie from "lottie-react";
-import animationData from "@/assets/messages/animation/happydog.json"; 
+import animationData from "@/assets/messages/animation/happydog.json";
 interface CollapsibleIconsProps {
   inputMessageValue: string;
   setInputMessage: (value: string) => void;
@@ -27,7 +27,7 @@ const CollapsibleIcons: React.FC<CollapsibleIconsProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [openEmoji, setOpenEmoji] = useState(false);
-  const [openSticker, setOpenSticker] = useState(false);
+  const [, setOpenSticker] = useState(false);
 
   const handleStickerClick = () => {
     // Append the URL or identifier of the sticker to the message input
