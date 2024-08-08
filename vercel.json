@@ -2,11 +2,11 @@
   "rewrites": [
     {
       "source": "/places/:path*",
-      "destination": "https://muft-theta.vercel.app/places/:path*"
+      "destination": "/places/:path*" 
     },
     {
-      "source": "/_next/:path*",
-      "destination": "https://muft-theta.vercel.app/_next/:path*"
+      "source": "/_next/static/:path*",
+      "destination": "/_next/static/:path*"
     },
     {
       "source": "/api/:path*",
