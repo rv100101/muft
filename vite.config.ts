@@ -11,25 +11,25 @@ export default defineConfig({
   server: {
     host: '127.0.0.1',
     port: 2930,
-    // proxy: {
-    //   // Change the proxy rule for /places
-    //   '/places': {
-    //     target: 'http://127.0.0.1:3000',
-    //     changeOrigin: true,
-    //     rewrite: (path) => path.replace(/^\/places/, '/places'),
-    //   },
-    //   // Keep the Next.js assets proxy
-    //   '/_next': {
-    //     target: 'http://localhost:3000',
-    //     changeOrigin: true,
-    //     rewrite: (path) => path.replace(/^\/_next/, '/_next'),
-    //   },
-    //   // Proxy API requests
-    //   '/api': {
-    //     target: 'http://localhost:3000',
-    //     changeOrigin: true,
-    //     rewrite: (path) => path.replace(/^\/api/, '/api'),
-    //   },
-    // },
+    proxy: {
+      // Change the proxy rule for /places
+      '/place': {
+        target: 'http://127.0.0.1:3000',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/place/, '/place'),
+      },
+      // Keep the Next.js assets proxy
+      '/_next': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/_next/, '/_next'),
+      },
+      // Proxy API requests
+      '/api': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '/api'),
+      },
+    },
   },
 });
