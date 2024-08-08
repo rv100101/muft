@@ -8,25 +8,24 @@ export default defineConfig({
   resolve: {
     alias: [{ find: '@', replacement: path.resolve(__dirname, 'src') }],
   },
-  
   server: {
-  host: '0.0.0.0',
+    host: '127.0.0.1',
     port: 2930,
     proxy: {
       '/places': {
-        target: 'https://muft-theta.vercel.app:3000/places',
+        target: 'http://127.0.0.1:3000/places',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/places/, ''),
       },
       // Proxy all Next.js assets
       '/_next': {
-        target: 'https://muft-theta.vercel.app:3000',
+        target: 'http://localhost:3000',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/_next/, '/_next'),
       },
       // Proxy API requests (if needed)
       '/api': {
-        target: 'https://muffun-test.vercel.app/api',
+        target: 'http://localhost:3000/api',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '/api'),
       },
