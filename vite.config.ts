@@ -10,17 +10,17 @@ export default defineConfig({
   },
   
   server: {
-    host: 'https://muffun-test.vercel.app',
+    host: 'https://muft-theta.vercel.app',
     port: 2930,
     proxy: {
       '/places': {
-        target: 'https://muffun-test.vercel.app:3000/places',
+        target: 'https://muft-theta.vercel.app:3000/places',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/places/, ''),
       },
       // Proxy all Next.js assets
       '/_next': {
-        target: 'https://muffun-test.vercel.app:3000',
+        target: 'https://muft-theta.vercel.app:3000',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/_next/, '/_next'),
       },
