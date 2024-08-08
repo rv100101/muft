@@ -12,10 +12,23 @@ import {
 } from "@radix-ui/react-dialog";
 import Lottie from "lottie-react";
 import animationData from "@/assets/messages/animation/happydog.json";
+
+interface Conversation {
+  id: string;
+  name: string;
+  messages: Array<Message>;
+}
+
+interface Message {
+  id: string;
+  text: string;
+  timestamp: Date;
+}
+
 interface CollapsibleIconsProps {
   inputMessageValue: string;
   setInputMessage: (value: string) => void;
-  currentSelectedConversation: any;
+  currentSelectedConversation: Conversation | null;
   messageInput: React.RefObject<HTMLTextAreaElement>;
 }
 
@@ -30,10 +43,9 @@ const CollapsibleIcons: React.FC<CollapsibleIconsProps> = ({
   const [, setOpenSticker] = useState(false);
 
   const handleStickerClick = () => {
-    // Append the URL or identifier of the sticker to the message input
     setOpenSticker(false);
-    setOpenEmoji(false); // Close the emoji dialog
-    setInputMessage(inputMessageValue + " [sticker:happy-dog]"); // Add a unique identifier for the sticker
+    setOpenEmoji(false);
+    setInputMessage(inputMessageValue + " [sticker:happy-dog]");
     messageInput.current?.focus();
   };
 
@@ -58,16 +70,14 @@ const CollapsibleIcons: React.FC<CollapsibleIconsProps> = ({
             </DialogTrigger>
             <DialogContent className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 p-4">
               <div className="relative bg-white rounded-lg shadow-lg p-4 max-w-3xl w-full">
-                {/* Close Button */}
                 <DialogClose className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 focus:outline-none">
                   <img
                     src={CloseCircle}
-                    alt="img-add-icon"
+                    alt="close-icon"
                     className="hover:cursor-pointer"
                   />
                 </DialogClose>
 
-                {/* Sticker Section */}
                 <div className="w-full mb-4 flex flex-col items-start">
                   <span className="font-bold text-gray-700 mb-2 block">
                     Select Sticker
@@ -83,8 +93,6 @@ const CollapsibleIcons: React.FC<CollapsibleIconsProps> = ({
                 </div>
 
                 <div className="pt-4">
-                  {" "}
-                  {/* Add padding top to avoid overlap */}
                   <div className="flex justify-between items-center mb-4">
                     <h2 className="text-lg font-bold">Select Emoji</h2>
                   </div>
