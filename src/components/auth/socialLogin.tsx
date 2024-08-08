@@ -1,8 +1,8 @@
 
 
 import React from "react";
-import fbLogo from "@/assets/auth/facebook-logo.png";
-import googleLogo from "@/assets/auth/google-logo.png";
+// import fbLogo from "@/assets/auth/facebook-logo.png";
+// import googleLogo from "@/assets/auth/google-logo.png";
 import mircosoftlogo from "@/assets/auth/microsoftlgo.png";
 import apppleLogo from "@/assets/auth/appleLogov2.png";
 import FacebookLoginButton from "./facebbookLogin"; // Adjust the import path as necessary
