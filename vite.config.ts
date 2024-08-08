@@ -13,10 +13,10 @@ export default defineConfig({
     port: 2930,
     proxy: {
       // Change the proxy rule for /places
-      '/place': {
+      '/places': {
         target: 'http://127.0.0.1:3000',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/place/, '/place'),
+        rewrite: (path) => path.replace(/^\/places/, '/places'),
       },
       // Keep the Next.js assets proxy
       '/_next': {

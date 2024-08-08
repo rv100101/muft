@@ -1,8 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/place/:path*",
-      "destination": "/place/:path*" 
+      "source": "/places/:path*",
+      "destination": "/places/:path*" 
     },
     
     {
