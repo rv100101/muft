@@ -293,7 +293,7 @@ const SignInForm = () => {
             )}
           </Button>
         </div>
-        <SocialLogin />
+        {/* <SocialLogin /> */}
         <div className="w-full">
           <Dialog
             open={isModalOpen}

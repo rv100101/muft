@@ -1,12 +1,10 @@
-
-
 import React from "react";
 // import fbLogo from "@/assets/auth/facebook-logo.png";
 // import googleLogo from "@/assets/auth/google-logo.png";
 import mircosoftlogo from "@/assets/auth/microsoftlgo.png";
 import apppleLogo from "@/assets/auth/appleLogov2.png";
-import FacebookLoginButton from "./facebbookLogin"; // Adjust the import path as necessary
-import GoogleLoginButton from "./googleLogin";
+// import FacebookLoginButton from "./facebbookLogin"; // Adjust the import path as necessary
+// import GoogleLoginButton from "./googleLogin";
 
 const SocialLogin = () => {
   const handleFacebookLogin = (accessToken: string) => {
@@ -30,10 +28,10 @@ const SocialLogin = () => {
       </div>
 
       <div className="flex flex-row space-x-5 mt-3 justify-center">
-        <div className="flex flex-col items-center">
+        {/* <div className="flex flex-col items-center">
           <FacebookLoginButton onLogin={handleFacebookLogin} />
         </div>
-        <GoogleLoginButton onLogin={handleGoogleLogin} />
+        <GoogleLoginButton onLogin={handleGoogleLogin} /> */}
         <img
           src={mircosoftlogo}
           alt="microsoft-logo"
