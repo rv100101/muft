@@ -1,7 +1,16 @@
 {
   "rewrites": [
-    { "source": "/places/:path*", "destination": "https://muft-theta.vercel.app:3000/places/:path*" },
-    { "source": "/_next/:path*", "destination": "https://muft-theta.vercel.app:3000/_next/:path*" },
-    { "source": "/api/:path*", "destination": "https://muffun-test.vercel.app/api/:path*" }
+    {
+      "source": "/places/:path*",
+      "destination": "https://muft-theta.vercel.app/places/:path*"
+    },
+    {
+      "source": "/_next/:path*",
+      "destination": "https://muft-theta.vercel.app/_next/:path*"
+    },
+    {
+      "source": "/api/:path*",
+      "destination": "https://muffun-test.vercel.app/api/:path*"
+    }
   ]
 }
