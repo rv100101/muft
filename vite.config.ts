@@ -10,7 +10,7 @@ export default defineConfig({
   },
   
   server: {
-    host: 'https://muft-theta.vercel.app',
+  host: '0.0.0.0',
     port: 2930,
     proxy: {
       '/places': {
