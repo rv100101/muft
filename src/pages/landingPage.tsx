@@ -47,7 +47,7 @@ const LandingPage = ({ uuid = null }: { uuid: string | null }) => {
       }
       setShowLoading(false);
     }
-    // fetchPlaces();
+    fetchPlaces();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i18n.language])
 
