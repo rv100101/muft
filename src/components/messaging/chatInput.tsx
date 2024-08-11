@@ -17,7 +17,7 @@ import animationData from "@/assets/messages/animation/happydog.json";
 const ChatInput = () => {
   const [t] = useTranslation();
   const [imageFiles, setImageFiles] = useState<File[]>([]);
-  const [imagePreviews, setImagePreviews] = useState<string[]>([]);
+  const [, setImagePreviews] = useState<string[]>([]);
 
   const currentSelectedConversation = useLatestConversationStore(
     (state) => state.conversation
@@ -153,19 +153,6 @@ const ChatInput = () => {
     setShowCloseButton(false);
   };
 
-  const handleImageRemove = (index: number) => {
-    setImageFiles((prevFiles) => {
-      const newFiles = [...prevFiles];
-      newFiles.splice(index, 1);
-      return newFiles;
-    });
-    setImagePreviews((prevPreviews) => {
-      const newPreviews = [...prevPreviews];
-      newPreviews.splice(index, 1);
-      return newPreviews;
-    });
-  };
-
   const { selectedMemberName } = useLatestConversationStore();
 
   useEffect(() => {
@@ -249,11 +236,7 @@ const ChatInput = () => {
                     )}
                   </>
                 )}
-                <SendHorizonalIcon
-              
-                  height={16}
-                  width={19}
-                />
+                <SendHorizonalIcon height={16} width={19} />
               </Button>
             </div>
           </div>
