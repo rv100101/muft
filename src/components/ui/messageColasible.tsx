@@ -16,6 +16,8 @@ import animationData from "@/assets/messages/animation/happydog.json";
 interface CollapsibleIconsProps {
   inputMessageValue: string;
   setInputMessage: (value: string) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   currentSelectedConversation: any;
   messageInput: React.RefObject<HTMLTextAreaElement>;
   setShowAnimationDog: (value: boolean) => void;
