@@ -1,11 +1,5 @@
-import { SendHorizonalIcon } from "lucide-react";
+import { SendHorizonalIcon, XCircle } from "lucide-react"; // Add XCircle icon
 import { Button } from "../ui/button";
-// import {
-//   Popover,
-//   PopoverContent,
-//   PopoverTrigger,
-// } from "@radix-ui/react-popover";
-// import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
 import { useMessageInputStore } from "@/zustand/messaging/messageInput";
 import messagingQuery from "@/queries/messaging";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -16,11 +10,14 @@ import useLatestConversationStore from "@/zustand/messaging/showConversation";
 import { toast } from "../ui/use-toast";
 import { useUserStore } from "@/zustand/auth/user";
 import { useTranslation } from "react-i18next";
-// import MessageColasible from "../ui/messageColasible";
 import CollapsibleIcons from "../ui/messageColasible";
-// import animationDog from "@/assets/messages/animation/happydog.json";
+import Lottie from "lottie-react";
+import animationData from "@/assets/messages/animation/happydog.json";
+
 const ChatInput = () => {
   const [t] = useTranslation();
+  const [imageFiles, setImageFiles] = useState<File[]>([]);
+  const [imagePreviews, setImagePreviews] = useState<string[]>([]);
 
   const currentSelectedConversation = useLatestConversationStore(
     (state) => state.conversation
@@ -31,7 +28,8 @@ const ChatInput = () => {
   const [uuid, setUuid] = useState(
     currentSelectedConversation?.conversation_uuid
   );
-  // const [openEmoji, setOpenEmoji] = useState(false);
+  const [showAnimationDog, setShowAnimationDog] = useState(false);
+  const [showCloseButton, setShowCloseButton] = useState(false);
   const messageInput = useRef<HTMLTextAreaElement>(null);
   const user = useUserStore((state) => state.user);
   const queryClient = useQueryClient();
@@ -57,17 +55,7 @@ const ChatInput = () => {
     }
 
     try {
-      const res: {
-        data: {
-          recipient_id: number;
-          conversation_id: number;
-          gallery_uuid: string;
-          gender: string;
-          recipient_uuid: string;
-          recipient_nickname: string;
-          conversation_uuid: string;
-        };
-      } = await messagingQuery.getConversation(
+      const res = await messagingQuery.getConversation(
         user!.member_id,
         currentSelectedConversation!.memberId
       );
@@ -104,11 +92,17 @@ const ChatInput = () => {
 
   const sendMessage = async () => {
     const newChatUuid = null;
-    await messagingQuery.sendMessage(
-      newChatUuid ?? uuid!,
-      finalInputMessage,
-      user!.member_id
-    );
+    const formData = new FormData();
+    formData.append("conversation", newChatUuid ?? uuid!);
+    formData.append("text", finalInputMessage);
+    formData.append("member", user!.member_id.toString());
+
+    // Append images to form data
+    imageFiles.forEach((file, index) => {
+      formData.append(`images[${index}]`, file);
+    });
+
+    return await messagingQuery.sendMessage(formData);
   };
 
   const mutateConversation = useMutation({
@@ -120,6 +114,9 @@ const ChatInput = () => {
       queryClient.invalidateQueries({
         queryKey: ["conversations"],
       });
+      // Clear imageFiles and imagePreviews after sending
+      setImageFiles([]);
+      setImagePreviews([]);
     },
     onError: () => {
       updateLastSentMessageStatus("failed");
@@ -143,13 +140,49 @@ const ChatInput = () => {
       }
       setfinalInputMessage(inputMessageValue);
       setInputMessage("");
+      setShowAnimationDog(false);
+      setShowCloseButton(false);
       mutateConversation.mutate();
     } else {
       setInputMessage("");
     }
   };
 
+  const handleCloseClick = () => {
+    setShowAnimationDog(false);
+    setShowCloseButton(false);
+  };
+
+  const handleImageRemove = (index: number) => {
+    setImageFiles((prevFiles) => {
+      const newFiles = [...prevFiles];
+      newFiles.splice(index, 1);
+      return newFiles;
+    });
+    setImagePreviews((prevPreviews) => {
+      const newPreviews = [...prevPreviews];
+      newPreviews.splice(index, 1);
+      return newPreviews;
+    });
+  };
+
   const { selectedMemberName } = useLatestConversationStore();
+
+  useEffect(() => {
+    // Create previews for selected files
+    const previews: string[] = [];
+    imageFiles.forEach((file) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        previews.push(reader.result as string);
+        if (previews.length === imageFiles.length) {
+          setImagePreviews(previews);
+        }
+      };
+      reader.readAsDataURL(file);
+    });
+  }, [imageFiles]);
+
   return (
     <div className="flex w-full items-end rounded-lg h-max bg-[#F7F8FA] dark:text-white dark:bg-[#020817] pb-4 sm:pb-0">
       {selectedMemberName.length > 1 && user?.temporarily_deactivated ? (
@@ -161,44 +194,68 @@ const ChatInput = () => {
         <></>
       ) : (
         <>
-          <div className="h-max w-full flex items-end justify-start sm:mb-4 mt-1">
-            <div className="flex flex-col items-center justify-center mx-2">
+          <div className="h-max w-full flex items-end justify-between sm:mb-4 mt-1">
+            <div className="flex items-center mx-2">
               <CollapsibleIcons
                 inputMessageValue={inputMessageValue}
                 setInputMessage={setInputMessage}
                 currentSelectedConversation={currentSelectedConversation}
                 messageInput={messageInput}
+                setShowAnimationDog={(value) => {
+                  setShowAnimationDog(value);
+                  setShowCloseButton(value);
+                }}
+                setImageFiles={setImageFiles} // Pass the handler
               />
             </div>
-            <textarea
-              ref={messageInput}
-              className="focus:outline-none p-2 w-full border-2 rounded-lg max-h-full overflow-y-auto caret-primary resize-none dark:text-white dark:bg-[#020817]"
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  handleMessageSend();
-                }
-              }}
-              disabled={!currentSelectedConversation}
-              data-emojiable={true}
-              value={inputMessageValue}
-              name="text"
-              rows={3}
-              onChange={(e) => {
-                setInputMessage(e.target.value);
-              }}
-              placeholder={t("messages.typeAMessage")}
-            />{" "}
-            <Button
-              disabled={!currentSelectedConversation}
-              onClick={handleMessageSend}
-              className="rounded-full flex h-max w-max hover:bg-transparen ml-4 px-2 mr-4"
-            >
-              <SendHorizonalIcon
-                className="flex-shrink-0"
-                height={16}
-                width={19}
+            <div className="relative flex-grow">
+              <textarea
+                ref={messageInput}
+                className="focus:outline-none p-2 border-2 rounded-lg max-h-full overflow-y-auto caret-primary resize-none dark:text-white dark:bg-[#020817]"
+                style={{ width: "75%" }} // Adjust the percentage or use px, em, etc.
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    handleMessageSend();
+                  }
+                }}
+                disabled={!currentSelectedConversation}
+                data-emojiable={true}
+                value={inputMessageValue}
+                name="text"
+                rows={3}
+                onChange={(e) => {
+                  setInputMessage(e.target.value);
+                }}
+                placeholder={t("messages.typeAMessage")}
               />
-            </Button>
+              <Button
+                disabled={!currentSelectedConversation}
+                onClick={handleMessageSend}
+                className="absolute right-0 bottom-0 rounded-full flex h-max w-max hover:bg-transparent ml-4 px-2 mr-4"
+              >
+                {showAnimationDog && (
+                  <>
+                    <Lottie
+                      animationData={animationData}
+                      loop={true}
+                      className="absolute -top-14 -left-2 w-12 h-12 z-10"
+                    />
+                    {showCloseButton && (
+                      <XCircle
+                        className="absolute -top-16 -right-1 w-4 h-4 text-red-500 z-20 cursor-pointer"
+                        onClick={handleCloseClick}
+                      />
+                    )}
+                  </>
+                )}
+                <SendHorizonalIcon
+              
+                  height={16}
+                  width={19}
+                />
+              </Button>
+            </div>
           </div>
         </>
       )}
