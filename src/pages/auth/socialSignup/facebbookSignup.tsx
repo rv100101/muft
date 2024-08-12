@@ -1,34 +1,56 @@
-// src/components/FacebookLoginButton.tsx
 import React from "react";
-import FacebookLogin from "@greatsumini/react-facebook-login";
+import FacebookLogin, {
+  SuccessResponse,
+} from "@greatsumini/react-facebook-login";
+import fbLogo from "@/assets/auth/facebook-logo.png";
+interface FacebookLoginButtonProps {
+  onLogin: (accessToken: string) => void;
+}
 
-const FacebookLoginButton: React.FC = () => {
+const FacebookLoginButton: React.FC<FacebookLoginButtonProps> = ({
+  onLogin,
+}) => {
+  const handleSuccess = (response: SuccessResponse) => {
+    console.log(response);
+    if (response.accessToken) {
+      onLogin(response.accessToken);
+    }
+  };
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   /* eslint-disable @typescript-eslint/no-explicit-any */
-  const handleResponse = (response: any) => {
-    if (response.status === "connected") {
-
-      const { name, email, picture } = response;
-      const [firstName, lastName] = name.split(" ");
-
-      console.log("First Name:", firstName);
-      console.log("Last Name:", lastName);
-      console.log("Email:", email);
-      console.log("Picture:", picture?.data?.url);
-    } else {
-      console.error("Login failed:", response);
-    }
+  const handleFailure = (error: any) => {
+    console.error("Facebook login failed", error);
+  };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  /* eslint-disable @typescript-eslint/no-explicit-any */
+  const handleProfileSuccess = (profile: any) => {
+    console.log("Profile data:", profile);
   };
 
   return (
-    <FacebookLogin
-      appId="460172250155750" // Replace with your Facebook app ID
-      autoLoad={false}
-      fields="name,email,picture"
-      scope="email"
-      onSuccess={handleResponse} // Adjust based on correct prop name
-      // onFailure={handleResponse} // If applicable
-    />
+    <div>
+      <FacebookLogin
+        appId="460172250155750" // Replace with your Facebook App ID
+        autoLoad={false}
+        fields="name,email,picture"
+        onSuccess={handleSuccess}
+        onFail={handleFailure}
+        onProfileSuccess={handleProfileSuccess}
+        // Hide the default button
+      />
+      <button
+        onClick={() =>
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          /* eslint-disable @typescript-eslint/no-explicit-any */
+          (window as any).FB.login(handleSuccess, {
+            scope: "public_profile,email",
+          })
+        }
+        className="hover:cursor-pointer"
+      >
+        <img src={fbLogo} alt="facebook-logo" />
+      </button>
+    </div>
   );
 };
 
