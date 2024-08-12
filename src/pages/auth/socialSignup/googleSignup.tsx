@@ -1,7 +1,17 @@
 import React from "react";
 import { GoogleLogin, CredentialResponse } from "@react-oauth/google";
 
-const GoogleSignUpButton = () => {
+interface GoogleSignUpButtonProps {
+  onSuccess: (userInfo: {
+    email: string;
+    firstName: string;
+    lastName: string;
+  }) => void;
+}
+
+const GoogleSignUpButton: React.FC<GoogleSignUpButtonProps> = ({
+  onSuccess,
+}) => {
   const handleSuccess = async (credentialResponse: CredentialResponse) => {
     if (credentialResponse.credential) {
       try {
@@ -10,15 +20,11 @@ const GoogleSignUpButton = () => {
         );
         const userInfo = await response.json();
 
-        console.log("Google User Info:", userInfo);
-
         const { name, email } = userInfo;
         const [firstName, ...lastNameParts] = name.split(" ");
         const lastName = lastNameParts.join(" ");
 
-        console.log("First Name:", firstName);
-        console.log("Last Name:", lastName);
-        console.log("Email:", email);
+        onSuccess({ email, firstName, lastName }); // Pass data to SignUpPage
       } catch (error) {
         console.error("Error fetching user info:", error);
       }
@@ -29,13 +35,7 @@ const GoogleSignUpButton = () => {
     console.error("Google login error");
   };
 
-  return (
-    <GoogleLogin
-      onSuccess={handleSuccess}
-      onError={handleError}
-      // Provide any additional props here if supported
-    />
-  );
+  return <GoogleLogin onSuccess={handleSuccess} onError={handleError} />;
 };
 
 export default GoogleSignUpButton;

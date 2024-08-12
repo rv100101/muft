@@ -59,12 +59,16 @@ const SignUpPage = () => {
     (state) => state.setModifiedMemberList
   );
   const setRedirecUrl = useRedirectStore((state) => state.setURl);
-
+const [googleData, setGoogleData] = useState<{
+  email: string;
+  firstName: string;
+  lastName: string;
+} | null>(null);
   const formik = useFormik({
     initialValues: {
-      first_name: "",
-      last_name: "",
-      email: "",
+      first_name: googleData?.firstName || "",
+      last_name: googleData?.lastName || "",
+      email: googleData?.email || "",
       password: "",
       lang: "",
     },
@@ -105,13 +109,37 @@ const SignUpPage = () => {
   );
 
   useEffect(() => {
+    if (googleData) {
+      formik.setValues({
+        ...formik.values,
+        first_name: googleData.firstName,
+        last_name: googleData.lastName,
+        email: googleData.email,
+      });
+    }
+  }, [googleData]);
+
+  
+  useEffect(() => {
+    
     if (searchString.length !== 0) {
       const params = searchString.split("=");
+
       if (params.length === 2 && params[0] === "referral_code") {
         setInvitedReferralCode(params[1]);
       }
     }
   }, [searchString, setInvitedReferralCode]);
+
+
+   const handleGoogleSuccess = (data: {
+     email: string;
+     firstName: string;
+     lastName: string;
+   }) => {
+     setGoogleData(data);
+   };
+
 
   const handleSignUp = async (values: SignUpDataType) => {
     try {
@@ -445,7 +473,7 @@ const SignUpPage = () => {
                   t("signUp.signUp")
                 )}
               </Button>
-              <GoogleSignInButton />
+              <GoogleSignInButton onSuccess={handleGoogleSuccess}  />
             </div>
           </form>
           <Link
