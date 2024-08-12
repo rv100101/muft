@@ -475,9 +475,28 @@ const SignUpPage = () => {
                   t("signUp.signUp")
                 )}
               </Button>
-              <GoogleSignInButton onSuccess={handleGoogleSuccess} />
-              <FacebookSignInButton onSuccess={handleGoogleSuccess} />
+              {/* <GoogleSignInButton onSuccess={handleGoogleSuccess} />
+              <FacebookSignInButton onSuccess={handleGoogleSuccess} /> */}
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: "16px",
+                }}
+              >
+                <div style={{ width: "160px", height: "48px" }}>
+                  <GoogleSignInButton onSuccess={handleGoogleSuccess} />
+                </div>
+                <div style={{ width: "210px", height: "45px" }}>
+                  <FacebookSignInButton onSuccess={handleGoogleSuccess} />
+                </div>
+              </div>
+
+              
             </div>
+
+            
           </form>
           <Link
             onClick={scrollToTop}

@@ -1,11 +1,7 @@
 import { useFormik } from "formik";
 import { useState } from "react";
 import * as Yup from "yup";
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import ForgotPassword from "@/components/auth/forgotPassword";
 import { Link, useLocation, useSearch } from "wouter";
 import { cn, scrollToTop } from "@/lib/utils";
@@ -33,7 +29,7 @@ import useHomePageNumber from "@/zustand/home/pageNumber";
 import useHomepageViewStore from "@/zustand/home/homepageView";
 import BlockedMessage from "../blockedMessage";
 import { useRedirectStore } from "@/zustand/auth/redirect";
-import SocialLogin from "./socialLogin";
+// import SocialLogin from "./socialLogin";
 
 type FormDataType = {
   email: string;
@@ -46,7 +42,7 @@ const SignInForm = () => {
     setId,
     updateRead: setReadList,
   } = useReadConversationsStateStore();
-  const setRedirecUrl = useRedirectStore(state => state.setURl);
+  const setRedirecUrl = useRedirectStore((state) => state.setURl);
   const setData = profileAboutContentStore((state) => state.setData);
   const [t, i18n] = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
@@ -54,8 +50,10 @@ const SignInForm = () => {
   const { toast } = useToast();
   const [, navigate] = useLocation();
   const [isLoading, setIsLoading] = useState(false);
-  const setPageNumber = useHomePageNumber(state => state.setPageNumber);
-  const setMemberList = useHomepageViewStore((state) => state.setModifiedMemberList);
+  const setPageNumber = useHomePageNumber((state) => state.setPageNumber);
+  const setMemberList = useHomepageViewStore(
+    (state) => state.setModifiedMemberList
+  );
   const setPreferredLanguage = usePreferredLanguageStore(
     (state) => state.setPreferredLanguage
   );
@@ -142,7 +140,7 @@ const SignInForm = () => {
         if (search && search.length != 0) {
           const path = search.split("=")[1].trim();
           setRedirecUrl(path);
-          if (path == '/myprofile') {
+          if (path == "/myprofile") {
             navigate(`/profile/${data.member_id}`);
           } else {
             navigate(path, { replace: true });
@@ -294,7 +292,7 @@ const SignInForm = () => {
             )}
           </Button>
         </div>
-        <SocialLogin />
+        {/* <SocialLogin /> */}
         <div className="w-full">
           <Dialog
             open={isModalOpen}

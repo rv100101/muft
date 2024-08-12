@@ -15,7 +15,6 @@ const FacebookLoginButton: React.FC<GoogleSignUpButtonProps> = ({
   onSuccess,
 }) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  /* eslint-disable @typescript-eslint/no-explicit-any */
   const handleResponse = (response: any) => {
     if (response.accessToken) {
       console.log("Login successful:", response);
@@ -53,12 +52,16 @@ const FacebookLoginButton: React.FC<GoogleSignUpButtonProps> = ({
         onSuccess={handleResponse}
         onFail={handleResponse} // Use the same handler for failures
         render={(renderProps) => (
-          <button onClick={renderProps.onClick}>
+          <button
+            onClick={renderProps.onClick}
+            className="bg-blue-600 text-white text-xs px-2 py-2 rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
             <img
               src={fbLogo}
               alt="Facebook logo"
               className="w-6 h-6 inline mr-2"
             />
+            Login with Facebook
           </button>
         )}
       />

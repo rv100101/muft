@@ -36,7 +36,14 @@ const GoogleSignUpButton: React.FC<GoogleSignUpButtonProps> = ({
     console.error("Google login error");
   };
 
-  return <GoogleLogin onSuccess={handleSuccess} onError={handleError} />;
+  return (
+    <div className="flex flex-col items-center space-y-4">
+    <GoogleLogin onSuccess={handleSuccess} onError={handleError} 
+    
+    />;
+      
+    </div>
+  );
 };
 
 export default GoogleSignUpButton;
