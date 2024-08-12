@@ -1,44 +1,34 @@
 // src/components/FacebookLoginButton.tsx
 import React from "react";
-import FacebookLogin, { ReactFacebookLoginInfo } from "react-facebook-login";
-import fbLogo from "@/assets/auth/facebook-logo.png";
+import FacebookLogin from "@greatsumini/react-facebook-login";
 
-interface FacebookLoginButtonProps {
-  onLogin: (accessToken: string) => void;
-}
+const FacebookLoginButton: React.FC = () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  /* eslint-disable @typescript-eslint/no-explicit-any */
+  const handleResponse = (response: any) => {
+    if (response.status === "connected") {
+      // Extract user information from the response
+      const { name, email, picture } = response;
+      const [firstName, lastName] = name.split(" ");
 
-const FacebookLoginButton: React.FC<FacebookLoginButtonProps> = ({
-  onLogin,
-}) => {
-  const responseFacebook = (response: ReactFacebookLoginInfo) => {
-    console.log(response);
-    if (response.accessToken) {
-      onLogin(response.accessToken);
+      console.log("First Name:", firstName);
+      console.log("Last Name:", lastName);
+      console.log("Email:", email);
+      console.log("Picture:", picture?.data?.url);
+    } else {
+      console.error("Login failed:", response);
     }
   };
 
   return (
-    <div>
-      <FacebookLogin
-        appId="460172250155750" // Replace with your Facebook App ID
-        autoLoad={false}
-        fields="name,email,picture"
-        callback={responseFacebook}
-        cssClass="hidden" // Hide the default button
-      />
-      <button
-        onClick={() =>
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          /* eslint-disable @typescript-eslint/no-explicit-any */
-          (window as any).FB.login(responseFacebook, {
-            scope: "public_profile,email",
-          })
-        }
-        className="hover:cursor-pointer"
-      >
-        <img src={fbLogo} alt="facebook-logo" />
-      </button>
-    </div>
+    <FacebookLogin
+      appId="460172250155750" // Replace with your Facebook app ID
+      autoLoad={false}
+      fields="name,email,picture"
+      scope="email"
+      onSuccess={handleResponse} // Adjust based on correct prop name
+      // onFailure={handleResponse} // If applicable
+    />
   );
 };
 

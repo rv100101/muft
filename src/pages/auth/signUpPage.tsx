@@ -45,11 +45,6 @@ export type SignUpDataType = {
 
 const SignUpPage = () => {
 
-   const handleFacebookLogin = (accessToken: string) => {
-  
-     console.log("Facebook Access Token:", accessToken);
-
-   };
 
   const search = useSearch();
   const setData = profileAboutContentStore((state) => state.setData);
@@ -483,7 +478,7 @@ const SignUpPage = () => {
                 )}
               </Button>
               <GoogleSignInButton onSuccess={handleGoogleSuccess} />
-              <FacebookSignInButton onLogin={handleFacebookLogin} />
+              <FacebookSignInButton  />
             </div>
           </form>
           <Link
