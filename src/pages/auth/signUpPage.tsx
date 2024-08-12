@@ -64,6 +64,7 @@ const SignUpPage = () => {
     email: string;
     firstName: string;
     lastName: string;
+    email_service: String;
   } | null>(null);
   const formik = useFormik({
     initialValues: {
@@ -135,6 +136,7 @@ const SignUpPage = () => {
     email: string;
     firstName: string;
     lastName: string;
+    email_service: string;
   }) => {
     setGoogleData(data);
   };
