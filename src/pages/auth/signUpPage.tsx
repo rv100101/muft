@@ -40,6 +40,7 @@ export type SignUpDataType = {
   email: string;
   password: string;
   lang: string;
+  email_service: string;
 };
 
 const SignUpPage = () => {
@@ -71,6 +72,7 @@ const SignUpPage = () => {
       email: googleData?.email || "",
       password: "",
       lang: "",
+      email_service: (googleData ? 1 : 0).toString(),
     },
     validationSchema: Yup.object({
       first_name: Yup.string()
@@ -152,7 +154,7 @@ const SignUpPage = () => {
     }
   };
 
-  // const handleGoogleSignUp = async (values: SignUpDataType) => {
+  // const handleSocialSignUp = async (values: SignUpDataType) => {
   //   try {
   //     setIsLoading(true);
   //     const response = await authQuery.signUp(values);
