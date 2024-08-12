@@ -8,6 +8,7 @@
       "DOM.Iterable"
     ],
     "module": "ESNext",
+      "typeRoots": ["./node_modules/@types", "./src/types"],
     "skipLibCheck": true,
     /* Path resolve */
     "baseUrl": ".",

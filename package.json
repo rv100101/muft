@@ -10,8 +10,7 @@
     "build": "tsc && vite build && next build",
     "start": "next start",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview",
-    "postinstall": "npm install --force"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@babel/preset-env": "^7.23.7",
@@ -37,6 +36,8 @@
     "@react-oauth/google": "^0.12.1",
     "@sentry/react": "^7.90.0",
     "@tanstack/react-query": "^4.35.7",
+    "@types/passport": "^1.0.16",
+    "@types/passport-facebook": "^3.0.3",
     "@types/react-document-meta": "^3.0.5",
     "@types/react-facebook-login": "^4.1.11",
     "@uidotdev/usehooks": "^2.4.1",
@@ -59,6 +60,8 @@
     "moment-with-locales-es6": "^1.0.1",
     "next": "^14.2.5",
     "next-compose-plugins": "^2.2.1",
+    "passport": "^0.7.0",
+    "passport-facebook": "^3.0.0",
     "react": "^18.3.1",
     "react-device-detect": "^2.2.3",
     "react-dom": "^18.3.1",
@@ -71,6 +74,7 @@
     "react-onesignal": "^3.0.1",
     "react-router-dom": "^6.26.0",
     "react-simple-image-viewer": "^1.2.2",
+    "reactjs-social-login": "^2.6.3",
     "shadcn-ui": "^0.4.1",
     "sitemap": "^7.1.1",
     "tailwind-merge": "^1.14.0",
@@ -87,6 +91,7 @@
     "@svgr/webpack": "^8.1.0",
     "@tanstack/eslint-plugin-query": "^4.36.0",
     "@types/dompurify": "^3.0.5",
+    "@types/facebook-js-sdk": "^3.3.11",
     "@types/jwt-decode": "^3.1.0",
     "@types/luxon": "^3.3.4",
     "@types/node": "^20.5.9",
