@@ -73,7 +73,7 @@ const SignUpPage = () => {
       email: googleData?.email || "",
       password: "",
       lang: "",
-      email_service: "",
+      email_service: (googleData ? 1 : 0).toString(),
     },
     validationSchema: Yup.object({
       first_name: Yup.string()
