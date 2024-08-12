@@ -15,6 +15,8 @@ const FacebookLoginButton: React.FC<GoogleSignUpButtonProps> = ({
   onSuccess,
 }) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   const handleResponse = (response: any) => {
     if (response.accessToken) {
       const { accessToken, userID } = response;
