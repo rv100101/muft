@@ -59,11 +59,11 @@ const SignUpPage = () => {
     (state) => state.setModifiedMemberList
   );
   const setRedirecUrl = useRedirectStore((state) => state.setURl);
-const [googleData, setGoogleData] = useState<{
-  email: string;
-  firstName: string;
-  lastName: string;
-} | null>(null);
+  const [googleData, setGoogleData] = useState<{
+    email: string;
+    firstName: string;
+    lastName: string;
+  } | null>(null);
   const formik = useFormik({
     initialValues: {
       first_name: googleData?.firstName || "",
@@ -119,9 +119,7 @@ const [googleData, setGoogleData] = useState<{
     }
   }, [googleData]);
 
-  
   useEffect(() => {
-    
     if (searchString.length !== 0) {
       const params = searchString.split("=");
 
@@ -131,15 +129,13 @@ const [googleData, setGoogleData] = useState<{
     }
   }, [searchString, setInvitedReferralCode]);
 
-
-   const handleGoogleSuccess = (data: {
-     email: string;
-     firstName: string;
-     lastName: string;
-   }) => {
-     setGoogleData(data);
-   };
-
+  const handleGoogleSuccess = (data: {
+    email: string;
+    firstName: string;
+    lastName: string;
+  }) => {
+    setGoogleData(data);
+  };
 
   const handleSignUp = async (values: SignUpDataType) => {
     try {
@@ -346,6 +342,7 @@ const [googleData, setGoogleData] = useState<{
                 <Input
                   type="text"
                   autoComplete="off"
+                  disabled={!!googleData}
                   className={cn(
                     "appearance-none focus-visible:ring-offset-0 focus-visible:ring-0 border-0 rounded-full py-2 px-5 text-normal focus:outline-0 w-full",
                     i18n.language == "ar" && "text-right"
@@ -473,7 +470,7 @@ const [googleData, setGoogleData] = useState<{
                   t("signUp.signUp")
                 )}
               </Button>
-              <GoogleSignInButton onSuccess={handleGoogleSuccess}  />
+              <GoogleSignInButton onSuccess={handleGoogleSuccess} />
             </div>
           </form>
           <Link

@@ -32,7 +32,7 @@ i18n
   });
 
 Sentry.init({
-  dsn: "https://fd6a643efc57d33d656c0a08f965cbbf@o1300880.ingest.sentry.io/4506415538765824",
+  dsn: "502902386423-p18lo2n307k1489042hrk3fojccdpk6v.apps.googleusercontent.com",
   integrations: [
     new Sentry.BrowserTracing({
       tracePropagationTargets: ["localhost", /^https:\/\/yourserver\.io\/api/],
@@ -50,7 +50,7 @@ Sentry.init({
 const queryClient = new QueryClient();
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <GoogleOAuthProvider clientId="502902386423-p18lo2n307k1489042hrk3fojccdpk6v.apps.googleusercontent.com">
+    <GoogleOAuthProvider clientId="502902386423-kdk73br639qj1gugph5e3eluc4no9b4c.apps.googleusercontent.com">
       <I18nextProvider i18n={i18n}>
         <QueryClientProvider client={queryClient}>
           <HelmetProvider>
