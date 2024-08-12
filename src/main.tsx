@@ -50,7 +50,7 @@ Sentry.init({
 const queryClient = new QueryClient();
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <GoogleOAuthProvider clientId="502902386423-l6n9276fjkcpbtpl88palhvvtkgrmvvm.apps.googleusercontent.com">
+    <GoogleOAuthProvider clientId="502902386423-p18lo2n307k1489042hrk3fojccdpk6v.apps.googleusercontent.com">
       <I18nextProvider i18n={i18n}>
         <QueryClientProvider client={queryClient}>
           <HelmetProvider>
