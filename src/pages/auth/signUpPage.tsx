@@ -118,6 +118,7 @@ const SignUpPage = () => {
         first_name: googleData.firstName,
         last_name: googleData.lastName,
         email: googleData.email,
+        email_service: googleData.email ? "1" : "0",
       });
     }
   }, [googleData]);
