@@ -1,8 +1,9 @@
 import React from "react";
 import FacebookLogin, {
-  SuccessResponse,
+  ProfileSuccessResponse,
 } from "@greatsumini/react-facebook-login";
 import fbLogo from "@/assets/auth/facebook-logo.png";
+
 interface FacebookLoginButtonProps {
   onLogin: (accessToken: string) => void;
 }
@@ -10,7 +11,7 @@ interface FacebookLoginButtonProps {
 const FacebookLoginButton: React.FC<FacebookLoginButtonProps> = ({
   onLogin,
 }) => {
-  const handleSuccess = (response: SuccessResponse) => {
+  const handleSuccess = (response: ProfileSuccessResponse) => {
     console.log(response);
     if (response.accessToken) {
       onLogin(response.accessToken);
@@ -21,10 +22,15 @@ const FacebookLoginButton: React.FC<FacebookLoginButtonProps> = ({
   const handleFailure = (error: any) => {
     console.error("Facebook login failed", error);
   };
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  /* eslint-disable @typescript-eslint/no-explicit-any */
-  const handleProfileSuccess = (profile: any) => {
-    console.log("Profile data:", profile);
+
+  const handleProfileSuccess = (profile: ProfileSuccessResponse) => {
+    console.log("Profile data:", profile.email);
+    console.log("Profile data:", profile.name);
+    if (profile.name) {
+      const [firstName, ...lastName] = profile.name.split(" ");
+      console.log("First Name:", firstName);
+      console.log("Last Name:", lastName.join(" "));
+    }
   };
 
   return (
@@ -36,7 +42,6 @@ const FacebookLoginButton: React.FC<FacebookLoginButtonProps> = ({
         onSuccess={handleSuccess}
         onFail={handleFailure}
         onProfileSuccess={handleProfileSuccess}
-        // Hide the default button
       />
       <button
         onClick={() =>
