@@ -64,7 +64,7 @@ const SignUpPage = () => {
     email: string;
     firstName: string;
     lastName: string;
-    email_service: String;
+    email_service: string;
   } | null>(null);
   const formik = useFormik({
     initialValues: {
@@ -73,7 +73,7 @@ const SignUpPage = () => {
       email: googleData?.email || "",
       password: "",
       lang: "",
-      email_service: (googleData ? 1 : 0).toString(),
+      email_service: "",
     },
     validationSchema: Yup.object({
       first_name: Yup.string()
