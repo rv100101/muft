@@ -12,6 +12,7 @@ import global_ar from "@/locales/ar/global.json";
 import i18n from "i18next";
 import { I18nextProvider, initReactI18next } from "react-i18next";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+
 i18n
   .use(initReactI18next) // passes i18n down to react-i18next
   .init({

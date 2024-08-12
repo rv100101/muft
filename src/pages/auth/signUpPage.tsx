@@ -34,6 +34,7 @@ import { useReferralInvitedCodeStore } from "@/zustand/settings/referralCodeInvi
 import { useRedirectStore } from "@/zustand/auth/redirect";
 // import SocialLogin from "@/components/auth/socialLogin";
 import GoogleSignInButton from "./socialSignup/googleSignup";
+import FacebookSignInButton from "./socialSignup/facebbookSignup";
 export type SignUpDataType = {
   first_name: string;
   last_name: string;
@@ -44,6 +45,13 @@ export type SignUpDataType = {
 };
 
 const SignUpPage = () => {
+
+   const handleFacebookLogin = (accessToken: string) => {
+  
+     console.log("Facebook Access Token:", accessToken);
+
+   };
+
   const search = useSearch();
   const setData = profileAboutContentStore((state) => state.setData);
   const [t, i18n] = useTranslation();
@@ -476,6 +484,7 @@ const SignUpPage = () => {
                 )}
               </Button>
               <GoogleSignInButton onSuccess={handleGoogleSuccess} />
+              <FacebookSignInButton onLogin={handleFacebookLogin} />
             </div>
           </form>
           <Link
