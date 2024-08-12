@@ -6,6 +6,7 @@ interface GoogleSignUpButtonProps {
     email: string;
     firstName: string;
     lastName: string;
+    email_service: string;
   }) => void;
 }
 
@@ -23,8 +24,8 @@ const GoogleSignUpButton: React.FC<GoogleSignUpButtonProps> = ({
         const { name, email } = userInfo;
         const [firstName, ...lastNameParts] = name.split(" ");
         const lastName = lastNameParts.join(" ");
-
-        onSuccess({ email, firstName, lastName }); // Pass data to SignUpPage
+   const email_service = "1";
+        onSuccess({ email, firstName, lastName, email_service }); // Pass data to SignUpPage
       } catch (error) {
         console.error("Error fetching user info:", error);
       }
