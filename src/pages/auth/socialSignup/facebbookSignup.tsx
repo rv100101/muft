@@ -1,15 +1,17 @@
 import React from "react";
-import FacebookLogin from "@greatsumini/react-facebook-login";
+
+import FacebookLogin, {
+  ProfileSuccessResponse,
+} from "@greatsumini/react-facebook-login";
 
 const FacebookLoginButton: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleResponse = (response: any) => {
+  const handleResponse = (response: ProfileSuccessResponse) => {
     if (response.status === "connected") {
       const { name, email } = response;
-      const [firstName, lastName] = name.split(" ");
 
-      console.log("First Name:", firstName);
-      console.log("Last Name:", lastName);
+      console.log("First Name:", name);
+      console.log("Last Name:", name);
       console.log("Email:", email);
     } else {
       console.error("Login failed:", response);
@@ -17,14 +19,13 @@ const FacebookLoginButton: React.FC = () => {
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onProfileSuccess = (response: any) => {
+  const onProfileSuccess = (response: ProfileSuccessResponse) => {
     console.log("Profile fetched successfully:", response);
 
     const { name, email } = response;
-    const [firstName, lastName] = name.split(" ");
 
-    console.log("First Name:", firstName);
-    console.log("Last Name:", lastName);
+    console.log("First Name:", name);
+    console.log("Last Name:", name);
     console.log("Email:", email);
   };
 
