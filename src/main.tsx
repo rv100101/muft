@@ -11,7 +11,7 @@ import global_en from "@/locales/en/global.json";
 import global_ar from "@/locales/ar/global.json";
 import i18n from "i18next";
 import { I18nextProvider, initReactI18next } from "react-i18next";
-
+import { GoogleOAuthProvider } from "@react-oauth/google";
 i18n
   .use(initReactI18next) // passes i18n down to react-i18next
   .init({
@@ -31,7 +31,6 @@ i18n
     },
   });
 
-
 Sentry.init({
   dsn: "https://fd6a643efc57d33d656c0a08f965cbbf@o1300880.ingest.sentry.io/4506415538765824",
   integrations: [
@@ -41,22 +40,25 @@ Sentry.init({
     new Sentry.Replay({
       maskAllText: false,
       blockAllMedia: false,
-    }),],
+    }),
+  ],
   tracesSampleRate: 1.0,
   replaysSessionSampleRate: 0,
-  replaysOnErrorSampleRate: 1
+  replaysOnErrorSampleRate: 1,
 });
 
 const queryClient = new QueryClient();
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <I18nextProvider i18n={i18n}>
-      <QueryClientProvider client={queryClient}>
-        <HelmetProvider>
-          <Toaster />
-          <App />
-        </HelmetProvider>
-      </QueryClientProvider>
-    </I18nextProvider>
+    <GoogleOAuthProvider clientId="502902386423-l6n9276fjkcpbtpl88palhvvtkgrmvvm.apps.googleusercontent.com">
+      <I18nextProvider i18n={i18n}>
+        <QueryClientProvider client={queryClient}>
+          <HelmetProvider>
+            <Toaster />
+            <App />
+          </HelmetProvider>
+        </QueryClientProvider>
+      </I18nextProvider>
+    </GoogleOAuthProvider>
   </React.StrictMode>
 );

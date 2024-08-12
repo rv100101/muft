@@ -1,52 +1,42 @@
+import React from "react";
+import { GoogleLogin, CredentialResponse } from "@react-oauth/google";
 
 
-// import React from "react";
-// import {
-//   GoogleLogin,
-//   GoogleLoginResponse,
-//   GoogleLoginResponseOffline,
-// } from "react-google-login";
-// import googleLogo from "@/assets/auth/google-logo.png";
+const GoogleLoginButton = () => {
+  const handleSuccess = async (credentialResponse: CredentialResponse) => {
+    if (credentialResponse.credential) {
+      try {
+        const response = await fetch(
+          `https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=${credentialResponse.credential}`
+        );
+        const userInfo = await response.json();
 
-// interface GoogleLoginButtonProps {
-//   onLogin: (token: string) => void;
-// }
+        console.log("Google User Info:", userInfo);
 
-// const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({ onLogin }) => {
-//   const clientId =
-//     "1095593932135-lomoci342enqi58h33hkl2phqgienkb7.apps.googleusercontent.com";
+        const { name, email } = userInfo;
+        const [firstName, ...lastNameParts] = name.split(" ");
+        const lastName = lastNameParts.join(" ");
 
-//   const onSuccess = (
-//     response: GoogleLoginResponse | GoogleLoginResponseOffline
-//   ) => {
-//     if ("profileObj" in response) {
-//       console.log("Google Login Success:", response.profileObj);
-//       onLogin(response.tokenId);
-//       // You can send the token to your backend server for further processing
-//     }
-//   };
+        console.log("First Name:", firstName);
+        console.log("Last Name:", lastName);
+        console.log("Email:", email);
+      } catch (error) {
+        console.error("Error fetching user info:", error);
+      }
+    }
+  };
 
-//   const onFailure = (response: any) => {
-//     console.error("Google Login Failed:", response);
-//   };
+  const handleError = () => {
+    console.error("Google login error");
+  };
 
-//   return (
-//     <GoogleLogin
-//       clientId={clientId}
-//       buttonText="Login with Google"
-//       onSuccess={onSuccess}
-//       onFailure={onFailure}
-//       cookiePolicy={"single_host_origin"}
-//       render={(renderProps) => (
-//         <img
-//           src={googleLogo}
-//           alt="google-logo"
-//           onClick={renderProps.onClick}
-//           className={`hover:cursor-pointer ${renderProps.disabled ? "opacity-50 cursor-not-allowed" : ""}`}
-//         />
-//       )}
-//     />
-//   );
-// };
+  return (
+    <GoogleLogin
+      onSuccess={handleSuccess}
+      onError={handleError}
+      // Provide any additional props here if supported
+    />
+  );
+};
 
-// export default GoogleLoginButton;
+export default GoogleLoginButton;

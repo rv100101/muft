@@ -90,19 +90,28 @@ const ChatInput = () => {
     }
   }, []);
 
+  // const sendMessage = async () => {
+  //   const newChatUuid = null;
+  //   const formData = new FormData();
+  //   formData.append("conversation", newChatUuid ?? uuid!);
+  //   formData.append("text", finalInputMessage);
+  //   formData.append("member", user!.member_id.toString());
+
+  //   // Append images to form data
+  //   imageFiles.forEach((file, index) => {
+  //     formData.append(`images[${index}]`, file);
+  //   });
+
+  //   return await messagingQuery.sendMessage(formData);
+  // };
+
   const sendMessage = async () => {
     const newChatUuid = null;
-    const formData = new FormData();
-    formData.append("conversation", newChatUuid ?? uuid!);
-    formData.append("text", finalInputMessage);
-    formData.append("member", user!.member_id.toString());
-
-    // Append images to form data
-    imageFiles.forEach((file, index) => {
-      formData.append(`images[${index}]`, file);
-    });
-
-    return await messagingQuery.sendMessage(formData);
+    await messagingQuery.sendMessage(
+      newChatUuid ?? uuid!,
+      finalInputMessage,
+      user!.member_id
+    );
   };
 
   const mutateConversation = useMutation({
@@ -152,6 +161,19 @@ const ChatInput = () => {
     setShowAnimationDog(false);
     setShowCloseButton(false);
   };
+
+  // const handleImageRemove = (index: number) => {
+  //   setImageFiles((prevFiles) => {
+  //     const newFiles = [...prevFiles];
+  //     newFiles.splice(index, 1);
+  //     return newFiles;
+  //   });
+  //   setImagePreviews((prevPreviews) => {
+  //     const newPreviews = [...prevPreviews];
+  //     newPreviews.splice(index, 1);
+  //     return newPreviews;
+  //   });
+  // };
 
   const { selectedMemberName } = useLatestConversationStore();
 
@@ -219,7 +241,7 @@ const ChatInput = () => {
               <Button
                 disabled={!currentSelectedConversation}
                 onClick={handleMessageSend}
-                className="absolute right-0 bottom-0 rounded-full flex h-max w-max hover:bg-transparent ml-4 px-2 mr-4"
+                className="focus:outline-none p-2 border-2 rounded-lg max-h-full overflow-y-auto  hover:bg-transparen caret-primary resize-none dark:text-white dark:bg-[#020817]"
               >
                 {showAnimationDog && (
                   <>

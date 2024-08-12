@@ -33,6 +33,7 @@ import useHomePageNumber from "@/zustand/home/pageNumber";
 import useHomepageViewStore from "@/zustand/home/homepageView";
 import BlockedMessage from "../blockedMessage";
 import { useRedirectStore } from "@/zustand/auth/redirect";
+import SocialLogin from "./socialLogin";
 
 type FormDataType = {
   email: string;
@@ -293,7 +294,7 @@ const SignInForm = () => {
             )}
           </Button>
         </div>
-        {/* <SocialLogin /> */}
+        <SocialLogin />
         <div className="w-full">
           <Dialog
             open={isModalOpen}

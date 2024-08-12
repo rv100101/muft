@@ -43,6 +43,25 @@ const signUp = async (values: SignUpDataType) => {
   );
 };
 
+// const signUpGoogle = async (values: SignUpDataType) => {
+//   const formData = new FormData();
+//   formData.append(
+//     "auth",
+//     "0DB31DEE22DC4C03AD7DAAA9C29518FF3C08D931992A4A5CB0A4FF4CF4707DC6"
+//   );
+//   formData.append("lang", values.lang);
+//   formData.append("first_name", values.first_name);
+//   formData.append("last_name", values.last_name);
+//   formData.append("email", values.email);
+//   formData.append("password", values.password);
+//   formData.append("email_service", "1");
+//   formData.append("referral_code", "");
+//   return await axiosQuery.post(
+//     "https://muffinapi.azurewebsites.net/signup.php",
+//     formData
+//   );
+// };
+
 const getProfilePhoto = async (memberId: number) => {
   return await axiosQuery.post("/GetProfilePhoto", {
     member: memberId,

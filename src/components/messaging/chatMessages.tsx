@@ -158,7 +158,7 @@ const ChatMessages = () => {
         }
       }
 
-      if (message.conversation_text.includes("[sticker:happy-dog]")) {
+      if (message.conversation_text.includes(">sticker:happy-dog<")) {
         return <Lottie animationData={animationDog} className="w-16 h-16" />;
       }
 

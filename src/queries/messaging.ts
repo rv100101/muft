@@ -27,11 +27,23 @@ const getConversationHistory = async (
   }
 };
 
-const sendMessage = async (formData: FormData) => {
-  return await axiosQuery.post("/NewConversation", formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
+// const sendMessage = async (formData: FormData) => {
+//   return await axiosQuery.post("/NewConversation", formData, {
+//     headers: {
+//       'Content-Type': 'multipart/form-data',
+//     },
+//   });
+// };
+
+const sendMessage = async (
+  conversation_uuid: string,
+  text: string,
+  member: number
+) => {
+  return await axiosQuery.post("/NewConversation", {
+    conversation: conversation_uuid,
+    text,
+    member,
   });
 };
 

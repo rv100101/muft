@@ -41,7 +41,7 @@ const CollapsibleIcons: React.FC<CollapsibleIconsProps> = ({
     setOpenSticker(false);
     setOpenEmoji(false);
     setShowAnimationDog(true);
-    setInputMessage(inputMessageValue + " [sticker:happy-dog]");
+    setInputMessage(inputMessageValue + " >sticker:happy-dog<");
     messageInput.current?.focus();
   };
 
@@ -67,7 +67,7 @@ const CollapsibleIcons: React.FC<CollapsibleIconsProps> = ({
               <img
                 src={image}
                 alt={`uploaded-img-${index}`}
-                className="w-24 h-24 object-cover"
+                className="w-14 h-14 object-cover"
               />
               <button
                 onClick={() => handleImageRemove(image)}
@@ -81,25 +81,27 @@ const CollapsibleIcons: React.FC<CollapsibleIconsProps> = ({
       )}
 
       {/* Collapsible menu */}
-      <div className="flex items-center">
+      <div className="flex items-center justify-start">
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="text-blue-500 p-2 focus:outline-none"
         >
           <ArrowRightCircle
-            className={`w-10 h-10 transform transition-transform ${isOpen ? "rotate-180" : "rotate-0"}`}
+            className={`w-10 h-10 transform transition-transform ${
+              isOpen ? "rotate-180" : "rotate-0"
+            }`}
           />
         </button>
         {isOpen && (
-          <div className="flex space-x-4 ml-4">
+          <div className="flex space-x-4 ml-2">
             <Dialog open={openEmoji} onOpenChange={setOpenEmoji}>
               <DialogTrigger
-                className="hover:cursor-pointer"
+                className="hover:cursor-pointer flex items-center justify-center ml-1"
                 disabled={!currentSelectedConversation}
               >
-                <SmileIcon className="text-primary" height={30} width={30} />
+                <SmileIcon className="text-primary" height={30} width={29} />
               </DialogTrigger>
-              <DialogContent className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 p-4">
+              <DialogContent className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 p-4 sm:flex-col sm:justify-end">
                 <div className="relative bg-white rounded-lg shadow-lg p-4 max-w-3xl w-full">
                   <DialogClose className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 focus:outline-none">
                     <img
@@ -143,7 +145,7 @@ const CollapsibleIcons: React.FC<CollapsibleIconsProps> = ({
               </DialogContent>
             </Dialog>
 
-            <button className="text-blue-500 p-1 h-12 w-12 focus:outline-none">
+            <button className="text-blue-500 p-1 h-12 w-12 flex items-center justify-center focus:outline-none">
               <img
                 src={Gift}
                 alt="gift-icon"
@@ -151,7 +153,7 @@ const CollapsibleIcons: React.FC<CollapsibleIconsProps> = ({
               />
             </button>
 
-            <button className="text-blue-500 p-2 h-12 w-12 focus:outline-none">
+            <button className="text-blue-500 p-2 h-12 w-12 flex items-center justify-center focus:outline-none">
               <input
                 type="file"
                 multiple
@@ -160,7 +162,10 @@ const CollapsibleIcons: React.FC<CollapsibleIconsProps> = ({
                 className="hidden"
                 id="image-upload"
               />
-              <label htmlFor="image-upload">
+              <label
+                htmlFor="image-upload"
+                className="flex items-center justify-center"
+              >
                 <img
                   src={ImgAdd}
                   alt="img-add-icon"
