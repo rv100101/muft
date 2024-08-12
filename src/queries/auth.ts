@@ -37,6 +37,19 @@ const signUp = async (values: SignUpDataType) => {
   formData.append("password", values.password);
   formData.append("email_service", values.email_service);
   formData.append("referral_code", "");
+
+  
+  interface FormDataObject {
+    [key: string]: FormDataEntryValue;
+  }
+ const formDataObject: FormDataObject = {};
+  formData.forEach((value, key) => {
+    formDataObject[key] = value;
+  });
+
+  console.log("FormData being sent:", formDataObject);
+
+  console.log("FormData being sent:", formDataObject);
   return await axiosQuery.post(
     "https://muffinapi.azurewebsites.net/signup.php",
     formData
