@@ -10,10 +10,12 @@ interface GoogleSignUpButtonProps {
     email_service: string;
   }) => void;
 }
+
 const FacebookLoginButton: React.FC<GoogleSignUpButtonProps> = ({
   onSuccess,
 }) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   const handleResponse = (response: any) => {
     if (response.accessToken) {
       console.log("Login successful:", response);
@@ -42,7 +44,7 @@ const FacebookLoginButton: React.FC<GoogleSignUpButtonProps> = ({
   };
 
   return (
-    <div>
+    <div className="flex flex-col items-center space-y-4">
       <FacebookLogin
         appId="460172250155750" // Replace with your Facebook app ID
         autoLoad={false}
@@ -50,18 +52,16 @@ const FacebookLoginButton: React.FC<GoogleSignUpButtonProps> = ({
         scope="email"
         onSuccess={handleResponse}
         onFail={handleResponse} // Use the same handler for failures
+        render={(renderProps) => (
+          <button onClick={renderProps.onClick}>
+            <img
+              src={fbLogo}
+              alt="Facebook logo"
+              className="w-6 h-6 inline mr-2"
+            />
+          </button>
+        )}
       />
-
-      <button
-        onClick={() =>
-          (window as any).FB.login(handleResponse, {
-            scope: "public_profile,email",
-          })
-        }
-        className="hover:cursor-pointer"
-      >
-        <img src={fbLogo} alt="facebook-logo" />
-      </button>
     </div>
   );
 };
