@@ -1,28 +1,22 @@
-import React, { useState,  } from "react";
+import React from "react";
 import FacebookLogin from "@greatsumini/react-facebook-login";
 
 const FacebookLoginButton: React.FC = () => {
-  const [, setProfile] = useState<{ name?: string; email?: string }>({});
-
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleResponse = (response: any) => {
-    if (response.status === "connected") {
-      const { accessToken, userID } = response.authResponse;
+    if (response.accessToken) {
+      console.log("Login successful:", response);
 
-      // Fetch the profile using the access token
+      // You can use the accessToken to fetch the profile
+      const { accessToken, userID } = response;
       fetch(
         `https://graph.facebook.com/${userID}?fields=name,email&access_token=${accessToken}`
       )
         .then((res) => res.json())
         .then((data) => {
           const { name, email } = data;
-          setProfile({ name, email });
-
-          const [firstName, lastName] = name?.split(" ") || [];
-
-          console.log("First Name:", firstName);
-          console.log("Last Name:", lastName);
-          console.log("Email:", email);
+          console.log("Fetched name:", name);
+          console.log("Fetched email:", email);
         })
         .catch((error) => {
           console.error("Error fetching user data:", error);
@@ -39,7 +33,7 @@ const FacebookLoginButton: React.FC = () => {
       fields="name,email,picture"
       scope="email"
       onSuccess={handleResponse}
-      onFail={handleResponse}
+      onFail={handleResponse} // Use the same handler for failures
     />
   );
 };
