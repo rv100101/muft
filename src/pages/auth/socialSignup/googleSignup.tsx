@@ -24,8 +24,8 @@ const GoogleSignUpButton: React.FC<GoogleSignUpButtonProps> = ({
         const { name, email } = userInfo;
         const [firstName, ...lastNameParts] = name.split(" ");
         const lastName = lastNameParts.join(" ");
-   const email_service = "1";
-        onSuccess({ email, firstName, lastName, email_service }); // Pass data to SignUpPage
+        const email_service = "1";
+        onSuccess({ email, firstName, lastName, email_service });
       } catch (error) {
         console.error("Error fetching user info:", error);
       }
