@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/places/:path*",
-      "destination": "/places/:path*" 
+      "destination": "/places/:path*"
     },
     {
       "source": "/_next/static/:path*",
@@ -12,5 +12,17 @@
       "source": "/api/:path*",
       "destination": "/api/:path*"
     }
-  ]
+  ],
+  "build": {
+    "env": {
+      "NODE_ENV": "production"
+    }
+  },
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/node"
+    }
+  ],
+  "installCommand": "npm install --legacy-peer-deps"
 }
