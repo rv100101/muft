@@ -11,7 +11,7 @@
     "start": "next start",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "postinstall": "npm install --legacy-peer-deps"
+    "postinstall": "npm install --force"
   },
   "dependencies": {
     "@babel/preset-env": "^7.23.7",
