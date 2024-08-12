@@ -10,8 +10,7 @@
     "build": "tsc && vite build && next build",
     "start": "next start",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview",
-    "vercel-build": "npm install --legacy-peer-deps && npm run build"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@babel/preset-env": "^7.23.7",
