@@ -1,32 +1,35 @@
-import React from "react";
-
-import FacebookLogin, {
-  ProfileSuccessResponse,
-} from "@greatsumini/react-facebook-login";
+import React, { useState,  } from "react";
+import FacebookLogin from "@greatsumini/react-facebook-login";
 
 const FacebookLoginButton: React.FC = () => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleResponse = (response: ProfileSuccessResponse) => {
-    if (response.status === "connected") {
-      const { name, email } = response;
+  const [, setProfile] = useState<{ name?: string; email?: string }>({});
 
-      console.log("First Name:", name);
-      console.log("Last Name:", name);
-      console.log("Email:", email);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleResponse = (response: any) => {
+    if (response.status === "connected") {
+      const { accessToken, userID } = response.authResponse;
+
+      // Fetch the profile using the access token
+      fetch(
+        `https://graph.facebook.com/${userID}?fields=name,email&access_token=${accessToken}`
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          const { name, email } = data;
+          setProfile({ name, email });
+
+          const [firstName, lastName] = name?.split(" ") || [];
+
+          console.log("First Name:", firstName);
+          console.log("Last Name:", lastName);
+          console.log("Email:", email);
+        })
+        .catch((error) => {
+          console.error("Error fetching user data:", error);
+        });
     } else {
       console.error("Login failed:", response);
     }
-  };
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onProfileSuccess = (response: ProfileSuccessResponse) => {
-    console.log("Profile fetched successfully:", response);
-
-    const { name, email } = response;
-
-    console.log("First Name:", name);
-    console.log("Last Name:", name);
-    console.log("Email:", email);
   };
 
   return (
@@ -35,8 +38,8 @@ const FacebookLoginButton: React.FC = () => {
       autoLoad={false}
       fields="name,email,picture"
       scope="email"
-      onSuccess={onProfileSuccess}
-      onFail={handleResponse} // Use handleResponse for handling errors
+      onSuccess={handleResponse}
+      onFail={handleResponse}
     />
   );
 };
