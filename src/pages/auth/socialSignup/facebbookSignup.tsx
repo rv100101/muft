@@ -7,7 +7,7 @@ const FacebookLoginButton: React.FC = () => {
   /* eslint-disable @typescript-eslint/no-explicit-any */
   const handleResponse = (response: any) => {
     if (response.status === "connected") {
-      // Extract user information from the response
+
       const { name, email, picture } = response;
       const [firstName, lastName] = name.split(" ");
 
