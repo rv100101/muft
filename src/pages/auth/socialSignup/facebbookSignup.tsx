@@ -1,5 +1,5 @@
 import React from "react";
-import FacebookLogin from "@greatsumini/react-facebook-login";
+// import FacebookLogin from "@greatsumini/react-facebook-login";
 import fbLogo from "@/assets/auth/facebook-logo.png";
 
 interface GoogleSignUpButtonProps {
