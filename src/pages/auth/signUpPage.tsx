@@ -32,7 +32,6 @@ import useHomePageNumber from "@/zustand/home/pageNumber";
 import useHomepageViewStore from "@/zustand/home/homepageView";
 import { useReferralInvitedCodeStore } from "@/zustand/settings/referralCodeInviteStore";
 import { useRedirectStore } from "@/zustand/auth/redirect";
-// import SocialLogin from "@/components/auth/socialLogin";
 import GoogleSignInButton from "./socialSignup/googleSignup";
 import FacebookSignInButton from "./socialSignup/facebbookSignup";
 export type SignUpDataType = {
