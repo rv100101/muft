@@ -476,7 +476,7 @@ const SignUpPage = () => {
                 )}
               </Button>
               <GoogleSignInButton onSuccess={handleGoogleSuccess} />
-              <FacebookSignInButton />
+              <FacebookSignInButton onSuccess={handleGoogleSuccess} />
             </div>
           </form>
           <Link
