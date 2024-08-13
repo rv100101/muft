@@ -26,6 +26,7 @@ import axios from "axios";
 import MuffinAcademy from "./components/muffinAcademy/muffinAcademy";
 import MuffinAcademyPost from "./components/muffinAcademy/muffinAcademyPost";
 import { useRedirectStore } from "./zustand/auth/redirect";
+
 function App() {
   useEffect(() => {
     runOneSignal();

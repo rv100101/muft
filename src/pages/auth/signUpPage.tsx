@@ -34,6 +34,7 @@ import { useReferralInvitedCodeStore } from "@/zustand/settings/referralCodeInvi
 import { useRedirectStore } from "@/zustand/auth/redirect";
 import GoogleSignInButton from "./socialSignup/googleSignup";
 import FacebookSignInButton from "./socialSignup/facebbookSignup";
+import MicrosoftSignInButton from "./socialSignup/LoginButtonMicrosoft";
 export type SignUpDataType = {
   first_name: string;
   last_name: string;
@@ -492,11 +493,21 @@ const SignUpPage = () => {
                   <FacebookSignInButton onSuccess={handleGoogleSuccess} />
                 </div>
               </div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: "16px",
+                }}
+              >
+                <div style={{ width: "500px", height: "48px" }}>
+                  <MicrosoftSignInButton onSuccess={handleGoogleSuccess} />
+                </div>
 
               
+              </div>
             </div>
-
-            
           </form>
           <Link
             onClick={scrollToTop}

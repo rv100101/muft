@@ -36,6 +36,7 @@ const signUp = async (values: SignUpDataType) => {
   formData.append("email", values.email);
   formData.append("password", values.password);
   formData.append("email_service", values.email_service);
+  formData.append("sso_service", values.email_service);
   formData.append("referral_code", "");
 
   

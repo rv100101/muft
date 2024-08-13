@@ -38,10 +38,7 @@ const GoogleSignUpButton: React.FC<GoogleSignUpButtonProps> = ({
 
   return (
     <div className="flex flex-col items-center space-y-4">
-    <GoogleLogin onSuccess={handleSuccess} onError={handleError} 
-    
-    />;
-      
+      <GoogleLogin onSuccess={handleSuccess} onError={handleError} />
     </div>
   );
 };

@@ -11,6 +11,7 @@ interface GoogleSignUpButtonProps {
   }) => void;
 }
 
+
 const FacebookLoginButton: React.FC<GoogleSignUpButtonProps> = ({
   onSuccess,
 }) => {
