@@ -211,7 +211,10 @@
     "password": "كلمة السر",
     "signUp": "تسجيل",
     "alreadyHaveAccount": "لديك حساب؟",
-    "help": "مساعدة"
+    "help": "مساعدة",
+    "orSignupUsing": "أو الاشتراك باستخدام",
+    "withFacebook": "مع الفيسبوك",
+    "withMicrosoft": "مع مايكروسوفت"
   },
   "forgotPassword": {
     "resetPassword": "تغيير كلمة السر",

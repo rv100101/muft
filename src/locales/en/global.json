@@ -226,7 +226,10 @@
     "password": "Password",
     "signUp": "Sign up",
     "alreadyHaveAccount": "Already have an account?",
-    "help": "Help"
+    "help": "Help",
+    "orSignupUsing": "Or Signup using",
+    "withFacebook": "With Facebook",
+    "withMicrosoft": "With Microsoft"
   },
   "forgotPassword": {
     "resetPassword": "Reset your password",

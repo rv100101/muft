@@ -1,7 +1,7 @@
 import React from "react";
 import FacebookLogin from "@greatsumini/react-facebook-login";
 import fbLogo from "@/assets/auth/facebook-logo.png";
-
+import { useTranslation } from "react-i18next";
 interface GoogleSignUpButtonProps {
   onSuccess: (userInfo: {
     email: string;
@@ -15,7 +15,9 @@ interface GoogleSignUpButtonProps {
 const FacebookLoginButton: React.FC<GoogleSignUpButtonProps> = ({
   onSuccess,
 }) => {
+  const [t] = useTranslation();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   const handleResponse = (response: any) => {
     if (response.accessToken) {
       console.log("Login successful:", response);
@@ -46,23 +48,23 @@ const FacebookLoginButton: React.FC<GoogleSignUpButtonProps> = ({
   return (
     <div className="flex flex-col items-center space-y-4">
       <FacebookLogin
-        appId="460172250155750" // Replace with your Facebook app ID
+        appId="460172250155750" 
         autoLoad={false}
         fields="name,email,picture"
         scope="email"
         onSuccess={handleResponse}
-        onFail={handleResponse} // Use the same handler for failures
+        onFail={handleResponse} 
         render={(renderProps) => (
           <button
             onClick={renderProps.onClick}
-            className="bg-blue-600 text-white text-xs px-2 py-2 rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="bg-blue-600  text-white text-xs px-3 py-2 rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <img
               src={fbLogo}
               alt="Facebook logo"
               className="w-6 h-6 inline mr-2"
             />
-            Login with Facebook
+            {t("signUp.withFacebook")}
           </button>
         )}
       />

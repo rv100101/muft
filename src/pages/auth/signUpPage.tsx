@@ -476,36 +476,25 @@ const SignUpPage = () => {
                   t("signUp.signUp")
                 )}
               </Button>
-              {/* <GoogleSignInButton onSuccess={handleGoogleSuccess} />
-              <FacebookSignInButton onSuccess={handleGoogleSuccess} /> */}
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  gap: "16px",
-                }}
-              >
-                <div style={{ width: "160px", height: "48px" }}>
+              <div className="flex justify-center mt-4">
+                <span className="text-center text-gray-700">
+                  {t("signUp.orSignupUsing")}
+                </span>
+              </div>
+
+              <div className="flex justify-center space-x-4 mt-4">
+                <div className="w-[200px] h-[48px]">
                   <GoogleSignInButton onSuccess={handleGoogleSuccess} />
                 </div>
-                <div style={{ width: "210px", height: "45px" }}>
+                <div className="w-[240px] h-[45px]">
                   <FacebookSignInButton onSuccess={handleGoogleSuccess} />
                 </div>
               </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  gap: "16px",
-                }}
-              >
-                <div style={{ width: "500px", height: "48px" }}>
+
+              <div className="flex justify-center mt-4">
+                <div className="w-190px] h-[48px]">
                   <MicrosoftSignInButton onSuccess={handleGoogleSuccess} />
                 </div>
-
-              
               </div>
             </div>
           </form>

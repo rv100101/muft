@@ -14,6 +14,7 @@ import { I18nextProvider, initReactI18next } from "react-i18next";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { MsalProvider } from "@azure/msal-react";
 import msalInstance from "./pages/auth/socialSignup/authConfig";
+
 i18n
   .use(initReactI18next) // passes i18n down to react-i18next
   .init({
@@ -53,7 +54,7 @@ const queryClient = new QueryClient();
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <MsalProvider instance={msalInstance}>
-      <GoogleOAuthProvider clientId="502902386423-kdk73br639qj1gugph5e3eluc4no9b4c.apps.googleusercontent.com">
+      <GoogleOAuthProvider clientId="502902386423-orobhrhr1qajm44pm6b9rjc4dqihp5tt.apps.googleusercontent.com">
         <I18nextProvider i18n={i18n}>
           <QueryClientProvider client={queryClient}>
             <HelmetProvider>

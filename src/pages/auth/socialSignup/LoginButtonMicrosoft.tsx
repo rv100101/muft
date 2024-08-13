@@ -5,7 +5,8 @@ import {
   UnauthenticatedTemplate,
 } from "@azure/msal-react";
 import micrologo from "@/assets/auth/microsoftlgo.png";
-// import { InteractionType } from "@azure/msal-browser";
+import { useTranslation } from "react-i18next";
+
 
 interface SignUpButtonProps {
   onSuccess: (userInfo: {
@@ -18,7 +19,7 @@ interface SignUpButtonProps {
 
 const AuthButtons: React.FC<SignUpButtonProps> = ({ onSuccess }) => {
   const { instance, accounts } = useMsal();
-
+    const [t] = useTranslation();
   const handleLogin = async () => {
     await instance.loginRedirect({
       scopes: ["User.Read"],
@@ -29,12 +30,11 @@ const AuthButtons: React.FC<SignUpButtonProps> = ({ onSuccess }) => {
       const account = result?.account || accounts[0];
 
       if (account && account.name) {
-        const email = account.username || ""; // username might be a better fit for email
+        const email = account.username || ""; 
         const personName = account.name || "";
         const [firstName = "", lastName = ""] = personName.split(" ");
-        const email_service = "1"; // Update this as needed
+        const email_service = "1"; 
 
-        // Trigger the onSuccess callback here
         onSuccess({
           email,
           firstName,
@@ -54,12 +54,11 @@ const AuthButtons: React.FC<SignUpButtonProps> = ({ onSuccess }) => {
   };
 
   useEffect(() => {
-    // If user is authenticated, execute onSuccess
     if (accounts[0]?.username) {
-      const email = accounts[0]?.username || ""; // username might be a better fit for email
+      const email = accounts[0]?.username || "";
       const personName = accounts[0]?.name || "";
       const [firstName = "", lastName = ""] = personName.split(" ");
-      const email_service = "1"; // Update this as needed
+      const email_service = "1"; 
 
       onSuccess({
         email,
@@ -68,8 +67,8 @@ const AuthButtons: React.FC<SignUpButtonProps> = ({ onSuccess }) => {
         email_service,
       });
     }
-    // The empty dependency array ensures this effect only runs once when the component mounts
-  }, []); // <-- Empty dependency array
+
+  }, []);
 
   return (
     <div>
@@ -88,7 +87,7 @@ const AuthButtons: React.FC<SignUpButtonProps> = ({ onSuccess }) => {
           className="bg-blue-600 text-white text-xs px-2 py-2 rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           <img src={micrologo} alt="Login" className="w-6 h-6 inline mr-2" />
-          Login with Microsoft
+          {t("signUp.withMicrosoft")}
         </button>
       </UnauthenticatedTemplate>
     </div>
