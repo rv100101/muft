@@ -49,7 +49,7 @@ const AuthButtons: React.FC<SignUpButtonProps> = ({ onSuccess }) => {
 
   const handleLogout = () => {
     instance.logoutRedirect({
-      postLogoutRedirectUri: "http://https://muft-ovx2.vercel.app/auth/signup",
+      postLogoutRedirectUri: "https://muft-ovx2.vercel.app/auth/signup",
     });
   };
 
