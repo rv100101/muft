@@ -158,21 +158,7 @@ const SignUpPage = () => {
     }
   };
 
-  // const handleSocialSignUp = async (values: SignUpDataType) => {
-  //   try {
-  //     setIsLoading(true);
-  //     const response = await authQuery.signUp(values);
-  //     if (response.data.length !== 0) {
-  //       const data = response.data[0];
-  //       setIsLoading(false);
-  //       setPreferredLanguage(values.lang);
-  //       return data;
-  //     }
-  //   } catch (err: unknown) {
-  //     setIsLoading(false);
-  //   }
-  // };
-
+  
   console.log(search);
 
   const signUp = useMutation({
