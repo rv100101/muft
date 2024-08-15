@@ -1,10 +1,21 @@
 {
   "rewrites": [
     {
-     "source": "/places/:path*",
-      "destination": "https://muft-ssr.vercel.app/places/:path*"
+      "source": "/places/:path*",
+      "has": [
+        {
+          "type": "header",
+          "key": "x-no-rewrite"
+        }
+      ],
+      "destination": "/places/:path*"
+    },
+    {
+      "source": "/places/:path*",
+      "destination": "https://muft-ssr.vercel.app/places/:path*",
+      "headers": {
+        "x-no-rewrite": "true"
+      }
     }
-
-    
   ]
 }
