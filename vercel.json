@@ -2,6 +2,17 @@
   "rewrites": [
     {
       "source": "/places/:path*",
+      "has": [
+        {
+          "type": "query",
+          "key": "proxy",
+          "value": "true"
+        }
+      ],
+      "destination": "/places/:path*"
+    },
+    {
+      "source": "/places/:path*",
       "destination": "https://muft-ssr.vercel.app/places/:path*?proxy=true"
     }
   ]
