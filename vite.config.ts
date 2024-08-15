@@ -18,11 +18,11 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/places/, '/places'),
       },
-    '/member': {
-        target: 'http://127.0.0.1:3000/member',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/member/, ''),
-      },
+    // '/member': {
+    //     target: 'http://127.0.0.1:3000/member',
+    //     changeOrigin: true,
+    //     rewrite: (path) => path.replace(/^\/member/, ''),
+    //   },
       // Keep the Next.js assets proxy
       '/_next': {
         target: 'http://localhost:3000',

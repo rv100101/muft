@@ -1,8 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/places/:path*",
-      "destination": "/places/:path*" 
+     "source": "/places/:path*",
+      "destination": "http://127.0.0.1:3000/places/:path*"
     },
     {
       "source": "/_next/static/:path*",
