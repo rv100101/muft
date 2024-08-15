@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/places/:path*",
-      "destination": "https://muft-ssr.vercel.app/internal-places/:path*"
+      "destination": "https://muft-ssr.vercel.app/places/:path*?proxy=true"
     }
   ]
 }
