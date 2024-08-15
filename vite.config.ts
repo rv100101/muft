@@ -13,11 +13,11 @@ export default defineConfig({
     port: 2930,
     proxy: {
       // Change the proxy rule for /places
-      '/places': {
-        target: 'http://127.0.0.1:3000',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/places/, '/places'),
-      },
+      // '/places': {
+      //   target: 'http://127.0.0.1:3000',
+      //   changeOrigin: true,
+      //   rewrite: (path) => path.replace(/^\/places/, '/places'),
+      // },
     // '/member': {
     //     target: 'http://127.0.0.1:3000/member',
     //     changeOrigin: true,
